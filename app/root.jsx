@@ -1,3 +1,4 @@
+import FacebookPixel from './components/FacebookPixel';
 import {Analytics, getShopAnalytics, useNonce} from '@shopify/hydrogen';
 import {
   Outlet,
@@ -27,24 +28,9 @@ export const shouldRevalidate = ({formMethod, currentUrl, nextUrl}) => {
   // revalidate when manually revalidating via useRevalidator
   if (currentUrl.toString() === nextUrl.toString()) return true;
 
-  // Defaulting to no revalidation for root loader data to improve performance.
-  // When using this feature, you risk your UI getting out of sync with your server.
-  // Use with caution. If you are uncomfortable with this optimization, update the
-  // line below to `return defaultShouldRevalidate` instead.
-  // For more details see: https://remix.run/docs/en/main/route/should-revalidate
   return false;
 };
 
-/**
- * The main and reset stylesheets are added in the Layout component
- * to prevent a bug in development HMR updates.
- *
- * This avoids the "failed to execute 'insertBefore' on 'Node'" error
- * that occurs after editing and navigating to another page.
- *
- * It's a temporary fix until the issue is resolved.
- * https://github.com/remix-run/remix/issues/9242
- */
 export function links() {
   return [
     {
@@ -158,6 +144,9 @@ export function Layout({children}) {
         <Links />
       </head>
       <body>
+        {/* AQUÍ ESTÁ LA MAGIA: El Pixel se inserta al inicio del cuerpo */}
+        <FacebookPixel />
+        
         {children}
         <ScrollRestoration nonce={nonce} />
         <Scripts nonce={nonce} />
@@ -211,9 +200,3 @@ export function ErrorBoundary() {
     </div>
   );
 }
-
-/** @typedef {LoaderReturnData} RootLoader */
-
-/** @typedef {import('react-router').ShouldRevalidateFunction} ShouldRevalidateFunction */
-/** @typedef {import('./+types/root').Route} Route */
-/** @typedef {import('@shopify/remix-oxygen').SerializeFrom<typeof loader>} LoaderReturnData */
