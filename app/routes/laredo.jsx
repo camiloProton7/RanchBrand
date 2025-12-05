@@ -1,7 +1,7 @@
 import {useEffect, useMemo, useRef, useState} from 'react';
 import {useLoaderData} from 'react-router';
 import {Image, Money} from '@shopify/hydrogen';
-// CAMBIO 1: Importamos el componente correcto que ya funciona
+// IMPORTANTE: Importamos el componente VideoFinal real
 import VideoFinal from '../components/VideoFinal';
 
 /* ===== META DATA ===== */
@@ -9,6 +9,11 @@ export const meta = () => ([
   {title: 'Laredo Bomber — Entrega en 24H | The Ranch'},
   {name: 'description', content: 'Chaqueta Laredo. Entrega confirmada en menos de 24 horas. Calidad Premium.'},
 ]);
+
+/* ===== CONFIGURACIÓN DE ASSETS ===== */
+// Rutas directas a la carpeta public (sin /assets/)
+const VIDEO_PATH = '/video-scroll.mp4';
+const IMAGE_PATH = '/poster-hero.jpg';
 
 /* ===== DATOS FIJOS (Reseñas, FAQ, Mock) ===== */
 const REVIEWS = [
@@ -96,15 +101,18 @@ export async function loader({context}) {
 }
 
 /* ===== CONSTANTES ===== */
-const STORE_DOMAIN = '1caf84-4.myshopify.com';
+const STORE_DOMAIN = 'the-ranch.myshopify.com';
 const COLORS = ['Verde Oliva', 'Negro'];
 const SIZES  = ['S', 'M', 'L', 'XL'];
 const ACCENT = '#f2c200';
-const WHATSAPP_NUMBER = '573000000000'; // Pon tu número aquí
+const WHATSAPP_NUMBER = '573000000000'; 
 
 /* ===== HELPERS ===== */
 function toNumericId(gid) { return gid?.match(/\/(\d+)$/)?.[1] || gid; }
-function cartUrl(gid, qty = 1) { return `https://${STORE_DOMAIN}/cart/${toNumericId(gid)}:${qty}`; }
+function cartUrl(gid, qty = 1) { 
+    const domain = (typeof window !== 'undefined') ? window.location.hostname : STORE_DOMAIN;
+    return `https://${domain}/cart/${toNumericId(gid)}:${qty}`; 
+}
 const norm = (s) => (s || '').trim().toLowerCase();
 
 /* ===== CALCULADORA LÓGICA ===== */
@@ -155,7 +163,7 @@ export default function LaredoLanding() {
 
   /* Ocultar Layout Global del Tema */
   useEffect(() => {
-    if (typeof document !== 'undefined') {
+    if(typeof document !== 'undefined') {
         const els = document.querySelectorAll('header, .header, .site-header, .PageLayout, footer, .footer-section');
         els.forEach(el => { if(el) el.style.display = 'none'; });
         document.body.style.padding = '0';
@@ -175,7 +183,7 @@ export default function LaredoLanding() {
 
   /* Observer Sticky Bar */
   useEffect(() => {
-    if (typeof IntersectionObserver === 'undefined') return;
+    if(typeof IntersectionObserver === 'undefined') return;
     const observer = new IntersectionObserver(
       ([entry]) => setShowStickyBar(!entry.isIntersecting),
       { threshold: 0, rootMargin: "-100px 0px 0px 0px" }
@@ -193,8 +201,8 @@ export default function LaredoLanding() {
   return (
     <>
       <style>{`
-        /* --- ESTILOS GENERALES --- */
-        html, body { margin:0; padding:0; background:#050505; color:#fff; font-family: 'Helvetica Neue', sans-serif; -webkit-font-smoothing: antialiased; }
+        /* --- ESTILOS GENERALES (CORREGIDO FONT FAMILY PARA EVITAR ERROR DE HIDRATACIÓN) --- */
+        html, body { margin:0; padding:0; background:#050505; color:#fff; font-family: Helvetica Neue, sans-serif; -webkit-font-smoothing: antialiased; }
         * { box-sizing: border-box; }
 
         /* HERO SCROLL */
@@ -223,7 +231,6 @@ export default function LaredoLanding() {
             margin-top: -8vh; padding-bottom: 0px; 
         }
 
-        /* ENVÍO URGENCIA */
         .shipping-alert {
             background: #1a1a1a; border-left: 4px solid ${ACCENT};
             padding: 20px 20px; margin: 0;
@@ -234,7 +241,6 @@ export default function LaredoLanding() {
         .ship-main { font-size: 16px; font-weight: 900; color: ${ACCENT}; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 2px; }
         .ship-sub { font-size: 14px; color: #fff; font-weight: 600; }
 
-        /* PANEL DE COMPRA */
         .panel { padding: 30px 20px 10px; max-width: 550px; margin: 0 auto; }
         .live-viewers { text-align: center; font-size: 12px; color: #aaa; margin-bottom: 15px; display: flex; align-items: center; justify-content: center; gap: 6px; }
         .pulsating-dot { width: 8px; height: 8px; background: #ff4444; border-radius: 50%; animation: pulse-red 1.5s infinite; }
@@ -243,42 +249,24 @@ export default function LaredoLanding() {
         .product-price { font-size: 42px; font-weight: 900; color: #fff; letter-spacing: -1px; }
         .compare-price { text-decoration: line-through; color: #555; font-size: 18px; margin-left: 10px; font-weight: 500; }
 
-        /* Selectores */
         .selector-row { margin-bottom: 20px; }
         .label-group { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
         .label-title { font-size: 13px; font-weight: 700; color: #ccc; text-transform: uppercase; }
-        .scarcity-tag { background: rgba(255, 68, 68, 0.15); color: #ff4444; padding: 2px 6px; border-radius: 4px; font-size: 10px; font-weight: 800; text-transform: uppercase; display:flex; align-items:center; gap:4px;}
         .select-box { width: 100%; padding: 16px; background: #151515; border: 1px solid #333; color: #fff; border-radius: 8px; font-size: 16px; appearance: none; font-weight: 600; }
         
-        /* BOTÓN DE TALLA DESTACADO (Pill Button) */
         .size-calc-btn { 
-            background: rgba(242, 194, 0, 0.15);
-            border: 1px solid ${ACCENT};
-            color: ${ACCENT};
-            padding: 6px 14px;
-            border-radius: 50px;
-            font-size: 11px;
-            font-weight: 800;
-            cursor: pointer;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            display: flex; align-items: center; gap: 6px;
-            transition: all 0.2s ease;
+            background: rgba(242, 194, 0, 0.15); border: 1px solid ${ACCENT}; color: ${ACCENT};
+            padding: 6px 14px; border-radius: 50px; font-size: 11px; font-weight: 800;
+            cursor: pointer; text-transform: uppercase; letter-spacing: 0.5px;
+            display: flex; align-items: center; gap: 6px; transition: all 0.2s ease;
         }
-        .size-calc-btn:hover {
-            background: ${ACCENT};
-            color: #000;
-            transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(242, 194, 0, 0.3);
-        }
+        .size-calc-btn:hover { background: ${ACCENT}; color: #000; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(242, 194, 0, 0.3); }
 
-        /* Stock Meter */
         .stock-meter { margin: 20px 0; }
         .meter-label { font-size: 11px; color: #888; margin-bottom: 5px; display: flex; justify-content: space-between; }
         .meter-bg { height: 6px; background: #222; border-radius: 3px; overflow: hidden; }
         .meter-fill { height: 100%; background: linear-gradient(90deg, #ff4444, #ff8844); width: 85%; border-radius: 3px; }
 
-        /* CTA */
         .cta-main {
             width: 100%; padding: 20px; margin-top: 10px;
             background: ${ACCENT}; color: #000;
@@ -288,7 +276,6 @@ export default function LaredoLanding() {
             animation: pulse-shadow 2s infinite;
         }
 
-        /* ACORDEONES INFO */
         .accordion-section { margin-top: 30px; border-top: 1px solid #222; }
         .accordion-item { border-bottom: 1px solid #222; }
         .accordion-header {
@@ -300,7 +287,6 @@ export default function LaredoLanding() {
         .accordion-content.open { max-height: 200px; padding-bottom: 20px; }
         .plus-icon { font-size: 20px; color: ${ACCENT}; }
 
-        /* SECCIONES EXTRA */
         .features-section { padding: 40px 24px 20px; max-width: 550px; margin: 0 auto; margin-top: 20px; }
         .features-grid { display: grid; gap: 24px; margin-bottom: 40px; }
         .feature-item { display: flex; gap: 16px; }
@@ -308,7 +294,6 @@ export default function LaredoLanding() {
         .f-content h4 { font-size: 14px; font-weight: 800; color: #fff; margin: 0 0 4px 0; text-transform: uppercase; }
         .f-content p { font-size: 13px; color: #999; margin: 0; line-height: 1.5; }
 
-        /* RESEÑAS */
         .reviews-title { text-align: center; font-size: 18px; font-weight: 800; text-transform: uppercase; margin-bottom: 20px; letter-spacing: 1px; color:#fff; }
         .reviews-grid { display: grid; gap: 16px; margin-bottom: 40px; }
         .review-card { background: #151515; padding: 16px; border-radius: 8px; border: 1px solid #222; }
@@ -318,14 +303,12 @@ export default function LaredoLanding() {
         .review-stars { color: ${ACCENT}; font-size: 12px; letter-spacing: 2px; }
         .review-text { color: #bbb; font-size: 13px; line-height: 1.4; font-style: italic; }
 
-        /* GALERÍA */
         .gallery-container { padding: 0 10px 40px; max-width: 800px; margin: 0 auto; }
         .gallery-header { text-align: center; margin: 30px 0 15px; font-size: 12px; font-weight: 800; color: #555; text-transform: uppercase; letter-spacing: 2px; }
         .gallery-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
         .gallery-item { aspect-ratio: 4/5; border-radius: 6px; overflow: hidden; background: #111; }
         .gallery-item img { width: 100%; height: 100%; object-fit: cover; }
 
-        /* FAQ SECTION */
         .faq-section { background: #0f0f0f; padding: 40px 20px; border-top: 1px solid #222; }
         .faq-title { text-align:center; font-size:20px; font-weight:900; margin-bottom:30px; color:${ACCENT}; text-transform:uppercase;}
         .faq-item { border-bottom: 1px solid #333; max-width: 600px; margin: 0 auto; }
@@ -333,13 +316,11 @@ export default function LaredoLanding() {
         .faq-a { max-height:0; overflow:hidden; transition:max-height 0.3s ease; color:#ccc; font-size:14px; line-height:1.5; }
         .faq-a.open { max-height:150px; padding-bottom:16px; }
 
-        /* TRUST FOOTER */
         .trust-footer { background: #000; padding: 40px 20px 120px; text-align: center; border-top: 1px solid #222; }
         .tf-logos { display:flex; justify-content:center; gap:15px; margin-bottom:20px; opacity:0.7; filter:grayscale(100%); }
         .tf-icon { font-size:24px; color:#fff; border:1px solid #444; padding:5px 10px; border-radius:4px; font-weight:bold; font-size:12px; }
         .tf-text { font-size:12px; color:#555; }
         
-        /* SIZE MODAL */
         .modal-overlay { position:fixed; inset:0; background:rgba(0,0,0,0.85); z-index:200; display:flex; align-items:center; justify-content:center; padding:20px; }
         .modal-content { background:#151515; padding:30px; border-radius:12px; border:1px solid #333; width:100%; max-width:350px; text-align:center; position:relative; }
         .close-modal { position:absolute; top:10px; right:15px; background:none; border:none; color:#fff; font-size:24px; cursor:pointer; }
@@ -352,7 +333,6 @@ export default function LaredoLanding() {
         .result-text { font-size:14px; color:#fff; }
         .result-size { font-size:32px; font-weight:900; color:${ACCENT}; display:block; margin:5px 0; }
 
-        /* STICKY & WA */
         .sticky-bar {
             position: fixed; bottom: 0; left: 0; right: 0;
             background: #111; border-top: 1px solid #333; z-index: 100;
@@ -383,10 +363,9 @@ export default function LaredoLanding() {
         <div className="hero-container">
             <div className="hero-sticky-frame">
                 <div className="video-layer">
-                    {/* CAMBIO 2: Usamos el componente VideoFinal y las rutas root */}
                     <VideoFinal 
-                        mp4Src="/video-scroll.mp4" 
-                        poster="/poster-hero.jpg" 
+                        mp4Src={VIDEO_PATH} 
+                        poster={IMAGE_PATH} 
                         bgFallback="#000" 
                     />
                 </div>
@@ -398,10 +377,9 @@ export default function LaredoLanding() {
             </div>
         </div>
 
-        {/* CONTENIDO PRINCIPAL */}
+        {/* CONTENIDO PRINCIPAL (RESTO DEL CÓDIGO IGUAL...) */}
         <div className="content-layer">
             
-            {/* ALERT DE ENVÍO */}
             <div className="shipping-alert">
                 <span className="ship-icon">🚀</span>
                 <div className="ship-text">
@@ -418,7 +396,7 @@ export default function LaredoLanding() {
 
                 <div className="price-block">
                     <span className="product-price">
-                        {selectedVariant?.price ? <Money data={selectedVariant.price}/> : '$185.000'}
+                        {selectedVariant?.price?.amount ? <Money data={selectedVariant.price}/> : '$185.000'}
                     </span>
                     <span className="compare-price">$245.000</span>
                 </div>
@@ -444,7 +422,6 @@ export default function LaredoLanding() {
                 <div className="selector-row">
                     <div className="label-group">
                         <span className="label-title">Talla</span>
-                        {/* AQUI ESTA EL NUEVO BOTÓN DESTACADO */}
                         <button className="size-calc-btn" onClick={() => setShowSizeModal(true)}>
                             📏 ¿Cuál es mi talla?
                         </button>
@@ -614,7 +591,7 @@ export default function LaredoLanding() {
       {/* WHATSAPP FLOAT */}
       <a href={`https://wa.me/${WHATSAPP_NUMBER}?text=Hola,%20tengo%20una%20pregunta%20sobre%20la%20Laredo`} target="_blank" rel="noreferrer" className="whatsapp-float">
         <svg width="28" height="28" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-</a>
-</>
-);
+      </a>
+    </>
+  );
 }
