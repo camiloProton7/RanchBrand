@@ -1,7 +1,7 @@
 import {useEffect, useMemo, useRef, useState} from 'react';
 import {useLoaderData} from 'react-router';
 import {Image, Money} from '@shopify/hydrogen';
-// IMPORTANTE: Importamos el componente VideoFinal real
+// Importamos el componente de video (asegúrate de que VideoFinal.jsx esté en components)
 import VideoFinal from '../components/VideoFinal';
 
 /* ===== META DATA ===== */
@@ -11,11 +11,11 @@ export const meta = () => ([
 ]);
 
 /* ===== CONFIGURACIÓN DE ASSETS ===== */
-// Rutas directas a la carpeta public (sin /assets/)
+// Rutas directas a la carpeta public
 const VIDEO_PATH = '/video-scroll.mp4';
 const IMAGE_PATH = '/poster-hero.jpg';
 
-/* ===== DATOS FIJOS (Reseñas, FAQ, Mock) ===== */
+/* ===== DATOS FIJOS (Reseñas, FAQ) ===== */
 const REVIEWS = [
   { id: 1, author: "Camilo R.", verified: true, text: "La calidad me sorprendió. La usé en moto bajo aguacero en Bogotá y llegué seco. Vale cada peso.", rating: 5 },
   { id: 2, author: "Andrés M.", verified: true, text: "El fit es perfecto. No queda bombacha como otras bomber. Se ve muy elegante para la oficina.", rating: 5 },
@@ -43,14 +43,7 @@ const MOCK_PRODUCT = {
       }
     ]
   },
-  images: {
-    nodes: [
-      {id: '1', url: 'https://cdn.shopify.com/s/files/1/0000/0001/files/sample1.jpg', altText: 'Frontal', width: 800, height: 1000},
-      {id: '2', url: 'https://cdn.shopify.com/s/files/1/0000/0001/files/sample2.jpg', altText: 'Detalle', width: 800, height: 1000},
-      {id: '3', url: 'https://cdn.shopify.com/s/files/1/0000/0001/files/sample3.jpg', altText: 'Interior', width: 800, height: 1000},
-      {id: '4', url: 'https://cdn.shopify.com/s/files/1/0000/0001/files/sample4.jpg', altText: 'Lifestyle', width: 800, height: 1000}
-    ]
-  }
+  images: { nodes: [] }
 };
 
 /* ===== LOADER (Backend) ===== */
@@ -64,26 +57,27 @@ export async function loader({context}) {
             id
             title
             handle
-            images(first: 10) {
-              nodes {
-                id
-                url
-                altText
-                width
-                height
-              }
+            # CAMBIO: Pedimos 50 imágenes para asegurar que lleguen las de todos los colores
+            images(first: 50) { 
+              nodes { 
+                id 
+                url 
+                altText 
+                width 
+                height 
+              } 
             }
             variants(first: 50) {
               nodes {
                 id
                 availableForSale
-                selectedOptions {
-                  name
-                  value
-                }
-                price {
-                  amount
-                  currencyCode
+                selectedOptions { name value }
+                price { amount currencyCode }
+                # También pedimos la imagen específica de la variante si existe
+                image {
+                    id
+                    url
+                    altText
                 }
               }
             }
@@ -93,21 +87,19 @@ export async function loader({context}) {
     `);
     
     let product = data?.products?.nodes?.[0] || MOCK_PRODUCT;
-    if (!product.images?.nodes?.length) product.images = MOCK_PRODUCT.images;
     return {product};
   } catch (error) {
     return {product: MOCK_PRODUCT};
   }
 }
 
-/* ===== CONSTANTES ===== */
-const STORE_DOMAIN = 'the-ranch.myshopify.com';
+/* ===== CONSTANTES Y HELPERS ===== */
+const STORE_DOMAIN = 'the-ranch.myshopify.com'; 
 const COLORS = ['Verde Oliva', 'Negro'];
 const SIZES  = ['S', 'M', 'L', 'XL'];
 const ACCENT = '#f2c200';
 const WHATSAPP_NUMBER = '573000000000'; 
 
-/* ===== HELPERS ===== */
 function toNumericId(gid) { return gid?.match(/\/(\d+)$/)?.[1] || gid; }
 function cartUrl(gid, qty = 1) { 
     const domain = (typeof window !== 'undefined') ? window.location.hostname : STORE_DOMAIN;
@@ -115,13 +107,10 @@ function cartUrl(gid, qty = 1) {
 }
 const norm = (s) => (s || '').trim().toLowerCase();
 
-/* ===== CALCULADORA LÓGICA ===== */
 function calculateRecommendedSize(height, weight) {
   if (!height || !weight) return null;
   const h = parseInt(height);
   const w = parseInt(weight);
-
-  // Algoritmo básico de tallaje
   if (w < 65) return 'S';
   if (w >= 65 && w < 78) return 'M';
   if (w >= 78 && w < 88) return 'L';
@@ -129,31 +118,25 @@ function calculateRecommendedSize(height, weight) {
   return 'XL';
 }
 
-/* ===== COMPONENTE DE PÁGINA ===== */
+/* ===== COMPONENTE PRINCIPAL ===== */
 export default function LaredoLanding() {
   const {product} = useLoaderData();
   const variants = product?.variants?.nodes || MOCK_PRODUCT.variants.nodes;
-  const gallery = product?.images?.nodes || [];
+  const allImages = product?.images?.nodes || [];
 
   const [color, setColor] = useState(COLORS[0]);
   const [size, setSize]   = useState('M');
   const [qty, setQty]     = useState(1);
   const [viewers, setViewers] = useState(12);
   const [showStickyBar, setShowStickyBar] = useState(false);
-  
-  // Estados de UI
   const [openAccordion, setOpenAccordion] = useState(null);
   const [openFaq, setOpenFaq] = useState(null);
-
-  // Estado Calculadora
   const [showSizeModal, setShowSizeModal] = useState(false);
   const [userHeight, setUserHeight] = useState('');
   const [userWeight, setUserWeight] = useState('');
   const [recommended, setRecommended] = useState(null);
-  
   const mainCtaRef = useRef(null);
 
-  /* Efecto: Simular gente viendo */
   useEffect(() => {
     const interval = setInterval(() => {
         setViewers(v => Math.floor(Math.random() * (18 - 8 + 1) + 8));
@@ -161,9 +144,8 @@ export default function LaredoLanding() {
     return () => clearInterval(interval);
   }, []);
 
-  /* Ocultar Layout Global del Tema */
   useEffect(() => {
-    if(typeof document !== 'undefined') {
+    if (typeof document !== 'undefined') {
         const els = document.querySelectorAll('header, .header, .site-header, .PageLayout, footer, .footer-section');
         els.forEach(el => { if(el) el.style.display = 'none'; });
         document.body.style.padding = '0';
@@ -171,7 +153,6 @@ export default function LaredoLanding() {
     }
   }, []);
 
-  /* Variante seleccionada */
   const selectedVariant = useMemo(() => {
     const found = variants.find((v) => {
       const map = Object.fromEntries(v.selectedOptions.map((o) => [norm(o.name), o.value]));
@@ -181,9 +162,25 @@ export default function LaredoLanding() {
     return found || variants[0];
   }, [variants, color, size]);
 
-  /* Observer Sticky Bar */
+  // LÓGICA INTELIGENTE DE GALERÍA
+  // Intenta filtrar las imágenes que coincidan con el color seleccionado (usando Alt Text)
+  const filteredGallery = useMemo(() => {
+      if (!allImages.length) return [];
+      
+      const matchingImages = allImages.filter(img => {
+          if (!img.altText) return true; // Si no tiene alt, la mostramos por si acaso
+          const alt = img.altText.toLowerCase();
+          const selectedColor = color.toLowerCase();
+          return alt.includes(selectedColor);
+      });
+
+      // Si encontramos fotos del color específico, mostramos esas. Si no, mostramos todas.
+      return matchingImages.length > 0 ? matchingImages : allImages;
+  }, [allImages, color]);
+
+
   useEffect(() => {
-    if(typeof IntersectionObserver === 'undefined') return;
+    if (typeof IntersectionObserver === 'undefined') return;
     const observer = new IntersectionObserver(
       ([entry]) => setShowStickyBar(!entry.isIntersecting),
       { threshold: 0, rootMargin: "-100px 0px 0px 0px" }
@@ -191,6 +188,20 @@ export default function LaredoLanding() {
     if (mainCtaRef.current) observer.observe(mainCtaRef.current);
     return () => observer.disconnect();
   }, []);
+
+  // RASTREO DE PIXEL (ViewContent)
+  useEffect(() => {
+    if (typeof window !== 'undefined' && window.fbq && selectedVariant) {
+      window.fbq('track', 'ViewContent', {
+        content_name: 'Laredo Bomber',
+        content_ids: [product?.id],
+        content_type: 'product',
+        value: selectedVariant.price.amount,
+        currency: selectedVariant.price.currencyCode
+      });
+    }
+  }, [product, selectedVariant]);
+
 
   const handleCalculate = () => {
     const res = calculateRecommendedSize(userHeight, userWeight);
@@ -201,11 +212,10 @@ export default function LaredoLanding() {
   return (
     <>
       <style>{`
-        /* --- ESTILOS GENERALES (CORREGIDO FONT FAMILY PARA EVITAR ERROR DE HIDRATACIÓN) --- */
+        /* CORRECCIÓN: Font-family sin comillas para evitar error #418 */
         html, body { margin:0; padding:0; background:#050505; color:#fff; font-family: Helvetica Neue, sans-serif; -webkit-font-smoothing: antialiased; }
         * { box-sizing: border-box; }
 
-        /* HERO SCROLL */
         .hero-container { height: 250vh; width: 100%; position: relative; z-index: 1; }
         .hero-sticky-frame { position: sticky; top: 0; left: 0; width: 100%; height: 100dvh; overflow: hidden; }
         .video-layer { position: absolute; inset: 0; z-index: 0; background: #000; }
@@ -222,7 +232,6 @@ export default function LaredoLanding() {
         .overlay h1 .highlight { color: ${ACCENT}; }
         .overlay p.subtitle  { font-size: clamp(15px, 4vw, 18px); opacity: 0.9; margin-top: 10px; max-width: 320px; font-weight: 400; }
 
-        /* CONTENT LAYER */
         .content-layer {
             position: relative; z-index: 10; 
             background: #0a0a0a; 
@@ -377,7 +386,7 @@ export default function LaredoLanding() {
             </div>
         </div>
 
-        {/* CONTENIDO PRINCIPAL (RESTO DEL CÓDIGO IGUAL...) */}
+        {/* CONTENIDO PRINCIPAL */}
         <div className="content-layer">
             
             <div className="shipping-alert">
@@ -503,12 +512,12 @@ export default function LaredoLanding() {
                 </div>
             </section>
 
-            {/* GALERÍA */}
-            {gallery.length > 0 && (
+            {/* GALERÍA DINÁMICA */}
+            {filteredGallery.length > 0 && (
                 <section className="gallery-container">
-                    <div className="gallery-header">Galería Oficial</div>
+                    <div className="gallery-header">Galería {color}</div>
                     <div className="gallery-grid">
-                        {gallery.slice(0,4).map((img, i) => (
+                        {filteredGallery.slice(0,6).map((img, i) => (
                             <div key={img.id || i} className="gallery-item">
                                 {img.url ? <Image data={img} widths={[500]} sizes="50vw" /> : null}
                             </div>
