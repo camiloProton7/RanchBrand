@@ -1,22 +1,20 @@
 import {useEffect} from 'react';
 import {useLocation} from 'react-router';
 
-/* ======================================================
-   ⚠️ ATENCIÓN: BORRA LOS CEROS Y PON TU ID REAL AQUÍ
-   Ejemplo: const PIXEL_ID = '148294728123';
-   ====================================================== */
-const PIXEL_ID = '377899794811334⁠'; 
+// TU ID REAL (Ya limpio y configurado)
+const PIXEL_ID = '377899794811334'; 
 
 export default function FacebookPixel() {
   const location = useLocation();
 
   useEffect(() => {
-    // Si no hay ID, no hacemos nada (evita errores de 'null')
-    if (!PIXEL_ID || PIXEL_ID === '377899794811334⁠') {
-        console.error("❌ ERROR: Falta configurar el PIXEL_ID en FacebookPixel.jsx");
+    // 1. Validación simple: Si no hay ID, salir y avisar en consola.
+    if (!PIXEL_ID) {
+        console.error("❌ Error: PIXEL_ID no está definido en FacebookPixel.jsx");
         return;
     }
 
+    // 2. Inicializar Facebook Pixel (Solo si no existe ya)
     if (!window.fbq) {
       console.log("🔵 Iniciando Pixel de Meta:", PIXEL_ID);
       
@@ -33,6 +31,7 @@ export default function FacebookPixel() {
     }
   }, []);
 
+  // 3. Rastreo de navegación (PageView)
   useEffect(() => {
     if (window.fbq && PIXEL_ID) {
       window.fbq('track', 'PageView');
