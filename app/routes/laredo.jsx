@@ -84,7 +84,7 @@ export async function loader({context}) {
 const COLORS = ['Verde Oliva', 'Negro'];
 const SIZES  = ['S', 'M', 'L', 'XL'];
 const ACCENT = '#f2c200';
-const WHATSAPP_NUMBER = '+1 555-736-4328'; 
+const WHATSAPP_NUMBER = '+15557364328'; 
 
 function toNumericId(gid) { return gid?.match(/\/(\d+)$/)?.[1] || gid; }
 
