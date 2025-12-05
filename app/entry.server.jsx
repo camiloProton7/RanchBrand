@@ -3,13 +3,6 @@ import {isbot} from 'isbot';
 import {renderToReadableStream} from 'react-dom/server';
 import {createContentSecurityPolicy} from '@shopify/hydrogen';
 
-/**
- * @param {Request} request
- * @param {number} responseStatusCode
- * @param {Headers} responseHeaders
- * @param {EntryContext} reactRouterContext
- * @param {HydrogenRouterContextProvider} context
- */
 export default async function handleRequest(
   request,
   responseStatusCode,
@@ -49,16 +42,40 @@ export default async function handleRequest(
   responseHeaders.set('Content-Type', 'text/html');
 
   /* ============================================================
-     🛡️ CORRECCIÓN DE SEGURIDAD (CSP) - PERMISOS PARA FACEBOOK
-     Aquí le damos permiso explícito al Pixel para ejecutarse.
+     🛡️ ZONA DE SEGURIDAD BLINDADA (Facebook & Google)
+     Aquí construimos la regla manualmente para evitar bloqueos.
      ============================================================ */
-  const facebookDomains = "https://connect.facebook.net https://www.facebook.com https://googleads.g.doubleclick.net https://www.googleadservices.com https://www.googletagmanager.com";
-  
-  // Modificamos las reglas existentes para agregar Facebook
+  const allowedScripts = [
+    "'self'",
+    "https://cdn.shopify.com",
+    "https://shopify.com",
+    "https://connect.facebook.net",
+    "https://www.facebook.com",
+    "https://www.google-analytics.com",
+    "https://*.google.com", 
+    "https://*.googleadservices.com",
+    "https://*.googletagmanager.com",
+    `'nonce-${nonce}'`, // Importante: Permitir scripts internos de Hydrogen
+    "'unsafe-eval'",    // Necesario para Pixel
+    "'unsafe-inline'"   // Necesario para Pixel
+  ].join(" ");
+
+  const allowedConnect = [
+    "'self'",
+    "https://monorail-edge.shopifysvc.com",
+    "https://connect.facebook.net",
+    "https://www.facebook.com",
+    "https://googleads.g.doubleclick.net",
+    "https://*.google-analytics.com",
+    "https://*.google.com"
+  ].join(" ");
+
+  // Sobrescribimos el encabezado completamente para asegurar que nuestras reglas mandan
   const newHeader = header
-    .replace("script-src", `script-src ${facebookDomains}`)
-    .replace("connect-src", `connect-src ${facebookDomains}`)
-    .replace("img-src", `img-src https://www.facebook.com https://googleads.g.doubleclick.net https://www.google.com https://www.google.co.in`);
+    // Aseguramos que script-src existe y tiene nuestros dominios
+    .replace("script-src", "script-src_OLD") // Quitamos la vieja si existe
+    .replace("connect-src", "connect-src_OLD") 
+    + `; script-src ${allowedScripts}; connect-src ${allowedConnect}; img-src 'self' data: https:; frame-src 'self' https:;`;
 
   responseHeaders.set('Content-Security-Policy', newHeader);
   /* ============================================================ */
@@ -68,6 +85,3 @@ export default async function handleRequest(
     status: responseStatusCode,
   });
 }
-
-/** @typedef {import('@shopify/hydrogen').HydrogenRouterContextProvider} HydrogenRouterContextProvider */
-/** @typedef {import('react-router').EntryContext} EntryContext */
