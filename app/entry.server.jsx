@@ -47,7 +47,21 @@ export default async function handleRequest(
   }
 
   responseHeaders.set('Content-Type', 'text/html');
-  responseHeaders.set('Content-Security-Policy', header);
+
+  /* ============================================================
+     🛡️ CORRECCIÓN DE SEGURIDAD (CSP) - PERMISOS PARA FACEBOOK
+     Aquí le damos permiso explícito al Pixel para ejecutarse.
+     ============================================================ */
+  const facebookDomains = "https://connect.facebook.net https://www.facebook.com https://googleads.g.doubleclick.net https://www.googleadservices.com https://www.googletagmanager.com";
+  
+  // Modificamos las reglas existentes para agregar Facebook
+  const newHeader = header
+    .replace("script-src", `script-src ${facebookDomains}`)
+    .replace("connect-src", `connect-src ${facebookDomains}`)
+    .replace("img-src", `img-src https://www.facebook.com https://googleads.g.doubleclick.net https://www.google.com https://www.google.co.in`);
+
+  responseHeaders.set('Content-Security-Policy', newHeader);
+  /* ============================================================ */
 
   return new Response(body, {
     headers: responseHeaders,
