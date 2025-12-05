@@ -1,29 +1,28 @@
 import {useEffect, useMemo, useRef, useState} from 'react';
 import {useLoaderData} from 'react-router';
 import {Image, Money} from '@shopify/hydrogen';
-// Importamos el componente de video (asegúrate de que VideoFinal.jsx esté en components)
+// Importamos el componente de video
 import VideoFinal from '../components/VideoFinal';
 
 /* ===== META DATA ===== */
 export const meta = () => ([
-  {title: 'Laredo Bomber — Entrega en 24H | The Ranch'},
+  {title: 'Laredo Bomber — Entrega Flash en 34H | The Ranch'},
   {name: 'description', content: 'Chaqueta Laredo. Entrega confirmada en menos de 24 horas. Calidad Premium.'},
 ]);
 
 /* ===== CONFIGURACIÓN DE ASSETS ===== */
-// Rutas directas a la carpeta public
 const VIDEO_PATH = '/video-scroll.mp4';
 const IMAGE_PATH = '/poster-hero.jpg';
 
-/* ===== DATOS FIJOS (Reseñas, FAQ) ===== */
+/* ===== DATOS FIJOS ===== */
 const REVIEWS = [
   { id: 1, author: "Camilo R.", verified: true, text: "La calidad me sorprendió. La usé en moto bajo aguacero en Bogotá y llegué seco. Vale cada peso.", rating: 5 },
   { id: 2, author: "Andrés M.", verified: true, text: "El fit es perfecto. No queda bombacha como otras bomber. Se ve muy elegante para la oficina.", rating: 5 },
-  { id: 3, author: "Juan David P.", verified: true, text: "El envío fue rapidísimo. La pedí a las 2pm y al otro día ya la tenía. Recomendados.", rating: 5 }
+  { id: 3, author: "Juan David P.", verified: true, text: "El envío fue rapidísimo. La pedí ayer y hoy ya la tengo. Recomendados.", rating: 5 }
 ];
 
 const FAQS = [
-  { q: "¿Cuánto tarda el envío?", a: "Si pides antes de las 4PM, despachamos HOY mismo. A ciudades principales llega en 24 horas hábiles." },
+  { q: "¿Cuándo me llega?", a: "Tenemos logística prioritaria. Si estás en ciudad principal, recibes en menos de 24 horas garantizado." },
   { q: "¿Puedo pagar cuando reciba?", a: "¡Sí! Tenemos pago contraentrega en todo el país. Pagas en efectivo al recibir tu chaqueta." },
   { q: "¿Qué pasa si no me queda?", a: "No te preocupes. El primer cambio por talla es totalmente GRATIS. Nosotros asumimos los envíos." },
   { q: "¿Es 100% impermeable?", a: "Sí, la tela es Nylon Taslan impermeable y las cremalleras son selladas. Soporta aguaceros fuertes." }
@@ -57,8 +56,8 @@ export async function loader({context}) {
             id
             title
             handle
-            # CAMBIO: Pedimos 50 imágenes para asegurar que lleguen las de todos los colores
-            images(first: 50) { 
+            # Pedimos hasta 100 imágenes para tener suficiente material visual
+            images(first: 100) { 
               nodes { 
                 id 
                 url 
@@ -73,12 +72,7 @@ export async function loader({context}) {
                 availableForSale
                 selectedOptions { name value }
                 price { amount currencyCode }
-                # También pedimos la imagen específica de la variante si existe
-                image {
-                    id
-                    url
-                    altText
-                }
+                image { id url altText }
               }
             }
           }
@@ -93,7 +87,7 @@ export async function loader({context}) {
   }
 }
 
-/* ===== CONSTANTES Y HELPERS ===== */
+/* ===== CONSTANTES ===== */
 const STORE_DOMAIN = 'the-ranch.myshopify.com'; 
 const COLORS = ['Verde Oliva', 'Negro'];
 const SIZES  = ['S', 'M', 'L', 'XL'];
@@ -127,7 +121,8 @@ export default function LaredoLanding() {
   const [color, setColor] = useState(COLORS[0]);
   const [size, setSize]   = useState('M');
   const [qty, setQty]     = useState(1);
-  const [viewers, setViewers] = useState(12);
+  const [viewers, setViewers] = useState(24);
+  const [recentSales, setRecentSales] = useState(3);
   const [showStickyBar, setShowStickyBar] = useState(false);
   const [openAccordion, setOpenAccordion] = useState(null);
   const [openFaq, setOpenFaq] = useState(null);
@@ -137,10 +132,12 @@ export default function LaredoLanding() {
   const [recommended, setRecommended] = useState(null);
   const mainCtaRef = useRef(null);
 
+  // Efecto de actividad social (Viewers + Sales)
   useEffect(() => {
     const interval = setInterval(() => {
-        setViewers(v => Math.floor(Math.random() * (18 - 8 + 1) + 8));
-    }, 5000);
+        setViewers(v => Math.max(8, v + Math.floor(Math.random() * 3 - 1)));
+        if (Math.random() > 0.7) setRecentSales(s => s + 1);
+    }, 4000);
     return () => clearInterval(interval);
   }, []);
 
@@ -162,20 +159,30 @@ export default function LaredoLanding() {
     return found || variants[0];
   }, [variants, color, size]);
 
-  // LÓGICA INTELIGENTE DE GALERÍA
-  // Intenta filtrar las imágenes que coincidan con el color seleccionado (usando Alt Text)
-  const filteredGallery = useMemo(() => {
+  /* === LÓGICA DE GALERÍA PREMIUM ===
+     En lugar de filtrar (ocultar) las imágenes, las ORDENAMOS.
+     1. Primero las que coinciden con el color exacto.
+     2. Luego el resto como "Lifestyle" para que la galería se vea llena y rica.
+  */
+  const sortedGallery = useMemo(() => {
       if (!allImages.length) return [];
+      const selectedColor = color.toLowerCase();
       
-      const matchingImages = allImages.filter(img => {
-          if (!img.altText) return true; // Si no tiene alt, la mostramos por si acaso
-          const alt = img.altText.toLowerCase();
-          const selectedColor = color.toLowerCase();
-          return alt.includes(selectedColor);
+      // Hacemos una copia para no mutar el original
+      return [...allImages].sort((a, b) => {
+          const altA = (a.altText || '').toLowerCase();
+          const altB = (b.altText || '').toLowerCase();
+          
+          const aMatches = altA.includes(selectedColor);
+          const bMatches = altB.includes(selectedColor);
+          
+          // Si A coincide y B no, A va primero (-1)
+          if (aMatches && !bMatches) return -1;
+          // Si B coincide y A no, B va primero (1)
+          if (!aMatches && bMatches) return 1;
+          // Si ambos coinciden o ninguno, mantener orden original
+          return 0;
       });
-
-      // Si encontramos fotos del color específico, mostramos esas. Si no, mostramos todas.
-      return matchingImages.length > 0 ? matchingImages : allImages;
   }, [allImages, color]);
 
 
@@ -189,7 +196,6 @@ export default function LaredoLanding() {
     return () => observer.disconnect();
   }, []);
 
-  // RASTREO DE PIXEL (ViewContent)
   useEffect(() => {
     if (typeof window !== 'undefined' && window.fbq && selectedVariant) {
       window.fbq('track', 'ViewContent', {
@@ -212,11 +218,12 @@ export default function LaredoLanding() {
   return (
     <>
       <style>{`
-        /* CORRECCIÓN: Font-family sin comillas para evitar error #418 */
+        /* --- ESTILOS GENERALES --- */
         html, body { margin:0; padding:0; background:#050505; color:#fff; font-family: Helvetica Neue, sans-serif; -webkit-font-smoothing: antialiased; }
         * { box-sizing: border-box; }
 
-        .hero-container { height: 250vh; width: 100%; position: relative; z-index: 1; }
+        /* HERO SCROLL */
+        .hero-container { height: 350vh; width: 100%; position: relative; z-index: 1; }
         .hero-sticky-frame { position: sticky; top: 0; left: 0; width: 100%; height: 100dvh; overflow: hidden; }
         .video-layer { position: absolute; inset: 0; z-index: 0; background: #000; }
         
@@ -227,144 +234,188 @@ export default function LaredoLanding() {
             background: linear-gradient(to top, rgba(0,0,0,0.95) 10%, transparent 50%);
             pointer-events: none;
         }
-        .stars { color: ${ACCENT}; font-size: 13px; margin-bottom: 8px; letter-spacing: 2px; font-weight: 700; text-transform:uppercase;}
-        .overlay h1 { font-size: clamp(42px, 10vw, 64px); font-weight: 900; line-height: 0.95; text-transform: uppercase; letter-spacing: -2px; margin:0; }
+        .stars { color: ${ACCENT}; font-size: 13px; margin-bottom: 8px; letter-spacing: 2px; font-weight: 700; text-transform:uppercase; text-shadow: 0 2px 10px rgba(0,0,0,0.5);}
+        .overlay h1 { font-size: clamp(42px, 12vw, 72px); font-weight: 900; line-height: 0.9; text-transform: uppercase; letter-spacing: -2px; margin:0; text-shadow: 0 4px 30px rgba(0,0,0,0.8); }
         .overlay h1 .highlight { color: ${ACCENT}; }
-        .overlay p.subtitle  { font-size: clamp(15px, 4vw, 18px); opacity: 0.9; margin-top: 10px; max-width: 320px; font-weight: 400; }
+        .overlay p.subtitle  { font-size: clamp(14px, 4vw, 16px); opacity: 0.9; margin-top: 12px; max-width: 320px; font-weight: 500; letter-spacing: 1px; text-transform:uppercase; }
 
+        /* CONTENT LAYER */
         .content-layer {
             position: relative; z-index: 10; 
             background: #0a0a0a; 
             box-shadow: 0 -50px 100px rgba(0,0,0,1);
-            border-radius: 20px 20px 0 0;
+            border-radius: 24px 24px 0 0;
             margin-top: -8vh; padding-bottom: 0px; 
         }
 
+        /* ENVÍO URGENCIA */
         .shipping-alert {
-            background: #1a1a1a; border-left: 4px solid ${ACCENT};
-            padding: 20px 20px; margin: 0;
+            background: linear-gradient(90deg, #1a1a1a 0%, #222 100%); 
+            border-left: 4px solid ${ACCENT};
+            padding: 16px 20px; margin: 0;
             display: flex; align-items: center; gap: 14px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
         }
-        .ship-icon { font-size: 28px; }
+        .ship-icon { font-size: 24px; animation: bounce 2s infinite; }
         .ship-text { display: flex; flex-direction: column; }
-        .ship-main { font-size: 16px; font-weight: 900; color: ${ACCENT}; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 2px; }
-        .ship-sub { font-size: 14px; color: #fff; font-weight: 600; }
+        .ship-main { font-size: 13px; font-weight: 900; color: ${ACCENT}; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 2px; }
+        .ship-sub { font-size: 14px; color: #fff; font-weight: 700; }
 
+        /* PANEL DE COMPRA */
         .panel { padding: 30px 20px 10px; max-width: 550px; margin: 0 auto; }
-        .live-viewers { text-align: center; font-size: 12px; color: #aaa; margin-bottom: 15px; display: flex; align-items: center; justify-content: center; gap: 6px; }
-        .pulsating-dot { width: 8px; height: 8px; background: #ff4444; border-radius: 50%; animation: pulse-red 1.5s infinite; }
+        .social-proof-bar { 
+            display: flex; justify-content: center; gap: 15px; margin-bottom: 20px; font-size: 11px; color: #888; 
+            background: #111; padding: 8px; border-radius: 50px; border: 1px solid #222; width: fit-content; margin-left: auto; margin-right: auto;
+        }
+        .sp-item { display: flex; align-items: center; gap: 5px; }
+        .pulsating-dot { width: 6px; height: 6px; background: #4ade80; border-radius: 50%; animation: pulse-green 1.5s infinite; }
+        .fire-icon { color: #ff4444; }
 
         .price-block { text-align:center; margin-bottom: 24px; }
-        .product-price { font-size: 42px; font-weight: 900; color: #fff; letter-spacing: -1px; }
-        .compare-price { text-decoration: line-through; color: #555; font-size: 18px; margin-left: 10px; font-weight: 500; }
+        .product-price { font-size: 48px; font-weight: 900; color: #fff; letter-spacing: -1.5px; }
+        .compare-price { text-decoration: line-through; color: #666; font-size: 20px; margin-left: 12px; font-weight: 500; position: relative; top: -10px;}
 
-        .selector-row { margin-bottom: 20px; }
-        .label-group { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
-        .label-title { font-size: 13px; font-weight: 700; color: #ccc; text-transform: uppercase; }
-        .select-box { width: 100%; padding: 16px; background: #151515; border: 1px solid #333; color: #fff; border-radius: 8px; font-size: 16px; appearance: none; font-weight: 600; }
+        /* Selectores */
+        .selector-row { margin-bottom: 24px; }
+        .label-group { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+        .label-title { font-size: 12px; font-weight: 800; color: #ccc; text-transform: uppercase; letter-spacing: 1px;}
+        .select-box { 
+            width: 100%; padding: 16px; background: #151515; border: 1px solid #333; color: #fff; 
+            border-radius: 12px; font-size: 16px; appearance: none; font-weight: 600; 
+            transition: border 0.2s; cursor: pointer;
+        }
+        .select-box:focus { border-color: ${ACCENT}; outline: none; }
         
         .size-calc-btn { 
-            background: rgba(242, 194, 0, 0.15); border: 1px solid ${ACCENT}; color: ${ACCENT};
-            padding: 6px 14px; border-radius: 50px; font-size: 11px; font-weight: 800;
-            cursor: pointer; text-transform: uppercase; letter-spacing: 0.5px;
-            display: flex; align-items: center; gap: 6px; transition: all 0.2s ease;
+            background: transparent; border: 1px solid #333; color: #888;
+            padding: 4px 10px; border-radius: 50px; font-size: 10px; font-weight: 700;
+            cursor: pointer; text-transform: uppercase; display: flex; align-items: center; gap: 4px;
+            transition: all 0.2s ease;
         }
-        .size-calc-btn:hover { background: ${ACCENT}; color: #000; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(242, 194, 0, 0.3); }
+        .size-calc-btn:hover { border-color: ${ACCENT}; color: ${ACCENT}; }
 
-        .stock-meter { margin: 20px 0; }
-        .meter-label { font-size: 11px; color: #888; margin-bottom: 5px; display: flex; justify-content: space-between; }
-        .meter-bg { height: 6px; background: #222; border-radius: 3px; overflow: hidden; }
-        .meter-fill { height: 100%; background: linear-gradient(90deg, #ff4444, #ff8844); width: 85%; border-radius: 3px; }
+        /* Stock Meter */
+        .stock-meter { margin: 20px 0; background: #111; padding: 10px; border-radius: 8px; border: 1px solid #222;}
+        .meter-label { font-size: 11px; color: #888; margin-bottom: 6px; display: flex; justify-content: space-between; }
+        .meter-bg { height: 4px; background: #222; border-radius: 2px; overflow: hidden; }
+        .meter-fill { height: 100%; background: linear-gradient(90deg, #ff4444, #ff8844); width: 85%; border-radius: 3px; animation: load-meter 2s ease-out; }
 
+        /* CTA */
         .cta-main {
-            width: 100%; padding: 20px; margin-top: 10px;
+            width: 100%; padding: 22px; margin-top: 15px;
             background: ${ACCENT}; color: #000;
-            font-size: 20px; font-weight: 900; text-transform: uppercase; letter-spacing: 0.5px;
-            border-radius: 8px; border: none; cursor: pointer;
-            box-shadow: 0 0 20px rgba(242, 194, 0, 0.3);
-            animation: pulse-shadow 2s infinite;
+            font-size: 18px; font-weight: 900; text-transform: uppercase; letter-spacing: 1px;
+            border-radius: 12px; border: none; cursor: pointer;
+            box-shadow: 0 4px 30px rgba(242, 194, 0, 0.2);
+            transition: transform 0.1s;
         }
+        .cta-main:active { transform: scale(0.98); }
 
-        .accordion-section { margin-top: 30px; border-top: 1px solid #222; }
+        /* ACORDEONES INFO */
+        .accordion-section { margin-top: 40px; border-top: 1px solid #222; }
         .accordion-item { border-bottom: 1px solid #222; }
         .accordion-header {
-            width: 100%; text-align: left; padding: 18px 0; background: none; border: none;
-            color: #ddd; font-size: 14px; font-weight: 700; cursor: pointer;
+            width: 100%; text-align: left; padding: 20px 0; background: none; border: none;
+            color: #eee; font-size: 13px; font-weight: 700; cursor: pointer;
             display: flex; justify-content: space-between; align-items: center; text-transform: uppercase; letter-spacing: 1px;
         }
         .accordion-content { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; color: #999; font-size: 14px; line-height: 1.6; }
-        .accordion-content.open { max-height: 200px; padding-bottom: 20px; }
-        .plus-icon { font-size: 20px; color: ${ACCENT}; }
+        .accordion-content.open { max-height: 300px; padding-bottom: 24px; }
+        .plus-icon { font-size: 18px; color: ${ACCENT}; }
 
-        .features-section { padding: 40px 24px 20px; max-width: 550px; margin: 0 auto; margin-top: 20px; }
-        .features-grid { display: grid; gap: 24px; margin-bottom: 40px; }
-        .feature-item { display: flex; gap: 16px; }
-        .f-icon { font-size: 24px; color: ${ACCENT}; }
-        .f-content h4 { font-size: 14px; font-weight: 800; color: #fff; margin: 0 0 4px 0; text-transform: uppercase; }
-        .f-content p { font-size: 13px; color: #999; margin: 0; line-height: 1.5; }
+        /* SECCIONES EXTRA */
+        .features-section { padding: 50px 24px; background: #0e0e0e; margin-top: 30px; }
+        .features-grid { display: grid; gap: 30px; margin-bottom: 50px; }
+        .feature-item { display: flex; gap: 16px; align-items: flex-start;}
+        .f-icon { font-size: 28px; color: ${ACCENT}; line-height: 1; }
+        .f-content h4 { font-size: 15px; font-weight: 800; color: #fff; margin: 0 0 6px 0; text-transform: uppercase; }
+        .f-content p { font-size: 13px; color: #888; margin: 0; line-height: 1.5; }
 
-        .reviews-title { text-align: center; font-size: 18px; font-weight: 800; text-transform: uppercase; margin-bottom: 20px; letter-spacing: 1px; color:#fff; }
-        .reviews-grid { display: grid; gap: 16px; margin-bottom: 40px; }
-        .review-card { background: #151515; padding: 16px; border-radius: 8px; border: 1px solid #222; }
-        .review-header { display: flex; justify-content: space-between; margin-bottom: 8px; }
-        .reviewer-name { font-weight: 700; font-size: 13px; color: #fff; }
-        .verified { color: #4ade80; margin-left: 4px; font-size: 12px; }
-        .review-stars { color: ${ACCENT}; font-size: 12px; letter-spacing: 2px; }
-        .review-text { color: #bbb; font-size: 13px; line-height: 1.4; font-style: italic; }
+        /* RESEÑAS */
+        .reviews-title { text-align: center; font-size: 20px; font-weight: 900; text-transform: uppercase; margin-bottom: 30px; letter-spacing: 1px; color:#fff; }
+        .reviews-grid { display: grid; gap: 16px; margin-bottom: 20px; }
+        .review-card { background: #151515; padding: 20px; border-radius: 12px; border: 1px solid #222; }
+        .review-header { display: flex; justify-content: space-between; margin-bottom: 10px; }
+        .reviewer-name { font-weight: 700; font-size: 14px; color: #fff; }
+        .verified { color: #4ade80; margin-left: 6px; font-size: 11px; background: rgba(74, 222, 128, 0.1); padding: 2px 6px; border-radius: 4px;}
+        .review-stars { color: ${ACCENT}; font-size: 14px; letter-spacing: 2px; }
+        .review-text { color: #ccc; font-size: 14px; line-height: 1.5; font-style: italic; }
 
-        .gallery-container { padding: 0 10px 40px; max-width: 800px; margin: 0 auto; }
-        .gallery-header { text-align: center; margin: 30px 0 15px; font-size: 12px; font-weight: 800; color: #555; text-transform: uppercase; letter-spacing: 2px; }
-        .gallery-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
-        .gallery-item { aspect-ratio: 4/5; border-radius: 6px; overflow: hidden; background: #111; }
-        .gallery-item img { width: 100%; height: 100%; object-fit: cover; }
+        /* GALERÍA PREMIUM */
+        .gallery-container { padding: 0 0 60px; max-width: 1000px; margin: 0 auto; background: #050505;}
+        .gallery-header { text-align: center; margin: 40px 0 20px; font-size: 12px; font-weight: 800; color: #555; text-transform: uppercase; letter-spacing: 2px; }
+        /* Grid estilo "Masonry" simple con CSS Grid */
+        .gallery-grid { 
+            display: grid; 
+            grid-template-columns: repeat(2, 1fr); 
+            gap: 2px; /* Gap muy fino para look premium */
+        }
+        /* Hacemos que cada 3ra imagen sea grande (ocupe 2 columnas) para romper la monotonía */
+        .gallery-item:nth-child(3n) {
+            grid-column: span 2;
+            aspect-ratio: 16/9;
+        }
+        .gallery-item { aspect-ratio: 4/5; overflow: hidden; background: #111; position: relative;}
+        .gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease;}
+        .gallery-item:hover img { transform: scale(1.03); }
 
-        .faq-section { background: #0f0f0f; padding: 40px 20px; border-top: 1px solid #222; }
-        .faq-title { text-align:center; font-size:20px; font-weight:900; margin-bottom:30px; color:${ACCENT}; text-transform:uppercase;}
+        /* FAQ SECTION */
+        .faq-section { background: #0f0f0f; padding: 60px 20px; border-top: 1px solid #222; }
+        .faq-title { text-align:center; font-size:24px; font-weight:900; margin-bottom:40px; color:${ACCENT}; text-transform:uppercase; letter-spacing:-1px;}
         .faq-item { border-bottom: 1px solid #333; max-width: 600px; margin: 0 auto; }
-        .faq-q { width:100%; text-align:left; padding: 16px 0; background:none; border:none; color:#fff; font-weight:700; font-size:15px; cursor:pointer; display:flex; justify-content:space-between; }
-        .faq-a { max-height:0; overflow:hidden; transition:max-height 0.3s ease; color:#ccc; font-size:14px; line-height:1.5; }
-        .faq-a.open { max-height:150px; padding-bottom:16px; }
+        .faq-q { width:100%; text-align:left; padding: 20px 0; background:none; border:none; color:#fff; font-weight:700; font-size:16px; cursor:pointer; display:flex; justify-content:space-between; align-items:center;}
+        .faq-a { max-height:0; overflow:hidden; transition:max-height 0.3s ease; color:#bbb; font-size:15px; line-height:1.6; }
+        .faq-a.open { max-height:150px; padding-bottom:24px; }
 
-        .trust-footer { background: #000; padding: 40px 20px 120px; text-align: center; border-top: 1px solid #222; }
-        .tf-logos { display:flex; justify-content:center; gap:15px; margin-bottom:20px; opacity:0.7; filter:grayscale(100%); }
-        .tf-icon { font-size:24px; color:#fff; border:1px solid #444; padding:5px 10px; border-radius:4px; font-weight:bold; font-size:12px; }
-        .tf-text { font-size:12px; color:#555; }
+        /* TRUST FOOTER */
+        .trust-footer { background: #000; padding: 60px 20px 140px; text-align: center; border-top: 1px solid #222; }
+        .tf-logos { display:flex; justify-content:center; gap:20px; margin-bottom:25px; opacity:0.6; filter:grayscale(100%); }
+        .tf-icon { font-size:24px; color:#fff; border:1px solid #444; padding:6px 12px; border-radius:6px; font-weight:bold; font-size:12px; }
+        .tf-text { font-size:12px; color:#555; line-height:1.5; }
         
-        .modal-overlay { position:fixed; inset:0; background:rgba(0,0,0,0.85); z-index:200; display:flex; align-items:center; justify-content:center; padding:20px; }
-        .modal-content { background:#151515; padding:30px; border-radius:12px; border:1px solid #333; width:100%; max-width:350px; text-align:center; position:relative; }
-        .close-modal { position:absolute; top:10px; right:15px; background:none; border:none; color:#fff; font-size:24px; cursor:pointer; }
-        .modal-title { font-size:18px; font-weight:800; margin-bottom:20px; color:#fff; }
-        .input-group { margin-bottom:15px; text-align:left; }
-        .input-group label { display:block; font-size:12px; color:#aaa; margin-bottom:5px; }
-        .modal-input { width:100%; padding:12px; background:#000; border:1px solid #333; color:#fff; border-radius:6px; font-size:16px; }
-        .calc-btn { width:100%; padding:14px; background:${ACCENT}; color:#000; font-weight:800; border:none; border-radius:8px; cursor:pointer; margin-top:10px; }
-        .result-box { margin-top:20px; padding:15px; background:#222; border-radius:8px; border:1px solid ${ACCENT}; }
-        .result-text { font-size:14px; color:#fff; }
-        .result-size { font-size:32px; font-weight:900; color:${ACCENT}; display:block; margin:5px 0; }
+        /* SIZE MODAL */
+        .modal-overlay { position:fixed; inset:0; background:rgba(0,0,0,0.9); z-index:200; display:flex; align-items:center; justify-content:center; padding:20px; backdrop-filter: blur(5px);}
+        .modal-content { background:#151515; padding:40px 30px; border-radius:16px; border:1px solid #333; width:100%; max-width:380px; text-align:center; position:relative; box-shadow: 0 20px 50px rgba(0,0,0,0.5);}
+        .close-modal { position:absolute; top:15px; right:20px; background:none; border:none; color:#666; font-size:28px; cursor:pointer; transition:color 0.2s;}
+        .close-modal:hover { color: #fff; }
+        .modal-title { font-size:20px; font-weight:900; margin-bottom:25px; color:#fff; text-transform: uppercase;}
+        .input-group { margin-bottom:20px; text-align:left; }
+        .input-group label { display:block; font-size:12px; color:#888; margin-bottom:8px; font-weight: 700; text-transform: uppercase;}
+        .modal-input { width:100%; padding:16px; background:#0a0a0a; border:1px solid #333; color:#fff; border-radius:8px; font-size:18px; text-align: center; font-weight: bold;}
+        .modal-input:focus { border-color: ${ACCENT}; outline: none; }
+        .calc-btn { width:100%; padding:16px; background:${ACCENT}; color:#000; font-weight:900; border:none; border-radius:8px; cursor:pointer; margin-top:15px; font-size: 14px; letter-spacing: 1px;}
+        .result-box { margin-top:25px; padding:20px; background:#222; border-radius:8px; border:1px solid ${ACCENT}; animation: fade-in 0.5s ease;}
+        .result-text { font-size:13px; color:#aaa; text-transform: uppercase; letter-spacing: 1px; font-weight: 700;}
+        .result-size { font-size:48px; font-weight:900; color:${ACCENT}; display:block; margin:10px 0; line-height: 1;}
 
+        /* STICKY & WA */
         .sticky-bar {
             position: fixed; bottom: 0; left: 0; right: 0;
-            background: #111; border-top: 1px solid #333; z-index: 100;
-            display: flex; align-items: center; justify-content: space-between; gap: 12px;
-            padding: 12px 16px calc(12px + env(safe-area-inset-bottom));
-            transform: translateY(110%); transition: transform 0.2s ease-out;
+            background: rgba(15,15,15,0.95); border-top: 1px solid #333; z-index: 100;
+            display: flex; align-items: center; justify-content: space-between; gap: 15px;
+            padding: 16px 20px calc(16px + env(safe-area-inset-bottom));
+            transform: translateY(110%); transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            backdrop-filter: blur(10px);
         }
         .sticky-bar.visible { transform: translateY(0); }
         .sticky-info { display: flex; flex-direction: column; }
-        .sticky-title { font-size: 11px; font-weight: 700; color: #aaa; text-transform: uppercase; }
-        .sticky-price { color: #fff; font-weight: 800; font-size:16px; }
-        .cta-sticky { flex: 1; padding: 14px; background: ${ACCENT}; color: #000; font-weight: 900; font-size: 14px; border: none; border-radius: 4px; text-transform: uppercase; }
+        .sticky-title { font-size: 10px; font-weight: 800; color: #666; text-transform: uppercase; letter-spacing: 1px; }
+        .sticky-price { color: #fff; font-weight: 900; font-size:18px; }
+        .cta-sticky { flex: 1; padding: 14px; background: ${ACCENT}; color: #000; font-weight: 900; font-size: 14px; border: none; border-radius: 8px; text-transform: uppercase; letter-spacing: 0.5px; box-shadow: 0 4px 15px rgba(242, 194, 0, 0.15); }
 
         .whatsapp-float {
-            position: fixed; bottom: 90px; right: 20px; z-index: 99;
-            background: #25D366; width: 50px; height: 50px; border-radius: 50%;
+            position: fixed; bottom: 100px; right: 20px; z-index: 99;
+            background: #25D366; width: 56px; height: 56px; border-radius: 50%;
             display: flex; align-items: center; justify-content: center;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.5); transition: transform 0.2s;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5); transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
         .whatsapp-float:active { transform: scale(0.9); }
 
-        @keyframes pulse-red { 0% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(0.8); } 100% { opacity: 1; transform: scale(1); } }
+        @keyframes pulse-green { 0% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(0.8); } 100% { opacity: 1; transform: scale(1); } }
         @keyframes pulse-shadow { 0% { box-shadow: 0 0 15px rgba(242, 194, 0, 0.1); } 50% { box-shadow: 0 0 25px rgba(242, 194, 0, 0.5); } 100% { box-shadow: 0 0 15px rgba(242, 194, 0, 0.1); } }
+        @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
+        @keyframes load-meter { 0% { width: 0%; } 100% { width: 85%; } }
+        @keyframes fade-in { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
       `}</style>
 
       <main>
@@ -379,7 +430,7 @@ export default function LaredoLanding() {
                     />
                 </div>
                 <div className="overlay">
-                    <div className="stars">★★★★★ 48 Reseñas</div>
+                    <div className="stars">★★★★★ +400 CLIENTES FELICES</div>
                     <h1>LAREDO <span className="highlight">BOMBER</span></h1>
                     <p className="subtitle">Diseñada para durar. Hecha para impresionar.</p>
                 </div>
@@ -389,18 +440,21 @@ export default function LaredoLanding() {
         {/* CONTENIDO PRINCIPAL */}
         <div className="content-layer">
             
+            {/* ALERT DE ENVÍO PREMIUM */}
             <div className="shipping-alert">
-                <span className="ship-icon">🚀</span>
+                <span className="ship-icon">⚡</span>
                 <div className="ship-text">
-                    <span className="ship-main">PIDE AHORA MISMO</span>
-                    <span className="ship-sub">Entrega confirmada menos de 24 horas.</span>
+                    <span className="ship-main">ENTREGA FLASH</span>
+                    <span className="ship-sub">Recibe tu pedido en menos de 24 horas.</span>
                 </div>
             </div>
 
             <section className="panel">
-                <div className="live-viewers">
-                    <div className="pulsating-dot"></div>
-                    {viewers} personas están viendo esto ahora
+                {/* PRUEBA SOCIAL EN VIVO */}
+                <div className="social-proof-bar">
+                    <div className="sp-item"><div className="pulsating-dot"></div> {viewers} viendo</div>
+                    <div className="sp-item">•</div>
+                    <div className="sp-item"><span className="fire-icon">🔥</span> {recentSales} ventas hace 1h</div>
                 </div>
 
                 <div className="price-block">
@@ -412,8 +466,8 @@ export default function LaredoLanding() {
 
                 <div className="stock-meter">
                     <div className="meter-label">
-                        <span>Disponibilidad</span>
-                        <span style={{color:'#ff4444', fontWeight:'bold'}}>¡Casi Agotado!</span>
+                        <span>Alta Demanda</span>
+                        <span style={{color:'#ff4444', fontWeight:'bold'}}>¡Quedan pocas unidades!</span>
                     </div>
                     <div className="meter-bg"><div className="meter-fill"></div></div>
                 </div>
@@ -446,7 +500,7 @@ export default function LaredoLanding() {
                     className="cta-main"
                     onClick={()=> selectedVariant && window.location.assign(cartUrl(selectedVariant.id, qty))}
                 >
-                    COMPRAR AHORA
+                    COMPRAR AHORA - ENVIAR YA
                 </button>
 
                 {/* ACORDEONES INFO */}
@@ -502,7 +556,7 @@ export default function LaredoLanding() {
                         <div className="review-header">
                           <span className="reviewer-name">
                             {review.author}
-                            {review.verified && <span className="verified">✓</span>}
+                            {review.verified && <span className="verified">✓ COMPRA VERIFICADA</span>}
                           </span>
                           <span className="review-stars">{'★'.repeat(review.rating)}</span>
                         </div>
@@ -512,14 +566,14 @@ export default function LaredoLanding() {
                 </div>
             </section>
 
-            {/* GALERÍA DINÁMICA */}
-            {filteredGallery.length > 0 && (
+            {/* GALERÍA PREMIUM INTELIGENTE */}
+            {sortedGallery.length > 0 && (
                 <section className="gallery-container">
-                    <div className="gallery-header">Galería {color}</div>
+                    <div className="gallery-header">Galería Oficial • {color}</div>
                     <div className="gallery-grid">
-                        {filteredGallery.slice(0,6).map((img, i) => (
+                        {sortedGallery.slice(0,8).map((img, i) => (
                             <div key={img.id || i} className="gallery-item">
-                                {img.url ? <Image data={img} widths={[500]} sizes="50vw" /> : null}
+                                {img.url ? <Image data={img} widths={[600]} sizes="(min-width: 768px) 50vw, 100vw" loading="lazy" /> : null}
                             </div>
                         ))}
                     </div>
@@ -551,7 +605,7 @@ export default function LaredoLanding() {
                     <span className="tf-icon">PSE</span>
                 </div>
                 <div className="tf-text">
-                    🔒 Compra 100% Segura. Tus datos están encriptados.<br/>
+                    🔒 Compra 100% Segura. Tus datos están encriptados con SSL de 256-bits.<br/>
                     The Ranch © 2025. Todos los derechos reservados.
                 </div>
             </footer>
@@ -572,7 +626,7 @@ export default function LaredoLanding() {
                     <label>Tu Peso (kg)</label>
                     <input type="number" className="modal-input" placeholder="Ej: 75" value={userWeight} onChange={e => setUserWeight(e.target.value)} />
                 </div>
-                <button className="calc-btn" onClick={handleCalculate}>CALCULAR AHORA</button>
+                <button className="calc-btn" onClick={handleCalculate}>CALCULAR TALLA</button>
                 {recommended && (
                     <div className="result-box">
                         <span className="result-text">Tu talla recomendada es:</span>
@@ -589,7 +643,7 @@ export default function LaredoLanding() {
       {/* STICKY BAR */}
       <div className={`sticky-bar ${showStickyBar ? 'visible' : ''}`}>
         <div className="sticky-info">
-            <span className="sticky-title">Laredo Bomber</span>
+            <span className="sticky-title">Oferta Flash</span>
             <span className="sticky-price">$185.000</span>
         </div>
         <button className="cta-sticky" onClick={()=> selectedVariant && window.location.assign(cartUrl(selectedVariant.id, qty))}>
@@ -598,7 +652,7 @@ export default function LaredoLanding() {
       </div>
 
       {/* WHATSAPP FLOAT */}
-      <a href={`https://wa.me/${WHATSAPP_NUMBER}?text=Hola,%20tengo%20una%20pregunta%20sobre%20la%20Laredo`} target="_blank" rel="noreferrer" className="whatsapp-float">
+      <a href={`https://wa.me/${WHATSAPP_NUMBER}?text=Hola,%20quiero%20pedir%20la%20Laredo%20con%20entrega%20en%2034h`} target="_blank" rel="noreferrer" className="whatsapp-float">
         <svg width="28" height="28" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
       </a>
     </>
