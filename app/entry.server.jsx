@@ -10,6 +10,7 @@ export default async function handleRequest(
   reactRouterContext,
   context,
 ) {
+  // Generamos el nonce para los scripts internos
   const {nonce, header, NonceProvider} = createContentSecurityPolicy({
     shop: {
       checkoutDomain: context.env.PUBLIC_CHECKOUT_DOMAIN,
@@ -42,59 +43,37 @@ export default async function handleRequest(
   responseHeaders.set('Content-Type', 'text/html');
 
   /* ============================================================
-     🛡️ ZONA DE SEGURIDAD BLINDADA (CSP)
-     Aquí agregamos 'unsafe-eval' que es lo que pide el error rojo.
+     🛡️ REGLAS DE SEGURIDAD MANUALES (Nuclear Option)
+     Ignoramos la regla por defecto y construimos una propia que
+     SÍ O SÍ incluye a Facebook y 'unsafe-eval'.
      ============================================================ */
   
-  // 1. Definimos las reglas para scripts (JS)
-  const scriptsRules = [
-    "'self'",
-    "'unsafe-inline'",  // Necesario para Pixel
-    "'unsafe-eval'",    // EL QUE TE FALTABA
-    "https://cdn.shopify.com",
-    "https://shopify.com",
-    "https://connect.facebook.net",
-    "https://www.facebook.com",
-    "https://www.google-analytics.com",
-    "https://*.google.com", 
-    "https://*.googleadservices.com",
-    "https://*.googletagmanager.com",
-    `'nonce-${nonce}'`
-  ].join(" ");
+  const customHeader = [
+    // Permitir recursos generales de Shopify y Google
+    `default-src 'self' https://cdn.shopify.com https://shopify.com https://*.google.com`,
+    
+    // REGLA CRÍTICA: script-src
+    // Agregamos 'unsafe-eval' y TODOS los dominios de publicidad (FB, Google Ads, Analytics)
+    `script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.shopify.com https://shopify.com https://connect.facebook.net https://www.facebook.com https://*.google.com https://*.google-analytics.com https://*.googleadservices.com https://*.doubleclick.net https://*.googletagmanager.com 'nonce-${nonce}'`,
+    
+    // Estilos
+    `style-src 'self' 'unsafe-inline' https://cdn.shopify.com`,
+    
+    // Imágenes (incluye data: para pixels de 1x1)
+    `img-src 'self' data: https:`,
+    
+    // Fuentes
+    `font-src 'self' data: https:`,
+    
+    // Conexiones (A dónde se envían los datos)
+    `connect-src 'self' https://monorail-edge.shopifysvc.com https://connect.facebook.net https://www.facebook.com https://*.google.com https://*.google-analytics.com https://*.doubleclick.net`,
+    
+    // Iframes
+    `frame-src 'self' https://www.facebook.com https://*.google.com`
+  ].join('; ');
 
-  // 2. Definimos reglas para conexiones de datos
-  const connectRules = [
-    "'self'",
-    "https://monorail-edge.shopifysvc.com",
-    "https://connect.facebook.net",
-    "https://www.facebook.com",
-    "https://googleads.g.doubleclick.net",
-    "https://*.google-analytics.com",
-    "https://*.google.com"
-  ].join(" ");
-
-  // 3. Modificamos el encabezado de seguridad
-  let newHeader = header;
-
-  // Reemplazamos o agregamos script-src
-  if (newHeader.includes("script-src")) {
-    newHeader = newHeader.replace("script-src", `script-src ${scriptsRules}`);
-  } else {
-    newHeader += `; script-src ${scriptsRules}`;
-  }
-
-  // Reemplazamos o agregamos connect-src
-  if (newHeader.includes("connect-src")) {
-    newHeader = newHeader.replace("connect-src", `connect-src ${connectRules}`);
-  } else {
-    newHeader += `; connect-src ${connectRules}`;
-  }
-
-  // Permitir imágenes de Pixel (1x1)
-  newHeader = newHeader.replace("img-src", "img-src 'self' data: https: ");
-
-  // Aplicar el nuevo encabezado permisivo
-  responseHeaders.set('Content-Security-Policy', newHeader);
+  // ¡AQUÍ ESTÁ LA CLAVE! Sobrescribimos la seguridad con nuestras reglas
+  responseHeaders.set('Content-Security-Policy', customHeader);
   /* ============================================================ */
 
   return new Response(body, {
