@@ -42,11 +42,15 @@ export default async function handleRequest(
   responseHeaders.set('Content-Type', 'text/html');
 
   /* ============================================================
-     🛡️ ZONA DE SEGURIDAD BLINDADA (Facebook & Google)
-     Aquí construimos la regla manualmente para evitar bloqueos.
+     🛡️ ZONA DE SEGURIDAD BLINDADA (CSP)
+     Aquí agregamos 'unsafe-eval' que es lo que pide el error rojo.
      ============================================================ */
-  const allowedScripts = [
+  
+  // 1. Definimos las reglas para scripts (JS)
+  const scriptsRules = [
     "'self'",
+    "'unsafe-inline'",  // Necesario para Pixel
+    "'unsafe-eval'",    // EL QUE TE FALTABA
     "https://cdn.shopify.com",
     "https://shopify.com",
     "https://connect.facebook.net",
@@ -55,12 +59,11 @@ export default async function handleRequest(
     "https://*.google.com", 
     "https://*.googleadservices.com",
     "https://*.googletagmanager.com",
-    `'nonce-${nonce}'`, // Importante: Permitir scripts internos de Hydrogen
-    "'unsafe-eval'",    // Necesario para Pixel
-    "'unsafe-inline'"   // Necesario para Pixel
+    `'nonce-${nonce}'`
   ].join(" ");
 
-  const allowedConnect = [
+  // 2. Definimos reglas para conexiones de datos
+  const connectRules = [
     "'self'",
     "https://monorail-edge.shopifysvc.com",
     "https://connect.facebook.net",
@@ -70,13 +73,27 @@ export default async function handleRequest(
     "https://*.google.com"
   ].join(" ");
 
-  // Sobrescribimos el encabezado completamente para asegurar que nuestras reglas mandan
-  const newHeader = header
-    // Aseguramos que script-src existe y tiene nuestros dominios
-    .replace("script-src", "script-src_OLD") // Quitamos la vieja si existe
-    .replace("connect-src", "connect-src_OLD") 
-    + `; script-src ${allowedScripts}; connect-src ${allowedConnect}; img-src 'self' data: https:; frame-src 'self' https:;`;
+  // 3. Modificamos el encabezado de seguridad
+  let newHeader = header;
 
+  // Reemplazamos o agregamos script-src
+  if (newHeader.includes("script-src")) {
+    newHeader = newHeader.replace("script-src", `script-src ${scriptsRules}`);
+  } else {
+    newHeader += `; script-src ${scriptsRules}`;
+  }
+
+  // Reemplazamos o agregamos connect-src
+  if (newHeader.includes("connect-src")) {
+    newHeader = newHeader.replace("connect-src", `connect-src ${connectRules}`);
+  } else {
+    newHeader += `; connect-src ${connectRules}`;
+  }
+
+  // Permitir imágenes de Pixel (1x1)
+  newHeader = newHeader.replace("img-src", "img-src 'self' data: https: ");
+
+  // Aplicar el nuevo encabezado permisivo
   responseHeaders.set('Content-Security-Policy', newHeader);
   /* ============================================================ */
 
