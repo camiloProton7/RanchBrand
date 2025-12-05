@@ -10,7 +10,6 @@ export default async function handleRequest(
   reactRouterContext,
   context,
 ) {
-  // Generamos el nonce para los scripts internos
   const {nonce, header, NonceProvider} = createContentSecurityPolicy({
     shop: {
       checkoutDomain: context.env.PUBLIC_CHECKOUT_DOMAIN,
@@ -43,37 +42,19 @@ export default async function handleRequest(
   responseHeaders.set('Content-Type', 'text/html');
 
   /* ============================================================
-     🛡️ REGLAS DE SEGURIDAD MANUALES (Nuclear Option)
-     Ignoramos la regla por defecto y construimos una propia que
-     SÍ O SÍ incluye a Facebook y 'unsafe-eval'.
+     🛡️ REGLAS DE SEGURIDAD MANUALES (SOLO META Y SHOPIFY)
+     Definimos cada regla explícitamente para evitar bloqueos.
      ============================================================ */
-  
-  const customHeader = [
-    // Permitir recursos generales de Shopify y Google
-    `default-src 'self' https://cdn.shopify.com https://shopify.com https://*.google.com`,
-    
-    // REGLA CRÍTICA: script-src
-    // Agregamos 'unsafe-eval' y TODOS los dominios de publicidad (FB, Google Ads, Analytics)
-    `script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.shopify.com https://shopify.com https://connect.facebook.net https://www.facebook.com https://*.google.com https://*.google-analytics.com https://*.googleadservices.com https://*.doubleclick.net https://*.googletagmanager.com 'nonce-${nonce}'`,
-    
-    // Estilos
+  const cspHeader = [
+    `default-src 'self' https://cdn.shopify.com https://shopify.com`,
+    `script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.shopify.com https://shopify.com https://connect.facebook.net https://www.facebook.com 'nonce-${nonce}'`,
     `style-src 'self' 'unsafe-inline' https://cdn.shopify.com`,
-    
-    // Imágenes (incluye data: para pixels de 1x1)
-    `img-src 'self' data: https:`,
-    
-    // Fuentes
-    `font-src 'self' data: https:`,
-    
-    // Conexiones (A dónde se envían los datos)
-    `connect-src 'self' https://monorail-edge.shopifysvc.com https://connect.facebook.net https://www.facebook.com https://*.google.com https://*.google-analytics.com https://*.doubleclick.net`,
-    
-    // Iframes
-    `frame-src 'self' https://www.facebook.com https://*.google.com`
+    `img-src 'self' data: https:`, // Permite imágenes de cualquier sitio HTTPS (necesario para Pixel)
+    `connect-src 'self' https://monorail-edge.shopifysvc.com https://connect.facebook.net https://www.facebook.com`,
+    `frame-src 'self' https://www.facebook.com`
   ].join('; ');
 
-  // ¡AQUÍ ESTÁ LA CLAVE! Sobrescribimos la seguridad con nuestras reglas
-  responseHeaders.set('Content-Security-Policy', customHeader);
+  responseHeaders.set('Content-Security-Policy', cspHeader);
   /* ============================================================ */
 
   return new Response(body, {
