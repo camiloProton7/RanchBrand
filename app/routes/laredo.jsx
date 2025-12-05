@@ -1,13 +1,12 @@
 import {useEffect, useMemo, useRef, useState} from 'react';
 import {useLoaderData} from 'react-router';
 import {Image, Money} from '@shopify/hydrogen';
-// Importamos el componente de video
 import VideoFinal from '../components/VideoFinal';
 
 /* ===== META DATA ===== */
 export const meta = () => ([
-  {title: 'Laredo Bomber — Entrega Flash en 34H | The Ranch'},
-  {name: 'description', content: 'Chaqueta Laredo. Entrega confirmada en menos de 24 horas. Calidad Premium.'},
+  {title: 'Laredo Bomber — Entrega en 24H | The Ranch'},
+  {name: 'description', content: 'Chaqueta Laredo. Entrega confirmada en menos de 34 horas. Calidad Premium.'},
 ]);
 
 /* ===== CONFIGURACIÓN DE ASSETS ===== */
@@ -22,10 +21,9 @@ const REVIEWS = [
 ];
 
 const FAQS = [
-  { q: "¿Cuándo me llega?", a: "Tenemos logística prioritaria. Si estás en ciudad principal, recibes en menos de 24 horas garantizado." },
+  { q: "¿Cuánto tarda el envío?", a: "Si pides antes de las 4PM, despachamos HOY mismo. A ciudades principales llega en 24 horas hábiles." },
   { q: "¿Puedo pagar cuando reciba?", a: "¡Sí! Tenemos pago contraentrega en todo el país. Pagas en efectivo al recibir tu chaqueta." },
-  { q: "¿Qué pasa si no me queda?", a: "No te preocupes. El primer cambio por talla es totalmente GRATIS. Nosotros asumimos los envíos." },
-  { q: "¿Es 100% impermeable?", a: "Sí, la tela es Nylon Taslan impermeable y las cremalleras son selladas. Soporta aguaceros fuertes." }
+  { q: "¿Qué pasa si no me queda?", a: "No te preocupes. El primer cambio por talla es totalmente GRATIS. Nosotros asumimos los envíos." }
 ];
 
 const MOCK_PRODUCT = {
@@ -45,7 +43,7 @@ const MOCK_PRODUCT = {
   images: { nodes: [] }
 };
 
-/* ===== LOADER (Backend) ===== */
+/* ===== LOADER ===== */
 export async function loader({context}) {
   const {storefront} = context;
   try {
@@ -56,16 +54,7 @@ export async function loader({context}) {
             id
             title
             handle
-            # Pedimos hasta 100 imágenes para tener suficiente material visual
-            images(first: 100) { 
-              nodes { 
-                id 
-                url 
-                altText 
-                width 
-                height 
-              } 
-            }
+            images(first: 50) { nodes { id url altText width height } }
             variants(first: 50) {
               nodes {
                 id
@@ -79,12 +68,8 @@ export async function loader({context}) {
         }
       }
     `);
-    
-    let product = data?.products?.nodes?.[0] || MOCK_PRODUCT;
-    return {product};
-  } catch (error) {
-    return {product: MOCK_PRODUCT};
-  }
+    return {product: data?.products?.nodes?.[0] || MOCK_PRODUCT};
+  } catch (error) { return {product: MOCK_PRODUCT}; }
 }
 
 /* ===== CONSTANTES ===== */
@@ -122,7 +107,8 @@ export default function LaredoLanding() {
   const [size, setSize]   = useState('M');
   const [qty, setQty]     = useState(1);
   const [viewers, setViewers] = useState(24);
-  const [recentSales, setRecentSales] = useState(3);
+  const [recentSales, setRecentSales] = useState(5); // Empezamos con un número más alto para impacto
+  
   const [showStickyBar, setShowStickyBar] = useState(false);
   const [openAccordion, setOpenAccordion] = useState(null);
   const [openFaq, setOpenFaq] = useState(null);
@@ -132,12 +118,12 @@ export default function LaredoLanding() {
   const [recommended, setRecommended] = useState(null);
   const mainCtaRef = useRef(null);
 
-  // Efecto de actividad social (Viewers + Sales)
+  // Efecto Social Proof
   useEffect(() => {
     const interval = setInterval(() => {
-        setViewers(v => Math.max(8, v + Math.floor(Math.random() * 3 - 1)));
-        if (Math.random() > 0.7) setRecentSales(s => s + 1);
-    }, 4000);
+        setViewers(v => Math.max(15, v + Math.floor(Math.random() * 5 - 2)));
+        if (Math.random() > 0.6) setRecentSales(s => s + 1);
+    }, 3500);
     return () => clearInterval(interval);
   }, []);
 
@@ -159,32 +145,19 @@ export default function LaredoLanding() {
     return found || variants[0];
   }, [variants, color, size]);
 
-  /* === LÓGICA DE GALERÍA PREMIUM ===
-     En lugar de filtrar (ocultar) las imágenes, las ORDENAMOS.
-     1. Primero las que coinciden con el color exacto.
-     2. Luego el resto como "Lifestyle" para que la galería se vea llena y rica.
-  */
   const sortedGallery = useMemo(() => {
       if (!allImages.length) return [];
       const selectedColor = color.toLowerCase();
-      
-      // Hacemos una copia para no mutar el original
       return [...allImages].sort((a, b) => {
           const altA = (a.altText || '').toLowerCase();
           const altB = (b.altText || '').toLowerCase();
-          
           const aMatches = altA.includes(selectedColor);
           const bMatches = altB.includes(selectedColor);
-          
-          // Si A coincide y B no, A va primero (-1)
           if (aMatches && !bMatches) return -1;
-          // Si B coincide y A no, B va primero (1)
           if (!aMatches && bMatches) return 1;
-          // Si ambos coinciden o ninguno, mantener orden original
           return 0;
       });
   }, [allImages, color]);
-
 
   useEffect(() => {
     if (typeof IntersectionObserver === 'undefined') return;
@@ -208,7 +181,6 @@ export default function LaredoLanding() {
     }
   }, [product, selectedVariant]);
 
-
   const handleCalculate = () => {
     const res = calculateRecommendedSize(userHeight, userWeight);
     setRecommended(res);
@@ -218,11 +190,10 @@ export default function LaredoLanding() {
   return (
     <>
       <style>{`
-        /* --- ESTILOS GENERALES --- */
         html, body { margin:0; padding:0; background:#050505; color:#fff; font-family: Helvetica Neue, sans-serif; -webkit-font-smoothing: antialiased; }
         * { box-sizing: border-box; }
 
-        /* HERO SCROLL */
+        /* --- HERO --- */
         .hero-container { height: 350vh; width: 100%; position: relative; z-index: 1; }
         .hero-sticky-frame { position: sticky; top: 0; left: 0; width: 100%; height: 100dvh; overflow: hidden; }
         .video-layer { position: absolute; inset: 0; z-index: 0; background: #000; }
@@ -239,91 +210,68 @@ export default function LaredoLanding() {
         .overlay h1 .highlight { color: ${ACCENT}; }
         .overlay p.subtitle  { font-size: clamp(14px, 4vw, 16px); opacity: 0.9; margin-top: 12px; max-width: 320px; font-weight: 500; letter-spacing: 1px; text-transform:uppercase; }
 
-        /* CONTENT LAYER */
-        .content-layer {
-            position: relative; z-index: 10; 
-            background: #0a0a0a; 
-            box-shadow: 0 -50px 100px rgba(0,0,0,1);
-            border-radius: 24px 24px 0 0;
-            margin-top: -8vh; padding-bottom: 0px; 
-        }
+        .content-layer { position: relative; z-index: 10; background: #0a0a0a; box-shadow: 0 -50px 100px rgba(0,0,0,1); border-radius: 24px 24px 0 0; margin-top: -8vh; padding-bottom: 0px; }
 
-        /* ENVÍO URGENCIA */
         .shipping-alert {
-            background: linear-gradient(90deg, #1a1a1a 0%, #222 100%); 
-            border-left: 4px solid ${ACCENT};
-            padding: 16px 20px; margin: 0;
-            display: flex; align-items: center; gap: 14px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+            background: linear-gradient(90deg, #1a1a1a 0%, #222 100%); border-left: 4px solid ${ACCENT};
+            padding: 16px 20px; margin: 0; display: flex; align-items: center; gap: 14px; box-shadow: 0 4px 20px rgba(0,0,0,0.2);
         }
         .ship-icon { font-size: 24px; animation: bounce 2s infinite; }
         .ship-text { display: flex; flex-direction: column; }
         .ship-main { font-size: 13px; font-weight: 900; color: ${ACCENT}; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 2px; }
         .ship-sub { font-size: 14px; color: #fff; font-weight: 700; }
 
-        /* PANEL DE COMPRA */
-        .panel { padding: 30px 20px 10px; max-width: 550px; margin: 0 auto; }
+        /* --- SOCIAL PROOF BAR MEJORADA --- */
         .social-proof-bar { 
-            display: flex; justify-content: center; gap: 15px; margin-bottom: 20px; font-size: 11px; color: #888; 
-            background: #111; padding: 8px; border-radius: 50px; border: 1px solid #222; width: fit-content; margin-left: auto; margin-right: auto;
+            display: flex; justify-content: center; align-items: center; gap: 20px; 
+            margin-bottom: 30px; 
+            font-size: 14px; font-weight: 700; color: #fff; 
+            background: rgba(255, 255, 255, 0.08); /* Vidrio */
+            padding: 12px 24px; 
+            border-radius: 50px; 
+            border: 1px solid rgba(255, 255, 255, 0.15); 
+            width: fit-content; margin-left: auto; margin-right: auto;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
         }
-        .sp-item { display: flex; align-items: center; gap: 5px; }
-        .pulsating-dot { width: 6px; height: 6px; background: #4ade80; border-radius: 50%; animation: pulse-green 1.5s infinite; }
-        .fire-icon { color: #ff4444; }
+        .sp-item { display: flex; align-items: center; gap: 8px; }
+        .pulsating-dot { width: 10px; height: 10px; background: #4ade80; border-radius: 50%; animation: pulse-green 1.5s infinite; box-shadow: 0 0 10px #4ade80; }
+        .fire-icon { color: #ff4444; font-size: 18px; }
 
+        .panel { padding: 40px 20px 10px; max-width: 550px; margin: 0 auto; }
         .price-block { text-align:center; margin-bottom: 24px; }
         .product-price { font-size: 48px; font-weight: 900; color: #fff; letter-spacing: -1.5px; }
         .compare-price { text-decoration: line-through; color: #666; font-size: 20px; margin-left: 12px; font-weight: 500; position: relative; top: -10px;}
 
-        /* Selectores */
         .selector-row { margin-bottom: 24px; }
         .label-group { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
         .label-title { font-size: 12px; font-weight: 800; color: #ccc; text-transform: uppercase; letter-spacing: 1px;}
-        .select-box { 
-            width: 100%; padding: 16px; background: #151515; border: 1px solid #333; color: #fff; 
-            border-radius: 12px; font-size: 16px; appearance: none; font-weight: 600; 
-            transition: border 0.2s; cursor: pointer;
-        }
+        .select-box { width: 100%; padding: 16px; background: #151515; border: 1px solid #333; color: #fff; border-radius: 12px; font-size: 16px; appearance: none; font-weight: 600; transition: border 0.2s; cursor: pointer; }
         .select-box:focus { border-color: ${ACCENT}; outline: none; }
         
         .size-calc-btn { 
-            background: transparent; border: 1px solid #333; color: #888;
-            padding: 4px 10px; border-radius: 50px; font-size: 10px; font-weight: 700;
-            cursor: pointer; text-transform: uppercase; display: flex; align-items: center; gap: 4px;
-            transition: all 0.2s ease;
+            background: transparent; border: 1px solid #333; color: #888; padding: 4px 10px; border-radius: 50px; font-size: 10px; font-weight: 700;
+            cursor: pointer; text-transform: uppercase; display: flex; align-items: center; gap: 4px; transition: all 0.2s ease;
         }
         .size-calc-btn:hover { border-color: ${ACCENT}; color: ${ACCENT}; }
 
-        /* Stock Meter */
-        .stock-meter { margin: 20px 0; background: #111; padding: 10px; border-radius: 8px; border: 1px solid #222;}
-        .meter-label { font-size: 11px; color: #888; margin-bottom: 6px; display: flex; justify-content: space-between; }
-        .meter-bg { height: 4px; background: #222; border-radius: 2px; overflow: hidden; }
+        .stock-meter { margin: 25px 0; background: #111; padding: 12px; border-radius: 10px; border: 1px solid #222;}
+        .meter-label { font-size: 12px; color: #bbb; margin-bottom: 8px; display: flex; justify-content: space-between; font-weight: 500; }
+        .meter-bg { height: 6px; background: #222; border-radius: 3px; overflow: hidden; }
         .meter-fill { height: 100%; background: linear-gradient(90deg, #ff4444, #ff8844); width: 85%; border-radius: 3px; animation: load-meter 2s ease-out; }
 
-        /* CTA */
         .cta-main {
-            width: 100%; padding: 22px; margin-top: 15px;
-            background: ${ACCENT}; color: #000;
-            font-size: 18px; font-weight: 900; text-transform: uppercase; letter-spacing: 1px;
-            border-radius: 12px; border: none; cursor: pointer;
-            box-shadow: 0 4px 30px rgba(242, 194, 0, 0.2);
-            transition: transform 0.1s;
+            width: 100%; padding: 22px; margin-top: 15px; background: ${ACCENT}; color: #000; font-size: 18px; font-weight: 900; text-transform: uppercase; letter-spacing: 1px; border-radius: 12px; border: none; cursor: pointer; box-shadow: 0 4px 30px rgba(242, 194, 0, 0.2); transition: transform 0.1s;
         }
         .cta-main:active { transform: scale(0.98); }
 
-        /* ACORDEONES INFO */
         .accordion-section { margin-top: 40px; border-top: 1px solid #222; }
         .accordion-item { border-bottom: 1px solid #222; }
-        .accordion-header {
-            width: 100%; text-align: left; padding: 20px 0; background: none; border: none;
-            color: #eee; font-size: 13px; font-weight: 700; cursor: pointer;
-            display: flex; justify-content: space-between; align-items: center; text-transform: uppercase; letter-spacing: 1px;
-        }
+        .accordion-header { width: 100%; text-align: left; padding: 20px 0; background: none; border: none; color: #eee; font-size: 13px; font-weight: 700; cursor: pointer; display: flex; justify-content: space-between; align-items: center; text-transform: uppercase; letter-spacing: 1px; }
         .accordion-content { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; color: #999; font-size: 14px; line-height: 1.6; }
         .accordion-content.open { max-height: 300px; padding-bottom: 24px; }
         .plus-icon { font-size: 18px; color: ${ACCENT}; }
 
-        /* SECCIONES EXTRA */
         .features-section { padding: 50px 24px; background: #0e0e0e; margin-top: 30px; }
         .features-grid { display: grid; gap: 30px; margin-bottom: 50px; }
         .feature-item { display: flex; gap: 16px; align-items: flex-start;}
@@ -331,7 +279,6 @@ export default function LaredoLanding() {
         .f-content h4 { font-size: 15px; font-weight: 800; color: #fff; margin: 0 0 6px 0; text-transform: uppercase; }
         .f-content p { font-size: 13px; color: #888; margin: 0; line-height: 1.5; }
 
-        /* RESEÑAS */
         .reviews-title { text-align: center; font-size: 20px; font-weight: 900; text-transform: uppercase; margin-bottom: 30px; letter-spacing: 1px; color:#fff; }
         .reviews-grid { display: grid; gap: 16px; margin-bottom: 20px; }
         .review-card { background: #151515; padding: 20px; border-radius: 12px; border: 1px solid #222; }
@@ -341,25 +288,14 @@ export default function LaredoLanding() {
         .review-stars { color: ${ACCENT}; font-size: 14px; letter-spacing: 2px; }
         .review-text { color: #ccc; font-size: 14px; line-height: 1.5; font-style: italic; }
 
-        /* GALERÍA PREMIUM */
         .gallery-container { padding: 0 0 60px; max-width: 1000px; margin: 0 auto; background: #050505;}
         .gallery-header { text-align: center; margin: 40px 0 20px; font-size: 12px; font-weight: 800; color: #555; text-transform: uppercase; letter-spacing: 2px; }
-        /* Grid estilo "Masonry" simple con CSS Grid */
-        .gallery-grid { 
-            display: grid; 
-            grid-template-columns: repeat(2, 1fr); 
-            gap: 2px; /* Gap muy fino para look premium */
-        }
-        /* Hacemos que cada 3ra imagen sea grande (ocupe 2 columnas) para romper la monotonía */
-        .gallery-item:nth-child(3n) {
-            grid-column: span 2;
-            aspect-ratio: 16/9;
-        }
+        .gallery-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2px; }
+        .gallery-item:nth-child(3n) { grid-column: span 2; aspect-ratio: 16/9; }
         .gallery-item { aspect-ratio: 4/5; overflow: hidden; background: #111; position: relative;}
         .gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease;}
         .gallery-item:hover img { transform: scale(1.03); }
 
-        /* FAQ SECTION */
         .faq-section { background: #0f0f0f; padding: 60px 20px; border-top: 1px solid #222; }
         .faq-title { text-align:center; font-size:24px; font-weight:900; margin-bottom:40px; color:${ACCENT}; text-transform:uppercase; letter-spacing:-1px;}
         .faq-item { border-bottom: 1px solid #333; max-width: 600px; margin: 0 auto; }
@@ -367,13 +303,11 @@ export default function LaredoLanding() {
         .faq-a { max-height:0; overflow:hidden; transition:max-height 0.3s ease; color:#bbb; font-size:15px; line-height:1.6; }
         .faq-a.open { max-height:150px; padding-bottom:24px; }
 
-        /* TRUST FOOTER */
         .trust-footer { background: #000; padding: 60px 20px 140px; text-align: center; border-top: 1px solid #222; }
         .tf-logos { display:flex; justify-content:center; gap:20px; margin-bottom:25px; opacity:0.6; filter:grayscale(100%); }
         .tf-icon { font-size:24px; color:#fff; border:1px solid #444; padding:6px 12px; border-radius:6px; font-weight:bold; font-size:12px; }
         .tf-text { font-size:12px; color:#555; line-height:1.5; }
         
-        /* SIZE MODAL */
         .modal-overlay { position:fixed; inset:0; background:rgba(0,0,0,0.9); z-index:200; display:flex; align-items:center; justify-content:center; padding:20px; backdrop-filter: blur(5px);}
         .modal-content { background:#151515; padding:40px 30px; border-radius:16px; border:1px solid #333; width:100%; max-width:380px; text-align:center; position:relative; box-shadow: 0 20px 50px rgba(0,0,0,0.5);}
         .close-modal { position:absolute; top:15px; right:20px; background:none; border:none; color:#666; font-size:28px; cursor:pointer; transition:color 0.2s;}
@@ -388,7 +322,6 @@ export default function LaredoLanding() {
         .result-text { font-size:13px; color:#aaa; text-transform: uppercase; letter-spacing: 1px; font-weight: 700;}
         .result-size { font-size:48px; font-weight:900; color:${ACCENT}; display:block; margin:10px 0; line-height: 1;}
 
-        /* STICKY & WA */
         .sticky-bar {
             position: fixed; bottom: 0; left: 0; right: 0;
             background: rgba(15,15,15,0.95); border-top: 1px solid #333; z-index: 100;
@@ -445,12 +378,12 @@ export default function LaredoLanding() {
                 <span className="ship-icon">⚡</span>
                 <div className="ship-text">
                     <span className="ship-main">ENTREGA FLASH</span>
-                    <span className="ship-sub">Recibe tu pedido en menos de 24 horas.</span>
+                    <span className="ship-sub">Recibe tu pedido en menos de 34 horas.</span>
                 </div>
             </div>
 
             <section className="panel">
-                {/* PRUEBA SOCIAL EN VIVO */}
+                {/* PRUEBA SOCIAL EN VIVO (AHORA MÁS GRANDE Y PREMIUM) */}
                 <div className="social-proof-bar">
                     <div className="sp-item"><div className="pulsating-dot"></div> {viewers} viendo</div>
                     <div className="sp-item">•</div>
