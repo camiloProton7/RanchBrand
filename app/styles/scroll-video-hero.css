@@ -127,9 +127,6 @@
 
 .tr-editorial-menu {
   aspect-ratio: 340 / 464;
-  background: rgba(11, 11, 9, 0.38);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
   border: 1px solid rgba(244, 240, 231, 0.66);
   color: #f4f0e7;
   display: flex;
