@@ -23,8 +23,7 @@ const clamp = (value, min = 0, max = 1) =>
  * playhead and the editorial navigation's spatial transition.
  */
 export function ScrollVideoHero({
-  videoSrc =
-    'https://cdn.shopify.com/videos/c/o/v/eba1a18c34794bd3a1f77800a585298e.mp4',
+  videoSrc = '/home-video.mp4',
   posterSrc = '/poster-hero.jpg',
   logoSrc,
 }) {
