@@ -31,20 +31,18 @@ export function ScrollVideoHero({
   const videoRef = useRef(null);
   const videoLayerRef = useRef(null);
   const menuRef = useRef(null);
-  const mobileDockRef = useRef(null);
   const mastheadRef = useRef(null);
   const [isVideoReady, setIsVideoReady] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     const section = sectionRef.current;
     const video = videoRef.current;
     const videoLayer = videoLayerRef.current;
     const menu = menuRef.current;
-    const mobileDock = mobileDockRef.current;
     const masthead = mastheadRef.current;
 
-    if (!section || !video || !videoLayer || !menu || !mobileDock || !masthead)
-      return;
+    if (!section || !video || !videoLayer || !menu || !masthead) return;
 
     const reducedMotion = window.matchMedia(
       '(prefers-reduced-motion: reduce)',
@@ -77,7 +75,6 @@ export function ScrollVideoHero({
 
       const progress = reducedMotion ? 0 : renderedProgress;
       const dock = clamp((progress - 0.4) / 0.4);
-      const isDesktop = window.innerWidth >= 900;
       const viewportHeight = window.innerHeight;
 
       const videoScale = 1 + progress * 0.1;
@@ -97,17 +94,11 @@ export function ScrollVideoHero({
       menu.style.opacity = String(menuFade);
       menu.style.pointerEvents = menuFade > 0.2 ? 'auto' : 'none';
 
-      // Masthead (header): aparece al hacer scroll
-      const mastheadFade = isDesktop ? clamp((progress - 0.62) / 0.22) : 0;
+      // Masthead (header): aparece al hacer scroll (desktop y móvil)
+      const mastheadFade = clamp((progress - 0.62) / 0.22);
       masthead.style.opacity = String(mastheadFade);
       masthead.style.pointerEvents = mastheadFade > 0.5 ? 'auto' : 'none';
 
-      const mobileDockFade = isDesktop
-        ? 0
-        : clamp((progress - 0.76) / 0.14);
-      mobileDock.style.opacity = String(mobileDockFade);
-      mobileDock.style.pointerEvents = mobileDockFade > 0.75 ? 'auto' : 'none';
-      mobileDock.setAttribute('aria-hidden', String(mobileDockFade < 0.75));
       section.style.setProperty('--hero-progress', String(progress));
       section.style.setProperty(
         '--scroll-cue-opacity',
@@ -201,6 +192,17 @@ export function ScrollVideoHero({
               </a>
             ))}
           </nav>
+          <button
+            className="tr-masthead-burger"
+            type="button"
+            aria-label="Abrir menú"
+            aria-expanded={mobileMenuOpen}
+            onClick={() => setMobileMenuOpen((v) => !v)}
+          >
+            <span />
+            <span />
+            <span />
+          </button>
         </header>
 
         <nav ref={menuRef} className="tr-editorial-menu" aria-label="Principal">
@@ -230,18 +232,19 @@ export function ScrollVideoHero({
           </div>
         </nav>
 
-        <nav
-          ref={mobileDockRef}
-          className="tr-mobile-dock"
-          aria-label="Principal compacta"
-          aria-hidden="true"
-        >
-          {MENU_ITEMS.map((item) => (
-            <a key={item.label} href={item.href}>
-              {item.label}
-            </a>
-          ))}
-        </nav>
+        {mobileMenuOpen && (
+          <div className="tr-mobile-menu" role="dialog" aria-label="Menú">
+            {MENU_ITEMS.map((item) => (
+              <a
+                key={item.label}
+                href={item.href}
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                {item.label}
+              </a>
+            ))}
+          </div>
+        )}
 
         <div className="tr-scroll-cue" aria-hidden="true">
           <span>Scroll to explore</span>
