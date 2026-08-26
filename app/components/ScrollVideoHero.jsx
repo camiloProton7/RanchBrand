@@ -234,15 +234,35 @@ export function ScrollVideoHero({
 
         {mobileMenuOpen && (
           <div className="tr-mobile-menu" role="dialog" aria-label="Menú">
-            {MENU_ITEMS.map((item) => (
+            <div className="tr-mobile-menu-top">
               <a
-                key={item.label}
-                href={item.href}
+                className="tr-masthead-logo"
+                href="https://ranch.com.co/"
+                aria-label="The Ranch"
+              >
+                {logoSrc ? <img src={logoSrc} alt="" /> : <span>The Ranch</span>}
+              </a>
+              <button
+                className="tr-mobile-menu-close"
+                type="button"
+                aria-label="Cerrar menú"
                 onClick={() => setMobileMenuOpen(false)}
               >
-                {item.label}
-              </a>
-            ))}
+                ✕
+              </button>
+            </div>
+            <nav className="tr-mobile-menu-nav">
+              {MENU_ITEMS.map((item, index) => (
+                <a
+                  key={item.label}
+                  href={item.href}
+                  onClick={() => setMobileMenuOpen(false)}
+                  style={{animationDelay: `${0.12 + index * 0.09}s`}}
+                >
+                  {item.label}
+                </a>
+              ))}
+            </nav>
           </div>
         )}
 
