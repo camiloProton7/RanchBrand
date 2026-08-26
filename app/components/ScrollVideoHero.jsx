@@ -24,7 +24,7 @@ const clamp = (value, min = 0, max = 1) =>
  */
 export function ScrollVideoHero({
   videoSrc = '/home-video.mp4',
-  posterSrc = '/poster-hero.jpg',
+  posterSrc = '/home-poster.jpg',
   logoSrc,
 }) {
   const sectionRef = useRef(null);
