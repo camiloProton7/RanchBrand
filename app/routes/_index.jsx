@@ -1,3 +1,4 @@
+import {useRouteLoaderData} from 'react-router';
 import {ScrollVideoHero} from '~/components/ScrollVideoHero';
 import homeStyles from '~/styles/scroll-video-hero.css?url';
 
@@ -15,10 +16,12 @@ export function links() {
 }
 
 export default function Home() {
+  const rootData = useRouteLoaderData('root');
+  const logoSrc = rootData?.header?.shop?.brand?.logo?.image?.url;
+
   return (
     <div className="tr-home">
-      <ScrollVideoHero />
+      <ScrollVideoHero logoSrc={logoSrc} />
     </div>
   );
 }
-
