@@ -1,5 +1,4 @@
 import {useLoaderData, useRouteLoaderData} from 'react-router';
-import {useEffect, useRef} from 'react';
 import {ScrollVideoHero} from '~/components/ScrollVideoHero';
 import homeStyles from '~/styles/scroll-video-hero.css?url';
 
@@ -48,43 +47,6 @@ export default function Home() {
 }
 
 function GorrasScroll({products}) {
-  const trackRef = useRef(null);
-
-  useEffect(() => {
-    const track = trackRef.current;
-    if (!track) return;
-    const cards = Array.from(track.querySelectorAll('.tr-gorra-card'));
-
-    let velocity = 0;
-    let prevX = track.scrollLeft;
-    let raf = 0;
-
-    const render = () => {
-      // Inercia suave: la velocidad decae lentamente (gravedad amortiguada)
-      velocity *= 0.92;
-      if (Math.abs(velocity) < 0.003) velocity = 0;
-      const tilt = Math.max(-3, Math.min(3, velocity * -0.45));
-      for (const card of cards) {
-        card.style.setProperty('--tilt', `${tilt}deg`);
-      }
-      raf = requestAnimationFrame(render);
-    };
-
-    const onScroll = () => {
-      const dx = track.scrollLeft - prevX;
-      prevX = track.scrollLeft;
-      velocity += dx * 0.12;
-    };
-
-    track.addEventListener('scroll', onScroll, {passive: true});
-    raf = requestAnimationFrame(render);
-
-    return () => {
-      track.removeEventListener('scroll', onScroll);
-      cancelAnimationFrame(raf);
-    };
-  }, []);
-
   if (!products || !products.length) return null;
 
   return (
@@ -99,7 +61,7 @@ function GorrasScroll({products}) {
         </a>
       </header>
 
-      <div className="tr-gorras-scroll" ref={trackRef}>
+      <div className="tr-gorras-scroll">
         {products.map((product) => {
           const primary = product.featuredImage;
           const second = product.images?.nodes?.[1];
