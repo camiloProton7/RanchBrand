@@ -1,4 +1,5 @@
 import {useLoaderData, useRouteLoaderData} from 'react-router';
+import {useEffect, useRef} from 'react';
 import {ScrollVideoHero} from '~/components/ScrollVideoHero';
 import homeStyles from '~/styles/scroll-video-hero.css?url';
 
@@ -47,10 +48,34 @@ export default function Home() {
 }
 
 function GorrasScroll({products}) {
+  const sectionRef = useRef(null);
+
+  useEffect(() => {
+    const section = sectionRef.current;
+    if (!section) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            section.classList.add('is-visible');
+            observer.disconnect();
+          }
+        }
+      },
+      {threshold: 0.15},
+    );
+    observer.observe(section);
+    return () => observer.disconnect();
+  }, []);
+
   if (!products || !products.length) return null;
 
   return (
-    <section className="tr-gorras" aria-label="Colección de gorras">
+    <section
+      ref={sectionRef}
+      className="tr-gorras"
+      aria-label="Colección de gorras"
+    >
       <header className="tr-gorras-head">
         <a
           className="tr-gorras-link"

@@ -87,7 +87,7 @@ export function ScrollVideoHero({
       const videoY = progress * -1.8;
       // Fundido del video al final del scroll para una transición suave
       // hacia la sección de gorras (fondo negro).
-      const videoFade = 1 - clamp((progress - 0.82) / 0.18);
+      const videoFade = 1 - clamp((progress - 0.7) / 0.3);
 
       videoLayer.style.transform = `translate3d(0, ${videoY}%, 0) scale(${videoScale})`;
       videoLayer.style.opacity = String(videoFade);

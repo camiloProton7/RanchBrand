@@ -587,7 +587,7 @@
   background: #0b0b09;
   color: #f4f0e7;
   overflow: hidden;
-  padding: 90px 0 110px;
+  padding: 40px 0 110px;
   position: relative;
 }
 
@@ -638,11 +638,20 @@
 .tr-gorras-scroll {
   display: flex;
   gap: 20px;
+  opacity: 0;
   overflow-x: auto;
   padding: 8px 24px 28px;
   scroll-snap-type: x mandatory;
   scrollbar-width: none;
+  transform: translateY(30px);
+  transition: opacity 0.9s ease,
+    transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
   -webkit-overflow-scrolling: touch;
+}
+
+.tr-gorras.is-visible .tr-gorras-scroll {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .tr-gorras-scroll::-webkit-scrollbar {
