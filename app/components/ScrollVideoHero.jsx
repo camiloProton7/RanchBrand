@@ -32,6 +32,7 @@ export function ScrollVideoHero({
   const videoLayerRef = useRef(null);
   const menuRef = useRef(null);
   const mobileDockRef = useRef(null);
+  const mastheadRef = useRef(null);
   const [isVideoReady, setIsVideoReady] = useState(false);
 
   useEffect(() => {
@@ -40,8 +41,10 @@ export function ScrollVideoHero({
     const videoLayer = videoLayerRef.current;
     const menu = menuRef.current;
     const mobileDock = mobileDockRef.current;
+    const masthead = mastheadRef.current;
 
-    if (!section || !video || !videoLayer || !menu || !mobileDock) return;
+    if (!section || !video || !videoLayer || !menu || !mobileDock || !masthead)
+      return;
 
     const reducedMotion = window.matchMedia(
       '(prefers-reduced-motion: reduce)',
@@ -73,39 +76,35 @@ export function ScrollVideoHero({
       }
 
       const progress = reducedMotion ? 0 : renderedProgress;
-      const depth = clamp((progress - 0.12) / 0.38);
-      const dock = clamp((progress - 0.45) / 0.4);
+      const dock = clamp((progress - 0.4) / 0.4);
       const isDesktop = window.innerWidth >= 900;
-      const viewportWidth = window.innerWidth;
       const viewportHeight = window.innerHeight;
 
-      const x = isDesktop ? dock * (-(viewportWidth / 2) + 190) : 0;
-      const y = isDesktop ? 0 : dock * (-(viewportHeight / 2) + 220);
-      const scale = isDesktop ? 1 - dock * 0.54 : 1 - dock * 0.15;
-      const rotateX = -depth * 1.25;
-      const rotateY = depth * 2.1;
-      const z = depth * 26;
       const videoScale = 1 + progress * 0.1;
       const videoY = progress * -1.8;
 
       videoLayer.style.transform = `translate3d(0, ${videoY}%, 0) scale(${videoScale})`;
+
+      // Menú editorial: sube hacia el header y se encoge, luego se desvanece
+      const menuY = dock * (-(viewportHeight / 2) + 64);
+      const menuScale = 1 - dock * 0.32;
+      const menuFade = 1 - clamp((progress - 0.72) / 0.16);
       menu.style.transform = [
         'translate(-50%, -50%)',
-        `translate3d(${x}px, ${y}px, ${z}px)`,
-        `scale(${scale})`,
-        `rotateX(${rotateX}deg)`,
-        `rotateY(${rotateY}deg)`,
+        `translate3d(0, ${menuY}px, 0)`,
+        `scale(${menuScale})`,
       ].join(' ');
+      menu.style.opacity = String(menuFade);
+      menu.style.pointerEvents = menuFade > 0.2 ? 'auto' : 'none';
 
-      const mobileMenuFade = isDesktop
-        ? 1
-        : 1 - clamp((progress - 0.72) / 0.14);
+      // Masthead (header): aparece al hacer scroll
+      const mastheadFade = isDesktop ? clamp((progress - 0.62) / 0.22) : 0;
+      masthead.style.opacity = String(mastheadFade);
+      masthead.style.pointerEvents = mastheadFade > 0.5 ? 'auto' : 'none';
+
       const mobileDockFade = isDesktop
         ? 0
         : clamp((progress - 0.76) / 0.14);
-
-      menu.style.opacity = String(mobileMenuFade);
-      menu.style.pointerEvents = mobileMenuFade > 0.2 ? 'auto' : 'none';
       mobileDock.style.opacity = String(mobileDockFade);
       mobileDock.style.pointerEvents = mobileDockFade > 0.75 ? 'auto' : 'none';
       mobileDock.setAttribute('aria-hidden', String(mobileDockFade < 0.75));
@@ -187,13 +186,21 @@ export function ScrollVideoHero({
         <div className="tr-film-shade" aria-hidden="true" />
         <div className="tr-editorial-grid" aria-hidden="true" />
 
-        <header className="tr-masthead">
-          <a className="tr-wordmark" href="https://ranch.com.co/">
-            The Ranch
+        <header ref={mastheadRef} className="tr-masthead">
+          <a
+            className="tr-masthead-logo"
+            href="https://ranch.com.co/"
+            aria-label="The Ranch"
+          >
+            {logoSrc ? <img src={logoSrc} alt="" /> : <span>The Ranch</span>}
           </a>
-          <a className="tr-shop-link" href="https://ranch.com.co/collections/all">
-            Shop <span aria-hidden="true">↗</span>
-          </a>
+          <nav className="tr-masthead-nav">
+            {MENU_ITEMS.map((item) => (
+              <a key={item.label} href={item.href}>
+                {item.label}
+              </a>
+            ))}
+          </nav>
         </header>
 
         <nav ref={menuRef} className="tr-editorial-menu" aria-label="Principal">
