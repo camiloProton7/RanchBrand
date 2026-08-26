@@ -49,13 +49,21 @@ export function ScrollVideoHero({
     let renderedProgress = 0;
     let frameId = 0;
 
+    const queueFrame = () => {
+      if (!frameId) {
+        frameId = window.requestAnimationFrame(renderFrame);
+      }
+    };
+
     const measureProgress = () => {
       const rect = section.getBoundingClientRect();
       const distance = Math.max(1, rect.height - window.innerHeight);
       targetProgress = clamp(-rect.top / distance);
+      queueFrame();
     };
 
     const renderFrame = () => {
+      frameId = 0;
       const smoothing = reducedMotion ? 1 : 0.11;
       renderedProgress += (targetProgress - renderedProgress) * smoothing;
 
@@ -117,7 +125,9 @@ export function ScrollVideoHero({
         }
       }
 
-      frameId = window.requestAnimationFrame(renderFrame);
+      if (Math.abs(targetProgress - renderedProgress) >= 0.0005) {
+        queueFrame();
+      }
     };
 
     const unlockVideo = () => {
@@ -133,16 +143,17 @@ export function ScrollVideoHero({
     };
 
     measureProgress();
-    frameId = window.requestAnimationFrame(renderFrame);
     window.addEventListener('scroll', measureProgress, {passive: true});
     window.addEventListener('resize', measureProgress);
     window.addEventListener('pointerdown', unlockVideo, {once: true});
+    video.addEventListener('loadedmetadata', queueFrame);
 
     return () => {
       window.cancelAnimationFrame(frameId);
       window.removeEventListener('scroll', measureProgress);
       window.removeEventListener('resize', measureProgress);
       window.removeEventListener('pointerdown', unlockVideo);
+      video.removeEventListener('loadedmetadata', queueFrame);
     };
   }, [videoSrc]);
 
