@@ -85,8 +85,12 @@ export function ScrollVideoHero({
 
       const videoScale = 1 + progress * 0.1;
       const videoY = progress * -1.8;
+      // Fundido del video al final del scroll para una transición suave
+      // hacia la sección de gorras (fondo negro).
+      const videoFade = 1 - clamp((progress - 0.82) / 0.18);
 
       videoLayer.style.transform = `translate3d(0, ${videoY}%, 0) scale(${videoScale})`;
+      videoLayer.style.opacity = String(videoFade);
 
       // Menú editorial: sube hacia el header y se encoge, luego se desvanece
       const menuY = dock * (-(viewportHeight / 2) + 64);
