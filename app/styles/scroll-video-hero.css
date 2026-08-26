@@ -127,7 +127,6 @@
 
 .tr-editorial-menu {
   aspect-ratio: 340 / 464;
-  border: 1px solid rgba(244, 240, 231, 0.66);
   color: #f4f0e7;
   display: flex;
   flex-direction: column;
