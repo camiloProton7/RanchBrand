@@ -1,17 +1,5 @@
 name: Storefront 1000068751
-
-on:
-  push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
-    types:
-      - opened
-      - synchronize
-      - reopened
-  workflow_dispatch:
+on: [push]
 
 permissions:
   contents: read
