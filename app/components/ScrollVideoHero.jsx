@@ -44,6 +44,12 @@ export function ScrollVideoHero({
 
     if (!section || !video || !videoLayer || !menu || !masthead) return;
 
+    // Si el video ya cargó (caché / carga rápida), marcarlo listo de inmediato
+    // para que no quede invisible en la primera visita.
+    if (video.readyState >= 2) {
+      setIsVideoReady(true);
+    }
+
     const reducedMotion = window.matchMedia(
       '(prefers-reduced-motion: reduce)',
     ).matches;
@@ -167,6 +173,7 @@ export function ScrollVideoHero({
             preload="auto"
             tabIndex={-1}
             onLoadedData={() => setIsVideoReady(true)}
+            onCanPlay={() => setIsVideoReady(true)}
             onLoadedMetadata={(event) => {
               event.currentTarget.pause();
               event.currentTarget.currentTime = 0;
