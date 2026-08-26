@@ -34,6 +34,11 @@ function formatPrice(amount) {
   return '$' + n.toLocaleString('es-CO', {maximumFractionDigits: 0});
 }
 
+function stripHtml(html) {
+  if (!html) return '';
+  return html.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+}
+
 export default function Home() {
   const rootData = useRouteLoaderData('root');
   const {gorras} = useLoaderData();
@@ -102,7 +107,7 @@ function GorrasScroll({products}) {
               <div className="tr-gorra-media">
                 {primary?.url ? (
                   <img
-                    className="tr-gorra-img-primary"
+                    className="tr-gorra-img"
                     src={primary.url}
                     alt={primary.altText || product.title}
                     loading="lazy"
@@ -110,22 +115,40 @@ function GorrasScroll({products}) {
                 ) : null}
                 {second?.url ? (
                   <img
-                    className="tr-gorra-img-secondary"
+                    className="tr-gorra-img tr-gorra-img-2"
                     src={second.url}
                     alt=""
                     loading="lazy"
                   />
                 ) : null}
+
+                <div className="tr-gorra-badges">
+                  <span className="tr-badge">New Drop</span>
+                  <span className="tr-badge">Eco Style</span>
+                </div>
+                <span className="tr-gorra-rating">4.8 (124 Reviews)</span>
+
+                <div className="tr-gorra-pager" aria-hidden="true">
+                  <span className="is-active" />
+                  <span />
+                  <span />
+                  <span />
+                </div>
               </div>
+
               <div className="tr-gorra-body">
                 <h3 className="tr-gorra-name">{product.title}</h3>
-                <div className="tr-gorra-prices">
-                  <span className="tr-gorra-price">{formatPrice(price)}</span>
-                  {hasDiscount ? (
-                    <span className="tr-gorra-compare">
-                      {formatPrice(compare)}
-                    </span>
-                  ) : null}
+                <p className="tr-gorra-desc">{stripHtml(product.description)}</p>
+                <div className="tr-gorra-foot">
+                  <span className="tr-gorra-price">
+                    {formatPrice(price)}
+                    {hasDiscount ? (
+                      <s className="tr-gorra-compare">{formatPrice(compare)}</s>
+                    ) : null}
+                  </span>
+                  <span className="tr-gorra-cta">
+                    Buy Now <i aria-hidden="true">→</i>
+                  </span>
                 </div>
               </div>
             </a>
@@ -146,6 +169,7 @@ const GORRAS_QUERY = `#graphql
           id
           title
           handle
+          description
           featuredImage {
             url
             altText
