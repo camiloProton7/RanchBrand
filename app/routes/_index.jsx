@@ -60,12 +60,12 @@ function GorrasScroll({products}) {
     let raf = 0;
 
     const render = () => {
-      // Inercia: la velocidad decae suavemente (como gravedad amortiguada)
-      velocity *= 0.9;
-      if (Math.abs(velocity) < 0.005) velocity = 0;
-      const skew = Math.max(-7, Math.min(7, velocity * -1.1));
+      // Inercia suave: la velocidad decae lentamente (gravedad amortiguada)
+      velocity *= 0.92;
+      if (Math.abs(velocity) < 0.003) velocity = 0;
+      const tilt = Math.max(-3, Math.min(3, velocity * -0.45));
       for (const card of cards) {
-        card.style.setProperty('--skew', `${skew}deg`);
+        card.style.setProperty('--tilt', `${tilt}deg`);
       }
       raf = requestAnimationFrame(render);
     };
