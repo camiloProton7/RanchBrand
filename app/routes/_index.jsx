@@ -7,7 +7,7 @@ export const meta = () => [
   {
     name: 'description',
     content:
-      'The Ranch: ropa, gorras y accesorios para quienes hacen las cosas bien.',
+      'The Ranch: gorras, chaquetas y accesorios para quienes hacen las cosas bien.',
   },
 ];
 
