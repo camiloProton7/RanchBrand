@@ -1,4 +1,5 @@
 import {useLoaderData, useRouteLoaderData} from 'react-router';
+import {useEffect, useRef} from 'react';
 import {ScrollVideoHero} from '~/components/ScrollVideoHero';
 import homeStyles from '~/styles/scroll-video-hero.css?url';
 
@@ -41,15 +42,50 @@ export default function Home() {
   return (
     <div className="tr-home">
       <ScrollVideoHero logoSrc={logoSrc} />
-      <GorrasMarquee products={gorras} />
+      <GorrasScroll products={gorras} />
     </div>
   );
 }
 
-function GorrasMarquee({products}) {
+function GorrasScroll({products}) {
+  const trackRef = useRef(null);
+
+  useEffect(() => {
+    const track = trackRef.current;
+    if (!track) return;
+    const cards = Array.from(track.querySelectorAll('.tr-gorra-card'));
+
+    let velocity = 0;
+    let prevX = track.scrollLeft;
+    let raf = 0;
+
+    const render = () => {
+      // Inercia: la velocidad decae suavemente (como gravedad amortiguada)
+      velocity *= 0.9;
+      if (Math.abs(velocity) < 0.005) velocity = 0;
+      const skew = Math.max(-7, Math.min(7, velocity * -1.1));
+      for (const card of cards) {
+        card.style.setProperty('--skew', `${skew}deg`);
+      }
+      raf = requestAnimationFrame(render);
+    };
+
+    const onScroll = () => {
+      const dx = track.scrollLeft - prevX;
+      prevX = track.scrollLeft;
+      velocity += dx * 0.12;
+    };
+
+    track.addEventListener('scroll', onScroll, {passive: true});
+    raf = requestAnimationFrame(render);
+
+    return () => {
+      track.removeEventListener('scroll', onScroll);
+      cancelAnimationFrame(raf);
+    };
+  }, []);
+
   if (!products || !products.length) return null;
-  // Duplicamos la lista para que el loop de translateX(-50%) sea infinito y sin saltos.
-  const items = [...products, ...products];
 
   return (
     <section className="tr-gorras" aria-label="Colección de gorras">
@@ -63,32 +99,52 @@ function GorrasMarquee({products}) {
         </a>
       </header>
 
-      <div className="tr-marquee">
-        <div className="tr-marquee-track">
-          {items.map((product, index) => (
+      <div className="tr-gorras-scroll" ref={trackRef}>
+        {products.map((product) => {
+          const primary = product.featuredImage;
+          const second = product.images?.nodes?.[1];
+          const price = product.priceRange?.minVariantPrice?.amount;
+          const compare = product.compareAtPriceRange?.minVariantPrice?.amount;
+          const hasDiscount = compare && Number(compare) > Number(price);
+
+          return (
             <a
-              key={`${product.id}-${index}`}
+              key={product.id}
               className="tr-gorra-card"
               href={`https://ranch.com.co/products/${product.handle}`}
             >
-              {product.featuredImage?.url ? (
-                <img
-                  src={product.featuredImage.url}
-                  alt={product.featuredImage.altText || product.title}
-                  loading="lazy"
-                />
-              ) : (
-                <div className="tr-gorra-placeholder">{product.title}</div>
-              )}
-              <div className="tr-gorra-info">
-                <span className="tr-gorra-name">{product.title}</span>
-                <span className="tr-gorra-price">
-                  {formatPrice(product.priceRange?.minVariantPrice?.amount)}
-                </span>
+              <div className="tr-gorra-media">
+                {primary?.url ? (
+                  <img
+                    className="tr-gorra-img-primary"
+                    src={primary.url}
+                    alt={primary.altText || product.title}
+                    loading="lazy"
+                  />
+                ) : null}
+                {second?.url ? (
+                  <img
+                    className="tr-gorra-img-secondary"
+                    src={second.url}
+                    alt=""
+                    loading="lazy"
+                  />
+                ) : null}
+              </div>
+              <div className="tr-gorra-body">
+                <h3 className="tr-gorra-name">{product.title}</h3>
+                <div className="tr-gorra-prices">
+                  <span className="tr-gorra-price">{formatPrice(price)}</span>
+                  {hasDiscount ? (
+                    <span className="tr-gorra-compare">
+                      {formatPrice(compare)}
+                    </span>
+                  ) : null}
+                </div>
               </div>
             </a>
-          ))}
-        </div>
+          );
+        })}
       </div>
     </section>
   );
@@ -110,7 +166,19 @@ const GORRAS_QUERY = `#graphql
             width
             height
           }
+          images(first: 2) {
+            nodes {
+              url
+              altText
+            }
+          }
           priceRange {
+            minVariantPrice {
+              amount
+              currencyCode
+            }
+          }
+          compareAtPriceRange {
             minVariantPrice {
               amount
               currencyCode
