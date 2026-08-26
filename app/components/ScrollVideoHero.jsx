@@ -3,17 +3,14 @@ import {useEffect, useRef, useState} from 'react';
 const MENU_ITEMS = [
   {
     label: 'Gorras',
-    numeral: 'I',
     href: 'https://ranch.com.co/collections/gorras',
   },
   {
     label: 'Chaquetas',
-    numeral: 'II',
     href: 'https://ranch.com.co/collections/chaquetas',
   },
   {
     label: 'Accesorios',
-    numeral: 'III',
     href: 'https://ranch.com.co/collections/all',
   },
 ];
@@ -220,10 +217,6 @@ export function ScrollVideoHero({
                 <li key={item.label} className={index === 0 ? 'is-active' : ''}>
                   <a href={item.href}>
                     <span className="tr-menu-label">{item.label}</span>
-                    <span className="tr-menu-leader" aria-hidden="true" />
-                    <span className="tr-menu-numeral" aria-hidden="true">
-                      {item.numeral}
-                    </span>
                   </a>
                 </li>
               ))}

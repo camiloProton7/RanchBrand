@@ -127,6 +127,9 @@
 
 .tr-editorial-menu {
   aspect-ratio: 340 / 464;
+  background: rgba(11, 11, 9, 0.38);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
   border: 1px solid rgba(244, 240, 231, 0.66);
   color: #f4f0e7;
   display: flex;
@@ -148,10 +151,13 @@
 }
 
 .tr-menu-logo {
-  align-items: flex-start;
+  align-items: center;
   color: #f4f0e7;
   display: flex;
+  justify-content: center;
+  margin: 0 auto;
   max-width: 190px;
+  opacity: 0.78;
   text-decoration: none;
   width: 66%;
 }
@@ -179,8 +185,9 @@
   font-family: Georgia, 'Times New Roman', serif;
   font-size: 18px;
   line-height: 1.02;
-  margin: 0 0 18px;
+  margin: 0 auto 18px;
   max-width: 260px;
+  text-align: center;
 }
 
 .tr-menu-list {
@@ -196,8 +203,8 @@
 .tr-menu-list a {
   align-items: center;
   color: #f4f0e7;
-  display: grid;
-  grid-template-columns: auto 1fr 26px;
+  display: flex;
+  justify-content: center;
   min-height: 30px;
   text-decoration: none;
 }
@@ -219,7 +226,7 @@
   left: 0;
   position: absolute;
   transform: scaleX(0);
-  transform-origin: left;
+  transform-origin: center;
   transition: transform 220ms ease;
   width: 100%;
 }
@@ -239,8 +246,7 @@
   text-align: right;
 }
 
-.tr-menu-list li:is(.is-active, :hover, :focus-within) .tr-menu-label::after,
-.tr-menu-list li:is(.is-active, :hover, :focus-within) .tr-menu-leader {
+.tr-menu-list li:is(.is-active, :hover, :focus-within) .tr-menu-label::after {
   opacity: 1;
   transform: scaleX(1);
 }
