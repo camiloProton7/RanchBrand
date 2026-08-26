@@ -1,17 +1,20 @@
 import {useEffect, useRef, useState} from 'react';
 
 const MENU_ITEMS = [
-  {label: 'B2B', numeral: 'I', href: 'https://ranch.com.co/'},
   {
-    label: 'Collections',
-    numeral: 'II',
-    href: 'https://ranch.com.co/collections',
+    label: 'Gorras',
+    numeral: 'I',
+    href: 'https://ranch.com.co/collections/gorras',
   },
-  {label: 'About', numeral: 'III', href: 'https://ranch.com.co/'},
   {
-    label: 'Contact',
-    numeral: 'IV',
-    href: 'https://ranch.com.co/pages/contact',
+    label: 'Chaquetas',
+    numeral: 'II',
+    href: 'https://ranch.com.co/collections/chaquetas',
+  },
+  {
+    label: 'Accesorios',
+    numeral: 'III',
+    href: 'https://ranch.com.co/collections/all',
   },
 ];
 
@@ -23,8 +26,10 @@ const clamp = (value, min = 0, max = 1) =>
  * playhead and the editorial navigation's spatial transition.
  */
 export function ScrollVideoHero({
-  videoSrc = '/video-scroll.mp4',
+  videoSrc =
+    'https://cdn.shopify.com/videos/c/o/v/eba1a18c34794bd3a1f77800a585298e.mp4',
   posterSrc = '/poster-hero.jpg',
+  logoSrc,
 }) {
   const sectionRef = useRef(null);
   const videoRef = useRef(null);
@@ -195,11 +200,17 @@ export function ScrollVideoHero({
         </header>
 
         <nav ref={menuRef} className="tr-editorial-menu" aria-label="Principal">
-          <div className="tr-menu-heading" aria-label="The Ranch Edition">
-            <span>The</span>
-            <span className="tr-heading-script">Ranch</span>
-            <span>Edition</span>
-          </div>
+          <a
+            className="tr-menu-logo"
+            href="https://ranch.com.co/"
+            aria-label="The Ranch"
+          >
+            {logoSrc ? (
+              <img src={logoSrc} alt="" />
+            ) : (
+              <span>The Ranch</span>
+            )}
+          </a>
 
           <div className="tr-menu-bottom">
             <p>No seguimos modas. Seguimos principios.</p>
@@ -225,8 +236,11 @@ export function ScrollVideoHero({
           aria-label="Principal compacta"
           aria-hidden="true"
         >
-          <a href="https://ranch.com.co/">The Ranch</a>
-          <a href="https://ranch.com.co/collections">Explore</a>
+          {MENU_ITEMS.map((item) => (
+            <a key={item.label} href={item.href}>
+              {item.label}
+            </a>
+          ))}
         </nav>
 
         <div className="tr-scroll-cue" aria-hidden="true">
