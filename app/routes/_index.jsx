@@ -52,7 +52,6 @@ function GorrasScroll({products}) {
   return (
     <section className="tr-gorras" aria-label="Colección de gorras">
       <header className="tr-gorras-head">
-        <h2 className="tr-gorras-title">Gorras</h2>
         <a
           className="tr-gorras-link"
           href="https://ranch.com.co/collections/gorras-truckers"
