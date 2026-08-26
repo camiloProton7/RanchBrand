@@ -175,6 +175,7 @@ export function ScrollVideoHero({
             className={`tr-scroll-video ${isVideoReady ? 'is-ready' : ''}`}
             src={videoSrc}
             poster={posterSrc}
+            crossOrigin="anonymous"
             muted
             playsInline
             preload="auto"
