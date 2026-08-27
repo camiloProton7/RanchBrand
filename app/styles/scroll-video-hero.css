@@ -14,7 +14,7 @@
   --hero-progress: 0;
   background: #0b0b09;
   box-sizing: border-box;
-  height: 200svh;
+  height: 150svh;
   padding: 0;
   position: relative;
   width: 100%;
@@ -902,7 +902,7 @@
 
 .tr-gorra-card:hover .tr-gorra-labels {
   align-items: center;
-  bottom: 64px;
+  bottom: 50px;
   flex-direction: row;
   gap: 6px;
   right: auto;
