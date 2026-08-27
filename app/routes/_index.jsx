@@ -67,7 +67,7 @@ function GorrasScroll({products}) {
           }
         }
       },
-      {threshold: 0.15},
+      {threshold: 0.02},
     );
     observer.observe(section);
     return () => observer.disconnect();
