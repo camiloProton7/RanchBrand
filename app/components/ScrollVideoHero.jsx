@@ -132,11 +132,20 @@ export function ScrollVideoHero({
       if (reducedMotion || video.readyState < 2) return;
       const playAttempt = video.play();
       if (playAttempt) {
-        playAttempt.catch(() => {
-          // El poster sigue visible si el navegador rechaza el arranque.
-        });
+        playAttempt
+          .then(() => video.pause())
+          .catch(() => {
+            // El poster sigue visible si el navegador rechaza el arranque.
+          });
       }
     };
+
+    // Desbloqueo al cargar para que el seek (currentTime) sea fluido.
+    if (video.readyState >= 2) {
+      unlockVideo();
+    } else {
+      video.addEventListener('loadeddata', unlockVideo, {once: true});
+    }
 
     measureProgress();
     window.addEventListener('scroll', measureProgress, {passive: true});
@@ -166,8 +175,6 @@ export function ScrollVideoHero({
             className={`tr-scroll-video ${isVideoReady ? 'is-ready' : ''}`}
             src={videoSrc}
             poster={posterSrc}
-            autoPlay
-            loop
             muted
             playsInline
             preload="auto"
@@ -175,6 +182,7 @@ export function ScrollVideoHero({
             onLoadedData={() => setIsVideoReady(true)}
             onCanPlay={() => setIsVideoReady(true)}
             onLoadedMetadata={(event) => {
+              event.currentTarget.pause();
               event.currentTarget.currentTime = 0;
             }}
           />
