@@ -55,15 +55,22 @@ function mapReview(raw) {
 
 export async function loader({context}) {
   const {storefront} = context;
-  let gorras = [];
+  const [gorras, chaquetas, reviews] = await Promise.all([
+    fetchCollection(storefront, 'gorras-truckers'),
+    fetchCollection(storefront, 'chaquetas'),
+    fetchTrustooReviews(),
+  ]);
+  return {gorras, chaquetas, reviews};
+}
+
+async function fetchCollection(storefront, handle) {
   try {
-    const data = await storefront.query(GORRAS_QUERY);
-    gorras = data?.collection?.products?.nodes || [];
+    const data = await storefront.query(COLLECTION_QUERY(handle));
+    return data?.collection?.products?.nodes || [];
   } catch (error) {
-    console.error(error);
+    console.error(`Colección ${handle} falló`, error);
+    return [];
   }
-  const reviews = await fetchTrustooReviews();
-  return {gorras, reviews};
 }
 
 function formatPrice(amount) {
@@ -81,19 +88,28 @@ const clamp01 = (v) => Math.min(1, Math.max(0, v));
 
 export default function Home() {
   const rootData = useRouteLoaderData('root');
-  const {gorras, reviews} = useLoaderData();
+  const {gorras, chaquetas, reviews} = useLoaderData();
   const logoSrc = rootData?.header?.shop?.brand?.logo?.image?.url;
 
   return (
     <div className="tr-home">
       <ScrollVideoHero logoSrc={logoSrc} />
-      <GorrasScroll products={gorras} />
+      <ProductScroll
+        products={gorras}
+        collectionUrl="https://ranch.com.co/collections/gorras-truckers"
+        ariaLabel="Colección de gorras"
+      />
       <ReviewsSection reviews={reviews} />
+      <ProductScroll
+        products={chaquetas}
+        collectionUrl="https://ranch.com.co/collections/chaquetas"
+        ariaLabel="Colección de chaquetas"
+      />
     </div>
   );
 }
 
-function GorrasScroll({products}) {
+function ProductScroll({products, collectionUrl, ariaLabel}) {
   const sectionRef = useRef(null);
 
   useEffect(() => {
@@ -120,13 +136,10 @@ function GorrasScroll({products}) {
     <section
       ref={sectionRef}
       className="tr-gorras"
-      aria-label="Colección de gorras"
+      aria-label={ariaLabel}
     >
       <header className="tr-gorras-head">
-        <a
-          className="tr-gorras-link"
-          href="https://ranch.com.co/collections/gorras-truckers"
-        >
+        <a className="tr-gorras-link" href={collectionUrl}>
           Ver todas <span aria-hidden="true">↗</span>
         </a>
       </header>
@@ -237,11 +250,13 @@ function ReviewsSection({reviews}) {
       raf = 0;
       const rect = section.getBoundingClientRect();
       const viewport = window.innerHeight;
-      const progress = clamp01((viewport - rect.top) / (viewport + rect.height));
+      // El progress empieza cuando la sección ya está ~30% dentro del viewport,
+      // para que las tarjetas caigan al llegar a la sección (no antes).
+      const progress = clamp01(
+        (viewport * 0.7 - rect.top) / (viewport + rect.height),
+      );
 
       cards.forEach((card, i) => {
-        // Cada tarjeta cae en un tramo del scroll a lo largo de TODA la sección:
-        // la primera apenas entra, la última al final. Retrocede con scroll inverso.
         const p = clamp01((progress - i * 0.1) / 0.22);
         const x = card.style.getPropertyValue('--x') || '0px';
         const y = card.style.getPropertyValue('--y') || '0px';
@@ -321,9 +336,9 @@ function ReviewsSection({reviews}) {
   );
 }
 
-const GORRAS_QUERY = `#graphql
-  query Gorras {
-    collection(handle: "gorras-truckers") {
+const COLLECTION_QUERY = (handle) => `#graphql
+  query Collection {
+    collection(handle: "${handle}") {
       title
       handle
       products(first: 15) {
