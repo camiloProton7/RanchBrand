@@ -120,7 +120,7 @@ export function ScrollVideoHero({
         Number.isFinite(video.duration) &&
         video.duration > 0
       ) {
-        const nextTime = clamp(progress) * Math.max(0, video.duration - 0.04);
+        const nextTime = clamp(progress) * Math.max(0, video.duration - 0.01);
         if (Math.abs(video.currentTime - nextTime) > 0.015) {
           video.currentTime = nextTime;
         }
