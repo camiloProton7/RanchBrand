@@ -227,14 +227,11 @@ const FALLBACK_REVIEWS = [
 ];
 
 const SCATTER = [
-  {x: '-28px', y: '-18px', rotate: -6},
-  {x: '38px', y: '14px', rotate: 4},
-  {x: '-48px', y: '28px', rotate: -8},
-  {x: '18px', y: '-32px', rotate: 3},
-  {x: '52px', y: '8px', rotate: -4},
-  {x: '-34px', y: '38px', rotate: 6},
-  {x: '24px', y: '18px', rotate: -3},
-  {x: '0px', y: '34px', rotate: 2},
+  {x: '-55px', y: '-30px', rotate: -7},
+  {x: '58px', y: '18px', rotate: 5},
+  {x: '-68px', y: '38px', rotate: -9},
+  {x: '28px', y: '-42px', rotate: 4},
+  {x: '0px', y: '40px', rotate: 2},
 ];
 
 function ReviewsSection({reviews}) {
@@ -257,7 +254,7 @@ function ReviewsSection({reviews}) {
       );
 
       cards.forEach((card, i) => {
-        const p = clamp01((progress - i * 0.1) / 0.22);
+        const p = clamp01((progress - i * 0.08) / 0.15);
         const x = card.style.getPropertyValue('--x') || '0px';
         const y = card.style.getPropertyValue('--y') || '0px';
         const r = card.style.getPropertyValue('--rotate') || '0deg';
