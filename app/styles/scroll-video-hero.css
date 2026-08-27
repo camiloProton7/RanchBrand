@@ -901,10 +901,10 @@
 }
 
 .tr-gorra-card:hover .tr-gorra-labels {
-  align-items: flex-start;
-  bottom: 96px;
-  flex-direction: column;
-  gap: 8px;
+  align-items: center;
+  bottom: 64px;
+  flex-direction: row;
+  gap: 6px;
   right: auto;
   top: auto;
 }
