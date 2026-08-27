@@ -725,7 +725,6 @@
   right: 10px;
   top: 10px;
   z-index: 3;
-  transition: top 0.4s ease, bottom 0.4s ease;
 }
 
 .tr-badge {
@@ -902,9 +901,10 @@
 
 .tr-gorra-card:hover .tr-gorra-labels {
   align-items: center;
-  bottom: 58px;
+  bottom: 60px;
   flex-direction: row;
   gap: 6px;
+  left: 18px;
   right: auto;
   top: auto;
 }
