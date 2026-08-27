@@ -122,11 +122,13 @@ function GorrasScroll({products}) {
                   />
                 ) : null}
 
-                <div className="tr-gorra-badges">
+                <div className="tr-gorra-labels">
                   <span className="tr-badge">Nuevo</span>
                   <span className="tr-badge">Premium</span>
+                  <span className="tr-badge tr-badge-rating">
+                    <i className="tr-star">★</i> 4.8
+                  </span>
                 </div>
-                <span className="tr-gorra-rating">★ 4.8</span>
 
                 <div className="tr-gorra-pager" aria-hidden="true">
                   <span className="is-active" />

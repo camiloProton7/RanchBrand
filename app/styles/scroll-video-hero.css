@@ -716,14 +716,16 @@
   opacity: 1;
 }
 
-/* ── Badges (izquierda) ── */
-.tr-gorra-badges {
+/* ── Labels (badges + rating) ── */
+.tr-gorra-labels {
   display: flex;
   gap: 6px;
   left: 10px;
   position: absolute;
+  right: 10px;
   top: 10px;
   z-index: 3;
+  transition: top 0.4s ease, bottom 0.4s ease;
 }
 
 .tr-badge {
@@ -740,23 +742,14 @@
   white-space: nowrap;
 }
 
-/* ── Rating (derecha en reposo) ── */
-.tr-gorra-rating {
-  background: rgba(255, 255, 255, 0.85);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
-  border-radius: 999px;
-  color: #1a1a18;
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 10px;
-  font-weight: 700;
-  padding: 4px 9px;
-  position: absolute;
-  right: 10px;
-  top: 10px;
-  white-space: nowrap;
-  z-index: 3;
-  transition: left 0.4s ease, right 0.4s ease, top 0.4s ease;
+.tr-badge-rating {
+  background: rgba(255, 255, 255, 0.92);
+  margin-left: auto;
+}
+
+.tr-star {
+  color: #f5b301;
+  font-style: normal;
 }
 
 /* ── Pager (inferior centro) ── */
@@ -819,6 +812,7 @@
   display: flex;
   justify-content: space-between;
   margin-top: auto;
+  padding-top: 14px;
 }
 
 .tr-gorra-price {
@@ -906,15 +900,17 @@
   display: none;
 }
 
-.tr-gorra-card:hover .tr-gorra-badges {
+.tr-gorra-card:hover .tr-gorra-labels {
+  align-items: flex-start;
+  bottom: 96px;
   flex-direction: column;
   gap: 8px;
+  right: auto;
+  top: auto;
 }
 
-.tr-gorra-card:hover .tr-gorra-rating {
-  left: 10px;
-  right: auto;
-  top: 64px;
+.tr-gorra-card:hover .tr-badge-rating {
+  margin-left: 0;
 }
 
 .tr-gorra-card:hover .tr-gorra-pager {
