@@ -16,16 +16,54 @@ export function links() {
   return [{rel: 'stylesheet', href: homeStyles}];
 }
 
+const TRUSTOO_SHOP_ID = '67813867760';
+
+async function fetchTrustooReviews() {
+  try {
+    const url = `https://api.trustoo.io/api/v1/reviews/get_product_reviews?shop_id=${TRUSTOO_SHOP_ID}&limit=30&page=1&sort_by=comprehensive-descending&scene=3&is_show_all=1`;
+    const res = await fetch(url, {headers: {accept: 'application/json'}});
+    const json = await res.json();
+    if (json.code !== 0) return [];
+    return (json.data?.list || [])
+      .map(mapReview)
+      .filter((r) => r.text && r.text.trim().length > 8)
+      .slice(0, 8);
+  } catch (error) {
+    console.error('Trustoo fetch failed', error);
+    return [];
+  }
+}
+
+function mapReview(raw) {
+  const resource = (raw.resources || []).find((x) =>
+    (x.src || x.thumb_src || '').trim(),
+  );
+  const photo =
+    (resource && (resource.src || resource.thumb_src)) ||
+    raw.product_image_src ||
+    raw.corresponding_product?.product_image ||
+    null;
+  return {
+    name: (raw.author || '').trim(),
+    product: raw.corresponding_product?.product_name || '',
+    stars: raw.star || 5,
+    text: (raw.content || '').trim(),
+    photo,
+    verified: !!raw.verified_badge,
+  };
+}
+
 export async function loader({context}) {
   const {storefront} = context;
+  let gorras = [];
   try {
     const data = await storefront.query(GORRAS_QUERY);
-    const products = data?.collection?.products?.nodes || [];
-    return {gorras: products};
+    gorras = data?.collection?.products?.nodes || [];
   } catch (error) {
     console.error(error);
-    return {gorras: []};
   }
+  const reviews = await fetchTrustooReviews();
+  return {gorras, reviews};
 }
 
 function formatPrice(amount) {
@@ -41,14 +79,14 @@ function stripHtml(html) {
 
 export default function Home() {
   const rootData = useRouteLoaderData('root');
-  const {gorras} = useLoaderData();
+  const {gorras, reviews} = useLoaderData();
   const logoSrc = rootData?.header?.shop?.brand?.logo?.image?.url;
 
   return (
     <div className="tr-home">
       <ScrollVideoHero logoSrc={logoSrc} />
       <GorrasScroll products={gorras} />
-      <ReviewsSection products={gorras} />
+      <ReviewsSection reviews={reviews} />
     </div>
   );
 }
@@ -162,55 +200,15 @@ function GorrasScroll({products}) {
   );
 }
 
-const REVIEWS = [
-  {
-    name: 'Camilo R.',
-    product: 'Gorra Redwood',
-    stars: 5,
-    text: 'La calidad del bordado es brutal. La uso todos los días y sigue como nueva.',
-  },
-  {
-    name: 'Daniela M.',
-    product: 'Gorra Andina',
-    stars: 4,
-    text: 'El color es tal cual la foto. Llegó rapidísimo y el empaque es otro nivel.',
-  },
-  {
-    name: 'Andrés P.',
-    product: 'Gorra Rodeo',
-    stars: 5,
-    text: 'Perfecta para el campo. No se deforma ni con el sol ni con la lluvia.',
-  },
-  {
-    name: 'Valentina S.',
-    product: 'Gorra Cabras',
-    stars: 5,
-    text: 'El ajuste es cómodo y el logo se ve premium. Vale cada peso.',
-  },
-  {
-    name: 'Santiago L.',
-    product: 'Gorra LandMan',
-    stars: 4,
-    text: 'Se siente de buena tela, fresca. Ya pedí otra para regalar.',
-  },
-  {
-    name: 'Mariana G.',
-    product: 'Gorra Forester',
-    stars: 5,
-    text: 'El detalle de la costura es fino. Se nota que es hecha a mano.',
-  },
-  {
-    name: 'Felipe T.',
-    product: 'Gorra Heritage 89',
-    stars: 4,
-    text: 'Me encantó. El diseño western es único, no la he visto en nadie más.',
-  },
-  {
-    name: 'Juliana C.',
-    product: 'Gorra GOAT',
-    stars: 5,
-    text: 'Excelente compra. La atención y la entrega fueron impecables.',
-  },
+const FALLBACK_REVIEWS = [
+  {name: 'Camilo R.', product: 'Gorra Redwood', stars: 5, text: 'La calidad del bordado es brutal. La uso todos los días y sigue como nueva.'},
+  {name: 'Daniela M.', product: 'Gorra Andina', stars: 4, text: 'El color es tal cual la foto. Llegó rapidísimo y el empaque es otro nivel.'},
+  {name: 'Andrés P.', product: 'Gorra Rodeo', stars: 5, text: 'Perfecta para el campo. No se deforma ni con el sol ni con la lluvia.'},
+  {name: 'Valentina S.', product: 'Gorra Cabras', stars: 5, text: 'El ajuste es cómodo y el logo se ve premium. Vale cada peso.'},
+  {name: 'Santiago L.', product: 'Gorra LandMan', stars: 4, text: 'Se siente de buena tela, fresca. Ya pedí otra para regalar.'},
+  {name: 'Mariana G.', product: 'Gorra Forester', stars: 5, text: 'El detalle de la costura es fino. Se nota que es hecha a mano.'},
+  {name: 'Felipe T.', product: 'Gorra Heritage 89', stars: 4, text: 'Me encantó. El diseño western es único, no la he visto en nadie más.'},
+  {name: 'Juliana C.', product: 'Gorra GOAT', stars: 5, text: 'Excelente compra. La atención y la entrega fueron impecables.'},
 ];
 
 const SCATTER = [
@@ -224,7 +222,7 @@ const SCATTER = [
   {x: '0px', y: '8px', rotate: 1},
 ];
 
-function ReviewsSection({products}) {
+function ReviewsSection({reviews}) {
   const sectionRef = useRef(null);
   const [visible, setVisible] = useState(false);
 
@@ -246,14 +244,11 @@ function ReviewsSection({products}) {
     return () => observer.disconnect();
   }, []);
 
-  const reviews = REVIEWS.map((review, i) => {
-    const product = products[i % products.length];
-    return {
-      ...review,
-      photo: product?.featuredImage?.url || null,
-      ...SCATTER[i % SCATTER.length],
-    };
-  });
+  const source = reviews && reviews.length ? reviews : FALLBACK_REVIEWS;
+  const cards = source.slice(0, 8).map((review, i) => ({
+    ...review,
+    ...SCATTER[i % SCATTER.length],
+  }));
 
   return (
     <section
@@ -263,9 +258,9 @@ function ReviewsSection({products}) {
     >
       <h2 className="tr-reviews-title">Lo que dicen en el campo</h2>
       <div className="tr-reviews-scatter">
-        {reviews.map((review, i) => (
+        {cards.map((review, i) => (
           <article
-            key={review.name}
+            key={`${review.name}-${i}`}
             className="tr-review-card"
             style={{
               '--x': review.x,
@@ -287,15 +282,17 @@ function ReviewsSection({products}) {
               className="tr-review-stars"
               aria-label={`${review.stars} de 5 estrellas`}
             >
-              {'★'.repeat(review.stars)}
-              {'☆'.repeat(5 - review.stars)}
+              {'★'.repeat(Math.max(0, Math.min(5, review.stars)))}
+              {'☆'.repeat(5 - Math.max(0, Math.min(5, review.stars)))}
             </div>
             <p className="tr-review-text">“{review.text}”</p>
             <div className="tr-review-meta">
               <span className="tr-review-name">{review.name}</span>
               <span className="tr-review-product">{review.product}</span>
             </div>
-            <span className="tr-review-verified">✓ Compra verificada</span>
+            {review.verified ? (
+              <span className="tr-review-verified">✓ Compra verificada</span>
+            ) : null}
           </article>
         ))}
       </div>
