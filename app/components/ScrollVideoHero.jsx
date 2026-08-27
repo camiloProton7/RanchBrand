@@ -115,6 +115,17 @@ export function ScrollVideoHero({
         String(1 - clamp(progress * 5)),
       );
 
+      // Scroll-scrubbing: el video avanza con el scroll. Solo se hace seek
+      // cuando el video ya tiene datos (readyState >= 3) para que no se trabe.
+      if (
+        !reducedMotion &&
+        video.readyState >= 3 &&
+        Number.isFinite(video.duration) &&
+        video.duration > 0
+      ) {
+        video.currentTime = clamp(progress) * video.duration;
+      }
+
       if (Math.abs(targetProgress - renderedProgress) >= 0.0005) {
         queueFrame();
       }
@@ -122,8 +133,15 @@ export function ScrollVideoHero({
 
     const unlockVideo = () => {
       if (reducedMotion || video.readyState < 2) return;
-      video.play().catch(() => {});
+      video.play().then(() => video.pause()).catch(() => {});
     };
+
+    // Desbloqueo al cargar para que el seek (currentTime) sea fluido.
+    if (video.readyState >= 2) {
+      unlockVideo();
+    } else {
+      video.addEventListener('loadeddata', unlockVideo, {once: true});
+    }
 
     measureProgress();
     window.addEventListener('scroll', measureProgress, {passive: true});
@@ -153,14 +171,16 @@ export function ScrollVideoHero({
             className={`tr-scroll-video ${isVideoReady ? 'is-ready' : ''}`}
             src={videoSrc}
             poster={posterSrc}
-            autoPlay
-            loop
             muted
             playsInline
             preload="auto"
             tabIndex={-1}
             onLoadedData={() => setIsVideoReady(true)}
             onCanPlay={() => setIsVideoReady(true)}
+            onLoadedMetadata={(event) => {
+              event.currentTarget.pause();
+              event.currentTarget.currentTime = 0;
+            }}
           />
         </div>
 
