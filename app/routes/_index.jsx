@@ -27,7 +27,7 @@ async function fetchTrustooReviews() {
     return (json.data?.list || [])
       .map(mapReview)
       .filter((r) => r.text && r.text.trim().length > 8)
-      .slice(0, 8);
+      .slice(0, 5);
   } catch (error) {
     console.error('Trustoo fetch failed', error);
     return [];
@@ -282,7 +282,7 @@ function ReviewsSection({reviews}) {
   }, []);
 
   const source = reviews && reviews.length ? reviews : FALLBACK_REVIEWS;
-  const cards = source.slice(0, 8).map((review, i) => ({
+  const cards = source.slice(0, 5).map((review, i) => ({
     ...review,
     ...SCATTER[i % SCATTER.length],
   }));
