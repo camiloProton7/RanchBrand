@@ -1,6 +1,7 @@
 import {useLoaderData, useRouteLoaderData} from 'react-router';
 import {useEffect, useRef} from 'react';
 import {ScrollVideoHero} from '~/components/ScrollVideoHero';
+import GorraDialSelector from '~/components/GorraDialSelector';
 import homeStyles from '~/styles/scroll-video-hero.css?url';
 
 export const meta = () => [
@@ -100,6 +101,7 @@ export default function Home() {
         ariaLabel="Colección de gorras"
       />
       <ReviewsSection reviews={reviews} />
+      <GorraDialSelector products={gorras} />
       <ProductScroll
         products={chaquetas}
         collectionUrl="https://ranch.com.co/collections/chaquetas"
