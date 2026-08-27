@@ -1,5 +1,5 @@
 import {useLoaderData, useRouteLoaderData} from 'react-router';
-import {useEffect, useRef} from 'react';
+import {useEffect, useRef, useState} from 'react';
 import {ScrollVideoHero} from '~/components/ScrollVideoHero';
 import homeStyles from '~/styles/scroll-video-hero.css?url';
 
@@ -48,6 +48,7 @@ export default function Home() {
     <div className="tr-home">
       <ScrollVideoHero logoSrc={logoSrc} />
       <GorrasScroll products={gorras} />
+      <ReviewsSection products={gorras} />
     </div>
   );
 }
@@ -156,6 +157,147 @@ function GorrasScroll({products}) {
             </a>
           );
         })}
+      </div>
+    </section>
+  );
+}
+
+const REVIEWS = [
+  {
+    name: 'Camilo R.',
+    product: 'Gorra Redwood',
+    stars: 5,
+    text: 'La calidad del bordado es brutal. La uso todos los días y sigue como nueva.',
+  },
+  {
+    name: 'Daniela M.',
+    product: 'Gorra Andina',
+    stars: 4,
+    text: 'El color es tal cual la foto. Llegó rapidísimo y el empaque es otro nivel.',
+  },
+  {
+    name: 'Andrés P.',
+    product: 'Gorra Rodeo',
+    stars: 5,
+    text: 'Perfecta para el campo. No se deforma ni con el sol ni con la lluvia.',
+  },
+  {
+    name: 'Valentina S.',
+    product: 'Gorra Cabras',
+    stars: 5,
+    text: 'El ajuste es cómodo y el logo se ve premium. Vale cada peso.',
+  },
+  {
+    name: 'Santiago L.',
+    product: 'Gorra LandMan',
+    stars: 4,
+    text: 'Se siente de buena tela, fresca. Ya pedí otra para regalar.',
+  },
+  {
+    name: 'Mariana G.',
+    product: 'Gorra Forester',
+    stars: 5,
+    text: 'El detalle de la costura es fino. Se nota que es hecha a mano.',
+  },
+  {
+    name: 'Felipe T.',
+    product: 'Gorra Heritage 89',
+    stars: 4,
+    text: 'Me encantó. El diseño western es único, no la he visto en nadie más.',
+  },
+  {
+    name: 'Juliana C.',
+    product: 'Gorra GOAT',
+    stars: 5,
+    text: 'Excelente compra. La atención y la entrega fueron impecables.',
+  },
+];
+
+const SCATTER = [
+  {x: '-6px', y: '-4px', rotate: -4},
+  {x: '12px', y: '6px', rotate: 3},
+  {x: '-14px', y: '10px', rotate: -6},
+  {x: '5px', y: '-8px', rotate: 2},
+  {x: '16px', y: '4px', rotate: -3},
+  {x: '-10px', y: '12px', rotate: 5},
+  {x: '7px', y: '5px', rotate: -2},
+  {x: '0px', y: '8px', rotate: 1},
+];
+
+function ReviewsSection({products}) {
+  const sectionRef = useRef(null);
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const section = sectionRef.current;
+    if (!section) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            setVisible(true);
+            observer.disconnect();
+          }
+        }
+      },
+      {threshold: 0.25},
+    );
+    observer.observe(section);
+    return () => observer.disconnect();
+  }, []);
+
+  const reviews = REVIEWS.map((review, i) => {
+    const product = products[i % products.length];
+    return {
+      ...review,
+      photo: product?.featuredImage?.url || null,
+      ...SCATTER[i % SCATTER.length],
+    };
+  });
+
+  return (
+    <section
+      ref={sectionRef}
+      className={`tr-reviews ${visible ? 'is-visible' : ''}`}
+      aria-label="Reseñas de clientes"
+    >
+      <h2 className="tr-reviews-title">Lo que dicen en el campo</h2>
+      <div className="tr-reviews-scatter">
+        {reviews.map((review, i) => (
+          <article
+            key={review.name}
+            className="tr-review-card"
+            style={{
+              '--x': review.x,
+              '--y': review.y,
+              '--rotate': `${review.rotate}deg`,
+              '--z': i,
+              animationDelay: `${i * 0.12}s`,
+            }}
+          >
+            {review.photo ? (
+              <img
+                className="tr-review-photo"
+                src={review.photo}
+                alt=""
+                loading="lazy"
+              />
+            ) : null}
+            <div
+              className="tr-review-stars"
+              aria-label={`${review.stars} de 5 estrellas`}
+            >
+              {'★'.repeat(review.stars)}
+              {'☆'.repeat(5 - review.stars)}
+            </div>
+            <p className="tr-review-text">“{review.text}”</p>
+            <div className="tr-review-meta">
+              <span className="tr-review-name">{review.name}</span>
+              <span className="tr-review-product">{review.product}</span>
+            </div>
+            <span className="tr-review-verified">✓ Compra verificada</span>
+          </article>
+        ))}
       </div>
     </section>
   );
