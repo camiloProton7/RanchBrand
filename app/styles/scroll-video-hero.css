@@ -921,22 +921,8 @@
 /* ── Sección de reseñas (mesa de madera) ── */
 .tr-reviews {
   background:
-    repeating-linear-gradient(
-      90deg,
-      rgba(0, 0, 0, 0.05) 0 2px,
-      transparent 2px 46px
-    ),
-    repeating-linear-gradient(
-      0deg,
-      rgba(0, 0, 0, 0.03) 0 1px,
-      transparent 1px 110px
-    ),
-    radial-gradient(
-      ellipse at 50% 35%,
-      #5c3b24 0%,
-      #432a16 55%,
-      #2e1c0e 100%
-    );
+    linear-gradient(rgba(15, 9, 4, 0.4), rgba(15, 9, 4, 0.5)),
+    url('/wood-texture.jpg') center / cover no-repeat;
   color: #f4f0e7;
   overflow: hidden;
   padding: 90px 20px 120px;
