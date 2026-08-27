@@ -954,6 +954,7 @@
   box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45),
     0 4px 12px rgba(0, 0, 0, 0.3);
   color: #241b12;
+  cursor: grab;
   display: flex;
   flex-direction: column;
   left: 50%;
@@ -961,11 +962,17 @@
   padding: 14px;
   position: absolute;
   top: 50%;
+  touch-action: none;
   transform: translate(-50%, -50%) translate(var(--x), var(--y))
     rotate(var(--rotate));
+  user-select: none;
   width: min(78vw, 320px);
   z-index: var(--z);
   will-change: transform, opacity;
+}
+
+.tr-review-card.is-dragging {
+  cursor: grabbing;
 }
 
 .tr-review-photo {

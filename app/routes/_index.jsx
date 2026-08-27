@@ -243,6 +243,17 @@ function ReviewsSection({reviews}) {
     const cards = Array.from(section.querySelectorAll('.tr-review-card'));
     let raf = 0;
 
+    const applyTransform = (card, p) => {
+      const x = card.style.getPropertyValue('--x') || '0px';
+      const y = card.style.getPropertyValue('--y') || '0px';
+      const dx = card.style.getPropertyValue('--dx') || '0px';
+      const dy = card.style.getPropertyValue('--dy') || '0px';
+      const r = card.style.getPropertyValue('--rotate') || '0deg';
+      const drop = (1 - p) * -620;
+      card.style.opacity = String(p);
+      card.style.transform = `translate(-50%, -50%) translate(calc(${x} + ${dx}), calc(${y} + ${dy})) rotate(${r}) translateY(${drop}px) scale(${0.85 + p * 0.15})`;
+    };
+
     const update = () => {
       raf = 0;
       const rect = section.getBoundingClientRect();
@@ -255,18 +266,60 @@ function ReviewsSection({reviews}) {
 
       cards.forEach((card, i) => {
         const p = clamp01((progress - i * 0.08) / 0.15);
-        const x = card.style.getPropertyValue('--x') || '0px';
-        const y = card.style.getPropertyValue('--y') || '0px';
-        const r = card.style.getPropertyValue('--rotate') || '0deg';
-        const drop = (1 - p) * -620;
-        card.style.opacity = String(p);
-        card.style.transform = `translate(-50%, -50%) translate(${x}, ${y}) rotate(${r}) translateY(${drop}px) scale(${0.85 + p * 0.15})`;
+        applyTransform(card, p);
       });
     };
 
     const onScroll = () => {
       if (!raf) raf = requestAnimationFrame(update);
     };
+
+    // Drag con el mouse: las tarjetas se pueden mover como fotos físicas.
+    cards.forEach((card) => {
+      let drag = null;
+
+      const onDown = (e) => {
+        if (e.button !== 0) return;
+        if (parseFloat(card.style.opacity) < 0.7) return;
+        e.preventDefault();
+        drag = {
+          startX: e.clientX,
+          startY: e.clientY,
+          dx: parseFloat(card.style.getPropertyValue('--dx')) || 0,
+          dy: parseFloat(card.style.getPropertyValue('--dy')) || 0,
+        };
+        card.setPointerCapture(e.pointerId);
+        card.classList.add('is-dragging');
+        card.style.zIndex = 200;
+        card.style.transition = 'none';
+      };
+
+      const onMove = (e) => {
+        if (!drag) return;
+        const dx = drag.dx + (e.clientX - drag.startX);
+        const dy = drag.dy + (e.clientY - drag.startY);
+        card.style.setProperty('--dx', `${dx}px`);
+        card.style.setProperty('--dy', `${dy}px`);
+        applyTransform(card, 1);
+      };
+
+      const onUp = () => {
+        if (!drag) return;
+        drag = null;
+        card.classList.remove('is-dragging');
+        card.style.zIndex = 100;
+        card.style.transition =
+          'transform 0.3s cubic-bezier(0.22, 1, 0.36, 1)';
+        setTimeout(() => {
+          card.style.transition = '';
+        }, 320);
+      };
+
+      card.addEventListener('pointerdown', onDown);
+      card.addEventListener('pointermove', onMove);
+      card.addEventListener('pointerup', onUp);
+      card.addEventListener('pointercancel', onUp);
+    });
 
     update();
     window.addEventListener('scroll', onScroll, {passive: true});
