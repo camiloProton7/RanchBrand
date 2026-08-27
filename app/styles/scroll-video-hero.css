@@ -908,12 +908,13 @@
 
 .tr-gorra-card:hover .tr-gorra-badges {
   flex-direction: column;
+  gap: 8px;
 }
 
 .tr-gorra-card:hover .tr-gorra-rating {
   left: 10px;
   right: auto;
-  top: 52px;
+  top: 64px;
 }
 
 .tr-gorra-card:hover .tr-gorra-pager {

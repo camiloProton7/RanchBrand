@@ -123,10 +123,10 @@ function GorrasScroll({products}) {
                 ) : null}
 
                 <div className="tr-gorra-badges">
-                  <span className="tr-badge">New Drop</span>
-                  <span className="tr-badge">Eco Style</span>
+                  <span className="tr-badge">Nuevo</span>
+                  <span className="tr-badge">Premium</span>
                 </div>
-                <span className="tr-gorra-rating">4.8 (124 Reviews)</span>
+                <span className="tr-gorra-rating">★ 4.8</span>
 
                 <div className="tr-gorra-pager" aria-hidden="true">
                   <span className="is-active" />
@@ -147,7 +147,7 @@ function GorrasScroll({products}) {
                     ) : null}
                   </span>
                   <span className="tr-gorra-cta">
-                    Buy Now <i aria-hidden="true">→</i>
+                    Comprar ahora <i aria-hidden="true">→</i>
                   </span>
                 </div>
               </div>
