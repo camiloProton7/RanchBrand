@@ -1,5 +1,5 @@
 import {useLoaderData, useRouteLoaderData} from 'react-router';
-import {useEffect, useRef, useState} from 'react';
+import {useEffect, useRef} from 'react';
 import {ScrollVideoHero} from '~/components/ScrollVideoHero';
 import homeStyles from '~/styles/scroll-video-hero.css?url';
 
@@ -76,6 +76,8 @@ function stripHtml(html) {
   if (!html) return '';
   return html.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
 }
+
+const clamp01 = (v) => Math.min(1, Math.max(0, v));
 
 export default function Home() {
   const rootData = useRouteLoaderData('root');
@@ -224,24 +226,43 @@ const SCATTER = [
 
 function ReviewsSection({reviews}) {
   const sectionRef = useRef(null);
-  const [visible, setVisible] = useState(false);
 
   useEffect(() => {
     const section = sectionRef.current;
     if (!section) return;
-    const observer = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          if (entry.isIntersecting) {
-            setVisible(true);
-            observer.disconnect();
-          }
-        }
-      },
-      {threshold: 0.25},
-    );
-    observer.observe(section);
-    return () => observer.disconnect();
+    const cards = Array.from(section.querySelectorAll('.tr-review-card'));
+    let raf = 0;
+
+    const update = () => {
+      raf = 0;
+      const rect = section.getBoundingClientRect();
+      const viewport = window.innerHeight;
+      const progress = clamp01((viewport - rect.top) / (viewport + rect.height));
+
+      cards.forEach((card, i) => {
+        // Cada tarjeta cae en un tramo del scroll; retrocede si el scroll es inverso.
+        const p = clamp01((progress - i * 0.07) / 0.16);
+        const x = card.style.getPropertyValue('--x') || '0px';
+        const y = card.style.getPropertyValue('--y') || '0px';
+        const r = card.style.getPropertyValue('--rotate') || '0deg';
+        const drop = (1 - p) * -620;
+        card.style.opacity = String(p);
+        card.style.transform = `translate(-50%, -50%) translate(${x}, ${y}) rotate(${r}) translateY(${drop}px) scale(${0.85 + p * 0.15})`;
+      });
+    };
+
+    const onScroll = () => {
+      if (!raf) raf = requestAnimationFrame(update);
+    };
+
+    update();
+    window.addEventListener('scroll', onScroll, {passive: true});
+    window.addEventListener('resize', onScroll);
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('resize', onScroll);
+      cancelAnimationFrame(raf);
+    };
   }, []);
 
   const source = reviews && reviews.length ? reviews : FALLBACK_REVIEWS;
@@ -253,7 +274,7 @@ function ReviewsSection({reviews}) {
   return (
     <section
       ref={sectionRef}
-      className={`tr-reviews ${visible ? 'is-visible' : ''}`}
+      className="tr-reviews"
       aria-label="Reseñas de clientes"
     >
       <h2 className="tr-reviews-title">Lo que dicen en el campo</h2>
@@ -267,7 +288,6 @@ function ReviewsSection({reviews}) {
               '--y': review.y,
               '--rotate': `${review.rotate}deg`,
               '--z': i,
-              animationDelay: `${i * 0.35}s`,
             }}
           >
             {review.photo ? (

@@ -120,10 +120,7 @@ export function ScrollVideoHero({
         Number.isFinite(video.duration) &&
         video.duration > 0
       ) {
-        const nextTime = clamp(progress) * video.duration;
-        if (Math.abs(video.currentTime - nextTime) > 0.015) {
-          video.currentTime = nextTime;
-        }
+        video.currentTime = clamp(progress) * video.duration;
       }
 
       if (Math.abs(targetProgress - renderedProgress) >= 0.0005) {
@@ -135,22 +132,11 @@ export function ScrollVideoHero({
       if (reducedMotion || video.readyState < 2) return;
       const playAttempt = video.play();
       if (playAttempt) {
-        playAttempt
-          .then(() => video.pause())
-          .catch(() => {
-            // El poster sigue visible si el navegador rechaza el arranque.
-          });
+        playAttempt.catch(() => {
+          // El poster sigue visible si el navegador rechaza el arranque.
+        });
       }
     };
-
-    // Desbloqueo al cargar: arrancar y pausar una vez para que el seek
-    // (currentTime) del scroll-scrubbing sea fluido, sin drift.
-    const warmUp = () => unlockVideo();
-    if (video.readyState >= 2) {
-      warmUp();
-    } else {
-      video.addEventListener('loadeddata', warmUp, {once: true});
-    }
 
     measureProgress();
     window.addEventListener('scroll', measureProgress, {passive: true});
@@ -180,7 +166,8 @@ export function ScrollVideoHero({
             className={`tr-scroll-video ${isVideoReady ? 'is-ready' : ''}`}
             src={videoSrc}
             poster={posterSrc}
-            crossOrigin="anonymous"
+            autoPlay
+            loop
             muted
             playsInline
             preload="auto"
@@ -188,7 +175,6 @@ export function ScrollVideoHero({
             onLoadedData={() => setIsVideoReady(true)}
             onCanPlay={() => setIsVideoReady(true)}
             onLoadedMetadata={(event) => {
-              event.currentTarget.pause();
               event.currentTarget.currentTime = 0;
             }}
           />
