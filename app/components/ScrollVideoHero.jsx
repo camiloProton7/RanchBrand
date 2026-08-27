@@ -121,7 +121,7 @@ export function ScrollVideoHero({
         video.duration > 0
       ) {
         const nextTime = clamp(progress) * Math.max(0, video.duration - 0.04);
-        if (Math.abs(video.currentTime - nextTime) > 0.025) {
+        if (Math.abs(video.currentTime - nextTime) > 0.015) {
           video.currentTime = nextTime;
         }
       }
@@ -138,10 +138,19 @@ export function ScrollVideoHero({
         playAttempt
           .then(() => video.pause())
           .catch(() => {
-            // The poster remains visible if a browser declines media warm-up.
+            // El poster sigue visible si el navegador rechaza el arranque.
           });
       }
     };
+
+    // Desbloqueo al cargar: arrancar y pausar una vez para que el seek
+    // (currentTime) del scroll-scrubbing sea fluido, sin drift.
+    const warmUp = () => unlockVideo();
+    if (video.readyState >= 2) {
+      warmUp();
+    } else {
+      video.addEventListener('loadeddata', warmUp, {once: true});
+    }
 
     measureProgress();
     window.addEventListener('scroll', measureProgress, {passive: true});
