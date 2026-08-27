@@ -240,8 +240,9 @@ function ReviewsSection({reviews}) {
       const progress = clamp01((viewport - rect.top) / (viewport + rect.height));
 
       cards.forEach((card, i) => {
-        // Cada tarjeta cae en un tramo del scroll; retrocede si el scroll es inverso.
-        const p = clamp01((progress - i * 0.07) / 0.16);
+        // Cada tarjeta cae en un tramo del scroll a lo largo de TODA la sección:
+        // la primera apenas entra, la última al final. Retrocede con scroll inverso.
+        const p = clamp01((progress - i * 0.1) / 0.22);
         const x = card.style.getPropertyValue('--x') || '0px';
         const y = card.style.getPropertyValue('--y') || '0px';
         const r = card.style.getPropertyValue('--rotate') || '0deg';
