@@ -115,14 +115,6 @@ export function ScrollVideoHero({
         String(1 - clamp(progress * 5)),
       );
 
-      if (
-        !reducedMotion &&
-        Number.isFinite(video.duration) &&
-        video.duration > 0
-      ) {
-        video.currentTime = clamp(progress) * video.duration;
-      }
-
       if (Math.abs(targetProgress - renderedProgress) >= 0.0005) {
         queueFrame();
       }
@@ -130,22 +122,8 @@ export function ScrollVideoHero({
 
     const unlockVideo = () => {
       if (reducedMotion || video.readyState < 2) return;
-      const playAttempt = video.play();
-      if (playAttempt) {
-        playAttempt
-          .then(() => video.pause())
-          .catch(() => {
-            // El poster sigue visible si el navegador rechaza el arranque.
-          });
-      }
+      video.play().catch(() => {});
     };
-
-    // Desbloqueo al cargar para que el seek (currentTime) sea fluido.
-    if (video.readyState >= 2) {
-      unlockVideo();
-    } else {
-      video.addEventListener('loadeddata', unlockVideo, {once: true});
-    }
 
     measureProgress();
     window.addEventListener('scroll', measureProgress, {passive: true});
@@ -175,16 +153,14 @@ export function ScrollVideoHero({
             className={`tr-scroll-video ${isVideoReady ? 'is-ready' : ''}`}
             src={videoSrc}
             poster={posterSrc}
+            autoPlay
+            loop
             muted
             playsInline
             preload="auto"
             tabIndex={-1}
             onLoadedData={() => setIsVideoReady(true)}
             onCanPlay={() => setIsVideoReady(true)}
-            onLoadedMetadata={(event) => {
-              event.currentTarget.pause();
-              event.currentTarget.currentTime = 0;
-            }}
           />
         </div>
 
