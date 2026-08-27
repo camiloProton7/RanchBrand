@@ -87,7 +87,7 @@ export function ScrollVideoHero({
       const videoY = progress * -1.8;
       // Fundido del video al final del scroll para una transición suave
       // hacia la sección de gorras (fondo negro).
-      const videoFade = 1 - clamp((progress - 0.9) / 0.1);
+      const videoFade = 1 - clamp((progress - 0.97) / 0.03);
 
       videoLayer.style.transform = `translate3d(0, ${videoY}%, 0) scale(${videoScale})`;
       videoLayer.style.opacity = String(videoFade);
@@ -120,7 +120,7 @@ export function ScrollVideoHero({
         Number.isFinite(video.duration) &&
         video.duration > 0
       ) {
-        const nextTime = clamp(progress) * Math.max(0, video.duration - 0.01);
+        const nextTime = clamp(progress) * video.duration;
         if (Math.abs(video.currentTime - nextTime) > 0.015) {
           video.currentTime = nextTime;
         }

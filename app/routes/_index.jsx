@@ -212,14 +212,14 @@ const FALLBACK_REVIEWS = [
 ];
 
 const SCATTER = [
-  {x: '-6px', y: '-4px', rotate: -4},
-  {x: '12px', y: '6px', rotate: 3},
-  {x: '-14px', y: '10px', rotate: -6},
-  {x: '5px', y: '-8px', rotate: 2},
-  {x: '16px', y: '4px', rotate: -3},
-  {x: '-10px', y: '12px', rotate: 5},
-  {x: '7px', y: '5px', rotate: -2},
-  {x: '0px', y: '8px', rotate: 1},
+  {x: '-28px', y: '-18px', rotate: -6},
+  {x: '38px', y: '14px', rotate: 4},
+  {x: '-48px', y: '28px', rotate: -8},
+  {x: '18px', y: '-32px', rotate: 3},
+  {x: '52px', y: '8px', rotate: -4},
+  {x: '-34px', y: '38px', rotate: 6},
+  {x: '24px', y: '18px', rotate: -3},
+  {x: '0px', y: '34px', rotate: 2},
 ];
 
 function ReviewsSection({reviews}) {
@@ -267,7 +267,7 @@ function ReviewsSection({reviews}) {
               '--y': review.y,
               '--rotate': `${review.rotate}deg`,
               '--z': i,
-              animationDelay: `${i * 0.12}s`,
+              animationDelay: `${i * 0.35}s`,
             }}
           >
             {review.photo ? (
