@@ -1409,3 +1409,146 @@
     gap: 36px;
   }
 }
+
+/* ── Carousel 3D de chaquetas ── */
+.tr-chaqueta3d {
+  background: radial-gradient(ellipse at 50% 0%, var(--bg) 0%, transparent 55%),
+    #0b0b09;
+  color: #f4f0e7;
+  overflow: hidden;
+  padding: 80px 0 48px;
+  position: relative;
+  transition: background 0.8s ease;
+}
+
+.tr-chaqueta3d-stage {
+  cursor: grab;
+  margin: 0 auto;
+  max-width: 760px;
+  min-height: 620px;
+  position: relative;
+  touch-action: pan-y;
+  user-select: none;
+}
+
+.tr-chaqueta3d-stage:active {
+  cursor: grabbing;
+}
+
+.tr-chaqueta3d-info {
+  left: 0;
+  padding: 0 24px;
+  position: relative;
+  right: 0;
+  text-align: center;
+  z-index: 10;
+}
+
+.tr-chaqueta3d-eyebrow {
+  color: #d8d2c4;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+.tr-chaqueta3d-name {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: clamp(26px, 6vw, 40px);
+  font-weight: 500;
+  margin: 8px 0 6px;
+}
+
+.tr-chaqueta3d-desc {
+  color: #b7b0a0;
+  font-size: 13px;
+  line-height: 1.5;
+  margin: 0 auto 16px;
+  max-width: 420px;
+}
+
+.tr-chaqueta3d-actions {
+  align-items: center;
+  display: flex;
+  gap: 14px;
+  justify-content: center;
+}
+
+.tr-chaqueta3d-price {
+  font-size: 20px;
+  font-weight: 800;
+}
+
+.tr-chaqueta3d-cta {
+  background: #f4f0e7;
+  border-radius: 999px;
+  color: #141310;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 11px 22px;
+  text-decoration: none;
+  transition: transform 0.2s ease;
+}
+
+.tr-chaqueta3d-cta:hover {
+  transform: translateY(-1px);
+}
+
+.tr-chaqueta3d-carousel {
+  height: 400px;
+  left: 0;
+  margin-top: 24px;
+  perspective: 1200px;
+  position: relative;
+  right: 0;
+}
+
+.tr-chaqueta3d-card {
+  aspect-ratio: 3 / 4;
+  border-radius: 16px;
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
+  left: 50%;
+  overflow: hidden;
+  position: absolute;
+  top: 50%;
+  transform-style: preserve-3d;
+  transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.4s ease;
+  width: 240px;
+  will-change: transform, opacity;
+}
+
+.tr-chaqueta3d-card img {
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+  width: 100%;
+}
+
+.tr-chaqueta3d-card.is-active {
+  box-shadow: 0 34px 70px rgba(0, 0, 0, 0.6);
+}
+
+.tr-chaqueta3d-hint {
+  bottom: 8px;
+  color: rgba(244, 240, 231, 0.7);
+  font-size: 11px;
+  left: 0;
+  letter-spacing: 0.1em;
+  position: absolute;
+  right: 0;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+@media (max-width: 640px) {
+  .tr-chaqueta3d-card {
+    width: 200px;
+  }
+  .tr-chaqueta3d-carousel {
+    height: 340px;
+  }
+  .tr-chaqueta3d-stage {
+    min-height: 560px;
+  }
+}
