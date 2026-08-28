@@ -1,7 +1,6 @@
 import {useLoaderData, useRouteLoaderData} from 'react-router';
 import {useEffect, useRef} from 'react';
 import {ScrollVideoHero} from '~/components/ScrollVideoHero';
-import GorraDialSelector from '~/components/GorraDialSelector';
 import homeStyles from '~/styles/scroll-video-hero.css?url';
 
 export const meta = () => [
@@ -101,7 +100,6 @@ export default function Home() {
         ariaLabel="Colección de gorras"
       />
       <ReviewsSection reviews={reviews} />
-      <GorraDialSelector products={gorras} />
       <ProductScroll
         products={chaquetas}
         collectionUrl="https://ranch.com.co/collections/chaquetas"
@@ -116,13 +114,38 @@ function EditorialFooter() {
   const year = new Date().getFullYear();
   return (
     <footer className="tr-footer">
-      <div className="tr-footer-top">
-        <div className="tr-footer-brand">
-          <span className="tr-footer-logo">THE RANCH</span>
+      <div className="tr-footer-inner">
+        <div className="tr-footer-head">
+          <h2 className="tr-footer-megatitle">THE RANCH</h2>
           <p className="tr-footer-tagline">No seguimos modas, las marcamos.</p>
         </div>
 
-        <div className="tr-footer-cols">
+        <div className="tr-footer-grid">
+          <div className="tr-footer-newsletter">
+            <h4 className="tr-footer-title">Únete al ranch</h4>
+            <p className="tr-footer-newsletter-desc">
+              Novedades, drops y ofertas exclusivas.
+            </p>
+            <form
+              className="tr-footer-form"
+              onSubmit={(e) => e.preventDefault()}
+            >
+              <input
+                className="tr-footer-input"
+                type="email"
+                placeholder="Tu email"
+                aria-label="Email"
+              />
+              <button
+                className="tr-footer-submit"
+                type="submit"
+                aria-label="Suscribirse"
+              >
+                →
+              </button>
+            </form>
+          </div>
+
           <div className="tr-footer-col">
             <h4 className="tr-footer-title">Tienda</h4>
             <a href="https://ranch.com.co/collections/gorras-truckers">
@@ -142,7 +165,7 @@ function EditorialFooter() {
           </div>
 
           <div className="tr-footer-col">
-            <h4 className="tr-footer-title">Legales</h4>
+            <h4 className="tr-footer-title">Legal</h4>
             <a href="https://ranch.com.co/policies/privacy-policy">
               Privacidad
             </a>
@@ -151,27 +174,27 @@ function EditorialFooter() {
             </a>
           </div>
         </div>
-      </div>
 
-      <div className="tr-footer-bottom">
-        <span className="tr-footer-copy">
-          © {year} The Ranch — Centro Chía, Colombia
-        </span>
-        <div className="tr-footer-social">
-          <a
-            href="https://www.instagram.com/"
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            Instagram
-          </a>
-          <a
-            href="https://www.tiktok.com/"
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            TikTok
-          </a>
+        <div className="tr-footer-bottom">
+          <span className="tr-footer-copy">
+            © {year} The Ranch — Centro Chía, Colombia
+          </span>
+          <div className="tr-footer-social">
+            <a
+              href="https://www.instagram.com/"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              Instagram
+            </a>
+            <a
+              href="https://www.tiktok.com/"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              TikTok
+            </a>
+          </div>
         </div>
       </div>
     </footer>
