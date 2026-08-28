@@ -189,9 +189,7 @@ function EditorialFooter() {
         </div>
 
         <div className="tr-footer-bottom">
-          <span className="tr-footer-copy">
-            © {year} The Ranch — Centro Chía, Colombia
-          </span>
+          <span className="tr-footer-copy">© {year} The Ranch — Colombia</span>
           <div className="tr-footer-social">
             <a
               href="https://www.instagram.com/"
@@ -216,22 +214,18 @@ function EditorialFooter() {
 
 function TrustBar() {
   const items = [
-    ['🚚', 'Envío gratis', 'a toda Colombia'],
-    ['🛡️', 'Garantía', 'de calidad'],
-    ['🔒', 'Pago seguro', '100% protegido'],
-    ['💳', 'Cuotas', 'disponibles'],
+    'Envío gratis a toda Colombia',
+    'Garantía de calidad',
+    'Pago 100% seguro',
+    'Cuotas disponibles',
   ];
   return (
     <div className="tr-trustbar">
-      {items.map(([icon, title, sub]) => (
-        <div className="tr-trustbar-item" key={title}>
-          <span className="tr-trustbar-icon" aria-hidden="true">
-            {icon}
-          </span>
-          <span className="tr-trustbar-text">
-            <strong>{title}</strong> {sub}
-          </span>
-        </div>
+      {items.map((text, i) => (
+        <span className="tr-trustbar-item" key={text}>
+          {i > 0 ? <span className="tr-trustbar-sep">·</span> : null}
+          {text}
+        </span>
       ))}
     </div>
   );
@@ -243,11 +237,12 @@ function RanchStory() {
       <div className="tr-ranchstory-inner">
         <span className="tr-ranchstory-eyebrow">El Ranch</span>
         <h2 className="tr-ranchstory-title">
-          Hecho en Chía, para el campo y la calle
+          Hecho en Colombia, para el campo y la calle
         </h2>
         <p className="tr-ranchstory-text">
-          Desde nuestra tienda en Centro Chía diseñamos piezas que aguantan el
-          sol, la lluvia y el kilómetro. No seguimos modas, las marcamos.
+          Diseñamos piezas que aguantan el sol, la lluvia y el kilómetro.
+          Cuero, bordado a mano y una actitud que no seguimos de nadie: la
+          nuestra.
         </p>
         <a
           className="tr-ranchstory-cta"
@@ -255,7 +250,7 @@ function RanchStory() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          Visítanos en Chía
+          Conoce la marca
         </a>
       </div>
     </section>
