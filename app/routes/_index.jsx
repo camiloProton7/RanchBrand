@@ -107,7 +107,74 @@ export default function Home() {
         collectionUrl="https://ranch.com.co/collections/chaquetas"
         ariaLabel="Colección de chaquetas"
       />
+      <EditorialFooter />
     </div>
+  );
+}
+
+function EditorialFooter() {
+  const year = new Date().getFullYear();
+  return (
+    <footer className="tr-footer">
+      <div className="tr-footer-top">
+        <div className="tr-footer-brand">
+          <span className="tr-footer-logo">THE RANCH</span>
+          <p className="tr-footer-tagline">No seguimos modas, las marcamos.</p>
+        </div>
+
+        <div className="tr-footer-cols">
+          <div className="tr-footer-col">
+            <h4 className="tr-footer-title">Tienda</h4>
+            <a href="https://ranch.com.co/collections/gorras-truckers">
+              Gorras
+            </a>
+            <a href="https://ranch.com.co/collections/chaquetas">Chaquetas</a>
+            <a href="https://ranch.com.co/collections/all">Accesorios</a>
+          </div>
+
+          <div className="tr-footer-col">
+            <h4 className="tr-footer-title">Ayuda</h4>
+            <a href="https://ranch.com.co/policies/shipping-policy">Envíos</a>
+            <a href="https://ranch.com.co/policies/refund-policy">
+              Devoluciones
+            </a>
+            <a href="https://wa.me/573209157343">Contacto</a>
+          </div>
+
+          <div className="tr-footer-col">
+            <h4 className="tr-footer-title">Legales</h4>
+            <a href="https://ranch.com.co/policies/privacy-policy">
+              Privacidad
+            </a>
+            <a href="https://ranch.com.co/policies/terms-of-service">
+              Términos
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div className="tr-footer-bottom">
+        <span className="tr-footer-copy">
+          © {year} The Ranch — Centro Chía, Colombia
+        </span>
+        <div className="tr-footer-social">
+          <a
+            href="https://www.instagram.com/"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            Instagram
+          </a>
+          <a
+            href="https://www.tiktok.com/"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            TikTok
+          </a>
+        </div>
+      </div>
+    </footer>
   );
 }
 
