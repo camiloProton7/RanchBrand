@@ -118,7 +118,6 @@ export default function ChaquetaSelector3D({products}) {
         <div className="tr-chaqueta3d-info" key={active.id}>
           <span className="tr-chaqueta3d-eyebrow">Chaquetas</span>
           <h3 className="tr-chaqueta3d-name">{active.title}</h3>
-          <p className="tr-chaqueta3d-desc">{stripHtml(active.description)}</p>
           <div className="tr-chaqueta3d-actions">
             <span className="tr-chaqueta3d-price">
               {formatPrice(active.priceRange?.minVariantPrice?.amount)}
