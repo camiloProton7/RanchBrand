@@ -137,8 +137,8 @@ export default function ChaquetaSelector3D({products}) {
             const offset = i - index;
             const angle = offset * 38;
             const scale = 1 - Math.abs(offset) * 0.12;
-            const x = offset * 42;
-            const z = -Math.abs(offset) * 160;
+            const x = offset * 160;
+            const z = -Math.abs(offset) * 180;
             const opacity = Math.abs(offset) > 2.5 ? 0 : 1;
             const isActive = i === index;
             return (
@@ -146,7 +146,7 @@ export default function ChaquetaSelector3D({products}) {
                 key={p.id}
                 className={`tr-chaqueta3d-card ${isActive ? 'is-active' : ''}`}
                 style={{
-                  transform: `translateX(${x}%) translateZ(${z}px) rotateY(${angle}deg) scale(${scale})`,
+                  transform: `translate(-50%, -50%) translateX(${x}px) translateZ(${z}px) rotateY(${angle}deg) scale(${scale})`,
                   zIndex: 20 - Math.abs(offset),
                   opacity,
                 }}
