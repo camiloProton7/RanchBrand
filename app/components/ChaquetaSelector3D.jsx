@@ -146,12 +146,13 @@ export default function ChaquetaSelector3D({products}) {
         <div className="tr-chaqueta3d-carousel">
           {items.map((p, i) => {
             const offset = i - index;
-            const angle = offset * 34;
+            const angle = offset * 45;
             const scale = 1 - Math.abs(offset) * 0.1;
-            const x = offset * 200;
-            const z = -Math.abs(offset) * 200;
+            const x = offset * 250;
+            const z = -Math.abs(offset) * 220;
             const opacity = Math.abs(offset) > 2.5 ? 0 : 1;
             const isActive = i === index;
+            const blur = isActive ? 0 : Math.min(6, Math.abs(offset) * 2.5);
             return (
               <div
                 key={p.id}
@@ -160,6 +161,7 @@ export default function ChaquetaSelector3D({products}) {
                   transform: `translate(-50%, -50%) translateX(${x}px) translateZ(${z}px) rotateY(${angle}deg) scale(${scale})`,
                   zIndex: 20 - Math.abs(offset),
                   opacity,
+                  filter: blur ? `blur(${blur}px)` : undefined,
                 }}
                 onClick={() => {
                   setIndex(i);
