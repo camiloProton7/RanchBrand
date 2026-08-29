@@ -24,11 +24,7 @@ function formatPrice(amount) {
 }
 
 function contextImage(product) {
-  return (
-    CONTEXT_IMAGES[product.handle] ||
-    product.images?.nodes?.[1]?.url ||
-    ''
-  );
+  return CONTEXT_IMAGES[product.handle] || '';
 }
 
 function extractColor(src, callback) {
@@ -181,23 +177,25 @@ export default function ChaquetaSelector3D({products}) {
           })}
         </div>
 
-        {/* Foto de contexto (debajo) */}
-        <div className="tr-chaqueta3d-context">
-          {items.map((p, i) => {
-            const src = contextImage(p);
-            if (!src) return null;
-            return (
-              <img
-                key={p.id}
-                className={i === index ? 'is-active' : ''}
-                src={src}
-                alt=""
-                loading="lazy"
-                draggable={false}
-              />
-            );
-          })}
-        </div>
+        {/* Foto de contexto (debajo) — solo aparece cuando hay fotos cargadas */}
+        {Object.keys(CONTEXT_IMAGES).length > 0 && (
+          <div className="tr-chaqueta3d-context">
+            {items.map((p, i) => {
+              const src = contextImage(p);
+              if (!src) return null;
+              return (
+                <img
+                  key={p.id}
+                  className={i === index ? 'is-active' : ''}
+                  src={src}
+                  alt=""
+                  loading="lazy"
+                  draggable={false}
+                />
+              );
+            })}
+          </div>
+        )}
 
         {!hasInteracted && (
           <div className="tr-chaqueta3d-hint" aria-hidden="true">
