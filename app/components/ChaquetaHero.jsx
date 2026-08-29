@@ -1,15 +1,13 @@
-import {useRef, useState} from 'react';
+import {useEffect, useRef, useState} from 'react';
 
 /**
  * ChaquetaHero — hero premium de chaquetas.
- * La chaqueta es un PNG transparente que "flota" sobre un fondo de color
- * complementario. Detrás hay un texto gigante con el nombre (LAREDO,
- * YELLOWSTONE, ARMOR, MOJAVE, SAHARA) en un color propio de cada chaqueta.
+ * PNG flotante sobre fondo de color complementario + texto gigante detrás.
+ * Incluye miniaturas de detalle (fotos de cada chaqueta), eyebrow y CTA.
  */
 
 const KEYWORDS = ['Laredo', 'Sahara', 'Yellowstone', 'Armor', 'Mojave'];
 
-// Colores complementarios por chaqueta: fondo + color del texto gigante
 const COLORS = {
   Laredo: {bg: '#6b4a2b', text: '#e8d5b0'},
   Sahara: {bg: '#c8a36a', text: '#3f3322'},
@@ -41,7 +39,12 @@ export default function ChaquetaHero({products}) {
     KEYWORDS.some((k) => (p.title || '').includes(k)),
   );
   const [index, setIndex] = useState(0);
+  const [imageIndex, setImageIndex] = useState(0);
   const dragInfo = useRef(null);
+
+  useEffect(() => {
+    setImageIndex(0);
+  }, [index]);
 
   if (!items.length) return null;
 
@@ -49,13 +52,13 @@ export default function ChaquetaHero({products}) {
   const keyword = keywordFor(active.title);
   const colors = COLORS[keyword] || {bg: '#3a3228', text: '#f4f0e7'};
   const giant = keyword.toUpperCase();
-  const jacketSrc = active.featuredImage?.url || '';
+  const images = active.images?.nodes || [];
+  const mainImage = images[imageIndex]?.url || active.featuredImage?.url || '';
   const n = items.length;
 
   const prev = () => setIndex((index - 1 + n) % n);
   const next = () => setIndex((index + 1) % n);
 
-  // Swipe táctil (mobile) para cambiar de chaqueta deslizando
   const onPointerDown = (e) => {
     if (e.pointerType === 'mouse' && e.button !== 0) return;
     dragInfo.current = {startX: e.clientX};
@@ -90,10 +93,10 @@ export default function ChaquetaHero({products}) {
         </span>
 
         {/* Chaqueta PNG flotando */}
-        {jacketSrc ? (
+        {mainImage ? (
           <img
             className="tr-chaqueta-hero-jacket"
-            src={jacketSrc}
+            src={mainImage}
             alt={active.title}
             draggable={false}
           />
@@ -118,7 +121,25 @@ export default function ChaquetaHero({products}) {
         </button>
       </div>
 
+      {/* Miniaturas de detalle */}
+      {images.length > 1 && (
+        <div className="tr-chaqueta-hero-thumbs">
+          {images.map((img, i) => (
+            <button
+              key={img.url}
+              className={i === imageIndex ? 'is-active' : ''}
+              type="button"
+              onClick={() => setImageIndex(i)}
+              aria-label={`Foto ${i + 1}`}
+            >
+              <img src={img.url} alt="" loading="lazy" draggable={false} />
+            </button>
+          ))}
+        </div>
+      )}
+
       <div className="tr-chaqueta-hero-info">
+        <span className="tr-chaqueta-hero-eyebrow">{active.title}</span>
         <p className="tr-chaqueta-hero-desc">{DESCRIPTIONS[keyword]}</p>
         <span className="tr-chaqueta-hero-price">
           {formatPrice(active.priceRange?.minVariantPrice?.amount)}
@@ -130,7 +151,10 @@ export default function ChaquetaHero({products}) {
           className="tr-chaqueta-hero-cta"
           href={`https://ranch.com.co/products/${active.handle}`}
         >
-          Comprar ahora
+          <span>Comprar ahora</span>
+          <span className="tr-chaqueta-hero-cta-arrow" aria-hidden="true">
+            →
+          </span>
         </a>
         <div className="tr-chaqueta-hero-dots">
           {items.map((p, i) => (

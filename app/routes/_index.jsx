@@ -568,7 +568,7 @@ const COLLECTION_QUERY = (handle) => `#graphql
             width
             height
           }
-          images(first: 2) {
+          images(first: 5) {
             nodes {
               url
               altText
