@@ -1667,3 +1667,141 @@
 .tr-whatsapp-float:hover {
   transform: scale(1.08);
 }
+
+/* ── Hero de chaquetas (campaña western) ── */
+.tr-chaqueta-hero {
+  background: #d8cfc0;
+  color: #3a2c1c;
+  padding: 48px 24px 56px;
+  position: relative;
+  text-align: center;
+}
+
+.tr-chaqueta-hero-logo {
+  color: #6b5a44;
+  display: block;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.3em;
+  margin-bottom: 24px;
+  text-transform: uppercase;
+}
+
+.tr-chaqueta-hero-stage {
+  align-items: center;
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  margin: 0 auto;
+  max-width: 820px;
+}
+
+.tr-chaqueta-hero-arrow {
+  align-items: center;
+  background: transparent;
+  border: 1px solid rgba(58, 44, 28, 0.3);
+  border-radius: 50%;
+  color: #3a2c1c;
+  cursor: pointer;
+  display: flex;
+  font-size: 28px;
+  height: 44px;
+  justify-content: center;
+  line-height: 1;
+  width: 44px;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.tr-chaqueta-hero-arrow:hover {
+  background: #3a2c1c;
+  color: #d8cfc0;
+}
+
+.tr-chaqueta-hero-media {
+  flex: 1;
+  max-width: 620px;
+}
+
+.tr-chaqueta-hero-media img {
+  border-radius: 14px;
+  box-shadow: 0 24px 50px rgba(0, 0, 0, 0.18);
+  display: block;
+  max-height: 560px;
+  object-fit: cover;
+  width: 100%;
+}
+
+.tr-chaqueta-hero-info {
+  margin: 20px auto 0;
+  max-width: 520px;
+}
+
+.tr-chaqueta-hero-desc {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 15px;
+  font-style: italic;
+  line-height: 1.6;
+  margin: 0 0 8px;
+}
+
+.tr-chaqueta-hero-price {
+  font-size: 18px;
+  font-weight: 800;
+}
+
+.tr-chaqueta-hero-bottom {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.tr-chaqueta-hero-cta {
+  background: #5a6b3c;
+  border-radius: 999px;
+  color: #fff;
+  display: inline-block;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  padding: 13px 34px;
+  text-decoration: none;
+  transition: background 0.2s ease;
+}
+
+.tr-chaqueta-hero-cta:hover {
+  background: #4a5a31;
+}
+
+.tr-chaqueta-hero-dots {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+}
+
+.tr-chaqueta-hero-dots button {
+  background: rgba(58, 44, 28, 0.25);
+  border: none;
+  border-radius: 999px;
+  cursor: pointer;
+  height: 6px;
+  padding: 0;
+  transition: background 0.3s ease, width 0.3s ease;
+  width: 6px;
+}
+
+.tr-chaqueta-hero-dots button.is-active {
+  background: #3a2c1c;
+  width: 20px;
+}
+
+@media (max-width: 640px) {
+  .tr-chaqueta-hero-media img {
+    max-height: 420px;
+  }
+  .tr-chaqueta-hero-arrow {
+    height: 38px;
+    width: 38px;
+  }
+}

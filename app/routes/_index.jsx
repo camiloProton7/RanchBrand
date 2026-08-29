@@ -1,7 +1,7 @@
 import {useLoaderData, useRouteLoaderData} from 'react-router';
 import {useEffect, useRef} from 'react';
 import {ScrollVideoHero} from '~/components/ScrollVideoHero';
-import ChaquetaSelector3D from '~/components/ChaquetaSelector3D';
+import ChaquetaHero from '~/components/ChaquetaHero';
 import homeStyles from '~/styles/scroll-video-hero.css?url';
 
 export const meta = () => [
@@ -104,7 +104,7 @@ export default function Home() {
         ariaLabel="Colección de gorras"
       />
       <ReviewsSection reviews={reviews} />
-      <ChaquetaSelector3D products={chaquetas} />
+      <ChaquetaHero products={chaquetas} />
       <ProductScroll
         products={camisetas}
         collectionUrl="https://ranch.com.co/collections/camisetas"
