@@ -85,18 +85,13 @@ export default function ChaquetaHero({products}) {
         onPointerCancel={onPointerUp}
       >
         {/* Texto gigante detrás */}
-        <span
-          key={active.id}
-          className="tr-chaqueta-hero-giant"
-          aria-hidden="true"
-        >
+        <span className="tr-chaqueta-hero-giant" aria-hidden="true">
           {giant}
         </span>
 
         {/* Chaqueta PNG flotando */}
         {jacketSrc ? (
           <img
-            key={active.id}
             className="tr-chaqueta-hero-jacket"
             src={jacketSrc}
             alt={active.title}

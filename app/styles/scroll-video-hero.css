@@ -1692,7 +1692,6 @@
 }
 
 .tr-chaqueta-hero-giant {
-  animation: tr-chaqueta-giant-in 0.7s cubic-bezier(0.22, 1, 0.36, 1);
   color: var(--text);
   font-family: Georgia, 'Times New Roman', serif;
   font-size: clamp(54px, 12vw, 140px);
@@ -1710,19 +1709,7 @@
   z-index: 1;
 }
 
-@keyframes tr-chaqueta-giant-in {
-  from {
-    opacity: 0;
-    transform: translate(-50%, -50%) scale(0.97);
-  }
-  to {
-    opacity: 0.9;
-    transform: translate(-50%, -50%) scale(1);
-  }
-}
-
 .tr-chaqueta-hero-jacket {
-  animation: tr-chaqueta-jacket-in 0.7s cubic-bezier(0.22, 1, 0.36, 1);
   filter: drop-shadow(0 30px 40px rgba(0, 0, 0, 0.45));
   height: 100%;
   left: 50%;
@@ -1733,17 +1720,6 @@
   transform: translate(-50%, -50%);
   width: auto;
   z-index: 2;
-}
-
-@keyframes tr-chaqueta-jacket-in {
-  from {
-    opacity: 0;
-    transform: translate(-50%, -44%) scale(0.94);
-  }
-  to {
-    opacity: 1;
-    transform: translate(-50%, -50%) scale(1);
-  }
 }
 
 .tr-chaqueta-hero-arrow {
