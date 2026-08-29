@@ -1692,20 +1692,14 @@
 }
 
 .tr-chaqueta-hero-giant {
-  background: linear-gradient(
-    180deg,
-    rgba(244, 240, 231, 0.55) 0%,
-    rgba(244, 240, 231, 0.07) 100%
-  );
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  color: var(--text);
   font-family: Georgia, 'Times New Roman', serif;
   font-size: clamp(90px, 18vw, 220px);
   font-weight: 700;
   left: 50%;
   letter-spacing: -0.02em;
   line-height: 0.85;
+  opacity: 0.9;
   position: absolute;
   text-transform: uppercase;
   top: 50%;

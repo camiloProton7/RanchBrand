@@ -1,13 +1,22 @@
-import {useEffect, useRef, useState} from 'react';
+import {useRef, useState} from 'react';
 
 /**
  * ChaquetaHero — hero premium de chaquetas.
- * La chaqueta es un PNG transparente que "flota" sobre un fondo que se tiñe
- * con el color dominante de cada chaqueta. Detrás hay un texto gigante con el
- * nombre (LAREDO, YELLOWSTONE, ARMOR, MOJAVE, SAHARA) parcialmente oculto.
+ * La chaqueta es un PNG transparente que "flota" sobre un fondo de color
+ * complementario. Detrás hay un texto gigante con el nombre (LAREDO,
+ * YELLOWSTONE, ARMOR, MOJAVE, SAHARA) en un color propio de cada chaqueta.
  */
 
 const KEYWORDS = ['Laredo', 'Sahara', 'Yellowstone', 'Armor', 'Mojave'];
+
+// Colores complementarios por chaqueta: fondo + color del texto gigante
+const COLORS = {
+  Laredo: {bg: '#6b4a2b', text: '#e8d5b0'},
+  Sahara: {bg: '#c8a36a', text: '#3f3322'},
+  Yellowstone: {bg: '#5a6b3c', text: '#e8d5a8'},
+  Armor: {bg: '#3a3f44', text: '#e8e2d4'},
+  Mojave: {bg: '#a35c3a', text: '#f0e0c8'},
+};
 
 const DESCRIPTIONS = {
   Laredo: 'Hecha a mano en lona y cuero, impermeabilizada para la intemperie.',
@@ -27,66 +36,19 @@ function keywordFor(title) {
   return KEYWORDS.find((k) => title.includes(k)) || title;
 }
 
-function descriptionFor(title) {
-  const key = keywordFor(title);
-  return DESCRIPTIONS[key] || 'Hecha a mano para la intemperie.';
-}
-
-function extractColor(src, callback) {
-  if (!src) return callback(null);
-  const img = new Image();
-  img.crossOrigin = 'anonymous';
-  img.onload = () => {
-    try {
-      const canvas = document.createElement('canvas');
-      canvas.width = 60;
-      canvas.height = 60;
-      const ctx = canvas.getContext('2d');
-      ctx.drawImage(img, 0, 0, 60, 60);
-      const data = ctx.getImageData(0, 0, 60, 60).data;
-      let r = 0;
-      let g = 0;
-      let b = 0;
-      let n = 0;
-      for (let i = 0; i < data.length; i += 4) {
-        if (data[i + 3] < 60) continue; // ignorar píxeles transparentes
-        r += data[i];
-        g += data[i + 1];
-        b += data[i + 2];
-        n++;
-      }
-      if (n === 0) return callback(null);
-      callback([Math.round(r / n), Math.round(g / n), Math.round(b / n)]);
-    } catch {
-      callback(null);
-    }
-  };
-  img.onerror = () => callback(null);
-  img.src = src;
-}
-
 export default function ChaquetaHero({products}) {
   const items = products.filter((p) =>
     KEYWORDS.some((k) => (p.title || '').includes(k)),
   );
   const [index, setIndex] = useState(0);
-  const [bg, setBg] = useState([46, 38, 28]);
   const dragInfo = useRef(null);
-
-  useEffect(() => {
-    let alive = true;
-    extractColor(items[index]?.featuredImage?.url, (rgb) => {
-      if (alive && rgb) setBg(rgb);
-    });
-    return () => {
-      alive = false;
-    };
-  }, [index, items]);
 
   if (!items.length) return null;
 
   const active = items[index];
-  const giant = keywordFor(active.title).toUpperCase();
+  const keyword = keywordFor(active.title);
+  const colors = COLORS[keyword] || {bg: '#3a3228', text: '#f4f0e7'};
+  const giant = keyword.toUpperCase();
   const jacketSrc = active.featuredImage?.url || '';
   const n = items.length;
 
@@ -113,7 +75,7 @@ export default function ChaquetaHero({products}) {
   return (
     <section
       className="tr-chaqueta-hero"
-      style={{'--bg': `rgb(${bg[0]}, ${bg[1]}, ${bg[2]})`}}
+      style={{'--bg': colors.bg, '--text': colors.text}}
       aria-label="Chaquetas"
     >
       <div
@@ -158,7 +120,7 @@ export default function ChaquetaHero({products}) {
       </div>
 
       <div className="tr-chaqueta-hero-info">
-        <p className="tr-chaqueta-hero-desc">{descriptionFor(active.title)}</p>
+        <p className="tr-chaqueta-hero-desc">{DESCRIPTIONS[keyword]}</p>
         <span className="tr-chaqueta-hero-price">
           {formatPrice(active.priceRange?.minVariantPrice?.amount)}
         </span>
