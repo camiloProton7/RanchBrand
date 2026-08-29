@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react';
+import {useEffect, useRef, useState} from 'react';
 
 /**
  * ChaquetaHero — hero premium de chaquetas.
@@ -71,6 +71,7 @@ export default function ChaquetaHero({products}) {
   );
   const [index, setIndex] = useState(0);
   const [bg, setBg] = useState([46, 38, 28]);
+  const dragInfo = useRef(null);
 
   useEffect(() => {
     let alive = true;
@@ -92,13 +93,35 @@ export default function ChaquetaHero({products}) {
   const prev = () => setIndex((index - 1 + n) % n);
   const next = () => setIndex((index + 1) % n);
 
+  // Swipe táctil (mobile) para cambiar de chaqueta deslizando
+  const onPointerDown = (e) => {
+    if (e.pointerType === 'mouse' && e.button !== 0) return;
+    dragInfo.current = {startX: e.clientX};
+  };
+
+  const onPointerUp = (e) => {
+    const info = dragInfo.current;
+    if (!info) return;
+    const dx = e.clientX - info.startX;
+    if (Math.abs(dx) > 50) {
+      if (dx < 0) next();
+      else prev();
+    }
+    dragInfo.current = null;
+  };
+
   return (
     <section
       className="tr-chaqueta-hero"
       style={{'--bg': `rgb(${bg[0]}, ${bg[1]}, ${bg[2]})`}}
       aria-label="Chaquetas"
     >
-      <div className="tr-chaqueta-hero-stage">
+      <div
+        className="tr-chaqueta-hero-stage"
+        onPointerDown={onPointerDown}
+        onPointerUp={onPointerUp}
+        onPointerCancel={onPointerUp}
+      >
         {/* Texto gigante detrás */}
         <span className="tr-chaqueta-hero-giant" aria-hidden="true">
           {giant}
