@@ -1670,18 +1670,13 @@
 
 /* ── Hero de chaquetas (PNG flotante + texto gigante + fondo dinámico) ── */
 .tr-chaqueta-hero {
-  background: radial-gradient(
-      ellipse at 50% 40%,
-      var(--bg) 0%,
-      transparent 56%
-    ),
-    linear-gradient(180deg, #1a1612 0%, #12100d 100%);
+  background: var(--bg);
   color: #f4f0e7;
   overflow: hidden;
   padding: 40px 24px 48px;
   position: relative;
   text-align: center;
-  transition: background 0.8s ease;
+  transition: background 0.7s ease;
 }
 
 .tr-chaqueta-hero-stage {
@@ -1692,6 +1687,7 @@
 }
 
 .tr-chaqueta-hero-giant {
+  animation: tr-chaqueta-giant-in 0.7s cubic-bezier(0.22, 1, 0.36, 1);
   color: var(--text);
   font-family: Georgia, 'Times New Roman', serif;
   font-size: clamp(90px, 18vw, 220px);
@@ -1709,7 +1705,19 @@
   z-index: 1;
 }
 
+@keyframes tr-chaqueta-giant-in {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.97);
+  }
+  to {
+    opacity: 0.9;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
 .tr-chaqueta-hero-jacket {
+  animation: tr-chaqueta-jacket-in 0.7s cubic-bezier(0.22, 1, 0.36, 1);
   filter: drop-shadow(0 30px 40px rgba(0, 0, 0, 0.45));
   height: 100%;
   left: 50%;
@@ -1720,6 +1728,17 @@
   transform: translate(-50%, -50%);
   width: auto;
   z-index: 2;
+}
+
+@keyframes tr-chaqueta-jacket-in {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -44%) scale(0.94);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
 }
 
 .tr-chaqueta-hero-arrow {

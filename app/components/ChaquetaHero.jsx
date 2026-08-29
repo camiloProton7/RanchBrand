@@ -85,7 +85,11 @@ export default function ChaquetaHero({products}) {
         onPointerCancel={onPointerUp}
       >
         {/* Texto gigante detrás */}
-        <span className="tr-chaqueta-hero-giant" aria-hidden="true">
+        <span
+          key={active.id}
+          className="tr-chaqueta-hero-giant"
+          aria-hidden="true"
+        >
           {giant}
         </span>
 
