@@ -1670,7 +1670,12 @@
 
 /* ── Hero de chaquetas (PNG flotante + texto gigante + fondo dinámico) ── */
 .tr-chaqueta-hero {
-  background: var(--bg);
+  background: linear-gradient(
+    165deg,
+    var(--bg) 0%,
+    #241d15 55%,
+    #15120e 100%
+  );
   color: #f4f0e7;
   overflow: hidden;
   padding: 40px 24px 48px;
@@ -1690,11 +1695,11 @@
   animation: tr-chaqueta-giant-in 0.7s cubic-bezier(0.22, 1, 0.36, 1);
   color: var(--text);
   font-family: Georgia, 'Times New Roman', serif;
-  font-size: clamp(90px, 18vw, 220px);
+  font-size: clamp(54px, 12vw, 140px);
   font-weight: 700;
   left: 50%;
-  letter-spacing: -0.02em;
-  line-height: 0.85;
+  letter-spacing: 0.02em;
+  line-height: 0.9;
   opacity: 0.9;
   position: absolute;
   text-transform: uppercase;
