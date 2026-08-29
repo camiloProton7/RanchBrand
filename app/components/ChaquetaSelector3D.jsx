@@ -1,11 +1,21 @@
 import {useEffect, useRef, useState} from 'react';
 
 /**
- * ChaquetaSelector3D — carousel 3D de chaquetas (estilo coverflow/SSENSE).
- * Las tarjetas rotan en perspectiva; al cambiar la chaqueta activa, cambia
- * toda la información y el fondo de la sección se tiñe con el color dominante
- * de la chaqueta.
+ * ChaquetaSelector3D — carousel 3D de chaquetas (coverflow).
+ * Solo muestra chaquetas seleccionadas, con tarjeta grande, info compacta,
+ * fondo teñido con el color de la chaqueta y una foto de contexto debajo.
  */
+
+// ── Fotos de contexto (Camilo las sube) ─────────────────────────────────────
+// Cada chaqueta puede tener una foto "de contexto" (lifestyle) debajo.
+// Añade aquí: handle -> ruta. Mientras tanto se usa la 2ª imagen del producto.
+const CONTEXT_IMAGES = {
+  // 'chaqueta-laredo': '/contexto/laredo.webp',
+  // 'chaqueta-impermeable-sahara': '/contexto/sahara.webp',
+};
+
+// Chaquetas que se muestran (por palabra clave en el título)
+const KEYWORDS = ['Laredo', 'Sahara', 'Yellowstone', 'Armor', 'Mojave'];
 
 function formatPrice(amount) {
   const n = Number(amount);
@@ -13,9 +23,12 @@ function formatPrice(amount) {
   return '$' + n.toLocaleString('es-CO', {maximumFractionDigits: 0});
 }
 
-function stripHtml(html) {
-  if (!html) return '';
-  return html.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+function contextImage(product) {
+  return (
+    CONTEXT_IMAGES[product.handle] ||
+    product.images?.nodes?.[1]?.url ||
+    ''
+  );
 }
 
 function extractColor(src, callback) {
@@ -50,33 +63,34 @@ function extractColor(src, callback) {
 }
 
 export default function ChaquetaSelector3D({products}) {
-  const n = products.length;
+  const items = products.filter((p) =>
+    KEYWORDS.some((k) => (p.title || '').includes(k)),
+  );
+  const n = items.length;
+
   const [index, setIndex] = useState(0);
   const [bgColor, setBgColor] = useState([16, 15, 13]);
-  const [isGrabbing, setIsGrabbing] = useState(false);
   const [hasInteracted, setHasInteracted] = useState(false);
 
   const dragInfo = useRef(null);
-  const DRAG_SCALE = 120; // px por chaqueta
+  const DRAG_SCALE = 140;
 
-  // Teñir el fondo con el color dominante de la chaqueta activa
   useEffect(() => {
     let alive = true;
-    const src = products[index]?.featuredImage?.url;
+    const src = items[index]?.featuredImage?.url;
     extractColor(src, (rgb) => {
       if (alive && rgb) setBgColor(rgb);
     });
     return () => {
       alive = false;
     };
-  }, [index, products]);
+  }, [index, items]);
 
   const clampIndex = (i) => Math.max(0, Math.min(n - 1, i));
 
   const onPointerDown = (e) => {
     if (e.pointerType === 'mouse' && e.button !== 0) return;
-    dragInfo.current = {startX: e.clientX, lastX: e.clientX};
-    setIsGrabbing(true);
+    dragInfo.current = {startX: e.clientX};
   };
 
   const onPointerMove = (e) => {
@@ -84,7 +98,6 @@ export default function ChaquetaSelector3D({products}) {
     if (!info) return;
     const dx = e.clientX - info.startX;
     if (Math.abs(dx) > DRAG_SCALE * 0.55) {
-      // Avanzó una chaqueta
       const dir = dx > 0 ? -1 : 1;
       setIndex(clampIndex(index + dir));
       dragInfo.current.startX = e.clientX;
@@ -94,12 +107,11 @@ export default function ChaquetaSelector3D({products}) {
 
   const onPointerUp = () => {
     dragInfo.current = null;
-    setIsGrabbing(false);
   };
 
-  if (!products.length) return null;
+  if (!items.length) return null;
 
-  const active = products[index];
+  const active = items[index];
 
   return (
     <section
@@ -114,31 +126,30 @@ export default function ChaquetaSelector3D({products}) {
         onPointerUp={onPointerUp}
         onPointerCancel={onPointerUp}
       >
-        {/* Info sincronizada */}
+        {/* Info compacta */}
         <div className="tr-chaqueta3d-info" key={active.id}>
-          <span className="tr-chaqueta3d-eyebrow">Chaquetas</span>
-          <h3 className="tr-chaqueta3d-name">{active.title}</h3>
-          <div className="tr-chaqueta3d-actions">
+          <div className="tr-chaqueta3d-head">
+            <h3 className="tr-chaqueta3d-name">{active.title}</h3>
             <span className="tr-chaqueta3d-price">
               {formatPrice(active.priceRange?.minVariantPrice?.amount)}
             </span>
-            <a
-              className="tr-chaqueta3d-cta"
-              href={`https://ranch.com.co/products/${active.handle}`}
-            >
-              Ver chaqueta
-            </a>
           </div>
+          <a
+            className="tr-chaqueta3d-cta"
+            href={`https://ranch.com.co/products/${active.handle}`}
+          >
+            Ver chaqueta
+          </a>
         </div>
 
-        {/* Carousel 3D (coverflow) */}
+        {/* Carousel 3D */}
         <div className="tr-chaqueta3d-carousel">
-          {products.map((p, i) => {
+          {items.map((p, i) => {
             const offset = i - index;
-            const angle = offset * 38;
-            const scale = 1 - Math.abs(offset) * 0.12;
-            const x = offset * 160;
-            const z = -Math.abs(offset) * 180;
+            const angle = offset * 34;
+            const scale = 1 - Math.abs(offset) * 0.1;
+            const x = offset * 200;
+            const z = -Math.abs(offset) * 200;
             const opacity = Math.abs(offset) > 2.5 ? 0 : 1;
             const isActive = i === index;
             return (
@@ -164,6 +175,24 @@ export default function ChaquetaSelector3D({products}) {
                   />
                 ) : null}
               </div>
+            );
+          })}
+        </div>
+
+        {/* Foto de contexto (debajo) */}
+        <div className="tr-chaqueta3d-context">
+          {items.map((p, i) => {
+            const src = contextImage(p);
+            if (!src) return null;
+            return (
+              <img
+                key={p.id}
+                className={i === index ? 'is-active' : ''}
+                src={src}
+                alt=""
+                loading="lazy"
+                draggable={false}
+              />
             );
           })}
         </div>
