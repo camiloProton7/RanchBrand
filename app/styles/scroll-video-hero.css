@@ -729,6 +729,9 @@
 
 .tr-gorra-card:hover .tr-gorra-media {
   border-radius: 20px;
+  inset: 0;
+  margin: 0;
+  position: absolute;
 }
 
 .tr-gorra-img {
@@ -750,7 +753,7 @@
 }
 
 .tr-gorra-card:hover .tr-gorra-img {
-  transform: scale(1.08);
+  transform: scale(1.05);
 }
 
 /* ── Labels (badges + rating) ── */
@@ -895,14 +898,44 @@
   width: 18px;
 }
 
-/* ── Estado hover: elevación + zoom + resaltado, sin tapar la imagen ── */
-.tr-gorra-card:hover .tr-gorra-cta {
-  background: #6b7d46;
-  box-shadow: 0 8px 22px rgba(90, 107, 60, 0.45);
+/* ── Estado hover: la foto es protagonista, texto abajo con atenuación ── */
+.tr-gorra-card:hover .tr-gorra-body {
+  background: linear-gradient(
+    180deg,
+    transparent 30%,
+    rgba(10, 9, 8, 0.88) 100%
+  );
+  inset: 0;
+  padding: 18px;
+  position: absolute;
+  z-index: 2;
+}
+
+.tr-gorra-card:hover .tr-gorra-desc {
+  display: none;
 }
 
 .tr-gorra-card:hover .tr-gorra-name {
-  color: #5a6b3c;
+  color: #fff;
+  font-size: 17px;
+  margin-top: auto;
+  text-align: center;
+}
+
+.tr-gorra-card:hover .tr-gorra-foot {
+  flex-direction: row;
+  justify-content: space-between;
+  margin-top: 10px;
+  padding-top: 12px;
+}
+
+.tr-gorra-card:hover .tr-gorra-price {
+  color: #f5b301;
+}
+
+.tr-gorra-card:hover .tr-gorra-cta {
+  background: rgba(255, 255, 255, 0.14);
+  color: #fff;
 }
 
 /* ── Sección de reseñas (mesa de madera) ── */
