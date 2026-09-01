@@ -1730,7 +1730,7 @@
 }
 
 .tr-chaqueta-hero-giant {
-  animation: tr-chaqueta-fade 0.6s ease both;
+  animation: tr-chaqueta-text-in 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
   color: var(--text);
   font-family: Georgia, 'Times New Roman', serif;
   font-size: clamp(54px, 12vw, 140px);
@@ -1759,7 +1759,7 @@
 }
 
 .tr-chaqueta-hero-jacket {
-  animation: tr-chaqueta-fade 0.6s ease both;
+  animation: tr-chaqueta-jacket-in 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
   filter: drop-shadow(0 30px 40px rgba(0, 0, 0, 0.45));
   height: 100%;
   left: 50%;
@@ -1790,29 +1790,66 @@
   }
 }
 
+@keyframes tr-chaqueta-jacket-in {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -42%) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+@keyframes tr-chaqueta-text-in {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -50%) translateY(18px);
+  }
+  to {
+    opacity: 0.9;
+    transform: translate(-50%, -50%) translateY(0);
+  }
+}
+
+@keyframes tr-chaqueta-info-in {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .tr-chaqueta-hero-arrow {
   align-items: center;
-  background: rgba(244, 240, 231, 0.08);
-  border: 1px solid rgba(244, 240, 231, 0.25);
+  background: rgba(20, 19, 16, 0.45);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(244, 240, 231, 0.5);
   border-radius: 50%;
   color: #f4f0e7;
   cursor: pointer;
   display: flex;
-  font-size: 28px;
-  height: 46px;
+  font-size: 26px;
+  height: 48px;
   justify-content: center;
   line-height: 1;
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  width: 46px;
+  width: 48px;
   z-index: 3;
-  transition: background 0.2s ease, border-color 0.2s ease;
+  transition: background 0.2s ease, border-color 0.2s ease,
+    transform 0.2s ease;
 }
 
 .tr-chaqueta-hero-arrow:hover {
-  background: rgba(244, 240, 231, 0.18);
+  background: rgba(20, 19, 16, 0.72);
   border-color: #f5b301;
+  transform: translateY(-50%) scale(1.05);
 }
 
 .tr-chaqueta-hero-prev {
@@ -1824,7 +1861,7 @@
 }
 
 .tr-chaqueta-hero-info {
-  animation: tr-chaqueta-fade 0.6s ease both;
+  animation: tr-chaqueta-info-in 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
   margin: 8px auto 0;
   max-width: 520px;
   position: relative;
