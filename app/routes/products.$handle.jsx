@@ -238,7 +238,6 @@ export default function ProductPage() {
             <img
               src={allImages[selectedImage]?.url}
               alt={allImages[selectedImage]?.alt || product.title}
-              style={{viewTransitionName: `product-${product.handle}`}}
             />
           </div>
           {allImages.length > 1 && (
@@ -380,7 +379,6 @@ export default function ProductPage() {
                   key={p.id}
                   className="trp-related-card"
                   to={`/products/${p.handle}`}
-                  viewTransition
                 >
                   <div className="trp-related-media">
                     {p.featuredImage?.url ? (
@@ -388,7 +386,6 @@ export default function ProductPage() {
                         src={p.featuredImage.url}
                         alt={p.featuredImage.altText || p.title}
                         loading="lazy"
-                        style={{viewTransitionName: `product-${p.handle}`}}
                       />
                     ) : null}
                   </div>

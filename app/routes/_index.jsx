@@ -343,7 +343,6 @@ function ProductScroll({products, collectionUrl, ariaLabel, title}) {
               key={product.id}
               className="tr-gorra-card"
               to={`/products/${product.handle}`}
-              viewTransition
             >
               <div className="tr-gorra-media">
                 {primary?.url ? (
@@ -352,7 +351,6 @@ function ProductScroll({products, collectionUrl, ariaLabel, title}) {
                     src={primary.url}
                     alt={primary.altText || product.title}
                     loading="lazy"
-                    style={{viewTransitionName: `product-${product.handle}`}}
                   />
                 ) : null}
                 {second?.url ? (
