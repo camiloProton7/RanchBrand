@@ -18,7 +18,8 @@ const COLORS = {
 
 // Fondo con imagen (opcional) por chaqueta. Las que no tienen usan solo el color.
 const BACKGROUND_IMAGES = {
-  Yellowstone: '/yellowstone-bg.jpg',
+  Yellowstone:
+    'https://rattwfjkxgqvxmxlybcz.supabase.co/storage/v1/object/public/whatsapp-images/home/yellowstone-bg.jpg',
 };
 
 const DESCRIPTIONS = {
