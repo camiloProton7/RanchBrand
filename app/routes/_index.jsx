@@ -3,6 +3,7 @@ import {useEffect, useRef} from 'react';
 import {ScrollVideoHero} from '~/components/ScrollVideoHero';
 import ChaquetaHero from '~/components/ChaquetaHero';
 import DesertCampaign from '~/components/DesertCampaign';
+import UtilityLinks from '~/components/UtilityLinks';
 import homeStyles from '~/styles/scroll-video-hero.css?url';
 
 export const meta = () => [
@@ -119,6 +120,7 @@ export default function Home() {
         title="Más vendidos"
       />
       <ReviewsSection reviews={reviews} />
+      <UtilityLinks />
       <EditorialFooter logoSrc={logoSrc} />
       <WhatsAppFloat />
     </div>

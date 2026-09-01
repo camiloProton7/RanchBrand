@@ -186,7 +186,7 @@ export function ScrollVideoHero({
           ))}
         </nav>
         <button
-          className="tr-masthead-burger"
+          className={`tr-masthead-burger ${mobileMenuOpen ? 'is-open' : ''}`}
           type="button"
           aria-label="Abrir menú"
           aria-expanded={mobileMenuOpen}
@@ -214,9 +214,11 @@ export function ScrollVideoHero({
               aria-label="Cerrar menú"
               onClick={() => setMobileMenuOpen(false)}
             >
-              ✕
+              <span />
+              <span />
             </button>
           </div>
+          <span className="tr-mobile-menu-eyebrow">Menú</span>
           <nav className="tr-mobile-menu-nav">
             {MENU_ITEMS.map((item, index) => (
               <a
@@ -225,6 +227,9 @@ export function ScrollVideoHero({
                 onClick={() => setMobileMenuOpen(false)}
                 style={{animationDelay: `${0.12 + index * 0.09}s`}}
               >
+                <span className="tr-mobile-menu-index">
+                  {String(index + 1).padStart(2, '0')}
+                </span>
                 {item.label}
               </a>
             ))}
