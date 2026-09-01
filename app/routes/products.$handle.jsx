@@ -1,5 +1,5 @@
 import {useMemo, useState} from 'react';
-import {useLoaderData} from 'react-router';
+import {Link, useLoaderData, useRouteLoaderData} from 'react-router';
 import productStyles from '~/styles/product.css?url';
 
 export const meta = ({data}) => {
@@ -12,9 +12,7 @@ export const meta = ({data}) => {
   ];
 };
 
-export const links = () => [
-  {rel: 'stylesheet', href: productStyles},
-];
+export const links = () => [{rel: 'stylesheet', href: productStyles}];
 
 const PRODUCT_QUERY = `#graphql
   query Product($handle: String!) {
@@ -33,12 +31,8 @@ const PRODUCT_QUERY = `#graphql
           altText
         }
       }
-      priceRange {
-        minVariantPrice { amount currencyCode }
-      }
-      compareAtPriceRange {
-        minVariantPrice { amount }
-      }
+      priceRange { minVariantPrice { amount currencyCode } }
+      compareAtPriceRange { minVariantPrice { amount } }
       variants(first: 50) {
         nodes {
           id
@@ -52,18 +46,94 @@ const PRODUCT_QUERY = `#graphql
   }
 `;
 
+const RELATED_QUERY = `#graphql
+  query RelatedProducts($handle: String!) {
+    collection(handle: $handle) {
+      products(first: 12) {
+        nodes {
+          id
+          title
+          handle
+          featuredImage {
+            url(transform: {maxWidth: 600, preferredContentType: WEBP})
+            altText
+          }
+          priceRange { minVariantPrice { amount currencyCode } }
+        }
+      }
+    }
+  }
+`;
+
+const TRUSTOO_SHOP_ID = '67813867760';
+
+function mapReview(raw) {
+  const resource = (raw.resources || []).find((x) =>
+    (x.src || x.thumb_src || '').trim(),
+  );
+  const photo =
+    (resource && (resource.src || resource.thumb_src)) ||
+    raw.product_image_src ||
+    raw.corresponding_product?.product_image ||
+    null;
+  return {
+    name: (raw.author || '').trim(),
+    product: raw.corresponding_product?.product_name || '',
+    stars: raw.star || 5,
+    text: (raw.content || '').trim(),
+    photo,
+    verified: !!raw.verified_badge,
+  };
+}
+
+async function fetchTrustooReviews() {
+  try {
+    const url = `https://api.trustoo.io/api/v1/reviews/get_product_reviews?shop_id=${TRUSTOO_SHOP_ID}&limit=50&page=1&sort_by=comprehensive-descending&scene=3&is_show_all=1`;
+    const res = await fetch(url, {headers: {accept: 'application/json'}});
+    const json = await res.json();
+    if (json.code !== 0) return [];
+    return (json.data?.list || [])
+      .map(mapReview)
+      .filter((r) => r.text && r.text.trim().length > 8);
+  } catch (error) {
+    console.error('Trustoo fetch failed', error);
+    return [];
+  }
+}
+
 export async function loader({params, context}) {
   const {handle} = params;
   const {storefront} = context;
   try {
-    const data = await storefront.query(PRODUCT_QUERY, {
-      variables: {handle},
-      cache: storefront.CacheShort(),
+    const [productData, relatedData, allReviews] = await Promise.all([
+      storefront.query(PRODUCT_QUERY, {
+        variables: {handle},
+        cache: storefront.CacheShort(),
+      }),
+      storefront.query(RELATED_QUERY, {
+        variables: {handle: 'hot-ranch'},
+        cache: storefront.CacheLong(),
+      }),
+      fetchTrustooReviews(),
+    ]);
+
+    const product = productData.product || null;
+    const title = (product?.title || '').toLowerCase();
+    const matching = allReviews.filter((r) => {
+      if (!title) return true;
+      const p = (r.product || '').toLowerCase();
+      return p && (p.includes(title) || title.includes(p));
     });
-    return {product: data.product || null};
+    const reviews = (matching.length ? matching : allReviews).slice(0, 4);
+
+    const related = (relatedData.collection?.products?.nodes || [])
+      .filter((p) => p.handle !== handle)
+      .slice(0, 4);
+
+    return {product, reviews, related};
   } catch (error) {
     console.error(`Producto ${handle} falló`, error);
-    return {product: null};
+    return {product: null, reviews: [], related: []};
   }
 }
 
@@ -81,13 +151,12 @@ function getCheckoutUrl(variantId, qty = 1) {
 
 function formatPrice(amount, currency = 'COP') {
   if (!amount) return '';
-  const n = Number(amount);
   return new Intl.NumberFormat('es-CO', {
     style: 'currency',
     currency,
     minimumFractionDigits: 0,
     maximumFractionDigits: 0,
-  }).format(n);
+  }).format(Number(amount));
 }
 
 const norm = (s) => (s || '').trim().toLowerCase();
@@ -99,7 +168,9 @@ const BENEFITS = [
 ];
 
 export default function ProductPage() {
-  const {product} = useLoaderData();
+  const {product, reviews, related} = useLoaderData();
+  const rootData = useRouteLoaderData('root');
+  const logoSrc = rootData?.header?.shop?.brand?.logo?.image?.url;
   const [selectedImage, setSelectedImage] = useState(0);
   const [options, setOptions] = useState({});
 
@@ -115,7 +186,6 @@ export default function ProductPage() {
     return imgs;
   }, [product]);
 
-  // Opciones del producto (talla, color, etc.)
   const optionNames = useMemo(() => {
     const names = [];
     variants.forEach((v) => {
@@ -127,12 +197,14 @@ export default function ProductPage() {
   }, [variants]);
 
   const selectedVariant = useMemo(() => {
-    return variants.find((v) => {
-      return (v.selectedOptions || []).every((o) => {
-        const val = options[norm(o.name)];
-        return !val || norm(o.value) === norm(val);
-      });
-    }) || variants[0];
+    return (
+      variants.find((v) =>
+        (v.selectedOptions || []).every((o) => {
+          const val = options[norm(o.name)];
+          return !val || norm(o.value) === norm(val);
+        }),
+      ) || variants[0]
+    );
   }, [variants, options]);
 
   if (!product) {
@@ -151,13 +223,14 @@ export default function ProductPage() {
   return (
     <div className="trp">
       <header className="trp-bar">
-        <a className="trp-bar-back" href="/">
+        <Link className="trp-bar-back" to="/">
           ← Volver
-        </a>
-        <a className="trp-bar-logo" href="/">
-          The Ranch
-        </a>
+        </Link>
+        <Link className="trp-bar-logo" to="/">
+          {logoSrc ? <img src={logoSrc} alt="The Ranch" /> : 'The Ranch'}
+        </Link>
       </header>
+
       <div className="trp-wrap">
         {/* ===== Galería ===== */}
         <div className="trp-gallery">
@@ -213,7 +286,6 @@ export default function ProductPage() {
             <p className="trp-desc">{product.description}</p>
           ) : null}
 
-          {/* Selectores */}
           {optionNames.map((name) => {
             const values = Array.from(
               new Set(
@@ -253,16 +325,6 @@ export default function ProductPage() {
             <span>Comprar ahora</span>
             <span className="trp-cta-arrow">→</span>
           </a>
-          <a
-            className="trp-cta-ghost"
-            href={`https://wa.me/573209157343?text=${encodeURIComponent(
-              `Hola, quiero más info de ${product.title}`,
-            )}`}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            ¿Dudas? Escríbenos por WhatsApp
-          </a>
 
           <ul className="trp-benefits">
             {BENEFITS.map((b) => (
@@ -273,6 +335,69 @@ export default function ProductPage() {
           </ul>
         </div>
       </div>
+
+      {/* ===== Reseñas ===== */}
+      {reviews.length > 0 && (
+        <section className="trp-reviews">
+          <div className="trp-reviews-inner">
+            <h2 className="trp-reviews-title">Lo que dicen en el campo</h2>
+            <div className="trp-reviews-grid">
+              {reviews.map((r, i) => (
+                <article key={i} className="trp-review-card">
+                  {r.photo ? (
+                    <img className="trp-review-photo" src={r.photo} alt="" loading="lazy" />
+                  ) : null}
+                  <div className="trp-review-stars" aria-label={`${r.stars} de 5 estrellas`}>
+                    {'★'.repeat(r.stars)}
+                    {'☆'.repeat(5 - r.stars)}
+                  </div>
+                  <p className="trp-review-text">“{r.text}”</p>
+                  <div className="trp-review-meta">
+                    <span className="trp-review-name">{r.name}</span>
+                    {r.verified ? (
+                      <span className="trp-review-verified">✓ Compra verificada</span>
+                    ) : null}
+                  </div>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* ===== Productos relacionados ===== */}
+      {related.length > 0 && (
+        <section className="trp-related">
+          <div className="trp-related-inner">
+            <h2 className="trp-related-title">Completa tu look</h2>
+            <div className="trp-related-grid">
+              {related.map((p) => (
+                <Link
+                  key={p.id}
+                  className="trp-related-card"
+                  to={`/products/${p.handle}`}
+                  viewTransition
+                >
+                  <div className="trp-related-media">
+                    {p.featuredImage?.url ? (
+                      <img
+                        src={p.featuredImage.url}
+                        alt={p.featuredImage.altText || p.title}
+                        loading="lazy"
+                        style={{viewTransitionName: `product-${p.handle}`}}
+                      />
+                    ) : null}
+                  </div>
+                  <h3 className="trp-related-name">{p.title}</h3>
+                  <span className="trp-related-price">
+                    {formatPrice(p.priceRange?.minVariantPrice?.amount)}
+                  </span>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
     </div>
   );
 }
