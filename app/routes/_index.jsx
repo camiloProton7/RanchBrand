@@ -1,4 +1,4 @@
-import {useLoaderData, useRouteLoaderData} from 'react-router';
+import {Link, useLoaderData, useRouteLoaderData} from 'react-router';
 import {useEffect, useRef} from 'react';
 import {ScrollVideoHero} from '~/components/ScrollVideoHero';
 import ChaquetaHero from '~/components/ChaquetaHero';
@@ -339,10 +339,11 @@ function ProductScroll({products, collectionUrl, ariaLabel, title}) {
           const hasDiscount = compare && Number(compare) > Number(price);
 
           return (
-            <a
+            <Link
               key={product.id}
               className="tr-gorra-card"
-              href={`/products/${product.handle}`}
+              to={`/products/${product.handle}`}
+              viewTransition
             >
               <div className="tr-gorra-media">
                 {primary?.url ? (
@@ -351,6 +352,7 @@ function ProductScroll({products, collectionUrl, ariaLabel, title}) {
                     src={primary.url}
                     alt={primary.altText || product.title}
                     loading="lazy"
+                    style={{viewTransitionName: `product-${product.handle}`}}
                   />
                 ) : null}
                 {second?.url ? (
@@ -393,7 +395,7 @@ function ProductScroll({products, collectionUrl, ariaLabel, title}) {
                   </span>
                 </div>
               </div>
-            </a>
+            </Link>
           );
         })}
       </div>

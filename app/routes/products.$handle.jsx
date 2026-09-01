@@ -165,6 +165,7 @@ export default function ProductPage() {
             <img
               src={allImages[selectedImage]?.url}
               alt={allImages[selectedImage]?.alt || product.title}
+              style={{viewTransitionName: `product-${product.handle}`}}
             />
           </div>
           {allImages.length > 1 && (
