@@ -22,6 +22,8 @@ const BACKGROUND_IMAGES = {
     'https://rattwfjkxgqvxmxlybcz.supabase.co/storage/v1/object/public/whatsapp-images/home/yellowstone-bg.jpg',
   Armor:
     'https://rattwfjkxgqvxmxlybcz.supabase.co/storage/v1/object/public/whatsapp-images/home/armor-bg.jpg',
+  Mojave:
+    'https://rattwfjkxgqvxmxlybcz.supabase.co/storage/v1/object/public/whatsapp-images/home/mojave-bg.jpg',
 };
 
 const DESCRIPTIONS = {
