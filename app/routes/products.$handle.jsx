@@ -336,28 +336,32 @@ export default function ProductPage() {
         </div>
       </div>
 
-      {/* ===== Reseñas ===== */}
+      {/* ===== Reseñas (carrusel auto) ===== */}
       {reviews.length > 0 && (
         <section className="trp-reviews">
-          <div className="trp-reviews-inner">
-            <h2 className="trp-reviews-title">Lo que dicen en el campo</h2>
-            <div className="trp-reviews-grid">
-              {reviews.map((r, i) => (
+          <h2 className="trp-reviews-title">Lo que dicen en el campo</h2>
+          <div className="trp-reviews-track">
+            <div className="trp-reviews-row">
+              {[...reviews, ...reviews].map((r, i) => (
                 <article key={i} className="trp-review-card">
-                  {r.photo ? (
-                    <img className="trp-review-photo" src={r.photo} alt="" loading="lazy" />
-                  ) : null}
-                  <div className="trp-review-stars" aria-label={`${r.stars} de 5 estrellas`}>
-                    {'★'.repeat(r.stars)}
-                    {'☆'.repeat(5 - r.stars)}
+                  <div className="trp-review-head">
+                    {r.photo ? (
+                      <img className="trp-review-photo" src={r.photo} alt="" loading="lazy" />
+                    ) : (
+                      <span className="trp-review-avatar">{r.name?.charAt(0) || 'R'}</span>
+                    )}
+                    <div className="trp-review-who">
+                      <span className="trp-review-name">{r.name}</span>
+                      <span className="trp-review-stars" aria-label={`${r.stars} de 5 estrellas`}>
+                        {'★'.repeat(r.stars)}
+                        {'☆'.repeat(5 - r.stars)}
+                      </span>
+                    </div>
                   </div>
                   <p className="trp-review-text">“{r.text}”</p>
-                  <div className="trp-review-meta">
-                    <span className="trp-review-name">{r.name}</span>
-                    {r.verified ? (
-                      <span className="trp-review-verified">✓ Compra verificada</span>
-                    ) : null}
-                  </div>
+                  {r.verified ? (
+                    <span className="trp-review-verified">✓ Compra verificada</span>
+                  ) : null}
                 </article>
               ))}
             </div>
