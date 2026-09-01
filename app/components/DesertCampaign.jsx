@@ -13,7 +13,7 @@ const PHOTO_2 =
  * y al final aparece un segundo ángulo con el CTA y la tarjeta del producto.
  */
 export default function DesertCampaign({
-  productUrl = 'https://ranch.com.co/products/gorra-desert',
+  productUrl = '/products/gorra-desert',
   price = '$172.000',
 }) {
   const sectionRef = useRef(null);

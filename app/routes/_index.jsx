@@ -342,7 +342,7 @@ function ProductScroll({products, collectionUrl, ariaLabel, title}) {
             <a
               key={product.id}
               className="tr-gorra-card"
-              href={`https://ranch.com.co/products/${product.handle}`}
+              href={`/products/${product.handle}`}
             >
               <div className="tr-gorra-media">
                 {primary?.url ? (

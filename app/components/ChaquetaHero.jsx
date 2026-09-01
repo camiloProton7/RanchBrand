@@ -261,7 +261,7 @@ export default function ChaquetaHero({products}) {
       <div className="tr-chaqueta-hero-bottom">
         <a
           className="tr-chaqueta-hero-cta"
-          href={`https://ranch.com.co/products/${active.handle}`}
+          href={`/products/${active.handle}`}
         >
           <span>Comprar ahora</span>
           <span className="tr-chaqueta-hero-cta-arrow" aria-hidden="true">
