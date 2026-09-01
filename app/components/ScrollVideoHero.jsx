@@ -163,6 +163,68 @@ export function ScrollVideoHero({
       className="tr-scroll-hero"
       aria-label="The Ranch — portada interactiva"
     >
+      <header ref={mastheadRef} className="tr-masthead">
+        <a
+          className="tr-masthead-logo"
+          href="https://ranch.com.co/"
+          aria-label="The Ranch"
+        >
+          {logoSrc ? <img src={logoSrc} alt="" /> : <span>The Ranch</span>}
+        </a>
+        <nav className="tr-masthead-nav">
+          {MENU_ITEMS.map((item) => (
+            <a key={item.label} href={item.href}>
+              {item.label}
+            </a>
+          ))}
+        </nav>
+        <button
+          className="tr-masthead-burger"
+          type="button"
+          aria-label="Abrir menú"
+          aria-expanded={mobileMenuOpen}
+          onClick={() => setMobileMenuOpen((v) => !v)}
+        >
+          <span />
+          <span />
+          <span />
+        </button>
+      </header>
+
+      {mobileMenuOpen && (
+        <div className="tr-mobile-menu" role="dialog" aria-label="Menú">
+          <div className="tr-mobile-menu-top">
+            <a
+              className="tr-masthead-logo"
+              href="https://ranch.com.co/"
+              aria-label="The Ranch"
+            >
+              {logoSrc ? <img src={logoSrc} alt="" /> : <span>The Ranch</span>}
+            </a>
+            <button
+              className="tr-mobile-menu-close"
+              type="button"
+              aria-label="Cerrar menú"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              ✕
+            </button>
+          </div>
+          <nav className="tr-mobile-menu-nav">
+            {MENU_ITEMS.map((item, index) => (
+              <a
+                key={item.label}
+                href={item.href}
+                onClick={() => setMobileMenuOpen(false)}
+                style={{animationDelay: `${0.12 + index * 0.09}s`}}
+              >
+                {item.label}
+              </a>
+            ))}
+          </nav>
+        </div>
+      )}
+
       <div className="tr-scroll-stage">
         <div ref={videoLayerRef} className="tr-video-layer" aria-hidden="true">
           <video
@@ -185,34 +247,6 @@ export function ScrollVideoHero({
 
         <div className="tr-film-shade" aria-hidden="true" />
         <div className="tr-editorial-grid" aria-hidden="true" />
-
-        <header ref={mastheadRef} className="tr-masthead">
-          <a
-            className="tr-masthead-logo"
-            href="https://ranch.com.co/"
-            aria-label="The Ranch"
-          >
-            {logoSrc ? <img src={logoSrc} alt="" /> : <span>The Ranch</span>}
-          </a>
-          <nav className="tr-masthead-nav">
-            {MENU_ITEMS.map((item) => (
-              <a key={item.label} href={item.href}>
-                {item.label}
-              </a>
-            ))}
-          </nav>
-          <button
-            className="tr-masthead-burger"
-            type="button"
-            aria-label="Abrir menú"
-            aria-expanded={mobileMenuOpen}
-            onClick={() => setMobileMenuOpen((v) => !v)}
-          >
-            <span />
-            <span />
-            <span />
-          </button>
-        </header>
 
         <nav ref={menuRef} className="tr-editorial-menu" aria-label="Principal">
           <a
@@ -240,40 +274,6 @@ export function ScrollVideoHero({
             </ol>
           </div>
         </nav>
-
-        {mobileMenuOpen && (
-          <div className="tr-mobile-menu" role="dialog" aria-label="Menú">
-            <div className="tr-mobile-menu-top">
-              <a
-                className="tr-masthead-logo"
-                href="https://ranch.com.co/"
-                aria-label="The Ranch"
-              >
-                {logoSrc ? <img src={logoSrc} alt="" /> : <span>The Ranch</span>}
-              </a>
-              <button
-                className="tr-mobile-menu-close"
-                type="button"
-                aria-label="Cerrar menú"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                ✕
-              </button>
-            </div>
-            <nav className="tr-mobile-menu-nav">
-              {MENU_ITEMS.map((item, index) => (
-                <a
-                  key={item.label}
-                  href={item.href}
-                  onClick={() => setMobileMenuOpen(false)}
-                  style={{animationDelay: `${0.12 + index * 0.09}s`}}
-                >
-                  {item.label}
-                </a>
-              ))}
-            </nav>
-          </div>
-        )}
 
         <div className="tr-scroll-cue" aria-hidden="true">
           <span>Scroll to explore</span>
