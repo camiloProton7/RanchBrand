@@ -641,8 +641,8 @@
     grid-template-columns: 1.1fr 0.9fr;
     grid-template-rows: auto auto auto;
     margin: 0 auto;
-    max-width: 1440px;
-    padding: 32px 32px 40px;
+    width: 100%;
+    padding: 32px 40px 40px;
   }
 
   .trp-viewer {
