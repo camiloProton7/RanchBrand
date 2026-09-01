@@ -174,6 +174,7 @@ export default function ProductPage() {
   const [selectedImage, setSelectedImage] = useState(0);
   const [options, setOptions] = useState({});
   const [qty, setQty] = useState(1);
+  const [showFullDesc, setShowFullDesc] = useState(false);
 
   const variants = product?.variants?.nodes || [];
   const allImages = useMemo(() => {
@@ -191,7 +192,7 @@ export default function ProductPage() {
     const names = [];
     variants.forEach((v) => {
       (v.selectedOptions || []).forEach((o) => {
-        if (!names.includes(o.name)) names.push(o.name);
+        if (o.name !== 'Title' && !names.includes(o.name)) names.push(o.name);
       });
     });
     return names;
@@ -289,7 +290,20 @@ export default function ProductPage() {
           </div>
 
           {product.description ? (
-            <p className="trp-desc">{product.description}</p>
+            <p className="trp-desc">
+              {showFullDesc || product.description.length <= 180
+                ? product.description
+                : `${product.description.slice(0, 180)}…`}
+              {product.description.length > 180 ? (
+                <button
+                  className="trp-read-more"
+                  type="button"
+                  onClick={() => setShowFullDesc((v) => !v)}
+                >
+                  {showFullDesc ? ' Leer menos' : ' Leer más'}
+                </button>
+              ) : null}
+            </p>
           ) : null}
 
           {optionNames.map((name) => {

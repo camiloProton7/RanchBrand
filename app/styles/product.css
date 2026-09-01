@@ -248,6 +248,18 @@
   margin: 0 0 26px;
 }
 
+.trp-read-more {
+  background: none;
+  border: none;
+  color: #f5b301;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: inherit;
+  padding: 0;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
 /* ===== Opciones ===== */
 .trp-option {
   margin-bottom: 20px;
