@@ -50,6 +50,7 @@
 .trp-lasso {
   border: 1.5px solid rgba(107, 74, 43, 0.22);
   border-radius: 50%;
+  display: none;
   height: 58%;
   left: 50%;
   pointer-events: none;
@@ -647,5 +648,13 @@
 
   .trp-related-grid {
     grid-template-columns: repeat(4, 1fr);
+  }
+
+  .trp-lasso {
+    display: block;
+  }
+
+  .trp-reviews {
+    padding: 40px 0 16px;
   }
 }
