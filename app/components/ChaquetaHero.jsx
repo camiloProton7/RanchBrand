@@ -100,6 +100,11 @@ export default function ChaquetaHero({products}) {
   const images = active.images?.nodes || [];
   const mainImage = images[imageIndex]?.url || active.featuredImage?.url || '';
   const backgroundImage = BACKGROUND_IMAGES[keyword] || '';
+  const price = active.priceRange?.minVariantPrice?.amount;
+  const compare = active.compareAtPriceRange?.minVariantPrice?.amount;
+  const hasDiscount = compare && Number(compare) > Number(price);
+  const totalInventory = active.totalInventory;
+  const lowStock = totalInventory != null && totalInventory <= 5;
   const n = items.length;
 
   const prev = () => setIndex((index - 1 + n) % n);
@@ -203,11 +208,27 @@ export default function ChaquetaHero({products}) {
       )}
 
       <div className="tr-chaqueta-hero-info" key={active.id}>
-        <span className="tr-chaqueta-hero-eyebrow">{active.title}</span>
+        <div className="tr-chaqueta-hero-head">
+          <span className="tr-chaqueta-hero-eyebrow">{active.title}</span>
+          <span className="tr-chaqueta-hero-rating">★ 4.9</span>
+        </div>
         <p className="tr-chaqueta-hero-desc">{DESCRIPTIONS[keyword]}</p>
-        <span className="tr-chaqueta-hero-price">
-          {formatPrice(active.priceRange?.minVariantPrice?.amount)}
-        </span>
+        <div className="tr-chaqueta-hero-price-row">
+          {hasDiscount ? (
+            <span className="tr-chaqueta-hero-compare">
+              {formatPrice(compare)}
+            </span>
+          ) : null}
+          <span className="tr-chaqueta-hero-price">{formatPrice(price)}</span>
+          {lowStock ? (
+            <span className="tr-chaqueta-hero-stock">⚡ Últimas unidades</span>
+          ) : null}
+        </div>
+        <ul className="tr-chaqueta-hero-benefits">
+          <li>💧 100% impermeable</li>
+          <li>🚚 Envío gratis a toda Colombia</li>
+          <li>🔄 1er cambio gratis</li>
+        </ul>
       </div>
 
       <div className="tr-chaqueta-hero-bottom">

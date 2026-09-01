@@ -1868,14 +1868,27 @@
   z-index: 1;
 }
 
+.tr-chaqueta-hero-head {
+  align-items: center;
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  margin-bottom: 8px;
+}
+
 .tr-chaqueta-hero-eyebrow {
   color: var(--text);
-  display: block;
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.2em;
-  margin-bottom: 8px;
   text-transform: uppercase;
+}
+
+.tr-chaqueta-hero-rating {
+  color: #f5b301;
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
 }
 
 .tr-chaqueta-hero-desc {
@@ -1883,13 +1896,52 @@
   font-size: 15px;
   font-style: italic;
   line-height: 1.6;
-  margin: 0 0 8px;
+  margin: 0 0 10px;
+}
+
+.tr-chaqueta-hero-price-row {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+  margin-bottom: 12px;
 }
 
 .tr-chaqueta-hero-price {
   color: #f5b301;
-  font-size: 18px;
+  font-size: 20px;
   font-weight: 800;
+}
+
+.tr-chaqueta-hero-compare {
+  color: #8a8374;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: line-through;
+}
+
+.tr-chaqueta-hero-stock {
+  color: #ff8a5c;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.tr-chaqueta-hero-benefits {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 16px;
+  justify-content: center;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.tr-chaqueta-hero-benefits li {
+  color: #c9c2b2;
+  font-size: 12px;
 }
 
 .tr-chaqueta-hero-bottom {
@@ -1904,22 +1956,25 @@
 
 .tr-chaqueta-hero-cta {
   align-items: center;
-  background: #f4f0e7;
+  background: #5a6b3c;
   border-radius: 999px;
-  color: #141310;
+  box-shadow: 0 6px 20px rgba(90, 107, 60, 0.35);
+  color: #fff;
   display: inline-flex;
-  font-size: 13px;
+  font-size: 15px;
   font-weight: 700;
   gap: 10px;
   letter-spacing: 0.04em;
-  padding: 12px 18px 12px 26px;
+  padding: 15px 22px 15px 30px;
   text-decoration: none;
-  transition: gap 0.25s ease, background 0.2s ease;
+  transition: background 0.2s ease, gap 0.25s ease, transform 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .tr-chaqueta-hero-cta:hover {
-  background: #fff;
+  background: #4a5a31;
   gap: 15px;
+  transform: translateY(-1px);
 }
 
 .tr-chaqueta-hero-cta-arrow {
