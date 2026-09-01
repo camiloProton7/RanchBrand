@@ -1,7 +1,6 @@
 import {useEffect, useMemo, useRef, useState} from 'react';
 import {useLoaderData} from 'react-router';
 import {Image, Money} from '@shopify/hydrogen';
-import VideoFinal from '../components/VideoFinal';
 
 /* ===== META DATA ===== */
 export const meta = () => ([
@@ -10,7 +9,6 @@ export const meta = () => ([
 ]);
 
 /* ===== CONFIGURACIÓN DE ASSETS ===== */
-const VIDEO_PATH = '/video-scroll.mp4';
 const IMAGE_PATH = '/poster-hero.jpg';
 
 /* ===== DOMINIO DE CHECKOUT (VITAL) ===== */
@@ -319,10 +317,10 @@ export default function LaredoLanding() {
         <div className="hero-container">
             <div className="hero-sticky-frame">
                 <div className="video-layer">
-                    <VideoFinal 
-                        mp4Src={VIDEO_PATH} 
-                        poster={IMAGE_PATH} 
-                        bgFallback="#000" 
+                    <img 
+                        src={IMAGE_PATH} 
+                        alt="Laredo Bomber" 
+                        style={{width:'100%', height:'100%', objectFit:'cover'}}
                     />
                 </div>
                 <div className="overlay">
