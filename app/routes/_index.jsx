@@ -325,9 +325,6 @@ function ProductScroll({products, collectionUrl, ariaLabel, title}) {
     >
       <header className="tr-gorras-head">
         {title ? <h2 className="tr-gorras-title">{title}</h2> : null}
-        <a className="tr-gorras-link" href={collectionUrl}>
-          Ver todas <span aria-hidden="true">↗</span>
-        </a>
       </header>
 
       <div className="tr-gorras-scroll">
