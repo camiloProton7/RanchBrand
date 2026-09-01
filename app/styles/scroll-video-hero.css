@@ -836,9 +836,11 @@
   display: -webkit-box;
   font-family: Arial, Helvetica, sans-serif;
   font-size: 12px;
+  hyphens: auto;
   line-height: 1.4;
   margin: 6px 0 0;
   overflow: hidden;
+  text-align: justify;
 }
 
 .tr-gorra-foot {
@@ -1661,7 +1663,7 @@
 
 /* ── Sección El Ranch (historia) ── */
 .tr-ranchstory {
-  background: #0b0b09;
+  background: #f4f0e7;
   padding: 100px 24px;
 }
 
@@ -1672,7 +1674,7 @@
 }
 
 .tr-ranchstory-eyebrow {
-  color: #d8d2c4;
+  color: #5a6b3c;
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.22em;
@@ -1680,6 +1682,7 @@
 }
 
 .tr-ranchstory-title {
+  color: #0b0b09;
   font-family: Georgia, 'Times New Roman', serif;
   font-size: clamp(30px, 6vw, 52px);
   font-weight: 500;
@@ -1688,7 +1691,7 @@
 }
 
 .tr-ranchstory-text {
-  color: #9a9384;
+  color: #5a554a;
   font-family: Georgia, 'Times New Roman', serif;
   font-size: 17px;
   font-style: italic;
@@ -1698,9 +1701,9 @@
 }
 
 .tr-ranchstory-cta {
-  border: 1px solid rgba(244, 240, 231, 0.3);
+  border: 1px solid rgba(11, 11, 9, 0.35);
   border-radius: 999px;
-  color: #f4f0e7;
+  color: #0b0b09;
   display: inline-block;
   font-size: 13px;
   font-weight: 700;
@@ -1710,8 +1713,8 @@
 }
 
 .tr-ranchstory-cta:hover {
-  border-color: #f5b301;
-  color: #f5b301;
+  border-color: #0b0b09;
+  color: #5a6b3c;
 }
 
 /* ── Botón flotante de WhatsApp ── */
