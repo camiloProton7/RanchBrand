@@ -728,9 +728,6 @@
 
 .tr-gorra-card:hover .tr-gorra-media {
   border-radius: 20px;
-  inset: 0;
-  margin: 0;
-  position: absolute;
 }
 
 .tr-gorra-img {
@@ -738,6 +735,7 @@
   inset: 0;
   object-fit: cover;
   position: absolute;
+  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
   width: 100%;
 }
 
@@ -748,6 +746,10 @@
 
 .tr-gorra-card:hover .tr-gorra-img-2 {
   opacity: 1;
+}
+
+.tr-gorra-card:hover .tr-gorra-img {
+  transform: scale(1.06);
 }
 
 /* ── Labels (badges + rating) ── */
@@ -892,68 +894,9 @@
   width: 18px;
 }
 
-/* ── Estado hover: imagen expandida + overlay ── */
-.tr-gorra-card:hover .tr-gorra-body {
-  background: linear-gradient(
-    180deg,
-    rgba(0, 0, 0, 0.42),
-    transparent 38%,
-    rgba(0, 0, 0, 0.84) 100%
-  );
-  color: #fff;
-  inset: 0;
-  padding: 18px;
-  position: absolute;
-  z-index: 2;
-}
-
-.tr-gorra-card:hover .tr-gorra-name,
-.tr-gorra-card:hover .tr-gorra-desc {
-  color: #fff;
-}
-
-.tr-gorra-card:hover .tr-gorra-foot {
-  flex-direction: column;
-  gap: 14px;
-  margin-top: auto;
-  padding-bottom: 46px;
-  padding-top: 20px;
-}
-
-.tr-gorra-card:hover .tr-gorra-price {
-  color: #fff;
-  position: absolute;
-  right: 18px;
-  top: 18px;
-}
-
+/* ── Estado hover: sutil, sin tapar la imagen ── */
 .tr-gorra-card:hover .tr-gorra-cta {
-  border-radius: 12px;
-  justify-content: center;
-  width: 100%;
-}
-
-.tr-gorra-card:hover .tr-gorra-cta i {
-  display: none;
-}
-
-.tr-gorra-card:hover .tr-gorra-labels {
-  align-items: center;
-  bottom: 16px;
-  flex-direction: row;
-  gap: 6px;
-  left: 18px;
-  right: auto;
-  top: auto;
-}
-
-.tr-gorra-card:hover .tr-badge-rating {
-  margin-left: 0;
-}
-
-.tr-gorra-card:hover .tr-gorra-pager {
-  bottom: auto;
-  top: 16px;
+  background: #4a5a31;
 }
 
 /* ── Sección de reseñas (mesa de madera) ── */
