@@ -141,6 +141,9 @@ export default function ChaquetaHero({products}) {
   const onPointerDown = (e) => {
     if (e.pointerType === 'mouse' && e.button !== 0) return;
     dragInfo.current = {startX: e.clientX};
+    try {
+      e.currentTarget.setPointerCapture(e.pointerId);
+    } catch (err) {}
   };
 
   const onPointerUp = (e) => {
