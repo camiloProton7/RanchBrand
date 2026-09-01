@@ -1,16 +1,16 @@
 /* ===== Página de producto premium ===== */
 .trp {
-  background: #0b0b09;
-  color: #f4f0e7;
+  background: #f4f0e7;
+  color: #0b0b09;
   min-height: 100svh;
 }
 
 .trp-bar {
   align-items: center;
-  background: rgba(11, 11, 9, 0.8);
+  background: rgba(244, 240, 231, 0.85);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border-bottom: 1px solid rgba(244, 240, 231, 0.08);
+  border-bottom: 1px solid rgba(11, 11, 9, 0.08);
   display: flex;
   justify-content: space-between;
   left: 0;
@@ -22,7 +22,7 @@
 }
 
 .trp-bar-back {
-  color: #f4f0e7;
+  color: #0b0b09;
   font-size: 13px;
   font-weight: 700;
   letter-spacing: 0.08em;
@@ -31,11 +31,11 @@
 }
 
 .trp-bar-back:hover {
-  color: #f5b301;
+  color: #5a6b3c;
 }
 
 .trp-bar-logo {
-  color: #f4f0e7;
+  color: #0b0b09;
   font-family: Georgia, 'Times New Roman', serif;
   font-size: 16px;
   font-weight: 700;
@@ -46,8 +46,8 @@
 
 .trp-empty {
   align-items: center;
-  background: #0b0b09;
-  color: #f4f0e7;
+  background: #f4f0e7;
+  color: #0b0b09;
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -86,7 +86,7 @@
 
 .trp-main-img {
   aspect-ratio: 4 / 5;
-  background: #141310;
+  background: #e5e1d6;
   border-radius: 20px;
   overflow: hidden;
   width: 100%;
@@ -107,7 +107,7 @@
 }
 
 .trp-thumbs button {
-  background: #141310;
+  background: #e5e1d6;
   border: 2px solid transparent;
   border-radius: 12px;
   cursor: pointer;
@@ -131,7 +131,7 @@
 
 /* ===== Info ===== */
 .trp-eyebrow {
-  color: #f5b301;
+  color: #5a6b3c;
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.22em;
@@ -139,6 +139,7 @@
 }
 
 .trp-title {
+  color: #0b0b09;
   font-family: Georgia, 'Times New Roman', serif;
   font-size: clamp(32px, 5vw, 52px);
   font-weight: 700;
@@ -160,13 +161,13 @@
 }
 
 .trp-rating-num {
-  color: #f4f0e7;
+  color: #0b0b09;
   font-weight: 700;
 }
 
 .trp-rating-sep,
 .trp-rating-label {
-  color: #9a9384;
+  color: #6b6558;
   font-size: 13px;
 }
 
@@ -207,7 +208,7 @@
 }
 
 .trp-desc {
-  color: #c9c2b2;
+  color: #5a554a;
   font-family: Georgia, 'Times New Roman', serif;
   font-size: 16px;
   line-height: 1.7;
@@ -220,7 +221,7 @@
 }
 
 .trp-option-label {
-  color: #9a9384;
+  color: #6b6558;
   display: block;
   font-size: 11px;
   font-weight: 700;
@@ -236,10 +237,10 @@
 }
 
 .trp-option-values button {
-  background: #141310;
-  border: 1px solid rgba(244, 240, 231, 0.16);
+  background: #ffffff;
+  border: 1px solid rgba(11, 11, 9, 0.16);
   border-radius: 10px;
-  color: #f4f0e7;
+  color: #0b0b09;
   cursor: pointer;
   font-size: 14px;
   font-weight: 600;
@@ -249,13 +250,13 @@
 }
 
 .trp-option-values button:hover {
-  border-color: rgba(244, 240, 231, 0.4);
+  border-color: rgba(11, 11, 9, 0.4);
 }
 
 .trp-option-values button.is-active {
-  background: #f4f0e7;
-  border-color: #f4f0e7;
-  color: #141310;
+  background: #0b0b09;
+  border-color: #0b0b09;
+  color: #f4f0e7;
 }
 
 /* ===== CTA ===== */
@@ -301,7 +302,7 @@
 
 /* ===== Beneficios ===== */
 .trp-benefits {
-  border-top: 1px solid rgba(244, 240, 231, 0.1);
+  border-top: 1px solid rgba(11, 11, 9, 0.1);
   display: flex;
   flex-direction: column;
   gap: 14px;
@@ -311,7 +312,7 @@
 }
 
 .trp-benefits li {
-  color: #c9c2b2;
+  color: #5a554a;
   font-size: 14px;
 }
 
@@ -340,14 +341,13 @@
 /* ===== Logo en barra ===== */
 .trp-bar-logo img {
   display: block;
-  filter: brightness(0) invert(1);
   height: 22px;
   width: auto;
 }
 
 /* ===== Reseñas (carrusel auto) ===== */
 .trp-reviews {
-  border-top: 1px solid rgba(244, 240, 231, 0.08);
+  border-top: 1px solid rgba(11, 11, 9, 0.1);
   overflow: hidden;
   padding: 72px 0;
 }
