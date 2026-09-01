@@ -2070,3 +2070,146 @@
     width: 38px;
   }
 }
+
+/* ===== Campaña Desert ===== */
+.tr-desert-campaign {
+  height: 250vh;
+  position: relative;
+}
+
+.tr-desert-stage {
+  height: 100svh;
+  overflow: hidden;
+  position: sticky;
+  top: 0;
+}
+
+.tr-desert-photo {
+  height: 100%;
+  left: 0;
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  will-change: filter, transform, opacity;
+}
+
+.tr-desert-photo-1 {
+  z-index: 1;
+}
+
+.tr-desert-photo-2 {
+  opacity: 0;
+  z-index: 2;
+}
+
+.tr-desert-shade {
+  background: linear-gradient(
+    to top,
+    rgba(11, 11, 9, 0.92) 0%,
+    rgba(11, 11, 9, 0.15) 48%,
+    rgba(11, 11, 9, 0.4) 100%
+  );
+  inset: 0;
+  position: absolute;
+  z-index: 3;
+}
+
+.tr-desert-giant {
+  color: #f4f0e7;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: clamp(60px, 15vw, 200px);
+  font-weight: 700;
+  left: 50%;
+  letter-spacing: 0.03em;
+  line-height: 0.85;
+  opacity: 0;
+  pointer-events: none;
+  position: absolute;
+  text-shadow: 0 6px 40px rgba(0, 0, 0, 0.5);
+  text-transform: uppercase;
+  top: 40%;
+  transform: translate(-50%, -50%);
+  white-space: nowrap;
+  z-index: 4;
+}
+
+.tr-desert-info {
+  bottom: max(42px, env(safe-area-inset-bottom));
+  left: 50%;
+  opacity: 0;
+  position: absolute;
+  text-align: center;
+  transform: translate(-50%, 0);
+  width: min(90%, 560px);
+  z-index: 4;
+}
+
+.tr-desert-eyebrow {
+  color: #f5b301;
+  display: block;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+}
+
+.tr-desert-tagline {
+  color: #f4f0e7;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 19px;
+  font-style: italic;
+  line-height: 1.5;
+  margin: 0 0 22px;
+}
+
+.tr-desert-cta {
+  align-items: center;
+  background: #5a6b3c;
+  border-radius: 999px;
+  box-shadow: 0 6px 24px rgba(90, 107, 60, 0.4);
+  color: #fff;
+  display: inline-flex;
+  font-size: 15px;
+  font-weight: 700;
+  gap: 12px;
+  letter-spacing: 0.02em;
+  padding: 16px 24px 16px 30px;
+  text-decoration: none;
+  transition: background 0.2s ease, gap 0.25s ease, transform 0.2s ease;
+}
+
+.tr-desert-cta:hover {
+  background: #4a5a31;
+  gap: 17px;
+  transform: translateY(-1px);
+}
+
+.tr-desert-cta-arrow {
+  align-items: center;
+  background: rgba(255, 255, 255, 0.18);
+  border-radius: 50%;
+  display: flex;
+  font-size: 13px;
+  height: 26px;
+  justify-content: center;
+  width: 26px;
+}
+
+.tr-desert-price {
+  color: #f5b301;
+  display: block;
+  font-size: 20px;
+  font-weight: 800;
+  margin-top: 14px;
+}
+
+@media (max-width: 640px) {
+  .tr-desert-giant {
+    font-size: clamp(48px, 20vw, 120px);
+  }
+  .tr-desert-tagline {
+    font-size: 16px;
+  }
+}
