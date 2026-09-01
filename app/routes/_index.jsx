@@ -578,14 +578,14 @@ const COLLECTION_QUERY = (handle) => `#graphql
           handle
           description
           featuredImage {
-            url
+            url(transform: {maxWidth: 1000, preferredContentType: WEBP})
             altText
             width
             height
           }
           images(first: 5) {
             nodes {
-              url
+              url(transform: {maxWidth: 400, preferredContentType: WEBP})
               altText
             }
           }
