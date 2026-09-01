@@ -20,6 +20,8 @@ const COLORS = {
 const BACKGROUND_IMAGES = {
   Yellowstone:
     'https://rattwfjkxgqvxmxlybcz.supabase.co/storage/v1/object/public/whatsapp-images/home/yellowstone-bg.jpg',
+  Armor:
+    'https://rattwfjkxgqvxmxlybcz.supabase.co/storage/v1/object/public/whatsapp-images/home/armor-bg.jpg',
 };
 
 const DESCRIPTIONS = {
