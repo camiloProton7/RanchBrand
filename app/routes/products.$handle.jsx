@@ -22,12 +22,12 @@ const PRODUCT_QUERY = `#graphql
       handle
       description
       featuredImage {
-        url(transform: {maxWidth: 1000, preferredContentType: WEBP})
+        url(transform: {maxWidth: 1200, preferredContentType: WEBP})
         altText
       }
       images(first: 10) {
         nodes {
-          url(transform: {maxWidth: 1000, preferredContentType: WEBP})
+          url(transform: {maxWidth: 1200, preferredContentType: WEBP})
           altText
         }
       }
@@ -39,7 +39,7 @@ const PRODUCT_QUERY = `#graphql
           availableForSale
           selectedOptions { name value }
           price { amount currencyCode }
-          image { url(transform: {maxWidth: 1000, preferredContentType: WEBP}) altText }
+          image { url(transform: {maxWidth: 1200, preferredContentType: WEBP}) altText }
         }
       }
     }
@@ -124,7 +124,7 @@ export async function loader({params, context}) {
       const p = (r.product || '').toLowerCase();
       return p && (p.includes(title) || title.includes(p));
     });
-    const reviews = (matching.length ? matching : allReviews).slice(0, 4);
+    const reviews = (matching.length ? matching : allReviews).slice(0, 6);
 
     const related = (relatedData.collection?.products?.nodes || [])
       .filter((p) => p.handle !== handle)
@@ -161,22 +161,49 @@ function formatPrice(amount, currency = 'COP') {
 
 const norm = (s) => (s || '').trim().toLowerCase();
 
-const BENEFITS = [
-  {icon: '🚚', text: 'Envío gratis a toda Colombia'},
-  {icon: '🔄', text: '1er cambio gratis · 60 días de garantía'},
-  {icon: '🔒', text: 'Pago 100% seguro · PSE, tarjeta o contraentrega'},
-];
+// Mapeo de nombres de color comunes a hex (para los círculos del selector)
+const COLOR_HEX = {
+  negro: '#1a1a18',
+  black: '#1a1a18',
+  blanco: '#e8e2d4',
+  white: '#e8e2d4',
+  crema: '#e6d9bf',
+  arena: '#d8c9a8',
+  beige: '#d8c9a8',
+  'verde oliva': '#5a6b3c',
+  olive: '#5a6b3c',
+  marrón: '#6b4a2b',
+  brown: '#6b4a2b',
+  cuero: '#8a5a2b',
+  camuflaje: '#4a5240',
+  camo: '#4a5240',
+  azul: '#3a4a5a',
+  rojo: '#7a3a2a',
+};
+
+function colorToHex(name) {
+  const key = norm(name);
+  if (COLOR_HEX[key]) return COLOR_HEX[key];
+  return '#c9bfa8';
+}
+
+const ATTRS = ['Edición limitada', 'Ajuste regulable'];
 
 export default function ProductPage() {
   const {product, reviews, related} = useLoaderData();
   const rootData = useRouteLoaderData('root');
   const logoSrc = rootData?.header?.shop?.brand?.logo?.image?.url;
-  const [selectedImage, setSelectedImage] = useState(0);
-  const [options, setOptions] = useState({});
+
+  const [activeImage, setActiveImage] = useState(0);
+  const [color, setColor] = useState(null);
+  const [fav, setFav] = useState(false);
   const [qty, setQty] = useState(1);
+  const [added, setAdded] = useState(false);
   const [showFullDesc, setShowFullDesc] = useState(false);
+  const [options, setOptions] = useState({});
 
   const variants = product?.variants?.nodes || [];
+
   const allImages = useMemo(() => {
     const imgs = (product?.images?.nodes || []).map((i) => ({
       url: i.url,
@@ -188,11 +215,25 @@ export default function ProductPage() {
     return imgs;
   }, [product]);
 
+  // Colores disponibles (de variantes con opción "Color")
+  const colors = useMemo(() => {
+    const set = [];
+    variants.forEach((v) => {
+      const opt = (v.selectedOptions || []).find((o) => norm(o.name) === 'color');
+      if (opt?.value && !set.includes(opt.value)) set.push(opt.value);
+    });
+    return set;
+  }, [variants]);
+
+  // Opciones de talla/otras (excluye Color y Title)
   const optionNames = useMemo(() => {
     const names = [];
     variants.forEach((v) => {
       (v.selectedOptions || []).forEach((o) => {
-        if (o.name !== 'Title' && !names.includes(o.name)) names.push(o.name);
+        const n = norm(o.name);
+        if (n !== 'title' && n !== 'color' && !names.includes(o.name)) {
+          names.push(o.name);
+        }
       });
     });
     return names;
@@ -202,12 +243,13 @@ export default function ProductPage() {
     return (
       variants.find((v) =>
         (v.selectedOptions || []).every((o) => {
-          const val = options[norm(o.name)];
+          const n = norm(o.name);
+          const val = n === 'color' ? color : options[n];
           return !val || norm(o.value) === norm(val);
         }),
       ) || variants[0]
     );
-  }, [variants, options]);
+  }, [variants, options, color]);
 
   if (!product) {
     return (
@@ -221,161 +263,147 @@ export default function ProductPage() {
   const price = selectedVariant?.price?.amount || product.priceRange?.minVariantPrice?.amount;
   const compare = product.compareAtPriceRange?.minVariantPrice?.amount;
   const hasDiscount = compare && Number(compare) > Number(price);
+  const isOut = selectedVariant?.availableForSale === false;
+
+  const handleScroll = (e) => {
+    const el = e.currentTarget;
+    const idx = Math.round(el.scrollLeft / el.clientWidth);
+    if (idx >= 0 && idx < allImages.length) setActiveImage(idx);
+  };
+
+  const handleAdd = () => {
+    if (!selectedVariant?.id) return;
+    setAdded(true);
+    setTimeout(() => {
+      window.location.href = getCheckoutUrl(selectedVariant.id, qty);
+    }, 650);
+  };
 
   return (
     <div className="trp">
-      <header className="trp-bar">
-        <Link className="trp-bar-back" to="/">
-          ← Volver
-        </Link>
-        <Link className="trp-bar-logo" to="/">
-          {logoSrc ? <img src={logoSrc} alt="The Ranch" /> : 'The Ranch'}
-        </Link>
-      </header>
-
-      <div className="trp-wrap">
-        {/* ===== Galería ===== */}
-        <div className="trp-gallery">
-          <div className="trp-main-img">
-            <img
-              src={allImages[selectedImage]?.url}
-              alt={allImages[selectedImage]?.alt || product.title}
-            />
-            <div className="trp-rating-pill">
-              <span className="trp-rating-pill-star">★</span>
-              <span className="trp-rating-pill-num">4.8</span>
-              <span className="trp-rating-pill-sep">·</span>
-              <span className="trp-rating-pill-label">672 reseñas</span>
+      {/* ===== Visor visual ===== */}
+      <div className="trp-viewer">
+        <div
+          className="trp-viewer-track"
+          onScroll={handleScroll}
+          aria-label="Galería de fotos"
+        >
+          {allImages.map((img, i) => (
+            <div key={i} className="trp-viewer-slide">
+              <img src={img.url} alt={img.alt} draggable={false} />
             </div>
-          </div>
-          {allImages.length > 1 && (
-            <div className="trp-thumbs">
-              {allImages.map((img, i) => (
-                <button
-                  key={img.url}
-                  type="button"
-                  className={i === selectedImage ? 'is-active' : ''}
-                  onClick={() => setSelectedImage(i)}
-                  aria-label={`Foto ${i + 1}`}
-                >
-                  <img src={img.url} alt="" />
-                </button>
-              ))}
-            </div>
-          )}
+          ))}
         </div>
 
-        {/* ===== Info ===== */}
-        <div className="trp-info">
-          <span className="trp-eyebrow">The Ranch</span>
-          <h1 className="trp-title">{product.title}</h1>
+        <Link className="trp-back" to="/" aria-label="Volver">
+          ←
+        </Link>
 
-          <div className="trp-rating">
-            <span className="trp-stars">★★★★★</span>
-            <span className="trp-rating-num">4.8</span>
-            <span className="trp-rating-sep">·</span>
-            <span className="trp-rating-label">Reseñas verificadas</span>
-          </div>
+        <button
+          className={`trp-fav ${fav ? 'is-active' : ''}`}
+          type="button"
+          aria-label="Añadir a favoritos"
+          onClick={() => setFav((v) => !v)}
+        >
+          {fav ? '♥' : '♡'}
+        </button>
 
-          <div className="trp-price-row">
-            <span className="trp-price">{formatPrice(price)}</span>
-            {hasDiscount ? (
-              <s className="trp-compare">{formatPrice(compare)}</s>
-            ) : null}
-            {selectedVariant?.availableForSale === false ? (
-              <span className="trp-stock">Agotado</span>
-            ) : (
-              <span className="trp-stock trp-stock-ok">Disponible</span>
-            )}
-          </div>
+        <div className="trp-gallery-indicator" aria-hidden="true">
+          {String(activeImage + 1).padStart(2, '0')}
+          <span> / </span>
+          {String(allImages.length).padStart(2, '0')}
+        </div>
 
-          {product.description ? (
-            <p className="trp-desc">
-              {showFullDesc || product.description.length <= 180
-                ? product.description
-                : `${product.description.slice(0, 180)}…`}
-              {product.description.length > 180 ? (
-                <button
-                  className="trp-read-more"
-                  type="button"
-                  onClick={() => setShowFullDesc((v) => !v)}
-                >
-                  {showFullDesc ? ' Leer menos' : ' Leer más'}
-                </button>
-              ) : null}
-            </p>
-          ) : null}
-
-          {optionNames.map((name) => {
-            const values = Array.from(
-              new Set(
-                variants
-                  .map((v) => v.selectedOptions?.find((o) => o.name === name)?.value)
-                  .filter(Boolean),
-              ),
-            );
-            return (
-              <div key={name} className="trp-option">
-                <span className="trp-option-label">{name}</span>
-                <div className="trp-option-values">
-                  {values.map((value) => (
-                    <button
-                      key={value}
-                      type="button"
-                      className={norm(options[name]) === norm(value) ? 'is-active' : ''}
-                      onClick={() =>
-                        setOptions((prev) => ({...prev, [norm(name)]: value}))
-                      }
-                    >
-                      {value}
-                    </button>
-                  ))}
-                </div>
-              </div>
-            );
-          })}
-
-          <div className="trp-buy-row">
-            <div className="trp-qty" aria-label="Cantidad">
+        {colors.length > 1 && (
+          <div className="trp-color-selector" role="radiogroup" aria-label="Color">
+            {colors.map((c) => (
               <button
+                key={c}
                 type="button"
-                onClick={() => setQty((q) => Math.max(1, q - 1))}
-                aria-label="Menos"
-              >
-                −
-              </button>
-              <span>{qty}</span>
-              <button
-                type="button"
-                onClick={() => setQty((q) => Math.min(10, q + 1))}
-                aria-label="Más"
-              >
-                +
-              </button>
-            </div>
-            <a
-              className="trp-cta"
-              href={getCheckoutUrl(selectedVariant?.id, qty)}
-              onClick={(e) => {
-                if (!selectedVariant?.id) e.preventDefault();
-              }}
-            >
-              <span>Comprar ahora</span>
-              <span className="trp-cta-arrow">→</span>
-            </a>
-          </div>
-
-          <ul className="trp-benefits">
-            {BENEFITS.map((b) => (
-              <li key={b.text}>
-                <span>{b.icon}</span> {b.text}
-              </li>
+                className={norm(color) === norm(c) ? 'is-active' : ''}
+                style={{background: colorToHex(c)}}
+                onClick={() => setColor(c)}
+                aria-label={`Color ${c}`}
+              />
             ))}
-          </ul>
+          </div>
+        )}
+
+        <div className="trp-attrs" aria-hidden="true">
+          {ATTRS.map((a) => (
+            <span key={a}>{a}</span>
+          ))}
+        </div>
+
+        <div className="trp-lasso" aria-hidden="true" />
+      </div>
+
+      {/* ===== Tarjeta flotante de rating ===== */}
+      <div className="trp-rating-pill">
+        <span className="trp-rating-pill-star">★</span>
+        <span className="trp-rating-pill-num">4.8</span>
+        <span className="trp-rating-pill-sep">·</span>
+        <span className="trp-rating-pill-label">672 reseñas</span>
+        <span className="trp-rating-pill-arrow">→</span>
+      </div>
+
+      {/* ===== Info ===== */}
+      <div className="trp-info">
+        <p className="trp-variant">Colección Western — The Ranch</p>
+        <h1 className="trp-title">{product.title}</h1>
+
+        <span className="trp-tag">{isOut ? 'Agotado' : 'Edición limitada'}</span>
+
+        {product.description ? (
+          <p className="trp-desc">
+            {showFullDesc || product.description.length <= 160
+              ? product.description
+              : `${product.description.slice(0, 160)}…`}
+            {product.description.length > 160 ? (
+              <button
+                className="trp-read-more"
+                type="button"
+                onClick={() => setShowFullDesc((v) => !v)}
+              >
+                {showFullDesc ? ' Ver menos' : ' Ver más'}
+              </button>
+            ) : null}
+          </p>
+        ) : null}
+
+        {optionNames.map((name) => {
+          const values = Array.from(
+            new Set(
+              variants
+                .map((v) => v.selectedOptions?.find((o) => o.name === name)?.value)
+                .filter(Boolean),
+            ),
+          );
+          return (
+            <div key={name} className="trp-option">
+              <span className="trp-option-label">Talla — {name}</span>
+              <div className="trp-option-values">
+                {values.map((value) => (
+                  <button
+                    key={value}
+                    type="button"
+                    className={norm(options[name]) === norm(value) ? 'is-active' : ''}
+                    onClick={() => setOptions((prev) => ({...prev, [norm(name)]: value}))}
+                  >
+                    {value}
+                  </button>
+                ))}
+              </div>
+            </div>
+          );
+        })}
+
+        <div className={`trp-stock ${isOut ? 'is-out' : ''}`}>
+          {isOut ? 'Agotado' : '⚡ Últimas unidades disponibles'}
         </div>
       </div>
 
-      {/* ===== Reseñas (carrusel auto) ===== */}
+      {/* ===== Reseñas (carrusel) ===== */}
       {reviews.length > 0 && (
         <section className="trp-reviews">
           <h2 className="trp-reviews-title">Lo que dicen en el campo</h2>
@@ -415,11 +443,7 @@ export default function ProductPage() {
             <h2 className="trp-related-title">Completa tu look</h2>
             <div className="trp-related-grid">
               {related.map((p) => (
-                <Link
-                  key={p.id}
-                  className="trp-related-card"
-                  to={`/products/${p.handle}`}
-                >
+                <Link key={p.id} className="trp-related-card" to={`/products/${p.handle}`}>
                   <div className="trp-related-media">
                     {p.featuredImage?.url ? (
                       <img
@@ -439,6 +463,41 @@ export default function ProductPage() {
           </div>
         </section>
       )}
+
+      {/* ===== Barra de compra fija ===== */}
+      <div className="trp-buybar">
+        <div className="trp-buybar-price">
+          <span className="trp-buybar-price-now">{formatPrice(price)}</span>
+          {hasDiscount ? (
+            <s className="trp-buybar-price-compare">{formatPrice(compare)}</s>
+          ) : null}
+        </div>
+        <div className="trp-qty" aria-label="Cantidad">
+          <button
+            type="button"
+            onClick={() => setQty((q) => Math.max(1, q - 1))}
+            aria-label="Menos"
+          >
+            −
+          </button>
+          <span>{qty}</span>
+          <button
+            type="button"
+            onClick={() => setQty((q) => Math.min(10, q + 1))}
+            aria-label="Más"
+          >
+            +
+          </button>
+        </div>
+        <button
+          className={`trp-add ${added ? 'is-added' : ''}`}
+          type="button"
+          onClick={handleAdd}
+          disabled={isOut}
+        >
+          {added ? '✓ Agregado' : '🛍 Agregar'}
+        </button>
+      </div>
     </div>
   );
 }
