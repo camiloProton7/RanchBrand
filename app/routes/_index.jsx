@@ -119,19 +119,23 @@ export default function Home() {
         title="Más vendidos"
       />
       <ReviewsSection reviews={reviews} />
-      <EditorialFooter />
+      <EditorialFooter logoSrc={logoSrc} />
       <WhatsAppFloat />
     </div>
   );
 }
 
-function EditorialFooter() {
+function EditorialFooter({logoSrc}) {
   const year = new Date().getFullYear();
   return (
     <footer className="tr-footer">
       <div className="tr-footer-inner">
         <div className="tr-footer-head">
-          <h2 className="tr-footer-megatitle">THE RANCH</h2>
+          {logoSrc ? (
+            <img className="tr-footer-logo" src={logoSrc} alt="The Ranch" />
+          ) : (
+            <h2 className="tr-footer-megatitle">THE RANCH</h2>
+          )}
           <p className="tr-footer-tagline">No seguimos modas, las marcamos.</p>
         </div>
 

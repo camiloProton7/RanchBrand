@@ -123,7 +123,7 @@
 .tr-masthead-logo img {
   display: block;
   filter: brightness(0) invert(1);
-  height: 26px;
+  height: 30px;
   width: auto;
 }
 
@@ -146,10 +146,34 @@
   font-family: Arial, Helvetica, sans-serif;
   font-size: 12px;
   font-weight: 700;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.14em;
+  padding-bottom: 5px;
   pointer-events: auto;
+  position: relative;
   text-decoration: none;
   text-transform: uppercase;
+  transition: color 0.2s ease;
+}
+
+.tr-masthead-nav a::after {
+  background: #f5b301;
+  bottom: 0;
+  content: '';
+  height: 1px;
+  left: 0;
+  position: absolute;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.25s ease;
+  width: 100%;
+}
+
+.tr-masthead-nav a:hover {
+  color: #f5b301;
+}
+
+.tr-masthead-nav a:hover::after {
+  transform: scaleX(1);
 }
 
 .tr-editorial-menu {
@@ -1279,6 +1303,14 @@
   letter-spacing: 0.01em;
   line-height: 0.9;
   margin: 0;
+}
+
+.tr-footer-logo {
+  display: block;
+  filter: brightness(0) invert(1);
+  height: 48px;
+  margin: 0 0 20px;
+  width: auto;
 }
 
 .tr-footer-tagline {
