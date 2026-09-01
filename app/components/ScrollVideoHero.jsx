@@ -106,8 +106,7 @@ export function ScrollVideoHero({
 
       // Masthead (header): aparece al hacer scroll (desktop y móvil)
       const mastheadFade = clamp((progress - 0.62) / 0.22);
-      masthead.style.opacity = String(mastheadFade);
-      masthead.style.pointerEvents = mastheadFade > 0.5 ? 'auto' : 'none';
+      masthead.classList.toggle('is-visible', mastheadFade > 0.5);
 
       section.style.setProperty('--hero-progress', String(progress));
       section.style.setProperty(

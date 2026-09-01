@@ -1,5 +1,5 @@
 import FacebookPixel from './components/FacebookPixel';
-import {Analytics, getShopAnalytics, useNonce} from '@shopify/hydrogen';
+import {useNonce} from '@shopify/hydrogen';
 import {
   Outlet,
   useRouteError,
@@ -8,14 +8,12 @@ import {
   Meta,
   Scripts,
   ScrollRestoration,
-  useRouteLoaderData,
 } from 'react-router';
 import favicon from '~/assets/favicon.svg';
-import {FOOTER_QUERY, HEADER_QUERY} from '~/lib/fragments';
+import {HEADER_QUERY} from '~/lib/fragments';
 import resetStyles from '~/styles/reset.css?url';
 import appStyles from '~/styles/app.css?url';
 import tailwindCss from './styles/tailwind.css?url';
-import {PageLayout} from './components/PageLayout';
 
 /**
  * This is important to avoid re-fetching root queries on sub-navigations
@@ -46,84 +44,21 @@ export function links() {
 }
 
 /**
+ * Layout mínimo: solo cargamos el logo de la marca (para el header editorial),
+ * sin carrito, búsqueda ni menú de la plantilla Hydrogen.
  * @param {Route.LoaderArgs} args
  */
 export async function loader(args) {
-  // Start fetching non-critical data without blocking time to first byte
-  const deferredData = loadDeferredData(args);
+  const {storefront} = args.context;
 
-  // Await the critical data required to render initial state of the page
-  const criticalData = await loadCriticalData(args);
-
-  const {storefront, env} = args.context;
-
-  return {
-    ...deferredData,
-    ...criticalData,
-    publicStoreDomain: env.PUBLIC_STORE_DOMAIN,
-    shop: getShopAnalytics({
-      storefront,
-      publicStorefrontId: env.PUBLIC_STOREFRONT_ID,
-    }),
-    consent: {
-      checkoutDomain: env.PUBLIC_CHECKOUT_DOMAIN,
-      storefrontAccessToken: env.PUBLIC_STOREFRONT_API_TOKEN,
-      withPrivacyBanner: false,
-      // localize the privacy banner
-      country: args.context.storefront.i18n.country,
-      language: args.context.storefront.i18n.language,
+  const header = await storefront.query(HEADER_QUERY, {
+    cache: storefront.CacheLong(),
+    variables: {
+      headerMenuHandle: 'main-menu',
     },
-  };
-}
-
-/**
- * Load data necessary for rendering content above the fold. This is the critical data
- * needed to render the page. If it's unavailable, the whole page should 400 or 500 error.
- * @param {Route.LoaderArgs}
- */
-async function loadCriticalData({context}) {
-  const {storefront} = context;
-
-  const [header] = await Promise.all([
-    storefront.query(HEADER_QUERY, {
-      cache: storefront.CacheLong(),
-      variables: {
-        headerMenuHandle: 'main-menu', // Adjust to your header menu handle
-      },
-    }),
-    // Add other queries here, so that they are loaded in parallel
-  ]);
+  });
 
   return {header};
-}
-
-/**
- * Load data for rendering content below the fold. This data is deferred and will be
- * fetched after the initial page load. If it's unavailable, the page should still 200.
- * Make sure to not throw any errors here, as it will cause the page to 500.
- * @param {Route.LoaderArgs}
- */
-function loadDeferredData({context}) {
-  const {storefront, customerAccount, cart} = context;
-
-  // defer the footer query (below the fold)
-  const footer = storefront
-    .query(FOOTER_QUERY, {
-      cache: storefront.CacheLong(),
-      variables: {
-        footerMenuHandle: 'footer', // Adjust to your footer menu handle
-      },
-    })
-    .catch((error) => {
-      // Log query errors, but don't throw them so the page can still render
-      console.error(error);
-      return null;
-    });
-  return {
-    cart: cart.get(),
-    isLoggedIn: customerAccount.isLoggedIn(),
-    footer,
-  };
 }
 
 /**
@@ -144,9 +79,9 @@ export function Layout({children}) {
         <Links />
       </head>
       <body>
-        {/* AQUÍ ESTÁ LA MAGIA: El Pixel se inserta al inicio del cuerpo */}
+        {/* El Pixel se inserta al inicio del cuerpo */}
         <FacebookPixel />
-        
+
         {children}
         <ScrollRestoration nonce={nonce} />
         <Scripts nonce={nonce} />
@@ -156,24 +91,7 @@ export function Layout({children}) {
 }
 
 export default function App() {
-  /** @type {RootLoader} */
-  const data = useRouteLoaderData('root');
-
-  if (!data) {
-    return <Outlet />;
-  }
-
-  return (
-    <Analytics.Provider
-      cart={data.cart}
-      shop={data.shop}
-      consent={data.consent}
-    >
-      <PageLayout {...data}>
-        <Outlet />
-      </PageLayout>
-    </Analytics.Provider>
-  );
+  return <Outlet />;
 }
 
 export function ErrorBoundary() {

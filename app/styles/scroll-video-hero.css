@@ -85,21 +85,32 @@
 
 .tr-masthead {
   align-items: center;
+  background: rgba(11, 11, 9, 0.62);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(244, 240, 231, 0.08);
   display: flex;
   justify-content: space-between;
   left: 0;
   opacity: 0;
   padding:
-    max(18px, env(safe-area-inset-top))
-    max(18px, env(safe-area-inset-right))
-    0
-    max(18px, env(safe-area-inset-left));
+    max(14px, env(safe-area-inset-top))
+    max(20px, env(safe-area-inset-right))
+    14px
+    max(20px, env(safe-area-inset-left));
   pointer-events: none;
-  position: absolute;
+  position: fixed;
   right: 0;
   top: 0;
-  transition: opacity 200ms ease;
-  z-index: 9;
+  transform: translateY(-100%);
+  transition: opacity 300ms ease, transform 300ms ease;
+  z-index: 40;
+}
+
+.tr-masthead.is-visible {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
 }
 
 .tr-masthead-logo {
@@ -422,8 +433,8 @@
   flex-direction: column;
   inset: 0;
   padding: max(24px, env(safe-area-inset-top)) 28px 28px;
-  position: absolute;
-  z-index: 10;
+  position: fixed;
+  z-index: 50;
   animation: tr-mobile-menu-fade 0.45s ease both;
 }
 
