@@ -44,9 +44,12 @@ export function ScrollVideoHero({
 
     if (!section || !video || !videoLayer || !menu || !masthead) return;
 
-    // Forzar la carga del video (iOS/Android ignoran preload="auto"), para que
-    // el scroll-scrubbing (seek según scroll) tenga datos disponibles.
-    video.load();
+    // Forzar la carga del video solo si aún no empezó (iOS/Android ignoran
+    // preload="auto"). Si ya está cargando, no reiniciarla: reiniciarla causa
+    // un parpadeo/bloqueo al inicio.
+    if (video.readyState === 0) {
+      video.load();
+    }
 
     // Si el video ya cargó (caché / carga rápida), marcarlo listo de inmediato
     // para que no quede invisible en la primera visita.
