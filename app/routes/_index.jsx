@@ -217,16 +217,31 @@ function TrustBar() {
     'Envío gratis a toda Colombia',
     'Garantía de calidad',
     'Pago 100% seguro',
-    'Cuotas disponibles',
+    'Pagos por Addi',
   ];
   return (
     <div className="tr-trustbar">
-      {items.map((text, i) => (
-        <span className="tr-trustbar-item" key={text}>
-          {i > 0 ? <span className="tr-trustbar-sep">·</span> : null}
-          {text}
-        </span>
-      ))}
+      <div className="tr-trustbar-track">
+        {[0, 1].map((dup) => (
+          <div
+            className="tr-trustbar-group"
+            key={dup}
+            aria-hidden={dup === 1 ? 'true' : undefined}
+          >
+            {items.map((text) => (
+              <span
+                className={`tr-trustbar-item ${
+                  text === 'Pagos por Addi' ? 'tr-trustbar-addi' : ''
+                }`}
+                key={`${dup}-${text}`}
+              >
+                {text}
+                <span className="tr-trustbar-sep">·</span>
+              </span>
+            ))}
+          </div>
+        ))}
+      </div>
     </div>
   );
 }

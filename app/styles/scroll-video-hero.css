@@ -1559,28 +1559,53 @@
   }
 }
 
-/* ── Barra de confianza ── */
+/* ── Barra de confianza (marquee) ── */
 .tr-trustbar {
-  align-items: center;
   background: #141310;
   border-bottom: 1px solid rgba(244, 240, 231, 0.08);
+  overflow: hidden;
+  padding: 14px 0;
+  position: relative;
+}
+
+.tr-trustbar-track {
+  animation: tr-trustbar-marquee 28s linear infinite;
   display: flex;
-  flex-wrap: wrap;
-  gap: 12px 28px;
-  justify-content: center;
-  padding: 14px 20px;
+  width: max-content;
+}
+
+.tr-trustbar-group {
+  align-items: center;
+  display: flex;
+  flex-shrink: 0;
 }
 
 .tr-trustbar-item {
+  align-items: center;
   color: #b7b0a0;
+  display: inline-flex;
   font-size: 11px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.tr-trustbar-addi {
+  color: #f5b301;
 }
 
 .tr-trustbar-sep {
   color: #5a5448;
   margin: 0 16px;
+}
+
+@keyframes tr-trustbar-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
 }
 
 /* ── Título de ProductScroll ── */
