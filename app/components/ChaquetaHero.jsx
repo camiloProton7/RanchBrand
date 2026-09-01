@@ -59,6 +59,7 @@ export default function ChaquetaHero({products}) {
   const giant = keyword.toUpperCase();
   const images = active.images?.nodes || [];
   const mainImage = images[imageIndex]?.url || active.featuredImage?.url || '';
+  const backgroundImage = BACKGROUND_IMAGES[keyword] || '';
   const n = items.length;
 
   const prev = () => setIndex((index - 1 + n) % n);
@@ -83,15 +84,18 @@ export default function ChaquetaHero({products}) {
   return (
     <section
       className="tr-chaqueta-hero"
-      style={{
-        '--bg': colors.bg,
-        '--text': colors.text,
-        '--bg-image': BACKGROUND_IMAGES[keyword]
-          ? `url(${BACKGROUND_IMAGES[keyword]})`
-          : 'none',
-      }}
+      style={{'--bg': colors.bg, '--text': colors.text}}
       aria-label="Chaquetas"
     >
+      {backgroundImage ? (
+        <img
+          className="tr-chaqueta-hero-bg"
+          src={backgroundImage}
+          alt=""
+          aria-hidden="true"
+          draggable={false}
+        />
+      ) : null}
       <div
         className="tr-chaqueta-hero-stage"
         onPointerDown={onPointerDown}

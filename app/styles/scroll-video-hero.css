@@ -1695,9 +1695,7 @@
 
 /* ── Hero de chaquetas (PNG flotante + texto gigante + fondo dinámico) ── */
 .tr-chaqueta-hero {
-  background:
-    var(--bg-image, none) center / cover no-repeat,
-    linear-gradient(165deg, var(--bg) 0%, #241d15 55%, #15120e 100%);
+  background: linear-gradient(165deg, var(--bg) 0%, #241d15 55%, #15120e 100%);
   color: #f4f0e7;
   overflow: hidden;
   padding: 40px 24px 48px;
@@ -1706,11 +1704,22 @@
   transition: background 0.7s ease;
 }
 
+.tr-chaqueta-hero-bg {
+  height: 100%;
+  left: 0;
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  z-index: 0;
+}
+
 .tr-chaqueta-hero-stage {
   height: 520px;
   margin: 0 auto;
   max-width: 900px;
   position: relative;
+  z-index: 1;
 }
 
 .tr-chaqueta-hero-giant {
@@ -1780,6 +1789,8 @@
 .tr-chaqueta-hero-info {
   margin: 8px auto 0;
   max-width: 520px;
+  position: relative;
+  z-index: 1;
 }
 
 .tr-chaqueta-hero-eyebrow {
@@ -1812,6 +1823,8 @@
   flex-direction: column;
   gap: 16px;
   margin-top: 18px;
+  position: relative;
+  z-index: 1;
 }
 
 .tr-chaqueta-hero-cta {
@@ -1851,6 +1864,8 @@
   justify-content: center;
   margin: 12px auto 0;
   max-width: 520px;
+  position: relative;
+  z-index: 1;
 }
 
 .tr-chaqueta-hero-thumbs button {
