@@ -1,16 +1,16 @@
 /* ===== Página de producto premium ===== */
 .trp {
-  background: #f4f0e7;
-  color: #0b0b09;
+  background: linear-gradient(180deg, #0b0b09 0%, #12110e 100%);
+  color: #f4f0e7;
   min-height: 100svh;
 }
 
 .trp-bar {
   align-items: center;
-  background: rgba(244, 240, 231, 0.85);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border-bottom: 1px solid rgba(11, 11, 9, 0.08);
+  background: rgba(11, 11, 9, 0.6);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(244, 240, 231, 0.08);
   display: flex;
   justify-content: space-between;
   left: 0;
@@ -22,7 +22,7 @@
 }
 
 .trp-bar-back {
-  color: #0b0b09;
+  color: #f4f0e7;
   font-size: 13px;
   font-weight: 700;
   letter-spacing: 0.08em;
@@ -31,11 +31,11 @@
 }
 
 .trp-bar-back:hover {
-  color: #5a6b3c;
+  color: #f5b301;
 }
 
 .trp-bar-logo {
-  color: #0b0b09;
+  color: #f4f0e7;
   font-family: Georgia, 'Times New Roman', serif;
   font-size: 16px;
   font-weight: 700;
@@ -46,8 +46,8 @@
 
 .trp-empty {
   align-items: center;
-  background: #f4f0e7;
-  color: #0b0b09;
+  background: #0b0b09;
+  color: #f4f0e7;
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -86,9 +86,10 @@
 
 .trp-main-img {
   aspect-ratio: 4 / 5;
-  background: #e5e1d6;
+  background: #141310;
   border-radius: 20px;
   overflow: hidden;
+  position: relative;
   width: 100%;
 }
 
@@ -96,6 +97,38 @@
   height: 100%;
   object-fit: cover;
   width: 100%;
+}
+
+.trp-rating-pill {
+  align-items: center;
+  background: rgba(244, 240, 231, 0.92);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-radius: 999px;
+  bottom: 14px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+  color: #1a1a18;
+  display: flex;
+  font-size: 12px;
+  font-weight: 700;
+  gap: 5px;
+  left: 14px;
+  padding: 8px 14px;
+  position: absolute;
+}
+
+.trp-rating-pill-star {
+  color: #f5b301;
+}
+
+.trp-rating-pill-num {
+  font-weight: 800;
+}
+
+.trp-rating-pill-sep,
+.trp-rating-pill-label {
+  color: #77756e;
+  font-weight: 600;
 }
 
 .trp-thumbs {
@@ -107,7 +140,7 @@
 }
 
 .trp-thumbs button {
-  background: #e5e1d6;
+  background: #141310;
   border: 2px solid transparent;
   border-radius: 12px;
   cursor: pointer;
@@ -131,7 +164,7 @@
 
 /* ===== Info ===== */
 .trp-eyebrow {
-  color: #5a6b3c;
+  color: #f5b301;
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.22em;
@@ -139,7 +172,7 @@
 }
 
 .trp-title {
-  color: #0b0b09;
+  color: #f4f0e7;
   font-family: Georgia, 'Times New Roman', serif;
   font-size: clamp(32px, 5vw, 52px);
   font-weight: 700;
@@ -161,13 +194,13 @@
 }
 
 .trp-rating-num {
-  color: #0b0b09;
+  color: #f4f0e7;
   font-weight: 700;
 }
 
 .trp-rating-sep,
 .trp-rating-label {
-  color: #6b6558;
+  color: #9a9384;
   font-size: 13px;
 }
 
@@ -208,7 +241,7 @@
 }
 
 .trp-desc {
-  color: #5a554a;
+  color: #c9c2b2;
   font-family: Georgia, 'Times New Roman', serif;
   font-size: 16px;
   line-height: 1.7;
@@ -221,7 +254,7 @@
 }
 
 .trp-option-label {
-  color: #6b6558;
+  color: #9a9384;
   display: block;
   font-size: 11px;
   font-weight: 700;
@@ -237,10 +270,10 @@
 }
 
 .trp-option-values button {
-  background: #ffffff;
-  border: 1px solid rgba(11, 11, 9, 0.16);
+  background: rgba(244, 240, 231, 0.06);
+  border: 1px solid rgba(244, 240, 231, 0.18);
   border-radius: 10px;
-  color: #0b0b09;
+  color: #f4f0e7;
   cursor: pointer;
   font-size: 14px;
   font-weight: 600;
@@ -250,13 +283,13 @@
 }
 
 .trp-option-values button:hover {
-  border-color: rgba(11, 11, 9, 0.4);
+  border-color: rgba(244, 240, 231, 0.45);
 }
 
 .trp-option-values button.is-active {
-  background: #0b0b09;
-  border-color: #0b0b09;
-  color: #f4f0e7;
+  background: #f4f0e7;
+  border-color: #f4f0e7;
+  color: #141310;
 }
 
 /* ===== CTA ===== */
@@ -300,9 +333,59 @@
   color: #f5b301;
 }
 
+/* ===== Fila de compra (cantidad + CTA) ===== */
+.trp-buy-row {
+  align-items: center;
+  display: flex;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.trp-qty {
+  align-items: center;
+  background: rgba(244, 240, 231, 0.06);
+  border: 1px solid rgba(244, 240, 231, 0.18);
+  border-radius: 999px;
+  display: flex;
+  flex-shrink: 0;
+  gap: 8px;
+  padding: 6px;
+}
+
+.trp-qty button {
+  align-items: center;
+  background: rgba(244, 240, 231, 0.1);
+  border: none;
+  border-radius: 50%;
+  color: #f4f0e7;
+  cursor: pointer;
+  display: flex;
+  font-size: 16px;
+  height: 32px;
+  justify-content: center;
+  width: 32px;
+}
+
+.trp-qty button:hover {
+  background: rgba(244, 240, 231, 0.22);
+}
+
+.trp-qty span {
+  color: #f4f0e7;
+  font-size: 14px;
+  font-weight: 700;
+  min-width: 20px;
+  text-align: center;
+}
+
+.trp-buy-row .trp-cta {
+  flex: 1;
+  margin-top: 0;
+}
+
 /* ===== Beneficios ===== */
 .trp-benefits {
-  border-top: 1px solid rgba(11, 11, 9, 0.1);
+  border-top: 1px solid rgba(244, 240, 231, 0.1);
   display: flex;
   flex-direction: column;
   gap: 14px;
@@ -312,7 +395,7 @@
 }
 
 .trp-benefits li {
-  color: #5a554a;
+  color: #c9c2b2;
   font-size: 14px;
 }
 
@@ -341,13 +424,14 @@
 /* ===== Logo en barra ===== */
 .trp-bar-logo img {
   display: block;
+  filter: brightness(0) invert(1);
   height: 22px;
   width: auto;
 }
 
 /* ===== Reseñas (carrusel auto) ===== */
 .trp-reviews {
-  border-top: 1px solid rgba(11, 11, 9, 0.1);
+  border-top: 1px solid rgba(244, 240, 231, 0.08);
   overflow: hidden;
   padding: 72px 0;
 }

@@ -173,6 +173,7 @@ export default function ProductPage() {
   const logoSrc = rootData?.header?.shop?.brand?.logo?.image?.url;
   const [selectedImage, setSelectedImage] = useState(0);
   const [options, setOptions] = useState({});
+  const [qty, setQty] = useState(1);
 
   const variants = product?.variants?.nodes || [];
   const allImages = useMemo(() => {
@@ -239,6 +240,12 @@ export default function ProductPage() {
               src={allImages[selectedImage]?.url}
               alt={allImages[selectedImage]?.alt || product.title}
             />
+            <div className="trp-rating-pill">
+              <span className="trp-rating-pill-star">★</span>
+              <span className="trp-rating-pill-num">4.8</span>
+              <span className="trp-rating-pill-sep">·</span>
+              <span className="trp-rating-pill-label">672 reseñas</span>
+            </div>
           </div>
           {allImages.length > 1 && (
             <div className="trp-thumbs">
@@ -314,16 +321,35 @@ export default function ProductPage() {
             );
           })}
 
-          <a
-            className="trp-cta"
-            href={getCheckoutUrl(selectedVariant?.id)}
-            onClick={(e) => {
-              if (!selectedVariant?.id) e.preventDefault();
-            }}
-          >
-            <span>Comprar ahora</span>
-            <span className="trp-cta-arrow">→</span>
-          </a>
+          <div className="trp-buy-row">
+            <div className="trp-qty" aria-label="Cantidad">
+              <button
+                type="button"
+                onClick={() => setQty((q) => Math.max(1, q - 1))}
+                aria-label="Menos"
+              >
+                −
+              </button>
+              <span>{qty}</span>
+              <button
+                type="button"
+                onClick={() => setQty((q) => Math.min(10, q + 1))}
+                aria-label="Más"
+              >
+                +
+              </button>
+            </div>
+            <a
+              className="trp-cta"
+              href={getCheckoutUrl(selectedVariant?.id, qty)}
+              onClick={(e) => {
+                if (!selectedVariant?.id) e.preventDefault();
+              }}
+            >
+              <span>Comprar ahora</span>
+              <span className="trp-cta-arrow">→</span>
+            </a>
+          </div>
 
           <ul className="trp-benefits">
             {BENEFITS.map((b) => (
