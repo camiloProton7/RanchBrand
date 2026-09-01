@@ -23,7 +23,7 @@ const BACKGROUND_IMAGES = {
   Armor:
     'https://rattwfjkxgqvxmxlybcz.supabase.co/storage/v1/object/public/whatsapp-images/home/armor-bg.jpg',
   Mojave:
-    'https://rattwfjkxgqvxmxlybcz.supabase.co/storage/v1/object/public/whatsapp-images/home/mojave-bg.jpg',
+    'https://rattwfjkxgqvxmxlybcz.supabase.co/storage/v1/object/public/whatsapp-images/home/mojave-desert.jpg',
   Laredo:
     'https://rattwfjkxgqvxmxlybcz.supabase.co/storage/v1/object/public/whatsapp-images/home/laredo-bg.jpg',
   Sahara:
@@ -130,6 +130,7 @@ export default function ChaquetaHero({products}) {
     >
       {backgroundImage ? (
         <img
+          key={active.id}
           className="tr-chaqueta-hero-bg"
           src={backgroundImage}
           alt=""
@@ -144,18 +145,25 @@ export default function ChaquetaHero({products}) {
         onPointerCancel={onPointerUp}
       >
         {/* Texto gigante detrás */}
-        <span className="tr-chaqueta-hero-giant" aria-hidden="true">
+        <span
+          key={active.id}
+          className="tr-chaqueta-hero-giant"
+          aria-hidden="true"
+        >
           {giant}
         </span>
 
         {/* Chaqueta PNG flotando */}
         {mainImage ? (
-          <img
-            className="tr-chaqueta-hero-jacket"
-            src={mainImage}
-            alt={active.title}
-            draggable={false}
-          />
+          <div className="tr-chaqueta-hero-jacket-float">
+            <img
+              key={active.id}
+              className="tr-chaqueta-hero-jacket"
+              src={mainImage}
+              alt={active.title}
+              draggable={false}
+            />
+          </div>
         ) : null}
 
         {/* Flechas */}
@@ -194,7 +202,7 @@ export default function ChaquetaHero({products}) {
         </div>
       )}
 
-      <div className="tr-chaqueta-hero-info">
+      <div className="tr-chaqueta-hero-info" key={active.id}>
         <span className="tr-chaqueta-hero-eyebrow">{active.title}</span>
         <p className="tr-chaqueta-hero-desc">{DESCRIPTIONS[keyword]}</p>
         <span className="tr-chaqueta-hero-price">
