@@ -1,16 +1,16 @@
 /* ===== Página de producto premium ===== */
 .trp {
-  background: linear-gradient(180deg, #0b0b09 0%, #12110e 100%);
-  color: #f4f0e7;
+  background: linear-gradient(180deg, #f7f5f0 0%, #efebe2 100%);
+  color: #0b0b09;
   min-height: 100svh;
 }
 
 .trp-bar {
   align-items: center;
-  background: rgba(11, 11, 9, 0.6);
+  background: rgba(247, 245, 240, 0.7);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border-bottom: 1px solid rgba(244, 240, 231, 0.08);
+  border-bottom: 1px solid rgba(11, 11, 9, 0.06);
   display: flex;
   justify-content: space-between;
   left: 0;
@@ -22,7 +22,7 @@
 }
 
 .trp-bar-back {
-  color: #f4f0e7;
+  color: #0b0b09;
   font-size: 13px;
   font-weight: 700;
   letter-spacing: 0.08em;
@@ -31,11 +31,11 @@
 }
 
 .trp-bar-back:hover {
-  color: #f5b301;
+  color: #5a6b3c;
 }
 
 .trp-bar-logo {
-  color: #f4f0e7;
+  color: #0b0b09;
   font-family: Georgia, 'Times New Roman', serif;
   font-size: 16px;
   font-weight: 700;
@@ -46,8 +46,8 @@
 
 .trp-empty {
   align-items: center;
-  background: #0b0b09;
-  color: #f4f0e7;
+  background: #f7f5f0;
+  color: #0b0b09;
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -86,7 +86,7 @@
 
 .trp-main-img {
   aspect-ratio: 4 / 5;
-  background: #141310;
+  background: radial-gradient(circle at 50% 38%, #fdfbf5 0%, #e8e2d4 72%);
   border-radius: 20px;
   overflow: hidden;
   position: relative;
@@ -101,12 +101,12 @@
 
 .trp-rating-pill {
   align-items: center;
-  background: rgba(244, 240, 231, 0.92);
+  background: rgba(255, 255, 255, 0.82);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   border-radius: 999px;
   bottom: 14px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.14);
   color: #1a1a18;
   display: flex;
   font-size: 12px;
@@ -140,7 +140,7 @@
 }
 
 .trp-thumbs button {
-  background: #141310;
+  background: #e8e2d4;
   border: 2px solid transparent;
   border-radius: 12px;
   cursor: pointer;
@@ -164,7 +164,7 @@
 
 /* ===== Info ===== */
 .trp-eyebrow {
-  color: #f5b301;
+  color: #5a6b3c;
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.22em;
@@ -172,7 +172,7 @@
 }
 
 .trp-title {
-  color: #f4f0e7;
+  color: #0b0b09;
   font-family: Georgia, 'Times New Roman', serif;
   font-size: clamp(32px, 5vw, 52px);
   font-weight: 700;
@@ -194,13 +194,13 @@
 }
 
 .trp-rating-num {
-  color: #f4f0e7;
+  color: #0b0b09;
   font-weight: 700;
 }
 
 .trp-rating-sep,
 .trp-rating-label {
-  color: #9a9384;
+  color: #6b6558;
   font-size: 13px;
 }
 
@@ -241,7 +241,7 @@
 }
 
 .trp-desc {
-  color: #c9c2b2;
+  color: #5a554a;
   font-family: Georgia, 'Times New Roman', serif;
   font-size: 16px;
   line-height: 1.7;
@@ -266,7 +266,7 @@
 }
 
 .trp-option-label {
-  color: #9a9384;
+  color: #6b6558;
   display: block;
   font-size: 11px;
   font-weight: 700;
@@ -282,10 +282,10 @@
 }
 
 .trp-option-values button {
-  background: rgba(244, 240, 231, 0.06);
-  border: 1px solid rgba(244, 240, 231, 0.18);
+  background: rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(11, 11, 9, 0.16);
   border-radius: 10px;
-  color: #f4f0e7;
+  color: #0b0b09;
   cursor: pointer;
   font-size: 14px;
   font-weight: 600;
@@ -295,13 +295,13 @@
 }
 
 .trp-option-values button:hover {
-  border-color: rgba(244, 240, 231, 0.45);
+  border-color: rgba(11, 11, 9, 0.4);
 }
 
 .trp-option-values button.is-active {
-  background: #f4f0e7;
-  border-color: #f4f0e7;
-  color: #141310;
+  background: #0b0b09;
+  border-color: #0b0b09;
+  color: #f4f0e7;
 }
 
 /* ===== CTA ===== */
@@ -355,8 +355,8 @@
 
 .trp-qty {
   align-items: center;
-  background: rgba(244, 240, 231, 0.06);
-  border: 1px solid rgba(244, 240, 231, 0.18);
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(11, 11, 9, 0.12);
   border-radius: 999px;
   display: flex;
   flex-shrink: 0;
@@ -366,10 +366,10 @@
 
 .trp-qty button {
   align-items: center;
-  background: rgba(244, 240, 231, 0.1);
+  background: rgba(11, 11, 9, 0.06);
   border: none;
   border-radius: 50%;
-  color: #f4f0e7;
+  color: #0b0b09;
   cursor: pointer;
   display: flex;
   font-size: 16px;
@@ -379,11 +379,11 @@
 }
 
 .trp-qty button:hover {
-  background: rgba(244, 240, 231, 0.22);
+  background: rgba(11, 11, 9, 0.14);
 }
 
 .trp-qty span {
-  color: #f4f0e7;
+  color: #0b0b09;
   font-size: 14px;
   font-weight: 700;
   min-width: 20px;
@@ -397,7 +397,7 @@
 
 /* ===== Beneficios ===== */
 .trp-benefits {
-  border-top: 1px solid rgba(244, 240, 231, 0.1);
+  border-top: 1px solid rgba(11, 11, 9, 0.1);
   display: flex;
   flex-direction: column;
   gap: 14px;
@@ -407,7 +407,7 @@
 }
 
 .trp-benefits li {
-  color: #c9c2b2;
+  color: #5a554a;
   font-size: 14px;
 }
 
@@ -436,14 +436,13 @@
 /* ===== Logo en barra ===== */
 .trp-bar-logo img {
   display: block;
-  filter: brightness(0) invert(1);
   height: 22px;
   width: auto;
 }
 
 /* ===== Reseñas (carrusel auto) ===== */
 .trp-reviews {
-  border-top: 1px solid rgba(244, 240, 231, 0.08);
+  border-top: 1px solid rgba(11, 11, 9, 0.08);
   overflow: hidden;
   padding: 72px 0;
 }
