@@ -6,11 +6,13 @@ const PHOTO_1 =
   'https://rattwfjkxgqvxmxlybcz.supabase.co/storage/v1/object/public/whatsapp-images/home/desert-model-1.webp';
 const PHOTO_2 =
   'https://rattwfjkxgqvxmxlybcz.supabase.co/storage/v1/object/public/whatsapp-images/home/desert-model-2.webp';
+const PRODUCT_IMAGE =
+  'https://cdn.shopify.com/s/files/1/0678/1386/7760/files/Mesadetrabajo110_500x.webp?v=1779766644';
 
 /**
  * Campaña editorial "Desert" — sección premium con scroll-scrubbing.
  * La foto principal pasa de blanco/negro a color con un zoom sutil,
- * y al final aparece un segundo ángulo con el CTA.
+ * y al final aparece un segundo ángulo con el CTA y la tarjeta del producto.
  */
 export default function DesertCampaign({
   productUrl = 'https://ranch.com.co/products/gorra-desert',
@@ -21,6 +23,7 @@ export default function DesertCampaign({
   const photo2Ref = useRef(null);
   const giantRef = useRef(null);
   const infoRef = useRef(null);
+  const cardRef = useRef(null);
 
   useEffect(() => {
     const section = sectionRef.current;
@@ -62,6 +65,13 @@ export default function DesertCampaign({
         infoRef.current.style.opacity = String(reveal);
         infoRef.current.style.transform = `translate(-50%, ${(1 - reveal) * 30}px)`;
       }
+
+      // Tarjeta del producto se revela al final (discreta)
+      if (cardRef.current) {
+        const reveal = clamp((progress - 0.5) / 0.3);
+        cardRef.current.style.opacity = String(reveal);
+        cardRef.current.style.transform = `translateY(${(1 - reveal) * 24}px)`;
+      }
     };
 
     measure();
@@ -98,6 +108,18 @@ export default function DesertCampaign({
         <span ref={giantRef} className="tr-desert-giant" aria-hidden="true">
           DESERT
         </span>
+
+        <a ref={cardRef} className="tr-desert-card" href={productUrl}>
+          <img src={PRODUCT_IMAGE} alt="Gorra Desert" draggable={false} />
+          <span className="tr-desert-card-info">
+            <span className="tr-desert-card-name">Gorra Desert</span>
+            <span className="tr-desert-card-price">{price}</span>
+          </span>
+          <span className="tr-desert-card-arrow" aria-hidden="true">
+            →
+          </span>
+        </a>
+
         <div ref={infoRef} className="tr-desert-info">
           <span className="tr-desert-eyebrow">The Ranch — Edición Desert</span>
           <p className="tr-desert-tagline">
@@ -107,7 +129,6 @@ export default function DesertCampaign({
             <span>Descubre la Gorra Desert</span>
             <span className="tr-desert-cta-arrow">→</span>
           </a>
-          <span className="tr-desert-price">{price}</span>
         </div>
       </div>
     </section>

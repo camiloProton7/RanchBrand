@@ -2087,6 +2087,7 @@
   height: 100%;
   left: 0;
   object-fit: cover;
+  object-position: center 25%;
   position: absolute;
   top: 0;
   width: 100%;
@@ -2202,6 +2203,63 @@
   font-size: 20px;
   font-weight: 800;
   margin-top: 14px;
+}
+
+.tr-desert-card {
+  align-items: center;
+  background: rgba(20, 19, 16, 0.72);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(244, 240, 231, 0.14);
+  border-radius: 16px;
+  bottom: max(42px, env(safe-area-inset-bottom));
+  display: flex;
+  gap: 12px;
+  left: 20px;
+  opacity: 0;
+  padding: 10px 14px 10px 10px;
+  position: absolute;
+  text-decoration: none;
+  z-index: 4;
+}
+
+.tr-desert-card img {
+  border-radius: 10px;
+  display: block;
+  height: 56px;
+  object-fit: cover;
+  width: 56px;
+}
+
+.tr-desert-card-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.tr-desert-card-name {
+  color: #f4f0e7;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.tr-desert-card-price {
+  color: #f5b301;
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.tr-desert-card-arrow {
+  align-items: center;
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 50%;
+  color: #f4f0e7;
+  display: flex;
+  font-size: 12px;
+  height: 28px;
+  justify-content: center;
+  margin-left: auto;
+  width: 28px;
 }
 
 @media (max-width: 640px) {
