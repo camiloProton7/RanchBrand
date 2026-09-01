@@ -103,7 +103,6 @@ export default function Home() {
         collectionUrl="https://ranch.com.co/collections/gorras-truckers"
         ariaLabel="Colección de gorras"
       />
-      <ReviewsSection reviews={reviews} />
       <ChaquetaHero products={chaquetas} />
       <ProductScroll
         products={camisetas}
@@ -117,6 +116,7 @@ export default function Home() {
         ariaLabel="Más vendidos"
         title="Más vendidos"
       />
+      <ReviewsSection reviews={reviews} />
       <EditorialFooter />
       <WhatsAppFloat />
     </div>

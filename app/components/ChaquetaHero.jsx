@@ -16,6 +16,11 @@ const COLORS = {
   Mojave: {bg: '#a35c3a', text: '#f0e0c8'},
 };
 
+// Fondo con imagen (opcional) por chaqueta. Las que no tienen usan solo el color.
+const BACKGROUND_IMAGES = {
+  Yellowstone: '/chaquetas-hero/yellowstone-bg.jpg',
+};
+
 const DESCRIPTIONS = {
   Laredo: 'Hecha a mano en lona y cuero, impermeabilizada para la intemperie.',
   Sahara: 'Ligera y transpirable, hecha para el calor del desierto.',
@@ -78,7 +83,13 @@ export default function ChaquetaHero({products}) {
   return (
     <section
       className="tr-chaqueta-hero"
-      style={{'--bg': colors.bg, '--text': colors.text}}
+      style={{
+        '--bg': colors.bg,
+        '--text': colors.text,
+        '--bg-image': BACKGROUND_IMAGES[keyword]
+          ? `url(${BACKGROUND_IMAGES[keyword]})`
+          : 'none',
+      }}
       aria-label="Chaquetas"
     >
       <div

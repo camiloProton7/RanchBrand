@@ -1695,12 +1695,9 @@
 
 /* ── Hero de chaquetas (PNG flotante + texto gigante + fondo dinámico) ── */
 .tr-chaqueta-hero {
-  background: linear-gradient(
-    165deg,
-    var(--bg) 0%,
-    #241d15 55%,
-    #15120e 100%
-  );
+  background:
+    var(--bg-image, none) center / cover no-repeat,
+    linear-gradient(165deg, var(--bg) 0%, #241d15 55%, #15120e 100%);
   color: #f4f0e7;
   overflow: hidden;
   padding: 40px 24px 48px;
