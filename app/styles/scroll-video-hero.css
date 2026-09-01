@@ -1705,10 +1705,10 @@
 }
 
 .tr-chaqueta-hero-bg {
-  animation: tr-chaqueta-fade 0.7s ease both;
   height: 100%;
   left: 0;
   object-fit: cover;
+  opacity: 1;
   position: absolute;
   top: 0;
   transform: translate(
@@ -1716,9 +1716,13 @@
       calc(var(--par-y, 0) * -24px)
     )
     scale(1.08);
-  transition: transform 0.3s ease-out;
+  transition: opacity 0.3s ease, transform 0.3s ease-out;
   width: 100%;
   z-index: 0;
+}
+
+.tr-chaqueta-hero-bg.is-fading {
+  opacity: 0;
 }
 
 .tr-chaqueta-hero-stage {

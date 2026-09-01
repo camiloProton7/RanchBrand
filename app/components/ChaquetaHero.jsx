@@ -52,8 +52,12 @@ export default function ChaquetaHero({products}) {
   const items = products.filter((p) =>
     KEYWORDS.some((k) => (p.title || '').includes(k)),
   );
+  const initialKeyword = items[0] ? keywordFor(items[0].title) : '';
+  const initialBg = BACKGROUND_IMAGES[initialKeyword] || '';
   const [index, setIndex] = useState(0);
   const [imageIndex, setImageIndex] = useState(0);
+  const [displayBg, setDisplayBg] = useState(initialBg);
+  const [bgFading, setBgFading] = useState(false);
   const dragInfo = useRef(null);
   const sectionRef = useRef(null);
 
@@ -90,6 +94,20 @@ export default function ChaquetaHero({products}) {
       window.removeEventListener('deviceorientation', onDeviceOrientation);
     };
   }, []);
+
+  // Crossfade del fondo al cambiar de chaqueta (fade-out → cambio → fade-in)
+  useEffect(() => {
+    const item = items[index];
+    if (!item) return;
+    const bg = BACKGROUND_IMAGES[keywordFor(item.title)] || '';
+    if (!bg || bg === displayBg) return;
+    setBgFading(true);
+    const t = setTimeout(() => {
+      setDisplayBg(bg);
+      setBgFading(false);
+    }, 300);
+    return () => clearTimeout(t);
+  }, [index]);
 
   if (!items.length) return null;
 
@@ -133,11 +151,10 @@ export default function ChaquetaHero({products}) {
       style={{'--bg': colors.bg, '--text': colors.text}}
       aria-label="Chaquetas"
     >
-      {backgroundImage ? (
+      {displayBg ? (
         <img
-          key={active.id}
-          className="tr-chaqueta-hero-bg"
-          src={backgroundImage}
+          className={`tr-chaqueta-hero-bg ${bgFading ? 'is-fading' : ''}`}
+          src={displayBg}
           alt=""
           aria-hidden="true"
           draggable={false}
