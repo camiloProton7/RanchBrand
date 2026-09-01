@@ -47,10 +47,41 @@ export default function ChaquetaHero({products}) {
   const [index, setIndex] = useState(0);
   const [imageIndex, setImageIndex] = useState(0);
   const dragInfo = useRef(null);
+  const sectionRef = useRef(null);
 
   useEffect(() => {
     setImageIndex(0);
   }, [index]);
+
+  // Parallax: el fondo responde al mouse (desktop) y al giroscopio (móvil).
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el) return;
+
+    const onMouseMove = (e) => {
+      const rect = el.getBoundingClientRect();
+      const x = (e.clientX - rect.left) / rect.width - 0.5;
+      const y = (e.clientY - rect.top) / rect.height - 0.5;
+      el.style.setProperty('--par-x', x.toFixed(3));
+      el.style.setProperty('--par-y', y.toFixed(3));
+    };
+
+    const onDeviceOrientation = (e) => {
+      if (e.gamma == null || e.beta == null) return;
+      const x = Math.max(-0.5, Math.min(0.5, (e.gamma || 0) / 45));
+      const y = Math.max(-0.5, Math.min(0.5, (e.beta || 0) / 45));
+      el.style.setProperty('--par-x', x.toFixed(3));
+      el.style.setProperty('--par-y', y.toFixed(3));
+    };
+
+    el.addEventListener('mousemove', onMouseMove);
+    window.addEventListener('deviceorientation', onDeviceOrientation);
+
+    return () => {
+      el.removeEventListener('mousemove', onMouseMove);
+      window.removeEventListener('deviceorientation', onDeviceOrientation);
+    };
+  }, []);
 
   if (!items.length) return null;
 
@@ -84,6 +115,7 @@ export default function ChaquetaHero({products}) {
 
   return (
     <section
+      ref={sectionRef}
       className="tr-chaqueta-hero"
       style={{'--bg': colors.bg, '--text': colors.text}}
       aria-label="Chaquetas"

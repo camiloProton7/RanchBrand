@@ -1710,6 +1710,12 @@
   object-fit: cover;
   position: absolute;
   top: 0;
+  transform: translate(
+      calc(var(--par-x, 0) * -24px),
+      calc(var(--par-y, 0) * -24px)
+    )
+    scale(1.08);
+  transition: transform 0.3s ease-out;
   width: 100%;
   z-index: 0;
 }
@@ -1741,6 +1747,7 @@
 }
 
 .tr-chaqueta-hero-jacket {
+  animation: tr-chaqueta-float 5.5s ease-in-out infinite;
   filter: drop-shadow(0 30px 40px rgba(0, 0, 0, 0.45));
   height: 100%;
   left: 50%;
@@ -1751,6 +1758,16 @@
   transform: translate(-50%, -50%);
   width: auto;
   z-index: 2;
+}
+
+@keyframes tr-chaqueta-float {
+  0%,
+  100% {
+    transform: translate(-50%, -50%) translateY(0);
+  }
+  50% {
+    transform: translate(-50%, -50%) translateY(-12px);
+  }
 }
 
 .tr-chaqueta-hero-arrow {
