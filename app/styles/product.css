@@ -122,6 +122,42 @@
   color: rgba(107, 74, 43, 0.5);
 }
 
+/* Miniaturas (debajo del visor) */
+.trp-thumbs {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  padding: 14px 16px 0;
+  scrollbar-width: none;
+}
+
+.trp-thumbs::-webkit-scrollbar {
+  display: none;
+}
+
+.trp-thumbs button {
+  background: #e0d3b8;
+  border: 2px solid transparent;
+  border-radius: 12px;
+  cursor: pointer;
+  flex-shrink: 0;
+  height: 64px;
+  overflow: hidden;
+  padding: 0;
+  width: 64px;
+  transition: border-color 0.2s ease;
+}
+
+.trp-thumbs button.is-active {
+  border-color: #1a1a18;
+}
+
+.trp-thumbs img {
+  height: 100%;
+  object-fit: cover;
+  width: 100%;
+}
+
 /* Selector de colores (vertical) */
 .trp-color-selector {
   display: flex;
@@ -252,8 +288,10 @@
   color: #5a554a;
   font-family: Georgia, 'Times New Roman', serif;
   font-size: 15px;
+  hyphens: auto;
   line-height: 1.65;
   margin: 0 0 24px;
+  text-align: justify;
 }
 
 .trp-read-more {
@@ -598,52 +636,55 @@
 /* ===== Responsive desktop ===== */
 @media (min-width: 900px) {
   .trp {
+    align-items: start;
+    column-gap: 44px;
     display: grid;
-    column-gap: 48px;
-    grid-template-columns: 1.08fr 0.92fr;
+    grid-template-columns: 1.1fr 0.9fr;
     margin: 0 auto;
-    max-width: 1280px;
-    padding: 0 32px 120px;
+    max-width: 1240px;
+    padding: 32px 24px 40px;
   }
 
   .trp-viewer {
-    align-self: start;
     border-radius: 28px;
     grid-column: 1;
-    grid-row: 1;
+    grid-row: 1 / span 3;
     position: sticky;
     top: 24px;
   }
 
-  .trp-info {
-    align-self: start;
-    grid-column: 2;
-    grid-row: 1;
-    padding: 48px 0 0;
+  .trp-thumbs {
+    grid-column: 1;
+    grid-row: 4;
+    padding: 14px 0 0;
   }
 
   .trp-rating-pill {
-    grid-column: 1 / -1;
+    grid-column: 2;
     grid-row: 1;
-    margin: -20px auto 0;
+    justify-self: start;
+    margin: 0;
+  }
+
+  .trp-info {
+    grid-column: 2;
+    grid-row: 2;
+    padding: 20px 0 0;
+  }
+
+  .trp-buybar {
+    border-radius: 20px;
+    bottom: 24px;
+    box-shadow: 0 12px 40px rgba(26, 26, 24, 0.2);
+    grid-column: 2;
+    grid-row: 3;
+    margin-top: 24px;
+    position: sticky;
   }
 
   .trp-reviews,
   .trp-related {
     grid-column: 1 / -1;
-  }
-
-  .trp-buybar {
-    align-self: end;
-    border-radius: 20px;
-    bottom: 24px;
-    box-shadow: 0 12px 40px rgba(26, 26, 24, 0.2);
-    grid-column: 2;
-    grid-row: 1;
-    left: auto;
-    position: sticky;
-    right: auto;
-    width: 100%;
   }
 
   .trp-related-grid {

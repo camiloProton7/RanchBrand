@@ -1,4 +1,4 @@
-import {useMemo, useState} from 'react';
+import {useMemo, useRef, useState} from 'react';
 import {Link, useLoaderData, useRouteLoaderData} from 'react-router';
 import productStyles from '~/styles/product.css?url';
 
@@ -201,6 +201,7 @@ export default function ProductPage() {
   const [added, setAdded] = useState(false);
   const [showFullDesc, setShowFullDesc] = useState(false);
   const [options, setOptions] = useState({});
+  const trackRef = useRef(null);
 
   const variants = product?.variants?.nodes || [];
 
@@ -271,6 +272,16 @@ export default function ProductPage() {
     if (idx >= 0 && idx < allImages.length) setActiveImage(idx);
   };
 
+  const scrollToImage = (i) => {
+    if (trackRef.current) {
+      trackRef.current.scrollTo({
+        left: i * trackRef.current.clientWidth,
+        behavior: 'smooth',
+      });
+      setActiveImage(i);
+    }
+  };
+
   const handleAdd = () => {
     if (!selectedVariant?.id) return;
     setAdded(true);
@@ -284,6 +295,7 @@ export default function ProductPage() {
       {/* ===== Visor visual ===== */}
       <div className="trp-viewer">
         <div
+          ref={trackRef}
           className="trp-viewer-track"
           onScroll={handleScroll}
           aria-label="Galería de fotos"
@@ -337,6 +349,23 @@ export default function ProductPage() {
 
         <div className="trp-lasso" aria-hidden="true" />
       </div>
+
+      {/* ===== Miniaturas ===== */}
+      {allImages.length > 1 && (
+        <div className="trp-thumbs">
+          {allImages.map((img, i) => (
+            <button
+              key={i}
+              type="button"
+              className={i === activeImage ? 'is-active' : ''}
+              onClick={() => scrollToImage(i)}
+              aria-label={`Foto ${i + 1}`}
+            >
+              <img src={img.url} alt="" />
+            </button>
+          ))}
+        </div>
+      )}
 
       {/* ===== Tarjeta flotante de rating ===== */}
       <div className="trp-rating-pill">
