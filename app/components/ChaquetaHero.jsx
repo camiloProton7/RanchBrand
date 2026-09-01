@@ -18,7 +18,7 @@ const COLORS = {
 
 // Fondo con imagen (opcional) por chaqueta. Las que no tienen usan solo el color.
 const BACKGROUND_IMAGES = {
-  Yellowstone: '/chaquetas-hero/yellowstone-bg.jpg',
+  Yellowstone: '/yellowstone-bg.jpg',
 };
 
 const DESCRIPTIONS = {
