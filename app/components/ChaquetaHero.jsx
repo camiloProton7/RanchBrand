@@ -109,6 +109,29 @@ export default function ChaquetaHero({products}) {
     return () => clearTimeout(t);
   }, [index]);
 
+  // Precargar fondos e imágenes de las chaquetas para que el cambio sea instantáneo
+  useEffect(() => {
+    Object.values(BACKGROUND_IMAGES).forEach((url) => {
+      if (url) {
+        const img = new Image();
+        img.src = url;
+      }
+    });
+    items.forEach((item) => {
+      const main = item.featuredImage?.url;
+      if (main) {
+        const img = new Image();
+        img.src = main;
+      }
+      (item.images?.nodes || []).forEach((im) => {
+        if (im?.url) {
+          const img = new Image();
+          img.src = im.url;
+        }
+      });
+    });
+  }, [items]);
+
   if (!items.length) return null;
 
   const active = items[index];
