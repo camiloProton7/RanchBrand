@@ -914,6 +914,7 @@
   flex-direction: column;
   gap: 14px;
   margin-top: auto;
+  padding-bottom: 46px;
   padding-top: 20px;
 }
 
@@ -936,7 +937,7 @@
 
 .tr-gorra-card:hover .tr-gorra-labels {
   align-items: center;
-  bottom: 60px;
+  bottom: 16px;
   flex-direction: row;
   gap: 6px;
   left: 18px;
