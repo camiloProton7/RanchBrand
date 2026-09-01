@@ -710,8 +710,9 @@
 }
 
 .tr-gorra-card:hover {
-  box-shadow: 0 24px 50px rgba(0, 0, 0, 0.5);
-  transform: translateY(-6px);
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.55),
+    0 0 0 1px rgba(244, 240, 231, 0.22);
+  transform: translateY(-8px);
 }
 
 /* ── Media: marco de imagen ── */
@@ -749,7 +750,7 @@
 }
 
 .tr-gorra-card:hover .tr-gorra-img {
-  transform: scale(1.06);
+  transform: scale(1.08);
 }
 
 /* ── Labels (badges + rating) ── */
@@ -894,9 +895,14 @@
   width: 18px;
 }
 
-/* ── Estado hover: sutil, sin tapar la imagen ── */
+/* ── Estado hover: elevación + zoom + resaltado, sin tapar la imagen ── */
 .tr-gorra-card:hover .tr-gorra-cta {
-  background: #4a5a31;
+  background: #6b7d46;
+  box-shadow: 0 8px 22px rgba(90, 107, 60, 0.45);
+}
+
+.tr-gorra-card:hover .tr-gorra-name {
+  color: #5a6b3c;
 }
 
 /* ── Sección de reseñas (mesa de madera) ── */

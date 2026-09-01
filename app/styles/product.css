@@ -462,7 +462,7 @@
 
 /* ===== Productos relacionados ===== */
 .trp-related {
-  border-top: 1px solid rgba(244, 240, 231, 0.08);
+  background: #f4f0e7;
   padding: 80px 24px 100px;
 }
 
@@ -472,6 +472,7 @@
 }
 
 .trp-related-title {
+  color: #0b0b09;
   font-family: Georgia, 'Times New Roman', serif;
   font-size: clamp(28px, 4vw, 44px);
   font-weight: 400;
@@ -509,14 +510,14 @@
 }
 
 .trp-related-name {
-  color: #f4f0e7;
+  color: #0b0b09;
   font-size: 15px;
   font-weight: 700;
   margin: 14px 0 4px;
 }
 
 .trp-related-price {
-  color: #f5b301;
+  color: #8a6d3b;
   font-size: 15px;
   font-weight: 800;
 }
