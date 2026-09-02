@@ -224,41 +224,61 @@ export function ProductAccordion({description}) {
 /* ===== Bundle "Se compran juntos" ===== */
 
 export function BundleTogether({items, formatPrice, onAddPack}) {
-  const [checked, setChecked] = useState(() => items.map(() => true));
+  const [selected, setSelected] = useState(() => items.map(() => null));
 
-  const toggle = (i) =>
-    setChecked((c) => c.map((v, j) => (j === i ? !v : v)));
+  const pick = (itemIdx, variantId) =>
+    setSelected((s) => s.map((id, j) => (j === itemIdx ? variantId : id)));
 
-  const selected = items.filter((_, i) => checked[i]);
-  const total = selected.reduce((s, it) => s + (Number(it.price) || 0), 0);
-  const discount = Math.round(total * 0.1);
+  const selectedVariants = items.map((it, i) =>
+    it.variants.find((v) => v.id === selected[i]),
+  );
+  const allSelected = selectedVariants.every((v) => v != null);
+
+  const total = selectedVariants.reduce(
+    (s, v) => s + (v ? Number(v.price) || 0 : 0),
+    0,
+  );
+  const discount = Math.round(total * 0.05);
   const final = total - discount;
 
   return (
     <section className="trp-bundle" aria-label="Se compran juntos">
+      <span className="trp-bundle-reco">Recomendado para ti</span>
       <h2 className="trp-bundle-title">Se compran juntos</h2>
-      <p className="trp-bundle-subtitle">Llévatelos juntos y ahorra un 10%</p>
+      <p className="trp-bundle-subtitle">5% de descuento en el paquete</p>
 
       <div className="trp-bundle-items">
-        {items.map((it, i) => (
-          <label key={it.variantId || it.title} className="trp-bundle-item">
-            <input
-              type="checkbox"
-              checked={checked[i]}
-              onChange={() => toggle(i)}
-            />
-            <span className="trp-bundle-check" aria-hidden="true">
-              {checked[i] ? '✓' : ''}
-            </span>
-            {it.image ? (
-              <img className="trp-bundle-img" src={it.image} alt="" loading="lazy" />
-            ) : null}
-            <span className="trp-bundle-info">
-              <span className="trp-bundle-name">{it.title}</span>
-              <span className="trp-bundle-price">{formatPrice(it.price)}</span>
-            </span>
-          </label>
-        ))}
+        {items.map((it, i) => {
+          const sel = selectedVariants[i];
+          return (
+            <div key={it.title} className="trp-bundle-item">
+              {it.image ? (
+                <img className="trp-bundle-img" src={it.image} alt="" loading="lazy" />
+              ) : null}
+              <div className="trp-bundle-info">
+                <span className="trp-bundle-name">{it.title}</span>
+                <select
+                  className="trp-bundle-select"
+                  value={selected[i] || ''}
+                  onChange={(e) => pick(i, e.target.value)}
+                  aria-label={`Talla de ${it.title}`}
+                >
+                  <option value="" disabled>
+                    Elige talla
+                  </option>
+                  {it.variants.map((v) => (
+                    <option key={v.id} value={v.id}>
+                      {v.label} · {formatPrice(v.price)}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <span className="trp-bundle-item-price">
+                {sel ? formatPrice(sel.price) : '—'}
+              </span>
+            </div>
+          );
+        })}
       </div>
 
       <div className="trp-bundle-summary">
@@ -271,10 +291,10 @@ export function BundleTogether({items, formatPrice, onAddPack}) {
       <button
         type="button"
         className="trp-bundle-cta"
-        onClick={() => onAddPack(selected)}
-        disabled={selected.length === 0}
+        onClick={() => onAddPack(selectedVariants.filter(Boolean))}
+        disabled={!allSelected}
       >
-        Añadir el pack ({selected.length}) al carrito
+        {allSelected ? 'Añadir el pack al carrito' : 'Elige talla primero'}
       </button>
     </section>
   );

@@ -70,8 +70,12 @@ const RELATED_QUERY = `#graphql
           priceRange {
             minVariantPrice { amount currencyCode }
           }
-          variants(first: 1) {
-            nodes { id }
+          variants(first: 10) {
+            nodes {
+              id
+              selectedOptions { name value }
+              price { amount currencyCode }
+            }
           }
         }
       }
@@ -307,7 +311,7 @@ export default function ProductPage() {
 
   const handleAddPack = (selectedItems) => {
     const lines = selectedItems
-      .map((it) => it.variantId)
+      .map((it) => it.id)
       .filter(Boolean)
       .map((id) => `${toNumericId(id)}:1`)
       .join(',');
@@ -315,18 +319,28 @@ export default function ProductPage() {
     window.location.href = `https://${SHOPIFY_DOMAIN}/cart/${lines}?discount=PACK10`;
   };
 
+  const toVariantLabel = (v) =>
+    (v.selectedOptions || []).map((o) => o.value).filter(Boolean).join(' / ') ||
+    'Único';
+
   const bundleItems = [
     {
-      variantId: selectedVariant?.id,
       title: product.title,
-      price,
       image: allImages[0]?.url,
+      variants: variants.map((v) => ({
+        id: v.id,
+        label: toVariantLabel(v),
+        price: v.price?.amount,
+      })),
     },
     ...related.slice(0, 2).map((p) => ({
-      variantId: p.variants?.nodes?.[0]?.id,
       title: p.title,
-      price: p.priceRange?.minVariantPrice?.amount,
       image: p.featuredImage?.url,
+      variants: (p.variants?.nodes || []).map((v) => ({
+        id: v.id,
+        label: toVariantLabel(v),
+        price: v.price?.amount,
+      })),
     })),
   ];
 
