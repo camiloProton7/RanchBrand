@@ -15,10 +15,23 @@ export const meta = ({data}) => {
   const product = data?.product;
   const title = product?.title ? `${product.title} — The Ranch` : 'Producto — The Ranch';
   const description = product?.description?.slice(0, 160) || 'The Ranch — Colombia';
+  const url = product?.handle
+    ? `https://laredo.ranch.com.co/products/${product.handle}`
+    : 'https://laredo.ranch.com.co';
+  const image = product?.featuredImage?.url || product?.images?.nodes?.[0]?.url;
   const items = [
     {title},
     {name: 'description', content: description},
+    {property: 'og:title', content: title},
+    {property: 'og:description', content: description},
+    {property: 'og:type', content: 'product'},
+    {property: 'og:url', content: url},
+    {name: 'twitter:card', content: 'summary_large_image'},
+    {tagName: 'link', rel: 'canonical', href: url},
   ];
+  if (image) {
+    items.push({property: 'og:image', content: image});
+  }
   if (product) {
     const price = product.priceRange?.minVariantPrice?.amount;
     const currency = product.priceRange?.minVariantPrice?.currencyCode || 'COP';

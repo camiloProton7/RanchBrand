@@ -13,6 +13,18 @@ export const meta = () => [
     content:
       'The Ranch: gorras, chaquetas y accesorios para quienes hacen las cosas bien.',
   },
+  {property: 'og:title', content: 'The Ranch — No seguimos modas'},
+  {
+    property: 'og:description',
+    content:
+      'Gorras, chaquetas y camisetas para quienes hacen las cosas bien. Envío gratis en Colombia.',
+  },
+  {property: 'og:type', content: 'website'},
+  {property: 'og:url', content: 'https://laredo.ranch.com.co/'},
+  {property: 'og:image', content: 'https://laredo.ranch.com.co/home-poster.jpg'},
+  {name: 'twitter:card', content: 'summary_large_image'},
+  {name: 'twitter:title', content: 'The Ranch — No seguimos modas'},
+  {tagName: 'link', rel: 'canonical', href: 'https://laredo.ranch.com.co/'},
   {
     'script:ld+json': {
       '@context': 'https://schema.org',
@@ -27,8 +39,8 @@ export const meta = () => [
 export function links() {
   return [
     {rel: 'stylesheet', href: homeStyles},
-    {rel: 'preload', as: 'video', href: '/home-video.mp4?v=4', type: 'video/mp4'},
-    {rel: 'preload', as: 'image', href: '/home-poster.webp?v=4'},
+    {rel: 'preload', as: 'video', href: '/home-video.mp4?v=5', type: 'video/mp4'},
+    {rel: 'preload', as: 'image', href: '/home-poster.jpg?v=5'},
   ];
 }
 

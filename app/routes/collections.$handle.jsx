@@ -5,8 +5,22 @@ import collectionStyles from '~/styles/collection.css?url';
 export const links = () => [{rel: 'stylesheet', href: collectionStyles}];
 
 export const meta = ({data}) => {
-  const title = data?.collection?.title;
-  return [{title: title ? `${title} — The Ranch` : 'Colección — The Ranch'}];
+  const collection = data?.collection;
+  const title = collection?.title ? `${collection.title} — The Ranch` : 'Colección — The Ranch';
+  const url = collection?.handle
+    ? `https://laredo.ranch.com.co/collections/${collection.handle}`
+    : 'https://laredo.ranch.com.co';
+  const description = collection?.description || 'Colección de The Ranch — Colombia.';
+  return [
+    {title},
+    {name: 'description', content: description},
+    {property: 'og:title', content: title},
+    {property: 'og:description', content: description},
+    {property: 'og:type', content: 'website'},
+    {property: 'og:url', content: url},
+    {name: 'twitter:card', content: 'summary_large_image'},
+    {tagName: 'link', rel: 'canonical', href: url},
+  ];
 };
 
 const COLLECTION_QUERY = `#graphql

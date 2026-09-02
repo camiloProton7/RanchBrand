@@ -15,8 +15,8 @@ const clamp = (value, min = 0, max = 1) =>
  * playhead and the editorial navigation's spatial transition.
  */
 export function ScrollVideoHero({
-  videoSrc = '/home-video.mp4?v=4',
-  posterSrc = '/home-poster.webp?v=4',
+  videoSrc = '/home-video.mp4?v=5',
+  posterSrc = '/home-poster.jpg?v=5',
   logoSrc,
 }) {
   const sectionRef = useRef(null);
@@ -170,7 +170,7 @@ export function ScrollVideoHero({
               event.currentTarget.currentTime = 0;
             }}
           >
-            <source src="/home-video-hevc.mp4?v=4" type='video/mp4; codecs="hvc1"' />
+            <source src="/home-video-hevc.mp4?v=5" type='video/mp4; codecs="hvc1"' />
             <source src={videoSrc} type="video/mp4" />
           </video>
         </div>
