@@ -405,6 +405,73 @@
   margin: 0 4px;
 }
 
+/* Social proof: contador de personas viendo */
+.trp-viewing {
+  align-items: center;
+  color: #8a8274;
+  display: flex;
+  font-size: 13px;
+  gap: 6px;
+  margin-top: 10px;
+}
+
+.trp-viewing strong {
+  color: #b34a2a;
+  font-weight: 700;
+}
+
+/* Social proof: popup de compra reciente */
+.trp-socpopup {
+  align-items: center;
+  animation: trp-socpopup-in 0.35s ease;
+  background: #ffffff;
+  border-radius: 14px;
+  bottom: 16px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.22);
+  display: flex;
+  gap: 10px;
+  left: 16px;
+  max-width: 300px;
+  padding: 10px 14px 10px 10px;
+  position: fixed;
+  z-index: 60;
+}
+
+.trp-socpopup-img {
+  border-radius: 10px;
+  height: 48px;
+  object-fit: cover;
+  width: 48px;
+}
+
+.trp-socpopup-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  line-height: 1.25;
+}
+
+.trp-socpopup-line1 {
+  color: #1a1a18;
+  font-size: 13px;
+}
+
+.trp-socpopup-line2 {
+  color: #6b6457;
+  font-size: 12px;
+}
+
+@keyframes trp-socpopup-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 /* ===== Reseñas (carrusel) ===== */
 .trp-reviews {
   background: #1a1a18;

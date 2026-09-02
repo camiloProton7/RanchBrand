@@ -9,6 +9,7 @@ import {
   RecommendedProduct,
   PaymentTrust,
 } from '~/components/ProductExtras';
+import {SocialProof} from '~/components/SocialProof';
 import productStyles from '~/styles/product.css?url';
 
 export const meta = ({data}) => {
@@ -620,6 +621,11 @@ export default function ProductPage() {
         <div className={`trp-stock ${isOut ? 'is-out' : ''}`}>
           {isOut ? 'Agotado' : '⚡ Últimas unidades disponibles'}
         </div>
+
+        <SocialProof
+          title={product.title}
+          image={selectedVariant?.image?.url || product.featuredImage?.url}
+        />
 
         <TrustBadges />
 
