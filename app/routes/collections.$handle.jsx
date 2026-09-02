@@ -301,10 +301,11 @@ function CollectionCard({product, index, onQuickView}) {
     return () => io.disconnect();
   }, []);
 
-  // Parallax sutil al scroll.
+  // Parallax sutil al scroll (solo en desktop con mouse, no en táctil).
   useEffect(() => {
     const el = parallaxRef.current;
     if (!el) return;
+    if (window.matchMedia('(hover: none)').matches) return;
     let raf = 0;
     const update = () => {
       raf = 0;
