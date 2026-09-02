@@ -19,7 +19,7 @@ export function links() {
   return [
     {rel: 'stylesheet', href: homeStyles},
     {rel: 'preload', as: 'video', href: '/home-video.mp4', type: 'video/mp4'},
-    {rel: 'preload', as: 'image', href: '/home-poster.jpg'},
+    {rel: 'preload', as: 'image', href: '/home-poster.webp'},
   ];
 }
 
@@ -586,7 +586,7 @@ const COLLECTION_QUERY = (handle) => `#graphql
           handle
           description
           featuredImage {
-            url(transform: {maxWidth: 1000, preferredContentType: WEBP})
+            url(transform: {maxWidth: 700, preferredContentType: WEBP})
             altText
             width
             height

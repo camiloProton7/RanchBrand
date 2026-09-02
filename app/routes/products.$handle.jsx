@@ -22,12 +22,12 @@ const PRODUCT_QUERY = `#graphql
       handle
       description
       featuredImage {
-        url(transform: {maxWidth: 1200, preferredContentType: WEBP})
+        url(transform: {maxWidth: 900, preferredContentType: WEBP})
         altText
       }
       images(first: 10) {
         nodes {
-          url(transform: {maxWidth: 1200, preferredContentType: WEBP})
+          url(transform: {maxWidth: 900, preferredContentType: WEBP})
           altText
         }
       }
@@ -39,7 +39,7 @@ const PRODUCT_QUERY = `#graphql
           availableForSale
           selectedOptions { name value }
           price { amount currencyCode }
-          image { url(transform: {maxWidth: 1200, preferredContentType: WEBP}) altText }
+          image { url(transform: {maxWidth: 900, preferredContentType: WEBP}) altText }
         }
       }
     }
