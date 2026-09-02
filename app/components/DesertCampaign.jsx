@@ -86,6 +86,8 @@ export default function DesertCampaign({
           src={PHOTO_1}
           alt="Modelo con la Gorra Desert"
           draggable={false}
+          loading="lazy"
+          decoding="async"
         />
         <img
           ref={photo2Ref}
@@ -93,6 +95,8 @@ export default function DesertCampaign({
           src={PHOTO_2}
           alt="Gorra Desert — detalle"
           draggable={false}
+          loading="lazy"
+          decoding="async"
         />
         <div className="tr-desert-shade" aria-hidden="true" />
         <span ref={giantRef} className="tr-desert-giant" aria-hidden="true">

@@ -16,7 +16,11 @@ export const meta = () => [
 ];
 
 export function links() {
-  return [{rel: 'stylesheet', href: homeStyles}];
+  return [
+    {rel: 'stylesheet', href: homeStyles},
+    {rel: 'preload', as: 'video', href: '/home-video.mp4', type: 'video/mp4'},
+    {rel: 'preload', as: 'image', href: '/home-poster.jpg'},
+  ];
 }
 
 const TRUSTOO_SHOP_ID = '67813867760';
