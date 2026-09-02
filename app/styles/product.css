@@ -873,6 +873,7 @@
 
   .trp-trust,
   .trp-size-guide {
+    align-self: start;
     grid-column: 1;
   }
 
