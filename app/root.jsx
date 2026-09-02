@@ -1,4 +1,5 @@
 import FacebookPixel from './components/FacebookPixel';
+import SiteHeader from './components/SiteHeader';
 import {useNonce} from '@shopify/hydrogen';
 import {
   Outlet,
@@ -8,12 +9,14 @@ import {
   Meta,
   Scripts,
   ScrollRestoration,
+  useLoaderData,
 } from 'react-router';
 import favicon from '~/assets/favicon.svg';
 import {HEADER_QUERY} from '~/lib/fragments';
 import resetStyles from '~/styles/reset.css?url';
 import appStyles from '~/styles/app.css?url';
 import tailwindCss from './styles/tailwind.css?url';
+import siteHeaderStyles from '~/styles/site-header.css?url';
 
 /**
  * This is important to avoid re-fetching root queries on sub-navigations
@@ -40,6 +43,7 @@ export function links() {
       href: 'https://shop.app',
     },
     {rel: 'icon', type: 'image/svg+xml', href: favicon},
+    {rel: 'stylesheet', href: siteHeaderStyles},
   ];
 }
 
@@ -91,7 +95,14 @@ export function Layout({children}) {
 }
 
 export default function App() {
-  return <Outlet />;
+  const data = useLoaderData();
+  const logoSrc = data?.header?.shop?.brand?.logo?.image?.url;
+  return (
+    <>
+      <SiteHeader logoSrc={logoSrc} />
+      <Outlet />
+    </>
+  );
 }
 
 export function ErrorBoundary() {

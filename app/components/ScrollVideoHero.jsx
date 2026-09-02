@@ -1,18 +1,10 @@
 import {useEffect, useRef, useState} from 'react';
 
 const MENU_ITEMS = [
-  {
-    label: 'Gorras',
-    href: 'https://ranch.com.co/collections/gorras',
-  },
-  {
-    label: 'Chaquetas',
-    href: 'https://ranch.com.co/collections/chaquetas',
-  },
-  {
-    label: 'Accesorios',
-    href: 'https://ranch.com.co/collections/all',
-  },
+  {label: 'Gorras', href: '/collections/gorras-truckers'},
+  {label: 'Chaquetas', href: '/collections/chaquetas'},
+  {label: 'Camisetas', href: '/collections/camisetas'},
+  {label: 'Accesorios', href: '/collections/all'},
 ];
 
 const clamp = (value, min = 0, max = 1) =>
@@ -31,18 +23,15 @@ export function ScrollVideoHero({
   const videoRef = useRef(null);
   const videoLayerRef = useRef(null);
   const menuRef = useRef(null);
-  const mastheadRef = useRef(null);
   const [isVideoReady, setIsVideoReady] = useState(false);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     const section = sectionRef.current;
     const video = videoRef.current;
     const videoLayer = videoLayerRef.current;
     const menu = menuRef.current;
-    const masthead = mastheadRef.current;
 
-    if (!section || !video || !videoLayer || !menu || !masthead) return;
+    if (!section || !video || !videoLayer || !menu) return;
 
     // Forzar la carga del video (iOS/Android ignoran preload="auto").
     video.load();
@@ -107,10 +96,6 @@ export function ScrollVideoHero({
       menu.style.opacity = String(menuFade);
       menu.style.pointerEvents = menuFade > 0.2 ? 'auto' : 'none';
 
-      // Masthead (header): aparece al hacer scroll (desktop y móvil)
-      const mastheadFade = clamp((progress - 0.62) / 0.22);
-      masthead.classList.toggle('is-visible', mastheadFade > 0.5);
-
       section.style.setProperty('--hero-progress', String(progress));
       section.style.setProperty(
         '--scroll-cue-opacity',
@@ -163,73 +148,6 @@ export function ScrollVideoHero({
       className="tr-scroll-hero"
       aria-label="The Ranch — portada interactiva"
     >
-      <header ref={mastheadRef} className="tr-masthead">
-        <a
-          className="tr-masthead-logo"
-          href="https://ranch.com.co/"
-          aria-label="The Ranch"
-        >
-          {logoSrc ? <img src={logoSrc} alt="" /> : <span>The Ranch</span>}
-        </a>
-        <nav className="tr-masthead-nav">
-          {MENU_ITEMS.map((item) => (
-            <a key={item.label} href={item.href}>
-              {item.label}
-            </a>
-          ))}
-        </nav>
-        <button
-          className={`tr-masthead-burger ${mobileMenuOpen ? 'is-open' : ''}`}
-          type="button"
-          aria-label="Abrir menú"
-          aria-expanded={mobileMenuOpen}
-          onClick={() => setMobileMenuOpen((v) => !v)}
-        >
-          <span />
-          <span />
-          <span />
-        </button>
-      </header>
-
-      {mobileMenuOpen && (
-        <div className="tr-mobile-menu" role="dialog" aria-label="Menú">
-          <div className="tr-mobile-menu-top">
-            <a
-              className="tr-masthead-logo"
-              href="https://ranch.com.co/"
-              aria-label="The Ranch"
-            >
-              {logoSrc ? <img src={logoSrc} alt="" /> : <span>The Ranch</span>}
-            </a>
-            <button
-              className="tr-mobile-menu-close"
-              type="button"
-              aria-label="Cerrar menú"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              <span />
-              <span />
-            </button>
-          </div>
-          <span className="tr-mobile-menu-eyebrow">Menú</span>
-          <nav className="tr-mobile-menu-nav">
-            {MENU_ITEMS.map((item, index) => (
-              <a
-                key={item.label}
-                href={item.href}
-                onClick={() => setMobileMenuOpen(false)}
-                style={{animationDelay: `${0.12 + index * 0.09}s`}}
-              >
-                <span className="tr-mobile-menu-index">
-                  {String(index + 1).padStart(2, '0')}
-                </span>
-                {item.label}
-              </a>
-            ))}
-          </nav>
-        </div>
-      )}
-
       <div className="tr-scroll-stage">
         <div ref={videoLayerRef} className="tr-video-layer" aria-hidden="true">
           {!isVideoReady ? (
