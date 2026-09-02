@@ -1352,6 +1352,9 @@
 }
 
 .trp-payment-dark {
-  background: #1a1a18;
-  border-color: rgba(11, 11, 9, 0.2);
+  background: #ffffff;
+}
+
+.trp-payment-dark img {
+  filter: invert(1);
 }
