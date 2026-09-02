@@ -621,12 +621,17 @@ export default function ProductPage() {
           {isOut ? 'Agotado' : '⚡ Últimas unidades disponibles'}
         </div>
 
+        <TrustBadges />
+
         {isApparel(product.productType, product.title) ? (
-          <>
-            <TrustBadges />
-            <SizeGuide />
-          </>
+          <SizeGuide />
         ) : null}
+
+        <div className="trp-shipping-badge">
+          <span aria-hidden="true">🚚</span> Envío gratis a toda Colombia
+          <span className="trp-shipping-sep" aria-hidden="true">·</span>
+          <span aria-hidden="true">🔒</span> Pago 100% seguro
+        </div>
 
         {/* ===== Barra de compra (grid 2x2) ===== */}
         <div className="trp-buybar">

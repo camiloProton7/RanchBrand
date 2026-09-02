@@ -383,6 +383,28 @@
   color: #8a8274;
 }
 
+/* Badge de confianza (envío gratis + pago seguro) */
+.trp-shipping-badge {
+  align-items: center;
+  background: #e8f5e9;
+  border: 1px solid rgba(46, 125, 50, 0.2);
+  border-radius: 12px;
+  color: #2e7d32;
+  display: flex;
+  flex-wrap: wrap;
+  font-size: 13px;
+  font-weight: 600;
+  gap: 6px;
+  justify-content: center;
+  margin-top: 14px;
+  padding: 10px 14px;
+}
+
+.trp-shipping-sep {
+  color: #b9b2a4;
+  margin: 0 4px;
+}
+
 /* ===== Reseñas (carrusel) ===== */
 .trp-reviews {
   background: #1a1a18;
