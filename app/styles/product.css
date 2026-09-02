@@ -687,6 +687,7 @@
     border-radius: 28px;
     grid-column: 1;
     grid-row: 1 / span 2;
+    max-height: 70vh;
   }
 
   .trp-thumbs {
