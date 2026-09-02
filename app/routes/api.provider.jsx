@@ -1,11 +1,19 @@
 /**
- * Endpoint de proveedores web → crea una solicitud en Supabase `tickets`.
+ * Endpoint de proveedores web → envía correo por Brevo.
  * POST /api/provider
  * Campos: name, company, email, phone, productType, message
- * Marca la solicitud como "proveedor" (context_data.source = "provider").
  */
 
-const SUPABASE_URL = 'https://rattwfjkxgqvxmxlybcz.supabase.co';
+const BREVO_API_URL = 'https://api.brevo.com/v3/smtp/email';
+const FROM_EMAIL = 'proton.lab4@gmail.com';
+const TO_EMAIL = 'proton.lab4@gmail.com';
+
+function esc(s) {
+  return String(s || '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+}
 
 export async function action({request, context}) {
   try {
@@ -24,54 +32,58 @@ export async function action({request, context}) {
       );
     }
 
-    const SERVICE_ROLE_KEY =
-      context?.env?.SUPABASE_SERVICE_ROLE_KEY ||
-      process.env.SUPABASE_SERVICE_ROLE_KEY;
-    if (!SERVICE_ROLE_KEY) {
-      console.error('SUPABASE_SERVICE_ROLE_KEY no está configurado');
+    const API_KEY = context?.env?.BREVO_API_KEY || process.env.BREVO_API_KEY;
+    if (!API_KEY) {
+      console.error('BREVO_API_KEY no está configurado');
       return Response.json(
         {ok: false, error: 'Configuración del servidor incompleta. Intenta más tarde.'},
         {status: 500},
       );
     }
 
-    const ticketNumber = `PRV-${Date.now().toString(36).toUpperCase()}`;
+    const html = [
+      '<h3 style="margin:0 0 12px">Nuevo proveedor interesado</h3>',
+      '<table style="border-collapse:collapse">',
+      `<tr><td style="padding:4px 12px 4px 0"><strong>Nombre:</strong></td><td>${esc(name)}</td></tr>`,
+      `<tr><td style="padding:4px 12px 4px 0"><strong>Empresa:</strong></td><td>${esc(company)}</td></tr>`,
+      email ? `<tr><td style="padding:4px 12px 4px 0"><strong>Correo:</strong></td><td>${esc(email)}</td></tr>` : '',
+      phone ? `<tr><td style="padding:4px 12px 4px 0"><strong>Teléfono:</strong></td><td>${esc(phone)}</td></tr>` : '',
+      productType ? `<tr><td style="padding:4px 12px 4px 0"><strong>Qué ofrece:</strong></td><td>${esc(productType)}</td></tr>` : '',
+      '</table>',
+      '<p style="margin:16px 0 4px"><strong>Mensaje:</strong></p>',
+      `<p style="margin:0">${esc(message).replace(/\n/g, '<br>')}</p>`,
+    ].join('');
 
-    const res = await fetch(`${SUPABASE_URL}/rest/v1/tickets`, {
+    const payload = {
+      sender: {name: 'The Ranch', email: FROM_EMAIL},
+      to: [{email: TO_EMAIL, name: 'The Ranch'}],
+      subject: `Nuevo proveedor: ${company} — ${name}`,
+      htmlContent: html,
+    };
+    if (email) payload.replyTo = {email, name};
+
+    const res = await fetch(BREVO_API_URL, {
       method: 'POST',
       headers: {
-        apikey: SERVICE_ROLE_KEY,
-        Authorization: `Bearer ${SERVICE_ROLE_KEY}`,
+        'api-key': API_KEY,
         'Content-Type': 'application/json',
-        Prefer: 'return=representation',
       },
-      body: JSON.stringify({
-        ticket_number: ticketNumber,
-        from_number: 'web',
-        customer_name: name,
-        customer_phone: phone,
-        customer_email: email,
-        issue_type: 'provider',
-        issue_description: message,
-        status: 'open',
-        context_data: {
-          source: 'provider',
-          company,
-          product_type: productType,
-        },
-      }),
+      body: JSON.stringify(payload),
     });
 
     if (!res.ok) {
       const detail = await res.text();
-      console.error('Supabase insert falló', res.status, detail);
+      console.error('Brevo falló', res.status, detail);
       return Response.json(
-        {ok: false, error: 'No pudimos guardar tu solicitud. Intenta de nuevo.'},
+        {ok: false, error: 'No pudimos enviar tu solicitud. Intenta de nuevo.'},
         {status: 500},
       );
     }
 
-    return Response.json({ok: true, ticketNumber});
+    return Response.json({
+      ok: true,
+      ticketNumber: `PRV-${Date.now().toString(36).toUpperCase()}`,
+    });
   } catch (err) {
     console.error('api.provider error', err);
     return Response.json(
