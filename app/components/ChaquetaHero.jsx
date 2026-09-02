@@ -247,7 +247,6 @@ export default function ChaquetaHero({products}) {
         <ul className="tr-chaqueta-hero-benefits">
           <li>💧 100% impermeable</li>
           <li>🚚 Envío gratis a toda Colombia</li>
-          <li>🔄 1er cambio gratis</li>
         </ul>
       </div>
 
