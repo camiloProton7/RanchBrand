@@ -2646,4 +2646,7 @@
   .tr-catmenu-link {
     font-size: 15px;
   }
+  .tr-catmenu-wa {
+    display: none;
+  }
 }

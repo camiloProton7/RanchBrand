@@ -1,6 +1,7 @@
 import {useEffect, useRef, useState} from 'react';
 
 const MENU_ITEMS = [
+  {label: 'Home', href: '/'},
   {label: 'Gorras', href: '/collections/gorras-truckers'},
   {label: 'Chaquetas', href: '/collections/chaquetas'},
   {label: 'Camisetas', href: '/collections/camisetas'},

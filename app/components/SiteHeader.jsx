@@ -4,6 +4,7 @@ import {getCartCount} from '~/lib/cart';
 import CartDrawer from '~/components/CartDrawer';
 
 const MENU_ITEMS = [
+  {label: 'Home', href: '/'},
   {label: 'Gorras', href: '/collections/gorras-truckers'},
   {label: 'Chaquetas', href: '/collections/chaquetas'},
   {label: 'Camisetas', href: '/collections/camisetas'},

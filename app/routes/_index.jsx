@@ -175,6 +175,7 @@ function TrustBar() {
 
 function CategoryMenu() {
   const items = [
+    {label: 'Home', href: '/'},
     {label: 'Gorras', href: '/collections/gorras-truckers'},
     {label: 'Chaquetas', href: '/collections/chaquetas'},
     {label: 'Camisetas', href: '/collections/camisetas'},
