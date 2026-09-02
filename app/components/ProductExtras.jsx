@@ -86,6 +86,9 @@ export function PaymentTrust() {
         <img src="/logo-bold.jpg" alt="Bold" loading="lazy" />
       </span>
       <span className="trp-payment-logo">
+        <img src="/logo-addi.jpg" alt="Addi" loading="lazy" />
+      </span>
+      <span className="trp-payment-logo">
         <img src="/logo-coordinadora.jpg" alt="Coordinadora" loading="lazy" />
       </span>
       <span className="trp-payment-logo trp-payment-dark">
