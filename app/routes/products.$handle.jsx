@@ -5,7 +5,7 @@ import {
   SizeGuide,
   isApparel,
   ProductAccordion,
-  BundleTogether,
+  RecommendedProduct,
 } from '~/components/ProductExtras';
 import productStyles from '~/styles/product.css?url';
 
@@ -309,41 +309,6 @@ export default function ProductPage() {
     }, 650);
   };
 
-  const handleAddPack = (selectedItems) => {
-    const lines = selectedItems
-      .map((it) => it.id)
-      .filter(Boolean)
-      .map((id) => `${toNumericId(id)}:1`)
-      .join(',');
-    if (!lines) return;
-    window.location.href = `https://${SHOPIFY_DOMAIN}/cart/${lines}?discount=PACK10`;
-  };
-
-  const toVariantLabel = (v) =>
-    (v.selectedOptions || []).map((o) => o.value).filter(Boolean).join(' / ') ||
-    'Único';
-
-  const bundleItems = [
-    {
-      title: product.title,
-      image: allImages[0]?.url,
-      variants: variants.map((v) => ({
-        id: v.id,
-        label: toVariantLabel(v),
-        price: v.price?.amount,
-      })),
-    },
-    ...related.slice(0, 2).map((p) => ({
-      title: p.title,
-      image: p.featuredImage?.url,
-      variants: (p.variants?.nodes || []).map((v) => ({
-        id: v.id,
-        label: toVariantLabel(v),
-        price: v.price?.amount,
-      })),
-    })),
-  ];
-
   return (
     <div className="trp">
       {/* ===== Visor visual ===== */}
@@ -437,7 +402,11 @@ export default function ProductPage() {
 
         <span className="trp-tag">{isOut ? 'Agotado' : 'Edición limitada'}</span>
 
-        <ProductAccordion description={product.description} />
+        <ProductAccordion
+          productType={product.productType}
+          title={product.title}
+          description={product.description}
+        />
 
         {optionNames.map((name) => {
           const values = Array.from(
@@ -511,12 +480,16 @@ export default function ProductPage() {
         </section>
       )}
 
-      {/* ===== Bundle "Se compran juntos" ===== */}
+      {/* ===== Producto recomendado ===== */}
       {related.length > 0 && (
-        <BundleTogether
-          items={bundleItems}
+        <RecommendedProduct
+          product={{
+            handle: related[0].handle,
+            title: related[0].title,
+            price: related[0].priceRange?.minVariantPrice?.amount,
+            image: related[0].featuredImage?.url,
+          }}
           formatPrice={formatPrice}
-          onAddPack={handleAddPack}
         />
       )}
 

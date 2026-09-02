@@ -1,8 +1,9 @@
 import {useState} from 'react';
+import {Link} from 'react-router';
 
 /**
  * Extras de conversión para la PDP: sellos de confianza, ayuda de tallas,
- * acordeón premium y bundle "Se compran juntos".
+ * acordeón específico por tipo de prenda y producto recomendado.
  */
 
 export function isApparel(productType = '', title = '') {
@@ -10,6 +11,14 @@ export function isApparel(productType = '', title = '') {
   return /chaqueta|jacket|saco|abrigo|camiseta|shirt|t-shirt|tshirt|buzo|hoodie|sudadera|polar|chamarra/.test(
     t,
   );
+}
+
+function detectType(productType = '', title = '') {
+  const t = `${productType} ${title}`.toLowerCase();
+  if (/chaqueta|jacket|chamarra|parka|impermeable|rompeviento|abrigo|saco/.test(t)) return 'jacket';
+  if (/gorra|cap|hat|trucker|beanie|sombrero/.test(t)) return 'cap';
+  if (/camiseta|shirt|t-shirt|tshirt|playera|buzo|hoodie|sudadera|polo/.test(t)) return 'shirt';
+  return 'other';
 }
 
 const TRUST_ITEMS = [
@@ -171,33 +180,81 @@ export function SizeGuide() {
   );
 }
 
-/* ===== Acordeón premium (información de la prenda) ===== */
+/* ===== Acordeón específico por tipo de prenda ===== */
 
-const ACCORDION_SECTIONS = [
-  {key: 'desc', title: 'Descripción'},
-  {
-    key: 'warm',
-    title: 'Nivel de abrigo y cómo se usa',
-    body: 'Prenda de peso medio, ideal para climas frescos (12°–22°C). Úsala sola en días templados o en capas con una chaqueta ligera cuando baje la temperatura.',
-  },
-  {
-    key: 'materials',
-    title: 'Materiales y cuidado',
-    body: 'Confeccionada con materiales de alta calidad y costuras reforzadas. Lava a máquina con agua fría, no uses blanqueador y seca a la sombra para conservar el color y la forma.',
-  },
-  {
-    key: 'shipping',
-    title: 'Envíos, cambios y garantía',
-    body: 'Envío gratis a toda Colombia (2–5 días hábiles). Cambios fáciles dentro de los 30 días. Garantía de 6 meses por defectos de fabricación.',
-  },
-];
+function getAccordionSections(productType, title, description) {
+  const type = detectType(productType, title);
+  const sections = [];
 
-export function ProductAccordion({description}) {
+  if (description) {
+    sections.push({key: 'desc', title: 'Descripción', body: description});
+  }
+
+  if (type === 'jacket') {
+    sections.push(
+      {
+        key: 'rain',
+        title: 'Impermeable — protección contra la lluvia',
+        body: 'Membrana impermeable que repele la lluvia y el viento. Costuras selladas para mantenerte seco incluso en aguaceros intensos.',
+      },
+      {
+        key: 'thermal',
+        title: 'Termo regulación',
+        body: 'Aislamiento térmico que regula tu temperatura corporal: abriga con el frío y libera el calor cuando estás en movimiento.',
+      },
+    );
+  } else if (type === 'shirt') {
+    sections.push({
+      key: 'breath',
+      title: 'Transpirabilidad',
+      body: 'Tejido transpirable que evacúa la humedad y te mantiene fresco y cómodo durante todo el día.',
+    });
+  } else if (type === 'cap') {
+    sections.push({
+      key: 'fit',
+      title: 'Ajuste cómodo',
+      body: 'Correa trasera ajustable para un calce perfecto y estable, sin apretar ni moverse durante el día.',
+    });
+  }
+
+  // Protección UV: clave para gorras y chaquetas
+  if (type === 'cap' || type === 'jacket') {
+    sections.push({
+      key: 'uv',
+      title: 'Protección UV',
+      body:
+        type === 'cap'
+          ? 'Ala y tejido con bloqueo de rayos UV para proteger tu rostro y cuello en largas jornadas al sol.'
+          : 'Tejido con bloqueo de rayos UV para cuidar tu piel durante la exposición prolongada al sol.',
+    });
+  }
+
+  const materials =
+    type === 'jacket'
+      ? 'Tejido técnico de alta resistencia y secado rápido. Lava a máquina con agua fría, sin suavizante, y seca a la sombra.'
+      : type === 'cap'
+        ? 'Algodón resistente y duradero. Lava a mano con agua fría y seca a la sombra para conservar la forma y el color.'
+        : 'Confeccionada con materiales de alta calidad y costuras reforzadas. Lava a máquina con agua fría, no uses blanqueador y seca a la sombra.';
+
+  sections.push(
+    {key: 'materials', title: 'Materiales y cuidado', body: materials},
+    {
+      key: 'shipping',
+      title: 'Envíos, cambios y garantía',
+      body: 'Envío gratis a toda Colombia (2–5 días hábiles). Cambios fáciles dentro de los 30 días. Garantía de 6 meses por defectos de fabricación.',
+    },
+  );
+
+  return sections;
+}
+
+export function ProductAccordion({productType, title, description}) {
   const [open, setOpen] = useState(0);
+  const sections = getAccordionSections(productType, title, description);
 
   return (
     <div className="trp-accordion">
-      {ACCORDION_SECTIONS.map((s, i) => (
+      {sections.map((s, i) => (
         <div key={s.key} className={`trp-acc-item${open === i ? ' is-open' : ''}`}>
           <button
             type="button"
@@ -211,9 +268,7 @@ export function ProductAccordion({description}) {
             </span>
           </button>
           <div className="trp-acc-body" aria-hidden={open !== i}>
-            <div className="trp-acc-content">
-              {i === 0 && description ? description : s.body}
-            </div>
+            <div className="trp-acc-content">{s.body}</div>
           </div>
         </div>
       ))}
@@ -221,81 +276,25 @@ export function ProductAccordion({description}) {
   );
 }
 
-/* ===== Bundle "Se compran juntos" ===== */
+/* ===== Producto recomendado (un solo producto) ===== */
 
-export function BundleTogether({items, formatPrice, onAddPack}) {
-  const [selected, setSelected] = useState(() => items.map(() => null));
-
-  const pick = (itemIdx, variantId) =>
-    setSelected((s) => s.map((id, j) => (j === itemIdx ? variantId : id)));
-
-  const selectedVariants = items.map((it, i) =>
-    it.variants.find((v) => v.id === selected[i]),
-  );
-  const allSelected = selectedVariants.every((v) => v != null);
-
-  const total = selectedVariants.reduce(
-    (s, v) => s + (v ? Number(v.price) || 0 : 0),
-    0,
-  );
-  const discount = Math.round(total * 0.05);
-  const final = total - discount;
-
+export function RecommendedProduct({product, formatPrice}) {
+  if (!product) return null;
   return (
-    <section className="trp-bundle" aria-label="Se compran juntos">
-      <span className="trp-bundle-reco">Recomendado para ti</span>
-      <h2 className="trp-bundle-title">Se compran juntos</h2>
-      <p className="trp-bundle-subtitle">5% de descuento en el paquete</p>
-
-      <div className="trp-bundle-items">
-        {items.map((it, i) => {
-          const sel = selectedVariants[i];
-          return (
-            <div key={it.title} className="trp-bundle-item">
-              {it.image ? (
-                <img className="trp-bundle-img" src={it.image} alt="" loading="lazy" />
-              ) : null}
-              <div className="trp-bundle-info">
-                <span className="trp-bundle-name">{it.title}</span>
-                <select
-                  className="trp-bundle-select"
-                  value={selected[i] || ''}
-                  onChange={(e) => pick(i, e.target.value)}
-                  aria-label={`Talla de ${it.title}`}
-                >
-                  <option value="" disabled>
-                    Elige talla
-                  </option>
-                  {it.variants.map((v) => (
-                    <option key={v.id} value={v.id}>
-                      {v.label} · {formatPrice(v.price)}
-                    </option>
-                  ))}
-                </select>
-              </div>
-              <span className="trp-bundle-item-price">
-                {sel ? formatPrice(sel.price) : '—'}
-              </span>
-            </div>
-          );
-        })}
-      </div>
-
-      <div className="trp-bundle-summary">
-        <span className="trp-bundle-total-label">Total</span>
-        <s className="trp-bundle-total-orig">{formatPrice(total)}</s>
-        <strong className="trp-bundle-total-final">{formatPrice(final)}</strong>
-        <span className="trp-bundle-save">Ahorras {formatPrice(discount)}</span>
-      </div>
-
-      <button
-        type="button"
-        className="trp-bundle-cta"
-        onClick={() => onAddPack(selectedVariants.filter(Boolean))}
-        disabled={!allSelected}
-      >
-        {allSelected ? 'Añadir el pack al carrito' : 'Elige talla primero'}
-      </button>
+    <section className="trp-reco" aria-label="Recomendado para ti">
+      <span className="trp-reco-tag">Recomendado para ti</span>
+      <Link to={`/products/${product.handle}`} className="trp-reco-card">
+        {product.image ? (
+          <img className="trp-reco-img" src={product.image} alt="" loading="lazy" />
+        ) : null}
+        <div className="trp-reco-info">
+          <h3 className="trp-reco-title">{product.title}</h3>
+          <span className="trp-reco-price">{formatPrice(product.price)}</span>
+        </div>
+        <span className="trp-reco-arrow" aria-hidden="true">
+          →
+        </span>
+      </Link>
     </section>
   );
 }

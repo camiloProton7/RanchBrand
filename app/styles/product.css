@@ -1166,3 +1166,72 @@
   cursor: not-allowed;
   opacity: 0.5;
 }
+
+/* ===== Producto recomendado (un solo producto, fondo claro) ===== */
+.trp-reco {
+  margin: 40px auto;
+  max-width: 720px;
+  padding: 0 24px;
+}
+
+.trp-reco-tag {
+  color: #8a8274;
+  display: block;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+}
+
+.trp-reco-card {
+  align-items: center;
+  background: #ffffff;
+  border: 1px solid rgba(11, 11, 9, 0.08);
+  border-radius: 16px;
+  color: inherit;
+  display: flex;
+  gap: 16px;
+  padding: 14px;
+  text-decoration: none;
+  transition: border-color 0.2s ease, transform 0.2s ease;
+}
+
+.trp-reco-card:hover {
+  border-color: rgba(245, 179, 1, 0.6);
+  transform: translateY(-2px);
+}
+
+.trp-reco-img {
+  border-radius: 12px;
+  height: 72px;
+  object-fit: cover;
+  width: 72px;
+}
+
+.trp-reco-info {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+
+.trp-reco-title {
+  color: #1a1a18;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 16px;
+  font-weight: 700;
+  margin: 0;
+}
+
+.trp-reco-price {
+  color: #1a1a18;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.trp-reco-arrow {
+  color: #1a1a18;
+  font-size: 20px;
+}
