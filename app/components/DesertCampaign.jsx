@@ -3,9 +3,9 @@ import {useEffect, useRef} from 'react';
 const clamp = (v, min = 0, max = 1) => Math.min(max, Math.max(min, v));
 
 const PHOTO_1 =
-  'https://rattwfjkxgqvxmxlybcz.supabase.co/storage/v1/render/image/public/whatsapp-images/home/desert-model-1.webp?format=webp&quality=75&width=1200';
+  'https://rattwfjkxgqvxmxlybcz.supabase.co/storage/v1/render/image/public/whatsapp-images/home/desert-model-1.webp?format=webp&quality=70&width=900';
 const PHOTO_2 =
-  'https://rattwfjkxgqvxmxlybcz.supabase.co/storage/v1/render/image/public/whatsapp-images/home/desert-model-2.webp?format=webp&quality=75&width=1200';
+  'https://rattwfjkxgqvxmxlybcz.supabase.co/storage/v1/render/image/public/whatsapp-images/home/desert-model-2.webp?format=webp&quality=70&width=900';
 
 /**
  * Campaña editorial "Desert" — sección premium con scroll-scrubbing.

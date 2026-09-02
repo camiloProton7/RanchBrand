@@ -238,7 +238,6 @@ export function ScrollVideoHero({
           <video
             ref={videoRef}
             className={`tr-scroll-video ${isVideoReady ? 'is-ready' : ''}`}
-            src={videoSrc}
             poster={posterSrc}
             muted
             playsInline
@@ -250,7 +249,10 @@ export function ScrollVideoHero({
               event.currentTarget.pause();
               event.currentTarget.currentTime = 0;
             }}
-          />
+          >
+            <source src="/home-video-hevc.mp4" type='video/mp4; codecs="hvc1"' />
+            <source src={videoSrc} type="video/mp4" />
+          </video>
         </div>
 
         <div className="tr-film-shade" aria-hidden="true" />
