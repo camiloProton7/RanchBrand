@@ -1,5 +1,6 @@
 import FacebookPixel from './components/FacebookPixel';
 import SiteHeader from './components/SiteHeader';
+import Footer from './components/Footer';
 import {useNonce} from '@shopify/hydrogen';
 import {
   Outlet,
@@ -17,6 +18,7 @@ import resetStyles from '~/styles/reset.css?url';
 import appStyles from '~/styles/app.css?url';
 import tailwindCss from './styles/tailwind.css?url';
 import siteHeaderStyles from '~/styles/site-header.css?url';
+import footerStyles from '~/styles/footer.css?url';
 
 /**
  * This is important to avoid re-fetching root queries on sub-navigations
@@ -44,6 +46,7 @@ export function links() {
     },
     {rel: 'icon', type: 'image/svg+xml', href: favicon},
     {rel: 'stylesheet', href: siteHeaderStyles},
+    {rel: 'stylesheet', href: footerStyles},
   ];
 }
 
@@ -101,6 +104,7 @@ export default function App() {
     <>
       <SiteHeader logoSrc={logoSrc} />
       <Outlet />
+      <Footer logoSrc={logoSrc} />
     </>
   );
 }

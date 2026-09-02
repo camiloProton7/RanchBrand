@@ -1,130 +1,86 @@
-import {Suspense} from 'react';
-import {Await, NavLink} from 'react-router';
+import {Link} from 'react-router';
 
-/**
- * @param {FooterProps}
- */
-export function Footer({footer: footerPromise, header, publicStoreDomain}) {
+export default function Footer({logoSrc}) {
+  const year = new Date().getFullYear();
   return (
-    <Suspense>
-      <Await resolve={footerPromise}>
-        {(footer) => (
-          <footer className="footer">
-            {footer?.menu && header.shop.primaryDomain?.url && (
-              <FooterMenu
-                menu={footer.menu}
-                primaryDomainUrl={header.shop.primaryDomain.url}
-                publicStoreDomain={publicStoreDomain}
+    <footer className="tr-footer">
+      <div className="tr-footer-inner">
+        <div className="tr-footer-head">
+          {logoSrc ? (
+            <img className="tr-footer-logo" src={logoSrc} alt="The Ranch" />
+          ) : (
+            <h2 className="tr-footer-megatitle">THE RANCH</h2>
+          )}
+          <p className="tr-footer-tagline">No seguimos modas, las marcamos.</p>
+        </div>
+
+        <div className="tr-footer-grid">
+          <div className="tr-footer-newsletter">
+            <h4 className="tr-footer-title">Únete al ranch</h4>
+            <p className="tr-footer-newsletter-desc">
+              Novedades, drops y ofertas exclusivas.
+            </p>
+            <form
+              className="tr-footer-form"
+              onSubmit={(e) => e.preventDefault()}
+            >
+              <input
+                className="tr-footer-input"
+                type="email"
+                placeholder="Tu email"
+                aria-label="Email"
               />
-            )}
-          </footer>
-        )}
-      </Await>
-    </Suspense>
+              <button
+                className="tr-footer-submit"
+                type="submit"
+                aria-label="Suscribirse"
+              >
+                →
+              </button>
+            </form>
+          </div>
+
+          <div className="tr-footer-col">
+            <h4 className="tr-footer-title">Tienda</h4>
+            <Link to="/collections/gorras-truckers">Gorras</Link>
+            <Link to="/collections/chaquetas">Chaquetas</Link>
+            <Link to="/collections/all">Accesorios</Link>
+          </div>
+
+          <div className="tr-footer-col">
+            <h4 className="tr-footer-title">Ayuda</h4>
+            <a href="https://ranch.com.co/policies/shipping-policy">Envíos</a>
+            <a href="https://ranch.com.co/policies/refund-policy">Devoluciones</a>
+            <a href="https://wa.me/573209157343">Contacto</a>
+          </div>
+
+          <div className="tr-footer-col">
+            <h4 className="tr-footer-title">Legal</h4>
+            <a href="https://ranch.com.co/policies/privacy-policy">Privacidad</a>
+            <a href="https://ranch.com.co/policies/terms-of-service">Términos</a>
+          </div>
+        </div>
+
+        <div className="tr-footer-bottom">
+          <span className="tr-footer-copy">© {year} The Ranch — Colombia</span>
+          <div className="tr-footer-social">
+            <a
+              href="https://www.instagram.com/"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              Instagram
+            </a>
+            <a
+              href="https://www.tiktok.com/"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              TikTok
+            </a>
+          </div>
+        </div>
+      </div>
+    </footer>
   );
 }
-
-/**
- * @param {{
- *   menu: FooterQuery['menu'];
- *   primaryDomainUrl: FooterProps['header']['shop']['primaryDomain']['url'];
- *   publicStoreDomain: string;
- * }}
- */
-function FooterMenu({menu, primaryDomainUrl, publicStoreDomain}) {
-  return (
-    <nav className="footer-menu" role="navigation">
-      {(menu || FALLBACK_FOOTER_MENU).items.map((item) => {
-        if (!item.url) return null;
-        // if the url is internal, we strip the domain
-        const url =
-          item.url.includes('myshopify.com') ||
-          item.url.includes(publicStoreDomain) ||
-          item.url.includes(primaryDomainUrl)
-            ? new URL(item.url).pathname
-            : item.url;
-        const isExternal = !url.startsWith('/');
-        return isExternal ? (
-          <a href={url} key={item.id} rel="noopener noreferrer" target="_blank">
-            {item.title}
-          </a>
-        ) : (
-          <NavLink
-            end
-            key={item.id}
-            prefetch="intent"
-            style={activeLinkStyle}
-            to={url}
-          >
-            {item.title}
-          </NavLink>
-        );
-      })}
-    </nav>
-  );
-}
-
-const FALLBACK_FOOTER_MENU = {
-  id: 'gid://shopify/Menu/199655620664',
-  items: [
-    {
-      id: 'gid://shopify/MenuItem/461633060920',
-      resourceId: 'gid://shopify/ShopPolicy/23358046264',
-      tags: [],
-      title: 'Privacy Policy',
-      type: 'SHOP_POLICY',
-      url: '/policies/privacy-policy',
-      items: [],
-    },
-    {
-      id: 'gid://shopify/MenuItem/461633093688',
-      resourceId: 'gid://shopify/ShopPolicy/23358013496',
-      tags: [],
-      title: 'Refund Policy',
-      type: 'SHOP_POLICY',
-      url: '/policies/refund-policy',
-      items: [],
-    },
-    {
-      id: 'gid://shopify/MenuItem/461633126456',
-      resourceId: 'gid://shopify/ShopPolicy/23358111800',
-      tags: [],
-      title: 'Shipping Policy',
-      type: 'SHOP_POLICY',
-      url: '/policies/shipping-policy',
-      items: [],
-    },
-    {
-      id: 'gid://shopify/MenuItem/461633159224',
-      resourceId: 'gid://shopify/ShopPolicy/23358079032',
-      tags: [],
-      title: 'Terms of Service',
-      type: 'SHOP_POLICY',
-      url: '/policies/terms-of-service',
-      items: [],
-    },
-  ],
-};
-
-/**
- * @param {{
- *   isActive: boolean;
- *   isPending: boolean;
- * }}
- */
-function activeLinkStyle({isActive, isPending}) {
-  return {
-    fontWeight: isActive ? 'bold' : undefined,
-    color: isPending ? 'grey' : 'white',
-  };
-}
-
-/**
- * @typedef {Object} FooterProps
- * @property {Promise<FooterQuery|null>} footer
- * @property {HeaderQuery} header
- * @property {string} publicStoreDomain
- */
-
-/** @typedef {import('storefrontapi.generated').FooterQuery} FooterQuery */
-/** @typedef {import('storefrontapi.generated').HeaderQuery} HeaderQuery */
