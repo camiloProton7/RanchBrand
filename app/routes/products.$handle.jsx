@@ -460,8 +460,9 @@ export default function ProductPage() {
 
   return (
     <div className="trp">
-      {/* ===== Visor visual ===== */}
-      <div className="trp-viewer">
+      <div className="trp-gallery">
+        {/* ===== Visor visual ===== */}
+        <div className="trp-viewer">
         <div
           ref={trackRef}
           className="trp-viewer-track"
@@ -525,6 +526,7 @@ export default function ProductPage() {
           ))}
         </div>
       )}
+      </div>
 
       {/* ===== Tarjeta flotante de rating ===== */}
       <div className="trp-rating-pill">
