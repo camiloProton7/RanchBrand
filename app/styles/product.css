@@ -1297,12 +1297,19 @@
 
 /* ===== Medios de pago (confianza) ===== */
 .trp-payments {
-  align-items: center;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-  justify-content: center;
+  background: #ffffff;
+  border: 1px solid rgba(11, 11, 9, 0.06);
+  border-radius: 14px;
   margin: 24px 0;
+  overflow: hidden;
+  padding: 18px 0;
+}
+
+.trp-payments-track {
+  animation: trp-payments-scroll 22s linear infinite;
+  display: flex;
+  gap: 16px;
+  width: max-content;
 }
 
 .trp-payment-logo {
@@ -1311,14 +1318,14 @@
   border: 1px solid rgba(11, 11, 9, 0.1);
   border-radius: 10px;
   display: flex;
-  height: 46px;
+  height: 56px;
   justify-content: center;
-  padding: 8px 16px;
+  padding: 8px 22px;
 }
 
 .trp-payment-logo img {
   display: block;
-  height: 26px;
+  height: 32px;
   object-fit: contain;
   width: auto;
 }
@@ -1329,4 +1336,13 @@
 
 .trp-payment-dark img {
   filter: invert(1);
+}
+
+@keyframes trp-payments-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-33.333%);
+  }
 }

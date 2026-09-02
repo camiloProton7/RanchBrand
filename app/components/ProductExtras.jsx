@@ -79,21 +79,27 @@ export function TrustBadges() {
   );
 }
 
+const PAYMENT_LOGOS = [
+  {src: '/logo-bold.jpg', alt: 'Bold'},
+  {src: '/logo-addi.jpg', alt: 'Addi'},
+  {src: '/logo-coordinadora.jpg', alt: 'Coordinadora'},
+  {src: '/logo-inter-rapidisimo.webp', alt: 'Inter Rapidísimo', invert: true},
+];
+
 export function PaymentTrust() {
+  const items = [...PAYMENT_LOGOS, ...PAYMENT_LOGOS, ...PAYMENT_LOGOS];
   return (
     <div className="trp-payments" aria-label="Medios de pago y envíos seguros">
-      <span className="trp-payment-logo">
-        <img src="/logo-bold.jpg" alt="Bold" loading="lazy" />
-      </span>
-      <span className="trp-payment-logo">
-        <img src="/logo-addi.jpg" alt="Addi" loading="lazy" />
-      </span>
-      <span className="trp-payment-logo">
-        <img src="/logo-coordinadora.jpg" alt="Coordinadora" loading="lazy" />
-      </span>
-      <span className="trp-payment-logo trp-payment-dark">
-        <img src="/logo-inter-rapidisimo.webp" alt="Inter Rapidísimo" loading="lazy" />
-      </span>
+      <div className="trp-payments-track">
+        {items.map((logo, i) => (
+          <span
+            key={i}
+            className={`trp-payment-logo${logo.invert ? ' trp-payment-dark' : ''}`}
+          >
+            <img src={logo.src} alt={logo.alt} loading="lazy" />
+          </span>
+        ))}
+      </div>
     </div>
   );
 }
