@@ -1,4 +1,4 @@
-import {useEffect, useRef} from 'react';
+import {useEffect, useMemo, useRef, useState} from 'react';
 import {Link, useLoaderData} from 'react-router';
 import collectionStyles from '~/styles/collection.css?url';
 
@@ -34,8 +34,12 @@ const COLLECTION_QUERY = `#graphql
           compareAtPriceRange {
             minVariantPrice { amount currencyCode }
           }
-          variants(first: 1) {
-            nodes { id }
+          variants(first: 10) {
+            nodes {
+              id
+              selectedOptions { name value }
+              price { amount currencyCode }
+            }
           }
         }
       }
@@ -59,6 +63,14 @@ function formatPrice(amount, currency = 'COP') {
   }).format(Number(amount));
 }
 
+const MARQUEE_ITEMS = [
+  'ENVÍO GRATIS',
+  'PROTECCIÓN UV',
+  'HECHO EN COLOMBIA',
+  'CAMBIOS FÁCILES',
+  'PAGO SEGURO',
+];
+
 export async function loader({params, context}) {
   const {storefront} = context;
   try {
@@ -74,6 +86,9 @@ export async function loader({params, context}) {
 
 export default function CollectionPage() {
   const {collection} = useLoaderData();
+  const [activeColor, setActiveColor] = useState(null);
+  const [sort, setSort] = useState('featured');
+  const [quickView, setQuickView] = useState(null);
 
   if (!collection) {
     return (
@@ -86,6 +101,41 @@ export default function CollectionPage() {
 
   const products = collection.products?.nodes || [];
   const heroImage = collection.image?.url || products[0]?.featuredImage?.url;
+
+  const colors = useMemo(() => {
+    const set = new Set();
+    products.forEach((p) => {
+      (p.variants?.nodes || []).forEach((v) => {
+        (v.selectedOptions || []).forEach((o) => {
+          if (o.name?.toLowerCase() === 'color' && o.value) set.add(o.value);
+        });
+      });
+    });
+    return Array.from(set);
+  }, [products]);
+
+  const filtered = useMemo(() => {
+    let list = [...products];
+    if (activeColor) {
+      list = list.filter((p) =>
+        (p.variants?.nodes || []).some((v) =>
+          (v.selectedOptions || []).some(
+            (o) => o.name?.toLowerCase() === 'color' && o.value === activeColor,
+          ),
+        ),
+      );
+    }
+    const price = (p) => Number(p.priceRange?.minVariantPrice?.amount) || 0;
+    if (sort === 'price-asc') list.sort((a, b) => price(a) - price(b));
+    else if (sort === 'price-desc') list.sort((a, b) => price(b) - price(a));
+    else if (sort === 'name') list.sort((a, b) => a.title.localeCompare(b.title));
+    return list;
+  }, [products, activeColor, sort]);
+
+  const addToCart = (variantId) => {
+    if (!variantId) return;
+    window.location.href = `https://${SHOPIFY_DOMAIN}/cart/${toNumericId(variantId)}:1`;
+  };
 
   return (
     <div className="tr-col">
@@ -107,16 +157,119 @@ export default function CollectionPage() {
         ) : null}
       </header>
 
+      {/* ===== Marquee ===== */}
+      <div className="tr-col-marquee" aria-hidden="true">
+        <div className="tr-col-marquee-track">
+          {[...MARQUEE_ITEMS, ...MARQUEE_ITEMS, ...MARQUEE_ITEMS].map((item, i) => (
+            <span key={i} className="tr-col-marquee-item">
+              {item}
+              <i>·</i>
+            </span>
+          ))}
+        </div>
+      </div>
+
+      {/* ===== Filtros ===== */}
+      <div className="tr-col-filters">
+        <div className="tr-col-chips">
+          <button
+            type="button"
+            className={!activeColor ? 'is-active' : ''}
+            onClick={() => setActiveColor(null)}
+          >
+            Todos
+          </button>
+          {colors.map((c) => (
+            <button
+              key={c}
+              type="button"
+              className={activeColor === c ? 'is-active' : ''}
+              onClick={() => setActiveColor(c)}
+            >
+              {c}
+            </button>
+          ))}
+        </div>
+        <select
+          className="tr-col-sort"
+          value={sort}
+          onChange={(e) => setSort(e.target.value)}
+          aria-label="Ordenar"
+        >
+          <option value="featured">Destacados</option>
+          <option value="price-asc">Precio: menor a mayor</option>
+          <option value="price-desc">Precio: mayor a menor</option>
+          <option value="name">Nombre A–Z</option>
+        </select>
+      </div>
+
+      {/* ===== Grid ===== */}
       <div className="tr-col-grid">
-        {products.map((p, i) => (
-          <CollectionCard key={p.id} product={p} index={i} />
+        {filtered.map((p, i) => (
+          <CollectionCard
+            key={p.id}
+            product={p}
+            index={i}
+            onAdd={addToCart}
+            onQuickView={setQuickView}
+          />
         ))}
       </div>
+
+      {/* ===== Quick view modal ===== */}
+      {quickView ? (
+        <div className="tr-col-qv-overlay" onClick={() => setQuickView(null)}>
+          <div className="tr-col-qv" onClick={(e) => e.stopPropagation()}>
+            <button
+              className="tr-col-qv-close"
+              type="button"
+              aria-label="Cerrar"
+              onClick={() => setQuickView(null)}
+            >
+              ×
+            </button>
+            {quickView.featuredImage?.url ? (
+              <img
+                className="tr-col-qv-img"
+                src={quickView.featuredImage.url}
+                alt={quickView.featuredImage.altText || quickView.title}
+              />
+            ) : null}
+            <div className="tr-col-qv-info">
+              <h3 className="tr-col-qv-title">{quickView.title}</h3>
+              <span className="tr-col-qv-price">
+                {formatPrice(quickView.priceRange?.minVariantPrice?.amount)}
+              </span>
+              <div className="tr-col-qv-variants">
+                {(quickView.variants?.nodes || []).map((v) => (
+                  <button
+                    key={v.id}
+                    type="button"
+                    onClick={() => {
+                      addToCart(v.id);
+                      setQuickView(null);
+                    }}
+                  >
+                    {(v.selectedOptions || []).map((o) => o.value).join(' / ') || 'Único'}
+                  </button>
+                ))}
+              </div>
+              <Link
+                className="tr-col-qv-link"
+                to={`/products/${quickView.handle}`}
+                onClick={() => setQuickView(null)}
+              >
+                Ver producto completo →
+              </Link>
+            </div>
+          </div>
+        </div>
+      ) : null}
     </div>
   );
 }
 
-function CollectionCard({product, index}) {
+function CollectionCard({product, index, onAdd, onQuickView}) {
   const ref = useRef(null);
   const image = product.featuredImage?.url;
   const price = product.priceRange?.minVariantPrice?.amount;
@@ -142,13 +295,6 @@ function CollectionCard({product, index}) {
     return () => io.disconnect();
   }, []);
 
-  const quickAdd = (e) => {
-    e.preventDefault();
-    if (!variantId) return;
-    window.location.href = `https://${SHOPIFY_DOMAIN}/cart/${toNumericId(variantId)}:1`;
-  };
-
-  // Bento: la primera tarjeta es grande; cada 5ª también destaca.
   const isFeature = index === 0 || index % 6 === 3;
 
   return (
@@ -162,14 +308,32 @@ function CollectionCard({product, index}) {
           {image ? <img src={image} alt={product.featuredImage?.altText || product.title} loading="lazy" /> : null}
           <div className="tr-col-card-shade" />
           {hasDiscount ? <span className="tr-col-badge">Oferta</span> : null}
-          <button
-            type="button"
-            className="tr-col-quick"
-            onClick={quickAdd}
-            aria-label={`Añadir ${product.title} al carrito`}
-          >
-            + Añadir
-          </button>
+          <div className="tr-col-card-actions">
+            <button
+              type="button"
+              className="tr-col-quick"
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                onAdd(variantId);
+              }}
+              aria-label={`Añadir ${product.title} al carrito`}
+            >
+              + Añadir
+            </button>
+            <button
+              type="button"
+              className="tr-col-view"
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                onQuickView(product);
+              }}
+              aria-label={`Vista rápida de ${product.title}`}
+            >
+              Vista rápida
+            </button>
+          </div>
         </div>
         <div className="tr-col-card-info">
           <h2 className="tr-col-card-title">{product.title}</h2>
