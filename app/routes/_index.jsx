@@ -21,7 +21,7 @@ export const meta = () => [
   },
   {property: 'og:type', content: 'website'},
   {property: 'og:url', content: 'https://laredo.ranch.com.co/'},
-  {property: 'og:image', content: 'https://laredo.ranch.com.co/home-poster.jpg'},
+  {property: 'og:image', content: 'https://laredo.ranch.com.co/og-image.jpg'},
   {name: 'twitter:card', content: 'summary_large_image'},
   {name: 'twitter:title', content: 'The Ranch — No seguimos modas'},
   {tagName: 'link', rel: 'canonical', href: 'https://laredo.ranch.com.co/'},
