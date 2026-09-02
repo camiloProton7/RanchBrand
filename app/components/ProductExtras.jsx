@@ -82,8 +82,8 @@ export function TrustBadges() {
 const PAYMENT_LOGOS = [
   {src: '/logo-bold.jpg', alt: 'Bold', h: 30},
   {src: '/logo-addi.jpg', alt: 'Addi', h: 30},
-  {src: '/logo-coordinadora.jpg', alt: 'Coordinadora', h: 56},
-  {src: '/logo-inter-rapidisimo.webp', alt: 'Inter Rapidísimo', invert: true, h: 56},
+  {src: '/logo-coordinadora.jpg', alt: 'Coordinadora', h: 80},
+  {src: '/logo-inter-rapidisimo.webp', alt: 'Inter Rapidísimo', invert: true, h: 80},
 ];
 
 export function PaymentTrust() {
