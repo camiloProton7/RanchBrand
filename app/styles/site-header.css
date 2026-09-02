@@ -29,6 +29,7 @@
 }
 
 .tr-site-logo img {
+  filter: brightness(0) invert(1);
   height: 30px;
   width: auto;
 }

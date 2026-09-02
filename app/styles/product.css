@@ -536,38 +536,41 @@
   font-weight: 800;
 }
 
-/* ===== Barra de compra fija ===== */
+/* ===== Barra de compra (sticky, en flujo) ===== */
 .trp-buybar {
-  align-items: center;
   background: #1a1a18;
-  border-radius: 24px 24px 0 0;
-  box-shadow: 0 -8px 30px rgba(26, 26, 24, 0.35);
+  border-radius: 16px;
+  bottom: 12px;
   display: flex;
+  flex-direction: column;
   gap: 12px;
-  left: 0;
-  padding: 12px 16px calc(12px + env(safe-area-inset-bottom));
-  position: fixed;
-  right: 0;
-  bottom: 0;
+  margin-top: 24px;
+  padding: 16px;
+  position: sticky;
   z-index: 20;
 }
 
 .trp-buybar-price {
+  align-items: baseline;
   display: flex;
-  flex-direction: column;
-  flex-shrink: 0;
-  gap: 2px;
+  gap: 10px;
 }
 
 .trp-buybar-price-now {
   color: #f5f0e6;
-  font-size: 20px;
+  font-size: 22px;
   font-weight: 800;
 }
 
 .trp-buybar-price-compare {
   color: #8a8274;
-  font-size: 13px;
+  font-size: 14px;
+}
+
+.trp-buybar-actions {
+  align-items: center;
+  display: flex;
+  gap: 10px;
 }
 
 .trp-qty {
@@ -605,7 +608,7 @@
 
 .trp-add {
   align-items: center;
-  background: #f5f0e6;
+  background: #f5b301;
   border: none;
   border-radius: 999px;
   color: #1a1a18;
@@ -613,11 +616,15 @@
   display: flex;
   flex: 1;
   font-size: 15px;
-  font-weight: 700;
+  font-weight: 800;
   gap: 8px;
   justify-content: center;
   padding: 15px 20px;
   transition: background 0.2s ease, transform 0.15s ease;
+}
+
+.trp-add:hover {
+  background: #ffc11a;
 }
 
 .trp-add:active {
@@ -672,13 +679,7 @@
   }
 
   .trp-buybar {
-    border-radius: 20px;
     bottom: 24px;
-    grid-column: 2;
-    grid-row: 3;
-    margin-top: 20px;
-    padding-bottom: 12px;
-    position: sticky;
   }
 
   .trp-reviews,
