@@ -62,11 +62,9 @@ export function getCartUrl() {
   return `https://${SHOPIFY_DOMAIN}/cart/${items}`;
 }
 
-export async function buyNow(variantId, qty = 1) {
+export function buyNow(variantId, qty = 1) {
   const id = toNumericId(variantId);
   if (!id) return;
-  const merchandiseId = `gid://shopify/ProductVariant/${id}`;
-  const token = import.meta.env.PUBLIC_STOREFRONT_API_TOKEN;
 
   trackEvent('InitiateCheckout', {
     content_ids: [id],
@@ -75,30 +73,8 @@ export async function buyNow(variantId, qty = 1) {
     currency: 'COP',
   });
 
-  try {
-    const res = await fetch(`https://${SHOPIFY_DOMAIN}/api/2024-01/graphql.json`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'X-Shopify-Storefront-Access-Token': token,
-      },
-      body: JSON.stringify({
-        query: `mutation CartCreate($input: CartInput!) { cartCreate(input: $input) { cart { checkoutUrl } } }`,
-        variables: {
-          input: {
-            lines: [{merchandiseId, quantity: qty}],
-          },
-        },
-      }),
-    });
-    const data = await res.json();
-    const checkoutUrl = data?.data?.cartCreate?.cart?.checkoutUrl;
-    if (checkoutUrl) {
-      window.location.href = checkoutUrl;
-    } else {
-      window.location.href = `https://${SHOPIFY_DOMAIN}/cart/${id}:${qty}`;
-    }
-  } catch {
-    window.location.href = `https://${SHOPIFY_DOMAIN}/cart/${id}:${qty}`;
-  }
+  // Redirección inmediata (sin fetch) al checkout de Shopify.
+  // /cart/{id}:{qty} agrega el producto y Shopify redirige directo al checkout
+  // (verificado: 302 → /checkouts/). Evita la espera de la API en cada clic.
+  window.location.href = `https://${SHOPIFY_DOMAIN}/cart/${id}:${qty}`;
 }
