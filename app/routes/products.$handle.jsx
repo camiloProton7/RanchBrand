@@ -366,6 +366,7 @@ export default function ProductPage() {
       title: product.title,
       image: selectedVariant.image?.url || product.featuredImage?.url,
       price: selectedVariant.price?.amount,
+      compareAtPrice: compare,
       handle: product.handle,
     });
     setAdded(true);
