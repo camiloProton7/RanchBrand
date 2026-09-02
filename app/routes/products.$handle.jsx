@@ -641,6 +641,11 @@ export default function ProductPage() {
           <span aria-hidden="true">🔒</span> Pago 100% seguro
         </div>
 
+        <div className="trp-guarantee-badge">
+          <span aria-hidden="true">🛡️</span> Compra protegida · Garantía de devolución
+          <span className="trp-guarantee-cards">VISA · MASTERCARD · PSE</span>
+        </div>
+
         {/* ===== Barra de compra (grid 2x2) ===== */}
         <div className="trp-buybar">
           <div className="trp-buybar-price">
