@@ -13,6 +13,15 @@ export const meta = () => [
     content:
       'The Ranch: gorras, chaquetas y accesorios para quienes hacen las cosas bien.',
   },
+  {
+    'script:ld+json': {
+      '@context': 'https://schema.org',
+      '@type': 'Organization',
+      name: 'The Ranch',
+      url: 'https://laredo.ranch.com.co',
+      sameAs: ['https://www.instagram.com/', 'https://www.tiktok.com/'],
+    },
+  },
 ];
 
 export function links() {

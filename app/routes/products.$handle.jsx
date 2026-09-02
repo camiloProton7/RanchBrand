@@ -15,10 +15,33 @@ export const meta = ({data}) => {
   const product = data?.product;
   const title = product?.title ? `${product.title} — The Ranch` : 'Producto — The Ranch';
   const description = product?.description?.slice(0, 160) || 'The Ranch — Colombia';
-  return [
+  const items = [
     {title},
     {name: 'description', content: description},
   ];
+  if (product) {
+    const price = product.priceRange?.minVariantPrice?.amount;
+    const currency = product.priceRange?.minVariantPrice?.currencyCode || 'COP';
+    items.push({
+      'script:ld+json': {
+        '@context': 'https://schema.org',
+        '@type': 'Product',
+        name: product.title,
+        description: product.description,
+        image: product.images?.nodes?.map((i) => i.url) || [],
+        sku: product.handle,
+        brand: {'@type': 'Brand', name: 'The Ranch'},
+        offers: {
+          '@type': 'Offer',
+          priceCurrency: currency,
+          price: price,
+          availability: 'https://schema.org/InStock',
+          url: `https://laredo.ranch.com.co/products/${product.handle}`,
+        },
+      },
+    });
+  }
+  return items;
 };
 
 export const links = () => [{rel: 'stylesheet', href: productStyles}];
