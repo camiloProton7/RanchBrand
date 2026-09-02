@@ -285,6 +285,22 @@ export default function ProductPage() {
     );
   }, [variants, options, color]);
 
+  // Inicializa color y talla con los primeros valores disponibles.
+  useEffect(() => {
+    if (colors.length && !color) setColor(colors[0]);
+  }, [colors, color]);
+
+  useEffect(() => {
+    if (!variants.length) return;
+    optionNames.forEach((name) => {
+      const key = norm(name);
+      if (!options[key]) {
+        const first = variants[0]?.selectedOptions?.find((o) => o.name === name)?.value;
+        if (first) setOptions((prev) => ({...prev, [key]: first}));
+      }
+    });
+  }, [optionNames, variants, options]);
+
   if (!product) {
     return (
       <div className="trp-empty">
@@ -422,6 +438,52 @@ export default function ProductPage() {
 
         <span className="trp-tag">{isOut ? 'Agotado' : 'Edición limitada'}</span>
 
+        {/* ===== Selectores de talla/color (debajo del título) ===== */}
+        {colors.length > 1 && (
+          <div className="trp-option">
+            <span className="trp-option-label">Color</span>
+            <div className="trp-option-values">
+              {colors.map((c) => (
+                <button
+                  key={c}
+                  type="button"
+                  className={norm(color) === norm(c) ? 'is-active' : ''}
+                  onClick={() => setColor(c)}
+                >
+                  {c}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {optionNames.map((name) => {
+          const values = Array.from(
+            new Set(
+              variants
+                .map((v) => v.selectedOptions?.find((o) => o.name === name)?.value)
+                .filter(Boolean),
+            ),
+          );
+          return (
+            <div key={name} className="trp-option">
+              <span className="trp-option-label">{name}</span>
+              <div className="trp-option-values">
+                {values.map((value) => (
+                  <button
+                    key={value}
+                    type="button"
+                    className={norm(options[norm(name)]) === norm(value) ? 'is-active' : ''}
+                    onClick={() => setOptions((prev) => ({...prev, [norm(name)]: value}))}
+                  >
+                    {value}
+                  </button>
+                ))}
+              </div>
+            </div>
+          );
+        })}
+
         {/* ===== Producto recomendado (antes de la descripción) ===== */}
         {related.length > 0 && (
           <RecommendedProduct
@@ -450,33 +512,6 @@ export default function ProductPage() {
           title={product.title}
           description={product.description}
         />
-
-        {optionNames.map((name) => {
-          const values = Array.from(
-            new Set(
-              variants
-                .map((v) => v.selectedOptions?.find((o) => o.name === name)?.value)
-                .filter(Boolean),
-            ),
-          );
-          return (
-            <div key={name} className="trp-option">
-              <span className="trp-option-label">Talla — {name}</span>
-              <div className="trp-option-values">
-                {values.map((value) => (
-                  <button
-                    key={value}
-                    type="button"
-                    className={norm(options[name]) === norm(value) ? 'is-active' : ''}
-                    onClick={() => setOptions((prev) => ({...prev, [norm(name)]: value}))}
-                  >
-                    {value}
-                  </button>
-                ))}
-              </div>
-            </div>
-          );
-        })}
 
         <div className={`trp-stock ${isOut ? 'is-out' : ''}`}>
           {isOut ? 'Agotado' : '⚡ Últimas unidades disponibles'}
