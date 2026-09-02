@@ -1328,7 +1328,7 @@
   align-items: center;
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 12px;
   justify-content: center;
   margin: 24px 0;
 }
@@ -1338,27 +1338,20 @@
   background: #ffffff;
   border: 1px solid rgba(11, 11, 9, 0.1);
   border-radius: 10px;
-  color: #5a554a;
   display: flex;
-  font-size: 12px;
-  font-weight: 600;
-  gap: 6px;
-  padding: 10px 16px;
-  white-space: nowrap;
+  height: 46px;
+  justify-content: center;
+  padding: 8px 16px;
 }
 
-.trp-payment-logo i {
-  font-style: normal;
+.trp-payment-logo img {
+  display: block;
+  height: 26px;
+  object-fit: contain;
+  width: auto;
 }
 
-.trp-payment-bold {
-  font-size: 15px;
-  font-weight: 800;
-  letter-spacing: -0.02em;
-}
-
-.trp-payment-addi {
-  font-size: 15px;
-  font-weight: 600;
-  font-style: italic;
+.trp-payment-dark {
+  background: #1a1a18;
+  border-color: rgba(11, 11, 9, 0.2);
 }

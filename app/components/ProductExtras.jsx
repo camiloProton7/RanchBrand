@@ -81,11 +81,15 @@ export function TrustBadges() {
 
 export function PaymentTrust() {
   return (
-    <div className="trp-payments" aria-label="Medios de pago seguros">
-      <span className="trp-payment-logo trp-payment-bold">Bold</span>
-      <span className="trp-payment-logo trp-payment-addi">addi</span>
-      <span className="trp-payment-logo trp-payment-secure">
-        <i aria-hidden="true">🔒</i> Pago seguro
+    <div className="trp-payments" aria-label="Medios de pago y envíos seguros">
+      <span className="trp-payment-logo">
+        <img src="/logo-bold.jpg" alt="Bold" loading="lazy" />
+      </span>
+      <span className="trp-payment-logo">
+        <img src="/logo-coordinadora.jpg" alt="Coordinadora" loading="lazy" />
+      </span>
+      <span className="trp-payment-logo trp-payment-dark">
+        <img src="/logo-inter-rapidisimo.webp" alt="Inter Rapidísimo" loading="lazy" />
       </span>
     </div>
   );
