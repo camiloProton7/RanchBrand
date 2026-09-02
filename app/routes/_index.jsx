@@ -123,8 +123,8 @@ export default function Home() {
         ariaLabel="Más vendidos"
         title="Más vendidos"
       />
-      <ReviewsSection reviews={reviews} />
       <UtilityLinks />
+      <ReviewsSection reviews={reviews} />
       <EditorialFooter logoSrc={logoSrc} />
       <WhatsAppFloat />
     </div>

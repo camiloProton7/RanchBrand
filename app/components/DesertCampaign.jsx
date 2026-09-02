@@ -44,7 +44,7 @@ export default function DesertCampaign({
       if (photo2Ref.current) {
         const secondIn = clamp((progress - 0.6) / 0.34);
         photo2Ref.current.style.opacity = String(secondIn);
-        photo2Ref.current.style.transform = `scale(${1.1 - secondIn * 0.1})`;
+        photo2Ref.current.style.transform = 'scale(1)';
       }
 
       // Texto gigante se revela
