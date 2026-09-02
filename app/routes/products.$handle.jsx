@@ -209,6 +209,7 @@ const COLOR_HEX = {
   arena: '#d8c9a8',
   beige: '#d8c9a8',
   'verde oliva': '#5a6b3c',
+  verde: '#3a6b35',
   olive: '#5a6b3c',
   marrón: '#6b4a2b',
   brown: '#6b4a2b',
@@ -217,12 +218,39 @@ const COLOR_HEX = {
   camo: '#4a5240',
   azul: '#3a4a5a',
   rojo: '#7a3a2a',
+  gris: '#8a8a8a',
+  gray: '#8a8a8a',
+  camel: '#b58a5a',
+  naranja: '#d97a2b',
+  amarillo: '#d9c23a',
+  morado: '#6b4a8a',
+  rosa: '#c97a8a',
 };
 
 function colorToHex(name) {
   const key = norm(name);
   if (COLOR_HEX[key]) return COLOR_HEX[key];
+  if (key.includes('verde')) return '#3a6b35';
+  if (key.includes('negro')) return '#1a1a18';
+  if (key.includes('blanco')) return '#e8e2d4';
+  if (key.includes('azul')) return '#3a4a5a';
+  if (key.includes('rojo')) return '#7a3a2a';
+  if (key.includes('marr') || key.includes('cuero') || key.includes('cafe')) return '#6b4a2b';
+  if (key.includes('gris')) return '#8a8a8a';
+  if (key.includes('naranja')) return '#d97a2b';
+  if (key.includes('amarillo')) return '#d9c23a';
+  if (key.includes('camuflaje') || key.includes('camo')) return '#4a5240';
+  if (key.includes('arena') || key.includes('beige') || key.includes('crema') || key.includes('camel') || key.includes('desert')) return '#d8c9a8';
   return '#c9bfa8';
+}
+
+// Abrevia tallas: "Pequeño (S)" -> "S", "Doble extragrande (XXL)" -> "2XL"
+function formatSize(value) {
+  const m = (value || '').match(/\(([^)]+)\)/);
+  if (!m) return value;
+  let abbr = m[1].trim().toUpperCase();
+  abbr = abbr.replace(/^X{2,}/, (x) => `${x.length}XL`);
+  return abbr;
 }
 
 const ATTRS = ['Edición limitada', 'Ajuste regulable'];
@@ -499,7 +527,7 @@ export default function ProductPage() {
                     className={norm(options[norm(name)]) === norm(value) ? 'is-active' : ''}
                     onClick={() => setOptions((prev) => ({...prev, [norm(name)]: value}))}
                   >
-                    {value}
+                    {formatSize(value)}
                   </button>
                 ))}
               </div>
