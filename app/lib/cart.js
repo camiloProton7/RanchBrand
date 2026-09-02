@@ -15,6 +15,12 @@ export function formatPrice(amount, currency = 'COP') {
   }).format(Number(amount));
 }
 
+function trackEvent(name, data = {}) {
+  if (typeof window !== 'undefined' && window.fbq) {
+    window.fbq('track', name, data);
+  }
+}
+
 export function getCart() {
   if (typeof window === 'undefined') return [];
   try {
@@ -35,6 +41,13 @@ export function addToCart(item) {
   }
   window.localStorage.setItem(CART_KEY, JSON.stringify(cart));
   window.dispatchEvent(new Event('ranch-cart-updated'));
+  trackEvent('AddToCart', {
+    content_ids: [toNumericId(item.variantId)],
+    content_name: item.title || '',
+    content_type: 'product',
+    value: Number(item.price) || 0,
+    currency: 'COP',
+  });
   return cart;
 }
 
@@ -54,6 +67,13 @@ export async function buyNow(variantId, qty = 1) {
   if (!id) return;
   const merchandiseId = `gid://shopify/ProductVariant/${id}`;
   const token = import.meta.env.PUBLIC_STOREFRONT_API_TOKEN;
+
+  trackEvent('InitiateCheckout', {
+    content_ids: [id],
+    content_type: 'product',
+    num_items: qty,
+    currency: 'COP',
+  });
 
   try {
     const res = await fetch(`https://${SHOPIFY_DOMAIN}/api/2024-01/graphql.json`, {

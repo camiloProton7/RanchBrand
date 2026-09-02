@@ -388,6 +388,19 @@ export default function ProductPage() {
     }
   }, [selectedVariant, allImages, colors, color]);
 
+  // Pixel de Meta: ViewContent cuando el producto carga.
+  useEffect(() => {
+    if (product?.id && typeof window !== 'undefined' && window.fbq) {
+      window.fbq('track', 'ViewContent', {
+        content_ids: [product.id],
+        content_name: product.title,
+        content_type: 'product',
+        value: Number(product.priceRange?.minVariantPrice?.amount) || 0,
+        currency: product.priceRange?.minVariantPrice?.currencyCode || 'COP',
+      });
+    }
+  }, [product]);
+
   if (!product) {
     return (
       <div className="trp-empty">
