@@ -1790,8 +1790,12 @@
 .tr-chaqueta-hero {
   background: linear-gradient(165deg, var(--bg) 0%, #241d15 55%, #15120e 100%);
   color: #f4f0e7;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 100svh;
   overflow: hidden;
-  padding: 40px 24px 48px;
+  padding: 32px 24px 28px;
   position: relative;
   text-align: center;
   transition: background 0.7s ease;
@@ -1819,11 +1823,13 @@
 }
 
 .tr-chaqueta-hero-stage {
-  height: 520px;
+  flex: 1;
   margin: 0 auto;
   max-width: 900px;
+  min-height: 300px;
   position: relative;
   touch-action: pan-y;
+  width: 100%;
   z-index: 1;
 }
 
@@ -1857,7 +1863,7 @@
 }
 
 .tr-chaqueta-hero-jacket {
-  animation: tr-chaqueta-jacket-in 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation: tr-chaqueta-fade 0.4s ease both;
   filter: drop-shadow(0 30px 40px rgba(0, 0, 0, 0.45));
   height: 100%;
   left: 50%;
@@ -2146,7 +2152,7 @@
 
 @media (max-width: 640px) {
   .tr-chaqueta-hero-stage {
-    height: 400px;
+    min-height: 260px;
   }
   .tr-chaqueta-hero-arrow {
     height: 38px;

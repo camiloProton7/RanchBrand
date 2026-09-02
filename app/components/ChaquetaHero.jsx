@@ -16,11 +16,11 @@ const COLORS = {
   Mojave: {bg: '#a35c3a', text: '#f0e0c8'},
 };
 
-// Fondo con imagen (opcional) por chaqueta. Servidas como WebP vía render de
-// Supabase (mucho más livianas que el JPG original).
+// Fondo con imagen (opcional) por chaqueta. Se sirve del CDN (cacheado) para
+// que el crossfade sea instantáneo; el render WebP no cachea y se siente lento.
 const BASE =
-  'https://rattwfjkxgqvxmxlybcz.supabase.co/storage/v1/render/image/public/whatsapp-images/home';
-const BG = (file) => `${BASE}/${file}?format=webp&quality=75`;
+  'https://rattwfjkxgqvxmxlybcz.supabase.co/storage/v1/object/public/whatsapp-images/home';
+const BG = (file) => `${BASE}/${file}`;
 
 const BACKGROUND_IMAGES = {
   Yellowstone: BG('yellowstone-bg.jpg'),
