@@ -16,18 +16,18 @@ const COLORS = {
   Mojave: {bg: '#a35c3a', text: '#f0e0c8'},
 };
 
-// Fondo con imagen (opcional) por chaqueta. Las que no tienen usan solo el color.
+// Fondo con imagen (opcional) por chaqueta. Servidas como WebP vía render de
+// Supabase (mucho más livianas que el JPG original).
+const BASE =
+  'https://rattwfjkxgqvxmxlybcz.supabase.co/storage/v1/render/image/public/whatsapp-images/home';
+const BG = (file) => `${BASE}/${file}?format=webp&quality=75`;
+
 const BACKGROUND_IMAGES = {
-  Yellowstone:
-    'https://rattwfjkxgqvxmxlybcz.supabase.co/storage/v1/object/public/whatsapp-images/home/yellowstone-bg.jpg',
-  Armor:
-    'https://rattwfjkxgqvxmxlybcz.supabase.co/storage/v1/object/public/whatsapp-images/home/armor-bg.jpg',
-  Mojave:
-    'https://rattwfjkxgqvxmxlybcz.supabase.co/storage/v1/object/public/whatsapp-images/home/mojave-desert.jpg',
-  Laredo:
-    'https://rattwfjkxgqvxmxlybcz.supabase.co/storage/v1/object/public/whatsapp-images/home/laredo-bg.jpg',
-  Sahara:
-    'https://rattwfjkxgqvxmxlybcz.supabase.co/storage/v1/object/public/whatsapp-images/home/sahara-bg.jpg',
+  Yellowstone: BG('yellowstone-bg.jpg'),
+  Armor: BG('armor-bg.jpg'),
+  Mojave: BG('mojave-desert.jpg'),
+  Laredo: BG('laredo-bg.jpg'),
+  Sahara: BG('sahara-bg.jpg'),
 };
 
 const DESCRIPTIONS = {
