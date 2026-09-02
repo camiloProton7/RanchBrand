@@ -1,8 +1,8 @@
 import {useState} from 'react';
 
 /**
- * Extras de conversión para la PDP: sellos de confianza + ayuda de tallas.
- * Solo aplica a chaquetas y camisetas (ropa con tallas).
+ * Extras de conversión para la PDP: sellos de confianza, ayuda de tallas,
+ * acordeón premium y bundle "Se compran juntos".
  */
 
 export function isApparel(productType = '', title = '') {
@@ -25,25 +25,21 @@ function suggestSize(weightKg, heightCm) {
   const meters = heightCm / 100;
   const imc = weightKg / (meters * meters);
 
-  // Talla base por estatura (promedio colombiano: ~1.70m hombres, ~1.57m mujeres)
   let base;
-  if (heightCm < 158) base = 0; // S
-  else if (heightCm < 165) base = 1; // M
-  else if (heightCm < 172) base = 2; // L
-  else if (heightCm < 179) base = 3; // XL
-  else base = 4; // XXL
+  if (heightCm < 158) base = 0;
+  else if (heightCm < 165) base = 1;
+  else if (heightCm < 172) base = 2;
+  else if (heightCm < 179) base = 3;
+  else base = 4;
 
-  // Ajuste por complexión (IMC)
   let adjust = 0;
-  if (imc < 21) adjust = -1; // delgado
-  else if (imc < 25) adjust = 0; // normal
-  else if (imc < 29) adjust = 1; // sobrepeso
-  else adjust = 2; // obesidad
+  if (imc < 21) adjust = -1;
+  else if (imc < 25) adjust = 0;
+  else if (imc < 29) adjust = 1;
+  else adjust = 2;
 
   const idx = Math.max(0, Math.min(SIZES.length - 1, base + adjust));
   const size = SIZES[idx];
-
-  // "Cerca del límite" → sugiere subir talla (prendas reducidas)
   const nearLimit = imc >= 23 && imc < 26;
 
   return {
@@ -172,5 +168,114 @@ export function SizeGuide() {
         </div>
       ) : null}
     </div>
+  );
+}
+
+/* ===== Acordeón premium (información de la prenda) ===== */
+
+const ACCORDION_SECTIONS = [
+  {key: 'desc', title: 'Descripción'},
+  {
+    key: 'warm',
+    title: 'Nivel de abrigo y cómo se usa',
+    body: 'Prenda de peso medio, ideal para climas frescos (12°–22°C). Úsala sola en días templados o en capas con una chaqueta ligera cuando baje la temperatura.',
+  },
+  {
+    key: 'materials',
+    title: 'Materiales y cuidado',
+    body: 'Confeccionada con materiales de alta calidad y costuras reforzadas. Lava a máquina con agua fría, no uses blanqueador y seca a la sombra para conservar el color y la forma.',
+  },
+  {
+    key: 'shipping',
+    title: 'Envíos, cambios y garantía',
+    body: 'Envío gratis a toda Colombia (2–5 días hábiles). Cambios fáciles dentro de los 30 días. Garantía de 6 meses por defectos de fabricación.',
+  },
+];
+
+export function ProductAccordion({description}) {
+  const [open, setOpen] = useState(0);
+
+  return (
+    <div className="trp-accordion">
+      {ACCORDION_SECTIONS.map((s, i) => (
+        <div key={s.key} className={`trp-acc-item${open === i ? ' is-open' : ''}`}>
+          <button
+            type="button"
+            className="trp-acc-head"
+            onClick={() => setOpen(open === i ? -1 : i)}
+            aria-expanded={open === i}
+          >
+            <span className="trp-acc-title">{s.title}</span>
+            <span className="trp-acc-icon" aria-hidden="true">
+              {open === i ? '−' : '+'}
+            </span>
+          </button>
+          <div className="trp-acc-body" aria-hidden={open !== i}>
+            <div className="trp-acc-content">
+              {i === 0 && description ? description : s.body}
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+/* ===== Bundle "Se compran juntos" ===== */
+
+export function BundleTogether({items, formatPrice, onAddPack}) {
+  const [checked, setChecked] = useState(() => items.map(() => true));
+
+  const toggle = (i) =>
+    setChecked((c) => c.map((v, j) => (j === i ? !v : v)));
+
+  const selected = items.filter((_, i) => checked[i]);
+  const total = selected.reduce((s, it) => s + (Number(it.price) || 0), 0);
+  const discount = Math.round(total * 0.1);
+  const final = total - discount;
+
+  return (
+    <section className="trp-bundle" aria-label="Se compran juntos">
+      <h2 className="trp-bundle-title">Se compran juntos</h2>
+      <p className="trp-bundle-subtitle">Llévatelos juntos y ahorra un 10%</p>
+
+      <div className="trp-bundle-items">
+        {items.map((it, i) => (
+          <label key={it.variantId || it.title} className="trp-bundle-item">
+            <input
+              type="checkbox"
+              checked={checked[i]}
+              onChange={() => toggle(i)}
+            />
+            <span className="trp-bundle-check" aria-hidden="true">
+              {checked[i] ? '✓' : ''}
+            </span>
+            {it.image ? (
+              <img className="trp-bundle-img" src={it.image} alt="" loading="lazy" />
+            ) : null}
+            <span className="trp-bundle-info">
+              <span className="trp-bundle-name">{it.title}</span>
+              <span className="trp-bundle-price">{formatPrice(it.price)}</span>
+            </span>
+          </label>
+        ))}
+      </div>
+
+      <div className="trp-bundle-summary">
+        <span className="trp-bundle-total-label">Total</span>
+        <s className="trp-bundle-total-orig">{formatPrice(total)}</s>
+        <strong className="trp-bundle-total-final">{formatPrice(final)}</strong>
+        <span className="trp-bundle-save">Ahorras {formatPrice(discount)}</span>
+      </div>
+
+      <button
+        type="button"
+        className="trp-bundle-cta"
+        onClick={() => onAddPack(selected)}
+        disabled={selected.length === 0}
+      >
+        Añadir el pack ({selected.length}) al carrito
+      </button>
+    </section>
   );
 }

@@ -1,6 +1,12 @@
 import {useMemo, useRef, useState} from 'react';
 import {Link, useLoaderData, useRouteLoaderData} from 'react-router';
-import {TrustBadges, SizeGuide, isApparel} from '~/components/ProductExtras';
+import {
+  TrustBadges,
+  SizeGuide,
+  isApparel,
+  ProductAccordion,
+  BundleTogether,
+} from '~/components/ProductExtras';
 import productStyles from '~/styles/product.css?url';
 
 export const meta = ({data}) => {
@@ -61,9 +67,12 @@ const RELATED_QUERY = `#graphql
             url(transform: {maxWidth: 600, preferredContentType: WEBP})
             altText
           }
-          priceRange { minVariantPrice { amount currencyCode } }
-        }
-      }
+          priceRange {
+            minVariantPrice { amount currencyCode }
+          }
+          variants(first: 1) {
+            nodes { id }
+          }
     }
   }
 `;
@@ -294,6 +303,31 @@ export default function ProductPage() {
     }, 650);
   };
 
+  const handleAddPack = (selectedItems) => {
+    const lines = selectedItems
+      .map((it) => it.variantId)
+      .filter(Boolean)
+      .map((id) => `${toNumericId(id)}:1`)
+      .join(',');
+    if (!lines) return;
+    window.location.href = `https://${SHOPIFY_DOMAIN}/cart/${lines}?discount=PACK10`;
+  };
+
+  const bundleItems = [
+    {
+      variantId: selectedVariant?.id,
+      title: product.title,
+      price,
+      image: allImages[0]?.url,
+    },
+    ...related.slice(0, 2).map((p) => ({
+      variantId: p.variants?.nodes?.[0]?.id,
+      title: p.title,
+      price: p.priceRange?.minVariantPrice?.amount,
+      image: p.featuredImage?.url,
+    })),
+  ];
+
   return (
     <div className="trp">
       {/* ===== Visor visual ===== */}
@@ -387,22 +421,7 @@ export default function ProductPage() {
 
         <span className="trp-tag">{isOut ? 'Agotado' : 'Edición limitada'}</span>
 
-        {product.description ? (
-          <p className="trp-desc">
-            {showFullDesc || product.description.length <= 160
-              ? product.description
-              : `${product.description.slice(0, 160)}…`}
-            {product.description.length > 160 ? (
-              <button
-                className="trp-read-more"
-                type="button"
-                onClick={() => setShowFullDesc((v) => !v)}
-              >
-                {showFullDesc ? ' Ver menos' : ' Ver más'}
-              </button>
-            ) : null}
-          </p>
-        ) : null}
+        <ProductAccordion description={product.description} />
 
         {optionNames.map((name) => {
           const values = Array.from(
@@ -476,32 +495,13 @@ export default function ProductPage() {
         </section>
       )}
 
-      {/* ===== Productos relacionados ===== */}
+      {/* ===== Bundle "Se compran juntos" ===== */}
       {related.length > 0 && (
-        <section className="trp-related">
-          <div className="trp-related-inner">
-            <h2 className="trp-related-title">Completa tu look</h2>
-            <div className="trp-related-grid">
-              {related.map((p) => (
-                <Link key={p.id} className="trp-related-card" to={`/products/${p.handle}`}>
-                  <div className="trp-related-media">
-                    {p.featuredImage?.url ? (
-                      <img
-                        src={p.featuredImage.url}
-                        alt={p.featuredImage.altText || p.title}
-                        loading="lazy"
-                      />
-                    ) : null}
-                  </div>
-                  <h3 className="trp-related-name">{p.title}</h3>
-                  <span className="trp-related-price">
-                    {formatPrice(p.priceRange?.minVariantPrice?.amount)}
-                  </span>
-                </Link>
-              ))}
-            </div>
-          </div>
-        </section>
+        <BundleTogether
+          items={bundleItems}
+          formatPrice={formatPrice}
+          onAddPack={handleAddPack}
+        />
       )}
 
       {/* ===== Barra de compra fija ===== */}
