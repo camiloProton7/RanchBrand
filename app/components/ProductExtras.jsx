@@ -305,9 +305,9 @@ export function RecommendedProduct({product, formatPrice, onAdd}) {
           <div className="trp-reco-price">
             <s className="trp-reco-price-orig">{formatPrice(price)}</s>
             <strong className="trp-reco-price-final">{formatPrice(final)}</strong>
+            <span className="trp-reco-badge">-10%</span>
           </div>
         </div>
-        <span className="trp-reco-badge">-10%</span>
         <span className="trp-reco-cta">Agregar al carrito</span>
       </a>
     </section>

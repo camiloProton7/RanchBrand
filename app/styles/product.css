@@ -189,12 +189,12 @@
 
 /* Atributos dentro del visor */
 .trp-attrs {
-  bottom: 20px;
   display: flex;
   flex-direction: column;
   gap: 6px;
   position: absolute;
   right: 16px;
+  top: 70px;
   z-index: 3;
 }
 
@@ -538,7 +538,9 @@
 
 /* ===== Barra de compra (sticky, en flujo) ===== */
 .trp-buybar {
-  background: #1a1a18;
+  background: rgba(26, 26, 24, 0.85);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   border-radius: 16px;
   bottom: 12px;
   display: flex;
@@ -1226,9 +1228,8 @@
 
 /* ===== Producto recomendado (un solo producto, descuento visible) ===== */
 .trp-reco {
-  margin: 32px auto;
-  max-width: 720px;
-  padding: 0 24px;
+  margin: 20px 0;
+  width: 100%;
 }
 
 .trp-reco-card {
@@ -1239,8 +1240,7 @@
   color: inherit;
   display: flex;
   gap: 14px;
-  padding: 14px;
-  position: relative;
+  padding: 14px 16px;
   text-decoration: none;
   transition: border-color 0.2s ease, transform 0.2s ease;
 }
@@ -1252,6 +1252,7 @@
 
 .trp-reco-img {
   border-radius: 12px;
+  flex-shrink: 0;
   height: 72px;
   object-fit: cover;
   width: 72px;
@@ -1279,16 +1280,20 @@
   font-size: 16px;
   font-weight: 700;
   margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .trp-reco-price {
   align-items: baseline;
   display: flex;
+  flex-wrap: wrap;
   gap: 8px;
 }
 
 .trp-reco-price-orig {
-  color: #a09a8a;
+  color: #c0392b;
   font-size: 13px;
 }
 
@@ -1302,20 +1307,18 @@
   background: #ffa41c;
   border-radius: 999px;
   color: #1a1a18;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 800;
-  padding: 5px 11px;
-  position: absolute;
-  right: 12px;
-  top: 12px;
+  padding: 3px 9px;
 }
 
 .trp-reco-cta {
   background: #ffa41c;
   border-radius: 999px;
   color: #1a1a18;
-  font-size: 11px;
+  flex-shrink: 0;
+  font-size: 12px;
   font-weight: 700;
-  padding: 8px 14px;
+  padding: 10px 16px;
   white-space: nowrap;
 }
