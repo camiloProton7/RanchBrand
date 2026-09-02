@@ -18,8 +18,8 @@ export const meta = () => [
 export function links() {
   return [
     {rel: 'stylesheet', href: homeStyles},
-    {rel: 'preload', as: 'video', href: '/home-video.mp4?v=3', type: 'video/mp4'},
-    {rel: 'preload', as: 'image', href: '/home-poster.webp?v=3'},
+    {rel: 'preload', as: 'video', href: '/home-video.mp4?v=4', type: 'video/mp4'},
+    {rel: 'preload', as: 'image', href: '/home-poster.webp?v=4'},
   ];
 }
 
