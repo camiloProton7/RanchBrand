@@ -2563,3 +2563,49 @@
 .tr-modal-ticket {
   color: #1a1a18;
 }
+
+/* ── Menú de categorías (debajo del video) ── */
+.tr-catmenu {
+  align-items: center;
+  background: #f5f0e6;
+  border-bottom: 1px solid rgba(11, 11, 9, 0.08);
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  padding: 16px 20px;
+}
+
+.tr-catmenu-nav {
+  display: flex;
+  gap: 28px;
+}
+
+.tr-catmenu-link {
+  color: #1a1a18;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: color 0.2s ease;
+}
+
+.tr-catmenu-link:hover {
+  color: #b34a2a;
+}
+
+.tr-catmenu-wa {
+  align-items: center;
+  background: #25d366;
+  border-radius: 50%;
+  color: #ffffff;
+  display: flex;
+  height: 36px;
+  justify-content: center;
+  width: 36px;
+  transition: transform 0.2s ease;
+}
+
+.tr-catmenu-wa:hover {
+  transform: scale(1.08);
+}

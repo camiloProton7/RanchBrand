@@ -103,6 +103,7 @@ export default function Home() {
   return (
     <div className="tr-home">
       <ScrollVideoHero logoSrc={logoSrc} />
+      <CategoryMenu />
       <TrustBar />
       <ProductScroll
         products={gorras}
@@ -160,6 +161,36 @@ function TrustBar() {
         ))}
       </div>
     </div>
+  );
+}
+
+function CategoryMenu() {
+  const items = [
+    {label: 'Gorras', href: '/collections/gorras-truckers'},
+    {label: 'Chaquetas', href: '/collections/chaquetas'},
+    {label: 'Camisetas', href: '/collections/camisetas'},
+  ];
+  return (
+    <section className="tr-catmenu" aria-label="Categorías">
+      <nav className="tr-catmenu-nav">
+        {items.map((item) => (
+          <Link key={item.href} className="tr-catmenu-link" to={item.href}>
+            {item.label}
+          </Link>
+        ))}
+      </nav>
+      <a
+        className="tr-catmenu-wa"
+        href="https://wa.me/573209157343"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="WhatsApp"
+      >
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+          <path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38a9.87 9.87 0 004.74 1.21c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0012.04 2zm5.83 14.12c-.25.7-1.45 1.33-2.02 1.38-.52.04-1.16.19-3.9-.81-3.3-1.3-5.38-4.67-5.54-4.89-.16-.22-1.32-1.76-1.32-3.36 0-1.6.84-2.39 1.14-2.71.3-.33.65-.41.87-.41.21 0 .44 0 .63.01.2.01.47-.08.74.57.27.65.92 2.25 1 2.41.08.16.13.35.03.57-.11.22-.16.35-.32.54-.16.19-.34.43-.48.57-.16.16-.33.34-.14.66.19.33.84 1.39 1.8 2.25 1.24 1.1 2.28 1.44 2.6 1.6.32.16.51.14.7-.08.19-.22.81-.94 1.02-1.27.21-.32.43-.27.72-.16.3.11 1.87.88 2.19 1.04.32.16.53.24.61.38.08.13.08.76-.17 1.45z" />
+        </svg>
+      </a>
+    </section>
   );
 }
 
