@@ -460,7 +460,8 @@ export default function ProductPage() {
 
   return (
     <div className="trp">
-      <div className="trp-gallery">
+      <div className="trp-media">
+        <div className="trp-gallery">
         {/* ===== Visor visual ===== */}
         <div className="trp-viewer">
         <div
@@ -528,7 +529,15 @@ export default function ProductPage() {
       )}
       </div>
 
-      {/* ===== Tarjeta flotante de rating ===== */}
+        <TrustBadges />
+
+        {isApparel(product.productType, product.title) ? (
+          <SizeGuide />
+        ) : null}
+      </div>
+
+      <div className="trp-side">
+        {/* ===== Tarjeta flotante de rating ===== */}
       <div className="trp-rating-pill">
         <span className="trp-rating-pill-star">★</span>
         <span className="trp-rating-pill-num">4.8</span>
@@ -630,12 +639,6 @@ export default function ProductPage() {
         />
       </div>
 
-      <TrustBadges />
-
-      {isApparel(product.productType, product.title) ? (
-        <SizeGuide />
-      ) : null}
-
       <div className="trp-info-bottom">
         <div className="trp-shipping-badge">
           <span aria-hidden="true">🚚</span> Envío gratis a toda Colombia
@@ -690,6 +693,7 @@ export default function ProductPage() {
             {added ? '✓ Añadido' : 'Agregar al carrito'}
           </button>
         </div>
+      </div>
       </div>
 
       {/* ===== Medios de pago (confianza) ===== */}
