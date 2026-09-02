@@ -569,29 +569,19 @@
 
 /* ===== Tarjeta premium (fondo + borde + sombra + hover segunda imagen) ===== */
 .tr-col-card-link {
-  background: #ffffff;
-  border: 1px solid rgba(11, 11, 9, 0.06);
-  border-radius: 16px;
-  box-shadow: 0 4px 20px rgba(11, 11, 9, 0.06);
   color: inherit;
-  display: block;
-  overflow: hidden;
-  padding: 10px;
+  display: flex;
+  flex-direction: column;
   text-decoration: none;
-  transition: box-shadow 0.35s ease, transform 0.35s ease;
-}
-
-.tr-col-card-link:hover {
-  box-shadow: 0 16px 36px rgba(11, 11, 9, 0.14);
-  transform: translateY(-4px);
 }
 
 .tr-col-card-media {
   aspect-ratio: 3 / 4;
   background: #e8e2d4;
-  border-radius: 12px;
+  border-radius: 16px;
   overflow: hidden;
   position: relative;
+  width: 100%;
 }
 
 .tr-col-card-img {
@@ -612,7 +602,7 @@
 }
 
 .tr-col-card-link:hover .tr-col-card-img {
-  transform: scale(1.05);
+  transform: scale(1.04);
 }
 
 .tr-col-offer {
@@ -631,7 +621,7 @@
 }
 
 .tr-col-card-info {
-  padding: 10px 4px 2px;
+  padding: 10px 2px 0;
 }
 
 .tr-col-card-name {

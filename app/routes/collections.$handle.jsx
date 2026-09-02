@@ -312,7 +312,7 @@ function CollectionCard({product, index, onQuickView}) {
       const center = rect.top + rect.height / 2;
       const viewportCenter = window.innerHeight / 2;
       const offset = (center - viewportCenter) / viewportCenter;
-      el.style.transform = `translate3d(0, ${(offset * -14).toFixed(2)}px, 0)`;
+      el.style.transform = `translate3d(0, ${(offset * -10).toFixed(2)}px, 0)`;
     };
     const onScroll = () => {
       if (!raf) raf = requestAnimationFrame(update);
