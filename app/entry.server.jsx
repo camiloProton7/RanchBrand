@@ -57,6 +57,13 @@ export default async function handleRequest(
   responseHeaders.set('Content-Security-Policy', cspHeader);
   /* ============================================================ */
 
+  // Headers de seguridad adicionales
+  responseHeaders.set('Strict-Transport-Security', 'max-age=31536000; includeSubDomains');
+  responseHeaders.set('X-Frame-Options', 'DENY');
+  responseHeaders.set('X-Content-Type-Options', 'nosniff');
+  responseHeaders.set('Referrer-Policy', 'strict-origin-when-cross-origin');
+  responseHeaders.set('Permissions-Policy', 'geolocation=(), microphone=(), camera=()');
+
   return new Response(body, {
     headers: responseHeaders,
     status: responseStatusCode,
