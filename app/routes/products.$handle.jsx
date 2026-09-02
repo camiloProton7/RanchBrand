@@ -165,6 +165,12 @@ function toNumericId(gid) {
 function getCheckoutUrl(variantId, qty = 1) {
   if (!variantId) return '#';
   const id = toNumericId(variantId);
+  return `https://${SHOPIFY_DOMAIN}/cart/${id}:${qty}?checkout=true`;
+}
+
+function getCartUrl(variantId, qty = 1) {
+  if (!variantId) return '#';
+  const id = toNumericId(variantId);
   return `https://${SHOPIFY_DOMAIN}/cart/${id}:${qty}`;
 }
 
@@ -301,12 +307,17 @@ export default function ProductPage() {
     }
   };
 
-  const handleAdd = () => {
+  const handleBuyNow = () => {
+    if (!selectedVariant?.id) return;
+    window.location.href = getCheckoutUrl(selectedVariant.id, qty);
+  };
+
+  const handleAddToCart = () => {
     if (!selectedVariant?.id) return;
     setAdded(true);
     setTimeout(() => {
-      window.location.href = getCheckoutUrl(selectedVariant.id, qty);
-    }, 650);
+      window.location.href = getCartUrl(selectedVariant.id, qty);
+    }, 450);
   };
 
   return (
@@ -402,6 +413,24 @@ export default function ProductPage() {
 
         <span className="trp-tag">{isOut ? 'Agotado' : 'Edición limitada'}</span>
 
+        {/* ===== Producto recomendado (antes de la descripción) ===== */}
+        {related.length > 0 && (
+          <RecommendedProduct
+            product={{
+              handle: related[0].handle,
+              title: related[0].title,
+              price: related[0].priceRange?.minVariantPrice?.amount,
+              image: related[0].featuredImage?.url,
+              variantId: related[0].variants?.nodes?.[0]?.id,
+            }}
+            formatPrice={formatPrice}
+            onAdd={() => {
+              const vid = related[0].variants?.nodes?.[0]?.id;
+              if (vid) window.location.href = getCartUrl(vid, 1);
+            }}
+          />
+        )}
+
         <ProductAccordion
           productType={product.productType}
           title={product.title}
@@ -473,29 +502,24 @@ export default function ProductPage() {
               </button>
             </div>
             <button
-              className={`trp-add ${added ? 'is-added' : ''}`}
+              className="trp-add"
               type="button"
-              onClick={handleAdd}
+              onClick={handleBuyNow}
               disabled={isOut}
             >
-              {added ? '✓ Añadido' : 'Comprar ahora'}
+              Comprar ahora
+            </button>
+            <button
+              className={`trp-add-cart ${added ? 'is-added' : ''}`}
+              type="button"
+              onClick={handleAddToCart}
+              disabled={isOut}
+            >
+              {added ? '✓ Añadido' : 'Agregar al carrito'}
             </button>
           </div>
         </div>
       </div>
-
-      {/* ===== Producto recomendado ===== */}
-      {related.length > 0 && (
-        <RecommendedProduct
-          product={{
-            handle: related[0].handle,
-            title: related[0].title,
-            price: related[0].priceRange?.minVariantPrice?.amount,
-            image: related[0].featuredImage?.url,
-          }}
-          formatPrice={formatPrice}
-        />
-      )}
 
       {/* ===== Reseñas (carrusel) ===== */}
       {reviews.length > 0 && (

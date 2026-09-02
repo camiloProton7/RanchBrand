@@ -39,21 +39,21 @@
   width: auto;
 }
 
-.tr-site-wa {
+.tr-site-cart {
   align-items: center;
-  color: #25d366;
+  color: #f4f0e7;
   display: flex;
   margin-left: auto;
   margin-right: 14px;
   transition: color 0.2s ease;
 }
 
-.tr-site-wa:hover {
-  color: #1ebe5d;
+.tr-site-cart:hover {
+  color: #f5b301;
 }
 
 .tr-site-menu-nav a.tr-site-menu-wa {
-  color: #25d366;
+  color: #f4f0e7;
 }
 
 .tr-site-nav {

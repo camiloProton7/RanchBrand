@@ -278,20 +278,29 @@ export function ProductAccordion({productType, title, description}) {
 
 /* ===== Producto recomendado (un solo producto) ===== */
 
-export function RecommendedProduct({product, formatPrice}) {
+export function RecommendedProduct({product, formatPrice, onAdd}) {
   if (!product) return null;
   const price = Number(product.price) || 0;
   const discount = Math.round(price * 0.1);
   const final = price - discount;
 
   return (
-    <section className="trp-reco" aria-label="Recomendado para ti">
-      <Link to={`/products/${product.handle}`} className="trp-reco-card">
+    <section className="trp-reco" aria-label="Llévalo con descuento">
+      <a
+        href={product.cartUrl || '#'}
+        className="trp-reco-card"
+        onClick={(e) => {
+          if (onAdd) {
+            e.preventDefault();
+            onAdd();
+          }
+        }}
+      >
         {product.image ? (
           <img className="trp-reco-img" src={product.image} alt="" loading="lazy" />
         ) : null}
         <div className="trp-reco-info">
-          <span className="trp-reco-tag">Recomendado para ti</span>
+          <span className="trp-reco-tag">Llévalo con descuento</span>
           <h3 className="trp-reco-title">{product.title}</h3>
           <div className="trp-reco-price">
             <s className="trp-reco-price-orig">{formatPrice(price)}</s>
@@ -299,10 +308,8 @@ export function RecommendedProduct({product, formatPrice}) {
           </div>
         </div>
         <span className="trp-reco-badge">-10%</span>
-        <span className="trp-reco-arrow" aria-hidden="true">
-          →
-        </span>
-      </Link>
+        <span className="trp-reco-cta">Agregar al carrito</span>
+      </a>
     </section>
   );
 }
