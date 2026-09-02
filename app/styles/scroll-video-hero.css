@@ -2189,9 +2189,8 @@
 }
 
 .tr-desert-photo-2 {
-  background: #15120e;
-  object-fit: contain;
-  object-position: center center;
+  object-fit: cover;
+  object-position: center 40%;
   opacity: 0;
   z-index: 2;
 }
