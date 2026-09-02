@@ -303,11 +303,23 @@ export default function ProductPage() {
 
   // Cambia la imagen activa cuando cambia la variante seleccionada (color/talla).
   useEffect(() => {
+    // 1. Si la variante tiene imagen asignada, úsala directamente.
     const img = selectedVariant?.image?.url;
-    if (!img) return;
-    const idx = allImages.findIndex((i) => i.url === img);
-    if (idx >= 0) setActiveImage(idx);
-  }, [selectedVariant, allImages]);
+    if (img) {
+      const idx = allImages.findIndex((i) => i.url === img);
+      if (idx >= 0) {
+        setActiveImage(idx);
+        return;
+      }
+    }
+    // 2. Heurística: mapear el índice del color seleccionado a la imagen.
+    if (colors.length > 1 && color) {
+      const colorIdx = colors.findIndex((c) => norm(c) === norm(color));
+      if (colorIdx >= 0 && colorIdx < allImages.length) {
+        setActiveImage(colorIdx);
+      }
+    }
+  }, [selectedVariant, allImages, colors, color]);
 
   if (!product) {
     return (
