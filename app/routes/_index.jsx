@@ -137,6 +137,7 @@ export default function Home() {
         collectionUrl="https://ranch.com.co/collections/camisetas"
         ariaLabel="Colección de camisetas"
       />
+      <ExchangeBanner />
       <DesertCampaign />
       <RanchStory />
       <ProductScroll
@@ -145,7 +146,6 @@ export default function Home() {
         ariaLabel="Más vendidos"
       />
       <UtilityLinks />
-      <ExchangeBanner />
       <ReviewsSection reviews={reviews} />
       <WhatsAppFloat />
     </div>

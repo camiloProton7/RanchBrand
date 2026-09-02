@@ -2658,58 +2658,56 @@
 
 /* ===== Banner de cambios (talla/color/referencia) ===== */
 .tr-exchange {
-  background: #1a1a18;
-  border-bottom: 1px solid rgba(245, 240, 230, 0.08);
-  border-top: 1px solid rgba(245, 240, 230, 0.08);
-  padding: 40px 24px;
+  background: #b34a2a;
+  padding: 48px 24px;
 }
 
 .tr-exchange-inner {
   align-items: center;
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 16px;
   margin: 0 auto;
   max-width: 720px;
   text-align: center;
 }
 
 .tr-exchange-icon {
-  font-size: 32px;
+  font-size: 36px;
 }
 
 .tr-exchange-title {
-  color: #f5f0e6;
+  color: #fff5ea;
   font-family: Georgia, 'Times New Roman', serif;
-  font-size: clamp(20px, 3vw, 26px);
+  font-size: clamp(24px, 4vw, 34px);
   font-weight: 400;
   margin: 0;
 }
 
 .tr-exchange-desc {
-  color: #c9c2b2;
-  font-size: 14px;
+  color: #f5dfcf;
+  font-size: 15px;
   line-height: 1.6;
   margin: 0;
 }
 
 .tr-exchange-cta {
-  background: #f5f0e6;
+  background: #fff5ea;
   border: none;
   border-radius: 999px;
-  color: #1a1a18;
+  color: #7a2e12;
   cursor: pointer;
   display: inline-block;
   font-family: inherit;
   font-size: 15px;
   font-weight: 700;
   margin-top: 4px;
-  padding: 13px 28px;
+  padding: 14px 30px;
   text-decoration: none;
   transition: background 0.2s ease, transform 0.2s ease;
 }
 
 .tr-exchange-cta:hover {
-  background: #ffa41c;
+  background: #ffffff;
   transform: translateY(-1px);
 }
