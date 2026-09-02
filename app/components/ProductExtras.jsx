@@ -79,6 +79,18 @@ export function TrustBadges() {
   );
 }
 
+export function PaymentTrust() {
+  return (
+    <div className="trp-payments" aria-label="Medios de pago seguros">
+      <span className="trp-payment-logo trp-payment-bold">Bold</span>
+      <span className="trp-payment-logo trp-payment-addi">addi</span>
+      <span className="trp-payment-logo trp-payment-secure">
+        <i aria-hidden="true">🔒</i> Pago seguro
+      </span>
+    </div>
+  );
+}
+
 export function SizeGuide() {
   const [weight, setWeight] = useState('');
   const [height, setHeight] = useState('');

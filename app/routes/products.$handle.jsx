@@ -6,6 +6,7 @@ import {
   isApparel,
   ProductAccordion,
   RecommendedProduct,
+  PaymentTrust,
 } from '~/components/ProductExtras';
 import productStyles from '~/styles/product.css?url';
 
@@ -538,6 +539,9 @@ export default function ProductPage() {
           </div>
         </div>
       </div>
+
+      {/* ===== Medios de pago (confianza) ===== */}
+      <PaymentTrust />
 
       {/* ===== Reseñas (carrusel) ===== */}
       {reviews.length > 0 && (
