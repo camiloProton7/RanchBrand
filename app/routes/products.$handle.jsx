@@ -308,21 +308,19 @@ export default function ProductPage() {
 
   // Cambia la imagen activa cuando cambia la variante seleccionada (color/talla).
   useEffect(() => {
-    // 1. Si la variante tiene imagen asignada, úsala directamente.
+    let idx = -1;
     const img = selectedVariant?.image?.url;
     if (img) {
-      const idx = allImages.findIndex((i) => i.url === img);
-      if (idx >= 0) {
-        setActiveImage(idx);
-        return;
-      }
+      idx = allImages.findIndex((i) => i.url === img);
     }
-    // 2. Heurística: mapear el índice del color seleccionado a la imagen.
-    if (colors.length > 1 && color) {
-      const colorIdx = colors.findIndex((c) => norm(c) === norm(color));
-      if (colorIdx >= 0 && colorIdx < allImages.length) {
-        setActiveImage(colorIdx);
-      }
+    if (idx < 0 && colors.length > 1 && color) {
+      idx = colors.findIndex((c) => norm(c) === norm(color));
+    }
+    if (idx >= 0 && idx < allImages.length) {
+      setActiveImage(idx);
+      const track = trackRef.current;
+      const slide = track?.children?.[idx];
+      if (slide) slide.scrollIntoView({behavior: 'smooth', inline: 'center'});
     }
   }, [selectedVariant, allImages, colors, color]);
 
@@ -399,15 +397,6 @@ export default function ProductPage() {
           ←
         </Link>
 
-        <button
-          className={`trp-fav ${fav ? 'is-active' : ''}`}
-          type="button"
-          aria-label="Añadir a favoritos"
-          onClick={() => setFav((v) => !v)}
-        >
-          {fav ? '♥' : '♡'}
-        </button>
-
         <div className="trp-gallery-indicator" aria-hidden="true">
           {String(activeImage + 1).padStart(2, '0')}
           <span> / </span>
@@ -475,16 +464,17 @@ export default function ProductPage() {
         {colors.length > 1 && (
           <div className="trp-option">
             <span className="trp-option-label">Color</span>
-            <div className="trp-option-values">
+            <div className="trp-option-values trp-option-colors">
               {colors.map((c) => (
                 <button
                   key={c}
                   type="button"
                   className={norm(color) === norm(c) ? 'is-active' : ''}
+                  style={{background: colorToHex(c)}}
                   onClick={() => setColor(c)}
-                >
-                  {c}
-                </button>
+                  aria-label={`Color ${c}`}
+                  title={c}
+                />
               ))}
             </div>
           </div>
