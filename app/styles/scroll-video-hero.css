@@ -2645,11 +2645,11 @@
     width: 100%;
   }
   .tr-catmenu-link {
-    font-size: 14px;
-    gap: 5px;
+    font-size: 12px;
+    gap: 3px;
   }
   .tr-catmenu-num {
-    font-size: 9px;
+    font-size: 8px;
   }
   .tr-catmenu-wa {
     display: none;
