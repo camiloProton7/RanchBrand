@@ -39,6 +39,23 @@
   width: auto;
 }
 
+.tr-site-wa {
+  align-items: center;
+  color: #25d366;
+  display: flex;
+  margin-left: auto;
+  margin-right: 14px;
+  transition: color 0.2s ease;
+}
+
+.tr-site-wa:hover {
+  color: #1ebe5d;
+}
+
+.tr-site-menu-nav a.tr-site-menu-wa {
+  color: #25d366;
+}
+
 .tr-site-nav {
   display: none;
   gap: 26px;

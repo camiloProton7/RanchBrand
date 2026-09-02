@@ -19,7 +19,7 @@ const COLLECTION_QUERY = `#graphql
         url
         altText
       }
-      products(first: 24) {
+      products(first: 48) {
         nodes {
           id
           title
