@@ -642,7 +642,7 @@ export default function ProductPage() {
         </div>
 
         <div className="trp-guarantee-badge">
-          <span aria-hidden="true">🛡️</span> Compra protegida · Garantía de devolución
+          <span aria-hidden="true">🛡️</span> Devolución garantizada 7 días
           <span className="trp-guarantee-cards">VISA · MASTERCARD · PSE</span>
         </div>
 
