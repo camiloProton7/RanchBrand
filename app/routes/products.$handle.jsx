@@ -174,6 +174,12 @@ function getCartUrl(variantId, qty = 1) {
   return `https://${SHOPIFY_DOMAIN}/cart/${id}:${qty}`;
 }
 
+function getBundleCartUrl(variantIds) {
+  if (!variantIds || !variantIds.length) return '#';
+  const items = variantIds.map((id) => `${toNumericId(id)}:1`).join(',');
+  return `https://${SHOPIFY_DOMAIN}/cart/${items}`;
+}
+
 function formatPrice(amount, currency = 'COP') {
   if (!amount) return '';
   return new Intl.NumberFormat('es-CO', {
@@ -427,8 +433,13 @@ export default function ProductPage() {
             }}
             formatPrice={formatPrice}
             onAdd={() => {
-              const vid = related[0].variants?.nodes?.[0]?.id;
-              if (vid) window.location.href = getCartUrl(vid, 1);
+              const currentVid = selectedVariant?.id;
+              const relatedVid = related[0]?.variants?.nodes?.[0]?.id;
+              if (currentVid && relatedVid) {
+                window.location.href = getBundleCartUrl([currentVid, relatedVid]);
+              } else if (relatedVid) {
+                window.location.href = getCartUrl(relatedVid, 1);
+              }
             }}
           />
         )}
