@@ -301,6 +301,14 @@ export default function ProductPage() {
     });
   }, [optionNames, variants, options]);
 
+  // Cambia la imagen activa cuando cambia la variante seleccionada (color/talla).
+  useEffect(() => {
+    const img = selectedVariant?.image?.url;
+    if (!img) return;
+    const idx = allImages.findIndex((i) => i.url === img);
+    if (idx >= 0) setActiveImage(idx);
+  }, [selectedVariant, allImages]);
+
   if (!product) {
     return (
       <div className="trp-empty">

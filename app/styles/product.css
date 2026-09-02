@@ -538,16 +538,17 @@
 
 /* ===== Barra de compra (sticky, en flujo) ===== */
 .trp-buybar {
-  background: rgba(26, 26, 24, 0.85);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border-radius: 16px;
+  background: rgba(22, 22, 20, 0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(244, 240, 231, 0.08);
+  border-radius: 18px;
   bottom: 12px;
   display: grid;
   gap: 10px;
   grid-template-columns: 1fr 1fr;
   margin-top: 24px;
-  padding: 12px;
+  padding: 14px;
   position: sticky;
   z-index: 20;
 }
@@ -613,21 +614,20 @@
   align-items: center;
   background: #ffa41c;
   border: none;
-  border-radius: 999px;
+  border-radius: 12px;
   color: #1a1a18;
   cursor: pointer;
   display: flex;
   font-size: 14px;
   font-weight: 700;
-  gap: 8px;
   justify-content: center;
-  padding: 12px 18px;
+  padding: 13px 16px;
   transition: background 0.2s ease, transform 0.15s ease;
   width: 100%;
 }
 
 .trp-add:hover {
-  background: #ff9900;
+  background: #ffb84d;
 }
 
 .trp-add:active {
@@ -646,16 +646,16 @@
 
 .trp-add-cart {
   align-items: center;
-  background: transparent;
-  border: 1px solid rgba(245, 240, 230, 0.3);
-  border-radius: 999px;
+  background: rgba(245, 240, 230, 0.06);
+  border: 1px solid rgba(245, 240, 230, 0.22);
+  border-radius: 12px;
   color: #f5f0e6;
   cursor: pointer;
   display: flex;
   font-size: 13px;
-  font-weight: 700;
+  font-weight: 600;
   justify-content: center;
-  padding: 12px 18px;
+  padding: 13px 16px;
   transition: background 0.2s ease, border-color 0.2s ease;
   width: 100%;
 }

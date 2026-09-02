@@ -80,10 +80,10 @@ export function TrustBadges() {
 }
 
 const PAYMENT_LOGOS = [
-  {src: '/logo-bold.jpg', alt: 'Bold'},
-  {src: '/logo-addi.jpg', alt: 'Addi'},
-  {src: '/logo-coordinadora.jpg', alt: 'Coordinadora'},
-  {src: '/logo-inter-rapidisimo.webp', alt: 'Inter Rapidísimo', invert: true},
+  {src: '/logo-bold.jpg', alt: 'Bold', h: 30},
+  {src: '/logo-addi.jpg', alt: 'Addi', h: 30},
+  {src: '/logo-coordinadora.jpg', alt: 'Coordinadora', h: 44},
+  {src: '/logo-inter-rapidisimo.webp', alt: 'Inter Rapidísimo', invert: true, h: 44},
 ];
 
 export function PaymentTrust() {
@@ -96,7 +96,7 @@ export function PaymentTrust() {
             key={i}
             className={`trp-payment-logo${logo.invert ? ' trp-payment-dark' : ''}`}
           >
-            <img src={logo.src} alt={logo.alt} loading="lazy" />
+            <img src={logo.src} alt={logo.alt} loading="lazy" style={{height: logo.h}} />
           </span>
         ))}
       </div>
