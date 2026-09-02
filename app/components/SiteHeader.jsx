@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useEffect, useRef, useState} from 'react';
 import {Link} from 'react-router';
 
 const MENU_ITEMS = [
@@ -14,10 +14,24 @@ const MENU_ITEMS = [
  */
 export default function SiteHeader({logoSrc}) {
   const [open, setOpen] = useState(false);
+  const [hidden, setHidden] = useState(false);
+  const lastY = useRef(0);
+
+  // Oculta el header al bajar el scroll (mobile) y lo muestra al subir.
+  useEffect(() => {
+    const onScroll = () => {
+      if (window.innerWidth > 860) return;
+      const y = window.scrollY;
+      setHidden(y > lastY.current && y > 140);
+      lastY.current = y;
+    };
+    window.addEventListener('scroll', onScroll, {passive: true});
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
 
   return (
     <>
-      <header className="tr-site-header">
+      <header className={`tr-site-header ${hidden ? 'is-hidden' : ''}`}>
         <Link className="tr-site-logo" to="/" aria-label="The Ranch">
           {logoSrc ? <img src={logoSrc} alt="" /> : <span>The Ranch</span>}
         </Link>
