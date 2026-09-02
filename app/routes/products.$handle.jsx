@@ -147,14 +147,16 @@ export async function loader({params, context}) {
     const rest = allReviews.filter((r) => !matching.includes(r));
     const reviews = [...matching, ...rest].slice(0, 8);
 
-    const related = (relatedData.collection?.products?.nodes || [])
-      .filter((p) => p.handle !== handle)
-      .slice(0, 4);
+    const relatedPool = (relatedData.collection?.products?.nodes || []).filter(
+      (p) => p.handle !== handle,
+    );
+    const related = relatedPool.slice(0, 4);
+    const similar = relatedPool.slice(0, 6);
 
-    return {product, reviews, related};
+    return {product, reviews, related, similar};
   } catch (error) {
     console.error(`Producto ${handle} falló`, error);
-    return {product: null, reviews: [], related: []};
+    return {product: null, reviews: [], related: [], similar: []};
   }
 }
 
@@ -223,7 +225,7 @@ function colorToHex(name) {
 const ATTRS = ['Edición limitada', 'Ajuste regulable'];
 
 export default function ProductPage() {
-  const {product, reviews, related} = useLoaderData();
+  const {product, reviews, related, similar} = useLoaderData();
   const rootData = useRouteLoaderData('root');
   const logoSrc = rootData?.header?.shop?.brand?.logo?.image?.url;
 
@@ -631,6 +633,73 @@ export default function ProductPage() {
           </div>
         </section>
       )}
+
+      {/* ===== Productos similares ===== */}
+      {similar.length > 0 && (
+        <section className="trp-similar">
+          <h2 className="trp-similar-title">También te puede gustar</h2>
+          <div className="trp-similar-grid">
+            {similar.map((p) => (
+              <Link key={p.id} className="trp-similar-card" to={`/products/${p.handle}`}>
+                <div className="trp-similar-media">
+                  {p.featuredImage?.url ? (
+                    <img
+                      src={p.featuredImage.url}
+                      alt={p.featuredImage.altText || p.title}
+                      loading="lazy"
+                    />
+                  ) : null}
+                </div>
+                <h3 className="trp-similar-name">{p.title}</h3>
+                <span className="trp-similar-price">
+                  {formatPrice(p.priceRange?.minVariantPrice?.amount)}
+                </span>
+              </Link>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {/* ===== Políticas ===== */}
+      <PolicyCards />
     </div>
+  );
+}
+
+function PolicyCards() {
+  const items = [
+    {
+      title: 'Garantía de calidad',
+      desc: 'Cada pieza pasa control de calidad. Si algo no te convence, te respondemos.',
+      icon: '🛡️',
+    },
+    {
+      title: 'Envíos garantizados',
+      desc: 'Despachamos a toda Colombia con seguimiento hasta tu puerta.',
+      icon: '🚚',
+    },
+    {
+      title: 'Pagos seguros',
+      desc: 'Bold, Addi y pasarelas cifradas. Tu dinero siempre protegido.',
+      icon: '🔒',
+    },
+    {
+      title: 'Atención al cliente',
+      desc: 'Te acompañamos antes, durante y después de tu compra.',
+      icon: '💬',
+    },
+  ];
+  return (
+    <section className="trp-policies">
+      {items.map((item) => (
+        <article key={item.title} className="trp-policy-card">
+          <span className="trp-policy-icon" aria-hidden="true">
+            {item.icon}
+          </span>
+          <h3 className="trp-policy-title">{item.title}</h3>
+          <p className="trp-policy-desc">{item.desc}</p>
+        </article>
+      ))}
+    </section>
   );
 }

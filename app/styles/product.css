@@ -1346,3 +1346,110 @@
     transform: translateX(-33.333%);
   }
 }
+
+/* ===== Productos similares ===== */
+.trp-similar {
+  margin: 40px 0;
+  padding: 0 20px;
+}
+
+.trp-similar-title {
+  color: #1a1a18;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 22px;
+  margin: 0 0 20px;
+}
+
+.trp-similar-grid {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.trp-similar-card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  text-decoration: none;
+}
+
+.trp-similar-media {
+  aspect-ratio: 3 / 4;
+  background: #f0ebe0;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.trp-similar-media img {
+  height: 100%;
+  object-fit: cover;
+  width: 100%;
+}
+
+.trp-similar-name {
+  color: #1a1a18;
+  font-size: 14px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.trp-similar-price {
+  color: #1a1a18;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+@media (min-width: 700px) {
+  .trp-similar-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1000px) {
+  .trp-similar-grid {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+}
+
+/* ===== Tarjetas de políticas ===== */
+.trp-policies {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin: 40px 0;
+  padding: 0 20px;
+}
+
+.trp-policy-card {
+  background: #1a1a18;
+  border: 1px solid rgba(244, 240, 231, 0.08);
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 20px;
+}
+
+.trp-policy-icon {
+  font-size: 26px;
+}
+
+.trp-policy-title {
+  color: #f5f0e6;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 16px;
+  margin: 0;
+}
+
+.trp-policy-desc {
+  color: #8a8274;
+  font-size: 13px;
+  line-height: 1.5;
+  margin: 0;
+}
+
+@media (min-width: 900px) {
+  .trp-policies {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
