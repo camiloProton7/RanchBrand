@@ -46,6 +46,7 @@ export function ScrollVideoHero({
       '(prefers-reduced-motion: reduce)',
     ).matches;
     let targetProgress = 0;
+    let targetFade = 0;
     let renderedProgress = 0;
     let frameId = 0;
 
@@ -59,6 +60,7 @@ export function ScrollVideoHero({
       const rect = section.getBoundingClientRect();
       const distance = Math.max(1, rect.height - window.innerHeight);
       targetProgress = clamp(-rect.top / distance);
+      targetFade = clamp(-rect.top / (rect.height || 1));
       queueFrame();
     };
 
@@ -77,9 +79,9 @@ export function ScrollVideoHero({
 
       const videoScale = 1 + progress * 0.1;
       const videoY = progress * -1.8;
-      // Fundido del video al final del scroll para una transición suave
-      // hacia la sección de gorras (fondo negro).
-      const videoFade = 1 - clamp((progress - 0.97) / 0.03);
+      // Fundido del video al final del scroll TOTAL del hero (no solo del
+      // scrubbing) para que no quede un hueco negro antes de la siguiente sección.
+      const videoFade = 1 - clamp((targetFade - 0.85) / 0.15);
 
       videoLayer.style.transform = `translate3d(0, ${videoY}%, 0) scale(${videoScale})`;
       videoLayer.style.opacity = String(videoFade);
