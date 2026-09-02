@@ -295,12 +295,10 @@ function CollectionCard({product, index, onAdd, onQuickView}) {
     return () => io.disconnect();
   }, []);
 
-  const isFeature = index === 0 || index % 6 === 3;
-
   return (
     <article
       ref={ref}
-      className={`tr-col-card${isFeature ? ' is-feature' : ''}`}
+      className="tr-col-card"
       style={{'--d': `${Math.min(index, 8) * 60}ms`}}
     >
       <Link to={`/products/${product.handle}`} className="tr-col-card-link">
