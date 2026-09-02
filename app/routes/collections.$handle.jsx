@@ -24,9 +24,16 @@ const COLLECTION_QUERY = `#graphql
           id
           title
           handle
+          description
           featuredImage {
             url(transform: {maxWidth: 700, preferredContentType: WEBP})
             altText
+          }
+          images(first: 2) {
+            nodes {
+              url(transform: {maxWidth: 700, preferredContentType: WEBP})
+              altText
+            }
           }
           priceRange {
             minVariantPrice { amount currencyCode }
@@ -63,12 +70,23 @@ function formatPrice(amount, currency = 'COP') {
   }).format(Number(amount));
 }
 
+function stripHtml(html) {
+  return (html || '').replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim();
+}
+
 const MARQUEE_ITEMS = [
   'ENVÍO GRATIS',
   'PROTECCIÓN UV',
   'HECHO EN COLOMBIA',
   'CAMBIOS FÁCILES',
   'PAGO SEGURO',
+];
+
+// Fotos de uso del producto (lifestyle). Reemplaza estas URLs por las tuyas.
+const LIFESTYLE_IMAGES = [
+  {url: 'https://rattwfjkxgqvxmxlybcz.supabase.co/storage/v1/object/public/whatsapp-images/home/yellowstone-bg.jpg', alt: 'Producto en uso'},
+  {url: 'https://rattwfjkxgqvxmxlybcz.supabase.co/storage/v1/object/public/whatsapp-images/home/mojave-desert.jpg', alt: 'Producto en uso'},
+  {url: 'https://rattwfjkxgqvxmxlybcz.supabase.co/storage/v1/object/public/whatsapp-images/home/laredo-bg.jpg', alt: 'Producto en uso'},
 ];
 
 export async function loader({params, context}) {
@@ -131,6 +149,16 @@ export default function CollectionPage() {
     else if (sort === 'name') list.sort((a, b) => a.title.localeCompare(b.title));
     return list;
   }, [products, activeColor, sort]);
+
+  // Intercala fotos de uso cada 3 productos.
+  const grid = [];
+  filtered.forEach((p, i) => {
+    grid.push({type: 'product', product: p, index: i});
+    if ((i + 1) % 3 === 0 && LIFESTYLE_IMAGES.length) {
+      const img = LIFESTYLE_IMAGES[Math.floor(i / 3) % LIFESTYLE_IMAGES.length];
+      grid.push({type: 'lifestyle', image: img, key: `lifestyle-${i}`});
+    }
+  });
 
   const addToCart = (variantId) => {
     if (!variantId) return;
@@ -205,15 +233,22 @@ export default function CollectionPage() {
 
       {/* ===== Grid ===== */}
       <div className="tr-col-grid">
-        {filtered.map((p, i) => (
-          <CollectionCard
-            key={p.id}
-            product={p}
-            index={i}
-            onAdd={addToCart}
-            onQuickView={setQuickView}
-          />
-        ))}
+        {grid.map((item) =>
+          item.type === 'product' ? (
+            <CollectionCard
+              key={item.product.id}
+              product={item.product}
+              index={item.index}
+              onAdd={addToCart}
+              onQuickView={setQuickView}
+            />
+          ) : (
+            <div key={item.key} className="tr-col-lifestyle">
+              <img src={item.image.url} alt={item.image.alt} loading="lazy" />
+              <span className="tr-col-lifestyle-tag">En uso</span>
+            </div>
+          ),
+        )}
       </div>
 
       {/* ===== Quick view modal ===== */}
@@ -271,7 +306,8 @@ export default function CollectionPage() {
 
 function CollectionCard({product, index, onAdd, onQuickView}) {
   const ref = useRef(null);
-  const image = product.featuredImage?.url;
+  const primary = product.featuredImage;
+  const second = product.images?.nodes?.[1];
   const price = product.priceRange?.minVariantPrice?.amount;
   const compare = product.compareAtPriceRange?.minVariantPrice?.amount;
   const hasDiscount = compare && Number(compare) > Number(price);
@@ -301,45 +337,61 @@ function CollectionCard({product, index, onAdd, onQuickView}) {
       className="tr-col-card"
       style={{'--d': `${Math.min(index, 8) * 60}ms`}}
     >
-      <Link to={`/products/${product.handle}`} className="tr-col-card-link">
-        <div className="tr-col-card-media">
-          {image ? <img src={image} alt={product.featuredImage?.altText || product.title} loading="lazy" /> : null}
-          <div className="tr-col-card-shade" />
-          {hasDiscount ? <span className="tr-col-badge">Oferta</span> : null}
-          <div className="tr-col-card-actions">
+      <Link className="tr-gorra-card" to={`/products/${product.handle}`}>
+        <div className="tr-gorra-media">
+          {primary?.url ? (
+            <img
+              className="tr-gorra-img"
+              src={primary.url}
+              alt={primary.altText || product.title}
+              loading="lazy"
+            />
+          ) : null}
+          {second?.url ? (
+            <img
+              className="tr-gorra-img tr-gorra-img-2"
+              src={second.url}
+              alt=""
+              loading="lazy"
+            />
+          ) : null}
+
+          <div className="tr-gorra-labels">
+            <span className="tr-badge">Premium</span>
+            <span className="tr-badge tr-badge-rating">
+              <i className="tr-star">★</i> 4.8
+            </span>
+          </div>
+
+          <div className="tr-gorra-pager" aria-hidden="true">
+            <span className="is-active" />
+            <span />
+            <span />
+            <span />
+          </div>
+        </div>
+
+        <div className="tr-gorra-body">
+          <h3 className="tr-gorra-name">{product.title}</h3>
+          <p className="tr-gorra-desc">{stripHtml(product.description)}</p>
+          <div className="tr-gorra-foot">
+            <span className="tr-gorra-price">
+              {formatPrice(price)}
+              {hasDiscount ? (
+                <s className="tr-gorra-compare">{formatPrice(compare)}</s>
+              ) : null}
+            </span>
             <button
               type="button"
-              className="tr-col-quick"
-              onClick={(e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                onAdd(variantId);
-              }}
-              aria-label={`Añadir ${product.title} al carrito`}
-            >
-              + Añadir
-            </button>
-            <button
-              type="button"
-              className="tr-col-view"
+              className="tr-gorra-cta"
               onClick={(e) => {
                 e.preventDefault();
                 e.stopPropagation();
                 onQuickView(product);
               }}
-              aria-label={`Vista rápida de ${product.title}`}
             >
-              Vista rápida
+              Comprar ahora <i aria-hidden="true">→</i>
             </button>
-          </div>
-        </div>
-        <div className="tr-col-card-info">
-          <h2 className="tr-col-card-title">{product.title}</h2>
-          <div className="tr-col-card-price">
-            <span className="tr-col-card-now">{formatPrice(price)}</span>
-            {hasDiscount ? (
-              <s className="tr-col-card-compare">{formatPrice(compare)}</s>
-            ) : null}
           </div>
         </div>
       </Link>
