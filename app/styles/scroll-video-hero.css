@@ -2662,7 +2662,9 @@
 
 /* ===== Banner de cambios (talla/color/referencia) ===== */
 .tr-exchange {
-  background: #b34a2a;
+  background: #f5f0e6;
+  border-bottom: 1px solid rgba(11, 11, 9, 0.08);
+  border-top: 1px solid rgba(11, 11, 9, 0.08);
   padding: 48px 24px;
 }
 
@@ -2681,7 +2683,7 @@
 }
 
 .tr-exchange-title {
-  color: #fff5ea;
+  color: #1a1a18;
   font-family: Georgia, 'Times New Roman', serif;
   font-size: clamp(24px, 4vw, 34px);
   font-weight: 400;
@@ -2689,17 +2691,17 @@
 }
 
 .tr-exchange-desc {
-  color: #f5dfcf;
+  color: #6b6457;
   font-size: 15px;
   line-height: 1.6;
   margin: 0;
 }
 
 .tr-exchange-cta {
-  background: #fff5ea;
+  background: #b34a2a;
   border: none;
   border-radius: 999px;
-  color: #7a2e12;
+  color: #fff5ea;
   cursor: pointer;
   display: inline-block;
   font-family: inherit;
@@ -2712,6 +2714,6 @@
 }
 
 .tr-exchange-cta:hover {
-  background: #ffffff;
+  background: #93391f;
   transform: translateY(-1px);
 }
