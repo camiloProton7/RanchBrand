@@ -606,7 +606,6 @@ const COLLECTION_QUERY = (handle) => `#graphql
               currencyCode
             }
           }
-          totalInventory
         }
       }
     }
