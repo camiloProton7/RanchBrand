@@ -82,13 +82,6 @@ const MARQUEE_ITEMS = [
   'PAGO SEGURO',
 ];
 
-// Fotos de uso del producto (lifestyle). Reemplaza estas URLs por las tuyas.
-const LIFESTYLE_IMAGES = [
-  {url: 'https://rattwfjkxgqvxmxlybcz.supabase.co/storage/v1/object/public/whatsapp-images/home/yellowstone-bg.jpg', alt: 'Producto en uso'},
-  {url: 'https://rattwfjkxgqvxmxlybcz.supabase.co/storage/v1/object/public/whatsapp-images/home/mojave-desert.jpg', alt: 'Producto en uso'},
-  {url: 'https://rattwfjkxgqvxmxlybcz.supabase.co/storage/v1/object/public/whatsapp-images/home/laredo-bg.jpg', alt: 'Producto en uso'},
-];
-
 export async function loader({params, context}) {
   const {storefront} = context;
   try {
@@ -149,16 +142,6 @@ export default function CollectionPage() {
     else if (sort === 'name') list.sort((a, b) => a.title.localeCompare(b.title));
     return list;
   }, [products, activeColor, sort]);
-
-  // Intercala fotos de uso cada 3 productos.
-  const grid = [];
-  filtered.forEach((p, i) => {
-    grid.push({type: 'product', product: p, index: i});
-    if ((i + 1) % 3 === 0 && LIFESTYLE_IMAGES.length) {
-      const img = LIFESTYLE_IMAGES[Math.floor(i / 3) % LIFESTYLE_IMAGES.length];
-      grid.push({type: 'lifestyle', image: img, key: `lifestyle-${i}`});
-    }
-  });
 
   const addToCart = (variantId) => {
     if (!variantId) return;
@@ -233,22 +216,15 @@ export default function CollectionPage() {
 
       {/* ===== Grid ===== */}
       <div className="tr-col-grid">
-        {grid.map((item) =>
-          item.type === 'product' ? (
-            <CollectionCard
-              key={item.product.id}
-              product={item.product}
-              index={item.index}
-              onAdd={addToCart}
-              onQuickView={setQuickView}
-            />
-          ) : (
-            <div key={item.key} className="tr-col-lifestyle">
-              <img src={item.image.url} alt={item.image.alt} loading="lazy" />
-              <span className="tr-col-lifestyle-tag">En uso</span>
-            </div>
-          ),
-        )}
+        {filtered.map((p, i) => (
+          <CollectionCard
+            key={p.id}
+            product={p}
+            index={i}
+            onAdd={addToCart}
+            onQuickView={setQuickView}
+          />
+        ))}
       </div>
 
       {/* ===== Quick view modal ===== */}
@@ -306,6 +282,7 @@ export default function CollectionPage() {
 
 function CollectionCard({product, index, onAdd, onQuickView}) {
   const ref = useRef(null);
+  const parallaxRef = useRef(null);
   const primary = product.featuredImage;
   const second = product.images?.nodes?.[1];
   const price = product.priceRange?.minVariantPrice?.amount;
@@ -331,14 +308,41 @@ function CollectionCard({product, index, onAdd, onQuickView}) {
     return () => io.disconnect();
   }, []);
 
+  // Parallax sutil: la tarjeta se desplaza levemente según su posición en el viewport.
+  useEffect(() => {
+    const el = parallaxRef.current;
+    if (!el) return;
+    let raf = 0;
+    const update = () => {
+      raf = 0;
+      const rect = el.getBoundingClientRect();
+      const center = rect.top + rect.height / 2;
+      const viewportCenter = window.innerHeight / 2;
+      const offset = (center - viewportCenter) / viewportCenter;
+      el.style.transform = `translate3d(0, ${(offset * -14).toFixed(2)}px, 0)`;
+    };
+    const onScroll = () => {
+      if (!raf) raf = requestAnimationFrame(update);
+    };
+    update();
+    window.addEventListener('scroll', onScroll, {passive: true});
+    window.addEventListener('resize', onScroll);
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('resize', onScroll);
+      if (raf) cancelAnimationFrame(raf);
+    };
+  }, []);
+
   return (
     <article
       ref={ref}
       className="tr-col-card"
       style={{'--d': `${Math.min(index, 8) * 60}ms`}}
     >
-      <Link className="tr-gorra-card" to={`/products/${product.handle}`}>
-        <div className="tr-gorra-media">
+      <div className="tr-col-parallax" ref={parallaxRef}>
+        <Link className="tr-gorra-card" to={`/products/${product.handle}`}>
+          <div className="tr-gorra-media">
           {primary?.url ? (
             <img
               className="tr-gorra-img"
@@ -394,7 +398,8 @@ function CollectionCard({product, index, onAdd, onQuickView}) {
             </button>
           </div>
         </div>
-      </Link>
+        </Link>
+      </div>
     </article>
   );
 }

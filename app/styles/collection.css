@@ -204,6 +204,11 @@
   transform: none;
 }
 
+.tr-col-parallax {
+  height: 100%;
+  will-change: transform;
+}
+
 /* ── Tarjeta de producto (igual al home, adaptada al grid) ── */
 .tr-col .tr-gorra-card {
   background: #f2efe7;
