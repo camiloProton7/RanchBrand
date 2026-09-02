@@ -45,11 +45,29 @@
   display: flex;
   margin-left: auto;
   margin-right: 14px;
+  position: relative;
   transition: color 0.2s ease;
 }
 
 .tr-site-cart:hover {
   color: #f5b301;
+}
+
+.tr-site-cart-count {
+  align-items: center;
+  background: #ffa41c;
+  border-radius: 999px;
+  color: #1a1a18;
+  display: flex;
+  font-size: 10px;
+  font-weight: 800;
+  height: 16px;
+  justify-content: center;
+  min-width: 16px;
+  padding: 0 4px;
+  position: absolute;
+  right: -8px;
+  top: -8px;
 }
 
 .tr-site-menu-nav a.tr-site-menu-wa {

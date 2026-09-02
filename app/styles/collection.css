@@ -596,12 +596,14 @@
   opacity: 0;
 }
 
-.tr-col-card-link:hover .tr-col-card-img-2 {
-  opacity: 1;
-}
+@media (hover: hover) {
+  .tr-col-card-link:hover .tr-col-card-img-2 {
+    opacity: 1;
+  }
 
-.tr-col-card-link:hover .tr-col-card-img {
-  transform: scale(1.04);
+  .tr-col-card-link:hover .tr-col-card-img {
+    transform: scale(1.04);
+  }
 }
 
 .tr-col-offer {

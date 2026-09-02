@@ -1,5 +1,6 @@
 import {useEffect, useRef, useState} from 'react';
 import {Link} from 'react-router';
+import {getCartCount, getCartUrl} from '~/lib/cart';
 
 const MENU_ITEMS = [
   {label: 'Gorras', href: '/collections/gorras-truckers'},
@@ -15,7 +16,19 @@ const MENU_ITEMS = [
 export default function SiteHeader({logoSrc}) {
   const [open, setOpen] = useState(false);
   const [hidden, setHidden] = useState(false);
+  const [count, setCount] = useState(0);
   const lastY = useRef(0);
+
+  useEffect(() => {
+    const update = () => setCount(getCartCount());
+    update();
+    window.addEventListener('ranch-cart-updated', update);
+    window.addEventListener('storage', update);
+    return () => {
+      window.removeEventListener('ranch-cart-updated', update);
+      window.removeEventListener('storage', update);
+    };
+  }, []);
 
   // Oculta el header al bajar el scroll (mobile) y lo muestra al subir.
   useEffect(() => {
@@ -47,12 +60,17 @@ export default function SiteHeader({logoSrc}) {
         <a
           className="tr-site-cart"
           href="https://1caf84-4.myshopify.com/cart"
+          onClick={(e) => {
+            e.preventDefault();
+            window.location.href = getCartUrl();
+          }}
           aria-label="Ver carrito"
         >
           <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
             <path d="M6 7h12l1 14H5L6 7z" />
             <path d="M9 7a3 3 0 0 1 6 0" />
           </svg>
+          {count > 0 ? <span className="tr-site-cart-count">{count}</span> : null}
         </a>
 
         <button
@@ -105,7 +123,11 @@ export default function SiteHeader({logoSrc}) {
             <a
               className="tr-site-menu-wa"
               href="https://1caf84-4.myshopify.com/cart"
-              onClick={() => setOpen(false)}
+              onClick={(e) => {
+                e.preventDefault();
+                setOpen(false);
+                window.location.href = getCartUrl();
+              }}
               style={{animationDelay: `${0.06 + MENU_ITEMS.length * 0.05}s`}}
             >
               <span className="tr-site-menu-num">

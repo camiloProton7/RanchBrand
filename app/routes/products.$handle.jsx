@@ -1,5 +1,6 @@
-import {useMemo, useRef, useState} from 'react';
+import {useEffect, useMemo, useRef, useState} from 'react';
 import {Link, useLoaderData, useRouteLoaderData} from 'react-router';
+import {addToCart} from '~/lib/cart';
 import {
   TrustBadges,
   SizeGuide,
@@ -323,10 +324,9 @@ export default function ProductPage() {
 
   const handleAddToCart = () => {
     if (!selectedVariant?.id) return;
+    addToCart(selectedVariant.id, qty);
     setAdded(true);
-    setTimeout(() => {
-      window.location.href = getCartUrl(selectedVariant.id, qty);
-    }, 450);
+    setTimeout(() => setAdded(false), 2000);
   };
 
   return (
