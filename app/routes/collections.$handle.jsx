@@ -28,6 +28,12 @@ const COLLECTION_QUERY = `#graphql
             url(transform: {maxWidth: 700, preferredContentType: WEBP})
             altText
           }
+          images(first: 2) {
+            nodes {
+              url(transform: {maxWidth: 700, preferredContentType: WEBP})
+              altText
+            }
+          }
           priceRange {
             minVariantPrice { amount currencyCode }
           }
@@ -272,6 +278,7 @@ function CollectionCard({product, index, onQuickView}) {
   const ref = useRef(null);
   const parallaxRef = useRef(null);
   const primary = product.featuredImage;
+  const second = product.images?.nodes?.[1];
   const price = product.priceRange?.minVariantPrice?.amount;
   const compare = product.compareAtPriceRange?.minVariantPrice?.amount;
   const hasDiscount = compare && Number(compare) > Number(price);
@@ -331,8 +338,17 @@ function CollectionCard({product, index, onQuickView}) {
           <div className="tr-col-card-media">
             {primary?.url ? (
               <img
+                className="tr-col-card-img"
                 src={primary.url}
                 alt={primary.altText || product.title}
+                loading="lazy"
+              />
+            ) : null}
+            {second?.url ? (
+              <img
+                className="tr-col-card-img tr-col-card-img-2"
+                src={second.url}
+                alt=""
                 loading="lazy"
               />
             ) : null}
