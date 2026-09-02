@@ -352,6 +352,9 @@ function CollectionCard({product, index, onQuickView}) {
                 loading="lazy"
               />
             ) : null}
+            <span className="tr-col-rating-badge">
+              <i>★</i> 4.8
+            </span>
             {hasDiscount ? <span className="tr-col-offer">Oferta</span> : null}
           </div>
           <div className="tr-col-card-info">
@@ -362,9 +365,6 @@ function CollectionCard({product, index, onQuickView}) {
                 {hasDiscount ? (
                   <s className="tr-col-card-compare">{formatPrice(compare)}</s>
                 ) : null}
-              </span>
-              <span className="tr-col-card-rating">
-                <i>★</i> 4.8
               </span>
             </div>
           </div>
