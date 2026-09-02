@@ -8,8 +8,8 @@ export const meta = ({data}) => {
   const collection = data?.collection;
   const title = collection?.title ? `${collection.title} — The Ranch` : 'Colección — The Ranch';
   const url = collection?.handle
-    ? `https://laredo.ranch.com.co/collections/${collection.handle}`
-    : 'https://laredo.ranch.com.co';
+    ? `https://ranch.com.co/collections/${collection.handle}`
+    : 'https://ranch.com.co';
   const description = collection?.description || 'Colección de The Ranch — Colombia.';
   return [
     {title},

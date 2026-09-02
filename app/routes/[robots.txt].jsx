@@ -3,7 +3,7 @@ export function loader() {
     'User-agent: *',
     'Allow: /',
     '',
-    'Sitemap: https://laredo.ranch.com.co/sitemap.xml',
+    'Sitemap: https://ranch.com.co/sitemap.xml',
   ].join('\n');
 
   return new Response(content, {

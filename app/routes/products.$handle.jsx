@@ -17,8 +17,8 @@ export const meta = ({data}) => {
   const title = product?.title ? `${product.title} — The Ranch` : 'Producto — The Ranch';
   const description = product?.description?.slice(0, 160) || 'The Ranch — Colombia';
   const url = product?.handle
-    ? `https://laredo.ranch.com.co/products/${product.handle}`
-    : 'https://laredo.ranch.com.co';
+    ? `https://ranch.com.co/products/${product.handle}`
+    : 'https://ranch.com.co';
   const image = product?.featuredImage?.url || product?.images?.nodes?.[0]?.url;
   const items = [
     {title},
@@ -50,7 +50,7 @@ export const meta = ({data}) => {
           priceCurrency: currency,
           price: price,
           availability: 'https://schema.org/InStock',
-          url: `https://laredo.ranch.com.co/products/${product.handle}`,
+          url: `https://ranch.com.co/products/${product.handle}`,
         },
       },
     });
