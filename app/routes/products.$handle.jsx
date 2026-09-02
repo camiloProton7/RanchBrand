@@ -73,6 +73,8 @@ const RELATED_QUERY = `#graphql
           variants(first: 1) {
             nodes { id }
           }
+        }
+      }
     }
   }
 `;
