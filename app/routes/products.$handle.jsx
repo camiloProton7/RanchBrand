@@ -1,5 +1,6 @@
 import {useMemo, useRef, useState} from 'react';
 import {Link, useLoaderData, useRouteLoaderData} from 'react-router';
+import {TrustBadges, SizeGuide, isApparel} from '~/components/ProductExtras';
 import productStyles from '~/styles/product.css?url';
 
 export const meta = ({data}) => {
@@ -21,6 +22,8 @@ const PRODUCT_QUERY = `#graphql
       title
       handle
       description
+      productType
+      tags
       featuredImage {
         url(transform: {maxWidth: 900, preferredContentType: WEBP})
         altText
@@ -431,6 +434,13 @@ export default function ProductPage() {
         <div className={`trp-stock ${isOut ? 'is-out' : ''}`}>
           {isOut ? 'Agotado' : '⚡ Últimas unidades disponibles'}
         </div>
+
+        {isApparel(product.productType, product.title) ? (
+          <>
+            <TrustBadges />
+            <SizeGuide />
+          </>
+        ) : null}
       </div>
 
       {/* ===== Reseñas (carrusel) ===== */}

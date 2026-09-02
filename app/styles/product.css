@@ -693,3 +693,226 @@
     padding: 40px 0 16px;
   }
 }
+
+/* ===== Sellos de confianza (chaquetas y camisetas) ===== */
+.trp-trust {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: repeat(2, 1fr);
+  margin-top: 22px;
+}
+
+.trp-trust-item {
+  align-items: center;
+  background: rgba(11, 11, 9, 0.04);
+  border: 1px solid rgba(11, 11, 9, 0.08);
+  border-radius: 12px;
+  display: flex;
+  gap: 10px;
+  padding: 12px;
+}
+
+.trp-trust-icon {
+  font-size: 20px;
+}
+
+.trp-trust-text {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
+}
+
+.trp-trust-title {
+  color: #1a1a18;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.trp-trust-desc {
+  color: #8a8274;
+  font-size: 11px;
+}
+
+/* ===== Ayuda de tallas ===== */
+.trp-size-guide {
+  background: #ffffff;
+  border: 1px solid rgba(11, 11, 9, 0.08);
+  border-radius: 16px;
+  margin-top: 22px;
+  padding: 20px;
+}
+
+.trp-size-head {
+  align-items: flex-start;
+  display: flex;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.trp-size-icon {
+  font-size: 26px;
+}
+
+.trp-size-title {
+  color: #1a1a18;
+  font-size: 16px;
+  font-weight: 700;
+  margin: 0;
+}
+
+.trp-size-subtitle {
+  color: #6b6558;
+  font-size: 12px;
+  line-height: 1.4;
+  margin: 2px 0 0;
+}
+
+.trp-size-fields {
+  display: flex;
+  gap: 10px;
+}
+
+.trp-size-field {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.trp-size-field span {
+  color: #5a554a;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.trp-size-field input {
+  background: #faf8f2;
+  border: 1px solid rgba(26, 26, 24, 0.16);
+  border-radius: 10px;
+  color: #1a1a18;
+  font-size: 15px;
+  padding: 12px 14px;
+  width: 100%;
+}
+
+.trp-size-field input:focus {
+  border-color: #5a6b3c;
+  outline: none;
+}
+
+.trp-size-cta {
+  background: #1a1a18;
+  border: none;
+  border-radius: 999px;
+  color: #f5f0e6;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 700;
+  margin-top: 14px;
+  padding: 13px 20px;
+  width: 100%;
+}
+
+.trp-size-cta:hover {
+  background: #2a2a26;
+}
+
+.trp-size-error {
+  color: #b34a2a;
+  font-size: 12px;
+  font-weight: 600;
+  margin: 10px 0 0;
+}
+
+.trp-size-result {
+  margin-top: 16px;
+}
+
+.trp-size-main {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 16px 0;
+}
+
+.trp-size-label {
+  color: #6b6558;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.trp-size-value {
+  color: #1a1a18;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 56px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.trp-size-fit {
+  display: grid;
+  gap: 8px;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.trp-size-fit-item {
+  align-items: center;
+  background: #faf8f2;
+  border: 1px solid rgba(26, 26, 24, 0.12);
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: 12px 8px;
+}
+
+.trp-size-fit-item.is-active {
+  background: #1a1a18;
+  border-color: #1a1a18;
+}
+
+.trp-size-fit-name {
+  color: #8a8274;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.trp-size-fit-item.is-active .trp-size-fit-name {
+  color: #f5f0e6;
+}
+
+.trp-size-fit-size {
+  color: #1a1a18;
+  font-size: 22px;
+  font-weight: 800;
+}
+
+.trp-size-fit-item.is-active .trp-size-fit-size {
+  color: #f5f0e6;
+}
+
+.trp-size-fit-desc {
+  color: #8a8274;
+  font-size: 10px;
+}
+
+.trp-size-fit-item.is-active .trp-size-fit-desc {
+  color: #c9c2b2;
+}
+
+.trp-size-note {
+  background: rgba(245, 179, 1, 0.14);
+  border-radius: 10px;
+  color: #5a554a;
+  font-size: 12px;
+  line-height: 1.5;
+  margin: 12px 0 0;
+  padding: 10px 12px;
+}
