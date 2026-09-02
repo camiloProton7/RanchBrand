@@ -121,7 +121,6 @@ export default function Home() {
         products={hotRanch}
         collectionUrl="https://ranch.com.co/collections/hot-ranch"
         ariaLabel="Más vendidos"
-        title="Más vendidos"
       />
       <UtilityLinks />
       <ReviewsSection reviews={reviews} />
