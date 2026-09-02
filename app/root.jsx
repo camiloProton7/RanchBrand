@@ -12,7 +12,6 @@ import {
   ScrollRestoration,
   useLoaderData,
 } from 'react-router';
-import favicon from '~/assets/favicon.svg';
 import {HEADER_QUERY} from '~/lib/fragments';
 import resetStyles from '~/styles/reset.css?url';
 import appStyles from '~/styles/app.css?url';
@@ -44,7 +43,7 @@ export function links() {
       rel: 'preconnect',
       href: 'https://shop.app',
     },
-    {rel: 'icon', type: 'image/svg+xml', href: favicon},
+    {rel: 'icon', type: 'image/gif', href: '/favicon.gif'},
     {rel: 'stylesheet', href: siteHeaderStyles},
     {rel: 'stylesheet', href: footerStyles},
   ];
