@@ -489,7 +489,7 @@ export default function ProductPage() {
           </>
         ) : null}
 
-        {/* ===== Barra de compra ===== */}
+        {/* ===== Barra de compra (grid 2x2) ===== */}
         <div className="trp-buybar">
           <div className="trp-buybar-price">
             <span className="trp-buybar-price-now">{formatPrice(totalPrice)}</span>
@@ -497,6 +497,14 @@ export default function ProductPage() {
               <s className="trp-buybar-price-compare">{formatPrice(totalCompare)}</s>
             ) : null}
           </div>
+          <button
+            className="trp-add"
+            type="button"
+            onClick={handleBuyNow}
+            disabled={isOut}
+          >
+            Comprar ahora
+          </button>
           <div className="trp-qty" aria-label="Cantidad">
             <button
               type="button"
@@ -514,14 +522,6 @@ export default function ProductPage() {
               +
             </button>
           </div>
-          <button
-            className="trp-add"
-            type="button"
-            onClick={handleBuyNow}
-            disabled={isOut}
-          >
-            Comprar ahora
-          </button>
           <button
             className={`trp-add-cart ${added ? 'is-added' : ''}`}
             type="button"
