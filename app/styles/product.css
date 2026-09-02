@@ -651,8 +651,10 @@
   width: 100%;
 }
 
-.trp-add:hover {
-  background: #ffb84d;
+@media (hover: hover) {
+  .trp-add:hover {
+    background: #ffb84d;
+  }
 }
 
 .trp-add:active {
@@ -687,9 +689,11 @@
   width: 100%;
 }
 
-.trp-add-cart:hover {
-  background: rgba(245, 240, 230, 0.08);
-  border-color: rgba(245, 240, 230, 0.5);
+@media (hover: hover) {
+  .trp-add-cart:hover {
+    background: rgba(245, 240, 230, 0.08);
+    border-color: rgba(245, 240, 230, 0.5);
+  }
 }
 
 .trp-add-cart.is-added {
