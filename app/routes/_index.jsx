@@ -1,5 +1,5 @@
 import {Link, useLoaderData, useRouteLoaderData} from 'react-router';
-import {useEffect, useRef} from 'react';
+import {useEffect, useRef, useState} from 'react';
 import {ScrollVideoHero} from '~/components/ScrollVideoHero';
 import ChaquetaHero from '~/components/ChaquetaHero';
 import DesertCampaign from '~/components/DesertCampaign';
@@ -187,34 +187,171 @@ function TrustBar() {
 }
 
 function ExchangeBanner() {
-  const waUrl =
-    'https://wa.me/573502712645?text=' +
-    encodeURIComponent(
-      'Hola, quiero solicitar un cambio de talla, color o referencia',
-    );
+  const [open, setOpen] = useState(false);
   return (
-    <section className="tr-exchange" aria-label="Cambios y devoluciones">
-      <div className="tr-exchange-inner">
-        <span className="tr-exchange-icon" aria-hidden="true">🔄</span>
-        <div className="tr-exchange-text">
-          <h2 className="tr-exchange-title">
-            ¿Cambio de talla, color o referencia?
-          </h2>
-          <p className="tr-exchange-desc">
-            Sin complicaciones. Te cambiamos tu pedido por la talla, color o
-            referencia que necesites.
-          </p>
+    <>
+      <section className="tr-exchange" aria-label="Cambios y devoluciones">
+        <div className="tr-exchange-inner">
+          <span className="tr-exchange-icon" aria-hidden="true">🔄</span>
+          <div className="tr-exchange-text">
+            <h2 className="tr-exchange-title">
+              ¿Cambio de talla, color o referencia?
+            </h2>
+            <p className="tr-exchange-desc">
+              Sin complicaciones. Te cambiamos tu pedido por la talla, color o
+              referencia que necesites.
+            </p>
+          </div>
+          <button
+            className="tr-exchange-cta"
+            type="button"
+            onClick={() => setOpen(true)}
+          >
+            Solicitar cambio
+          </button>
         </div>
-        <a
-          className="tr-exchange-cta"
-          href={waUrl}
-          target="_blank"
-          rel="noopener noreferrer"
+      </section>
+      {open ? <ExchangeModal onClose={() => setOpen(false)} /> : null}
+    </>
+  );
+}
+
+function ExchangeModal({onClose}) {
+  const [status, setStatus] = useState('idle'); // idle | sending | done | error
+  const [ticketNumber, setTicketNumber] = useState('');
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const fd = new FormData(e.currentTarget);
+    setStatus('sending');
+    try {
+      const body = new URLSearchParams();
+      body.append('name', fd.get('name') || '');
+      body.append('phone', fd.get('phone') || '');
+      body.append('orderNumber', fd.get('orderNumber') || '');
+      body.append('reason', fd.get('reason') || '');
+      body.append('message', fd.get('message') || '');
+
+      const res = await fetch('/api/exchange', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+        body: body.toString(),
+      });
+      const data = await res.json();
+      if (data.ok) {
+        setTicketNumber(data.ticketNumber);
+        setStatus('done');
+      } else {
+        setStatus('error');
+      }
+    } catch (err) {
+      setStatus('error');
+    }
+  };
+
+  const close = () => {
+    if (status === 'sending') return;
+    onClose();
+  };
+
+  return (
+    <div
+      className="tr-modal"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Solicitar cambio"
+      onClick={(e) => {
+        if (e.target === e.currentTarget) close();
+      }}
+    >
+      <div className="tr-modal-panel">
+        <button
+          type="button"
+          className="tr-modal-close"
+          onClick={close}
+          aria-label="Cerrar"
         >
-          Solicitar cambio
-        </a>
+          ×
+        </button>
+
+        {status === 'done' ? (
+          <div className="tr-modal-success">
+            <span className="tr-modal-success-icon" aria-hidden="true">
+              ✓
+            </span>
+            <h3 className="tr-modal-success-title">¡Solicitud de cambio recibida!</h3>
+            <p className="tr-modal-success-text">
+              Te contactaremos pronto para coordinar el cambio.
+              {ticketNumber ? (
+                <>
+                  {' '}
+                  Tu ticket:{' '}
+                  <strong className="tr-modal-ticket">{ticketNumber}</strong>.
+                </>
+              ) : null}
+            </p>
+            <button type="button" className="tr-modal-button" onClick={close}>
+              Cerrar
+            </button>
+          </div>
+        ) : (
+          <form className="tr-modal-form" onSubmit={handleSubmit}>
+            <h3 className="tr-modal-title">Solicitar cambio</h3>
+            <p className="tr-modal-subtitle">
+              Déjanos tus datos y coordinamos el cambio de tu pedido.
+            </p>
+
+            <label className="tr-modal-field">
+              <span className="tr-modal-label">Nombre *</span>
+              <input name="name" required autoComplete="name" />
+            </label>
+
+            <label className="tr-modal-field">
+              <span className="tr-modal-label">Teléfono / WhatsApp *</span>
+              <input name="phone" type="tel" required autoComplete="tel" />
+            </label>
+
+            <label className="tr-modal-field">
+              <span className="tr-modal-label">Número de pedido *</span>
+              <input name="orderNumber" required placeholder="Ej. #1024" />
+            </label>
+
+            <label className="tr-modal-field">
+              <span className="tr-modal-label">Razón del cambio *</span>
+              <select name="reason" required defaultValue="">
+                <option value="" disabled>
+                  Selecciona una razón
+                </option>
+                <option>Talla</option>
+                <option>Color</option>
+                <option>Referencia</option>
+                <option>Defecto del producto</option>
+                <option>Otro</option>
+              </select>
+            </label>
+
+            <label className="tr-modal-field">
+              <span className="tr-modal-label">Detalles adicionales</span>
+              <textarea name="message" rows={3} />
+            </label>
+
+            {status === 'error' ? (
+              <p className="tr-modal-error">
+                No pudimos enviar tu solicitud. Intenta de nuevo.
+              </p>
+            ) : null}
+
+            <button
+              type="submit"
+              className="tr-modal-button"
+              disabled={status === 'sending'}
+            >
+              {status === 'sending' ? 'Enviando...' : 'Enviar solicitud'}
+            </button>
+          </form>
+        )}
       </div>
-    </section>
+    </div>
   );
 }
 

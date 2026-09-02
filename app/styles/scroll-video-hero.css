@@ -2695,9 +2695,12 @@
 
 .tr-exchange-cta {
   background: #f5f0e6;
+  border: none;
   border-radius: 999px;
   color: #1a1a18;
+  cursor: pointer;
   display: inline-block;
+  font-family: inherit;
   font-size: 15px;
   font-weight: 700;
   margin-top: 4px;

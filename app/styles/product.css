@@ -265,7 +265,7 @@
 .trp-title {
   color: #1a1a18;
   font-family: Georgia, 'Times New Roman', serif;
-  font-size: clamp(30px, 8vw, 44px);
+  font-size: clamp(26px, 7vw, 38px);
   font-weight: 700;
   letter-spacing: -0.01em;
   line-height: 1.02;
@@ -809,8 +809,8 @@
     grid-row: 1;
     aspect-ratio: 4 / 5;
     margin: 0 auto;
-    max-height: 66vh;
-    max-width: calc(66vh * 4 / 5);
+    max-height: 78vh;
+    max-width: calc(78vh * 4 / 5);
     width: auto;
   }
 
@@ -832,6 +832,10 @@
     grid-column: 2;
     grid-row: 2;
     padding: 16px 0 0;
+  }
+
+  .trp-title {
+    font-size: 34px;
   }
 
   .trp-buybar {
