@@ -239,6 +239,9 @@ export function ScrollVideoHero({
 
       <div className="tr-scroll-stage">
         <div ref={videoLayerRef} className="tr-video-layer" aria-hidden="true">
+          {!isVideoReady ? (
+            <img className="tr-video-poster" src={posterSrc} alt="" />
+          ) : null}
           <video
             ref={videoRef}
             className={`tr-scroll-video ${isVideoReady ? 'is-ready' : ''}`}
