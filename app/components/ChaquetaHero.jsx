@@ -196,6 +196,7 @@ export default function ChaquetaHero({products}) {
           className="tr-chaqueta-hero-arrow tr-chaqueta-hero-prev"
           type="button"
           onClick={prev}
+          onPointerDown={(e) => e.stopPropagation()}
           aria-label="Anterior"
         >
           ‹
@@ -204,6 +205,7 @@ export default function ChaquetaHero({products}) {
           className="tr-chaqueta-hero-arrow tr-chaqueta-hero-next"
           type="button"
           onClick={next}
+          onPointerDown={(e) => e.stopPropagation()}
           aria-label="Siguiente"
         >
           ›

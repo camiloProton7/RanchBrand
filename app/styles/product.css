@@ -806,7 +806,7 @@
   .trp-viewer {
     border-radius: 28px;
     grid-column: 1;
-    grid-row: 1 / span 2;
+    grid-row: 1;
     aspect-ratio: 4 / 5;
     margin: 0 auto;
     max-height: 66vh;
@@ -816,7 +816,8 @@
 
   .trp-thumbs {
     grid-column: 1;
-    grid-row: 3;
+    grid-row: 2;
+    justify-self: center;
     padding: 14px 0 0;
   }
 

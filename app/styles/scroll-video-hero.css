@@ -1970,6 +1970,7 @@
   margin: 8px auto 0;
   max-width: 520px;
   position: relative;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
   z-index: 1;
 }
 
