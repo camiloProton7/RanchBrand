@@ -62,6 +62,16 @@ export function getCartUrl() {
   return `https://${SHOPIFY_DOMAIN}/cart/${items}`;
 }
 
+// Genera la URL del carrito con varios productos + cupón de descuento opcional.
+export function getBundleCartUrl(variantIds, discountCode) {
+  const items = variantIds.map((vid) => `${toNumericId(vid)}:1`).join(',');
+  const cartPath = `/cart/${items}`;
+  if (discountCode) {
+    return `https://${SHOPIFY_DOMAIN}/discount/${discountCode}?redirect=${cartPath}`;
+  }
+  return `https://${SHOPIFY_DOMAIN}${cartPath}`;
+}
+
 export function buyNow(variantId, qty = 1) {
   const id = toNumericId(variantId);
   if (!id) return;

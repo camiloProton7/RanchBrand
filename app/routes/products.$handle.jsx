@@ -217,10 +217,14 @@ function getCartUrl(variantId, qty = 1) {
   return `https://${SHOPIFY_DOMAIN}/cart/${id}:${qty}`;
 }
 
-function getBundleCartUrl(variantIds) {
+function getBundleCartUrl(variantIds, discountCode) {
   if (!variantIds || !variantIds.length) return '#';
   const items = variantIds.map((id) => `${toNumericId(id)}:1`).join(',');
-  return `https://${SHOPIFY_DOMAIN}/cart/${items}`;
+  const cartPath = `/cart/${items}`;
+  if (discountCode) {
+    return `https://${SHOPIFY_DOMAIN}/discount/${discountCode}?redirect=${cartPath}`;
+  }
+  return `https://${SHOPIFY_DOMAIN}${cartPath}`;
 }
 
 function formatPrice(amount, currency = 'COP') {
@@ -599,9 +603,9 @@ export default function ProductPage() {
               const currentVid = selectedVariant?.id;
               const relatedVid = related[0]?.variants?.nodes?.[0]?.id;
               if (currentVid && relatedVid) {
-                window.location.href = getBundleCartUrl([currentVid, relatedVid]);
+                window.location.href = getBundleCartUrl([currentVid, relatedVid], 'COMBO10');
               } else if (relatedVid) {
-                window.location.href = getCartUrl(relatedVid, 1);
+                window.location.href = getBundleCartUrl([relatedVid], 'COMBO10');
               }
             }}
           />
