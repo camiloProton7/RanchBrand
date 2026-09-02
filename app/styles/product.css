@@ -714,7 +714,10 @@
   }
 
   .trp-reviews,
-  .trp-related {
+  .trp-related,
+  .trp-payments,
+  .trp-similar,
+  .trp-policies {
     grid-column: 1 / -1;
   }
 

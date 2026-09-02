@@ -62,6 +62,7 @@
   display: block;
   height: 100%;
   object-fit: cover;
+  object-position: center 30%;
   opacity: 0;
   transition: opacity 500ms ease;
   width: 100%;
