@@ -24,16 +24,9 @@ const COLLECTION_QUERY = `#graphql
           id
           title
           handle
-          description
           featuredImage {
             url(transform: {maxWidth: 700, preferredContentType: WEBP})
             altText
-          }
-          images(first: 2) {
-            nodes {
-              url(transform: {maxWidth: 700, preferredContentType: WEBP})
-              altText
-            }
           }
           priceRange {
             minVariantPrice { amount currencyCode }
@@ -68,10 +61,6 @@ function formatPrice(amount, currency = 'COP') {
     minimumFractionDigits: 0,
     maximumFractionDigits: 0,
   }).format(Number(amount));
-}
-
-function stripHtml(html) {
-  return (html || '').replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim();
 }
 
 const MARQUEE_ITEMS = [
@@ -221,7 +210,6 @@ export default function CollectionPage() {
             key={p.id}
             product={p}
             index={i}
-            onAdd={addToCart}
             onQuickView={setQuickView}
           />
         ))}
@@ -280,15 +268,13 @@ export default function CollectionPage() {
   );
 }
 
-function CollectionCard({product, index, onAdd, onQuickView}) {
+function CollectionCard({product, index, onQuickView}) {
   const ref = useRef(null);
   const parallaxRef = useRef(null);
   const primary = product.featuredImage;
-  const second = product.images?.nodes?.[1];
   const price = product.priceRange?.minVariantPrice?.amount;
   const compare = product.compareAtPriceRange?.minVariantPrice?.amount;
   const hasDiscount = compare && Number(compare) > Number(price);
-  const variantId = product.variants?.nodes?.[0]?.id;
 
   useEffect(() => {
     const el = ref.current;
@@ -308,7 +294,7 @@ function CollectionCard({product, index, onAdd, onQuickView}) {
     return () => io.disconnect();
   }, []);
 
-  // Parallax sutil: la tarjeta se desplaza levemente según su posición en el viewport.
+  // Parallax sutil al scroll.
   useEffect(() => {
     const el = parallaxRef.current;
     if (!el) return;
@@ -341,63 +327,31 @@ function CollectionCard({product, index, onAdd, onQuickView}) {
       style={{'--d': `${Math.min(index, 8) * 60}ms`}}
     >
       <div className="tr-col-parallax" ref={parallaxRef}>
-        <Link className="tr-gorra-card" to={`/products/${product.handle}`}>
-          <div className="tr-gorra-media">
-          {primary?.url ? (
-            <img
-              className="tr-gorra-img"
-              src={primary.url}
-              alt={primary.altText || product.title}
-              loading="lazy"
-            />
-          ) : null}
-          {second?.url ? (
-            <img
-              className="tr-gorra-img tr-gorra-img-2"
-              src={second.url}
-              alt=""
-              loading="lazy"
-            />
-          ) : null}
-
-          <div className="tr-gorra-labels">
-            <span className="tr-badge">Premium</span>
-            <span className="tr-badge tr-badge-rating">
-              <i className="tr-star">★</i> 4.8
-            </span>
+        <Link className="tr-col-card-link" to={`/products/${product.handle}`}>
+          <div className="tr-col-card-media">
+            {primary?.url ? (
+              <img
+                src={primary.url}
+                alt={primary.altText || product.title}
+                loading="lazy"
+              />
+            ) : null}
+            {hasDiscount ? <span className="tr-col-offer">Oferta</span> : null}
           </div>
-
-          <div className="tr-gorra-pager" aria-hidden="true">
-            <span className="is-active" />
-            <span />
-            <span />
-            <span />
+          <div className="tr-col-card-info">
+            <h3 className="tr-col-card-name">{product.title}</h3>
+            <div className="tr-col-card-meta">
+              <span className="tr-col-card-price">
+                {formatPrice(price)}
+                {hasDiscount ? (
+                  <s className="tr-col-card-compare">{formatPrice(compare)}</s>
+                ) : null}
+              </span>
+              <span className="tr-col-card-rating">
+                <i>★</i> 4.8
+              </span>
+            </div>
           </div>
-        </div>
-
-        <div className="tr-gorra-body">
-          <h3 className="tr-gorra-name">{product.title}</h3>
-          <p className="tr-gorra-desc">{stripHtml(product.description)}</p>
-          <div className="tr-gorra-foot">
-            <span className="tr-gorra-price">
-              {formatPrice(price)}
-              {hasDiscount ? (
-                <s className="tr-gorra-compare">{formatPrice(compare)}</s>
-              ) : null}
-            </span>
-            <button
-              type="button"
-              className="tr-gorra-cta"
-              onClick={(e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                onQuickView(product);
-              }}
-            >
-              Comprar ahora <i aria-hidden="true">→</i>
-            </button>
-          </div>
-        </div>
         </Link>
       </div>
     </article>

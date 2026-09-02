@@ -185,7 +185,7 @@
 /* ===== Grid (uniforme, tarjetas del home) ===== */
 .tr-col-grid {
   display: grid;
-  gap: 12px;
+  gap: 16px;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   margin: 0 auto;
   max-width: 1400px;
@@ -565,4 +565,96 @@
   .tr-col .tr-gorra-media {
     margin: 8px;
   }
+}
+
+/* ===== Tarjeta minimalista (imagen + nombre + precio + estrellas) ===== */
+.tr-col-card-link {
+  color: inherit;
+  display: block;
+  text-decoration: none;
+}
+
+.tr-col-card-media {
+  border-radius: 14px;
+  overflow: hidden;
+  position: relative;
+}
+
+.tr-col-card-media img {
+  display: block;
+  height: auto;
+  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  width: 100%;
+}
+
+.tr-col-card:hover .tr-col-card-media img {
+  transform: scale(1.04);
+}
+
+.tr-col-offer {
+  background: #ffa41c;
+  border-radius: 999px;
+  color: #1a1a18;
+  font-size: 10px;
+  font-weight: 800;
+  left: 10px;
+  letter-spacing: 0.06em;
+  padding: 4px 10px;
+  position: absolute;
+  text-transform: uppercase;
+  top: 10px;
+}
+
+.tr-col-card-info {
+  padding: 10px 4px 2px;
+}
+
+.tr-col-card-name {
+  color: #1a1a18;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.3;
+  margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.tr-col-card-meta {
+  align-items: center;
+  display: flex;
+  gap: 8px;
+  justify-content: space-between;
+  margin-top: 4px;
+}
+
+.tr-col-card-price {
+  align-items: baseline;
+  color: #1a1a18;
+  display: flex;
+  flex-wrap: wrap;
+  font-size: 14px;
+  font-weight: 800;
+  gap: 6px;
+  min-width: 0;
+}
+
+.tr-col-card-compare {
+  color: #9a968c;
+  font-size: 11px;
+  font-weight: 500;
+  text-decoration: line-through;
+}
+
+.tr-col-card-rating {
+  color: #5a554a;
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.tr-col-card-rating i {
+  color: #f5b301;
+  font-style: normal;
 }
