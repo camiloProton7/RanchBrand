@@ -19,7 +19,8 @@ const LINKS = [
     icon: '🏷️',
     title: 'Dotaciones',
     desc: 'Uniformes y dotaciones para empresas y equipos.',
-    href: '#',
+    href: 'https://wa.me/573502712645',
+    external: true,
   },
 ];
 
