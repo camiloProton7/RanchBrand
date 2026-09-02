@@ -1,12 +1,12 @@
 import {useEffect, useRef, useState} from 'react';
 import {Link} from 'react-router';
-import {getCartCount, getCartUrl} from '~/lib/cart';
+import {getCartCount} from '~/lib/cart';
+import CartDrawer from '~/components/CartDrawer';
 
 const MENU_ITEMS = [
   {label: 'Gorras', href: '/collections/gorras-truckers'},
   {label: 'Chaquetas', href: '/collections/chaquetas'},
   {label: 'Camisetas', href: '/collections/camisetas'},
-  {label: 'Accesorios', href: '/collections/all'},
 ];
 
 /**
@@ -17,6 +17,7 @@ export default function SiteHeader({logoSrc}) {
   const [open, setOpen] = useState(false);
   const [hidden, setHidden] = useState(false);
   const [count, setCount] = useState(0);
+  const [cartOpen, setCartOpen] = useState(false);
   const lastY = useRef(0);
 
   useEffect(() => {
@@ -59,10 +60,10 @@ export default function SiteHeader({logoSrc}) {
 
         <a
           className="tr-site-cart"
-          href="https://1caf84-4.myshopify.com/cart"
+          href="#"
           onClick={(e) => {
             e.preventDefault();
-            window.location.href = getCartUrl();
+            setCartOpen(true);
           }}
           aria-label="Ver carrito"
         >
@@ -122,11 +123,11 @@ export default function SiteHeader({logoSrc}) {
             ))}
             <a
               className="tr-site-menu-wa"
-              href="https://1caf84-4.myshopify.com/cart"
+              href="#"
               onClick={(e) => {
                 e.preventDefault();
                 setOpen(false);
-                window.location.href = getCartUrl();
+                setCartOpen(true);
               }}
               style={{animationDelay: `${0.06 + MENU_ITEMS.length * 0.05}s`}}
             >
@@ -138,6 +139,8 @@ export default function SiteHeader({logoSrc}) {
           </nav>
         </div>
       ) : null}
+
+      <CartDrawer open={cartOpen} onClose={() => setCartOpen(false)} />
     </>
   );
 }

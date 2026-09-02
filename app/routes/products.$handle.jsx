@@ -1,6 +1,6 @@
 import {useEffect, useMemo, useRef, useState} from 'react';
 import {Link, useLoaderData, useRouteLoaderData} from 'react-router';
-import {addToCart} from '~/lib/cart';
+import {addToCart, buyNow} from '~/lib/cart';
 import {
   TrustBadges,
   SizeGuide,
@@ -355,12 +355,19 @@ export default function ProductPage() {
 
   const handleBuyNow = () => {
     if (!selectedVariant?.id) return;
-    window.location.href = getCheckoutUrl(selectedVariant.id, qty);
+    buyNow(selectedVariant.id, qty);
   };
 
   const handleAddToCart = () => {
     if (!selectedVariant?.id) return;
-    addToCart(selectedVariant.id, qty);
+    addToCart({
+      variantId: selectedVariant.id,
+      qty,
+      title: product.title,
+      image: selectedVariant.image?.url || product.featuredImage?.url,
+      price: selectedVariant.price?.amount,
+      handle: product.handle,
+    });
     setAdded(true);
     setTimeout(() => setAdded(false), 2000);
   };
