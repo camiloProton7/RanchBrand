@@ -699,6 +699,9 @@ export default function ProductPage() {
       {/* ===== Medios de pago (confianza) ===== */}
       <PaymentTrust />
 
+      {/* ===== Políticas (garantía, envíos, pagos, atención) ===== */}
+      <PolicyCards />
+
       {/* ===== Reseñas (carrusel) ===== */}
       {reviews.length > 0 && (
         <section className="trp-reviews">
@@ -769,9 +772,6 @@ export default function ProductPage() {
           </div>
         </section>
       )}
-
-      {/* ===== Políticas ===== */}
-      <PolicyCards />
     </div>
   );
 }

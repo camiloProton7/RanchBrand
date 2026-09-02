@@ -43,7 +43,7 @@ export function links() {
       rel: 'preconnect',
       href: 'https://shop.app',
     },
-    {rel: 'icon', type: 'image/gif', href: '/favicon.gif'},
+    {rel: 'icon', type: 'image/png', href: '/favicon.png'},
     {rel: 'stylesheet', href: siteHeaderStyles},
     {rel: 'stylesheet', href: footerStyles},
   ];
