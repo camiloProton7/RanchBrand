@@ -362,7 +362,6 @@ function ProductScroll({products, collectionUrl, ariaLabel, title}) {
                 ) : null}
 
                 <div className="tr-gorra-labels">
-                  <span className="tr-badge">Nuevo</span>
                   <span className="tr-badge">Premium</span>
                   <span className="tr-badge tr-badge-rating">
                     <i className="tr-star">★</i> 4.8
