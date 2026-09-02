@@ -124,7 +124,8 @@ export async function loader({params, context}) {
       const p = (r.product || '').toLowerCase();
       return p && (p.includes(title) || title.includes(p));
     });
-    const reviews = (matching.length ? matching : allReviews).slice(0, 6);
+    const rest = allReviews.filter((r) => !matching.includes(r));
+    const reviews = [...matching, ...rest].slice(0, 8);
 
     const related = (relatedData.collection?.products?.nodes || [])
       .filter((p) => p.handle !== handle)
@@ -524,7 +525,7 @@ export default function ProductPage() {
           onClick={handleAdd}
           disabled={isOut}
         >
-          {added ? '✓ Agregado' : '🛍 Agregar'}
+          {added ? '✓ Añadido' : '🛍 Comprar'}
         </button>
       </div>
     </div>

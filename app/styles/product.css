@@ -370,9 +370,9 @@
 .trp-reviews-title {
   color: #f5f0e6;
   font-family: Georgia, 'Times New Roman', serif;
-  font-size: clamp(22px, 3.5vw, 30px);
+  font-size: clamp(18px, 2.5vw, 24px);
   font-weight: 400;
-  margin: 0 0 28px;
+  margin: 0 0 24px;
   text-align: center;
 }
 
@@ -672,11 +672,12 @@
 
   .trp-buybar {
     border-radius: 20px;
+    bottom: 24px;
     grid-column: 2;
     grid-row: 3;
-    margin-top: 24px;
-    position: static;
+    margin-top: 20px;
     padding-bottom: 12px;
+    position: sticky;
   }
 
   .trp-reviews,
@@ -686,10 +687,6 @@
 
   .trp-related-grid {
     grid-template-columns: repeat(4, 1fr);
-  }
-
-  .trp-lasso {
-    display: block;
   }
 
   .trp-reviews {
