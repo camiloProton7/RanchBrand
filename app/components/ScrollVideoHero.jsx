@@ -44,12 +44,8 @@ export function ScrollVideoHero({
 
     if (!section || !video || !videoLayer || !menu || !masthead) return;
 
-    // Forzar la carga del video solo si aún no empezó (iOS/Android ignoran
-    // preload="auto"). Si ya está cargando, no reiniciarla: reiniciarla causa
-    // un parpadeo/bloqueo al inicio.
-    if (video.readyState === 0) {
-      video.load();
-    }
+    // Forzar la carga del video (iOS/Android ignoran preload="auto").
+    video.load();
 
     // Si el video ya cargó (caché / carga rápida), marcarlo listo de inmediato
     // para que no quede invisible en la primera visita.
@@ -138,16 +134,13 @@ export function ScrollVideoHero({
     };
 
     const unlockVideo = () => {
-      if (reducedMotion || video.readyState < 2) return;
+      if (reducedMotion) return;
       video.play().then(() => video.pause()).catch(() => {});
     };
 
-    // Desbloqueo al cargar para que el seek (currentTime) sea fluido.
-    if (video.readyState >= 2) {
-      unlockVideo();
-    } else {
-      video.addEventListener('loadeddata', unlockVideo, {once: true});
-    }
+    // Forzar desbloqueo/carga inmediato (en móvil preload se ignora).
+    unlockVideo();
+    video.addEventListener('loadeddata', unlockVideo, {once: true});
 
     measureProgress();
     window.addEventListener('scroll', measureProgress, {passive: true});

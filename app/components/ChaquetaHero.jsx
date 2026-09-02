@@ -78,45 +78,10 @@ export default function ChaquetaHero({products}) {
       el.style.setProperty('--par-y', y.toFixed(3));
     };
 
-    const onDeviceOrientation = (e) => {
-      if (e.gamma == null || e.beta == null) return;
-      const x = Math.max(-0.5, Math.min(0.5, (e.gamma || 0) / 45));
-      const y = Math.max(-0.5, Math.min(0.5, (e.beta || 0) / 45));
-      el.style.setProperty('--par-x', x.toFixed(3));
-      el.style.setProperty('--par-y', y.toFixed(3));
-    };
-
     el.addEventListener('mousemove', onMouseMove);
-
-    // iOS 13+ requiere permiso para el giroscopio (deviceorientation). Se pide
-    // en el primer touch; en Android/desktop se registra directo.
-    let orientationEnabled = false;
-    const enableOrientation = () => {
-      if (orientationEnabled) return;
-      if (
-        typeof DeviceOrientationEvent !== 'undefined' &&
-        typeof DeviceOrientationEvent.requestPermission === 'function'
-      ) {
-        DeviceOrientationEvent.requestPermission()
-          .then((state) => {
-            if (state === 'granted') {
-              window.addEventListener('deviceorientation', onDeviceOrientation);
-              orientationEnabled = true;
-            }
-          })
-          .catch(() => {});
-      } else {
-        window.addEventListener('deviceorientation', onDeviceOrientation);
-        orientationEnabled = true;
-      }
-    };
-    enableOrientation();
-    window.addEventListener('touchstart', enableOrientation, {once: true});
 
     return () => {
       el.removeEventListener('mousemove', onMouseMove);
-      window.removeEventListener('deviceorientation', onDeviceOrientation);
-      window.removeEventListener('touchstart', enableOrientation);
     };
   }, []);
 
@@ -130,7 +95,7 @@ export default function ChaquetaHero({products}) {
     const t = setTimeout(() => {
       setDisplayBg(bg);
       setBgFading(false);
-    }, 300);
+    }, 200);
     return () => clearTimeout(t);
   }, [index]);
 
