@@ -491,52 +491,45 @@ export default function ProductPage() {
 
         {/* ===== Barra de compra ===== */}
         <div className="trp-buybar">
-          <div className="trp-buybar-left">
-            <div className="trp-buybar-price">
-              <span className="trp-buybar-price-now">{formatPrice(totalPrice)}</span>
-              {hasDiscount ? (
-                <s className="trp-buybar-price-compare">{formatPrice(totalCompare)}</s>
-              ) : null}
-            </div>
-            <div className="trp-qty-row">
-              <span className="trp-qty-label">Unidades</span>
-              <div className="trp-qty" aria-label="Cantidad">
-                <button
-                  type="button"
-                  onClick={() => setQty((q) => Math.max(1, q - 1))}
-                  aria-label="Menos"
-                >
-                  −
-                </button>
-                <span>{qty}</span>
-                <button
-                  type="button"
-                  onClick={() => setQty((q) => Math.min(10, q + 1))}
-                  aria-label="Más"
-                >
-                  +
-                </button>
-              </div>
-            </div>
+          <div className="trp-buybar-price">
+            <span className="trp-buybar-price-now">{formatPrice(totalPrice)}</span>
+            {hasDiscount ? (
+              <s className="trp-buybar-price-compare">{formatPrice(totalCompare)}</s>
+            ) : null}
           </div>
-          <div className="trp-buybar-right">
+          <div className="trp-qty" aria-label="Cantidad">
             <button
-              className="trp-add"
               type="button"
-              onClick={handleBuyNow}
-              disabled={isOut}
+              onClick={() => setQty((q) => Math.max(1, q - 1))}
+              aria-label="Menos"
             >
-              Comprar ahora
+              −
             </button>
+            <span>{qty}</span>
             <button
-              className={`trp-add-cart ${added ? 'is-added' : ''}`}
               type="button"
-              onClick={handleAddToCart}
-              disabled={isOut}
+              onClick={() => setQty((q) => Math.min(10, q + 1))}
+              aria-label="Más"
             >
-              {added ? '✓ Añadido' : 'Agregar al carrito'}
+              +
             </button>
           </div>
+          <button
+            className="trp-add"
+            type="button"
+            onClick={handleBuyNow}
+            disabled={isOut}
+          >
+            Comprar ahora
+          </button>
+          <button
+            className={`trp-add-cart ${added ? 'is-added' : ''}`}
+            type="button"
+            onClick={handleAddToCart}
+            disabled={isOut}
+          >
+            {added ? '✓ Añadido' : 'Agregar al carrito'}
+          </button>
         </div>
       </div>
 
