@@ -224,7 +224,7 @@ function getAccordionSections(productType, title, description) {
       title: 'Protección UV',
       body:
         type === 'cap'
-          ? 'Ala y tejido con bloqueo de rayos UV para proteger tu rostro y cuello en largas jornadas al sol.'
+          ? 'Visera y tejido con bloqueo de rayos UV para proteger tu rostro y cuello en largas jornadas al sol.'
           : 'Tejido con bloqueo de rayos UV para cuidar tu piel durante la exposición prolongada al sol.',
     });
   }
@@ -280,17 +280,25 @@ export function ProductAccordion({productType, title, description}) {
 
 export function RecommendedProduct({product, formatPrice}) {
   if (!product) return null;
+  const price = Number(product.price) || 0;
+  const discount = Math.round(price * 0.1);
+  const final = price - discount;
+
   return (
     <section className="trp-reco" aria-label="Recomendado para ti">
-      <span className="trp-reco-tag">Recomendado para ti</span>
       <Link to={`/products/${product.handle}`} className="trp-reco-card">
         {product.image ? (
           <img className="trp-reco-img" src={product.image} alt="" loading="lazy" />
         ) : null}
         <div className="trp-reco-info">
+          <span className="trp-reco-tag">Recomendado para ti</span>
           <h3 className="trp-reco-title">{product.title}</h3>
-          <span className="trp-reco-price">{formatPrice(product.price)}</span>
+          <div className="trp-reco-price">
+            <s className="trp-reco-price-orig">{formatPrice(price)}</s>
+            <strong className="trp-reco-price-final">{formatPrice(final)}</strong>
+          </div>
         </div>
+        <span className="trp-reco-badge">-10%</span>
         <span className="trp-reco-arrow" aria-hidden="true">
           →
         </span>

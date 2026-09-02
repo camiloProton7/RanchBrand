@@ -484,6 +484,19 @@ export default function ProductPage() {
         </div>
       </div>
 
+      {/* ===== Producto recomendado ===== */}
+      {related.length > 0 && (
+        <RecommendedProduct
+          product={{
+            handle: related[0].handle,
+            title: related[0].title,
+            price: related[0].priceRange?.minVariantPrice?.amount,
+            image: related[0].featuredImage?.url,
+          }}
+          formatPrice={formatPrice}
+        />
+      )}
+
       {/* ===== Reseñas (carrusel) ===== */}
       {reviews.length > 0 && (
         <section className="trp-reviews">
@@ -515,19 +528,6 @@ export default function ProductPage() {
             </div>
           </div>
         </section>
-      )}
-
-      {/* ===== Producto recomendado ===== */}
-      {related.length > 0 && (
-        <RecommendedProduct
-          product={{
-            handle: related[0].handle,
-            title: related[0].title,
-            price: related[0].priceRange?.minVariantPrice?.amount,
-            image: related[0].featuredImage?.url,
-          }}
-          formatPrice={formatPrice}
-        />
       )}
     </div>
   );

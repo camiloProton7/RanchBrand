@@ -608,7 +608,7 @@
 
 .trp-add {
   align-items: center;
-  background: #f5b301;
+  background: #ffa41c;
   border: none;
   border-radius: 999px;
   color: #1a1a18;
@@ -624,7 +624,7 @@
 }
 
 .trp-add:hover {
-  background: #ffc11a;
+  background: #ff9900;
 }
 
 .trp-add:active {
@@ -1168,21 +1168,11 @@
   opacity: 0.5;
 }
 
-/* ===== Producto recomendado (un solo producto, fondo claro) ===== */
+/* ===== Producto recomendado (un solo producto, descuento visible) ===== */
 .trp-reco {
-  margin: 40px auto;
+  margin: 32px auto;
   max-width: 720px;
   padding: 0 24px;
-}
-
-.trp-reco-tag {
-  color: #8a8274;
-  display: block;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.14em;
-  margin-bottom: 12px;
-  text-transform: uppercase;
 }
 
 .trp-reco-card {
@@ -1192,14 +1182,15 @@
   border-radius: 16px;
   color: inherit;
   display: flex;
-  gap: 16px;
+  gap: 14px;
   padding: 14px;
+  position: relative;
   text-decoration: none;
   transition: border-color 0.2s ease, transform 0.2s ease;
 }
 
 .trp-reco-card:hover {
-  border-color: rgba(245, 179, 1, 0.6);
+  border-color: rgba(255, 164, 28, 0.7);
   transform: translateY(-2px);
 }
 
@@ -1218,6 +1209,14 @@
   min-width: 0;
 }
 
+.trp-reco-tag {
+  color: #8a8274;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
 .trp-reco-title {
   color: #1a1a18;
   font-family: Georgia, 'Times New Roman', serif;
@@ -1227,9 +1226,32 @@
 }
 
 .trp-reco-price {
+  align-items: baseline;
+  display: flex;
+  gap: 8px;
+}
+
+.trp-reco-price-orig {
+  color: #a09a8a;
+  font-size: 13px;
+}
+
+.trp-reco-price-final {
+  color: #c2410c;
+  font-size: 17px;
+  font-weight: 800;
+}
+
+.trp-reco-badge {
+  background: #ffa41c;
+  border-radius: 999px;
   color: #1a1a18;
-  font-size: 14px;
-  font-weight: 700;
+  font-size: 12px;
+  font-weight: 800;
+  padding: 5px 11px;
+  position: absolute;
+  right: 12px;
+  top: 12px;
 }
 
 .trp-reco-arrow {
