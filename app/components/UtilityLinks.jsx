@@ -12,7 +12,8 @@ const LINKS = [
     icon: '📦',
     title: 'Seguimiento de tu pedido',
     desc: 'Consulta dónde está tu envío en tiempo real.',
-    href: '#',
+    href: 'https://envia.com/es-CO/rastreo',
+    external: true,
   },
   {
     icon: '🏷️',
@@ -20,16 +21,11 @@ const LINKS = [
     desc: 'Uniformes y dotaciones para empresas y equipos.',
     href: '#',
   },
-  {
-    icon: '🤝',
-    title: 'Conviértete en proveedor',
-    desc: 'Únete a nuestra red de proveedores de The Ranch.',
-    href: '#',
-  },
 ];
 
 export default function UtilityLinks() {
   const [contactOpen, setContactOpen] = useState(false);
+  const [providerOpen, setProviderOpen] = useState(false);
 
   return (
     <>
@@ -38,7 +34,13 @@ export default function UtilityLinks() {
           <h2 className="tr-utility-title">¿Cómo podemos ayudarte?</h2>
           <div className="tr-utility-grid">
             {LINKS.map((link) => (
-              <a key={link.title} className="tr-utility-card" href={link.href}>
+              <a
+                key={link.title}
+                className="tr-utility-card"
+                href={link.href}
+                target={link.external ? '_blank' : undefined}
+                rel={link.external ? 'noopener noreferrer' : undefined}
+              >
                 <span className="tr-utility-icon" aria-hidden="true">
                   {link.icon}
                 </span>
@@ -49,6 +51,23 @@ export default function UtilityLinks() {
                 </span>
               </a>
             ))}
+
+            <button
+              type="button"
+              className="tr-utility-card"
+              onClick={() => setProviderOpen(true)}
+            >
+              <span className="tr-utility-icon" aria-hidden="true">
+                🤝
+              </span>
+              <span className="tr-utility-card-title">Conviértete en proveedor</span>
+              <span className="tr-utility-card-desc">
+                Únete a nuestra red de proveedores de The Ranch.
+              </span>
+              <span className="tr-utility-card-arrow" aria-hidden="true">
+                →
+              </span>
+            </button>
 
             <button
               type="button"
@@ -73,7 +92,189 @@ export default function UtilityLinks() {
       {contactOpen ? (
         <ContactModal onClose={() => setContactOpen(false)} />
       ) : null}
+
+      {providerOpen ? (
+        <ProviderModal onClose={() => setProviderOpen(false)} />
+      ) : null}
     </>
+  );
+}
+
+function ProviderModal({onClose}) {
+  const [form, setForm] = useState({
+    name: '',
+    company: '',
+    email: '',
+    phone: '',
+    productType: '',
+    message: '',
+  });
+  const [status, setStatus] = useState('idle');
+  const [ticketNumber, setTicketNumber] = useState('');
+
+  const update = (field) => (e) =>
+    setForm((prev) => ({...prev, [field]: e.target.value}));
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setStatus('sending');
+    try {
+      const body = new URLSearchParams();
+      body.append('name', form.name);
+      body.append('company', form.company);
+      body.append('email', form.email);
+      body.append('phone', form.phone);
+      body.append('productType', form.productType);
+      body.append('message', form.message);
+
+      const res = await fetch('/api/provider', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+        body: body.toString(),
+      });
+      const data = await res.json();
+      if (data.ok) {
+        setTicketNumber(data.ticketNumber);
+        setStatus('done');
+      } else {
+        setStatus('error');
+      }
+    } catch (err) {
+      setStatus('error');
+    }
+  };
+
+  const close = () => {
+    if (status === 'sending') return;
+    onClose();
+  };
+
+  return (
+    <div
+      className="tr-modal"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Conviértete en proveedor"
+      onClick={(e) => {
+        if (e.target === e.currentTarget) close();
+      }}
+    >
+      <div className="tr-modal-panel">
+        <button
+          type="button"
+          className="tr-modal-close"
+          onClick={close}
+          aria-label="Cerrar"
+        >
+          ×
+        </button>
+
+        {status === 'done' ? (
+          <div className="tr-modal-success">
+            <span className="tr-modal-success-icon" aria-hidden="true">
+              ✓
+            </span>
+            <h3 className="tr-modal-success-title">¡Solicitud recibida!</h3>
+            <p className="tr-modal-success-text">
+              Tu número de solicitud es{' '}
+              <strong className="tr-modal-ticket">{ticketNumber}</strong>.
+              Nuestro equipo te contactará para continuar.
+            </p>
+            <button type="button" className="tr-modal-button" onClick={onClose}>
+              Entendido
+            </button>
+          </div>
+        ) : (
+          <form className="tr-modal-form" onSubmit={handleSubmit}>
+            <h3 className="tr-modal-title">Conviértete en proveedor</h3>
+            <p className="tr-modal-subtitle">
+              Cuéntanos qué ofreces y te contactamos para aliarnos.
+            </p>
+
+            <label className="tr-modal-field">
+              <span className="tr-modal-label">Nombre *</span>
+              <input
+                type="text"
+                value={form.name}
+                onChange={update('name')}
+                required
+                placeholder="Tu nombre"
+                autoComplete="name"
+              />
+            </label>
+
+            <label className="tr-modal-field">
+              <span className="tr-modal-label">Empresa *</span>
+              <input
+                type="text"
+                value={form.company}
+                onChange={update('company')}
+                required
+                placeholder="Nombre de tu empresa"
+              />
+            </label>
+
+            <label className="tr-modal-field">
+              <span className="tr-modal-label">Correo</span>
+              <input
+                type="email"
+                value={form.email}
+                onChange={update('email')}
+                placeholder="tucorreo@empresa.com"
+                autoComplete="email"
+              />
+            </label>
+
+            <label className="tr-modal-field">
+              <span className="tr-modal-label">Teléfono / WhatsApp</span>
+              <input
+                type="tel"
+                value={form.phone}
+                onChange={update('phone')}
+                placeholder="+57 300 000 0000"
+                autoComplete="tel"
+              />
+            </label>
+
+            <label className="tr-modal-field">
+              <span className="tr-modal-label">¿Qué ofreces? *</span>
+              <input
+                type="text"
+                value={form.productType}
+                onChange={update('productType')}
+                required
+                placeholder="Ej. telas, empaques, bordados…"
+              />
+            </label>
+
+            <label className="tr-modal-field">
+              <span className="tr-modal-label">Mensaje *</span>
+              <textarea
+                value={form.message}
+                onChange={update('message')}
+                required
+                rows={4}
+                placeholder="Cuéntanos brevemente sobre tu empresa…"
+              />
+            </label>
+
+            {status === 'error' ? (
+              <p className="tr-modal-error">
+                No pudimos enviar tu solicitud. Intenta de nuevo.
+              </p>
+            ) : null}
+
+            <button
+              type="submit"
+              className="tr-modal-button"
+              disabled={status === 'sending'}
+            >
+              {status === 'sending' ? 'Enviando…' : 'Enviar solicitud'}
+            </button>
+          </form>
+        )}
+      </div>
+    </div>
   );
 }
 
