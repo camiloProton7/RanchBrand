@@ -4,7 +4,6 @@ const MENU_ITEMS = [
   {label: 'Gorras', href: '/collections/gorras-truckers'},
   {label: 'Chaquetas', href: '/collections/chaquetas'},
   {label: 'Camisetas', href: '/collections/camisetas'},
-  {label: 'Accesorios', href: '/collections/all'},
 ];
 
 const clamp = (value, min = 0, max = 1) =>
