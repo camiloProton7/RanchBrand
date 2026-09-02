@@ -628,13 +628,15 @@ export default function ProductPage() {
           title={product.title}
           image={selectedVariant?.image?.url || product.featuredImage?.url}
         />
+      </div>
 
-        <TrustBadges />
+      <TrustBadges />
 
-        {isApparel(product.productType, product.title) ? (
-          <SizeGuide />
-        ) : null}
+      {isApparel(product.productType, product.title) ? (
+        <SizeGuide />
+      ) : null}
 
+      <div className="trp-info-bottom">
         <div className="trp-shipping-badge">
           <span aria-hidden="true">🚚</span> Envío gratis a toda Colombia
           <span className="trp-shipping-sep" aria-hidden="true">·</span>
