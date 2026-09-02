@@ -1387,6 +1387,25 @@
   background: #f0ebe0;
   border-radius: 12px;
   overflow: hidden;
+  position: relative;
+}
+
+.trp-similar-rating {
+  align-items: center;
+  background: rgba(11, 11, 9, 0.7);
+  border-radius: 999px;
+  color: #f5f0e6;
+  display: inline-flex;
+  font-size: 11px;
+  gap: 3px;
+  padding: 4px 8px;
+  position: absolute;
+  right: 8px;
+  top: 8px;
+}
+
+.trp-similar-rating i {
+  color: #f5b301;
 }
 
 .trp-similar-media img {
@@ -1406,6 +1425,18 @@
   color: #1a1a18;
   font-size: 14px;
   font-weight: 700;
+}
+
+.trp-similar-foot {
+  align-items: baseline;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.trp-similar-compare {
+  color: #c0392b;
+  font-size: 12px;
 }
 
 @media (min-width: 700px) {

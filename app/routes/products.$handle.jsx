@@ -72,6 +72,9 @@ const RELATED_QUERY = `#graphql
           priceRange {
             minVariantPrice { amount currencyCode }
           }
+          compareAtPriceRange {
+            minVariantPrice { amount }
+          }
           variants(first: 10) {
             nodes {
               id
@@ -649,11 +652,23 @@ export default function ProductPage() {
                       loading="lazy"
                     />
                   ) : null}
+                  <span className="trp-similar-rating">
+                    <i>★</i> 4.8
+                  </span>
                 </div>
                 <h3 className="trp-similar-name">{p.title}</h3>
-                <span className="trp-similar-price">
-                  {formatPrice(p.priceRange?.minVariantPrice?.amount)}
-                </span>
+                <div className="trp-similar-foot">
+                  <span className="trp-similar-price">
+                    {formatPrice(p.priceRange?.minVariantPrice?.amount)}
+                  </span>
+                  {p.compareAtPriceRange?.minVariantPrice?.amount &&
+                  Number(p.compareAtPriceRange.minVariantPrice.amount) >
+                    Number(p.priceRange?.minVariantPrice?.amount) ? (
+                    <s className="trp-similar-compare">
+                      {formatPrice(p.compareAtPriceRange.minVariantPrice.amount)}
+                    </s>
+                  ) : null}
+                </div>
               </Link>
             ))}
           </div>
