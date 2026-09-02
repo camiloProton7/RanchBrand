@@ -542,12 +542,26 @@
   border-radius: 16px;
   bottom: 12px;
   display: flex;
-  flex-direction: column;
   gap: 12px;
   margin-top: 24px;
   padding: 16px;
   position: sticky;
   z-index: 20;
+}
+
+.trp-buybar-left {
+  display: flex;
+  flex: 1 1 45%;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 0;
+}
+
+.trp-buybar-right {
+  display: flex;
+  flex: 1 1 55%;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .trp-buybar-price {
@@ -571,6 +585,21 @@
   align-items: center;
   display: flex;
   gap: 10px;
+}
+
+.trp-qty-row {
+  align-items: center;
+  display: flex;
+  gap: 8px;
+}
+
+.trp-qty-label {
+  color: #8a8274;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  white-space: nowrap;
 }
 
 .trp-qty {
