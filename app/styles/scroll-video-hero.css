@@ -2636,15 +2636,19 @@
   .tr-catmenu-inner {
     flex-direction: column;
     gap: 14px;
-    padding: 18px 20px;
+    padding: 18px 16px;
   }
   .tr-catmenu-nav {
-    gap: 24px;
-    justify-content: center;
+    gap: 0;
+    justify-content: space-between;
     width: 100%;
   }
   .tr-catmenu-link {
-    font-size: 15px;
+    font-size: 14px;
+    gap: 5px;
+  }
+  .tr-catmenu-num {
+    font-size: 9px;
   }
   .tr-catmenu-wa {
     display: none;
