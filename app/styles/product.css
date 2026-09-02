@@ -680,7 +680,7 @@
     grid-template-rows: auto auto auto;
     margin: 0 auto;
     width: 100%;
-    padding: 32px 40px 40px;
+    padding: 88px 40px 40px;
   }
 
   .trp-viewer {
@@ -689,6 +689,10 @@
     grid-row: 1 / span 2;
     aspect-ratio: auto;
     height: 66vh;
+  }
+
+  .trp-viewer-slide img {
+    object-fit: contain;
   }
 
   .trp-thumbs {
