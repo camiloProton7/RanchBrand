@@ -710,12 +710,11 @@
     border-radius: 28px;
     grid-column: 1;
     grid-row: 1 / span 2;
-    aspect-ratio: auto;
-    height: 66vh;
-  }
-
-  .trp-viewer-slide img {
-    object-fit: contain;
+    aspect-ratio: 4 / 5;
+    margin: 0 auto;
+    max-height: 66vh;
+    max-width: calc(66vh * 4 / 5);
+    width: auto;
   }
 
   .trp-thumbs {
