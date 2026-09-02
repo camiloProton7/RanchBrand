@@ -1,0 +1,258 @@
+/* ===== Página de colección (headless) ===== */
+
+.tr-col-empty {
+  align-items: center;
+  background: #0b0b09;
+  color: #f4f0e7;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  justify-content: center;
+  min-height: 60svh;
+  text-align: center;
+}
+
+.tr-col-empty a {
+  color: #f5b301;
+}
+
+/* ── Hero editorial ── */
+.tr-col-hero {
+  align-items: flex-end;
+  background: #0b0b09;
+  color: #f4f0e7;
+  display: flex;
+  min-height: 68svh;
+  overflow: hidden;
+  padding: 80px 24px 52px;
+  position: relative;
+}
+
+.tr-col-hero-media {
+  inset: 0;
+  position: absolute;
+  z-index: 0;
+}
+
+.tr-col-hero-media img {
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.22;
+  width: 100%;
+}
+
+.tr-col-hero-inner {
+  margin: 0 auto;
+  max-width: 1200px;
+  position: relative;
+  width: 100%;
+  z-index: 1;
+}
+
+.tr-col-eyebrow {
+  align-items: center;
+  color: #f5b301;
+  display: flex;
+  font-size: 12px;
+  font-weight: 700;
+  gap: 12px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+.tr-col-eyebrow::before {
+  background: #f5b301;
+  content: '';
+  height: 1px;
+  width: 40px;
+}
+
+.tr-col-title {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: clamp(48px, 13vw, 128px);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 0.9;
+  margin: 18px 0 0;
+  text-transform: uppercase;
+}
+
+.tr-col-desc {
+  color: #c9c2b2;
+  font-size: clamp(14px, 2vw, 17px);
+  line-height: 1.6;
+  margin: 18px 0 0;
+  max-width: 520px;
+}
+
+.tr-col-count {
+  color: #8a8274;
+  display: inline-block;
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  margin-top: 20px;
+  text-transform: uppercase;
+}
+
+/* ── Bento grid ── */
+.tr-col-grid {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(2, 1fr);
+  margin: 0 auto;
+  max-width: 1400px;
+  padding: 24px;
+}
+
+.tr-col-card {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+  transition-delay: var(--d, 0ms);
+}
+
+.tr-col-card.is-in {
+  opacity: 1;
+  transform: none;
+}
+
+.tr-col-card.is-feature {
+  grid-column: span 2;
+}
+
+.tr-col-card-link {
+  color: inherit;
+  display: block;
+  text-decoration: none;
+}
+
+.tr-col-card-media {
+  aspect-ratio: 3 / 4;
+  background: #e8e2d4;
+  border-radius: 16px;
+  overflow: hidden;
+  position: relative;
+}
+
+.tr-col-card.is-feature .tr-col-card-media {
+  aspect-ratio: 16 / 12;
+}
+
+.tr-col-card-media img {
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  width: 100%;
+}
+
+.tr-col-card:hover .tr-col-card-media img {
+  transform: scale(1.06);
+}
+
+.tr-col-card-shade {
+  background: linear-gradient(to top, rgba(11, 11, 9, 0.4), transparent 40%);
+  inset: 0;
+  position: absolute;
+}
+
+.tr-col-badge {
+  background: #f5b301;
+  border-radius: 999px;
+  color: #1a1a18;
+  font-size: 11px;
+  font-weight: 800;
+  left: 12px;
+  letter-spacing: 0.04em;
+  padding: 5px 12px;
+  position: absolute;
+  text-transform: uppercase;
+  top: 12px;
+}
+
+.tr-col-quick {
+  background: rgba(244, 240, 231, 0.92);
+  border: none;
+  border-radius: 999px;
+  bottom: 12px;
+  color: #1a1a18;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 700;
+  left: 50%;
+  opacity: 0;
+  padding: 10px 18px;
+  position: absolute;
+  transform: translate(-50%, 14px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  white-space: nowrap;
+}
+
+.tr-col-quick:hover {
+  background: #f5b301;
+}
+
+.tr-col-card:hover .tr-col-quick {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+.tr-col-card-info {
+  padding: 12px 4px 4px;
+}
+
+.tr-col-card-title {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 16px;
+  font-weight: 700;
+  margin: 0;
+}
+
+.tr-col-card-price {
+  align-items: baseline;
+  display: flex;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.tr-col-card-now {
+  color: #1a1a18;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.tr-col-card-compare {
+  color: #a09a8a;
+  font-size: 12px;
+}
+
+/* ── Responsive ── */
+@media (min-width: 700px) {
+  .tr-col-grid {
+    gap: 16px;
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .tr-col-card.is-feature {
+    grid-column: span 2;
+  }
+}
+
+@media (min-width: 1000px) {
+  .tr-col-grid {
+    gap: 18px;
+    grid-template-columns: repeat(4, 1fr);
+  }
+  .tr-col-card.is-feature {
+    grid-column: span 2;
+    grid-row: span 2;
+  }
+  .tr-col-card.is-feature .tr-col-card-media {
+    aspect-ratio: 1 / 1;
+  }
+}
+
+@media (max-width: 699px) {
+  .tr-col-quick {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}

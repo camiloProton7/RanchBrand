@@ -172,11 +172,9 @@ function EditorialFooter({logoSrc}) {
 
           <div className="tr-footer-col">
             <h4 className="tr-footer-title">Tienda</h4>
-            <a href="https://ranch.com.co/collections/gorras-truckers">
-              Gorras
-            </a>
-            <a href="https://ranch.com.co/collections/chaquetas">Chaquetas</a>
-            <a href="https://ranch.com.co/collections/all">Accesorios</a>
+            <Link to="/collections/gorras-truckers">Gorras</Link>
+            <Link to="/collections/chaquetas">Chaquetas</Link>
+            <Link to="/collections/all">Accesorios</Link>
           </div>
 
           <div className="tr-footer-col">
