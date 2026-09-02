@@ -2655,3 +2655,58 @@
     display: none;
   }
 }
+
+/* ===== Banner de cambios (talla/color/referencia) ===== */
+.tr-exchange {
+  background: #1a1a18;
+  border-bottom: 1px solid rgba(245, 240, 230, 0.08);
+  border-top: 1px solid rgba(245, 240, 230, 0.08);
+  padding: 40px 24px;
+}
+
+.tr-exchange-inner {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin: 0 auto;
+  max-width: 720px;
+  text-align: center;
+}
+
+.tr-exchange-icon {
+  font-size: 32px;
+}
+
+.tr-exchange-title {
+  color: #f5f0e6;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: clamp(20px, 3vw, 26px);
+  font-weight: 400;
+  margin: 0;
+}
+
+.tr-exchange-desc {
+  color: #c9c2b2;
+  font-size: 14px;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.tr-exchange-cta {
+  background: #f5f0e6;
+  border-radius: 999px;
+  color: #1a1a18;
+  display: inline-block;
+  font-size: 15px;
+  font-weight: 700;
+  margin-top: 4px;
+  padding: 13px 28px;
+  text-decoration: none;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.tr-exchange-cta:hover {
+  background: #ffa41c;
+  transform: translateY(-1px);
+}

@@ -145,6 +145,7 @@ export default function Home() {
         ariaLabel="Más vendidos"
       />
       <UtilityLinks />
+      <ExchangeBanner />
       <ReviewsSection reviews={reviews} />
       <WhatsAppFloat />
     </div>
@@ -182,6 +183,38 @@ function TrustBar() {
         ))}
       </div>
     </div>
+  );
+}
+
+function ExchangeBanner() {
+  const waUrl =
+    'https://wa.me/573502712645?text=' +
+    encodeURIComponent(
+      'Hola, quiero solicitar un cambio de talla, color o referencia',
+    );
+  return (
+    <section className="tr-exchange" aria-label="Cambios y devoluciones">
+      <div className="tr-exchange-inner">
+        <span className="tr-exchange-icon" aria-hidden="true">🔄</span>
+        <div className="tr-exchange-text">
+          <h2 className="tr-exchange-title">
+            ¿Cambio de talla, color o referencia?
+          </h2>
+          <p className="tr-exchange-desc">
+            Sin complicaciones. Te cambiamos tu pedido por la talla, color o
+            referencia que necesites.
+          </p>
+        </div>
+        <a
+          className="tr-exchange-cta"
+          href={waUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Solicitar cambio
+        </a>
+      </div>
+    </section>
   );
 }
 
