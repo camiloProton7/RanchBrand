@@ -104,17 +104,6 @@ export function ScrollVideoHero({
         String(1 - clamp(progress * 5)),
       );
 
-      // Scroll-scrubbing: el video avanza con el scroll. Solo se hace seek
-      // cuando el video ya tiene datos (readyState >= 3) para que no se trabe.
-      if (
-        !reducedMotion &&
-        video.readyState >= 3 &&
-        Number.isFinite(video.duration) &&
-        video.duration > 0
-      ) {
-        video.currentTime = clamp(progress) * video.duration;
-      }
-
       if (Math.abs(targetProgress - renderedProgress) >= 0.0005) {
         queueFrame();
       }
@@ -122,7 +111,7 @@ export function ScrollVideoHero({
 
     const unlockVideo = () => {
       if (reducedMotion) return;
-      video.play().then(() => video.pause()).catch(() => {});
+      video.play().catch(() => {});
     };
 
     // Forzar desbloqueo/carga inmediato (en móvil preload se ignora).
@@ -161,14 +150,12 @@ export function ScrollVideoHero({
             poster={posterSrc}
             muted
             playsInline
+            autoPlay
+            loop
             preload="auto"
             tabIndex={-1}
             onLoadedData={() => setIsVideoReady(true)}
             onCanPlay={() => setIsVideoReady(true)}
-            onLoadedMetadata={(event) => {
-              event.currentTarget.pause();
-              event.currentTarget.currentTime = 0;
-            }}
           >
             <source src="/home-video-hevc.mp4?v=6" type='video/mp4; codecs="hvc1"' />
             <source src={videoSrc} type="video/mp4" />
