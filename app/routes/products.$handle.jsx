@@ -650,9 +650,10 @@ export default function ProductPage() {
           <span aria-hidden="true">🛡️</span> Devolución garantizada 7 días
           <span className="trp-guarantee-cards">VISA · MASTERCARD · PSE</span>
         </div>
+      </div>
 
-        {/* ===== Barra de compra (grid 2x2) ===== */}
-        <div className="trp-buybar">
+      {/* ===== Barra de compra (grid 2x2) ===== */}
+      <div className="trp-buybar">
           <div className="trp-buybar-price">
             <span className="trp-buybar-price-now">{formatPrice(totalPrice)}</span>
             {hasDiscount ? (
@@ -693,7 +694,6 @@ export default function ProductPage() {
             {added ? '✓ Añadido' : 'Agregar al carrito'}
           </button>
         </div>
-      </div>
       </div>
 
       {/* ===== Medios de pago (confianza) ===== */}
