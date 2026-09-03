@@ -39,8 +39,8 @@ export const meta = () => [
 export function links() {
   return [
     {rel: 'stylesheet', href: homeStyles},
-    {rel: 'preload', as: 'video', href: '/home-video.mp4?v=5', type: 'video/mp4'},
-    {rel: 'preload', as: 'image', href: '/home-poster.jpg?v=5'},
+    {rel: 'preload', as: 'video', href: '/home-video.mp4?v=6', type: 'video/mp4'},
+    {rel: 'preload', as: 'image', href: '/home-poster.jpg?v=6'},
   ];
 }
 
