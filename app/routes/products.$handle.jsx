@@ -125,6 +125,29 @@ const RELATED_QUERY = `#graphql
   }
 `;
 
+const COMBO_QUERY = `#graphql
+  query ComboProducts($handle: String!) {
+    collection(handle: $handle) {
+      products(first: 50) {
+        nodes {
+          id
+          title
+          handle
+          featuredImage {
+            url(transform: {maxWidth: 400, preferredContentType: WEBP})
+            altText
+          }
+          variants(first: 1) {
+            nodes {
+              id
+            }
+          }
+        }
+      }
+    }
+  }
+`;
+
 const TRUSTOO_SHOP_ID = '67813867760';
 
 function mapReview(raw) {
@@ -165,6 +188,7 @@ export async function loader({params, context}) {
   const {handle} = params;
   const {storefront} = context;
   try {
+    const isCombo = handle === 'combo-5x-500';
     const [productData, relatedData, allReviews] = await Promise.all([
       storefront.query(PRODUCT_QUERY, {
         variables: {handle},
@@ -193,10 +217,28 @@ export async function loader({params, context}) {
     const related = relatedPool.slice(0, 4);
     const similar = relatedPool.slice(0, 6);
 
-    return {product, reviews, related, similar};
+    let comboGorras = [];
+    if (isCombo) {
+      const comboData = await storefront.query(COMBO_QUERY, {
+        variables: {handle: 'gorras-truckers'},
+        cache: storefront.CacheLong(),
+      });
+      comboGorras = (comboData.collection?.products?.nodes || []).filter(
+        (p) => p.handle !== handle,
+      );
+    }
+
+    return {product, reviews, related, similar, comboGorras, isCombo};
   } catch (error) {
     console.error(`Producto ${handle} falló`, error);
-    return {product: null, reviews: [], related: [], similar: []};
+    return {
+      product: null,
+      reviews: [],
+      related: [],
+      similar: [],
+      comboGorras: [],
+      isCombo: false,
+    };
   }
 }
 
@@ -226,6 +268,16 @@ function getBundleCartUrl(variantIds, discountCode) {
     return `https://${SHOPIFY_DOMAIN}/discount/${discountCode}?redirect=${cartPath}`;
   }
   return `https://${SHOPIFY_DOMAIN}${cartPath}`;
+}
+
+// URL del carrito para el combo: agrega la variante del combo (precio fijo) +
+// la lista de gorras elegidas como atributo del carrito (visible en el pedido).
+function getComboCartUrl(comboVariantId, selectedHandles, checkout = false) {
+  const id = toNumericId(comboVariantId);
+  const attr = encodeURIComponent(selectedHandles.join(','));
+  let url = `https://${SHOPIFY_DOMAIN}/cart/${id}:1?attributes[gorras]=${attr}`;
+  if (checkout) url += '&checkout=true';
+  return url;
 }
 
 function formatPrice(amount, currency = 'COP') {
@@ -297,7 +349,7 @@ function formatSize(value) {
 const ATTRS = ['Edición limitada', 'Ajuste regulable'];
 
 export default function ProductPage() {
-  const {product, reviews, related, similar} = useLoaderData();
+  const {product, reviews, related, similar, comboGorras, isCombo} = useLoaderData();
   const rootData = useRouteLoaderData('root');
   const logoSrc = rootData?.header?.shop?.brand?.logo?.image?.url;
 
@@ -308,6 +360,7 @@ export default function ProductPage() {
   const [added, setAdded] = useState(false);
   const [showFullDesc, setShowFullDesc] = useState(false);
   const [options, setOptions] = useState({});
+  const [selectedGorras, setSelectedGorras] = useState([]);
   const trackRef = useRef(null);
 
   const variants = product?.variants?.nodes || [];
@@ -438,12 +491,32 @@ export default function ProductPage() {
     }
   };
 
+  const comboReady = isCombo && selectedGorras.length === 5;
+
+  const toggleGorra = (handle) => {
+    setSelectedGorras((prev) => {
+      if (prev.includes(handle)) return prev.filter((h) => h !== handle);
+      if (prev.length >= 5) return prev;
+      return [...prev, handle];
+    });
+  };
+
   const handleBuyNow = () => {
+    if (isCombo) {
+      if (!comboReady) return;
+      window.location.href = getComboCartUrl(selectedVariant.id, selectedGorras, true);
+      return;
+    }
     if (!selectedVariant?.id) return;
     buyNow(selectedVariant.id, qty);
   };
 
   const handleAddToCart = () => {
+    if (isCombo) {
+      if (!comboReady) return;
+      window.location.href = getComboCartUrl(selectedVariant.id, selectedGorras, false);
+      return;
+    }
     if (!selectedVariant?.id) return;
     addToCart({
       variantId: selectedVariant.id,
@@ -545,6 +618,38 @@ export default function ProductPage() {
         <span className="trp-rating-pill-label">672 reseñas</span>
         <span className="trp-rating-pill-arrow">→</span>
       </div>
+
+      {isCombo && comboGorras.length > 0 ? (
+        <section className="trp-combo-picker" aria-label="Elige tus 5 gorras">
+          <h2 className="trp-combo-title">Elige tus 5 gorras</h2>
+          <p className={`trp-combo-count ${comboReady ? 'is-ready' : ''}`}>
+            {selectedGorras.length}/5 seleccionadas
+          </p>
+          <div className="trp-combo-grid">
+            {comboGorras.map((g) => {
+              const isSel = selectedGorras.includes(g.handle);
+              return (
+                <button
+                  key={g.handle}
+                  type="button"
+                  className={`trp-combo-card ${isSel ? 'is-selected' : ''}`}
+                  onClick={() => toggleGorra(g.handle)}
+                  disabled={!isSel && selectedGorras.length >= 5}
+                  aria-pressed={isSel}
+                >
+                  {g.featuredImage?.url ? (
+                    <img src={g.featuredImage.url} alt={g.title} loading="lazy" />
+                  ) : null}
+                  <span className="trp-combo-name">{g.title}</span>
+                  <span className="trp-combo-check" aria-hidden="true">
+                    {isSel ? '✓' : ''}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+        </section>
+      ) : null}
 
       {/* ===== Info ===== */}
       <div className="trp-info">
@@ -664,9 +769,9 @@ export default function ProductPage() {
             className="trp-add"
             type="button"
             onClick={handleBuyNow}
-            disabled={isOut}
+            disabled={isOut || (isCombo && !comboReady)}
           >
-            Comprar ahora
+            {isCombo && !comboReady ? 'Elige 5 gorras' : 'Comprar ahora'}
           </button>
           <div className="trp-qty" aria-label="Cantidad">
             <button
@@ -689,9 +794,13 @@ export default function ProductPage() {
             className={`trp-add-cart ${added ? 'is-added' : ''}`}
             type="button"
             onClick={handleAddToCart}
-            disabled={isOut}
+            disabled={isOut || (isCombo && !comboReady)}
           >
-            {added ? '✓ Añadido' : 'Agregar al carrito'}
+            {isCombo && !comboReady
+              ? 'Elige 5 gorras'
+              : added
+                ? '✓ Añadido'
+                : 'Agregar al carrito'}
           </button>
         </div>
       </div>

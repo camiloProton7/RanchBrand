@@ -693,6 +693,95 @@
   z-index: 20;
 }
 
+/* ===== Combo: selector de gorras ===== */
+.trp-combo-picker {
+  margin: 0 0 20px;
+}
+
+.trp-combo-title {
+  color: #1a1a18;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 20px;
+  font-weight: 700;
+  margin: 0 0 4px;
+}
+
+.trp-combo-count {
+  color: #6b6457;
+  font-size: 13px;
+  font-weight: 600;
+  margin: 0 0 12px;
+}
+
+.trp-combo-count.is-ready {
+  color: #2e7d32;
+}
+
+.trp-combo-grid {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.trp-combo-card {
+  align-items: center;
+  background: #ffffff;
+  border: 2px solid rgba(11, 11, 9, 0.08);
+  border-radius: 12px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 8px;
+  position: relative;
+  text-align: center;
+  transition: border-color 0.15s ease, transform 0.15s ease;
+}
+
+.trp-combo-card:hover:not(:disabled) {
+  border-color: rgba(11, 11, 9, 0.25);
+}
+
+.trp-combo-card.is-selected {
+  border-color: #b34a2a;
+}
+
+.trp-combo-card:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+.trp-combo-card img {
+  aspect-ratio: 1 / 1;
+  border-radius: 8px;
+  height: auto;
+  object-fit: cover;
+  width: 100%;
+}
+
+.trp-combo-name {
+  color: #1a1a18;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.trp-combo-check {
+  align-items: center;
+  background: #b34a2a;
+  border-radius: 50%;
+  color: #fff5ea;
+  display: flex;
+  font-size: 12px;
+  font-weight: 700;
+  height: 20px;
+  justify-content: center;
+  position: absolute;
+  right: 6px;
+  top: 6px;
+  width: 20px;
+}
+
 .trp-buybar-price {
   align-items: flex-start;
   display: flex;
