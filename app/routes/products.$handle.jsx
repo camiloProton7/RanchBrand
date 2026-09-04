@@ -272,12 +272,12 @@ function getBundleCartUrl(variantIds, discountCode) {
 
 // URL del carrito para el combo: agrega la variante del combo (precio fijo) +
 // la lista de gorras elegidas como atributo del carrito (visible en el pedido).
-function getComboCartUrl(comboVariantId, selectedHandles, checkout = false) {
+// Sin "checkout=true": Shopify lo rechaza (400). La URL del carrito ya redirige
+// sola al checkout (302 → /checkouts/).
+function getComboCartUrl(comboVariantId, selectedHandles) {
   const id = toNumericId(comboVariantId);
   const attr = encodeURIComponent(selectedHandles.join(','));
-  let url = `https://${SHOPIFY_DOMAIN}/cart/${id}:1?attributes[gorras]=${attr}`;
-  if (checkout) url += '&checkout=true';
-  return url;
+  return `https://${SHOPIFY_DOMAIN}/cart/${id}:1?attributes[gorras]=${attr}`;
 }
 
 function formatPrice(amount, currency = 'COP') {
@@ -504,7 +504,7 @@ export default function ProductPage() {
   const handleBuyNow = () => {
     if (isCombo) {
       if (!comboReady) return;
-      window.location.href = getComboCartUrl(selectedVariant.id, selectedGorras, true);
+      window.location.href = getComboCartUrl(selectedVariant.id, selectedGorras);
       return;
     }
     if (!selectedVariant?.id) return;
@@ -514,7 +514,7 @@ export default function ProductPage() {
   const handleAddToCart = () => {
     if (isCombo) {
       if (!comboReady) return;
-      window.location.href = getComboCartUrl(selectedVariant.id, selectedGorras, false);
+      window.location.href = getComboCartUrl(selectedVariant.id, selectedGorras);
       return;
     }
     if (!selectedVariant?.id) return;
