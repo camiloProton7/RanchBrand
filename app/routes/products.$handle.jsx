@@ -270,14 +270,17 @@ function getBundleCartUrl(variantIds, discountCode) {
   return `https://${SHOPIFY_DOMAIN}${cartPath}`;
 }
 
-// URL del carrito para el combo: agrega la variante del combo (precio fijo) +
-// la lista de gorras elegidas como atributo del carrito (visible en el pedido).
-// Sin "checkout=true": Shopify lo rechaza (400). La URL del carrito ya redirige
-// sola al checkout (302 → /checkouts/).
-function getComboCartUrl(comboVariantId, selectedHandles) {
+// URL del carrito para el combo: agrega la variante del combo (precio fijo) y
+// guarda las gorras elegidas como NOTA del pedido (visible en el checkout y en
+// el Admin de Shopify). Sin "checkout=true" (Shopify lo rechaza con 400).
+function getComboCartUrl(comboVariantId, selectedHandles, gorras) {
   const id = toNumericId(comboVariantId);
-  const attr = encodeURIComponent(selectedHandles.join(','));
-  return `https://${SHOPIFY_DOMAIN}/cart/${id}:1?attributes[gorras]=${attr}`;
+  const titles = selectedHandles.map((h) => {
+    const g = gorras.find((x) => x.handle === h);
+    return g?.title || h;
+  });
+  const note = encodeURIComponent(`Gorras elegidas (5): ${titles.join(', ')}`);
+  return `https://${SHOPIFY_DOMAIN}/cart/${id}:1?note=${note}`;
 }
 
 function formatPrice(amount, currency = 'COP') {
@@ -504,7 +507,7 @@ export default function ProductPage() {
   const handleBuyNow = () => {
     if (isCombo) {
       if (!comboReady) return;
-      window.location.href = getComboCartUrl(selectedVariant.id, selectedGorras);
+      window.location.href = getComboCartUrl(selectedVariant.id, selectedGorras, comboGorras);
       return;
     }
     if (!selectedVariant?.id) return;
@@ -514,7 +517,7 @@ export default function ProductPage() {
   const handleAddToCart = () => {
     if (isCombo) {
       if (!comboReady) return;
-      window.location.href = getComboCartUrl(selectedVariant.id, selectedGorras);
+      window.location.href = getComboCartUrl(selectedVariant.id, selectedGorras, comboGorras);
       return;
     }
     if (!selectedVariant?.id) return;
