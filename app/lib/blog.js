@@ -1,7 +1,9 @@
 // Artículos del blog (contenido SEO para atraer tráfico orgánico).
 // Cada post tiene bloques renderizables: h2 (subtítulo), p (párrafo), ul (lista).
+// Los posts diarios se cargan desde daily-posts.json (los añade el cron de noticias).
+import dailyPosts from './daily-posts.json';
 
-export const POSTS = [
+const STATIC_POSTS = [
   {
     slug: 'mejores-gorras-trucker-colombia',
     title: 'Las mejores gorras trucker de Colombia: guía 2026',
@@ -179,6 +181,8 @@ export const POSTS = [
     ],
   },
 ];
+
+export const POSTS = [...dailyPosts, ...STATIC_POSTS];
 
 export function getPost(slug) {
   return POSTS.find((p) => p.slug === slug) || null;
