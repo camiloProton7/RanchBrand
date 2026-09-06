@@ -44,6 +44,7 @@ export default function Footer({logoSrc}) {
             <h4 className="tr-footer-title">Tienda</h4>
             <Link to="/collections/gorras-truckers">Gorras</Link>
             <Link to="/collections/chaquetas">Chaquetas</Link>
+            <Link to="/blog">Blog</Link>
           </div>
 
           <div className="tr-footer-col">
