@@ -95,7 +95,9 @@ export async function loader({context}) {
 
 async function fetchCollection(storefront, handle) {
   try {
-    const data = await storefront.query(COLLECTION_QUERY(handle));
+    const data = await storefront.query(COLLECTION_QUERY, {
+      variables: {handle},
+    });
     return data?.collection?.products?.nodes || [];
   } catch (error) {
     console.error(`Colección ${handle} falló`, error);
@@ -705,9 +707,9 @@ function ReviewsSection({reviews}) {
   );
 }
 
-const COLLECTION_QUERY = (handle) => `#graphql
-  query Collection {
-    collection(handle: "${handle}") {
+const COLLECTION_QUERY = `#graphql
+  query Collection($handle: String!) {
+    collection(handle: $handle) {
       title
       handle
       products(first: 15) {
