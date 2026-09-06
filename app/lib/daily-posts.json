@@ -1,1 +1,50 @@
-[]
+[
+  {
+    "slug": "llanero-historia-vaquero-colombiano",
+    "title": "El llanero: historia y legado del vaquero colombiano",
+    "excerpt": "Descubre la historia del llanero, el vaquero de los llanos orientales de Colombia, y por qué su espíritu sigue vivo en la moda western actual.",
+    "date": "2026-09-06",
+    "category": "Campo",
+    "blocks": [
+      {"type": "p", "text": "Antes de las gorras y las chaquetas, hubo hombres que hicieron del campo su hogar. En los llanos orientales de Colombia, el llanero es el símbolo del vaquero criollo: jinete incansable, trabajador del hato y guardián de una tradición que sigue viva."},
+      {"type": "h2", "text": "¿Quién es el llanero?"},
+      {"type": "p", "text": "El llanero es el vaquero de la región de la Orinoquía. Monta a caballo, trabaja el ganado, doma potros y conoce el territorio como nadie. Su vestimenta —sombrero, camisa de trabajo y botas— nació de la necesidad, no de la moda."},
+      {"type": "h2", "text": "Lo que el llanero nos enseña"},
+      {"type": "ul", "items": ["El trabajo honesto y a mano vale más que cualquier atajo.", "Las cosas bien hechas duran generaciones.", "El estilo nace de la función: si sirve, se ve bien.", "La lealtad a la tierra es una forma de carácter."]},
+      {"type": "p", "text": "En The Ranch recogemos ese espíritu. No seguimos modas, las marcamos. Cada gorra y chaqueta está hecha para quienes hacen las cosas bien, como el llanero."},
+      {"type": "p", "text": "Lleva el espíritu del campo contigo. Explora la colección de gorras y chaquetas The Ranch."}
+    ]
+  },
+  {
+    "slug": "como-cuidar-cuero-gamuza-prendas",
+    "title": "Cómo cuidar el cuero y la gamuza de tus prendas",
+    "excerpt": "Aprende a limpiar, hidratar y guardar el cuero y la gamuza para que tus gorras y chaquetas duren años como nuevas.",
+    "date": "2026-09-06",
+    "category": "Campo",
+    "blocks": [
+      {"type": "p", "text": "El cuero y la gamuza dan ese acabado premium que distingue a las gorras y chaquetas The Ranch. Pero como todo material noble, piden un cuidado mínimo para envejecer con dignidad."},
+      {"type": "h2", "text": "Limpieza básica"},
+      {"type": "ul", "items": ["Polvo y suciedad: cepillo de cerdas suaves, siempre en seco.", "Manchas en gamuza: goma de borrar específica, con suavidad.", "Cuero liso: paño ligeramente húmedo, sin empapar."]},
+      {"type": "h2", "text": "Hidratación y guardado"},
+      {"type": "p", "text": "Cada pocos meses, aplica un acondicionador para cuero para evitar que se reseque y se cuartee. Guarda las prendas en un lugar seco, lejos del sol directo y de la humedad, y nunca en bolsas plásticas cerradas."},
+      {"type": "h2", "text": "Lo que nunca debes hacer"},
+      {"type": "ul", "items": ["No uses agua abundante ni sumerjas el cuero.", "No seques con secadora ni fuentes de calor directas.", "No apliques betún en la gamuza: pierde su textura."]},
+      {"type": "p", "text": "Con estos cuidados, tu gorra con visera en cuero y tus chaquetas de gamuza te acompañarán muchos años. Descubre la colección The Ranch."}
+    ]
+  },
+  {
+    "slug": "festivales-campo-colombiano",
+    "title": "Festivales del campo colombiano que debes conocer",
+    "excerpt": "Un recorrido por las ferias y festivales del campo colombiano: música llanera, cabalgatas y la tradición vaquera en su máxima expresión.",
+    "date": "2026-09-06",
+    "category": "Campo",
+    "blocks": [
+      {"type": "p", "text": "Colombia respira campo a través de sus festivales. Son el escenario donde la cultura vaquera, la música y la tradición se encuentran. Estos son algunos imperdibles."},
+      {"type": "h2", "text": "Festivales que mantienen viva la tradición"},
+      {"type": "ul", "items": ["Festival Internacional del Joropo (Villavicencio): la cuna de la música llanera.", "Expo de la Vaquería (Llanos Orientales): el orgullo del hato y el caballo.", "Feria de las Flores (Medellín): silleteros y tradición antioqueña.", "Cabalgatas regionales: el encuentro de jinetes y ganaderos."]},
+      {"type": "h2", "text": "Por qué importan"},
+      {"type": "p", "text": "Estos festivales no son solo fiesta: son la memoria viva del campo. En ellos se transmiten oficios, se honra al caballo y se celebra una forma de vida que The Ranch lleva en cada diseño."},
+      {"type": "p", "text": "Si te mueves por el campo, hazlo con estilo. Conoce la colección de gorras y chaquetas The Ranch, hecha para quienes viven esta tradición."}
+    ]
+  }
+]
