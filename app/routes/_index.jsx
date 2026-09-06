@@ -11,7 +11,7 @@ export const meta = () => [
   {
     name: 'description',
     content:
-      'The Ranch: gorras, chaquetas y accesorios para quienes hacen las cosas bien.',
+      'The Ranch: gorras, chaquetas y camisetas para quienes hacen las cosas bien. Envío gratis en Colombia.',
   },
   {property: 'og:title', content: 'The Ranch — No seguimos modas'},
   {
@@ -39,7 +39,7 @@ export const meta = () => [
 export function links() {
   return [
     {rel: 'stylesheet', href: homeStyles},
-    {rel: 'preload', as: 'video', href: '/home-video.mp4?v=6', type: 'video/mp4'},
+    {rel: 'preload', as: 'video', href: '/home-video-hevc.mp4?v=6', type: 'video/mp4; codecs="hvc1"'},
     {rel: 'preload', as: 'image', href: '/home-poster.jpg?v=6'},
   ];
 }
