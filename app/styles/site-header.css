@@ -373,6 +373,29 @@
   width: 100%;
 }
 
+.tr-cart-wa {
+  margin-bottom: 12px;
+}
+
+.tr-cart-wa-label {
+  color: #5a554a;
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.tr-cart-wa-input {
+  background: #f5f0e6;
+  border: 1px solid rgba(11, 11, 9, 0.12);
+  border-radius: 10px;
+  box-sizing: border-box;
+  color: #1a1a18;
+  font-size: 14px;
+  padding: 12px 14px;
+  width: 100%;
+}
+
 .tr-cart-continue {
   background: none;
   border: none;

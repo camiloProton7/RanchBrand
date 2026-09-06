@@ -3,6 +3,8 @@ import {getCart, getCartUrl, formatPrice} from '~/lib/cart';
 
 export default function CartDrawer({open, onClose}) {
   const [items, setItems] = useState([]);
+  const [phone, setPhone] = useState('');
+  const [saved, setSaved] = useState(false);
 
   useEffect(() => {
     const update = () => setItems(getCart());
@@ -22,6 +24,22 @@ export default function CartDrawer({open, onClose}) {
     0,
   );
   const discount = compareTotal > subtotal ? compareTotal - subtotal : 0;
+
+  // Guarda el carrito + teléfono para el recordatorio de carrito abandonado.
+  const saveCart = async (value) => {
+    setPhone(value);
+    const digits = value.replace(/\D/g, '');
+    if (digits.length < 10 || items.length === 0 || saved) return;
+    try {
+      const form = new FormData();
+      form.append('phone', digits);
+      form.append('items', JSON.stringify(items));
+      await fetch('/api/cart', {method: 'POST', body: form});
+      setSaved(true);
+    } catch {
+      // no crítico: el checkout igual captura el teléfono
+    }
+  };
 
   if (!open) return null;
 
@@ -91,6 +109,21 @@ export default function CartDrawer({open, onClose}) {
             <div className="tr-cart-total">
               <span>Total</span>
               <span>{formatPrice(subtotal)}</span>
+            </div>
+            <div className="tr-cart-wa">
+              <label className="tr-cart-wa-label" htmlFor="tr-cart-phone">
+                {saved ? '✓ Te avisaremos por WhatsApp' : 'Déjanos tu WhatsApp (opcional)'}
+              </label>
+              <input
+                id="tr-cart-phone"
+                className="tr-cart-wa-input"
+                type="tel"
+                inputMode="tel"
+                placeholder="300 123 4567"
+                value={phone}
+                onChange={(e) => saveCart(e.target.value)}
+                autoComplete="tel"
+              />
             </div>
             <a className="tr-cart-checkout" href={getCartUrl()}>
               Finalizar compra
