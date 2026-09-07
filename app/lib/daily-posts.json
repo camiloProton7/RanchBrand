@@ -1,5 +1,52 @@
 [
   {
+    "slug": "ganaderia-vida-en-el-rancho",
+    "title": "Ganadería y vida en el rancho: lo que el hato enseña cada día",
+    "excerpt": "Un día en el rancho es una lección de constancia, madrugada y respeto por el animal. Así se vive y se trabaja la ganadería de verdad.",
+    "date": "2026-09-07",
+    "category": "Campo",
+    "blocks": [
+      {"type": "p", "text": "El rancho no perdona la pereza. Antes de que salga el sol ya hay trabajo: el ganado no espera, el agua no se acarrea sola y la jornada se mide en hechos, no en intenciones."},
+      {"type": "h2", "text": "El día empieza antes del amanecer"},
+      {"type": "p", "text": "La revisión del hato es el primer ritual. Se cuentan cabezas, se mira el estado de cada animal y se mueve el ganado según el clima y la pastura. Todo a mano, con calma: el ganado responde al trato firme y sereno, nunca al grito."},
+      {"type": "h2", "text": "Lo que el trabajo de campo enseña"},
+      {"type": "ul", "items": ["Constancia: el hato se cuida todos los días, sin excepción.", "Paciencia: un animal no se apura, se acompaña.", "Responsabilidad: la vida de muchos depende de tu criterio.", "Orden: cada herramienta y cada cerca tienen su lugar."]},
+      {"type": "p", "text": "Esa es la vida que inspira a The Ranch. Prendas pensadas para quienes madrugan y trabajan duro. Llévala contigo: explora la colección de gorras y chaquetas The Ranch."}
+    ]
+  },
+  {
+    "slug": "moda-western-como-vestirla",
+    "title": "Moda western: cómo vestirla sin disfrazarte de vaquero",
+    "excerpt": "La moda western no es un disfraz: es actitud y piezas clave bien elegidas. Aprende a combinarla con estilo premium y sin excesos.",
+    "date": "2026-09-07",
+    "category": "Campo",
+    "blocks": [
+      {"type": "p", "text": "Vestir western no es disfrazarse de vaquero. Es sumar carácter a tu ropa de siempre con piezas bien elegidas y detalles que hablan por ti. No seguimos modas, las marcamos."},
+      {"type": "h2", "text": "Empieza por una sola pieza"},
+      {"type": "p", "text": "La clave está en la dosificación. Una gorra con visera en cuero o una chaqueta de gamuza transforman un básico sin esfuerzo. No necesitas el outfit completo: necesitas la pieza correcta."},
+      {"type": "h2", "text": "Cómo combinar sin pasarte"},
+      {"type": "ul", "items": ["Gorra de cuero + camisa blanca + jeans: sobrio y seguro.", "Chaqueta de gamuza + t-shirt lisa + botas: el clásico del campo.", "Un solo acento western por look: el exceso mata el estilo.", "Tonos tierra (arena, tabaco, cuero) siempre funcionan."]},
+      {"type": "p", "text": "El estilo western premium se trata de intención, no de volumen. Menos piezas, mejores materiales. Así se viste quien manda sin gritar."},
+      {"type": "p", "text": "Encuentra la pieza que te define. Explora la colección de gorras y chaquetas The Ranch."}
+    ]
+  },
+  {
+    "slug": "caballos-cabalgatas-equitacion",
+    "title": "Caballos y cabalgatas: lo que todo jinete debe saber antes de montar",
+    "excerpt": "Del manejo básico a la cabalgata larga, esto es lo que de verdad importa cuando montas y convives con caballos.",
+    "date": "2026-09-07",
+    "category": "Campo",
+    "blocks": [
+      {"type": "p", "text": "El caballo no es un accesorio: es un compañero de trabajo y de camino. Antes de montar, hay cosas que ningún jinete serio puede ignorar."},
+      {"type": "h2", "text": "Primero el caballo, después el jinete"},
+      {"type": "p", "text": "Revisa el estado del animal antes de ensillar: cascos, lomo y boca. Un caballo incómodo o lastimado es un accidente esperando. El buen jinete se ocupa del caballo antes que de sí mismo."},
+      {"type": "h2", "text": "Lo esencial para una cabalgata larga"},
+      {"type": "ul", "items": ["Hidratación para ti y para el caballo, con paradas programadas.", "Ensillar bien: un sudadero mal puesto lastima al animal.", "Respetar el paso del caballo en terrenos difíciles.", "Conocer la ruta y avisar el plan antes de salir."]},
+      {"type": "p", "text": "Cabalgata no es galopar sin rumbo. Es leer el terreno, dosificar la energía del animal y volver a casa entero. Ahí está el verdadero oficio del jinete."},
+      {"type": "p", "text": "Para el campo y para el camino, viste como se debe. Explora la colección de gorras y chaquetas The Ranch."}
+    ]
+  },
+  {
     "slug": "llanero-historia-vaquero-colombiano",
     "title": "El llanero: historia y legado del vaquero colombiano",
     "excerpt": "Descubre la historia del llanero, el vaquero de los llanos orientales de Colombia, y por qué su espíritu sigue vivo en la moda western actual.",
