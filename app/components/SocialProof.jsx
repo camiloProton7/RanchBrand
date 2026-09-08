@@ -19,7 +19,7 @@ function randomItem(arr) {
  * Datos simulados, rotando en intervalos.
  */
 export function SocialProof({title, image}) {
-  const [viewers, setViewers] = useState(() => 17 + Math.floor(Math.random() * 18));
+  const [viewers, setViewers] = useState(24); // valor fijo (evita error de hidratación)
   const [popup, setPopup] = useState(null);
 
   // Contador de personas viendo (fluctúa levemente)
