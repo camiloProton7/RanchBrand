@@ -29,6 +29,14 @@ const FONTS = [
   {id: 'oswald', label: 'Bold', family: '"Oswald", sans-serif'},
 ];
 
+// Producto "Personalización grabado láser" ($15.000) para el cobro extra
+const PERSONALIZACION_VARIANT_ID = '50406577111280';
+const SHOPIFY_DOMAIN = '1caf84-4.myshopify.com';
+
+function toNumericId(gid) {
+  return gid?.match(/\/(\d+)$/)?.[1] || gid;
+}
+
 export const links = () => [
   {rel: 'stylesheet', href: customStyles},
   {
@@ -218,8 +226,17 @@ export default function Personalizar() {
 
       const res = await fetch('/api/personalizar', {method: 'POST', body: form});
       const data = await res.json();
-      if (data?.ok) setDone(true);
-      else alert('No se pudo guardar. Intenta de nuevo.');
+      if (data?.ok) {
+        // Agregar la chaqueta + la personalización ($15.000) al carrito
+        const chaquetaId = toNumericId(product.variants?.nodes?.[0]?.id);
+        if (chaquetaId) {
+          window.location.href = `https://${SHOPIFY_DOMAIN}/cart/${chaquetaId}:1,${PERSONALIZACION_VARIANT_ID}:1`;
+        } else {
+          setDone(true);
+        }
+      } else {
+        alert('No se pudo guardar. Intenta de nuevo.');
+      }
     } catch (err) {
       console.error(err);
       alert('Ocurrió un error. Intenta de nuevo.');
