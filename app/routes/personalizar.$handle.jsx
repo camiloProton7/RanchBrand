@@ -1,5 +1,5 @@
 import {useLoaderData} from 'react-router';
-import {useRef, useState} from 'react';
+import {useEffect, useRef, useState} from 'react';
 import customStyles from '~/styles/personalizar.css?url';
 
 const PRODUCT_QUERY = `#graphql
@@ -76,6 +76,22 @@ export default function Personalizar() {
   const [busy, setBusy] = useState(false);
   const [done, setDone] = useState(false);
   const [logoError, setLogoError] = useState('');
+  const [fontsReady, setFontsReady] = useState(false);
+
+  // Precargar las tipografías para que el preview las muestre correctamente
+  useEffect(() => {
+    let mounted = true;
+    (async () => {
+      try {
+        await Promise.all(FONTS.map((f) => document.fonts.load(`52px ${f.family}`)));
+        await document.fonts.ready;
+      } catch {}
+      if (mounted) setFontsReady(true);
+    })();
+    return () => {
+      mounted = false;
+    };
+  }, []);
 
   const stageRef = useRef(null);
   const pointers = useRef({});
