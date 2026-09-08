@@ -1,5 +1,50 @@
 [
   {
+    "slug": "frases-principios-filosofia-rancho",
+    "title": "Frases y principios del rancho: la filosofía que no se negocia",
+    "excerpt": "El rancho se sostiene sobre principios que pasan de generación en generación. Estas son las frases y la filosofía que nos rigen.",
+    "date": "2026-09-08",
+    "category": "Campo",
+    "blocks": [
+      {"type": "p", "text": "El rancho no se construye solo con trabajo: se sostiene con principios. Hay frases que se repiten de generación en generación, no por costumbre, sino porque encierran la verdad del campo."},
+      {"type": "h2", "text": "Los principios que no se negocian"},
+      {"type": "p", "text": "La filosofía del rancho es simple y exigente: haz las cosas bien la primera vez, respeta al que trabaja contigo y deja que tu trabajo hable por ti. No seguimos modas, las marcamos."},
+      {"type": "h2", "text": "Frases que marcan carácter"},
+      {"type": "ul", "items": ["El que madruga no llega tarde a nada.", "Las cosas bien hechas no piden explicación.", "El campo no miente: te devuelve lo que le das.", "Más vale un hombre de palabra que cien de promesas."]},
+      {"type": "p", "text": "Lleva estos principios contigo en cada jornada. Explora la colección de gorras y chaquetas The Ranch, hecha para quienes viven esta filosofía."}
+    ]
+  },
+  {
+    "slug": "herramientas-del-campo",
+    "title": "Herramientas del campo: las que todo ranchero debe dominar",
+    "excerpt": "La herramienta no es un accesorio: es una extensión de la mano. Estas son las que nunca faltan y cómo cuidarlas para que duren.",
+    "date": "2026-09-08",
+    "category": "Campo",
+    "blocks": [
+      {"type": "p", "text": "En el campo, la herramienta no es un accesorio: es una extensión de la mano. Saber elegirla y cuidarla separa al que improvisa del que de verdad trabaja."},
+      {"type": "h2", "text": "Las que nunca faltan"},
+      {"type": "ul", "items": ["El machete: para abrir camino, cortar y despejar.", "El lazo y la soga: el oficio del ganado en su esencia.", "El cuchillo de cacha: herramienta, no adorno.", "El apero y la cincha: donde descansa la seguridad del jinete."]},
+      {"type": "h2", "text": "Cuidarlas es respetarlas"},
+      {"type": "p", "text": "Una herramienta bien cuidada trabaja mejor y dura más. Límpiala, engrasa el metal y guárdala seca. Quien descuida sus herramientas descuida su trabajo."},
+      {"type": "p", "text": "El oficio del campo se respeta con hechos. Explora la colección de gorras y chaquetas The Ranch para quienes trabajan duro."}
+    ]
+  },
+  {
+    "slug": "oficios-del-campo",
+    "title": "Oficios del campo: los trabajos que sostienen el rancho",
+    "excerpt": "Detrás de cada hato hay oficios que pocos ven y todos necesitan. Descubre los trabajos que mantienen viva la vida en el rancho.",
+    "date": "2026-09-08",
+    "category": "Campo",
+    "blocks": [
+      {"type": "p", "text": "Detrás de cada hato y cada cosecha hay oficios que pocos ven y todos necesitan. El campo se sostiene sobre manos que dominan su arte con silencio y precisión."},
+      {"type": "h2", "text": "Los oficios que mantienen vivo el rancho"},
+      {"type": "ul", "items": ["El vaquero o llanero: el que lee al ganado y al caballo.", "El herrador: cuida los cascos, la base de todo jinete.", "El talabartero: trabaja el cuero con maestría de artesano.", "El caporal: ordena la faena y responde por el hato."]},
+      {"type": "h2", "text": "Oficios que no pasan de moda"},
+      {"type": "p", "text": "Estos oficios no se aprenden en un manual: se heredan, se practican y se perfeccionan con los años. Son la columna vertebral de la vida en el rancho."},
+      {"type": "p", "text": "El trabajo honesto merece buen equipo. Explora la colección de gorras y chaquetas The Ranch."}
+    ]
+  },
+  {
     "slug": "ganaderia-vida-en-el-rancho",
     "title": "Ganadería y vida en el rancho: lo que el hato enseña cada día",
     "excerpt": "Un día en el rancho es una lección de constancia, madrugada y respeto por el animal. Así se vive y se trabaja la ganadería de verdad.",
