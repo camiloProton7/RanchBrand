@@ -1,9 +1,9 @@
-/* ===== Editor de personalización (grabado láser) ===== */
+/* ===== Editor de personalización (grabado láser) — blanco y negro ===== */
 .cust {
-  background: #f5f0e6;
-  color: #1a1a18;
+  background: #fafafa;
+  color: #0b0b09;
   min-height: 100vh;
-  padding: 80px 16px 60px;
+  padding: 72px 16px 60px;
 }
 
 .cust-head {
@@ -16,11 +16,12 @@
   font-family: Georgia, 'Times New Roman', serif;
   font-size: clamp(24px, 6vw, 34px);
   font-weight: 700;
+  letter-spacing: -0.5px;
   margin: 0 0 8px;
 }
 
 .cust-sub {
-  color: #6b6457;
+  color: #6b6b6b;
   font-size: 14px;
   margin: 0;
 }
@@ -28,7 +29,7 @@
 /* Escenario de previsualización */
 .cust-stage {
   background: #ffffff;
-  border: 1px solid #e5dccb;
+  border: 1px solid #e4e4e4;
   border-radius: 16px;
   margin: 0 auto 20px;
   max-width: 560px;
@@ -46,35 +47,42 @@
 }
 
 .cust-design {
+  color: #000000;
   cursor: grab;
-  font-size: 48px;
+  font-size: 52px;
   font-weight: 700;
+  left: 50%;
   line-height: 1;
   position: absolute;
   text-align: center;
+  top: 40%;
   touch-action: none;
   transform-origin: center center;
+  user-select: none;
   white-space: pre-wrap;
 }
 
-.cust-design:active {
+.cust-design.is-dragging {
   cursor: grabbing;
 }
 
 .cust-logo {
   display: block;
-  max-height: 160px;
-  max-width: 200px;
+  max-height: 170px;
+  max-width: 210px;
+  pointer-events: none;
+  user-select: none;
   width: auto;
 }
 
 .cust-hint {
-  background: rgba(11, 11, 9, 0.72);
+  background: rgba(11, 11, 9, 0.78);
   bottom: 0;
-  color: #f4f0e7;
+  color: #ffffff;
   font-size: 11px;
   left: 0;
   padding: 8px 12px;
+  pointer-events: none;
   position: absolute;
   right: 0;
   text-align: center;
@@ -91,7 +99,7 @@
 }
 
 .cust-label {
-  color: #1a1a18;
+  color: #0b0b09;
   display: block;
   font-size: 13px;
   font-weight: 700;
@@ -100,13 +108,18 @@
 
 .cust-input {
   background: #ffffff;
-  border: 1px solid #d8d0c2;
+  border: 1px solid #d6d6d6;
   border-radius: 10px;
   box-sizing: border-box;
-  color: #1a1a18;
+  color: #0b0b09;
   font-size: 16px;
   padding: 13px 14px;
   width: 100%;
+}
+
+.cust-input:focus {
+  border-color: #0b0b09;
+  outline: none;
 }
 
 .cust-fonts {
@@ -117,17 +130,18 @@
 
 .cust-font {
   background: #ffffff;
-  border: 2px solid #e5dccb;
+  border: 2px solid #e4e4e4;
   border-radius: 10px;
-  color: #1a1a18;
+  color: #0b0b09;
   cursor: pointer;
   font-size: 18px;
   padding: 14px 8px;
 }
 
 .cust-font.is-active {
-  border-color: #b34a2a;
-  color: #b34a2a;
+  background: #0b0b09;
+  border-color: #0b0b09;
+  color: #ffffff;
 }
 
 .cust-range {
@@ -136,19 +150,25 @@
 
 .cust-file {
   background: #ffffff;
-  border: 1px dashed #d8d0c2;
+  border: 1px dashed #c9c9c9;
   border-radius: 10px;
   box-sizing: border-box;
-  color: #6b6457;
+  color: #6b6b6b;
   font-size: 13px;
   padding: 13px;
   width: 100%;
 }
 
+.cust-error {
+  color: #b00020;
+  font-size: 12px;
+  margin: 8px 0 0;
+}
+
 .cust-clear {
   background: none;
   border: none;
-  color: #b34a2a;
+  color: #0b0b09;
   cursor: pointer;
   font-size: 13px;
   margin-top: 8px;
@@ -157,10 +177,10 @@
 }
 
 .cust-cta {
-  background: #ffa41c;
+  background: #0b0b09;
   border: none;
   border-radius: 12px;
-  color: #1a1a18;
+  color: #ffffff;
   cursor: pointer;
   font-size: 16px;
   font-weight: 700;
@@ -169,22 +189,22 @@
 }
 
 .cust-cta:disabled {
+  background: #d6d6d6;
   cursor: not-allowed;
-  opacity: 0.5;
 }
 
 .cust-note {
-  color: #a39a8a;
+  color: #9a9a9a;
   font-size: 12px;
   margin: 12px 0 0;
   text-align: center;
 }
 
 .cust-done {
-  background: #e8f5e9;
-  border: 1px solid #c8e6c9;
+  background: #f0f0f0;
+  border: 1px solid #d6d6d6;
   border-radius: 12px;
-  color: #2e7d32;
+  color: #0b0b09;
   font-size: 14px;
   margin-top: 16px;
   padding: 14px;

@@ -73,37 +73,57 @@ export default function Personalizar() {
   const [font, setFont] = useState(FONTS[0].family);
   const [logo, setLogo] = useState(null);
   const [scale, setScale] = useState(1);
-  const [pos, setPos] = useState({x: 50, y: 38});
+  const [pos, setPos] = useState({x: 50, y: 40});
+  const [dragging, setDragging] = useState(false);
   const [busy, setBusy] = useState(false);
   const [done, setDone] = useState(false);
+  const [logoError, setLogoError] = useState('');
 
   const stageRef = useRef(null);
-  const dragging = useRef(false);
 
-  const onPointerDown = (e) => {
-    dragging.current = true;
-    e.target.setPointerCapture?.(e.pointerId);
+  // ---- Drag robusto: todos los handlers en el diseño con pointer capture ----
+  const startDrag = (e) => {
+    e.preventDefault();
+    setDragging(true);
+    e.currentTarget.setPointerCapture?.(e.pointerId);
+    moveTo(e);
   };
-  const onPointerMove = (e) => {
-    if (!dragging.current || !stageRef.current) return;
-    const rect = stageRef.current.getBoundingClientRect();
+
+  const moveTo = (e) => {
+    const rect = stageRef.current?.getBoundingClientRect();
+    if (!rect || rect.width === 0) return;
     const x = clamp(((e.clientX - rect.left) / rect.width) * 100, 0, 100);
     const y = clamp(((e.clientY - rect.top) / rect.height) * 100, 0, 100);
     setPos({x, y});
   };
-  const onPointerUp = () => {
-    dragging.current = false;
+
+  const moveDrag = (e) => {
+    if (dragging) moveTo(e);
   };
+
+  const endDrag = () => setDragging(false);
 
   const onLogo = (e) => {
     const file = e.target.files?.[0];
+    setLogoError('');
     if (!file) return;
+    if (file.type !== 'image/png') {
+      setLogoError('El logo debe ser PNG (fondo transparente).');
+      e.target.value = '';
+      return;
+    }
     const reader = new FileReader();
     reader.onload = () => setLogo(reader.result);
     reader.readAsDataURL(file);
   };
 
   const renderCanvas = async () => {
+    // Asegurar que la tipografía esté cargada antes de dibujar
+    try {
+      await document.fonts.load(`90px ${font}`);
+      await document.fonts.ready;
+    } catch {}
+
     const canvas = document.createElement('canvas');
     const ctx = canvas.getContext('2d');
     const image = new Image();
@@ -128,7 +148,7 @@ export default function Personalizar() {
       ctx.fillStyle = '#000000';
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
-      ctx.font = `${Math.round(90 * scale)}px ${font}`;
+      ctx.font = `${Math.round(110 * scale)}px ${font}`;
       ctx.fillText(text, px, py);
     }
     return canvas.toDataURL('image/png');
@@ -170,41 +190,36 @@ export default function Personalizar() {
     <div className="cust">
       <header className="cust-head">
         <h1 className="cust-title">Personaliza tu {product?.title}</h1>
-        <p className="cust-sub">
-          Grabado láser en negro · + $15.000 COP · {formatCOP(price)}
-        </p>
+        <p className="cust-sub">Grabado láser en negro · + $15.000 COP · {formatCOP(price)}</p>
       </header>
 
       {/* Escenario de previsualización */}
-      <div
-        className="cust-stage"
-        ref={stageRef}
-        onPointerMove={onPointerMove}
-        onPointerUp={onPointerUp}
-        onPointerLeave={onPointerUp}
-      >
-        {img ? <img className="cust-img" src={img} alt={product?.title} /> : null}
+      <div className="cust-stage" ref={stageRef}>
+        {img ? <img className="cust-img" src={img} alt={product?.title} draggable={false} /> : null}
         <div
-          className="cust-design"
+          className={`cust-design ${dragging ? 'is-dragging' : ''}`}
           style={{
             left: `${pos.x}%`,
             top: `${pos.y}%`,
             transform: `translate(-50%, -50%) scale(${scale})`,
             fontFamily: font,
-            color: '#000000',
           }}
-          onPointerDown={onPointerDown}
+          onPointerDown={startDrag}
+          onPointerMove={moveDrag}
+          onPointerUp={endDrag}
+          onPointerCancel={endDrag}
         >
-          {logo ? <img className="cust-logo" src={logo} alt="logo" /> : text || 'Tu texto'}
+          {logo ? <img className="cust-logo" src={logo} alt="logo" draggable={false} /> : (text || '')}
         </div>
-        <div className="cust-hint">Arrastra para mover · usa el slider para escalar</div>
+        <div className="cust-hint">Arrastra para mover · slider para escalar</div>
       </div>
 
       {/* Controles */}
       <div className="cust-controls">
         <div className="cust-row">
-          <label className="cust-label">Texto</label>
+          <label className="cust-label" htmlFor="cust-text">Texto</label>
           <input
+            id="cust-text"
             className="cust-input"
             type="text"
             placeholder="Escribe tu texto…"
@@ -215,7 +230,7 @@ export default function Personalizar() {
         </div>
 
         <div className="cust-row">
-          <label className="cust-label">Tipografía</label>
+          <span className="cust-label">Tipografía</span>
           <div className="cust-fonts">
             {FONTS.map((f) => (
               <button
@@ -232,8 +247,9 @@ export default function Personalizar() {
         </div>
 
         <div className="cust-row">
-          <label className="cust-label">Tamaño</label>
+          <label className="cust-label" htmlFor="cust-scale">Tamaño</label>
           <input
+            id="cust-scale"
             className="cust-range"
             type="range"
             min="0.3"
@@ -245,8 +261,9 @@ export default function Personalizar() {
         </div>
 
         <div className="cust-row">
-          <label className="cust-label">Subir tu logo (opcional)</label>
-          <input className="cust-file" type="file" accept="image/*" onChange={onLogo} />
+          <span className="cust-label">Subir tu logo (PNG, opcional)</span>
+          <input className="cust-file" type="file" accept="image/png" onChange={onLogo} />
+          {logoError ? <p className="cust-error">{logoError}</p> : null}
           {logo ? (
             <button className="cust-clear" type="button" onClick={() => setLogo(null)}>
               Quitar logo
@@ -263,7 +280,7 @@ export default function Personalizar() {
           {busy ? 'Generando…' : 'Finalizar personalización'}
         </button>
         <p className="cust-note">
-          Al finalizar guardamos tu diseño (render + archivos) y lo enviamos con tu pedido.
+          Guardamos tu diseño (render + archivos) y lo enviamos con tu pedido.
         </p>
 
         {done ? (
