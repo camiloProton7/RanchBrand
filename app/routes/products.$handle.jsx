@@ -10,7 +10,9 @@ import {
   PaymentTrust,
 } from '~/components/ProductExtras';
 import {SocialProof} from '~/components/SocialProof';
+import Personalizador from '~/components/Personalizador';
 import productStyles from '~/styles/product.css?url';
+import persoStyles from '~/styles/perso.css?url';
 
 export const meta = ({data}) => {
   const product = data?.product;
@@ -58,7 +60,14 @@ export const meta = ({data}) => {
   return items;
 };
 
-export const links = () => [{rel: 'stylesheet', href: productStyles}];
+export const links = () => [
+  {rel: 'stylesheet', href: productStyles},
+  {rel: 'stylesheet', href: persoStyles},
+  {
+    rel: 'stylesheet',
+    href: 'https://fonts.googleapis.com/css2?family=Rye&family=Playfair+Display:wght@700&family=Great+Vibes&family=Oswald:wght@600&display=swap',
+  },
+];
 
 const PRODUCT_QUERY = `#graphql
   query Product($handle: String!) {
@@ -244,6 +253,11 @@ export async function loader({params, context}) {
 
 const SHOPIFY_DOMAIN = '1caf84-4.myshopify.com';
 
+// Producto "Personalización grabado láser" ($15.000) para el cobro extra
+const PERSONALIZACION_VARIANT_ID = '50406577111280';
+// Handles de productos que permiten personalización (grabado láser)
+const PERSONALIZABLES = ['chaqueta-ganadera-gamuza'];
+
 function toNumericId(gid) {
   return gid?.match(/\/(\d+)$/)?.[1] || gid;
 }
@@ -364,6 +378,7 @@ export default function ProductPage() {
   const [showFullDesc, setShowFullDesc] = useState(false);
   const [options, setOptions] = useState({});
   const [selectedGorras, setSelectedGorras] = useState([]);
+  const [personalizacion, setPersonalizacion] = useState(null);
   const trackRef = useRef(null);
 
   const variants = product?.variants?.nodes || [];
@@ -504,23 +519,62 @@ export default function ProductPage() {
     });
   };
 
-  const handleBuyNow = () => {
+  const handlePersonalizado = async () => {
+    if (!selectedVariant?.id || !personalizacion?.enabled) return false;
+    try {
+      const render = await personalizacion.render();
+      const form = new FormData();
+      form.append('product', product.title);
+      form.append('handle', product.handle);
+      form.append('variantId', selectedVariant.id);
+      form.append('text', personalizacion.text);
+      form.append('font', personalizacion.font);
+      form.append('scale', String(personalizacion.scale));
+      form.append('pos', JSON.stringify(personalizacion.pos));
+      form.append('render', render);
+      if (personalizacion.logo) form.append('logo', personalizacion.logo);
+
+      const res = await fetch('/api/personalizar', {method: 'POST', body: form});
+      const data = await res.json();
+      if (data?.ok) {
+        const chaquetaId = toNumericId(selectedVariant.id);
+        window.location.href = `https://${SHOPIFY_DOMAIN}/cart/${chaquetaId}:1,${PERSONALIZACION_VARIANT_ID}:1`;
+        return true;
+      }
+      alert('No se pudo guardar la personalización. Intenta de nuevo.');
+      return false;
+    } catch (e) {
+      console.error(e);
+      alert('Ocurrió un error. Intenta de nuevo.');
+      return false;
+    }
+  };
+
+  const handleBuyNow = async () => {
     if (isCombo) {
       if (!comboReady) return;
       window.location.href = getComboCartUrl(selectedVariant.id, selectedGorras, comboGorras);
       return;
     }
     if (!selectedVariant?.id) return;
+    if (personalizacion?.enabled) {
+      await handlePersonalizado();
+      return;
+    }
     buyNow(selectedVariant.id, qty);
   };
 
-  const handleAddToCart = () => {
+  const handleAddToCart = async () => {
     if (isCombo) {
       if (!comboReady) return;
       window.location.href = getComboCartUrl(selectedVariant.id, selectedGorras, comboGorras);
       return;
     }
     if (!selectedVariant?.id) return;
+    if (personalizacion?.enabled) {
+      await handlePersonalizado();
+      return;
+    }
     addToCart({
       variantId: selectedVariant.id,
       qty,
@@ -759,6 +813,10 @@ export default function ProductPage() {
           <span className="trp-guarantee-cards">VISA · MASTERCARD · PSE</span>
         </div>
       </div>
+
+      {PERSONALIZABLES.includes(product.handle) ? (
+        <Personalizador product={product} onChange={setPersonalizacion} />
+      ) : null}
 
       {/* ===== Barra de compra (grid 2x2) ===== */}
       <div className="trp-buybar">
