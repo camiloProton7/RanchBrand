@@ -760,6 +760,12 @@ export default function ProductPage() {
         </div>
       </div>
 
+      {product.handle === 'chaqueta-ganadera-gamuza' ? (
+        <a className="trp-personalizar" href={`/personalizar/${product.handle}`}>
+          ✏️ Personalizar con grabado láser · +$15.000
+        </a>
+      ) : null}
+
       {/* ===== Barra de compra (grid 2x2) ===== */}
       <div className="trp-buybar">
           <div className="trp-buybar-price">

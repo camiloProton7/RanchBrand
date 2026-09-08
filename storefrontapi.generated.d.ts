@@ -382,6 +382,24 @@ export type CollectionByHandleQuery = {
   >;
 };
 
+export type PersonalizableProductQueryVariables = StorefrontAPI.Exact<{
+  handle: StorefrontAPI.Scalars['String']['input'];
+}>;
+
+export type PersonalizableProductQuery = {
+  product?: StorefrontAPI.Maybe<
+    Pick<StorefrontAPI.Product, 'id' | 'title' | 'handle'> & {
+      featuredImage?: StorefrontAPI.Maybe<
+        Pick<StorefrontAPI.Image, 'url' | 'altText'>
+      >;
+      priceRange: {
+        minVariantPrice: Pick<StorefrontAPI.MoneyV2, 'amount' | 'currencyCode'>;
+      };
+      variants: {nodes: Array<Pick<StorefrontAPI.ProductVariant, 'id'>>};
+    }
+  >;
+};
+
 export type ProductQueryVariables = StorefrontAPI.Exact<{
   handle: StorefrontAPI.Scalars['String']['input'];
 }>;
@@ -495,6 +513,10 @@ interface GeneratedQueryTypes {
   '#graphql\n  query CollectionByHandle($handle: String!) {\n    collection(handle: $handle) {\n      id\n      title\n      description\n      image {\n        url\n        altText\n      }\n      products(first: 48) {\n        nodes {\n          id\n          title\n          handle\n          featuredImage {\n            url(transform: {maxWidth: 700, preferredContentType: WEBP})\n            altText\n          }\n          images(first: 2) {\n            nodes {\n              url(transform: {maxWidth: 700, preferredContentType: WEBP})\n              altText\n            }\n          }\n          priceRange {\n            minVariantPrice { amount currencyCode }\n          }\n          compareAtPriceRange {\n            minVariantPrice { amount currencyCode }\n          }\n          variants(first: 10) {\n            nodes {\n              id\n              selectedOptions { name value }\n              price { amount currencyCode }\n            }\n          }\n        }\n      }\n    }\n  }\n': {
     return: CollectionByHandleQuery;
     variables: CollectionByHandleQueryVariables;
+  };
+  '#graphql\n  query PersonalizableProduct($handle: String!) {\n    product(handle: $handle) {\n      id\n      title\n      handle\n      featuredImage {\n        url(transform: {maxWidth: 900, preferredContentType: WEBP})\n        altText\n      }\n      priceRange {\n        minVariantPrice { amount currencyCode }\n      }\n      variants(first: 1) {\n        nodes { id }\n      }\n    }\n  }\n': {
+    return: PersonalizableProductQuery;
+    variables: PersonalizableProductQueryVariables;
   };
   '#graphql\n  query Product($handle: String!) {\n    product(handle: $handle) {\n      id\n      title\n      handle\n      description\n      productType\n      tags\n      featuredImage {\n        url(transform: {maxWidth: 900, preferredContentType: WEBP})\n        altText\n      }\n      images(first: 10) {\n        nodes {\n          url(transform: {maxWidth: 900, preferredContentType: WEBP})\n          altText\n        }\n      }\n      priceRange { minVariantPrice { amount currencyCode } }\n      compareAtPriceRange { minVariantPrice { amount } }\n      variants(first: 50) {\n        nodes {\n          id\n          availableForSale\n          selectedOptions { name value }\n          price { amount currencyCode }\n          image { url(transform: {maxWidth: 900, preferredContentType: WEBP}) altText }\n        }\n      }\n    }\n  }\n': {
     return: ProductQuery;

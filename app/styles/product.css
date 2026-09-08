@@ -676,6 +676,21 @@
   font-weight: 800;
 }
 
+/* ===== Botón personalizar (grabado láser) ===== */
+.trp-personalizar {
+  align-items: center;
+  border: 2px dashed #b34a2a;
+  border-radius: 12px;
+  color: #b34a2a;
+  display: flex;
+  font-size: 14px;
+  font-weight: 700;
+  justify-content: center;
+  margin-bottom: 12px;
+  padding: 14px;
+  text-decoration: none;
+}
+
 /* ===== Barra de compra (sticky, en flujo) ===== */
 .trp-buybar {
   background: rgba(22, 22, 20, 0.92);
