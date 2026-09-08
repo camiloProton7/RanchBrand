@@ -48,7 +48,8 @@ export default async function handleRequest(
   const cspHeader = [
     `default-src 'self' https://cdn.shopify.com https://shopify.com`,
     `script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.shopify.com https://shopify.com https://connect.facebook.net https://www.facebook.com 'nonce-${nonce}'`,
-    `style-src 'self' 'unsafe-inline' https://cdn.shopify.com`,
+    `style-src 'self' 'unsafe-inline' https://cdn.shopify.com https://fonts.googleapis.com`,
+    `font-src 'self' https://fonts.gstatic.com`,
     `img-src 'self' data: https:`, // Permite imágenes de cualquier sitio HTTPS (necesario para Pixel)
     `connect-src 'self' https://monorail-edge.shopifysvc.com https://connect.facebook.net https://www.facebook.com`,
     `frame-src 'self' https://www.facebook.com`
