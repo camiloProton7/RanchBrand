@@ -69,9 +69,14 @@
 }
 
 .cust-design {
+  align-items: center;
   color: #000000;
   cursor: grab;
+  display: flex;
+  flex-direction: column;
   font-size: 56px;
+  gap: 14px;
+  justify-content: center;
   left: 50%;
   line-height: 1;
   position: absolute;
@@ -80,6 +85,10 @@
   touch-action: none;
   transform-origin: center center;
   user-select: none;
+  white-space: pre-wrap;
+}
+
+.cust-design-text {
   white-space: pre-wrap;
 }
 
@@ -268,6 +277,18 @@
   font-size: 13px;
   padding: 16px;
   width: 100%;
+}
+
+.cust-file-hint {
+  color: #a39a8a;
+  font-size: 12px;
+  margin: 8px 0 0;
+}
+
+.cust-note-inline {
+  color: #6b6457;
+  font-size: 12px;
+  margin: 8px 0 0;
 }
 
 .cust-error {

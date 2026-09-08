@@ -83,16 +83,19 @@ export default function Personalizar() {
   const [dragging, setDragging] = useState(false);
   const [busy, setBusy] = useState(false);
   const [done, setDone] = useState(false);
-  const [logoError, setLogoError] = useState('');
-  const [fontsReady, setFontsReady] = useState(false);
+  const [logoNote, setLogoNote] = useState('');
 
-  // Precargar las tipografías para que el preview las muestre correctamente
+  const stageRef = useRef(null);
+  const pointers = useRef({});
+  const pinchDist = useRef(0);
+  const scaleAtPinch = useRef(1);
+
+  // Precargar tipografías + imagen de la chaqueta para generar el render rápido
   useEffect(() => {
     let mounted = true;
     (async () => {
       try {
         await Promise.all(FONTS.map((f) => document.fonts.load(`52px ${f.family}`)));
-        await document.fonts.ready;
       } catch {}
       if (mounted) setFontsReady(true);
     })();
@@ -100,11 +103,7 @@ export default function Personalizar() {
       mounted = false;
     };
   }, []);
-
-  const stageRef = useRef(null);
-  const pointers = useRef({});
-  const pinchDist = useRef(0);
-  const scaleAtPinch = useRef(1);
+  const [fontsReady, setFontsReady] = useState(false);
 
   const moveTo = (cx, cy) => {
     const rect = stageRef.current?.getBoundingClientRect();
@@ -150,33 +149,28 @@ export default function Personalizar() {
 
   const onUp = (e) => {
     delete pointers.current[e.pointerId];
-    if (Object.keys(pointers.current).length < 2) {
-      pinchDist.current = 0;
-    }
-    if (Object.keys(pointers.current).length === 0) {
-      setDragging(false);
-    }
+    if (Object.keys(pointers.current).length < 2) pinchDist.current = 0;
+    if (Object.keys(pointers.current).length === 0) setDragging(false);
   };
 
   const onLogo = (e) => {
     const file = e.target.files?.[0];
-    setLogoError('');
+    setLogoNote('');
     if (!file) return;
-    if (file.type !== 'image/png') {
-      setLogoError('El logo debe ser PNG (fondo transparente).');
+    if (!file.type.startsWith('image/')) {
+      setLogoNote('Sube un archivo de imagen (PNG con fondo transparente recomendado).');
       e.target.value = '';
       return;
     }
     const reader = new FileReader();
-    reader.onload = () => setLogo(reader.result);
+    reader.onload = () => {
+      setLogo(reader.result);
+      setLogoNote('Logo agregado. Si quieres, puedes escribir también un texto.');
+    };
     reader.readAsDataURL(file);
   };
 
   const renderCanvas = async () => {
-    try {
-      await document.fonts.load(`110px ${font}`);
-      await document.fonts.ready;
-    } catch {}
     const canvas = document.createElement('canvas');
     const ctx = canvas.getContext('2d');
     const image = new Image();
@@ -189,20 +183,34 @@ export default function Personalizar() {
 
     const px = (pos.x / 100) * canvas.width;
     const py = (pos.y / 100) * canvas.height;
+    const hasText = !!text.trim();
+    const hasLogo = !!logo;
+    const lineH = Math.round(110 * scale);
 
-    if (logo) {
+    ctx.fillStyle = '#000000';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+
+    if (hasText && hasLogo) {
+      // Texto arriba, logo debajo
+      ctx.font = `${lineH}px ${font}`;
+      ctx.fillText(text.trim(), px, py - lineH * 0.6);
+      const li = new Image();
+      li.src = logo;
+      await li.decode();
+      const w = li.width * scale;
+      const h = li.height * scale;
+      ctx.drawImage(li, px - w / 2, py + lineH * 0.55, w, h);
+    } else if (hasLogo) {
       const li = new Image();
       li.src = logo;
       await li.decode();
       const w = li.width * scale;
       const h = li.height * scale;
       ctx.drawImage(li, px - w / 2, py - h / 2, w, h);
-    } else if (text.trim()) {
-      ctx.fillStyle = '#000000';
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'middle';
-      ctx.font = `${Math.round(110 * scale)}px ${font}`;
-      ctx.fillText(text, px, py);
+    } else if (hasText) {
+      ctx.font = `${lineH}px ${font}`;
+      ctx.fillText(text.trim(), px, py);
     }
     return canvas.toDataURL('image/png');
   };
@@ -227,7 +235,6 @@ export default function Personalizar() {
       const res = await fetch('/api/personalizar', {method: 'POST', body: form});
       const data = await res.json();
       if (data?.ok) {
-        // Agregar la chaqueta + la personalización ($15.000) al carrito
         const chaquetaId = toNumericId(product.variants?.nodes?.[0]?.id);
         if (chaquetaId) {
           window.location.href = `https://${SHOPIFY_DOMAIN}/cart/${chaquetaId}:1,${PERSONALIZACION_VARIANT_ID}:1`;
@@ -253,7 +260,7 @@ export default function Personalizar() {
         <span className="cust-badge">Grabado láser</span>
         <h1 className="cust-title">Personaliza tu {product?.title}</h1>
         <p className="cust-sub">
-          Escribe, elige tu estilo, súbelo y míralo en vivo.
+          Escribe, sube tu logo y míralo en vivo.
           <strong> +$15.000</strong> por personalización
         </p>
       </header>
@@ -274,7 +281,9 @@ export default function Personalizar() {
           onPointerUp={onUp}
           onPointerCancel={onUp}
         >
-          {logo ? <img className="cust-logo" src={logo} alt="logo" draggable={false} /> : previewText}
+          {text.trim() ? <span className="cust-design-text">{text}</span> : null}
+          {logo ? <img className="cust-logo" src={logo} alt="logo" draggable={false} /> : null}
+          {!text.trim() && !logo ? <span className="cust-design-text">Tu texto</span> : null}
         </div>
         <div className="cust-stage-topbar">
           <span className="cust-stage-tag">Vista previa en vivo</span>
@@ -333,9 +342,10 @@ export default function Personalizar() {
         </div>
 
         <div className="cust-row">
-          <span className="cust-label">4 · Tu logo (PNG, opcional)</span>
-          <input className="cust-file" type="file" accept="image/png" onChange={onLogo} />
-          {logoError ? <p className="cust-error">{logoError}</p> : null}
+          <span className="cust-label">4 · Tu logo (opcional)</span>
+          <input className="cust-file" type="file" accept="image/*" onChange={onLogo} />
+          <p className="cust-file-hint">PNG con fondo transparente recomendado</p>
+          {logoNote ? <p className="cust-note-inline">{logoNote}</p> : null}
           {logo ? (
             <button className="cust-clear" type="button" onClick={() => setLogo(null)}>
               Quitar logo
