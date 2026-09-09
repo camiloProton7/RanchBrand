@@ -109,6 +109,7 @@ export default function CollectionPage() {
   const [activeColor, setActiveColor] = useState(null);
   const [sort, setSort] = useState('featured');
   const [quickView, setQuickView] = useState(null);
+  const [tappedId, setTappedId] = useState(null);
 
   if (!collection) {
     return (
@@ -231,6 +232,8 @@ export default function CollectionPage() {
             product={p}
             index={i}
             onQuickView={setQuickView}
+            tapped={tappedId === p.id}
+            onToggle={() => setTappedId((prev) => (prev === p.id ? null : p.id))}
           />
         ))}
       </div>
@@ -288,7 +291,7 @@ export default function CollectionPage() {
   );
 }
 
-function CollectionCard({product, index, onQuickView}) {
+function CollectionCard({product, index, onQuickView, tapped, onToggle}) {
   const ref = useRef(null);
   const parallaxRef = useRef(null);
   const primary = product.featuredImage;
@@ -345,12 +348,21 @@ function CollectionCard({product, index, onQuickView}) {
   return (
     <article
       ref={ref}
-      className="tr-col-card"
+      className={`tr-col-card ${tapped ? 'is-tapped' : ''}`}
       style={{'--d': `${Math.min(index, 8) * 60}ms`}}
     >
       <div className="tr-col-parallax" ref={parallaxRef}>
         <Link className="tr-col-card-link" to={`/products/${product.handle}`}>
-          <div className="tr-col-card-media">
+          <div
+            className="tr-col-card-media"
+            onClick={(e) => {
+              if (window.matchMedia('(hover: none)').matches && second?.url) {
+                e.preventDefault();
+                e.stopPropagation();
+                onToggle?.();
+              }
+            }}
+          >
             {primary?.url ? (
               <img
                 className="tr-col-card-img"
