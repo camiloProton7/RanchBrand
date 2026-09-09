@@ -814,8 +814,10 @@
   transition: opacity 0.45s ease;
 }
 
-.tr-gorra-card:hover .tr-gorra-img-2 {
-  opacity: 1;
+@media (hover: hover) {
+  .tr-gorra-card:hover .tr-gorra-img-2 {
+    opacity: 1;
+  }
 }
 
 .tr-gorra-card:hover .tr-gorra-img {
