@@ -820,6 +820,11 @@
   }
 }
 
+/* Toggle táctil (móvil): un toque en la imagen alterna la segunda foto */
+.tr-gorra-card.is-tapped .tr-gorra-img-2 {
+  opacity: 1;
+}
+
 .tr-gorra-card:hover .tr-gorra-img {
   transform: scale(1.05);
 }
