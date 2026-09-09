@@ -288,11 +288,6 @@ export default function CollectionPage() {
   );
 }
 
-function stripHtml(html) {
-  if (!html) return '';
-  return html.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
-}
-
 function CollectionCard({product, index, onQuickView}) {
   const primary = product.featuredImage;
   const second = product.images?.nodes?.[1];
@@ -301,53 +296,43 @@ function CollectionCard({product, index, onQuickView}) {
   const hasDiscount = compare && Number(compare) > Number(price);
 
   return (
-    <Link className="tr-gorra-card" to={`/products/${product.handle}`}>
-      <div className="tr-gorra-media">
-        {primary?.url ? (
-          <img
-            className="tr-gorra-img"
-            src={primary.url}
-            alt={primary.altText || product.title}
-            loading="lazy"
-          />
-        ) : null}
-        {second?.url ? (
-          <img
-            className="tr-gorra-img tr-gorra-img-2"
-            src={second.url}
-            alt=""
-            loading="eager"
-            fetchpriority="high"
-          />
-        ) : null}
-        <div className="tr-gorra-labels">
-          <span className="tr-badge">{hasDiscount ? 'Oferta' : 'Premium'}</span>
-          <span className="tr-badge tr-badge-rating">
-            <i className="tr-star">★</i> 4.8
-          </span>
-        </div>
-        <div className="tr-gorra-pager" aria-hidden="true">
-          <span className="is-active" />
-          <span />
-          <span />
-          <span />
-        </div>
-      </div>
-      <div className="tr-gorra-body">
-        <h3 className="tr-gorra-name">{product.title}</h3>
-        <p className="tr-gorra-desc">{stripHtml(product.description)}</p>
-        <div className="tr-gorra-foot">
-          <span className="tr-gorra-price">
-            {formatPrice(price)}
-            {hasDiscount ? (
-              <s className="tr-gorra-compare">{formatPrice(compare)}</s>
+    <article className="tr-col-card">
+      <Link className="tr-col-card-link" to={`/products/${product.handle}`}>
+          <div className="tr-col-card-media">
+            {primary?.url ? (
+              <img
+                className="tr-col-card-img"
+                src={primary.url}
+                alt={primary.altText || product.title}
+                loading="lazy"
+              />
             ) : null}
-          </span>
-          <span className="tr-gorra-cta">
-            Comprar ahora <i aria-hidden="true">→</i>
-          </span>
-        </div>
-      </div>
-    </Link>
+            {second?.url ? (
+              <img
+                className="tr-col-card-img tr-col-card-img-2"
+                src={second.url}
+                alt=""
+                loading="eager"
+                fetchpriority="high"
+              />
+            ) : null}
+            <span className="tr-col-rating-badge">
+              <i>★</i> 4.8
+            </span>
+            {hasDiscount ? <span className="tr-col-offer">Oferta</span> : null}
+          </div>
+          <div className="tr-col-card-info">
+            <h3 className="tr-col-card-name">{product.title}</h3>
+            <div className="tr-col-card-meta">
+              <span className="tr-col-card-price">
+                {formatPrice(price)}
+                {hasDiscount ? (
+                  <s className="tr-col-card-compare">{formatPrice(compare)}</s>
+                ) : null}
+              </span>
+            </div>
+          </div>
+      </Link>
+    </article>
   );
 }
