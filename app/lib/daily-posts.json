@@ -1,5 +1,56 @@
 [
   {
+    "slug": "cuidado-de-gorras-cuero-prendas-campo",
+    "title": "Cuidado de gorras, cuero y prendas de campo: que duren como el oficio",
+    "excerpt": "Una gorra con visera en cuero o una chaqueta de campo bien cuidada duran décadas. Aprende a limpiarlas, guardarlas y evitar los errores que las arruinan.",
+    "date": "2026-09-09",
+    "category": "Campo",
+    "blocks": [
+      {"type": "p", "text": "La ropa de campo no se usa: se lleva. Y quien la lleva de verdad la cuida. Una gorra con visera en cuero o una chaqueta de trabajo bien mantenidas no solo se ven mejor, duran lo que debe durar un oficio."},
+      {"type": "h2", "text": "La gorra: el cuero pide poco, pero pide"},
+      {"type": "ul", "items": ["Visera de cuero: límpiala en seco con un paño suave y un toque de acondicionador cada tanto.", "Tela y bordado: cepillo de cerdas suaves para el polvo; manchas puntuales con paño húmedo, sin restregar.", "Guardado: nunca aplastes la copa; dale forma y guárdala en un lugar seco y ventilado."]},
+      {"type": "h2", "text": "El cuero de las chaquetas y prendas de campo"},
+      {"type": "p", "text": "El cuero reseco se cuartea; el cuero húmedo se pudre. Hidrátalo cada pocos meses con acondicionador específico y déjalo respirar. Evita el sol directo y las bolsas plásticas cerradas: el cuero necesita aire."},
+      {"type": "h2", "text": "Lo que nunca debes hacer"},
+      {"type": "ul", "items": ["No laves el cuero en lavadora ni lo sumerjas en agua.", "No uses secadora ni calor directo para secar prendas mojadas.", "No apliques betún sobre la gamuza: pierde su textura para siempre."]},
+      {"type": "p", "text": "No seguimos modas, las marcamos; y lo que marcamos se cuida. Una prenda bien tratada te acompaña tantos años como las que heredaste. Explora la colección de gorras y chaquetas The Ranch y dale a tu equipo el cuidado que merece."}
+    ]
+  },
+  {
+    "slug": "estilo-western-premium-como-vestirlo-hoy",
+    "title": "Estilo western premium: la guía para vestirlo con cabeza fría",
+    "excerpt": "El western premium no es disfraz ni exceso: es una actitud construida con materiales, corte y una sola pieza protagonista. Así se domina hoy.",
+    "date": "2026-09-09",
+    "category": "Campo",
+    "blocks": [
+      {"type": "p", "text": "Hay una diferencia enorme entre vestir western y parecer que sales de un set de película. El estilo western premium se gana con cabeza fría: pocos elementos, de buena factura, y una sola pieza que manda. No seguimos modas, las marcamos."},
+      {"type": "h2", "text": "Una sola pieza protagonista"},
+      {"type": "p", "text": "El error más común es cargar el look entero: sombrero, hebilla, botas y chaqueta a la vez. El resultado es ruido. Elige UNA pieza con carácter —una chaqueta de gamuza, una gorra de cuero— y deja que el resto sea neutral."},
+      {"type": "h2", "text": "El truco está en los materiales y el corte"},
+      {"type": "ul", "items": ["Tonos tierra y neutros: arena, tabaco, cuero, caqui. Siempre funcionan.", "Cortes limpios y entallados: el western premium no cuelga, se asienta.", "Materiales nobles: cuero, gamuza, algodón grueso. Lo barato se nota a metros.", "Una textura protagonista por look: o cuero, o gamuza, no ambos."]},
+      {"type": "h2", "text": "Combinaciones que nunca fallan"},
+      {"type": "ul", "items": ["Gorra de cuero + camisa blanca + jeans rectos: sobrio y seguro.", "Chaqueta de gamuza + t-shirt lisa + botas de trabajo: el clásico del campo.", "Total look tierra con una hebilla discreta: presencia sin estridencia."]},
+      {"type": "p", "text": "Vestir bien no es gritar: es que te lean sin que digas nada. Encuentra la pieza que te define en la colección de gorras y chaquetas The Ranch."}
+    ]
+  },
+  {
+    "slug": "filosofia-vaquera-principios-campo",
+    "title": "La filosofía vaquera: los principios que el campo enseña a quien escucha",
+    "excerpt": "El campo tiene su propio código: hacerse responsable, cumplir la palabra y trabajar sin atajos. Estos son los principios que de verdad forman carácter.",
+    "date": "2026-09-09",
+    "category": "Campo",
+    "blocks": [
+      {"type": "p", "text": "El campo no dicta lecciones: las muestra. Quien madruga, ensilla y responde por su ganado aprende un código que ningún salón enseña. Esa es la filosofía vaquera, y se lleva puesta."},
+      {"type": "h2", "text": "La palabra vale más que la firma"},
+      {"type": "p", "text": "En el rancho un apretón de manos cierra un trato y una promesa se cumple aunque cueste. El carácter no se declara: se demuestra cada vez que haces lo que dijiste, sin excusas ni atajos."},
+      {"type": "h2", "text": "Responsabilidad: el animal y la tierra dependen de ti"},
+      {"type": "ul", "items": ["No se abandona la faena a mitad: se termina lo que se empieza.", "Se cuida lo ajeno como lo propio: la cerca, el agua, el ganado.", "El error se asume y se corrige, no se esconde.", "La madrugada no se negocia: el trabajo manda sobre la comodidad."]},
+      {"type": "h2", "text": "Sin atajos: lo bien hecho habla solo"},
+      {"type": "p", "text": "El que busca atajos llega antes y dura menos. El campo premia al que hace las cosas bien la primera vez, al que entrena la constancia como un músculo. Ahí se forja la reputación que nadie te puede quitar."},
+      {"type": "p", "text": "Ese es el espíritu que vestimos. No seguimos modas, las marcamos. Si compartes este código, explora la colección de gorras y chaquetas The Ranch, hecha para quienes viven así."}
+    ]
+  },
+  {
     "slug": "frases-principios-filosofia-rancho",
     "title": "Frases y principios del rancho: la filosofía que no se negocia",
     "excerpt": "El rancho se sostiene sobre principios que pasan de generación en generación. Estas son las frases y la filosofía que nos rigen.",
