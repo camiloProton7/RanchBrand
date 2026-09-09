@@ -364,7 +364,8 @@ function CollectionCard({product, index, onQuickView}) {
                 className="tr-col-card-img tr-col-card-img-2"
                 src={second.url}
                 alt=""
-                loading="lazy"
+                loading="eager"
+                fetchpriority="high"
               />
             ) : null}
             <span className="tr-col-rating-badge">
