@@ -290,8 +290,6 @@ export default function CollectionPage() {
 
 function CollectionCard({product, index, onQuickView}) {
   const ref = useRef(null);
-  const parallaxRef = useRef(null);
-  const [hovered, setHovered] = useState(false);
   const primary = product.featuredImage;
   const second = product.images?.nodes?.[1];
   const price = product.priceRange?.minVariantPrice?.amount;
@@ -316,32 +314,7 @@ function CollectionCard({product, index, onQuickView}) {
     return () => io.disconnect();
   }, []);
 
-  // Parallax sutil al scroll (solo en desktop con mouse, no en táctil).
-  useEffect(() => {
-    const el = parallaxRef.current;
-    if (!el) return;
-    if (window.matchMedia('(hover: none)').matches) return;
-    let raf = 0;
-    const update = () => {
-      raf = 0;
-      const rect = el.getBoundingClientRect();
-      const center = rect.top + rect.height / 2;
-      const viewportCenter = window.innerHeight / 2;
-      const offset = (center - viewportCenter) / viewportCenter;
-      el.style.transform = `translate3d(0, ${(offset * -10).toFixed(2)}px, 0)`;
-    };
-    const onScroll = () => {
-      if (!raf) raf = requestAnimationFrame(update);
-    };
-    update();
-    window.addEventListener('scroll', onScroll, {passive: true});
-    window.addEventListener('resize', onScroll);
-    return () => {
-      window.removeEventListener('scroll', onScroll);
-      window.removeEventListener('resize', onScroll);
-      if (raf) cancelAnimationFrame(raf);
-    };
-  }, []);
+  // Parallax eliminado (causaba problemas con el hover en la tarjeta).
 
   return (
     <article
@@ -349,13 +322,8 @@ function CollectionCard({product, index, onQuickView}) {
       className="tr-col-card"
       style={{'--d': `${Math.min(index, 8) * 60}ms`}}
     >
-      <div className="tr-col-parallax" ref={parallaxRef}>
-        <Link className="tr-col-card-link" to={`/products/${product.handle}`}>
-          <div
-            className={`tr-col-card-media ${hovered ? 'is-hovered' : ''}`}
-            onMouseEnter={() => setHovered(true)}
-            onMouseLeave={() => setHovered(false)}
-          >
+      <Link className="tr-col-card-link" to={`/products/${product.handle}`}>
+          <div className="tr-col-card-media">
             {primary?.url ? (
               <img
                 className="tr-col-card-img"
@@ -389,8 +357,7 @@ function CollectionCard({product, index, onQuickView}) {
               </span>
             </div>
           </div>
-        </Link>
-      </div>
+      </Link>
     </article>
   );
 }
