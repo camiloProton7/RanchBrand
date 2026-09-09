@@ -609,8 +609,8 @@
   }
 }
 
-/* Toggle táctil (móvil): un toque alterna la segunda foto */
-.tr-col-card.is-tapped .tr-col-card-img-2 {
+/* Vistazo táctil (móvil): al mantener el dedo se ve la 2ª foto; al soltar vuelve */
+.tr-col-card-media.is-peek .tr-col-card-img-2 {
   opacity: 1;
 }
 

@@ -291,6 +291,7 @@ export default function CollectionPage() {
 function CollectionCard({product, index, onQuickView}) {
   const ref = useRef(null);
   const parallaxRef = useRef(null);
+  const [peek, setPeek] = useState(false);
   const primary = product.featuredImage;
   const second = product.images?.nodes?.[1];
   const price = product.priceRange?.minVariantPrice?.amount;
@@ -350,7 +351,13 @@ function CollectionCard({product, index, onQuickView}) {
     >
       <div className="tr-col-parallax" ref={parallaxRef}>
         <Link className="tr-col-card-link" to={`/products/${product.handle}`}>
-          <div className="tr-col-card-media">
+          <div
+            className={`tr-col-card-media ${peek ? 'is-peek' : ''}`}
+            onTouchStart={() => { if (second?.url) setPeek(true); }}
+            onTouchMove={() => setPeek(false)}
+            onTouchEnd={() => setPeek(false)}
+            onTouchCancel={() => setPeek(false)}
+          >
             {primary?.url ? (
               <img
                 className="tr-col-card-img"
