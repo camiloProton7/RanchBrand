@@ -291,6 +291,7 @@ export default function CollectionPage() {
 function CollectionCard({product, index, onQuickView}) {
   const ref = useRef(null);
   const parallaxRef = useRef(null);
+  const [hovered, setHovered] = useState(false);
   const primary = product.featuredImage;
   const second = product.images?.nodes?.[1];
   const price = product.priceRange?.minVariantPrice?.amount;
@@ -350,7 +351,11 @@ function CollectionCard({product, index, onQuickView}) {
     >
       <div className="tr-col-parallax" ref={parallaxRef}>
         <Link className="tr-col-card-link" to={`/products/${product.handle}`}>
-          <div className="tr-col-card-media">
+          <div
+            className={`tr-col-card-media ${hovered ? 'is-hovered' : ''}`}
+            onMouseEnter={() => setHovered(true)}
+            onMouseLeave={() => setHovered(false)}
+          >
             {primary?.url ? (
               <img
                 className="tr-col-card-img"

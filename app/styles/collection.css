@@ -599,10 +599,8 @@
   transition: opacity 0.2s ease;
 }
 
-@media (hover: hover) {
-  .tr-col-card-link:hover .tr-col-card-img-2 {
-    opacity: 1;
-  }
+.tr-col-card-media.is-hovered .tr-col-card-img-2 {
+  opacity: 1;
 }
 
 .tr-col-offer {
