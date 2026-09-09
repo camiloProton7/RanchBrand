@@ -191,20 +191,6 @@
 
 .tr-col-card {
   min-width: 0;
-  opacity: 0;
-  transform: translateY(24px);
-  transition: opacity 0.7s ease, transform 0.7s ease;
-  transition-delay: var(--d, 0ms);
-}
-
-.tr-col-card.is-in {
-  opacity: 1;
-  transform: none;
-}
-
-.tr-col-parallax {
-  height: 100%;
-  will-change: transform;
 }
 
 /* ── Tarjeta de producto (igual al home, adaptada al grid) ── */
