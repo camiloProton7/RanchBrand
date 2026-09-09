@@ -596,11 +596,13 @@
 
 .tr-col-card-img-2 {
   opacity: 0;
-  transition: opacity 0.2s ease;
+  transition: opacity 0.45s ease;
 }
 
-.tr-col-card-media.is-hovered .tr-col-card-img-2 {
-  opacity: 1;
+@media (hover: hover) {
+  .tr-col-card-link:hover .tr-col-card-img-2 {
+    opacity: 1;
+  }
 }
 
 .tr-col-offer {
