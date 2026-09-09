@@ -8,6 +8,7 @@ const MENU_ITEMS = [
   {label: 'Gorras', href: '/collections/gorras-truckers'},
   {label: 'Chaquetas', href: '/collections/chaquetas'},
   {label: 'Camisetas', href: '/collections/camisetas'},
+  {label: 'Botas', href: '/collections/botas-1'},
   {label: 'Blog', href: '/blog'},
 ];
 
