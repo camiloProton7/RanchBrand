@@ -289,39 +289,14 @@ export default function CollectionPage() {
 }
 
 function CollectionCard({product, index, onQuickView}) {
-  const ref = useRef(null);
   const primary = product.featuredImage;
   const second = product.images?.nodes?.[1];
   const price = product.priceRange?.minVariantPrice?.amount;
   const compare = product.compareAtPriceRange?.minVariantPrice?.amount;
   const hasDiscount = compare && Number(compare) > Number(price);
 
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const io = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((e) => {
-          if (e.isIntersecting) {
-            e.target.classList.add('is-in');
-            io.unobserve(e.target);
-          }
-        });
-      },
-      {threshold: 0.12},
-    );
-    io.observe(el);
-    return () => io.disconnect();
-  }, []);
-
-  // Parallax eliminado (causaba problemas con el hover en la tarjeta).
-
   return (
-    <article
-      ref={ref}
-      className="tr-col-card"
-      style={{'--d': `${Math.min(index, 8) * 60}ms`}}
-    >
+    <article className="tr-col-card">
       <Link className="tr-col-card-link" to={`/products/${product.handle}`}>
           <div className="tr-col-card-media">
             {primary?.url ? (
