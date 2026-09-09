@@ -435,6 +435,7 @@ function WhatsAppFloat() {
 
 function ProductScroll({products, collectionUrl, ariaLabel, title}) {
   const sectionRef = useRef(null);
+  const [tappedId, setTappedId] = useState(null);
 
   useEffect(() => {
     const section = sectionRef.current;
@@ -477,10 +478,19 @@ function ProductScroll({products, collectionUrl, ariaLabel, title}) {
           return (
             <Link
               key={product.id}
-              className="tr-gorra-card"
+              className={`tr-gorra-card ${tappedId === product.id ? 'is-tapped' : ''}`}
               to={`/products/${product.handle}`}
             >
-              <div className="tr-gorra-media">
+              <div
+                className="tr-gorra-media"
+                onClick={(e) => {
+                  if (window.matchMedia('(hover: none)').matches && second?.url) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    setTappedId((prev) => (prev === product.id ? null : product.id));
+                  }
+                }}
+              >
                 {primary?.url ? (
                   <img
                     className="tr-gorra-img"
