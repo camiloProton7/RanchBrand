@@ -1,5 +1,56 @@
 [
   {
+    "slug": "manejo-del-ganado-sin-voz",
+    "title": "Manejo del ganado: el arte de mover el hato sin alzar la voz",
+    "excerpt": "Mover ganado no es correr detrás de los animales: es leer su comportamiento, trabajar en calma y hacer que el hato se mueva solo. Así se hace en serio.",
+    "date": "2026-09-10",
+    "category": "Campo",
+    "blocks": [
+      {"type": "p", "text": "El ganado no obedece al grito, obedece a la calma. El vaquero que conoce su oficio mueve un hato entero sin alzar la voz, porque entiende cómo piensa el animal: en grupo, por instinto y con un punto de fuga siempre a la vista."},
+      {"type": "h2", "text": "La zona de fuga: el secreto que nadie te enseña"},
+      {"type": "p", "text": "Cada animal tiene una distancia a la que se siente seguro. Si la invades de frente, retrocede; si la presionas por el flanco, avanza. Trabajar con esa zona —ni demasiado cerca, ni demasiado lejos— es lo que separa al que guía del que persigue."},
+      {"type": "h2", "text": "Reglas para mover ganado sin estrés"},
+      {"type": "ul", "items": ["Trabaja por el flanco, nunca de frente: el animal avanza cuando lo flanqueas con calma.", "Presión y liberación: suelta la presión en cuanto el animal da el paso correcto.", "Sin griterío: el ganado estresado se dispersa, no se mueve.", "Un solo punto de mando: si todos mandan, nadie guía."]},
+      {"type": "h2", "text": "¿Por qué importa?"},
+      {"type": "p", "text": "Un animal estresado pierde peso, se lastima y vuelve lenta la faena. Un hato bien manejado trabaja solo y llega entero. El buen vaquero no se ve desde lejos: se nota en cómo camina el ganado."},
+      {"type": "p", "text": "Ese oficio silencioso es el que honramos en The Ranch. No seguimos modas, las marcamos. Descubre la colección de gorras y chaquetas hechas para quienes trabajan el campo como se debe."}
+    ]
+  },
+  {
+    "slug": "moda-western-otonio-capas-y-detalles",
+    "title": "Moda western de entretiempo: capas, tonos y detalles que mandan",
+    "excerpt": "La moda western no es solo verano ni sombrero: es dominar las capas y los detalles cuando cambia el clima. Así se viste el entretiempo con intención.",
+    "date": "2026-09-10",
+    "category": "Campo",
+    "blocks": [
+      {"type": "p", "text": "Cuando el calor afloja, el western se vuelve cuestión de capas. Es el momento en que una chaqueta ligera, un tono tierra bien elegido y un detalle de cuero hacen todo el trabajo. No seguimos modas, las marcamos."},
+      {"type": "h2", "text": "La capa correcta, no la más gruesa"},
+      {"type": "p", "text": "El entretiempo castiga al que se abriga de más. Una chaqueta de gamuza o una camisa de trabajo con peso medio funcionan mejor que una prenda gruesa que termina amarrada a la cintura. La idea es sumar y quitar capas sin perder el corte."},
+      {"type": "h2", "text": "La paleta del entretiempo"},
+      {"type": "ul", "items": ["Tabaco y caqui: los tonos que conectan con la tierra seca.", "Cuero envejecido: el detalle que le da carácter sin estridencia.", "Azul denim oscuro: la base neutra que sostiene todo lo demás.", "Acentos de gamuza: textura sin ruido, presencia sin exceso."]},
+      {"type": "h2", "text": "Detalles que elevan el conjunto"},
+      {"type": "p", "text": "Una gorra con visera en cuero cierra el look con la misma naturalidad con que se remata un lazo: sin esfuerzo, pero con oficio. Los puños, el cuello y el corte de la prenda son los que delatan si sabes lo que haces."},
+      {"type": "p", "text": "Vestir de entretiempo es una declaración de calma. Encuentra la capa y el detalle que te definen en la colección de gorras y chaquetas The Ranch."}
+    ]
+  },
+  {
+    "slug": "lectura-del-caballo-antes-de-montar",
+    "title": "Cómo leer un caballo antes de montar: el lenguaje que todo jinete debe dominar",
+    "excerpt": "El caballo habla todo el tiempo: con las orejas, la cola y el cuerpo. Leerlo antes de montar evita sustos y convierte la monta en una conversación.",
+    "date": "2026-09-10",
+    "category": "Campo",
+    "blocks": [
+      {"type": "p", "text": "El buen jinete no monta a ciegas: lee. El caballo comunica su estado mucho antes de que pongas el pie en el estribo, y quien sabe escuchar evita sustos, caídas y malos ratos."},
+      {"type": "h2", "text": "Las señales que no mienten"},
+      {"type": "ul", "items": ["Orejas hacia atrás: alerta o molestia, pide espacio y calma.", "Orejas hacia delante: atención y curiosidad, buena señal.", "Cola tensa o en látigo: nervios o incomodidad.", "Bostezo y labios relajados: calma y confianza.", "Pateo o balanceo: ansiedad, hay que revisar el entorno."]},
+      {"type": "h2", "text": "Antes de ensillar, lee el ánimo"},
+      {"type": "p", "text": "Acércate por el costado, nunca por sorpresa, y habla en un tono parejo. Si el animal gira la grupa o aprieta la boca, no es el día para apurarlo. Un caballo sereno se ensilla solo; uno nervioso te avisa antes de que sea tarde."},
+      {"type": "h2", "text": "Montar es conversar"},
+      {"type": "p", "text": "Una vez arriba, la monta es un diálogo de peso, pierna y rienda. Cuanto mejor leas las señales sutiles del animal, menos fuerza necesitarás. El mejor jinete no es el que domina, es el que se hace entender."},
+      {"type": "p", "text": "Esa conexión entre jinete y caballo es parte del espíritu The Ranch. No seguimos modas, las marcamos. Explora la colección de gorras y chaquetas para el camino."}
+    ]
+  },
+  {
     "slug": "cuidado-de-gorras-cuero-prendas-campo",
     "title": "Cuidado de gorras, cuero y prendas de campo: que duren como el oficio",
     "excerpt": "Una gorra con visera en cuero o una chaqueta de campo bien cuidada duran décadas. Aprende a limpiarlas, guardarlas y evitar los errores que las arruinan.",
