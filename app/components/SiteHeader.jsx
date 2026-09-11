@@ -6,7 +6,14 @@ import CartDrawer from '~/components/CartDrawer';
 const MENU_ITEMS = [
   {label: 'Home', href: '/'},
   {label: 'Gorras', href: '/collections/gorras-truckers'},
-  {label: 'Chaquetas', href: '/collections/chaquetas'},
+  {
+    label: 'Chaquetas',
+    href: '/collections/chaquetas',
+    children: [
+      {label: 'Hombre', href: '/collections/chaquetas'},
+      {label: 'Mujer', href: '/collections/chaquetas-mujer'},
+    ],
+  },
   {label: 'Camisetas', href: '/collections/camisetas'},
   {label: 'Botas', href: '/collections/botas-1'},
   {label: 'Blog', href: '/blog'},
@@ -55,9 +62,21 @@ export default function SiteHeader({logoSrc}) {
 
         <nav className="tr-site-nav" aria-label="Principal">
           {MENU_ITEMS.map((item) => (
-            <Link key={item.label} to={item.href}>
-              {item.label}
-            </Link>
+            <div key={item.label} className="tr-site-nav-item">
+              <Link to={item.href}>
+                {item.label}
+                {item.children ? <span className="tr-site-nav-caret">▾</span> : null}
+              </Link>
+              {item.children ? (
+                <div className="tr-site-dropdown">
+                  {item.children.map((child) => (
+                    <Link key={child.label} to={child.href}>
+                      {child.label}
+                    </Link>
+                  ))}
+                </div>
+              ) : null}
+            </div>
           ))}
         </nav>
 
@@ -112,17 +131,32 @@ export default function SiteHeader({logoSrc}) {
 
           <nav className="tr-site-menu-nav">
             {MENU_ITEMS.map((item, i) => (
-              <Link
-                key={item.label}
-                to={item.href}
-                onClick={() => setOpen(false)}
-                style={{animationDelay: `${0.06 + i * 0.05}s`}}
-              >
-                <span className="tr-site-menu-num">
-                  {String(i + 1).padStart(2, '0')}
-                </span>
-                {item.label}
-              </Link>
+              <div key={item.label} className="tr-site-menu-group">
+                <Link
+                  to={item.href}
+                  onClick={() => setOpen(false)}
+                  style={{animationDelay: `${0.06 + i * 0.05}s`}}
+                >
+                  <span className="tr-site-menu-num">
+                    {String(i + 1).padStart(2, '0')}
+                  </span>
+                  {item.label}
+                </Link>
+                {item.children ? (
+                  <div className="tr-site-menu-sub">
+                    {item.children.map((child) => (
+                      <Link
+                        key={child.label}
+                        to={child.href}
+                        onClick={() => setOpen(false)}
+                      >
+                        <span className="tr-site-menu-num tr-site-menu-num-sub" />
+                        {child.label}
+                      </Link>
+                    ))}
+                  </div>
+                ) : null}
+              </div>
             ))}
             <a
               className="tr-site-menu-wa"
