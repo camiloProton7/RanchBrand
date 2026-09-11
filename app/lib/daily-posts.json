@@ -1,5 +1,56 @@
 [
   {
+    "slug": "origen-del-vaquero-legado-llanero",
+    "title": "El origen del vaquero: de los llanos españoles al espíritu llanero",
+    "excerpt": "El vaquero no nació en una película: se forjó durante siglos de trabajo a caballo. Este es el origen de un oficio que hoy se lleva puesto.",
+    "date": "2026-09-11",
+    "category": "Campo",
+    "blocks": [
+      {"type": "p", "text": "El vaquero no nació en el cine: se forjó durante siglos de trabajo a caballo. De los llanos de la península ibérica a los llanos colombianos, el oficio de mover ganado montado forjó una forma de vestir, de pensar y de vivir que sigue mandando."},
+      {"type": "h2", "text": "Del campo español al llano americano"},
+      {"type": "p", "text": "La palabra lo dice: vaquero viene de vaca. Las técnicas de arrear, marcar y cuidar el hato cruzaron el Atlántico con los españoles y se mezclaron con el conocimiento de la tierra. De esa mezcla nació el llanero: jinete incansable y guardián de una tradición que no conoce fronteras."},
+      {"type": "h2", "text": "Lo que el vaquero de verdad heredó"},
+      {"type": "ul", "items": ["El oficio antes que el adorno: cada prenda nació de una función real.", "El caballo como compañero, no como herramienta desechable.", "La palabra empeñada y el trabajo hecho a mano.", "El respeto por la tierra y por el hato que la habita."]},
+      {"type": "h2", "text": "Por qué su legado sigue mandando"},
+      {"type": "p", "text": "Porque los valores del vaquero —trabajo, palabra y resistencia— siguen separando al que tiene carácter del que solo aparenta. Su estilo nació de la función, y por eso no envejece."},
+      {"type": "p", "text": "No seguimos modas, las marcamos. Lleva contigo el legado del vaquero: explora la colección de gorras y chaquetas The Ranch."}
+    ]
+  },
+  {
+    "slug": "coleo-tradicion-llanera",
+    "title": "El coleo: la tradición llanera donde caballo, fuerza y honor se miden",
+    "excerpt": "El coleo es la más llanera de las tradiciones: una prueba de jineta, fuerza y honor que mantiene viva la conexión entre el llanero, el caballo y el ganado.",
+    "date": "2026-09-11",
+    "category": "Campo",
+    "blocks": [
+      {"type": "p", "text": "El coleo es la más llanera de las tradiciones: una muestra de jineta, fuerza y honor que se transmite de generación en generación. Más que un deporte, es un ritual que mantiene vivo el vínculo entre el llanero y su caballo."},
+      {"type": "h2", "text": "¿Qué es el coleo?"},
+      {"type": "p", "text": "Un grupo de jinetes persigue a un toro a todo galope; uno de ellos lo toma por la cola y, con un movimiento preciso, lo derriba dentro de una zona marcada. Parece fuerza bruta, pero es pura técnica: un tirón mal dado lastima al animal y deshonra al coleador."},
+      {"type": "h2", "text": "Las reglas de oro del coleador"},
+      {"type": "ul", "items": ["El caballo lo es todo: se entrena y se cuida tanto como al jinete.", "La técnica vale más que la fuerza: se derriba con precisión, no con rabia.", "El respeto por el toro es parte del honor del coleador.", "La faena es colectiva: se gana y se pierde en equipo."]},
+      {"type": "h2", "text": "Deporte, fiesta y memoria"},
+      {"type": "p", "text": "El coleo es el corazón de muchas festividades llaneras, junto al joropo y la vaquería. En cada enlazada y cada derribo se transmite, sin manuales, la relación del llanero con el caballo y el hato."},
+      {"type": "p", "text": "La tradición se honra viviéndola y vistiéndola. No seguimos modas, las marcamos. Explora la colección de gorras y chaquetas The Ranch."}
+    ]
+  },
+  {
+    "slug": "caballo-criollo-colombiano-paso-fino",
+    "title": "El caballo criollo colombiano: el paso fino que nació para el campo",
+    "excerpt": "El caballo criollo colombiano es el resultado de siglos de selección para el trabajo de llano. Su paso fino lo convirtió en una monta legendaria.",
+    "date": "2026-09-11",
+    "category": "Campo",
+    "blocks": [
+      {"type": "p", "text": "El caballo criollo colombiano no es solo una raza: es el resultado de siglos de selección para el campo. Su paso fino, suave y seguro, lo convirtió en la monta ideal para las largas jornadas del llano."},
+      {"type": "h2", "text": "El paso fino: comodidad que no se improvisa"},
+      {"type": "p", "text": "A diferencia del trote, que sacude al jinete, el paso fino es un andar lateral de cuatro tiempos que se siente casi como flotar. No se aprende: se hereda en la genética, refinada por generaciones de criadores."},
+      {"type": "h2", "text": "Un caballo hecho para el trabajo de llano"},
+      {"type": "ul", "items": ["Resistencia: aguanta jornadas largas sin desfondarse.", "Seguridad: su paso firme da estabilidad en terrenos irregulares.", "Temperamento: dócil y valiente a la vez, ideal para el ganado.", "Nobleza: se entrega al jinete que lo respeta."]},
+      {"type": "h2", "text": "Cabalgarlo es un arte, no un paseo"},
+      {"type": "p", "text": "Montar bien un paso fino exige dejar fluir el andar sin pelear con las riendas. El buen jinete acompaña, dosifica y lee al animal: ahí la equitación se vuelve conversación, no forcejeo."},
+      {"type": "p", "text": "El caballo y su jinete comparten camino y carácter. No seguimos modas, las marcamos. Descubre la colección de gorras y chaquetas The Ranch, pensada para quien monta y trabaja."}
+    ]
+  },
+  {
     "slug": "manejo-del-ganado-sin-voz",
     "title": "Manejo del ganado: el arte de mover el hato sin alzar la voz",
     "excerpt": "Mover ganado no es correr detrás de los animales: es leer su comportamiento, trabajar en calma y hacer que el hato se mueva solo. Así se hace en serio.",
