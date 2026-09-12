@@ -1,5 +1,50 @@
 [
   {
+    "slug": "la-marca-del-ganado-hierro-identidad-hato",
+    "title": "La marca del ganado: el hierro que da identidad al hato",
+    "excerpt": "Marcar el ganado es más que un trámite: es un ritual que une al rancho con su historia. Así se forja, se aplica y se respeta el hierro.",
+    "date": "2026-09-12",
+    "category": "Campo",
+    "blocks": [
+      {"type": "p", "text": "En el rancho, el hierro no es un adorno: es la firma del dueño sobre su ganado. Marcar el hato es un ritual que une trabajo, identidad y orgullo, y que se ha transmitido sin manuales durante generaciones."},
+      {"type": "h2", "text": "El hierro: una firma que se forja en fuego"},
+      {"type": "p", "text": "Cada marca es un diseño único que se dibuja, se forja en hierro y se hereda. Reconocerla a distancia es leer de quién es cada animal, de qué finca viene y qué historia lleva. Por eso un buen hierro se cuida como se cuida el apellido."},
+      {"type": "h2", "text": "Cómo se marca bien, sin lastimar de más"},
+      {"type": "ul", "items": ["Hierro bien caliente, contacto corto y firme: marca limpia, sin quemar de más.", "Se marca en el costado, sobre piel firme y con el animal inmovilizado con calma.", "Un solo operario marca: la prisa y el desorden lastiman al animal.", "Se cura la marca y se vigila los días siguientes para evitar infección."]},
+      {"type": "p", "text": "Marcar es un acto de responsabilidad: el que marca responde por el animal. Ese mismo principio de dejar huella es el que nos mueve. No seguimos modas, las marcamos. Descubre la colección de gorras y chaquetas The Ranch, hecha para quienes dejan marca."}
+    ]
+  },
+  {
+    "slug": "joropo-contrapunteo-musica-llanera",
+    "title": "El joropo y el contrapunteo: la música que nace del trabajo",
+    "excerpt": "Arpa, cuatro y versos improvisados: el joropo es la banda sonora del llano y el contrapunteo, su duelo de ingenio.",
+    "date": "2026-09-12",
+    "category": "Campo",
+    "blocks": [
+      {"type": "p", "text": "El joropo no nació en un escenario: nació en la sabana, entre jornadas de ganado y noches de fogata. Es la música del llano colombiano, y se canta como se trabaja: con fuerza y sin adornos."},
+      {"type": "h2", "text": "El arpa, el cuatro y las maracas"},
+      {"type": "p", "text": "Tres instrumentos bastan para sostener el joropo. El arpa marca la melodía, el cuatro lleva el ritmo y las maracas le dan el pulso que recuerda el trote del caballo. No hace falta más: el llano no pide orquesta, pide verdad."},
+      {"type": "h2", "text": "El contrapunteo: un duelo de ingenio improvisado"},
+      {"type": "ul", "items": ["Dos copleros se enfrentan improvisando versos sobre un mismo pie forzado.", "Gana quien responde más rápido y con más ingenio, sin perder el compás.", "Se canta la historia, el amor, el trabajo y las travesías del llano.", "El público acompaña con palmas y coros, como una sola voz."]},
+      {"type": "p", "text": "Esa música es la memoria viva del campo que inspira a The Ranch. No seguimos modas, las marcamos. Explora la colección de gorras y chaquetas The Ranch y lleva el espíritu del llano contigo."}
+    ]
+  },
+  {
+    "slug": "talabartero-oficio-cuero-a-mano",
+    "title": "El talabartero: el oficio que domina el cuero a mano",
+    "excerpt": "Detrás de cada silla, cincha y pieza de cuero hay un artesano que conoce el material como a su propia mano. Así trabaja el talabartero.",
+    "date": "2026-09-12",
+    "category": "Campo",
+    "blocks": [
+      {"type": "p", "text": "Detrás de cada silla de montar, cincha y pieza de cuero hay un artesano que domina el material como si fuera su propia mano. El talabartero es uno de los oficios más antiguos y respetados del campo."},
+      {"type": "h2", "text": "Un oficio que no se improvisa"},
+      {"type": "p", "text": "El talabartero corta, cose y da forma al cuero con herramientas que han cambiado poco en siglos: cuchilla, lezna, aguja e hilo encerado. Su trabajo sostiene la seguridad del jinete: una cincha mal cosida no es un detalle, es un riesgo."},
+      {"type": "h2", "text": "Lo que distingue a un buen talabartero"},
+      {"type": "ul", "items": ["Conoce el cuero: sabe qué pieza sirve para cada trabajo según su flexibilidad y resistencia.", "Costura firme y pareja: cada puntada soporta tensión y peso real.", "Acabado honesto: sin pegamentos que escondan malas uniones.", "Repara antes que reemplazar: el buen cuero se cuida, no se desecha."]},
+      {"type": "p", "text": "El respeto por el cuero bien trabajado es el mismo con el que hacemos nuestras piezas. No seguimos modas, las marcamos. Conoce la colección de gorras con visera en cuero y chaquetas The Ranch, hechas con oficio."}
+    ]
+  },
+  {
     "slug": "origen-del-vaquero-legado-llanero",
     "title": "El origen del vaquero: de los llanos españoles al espíritu llanero",
     "excerpt": "El vaquero no nació en una película: se forjó durante siglos de trabajo a caballo. Este es el origen de un oficio que hoy se lleva puesto.",
