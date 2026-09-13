@@ -1,10 +1,12 @@
 import {useEffect, useState} from 'react';
-import {getCart, getCartUrl, formatPrice} from '~/lib/cart';
+import {Link} from 'react-router';
+import {getCart, getCartUrl, formatPrice, addToCart} from '~/lib/cart';
 
 export default function CartDrawer({open, onClose}) {
   const [items, setItems] = useState([]);
   const [phone, setPhone] = useState('');
   const [saved, setSaved] = useState(false);
+  const [recommended, setRecommended] = useState([]);
 
   useEffect(() => {
     const update = () => setItems(getCart());
@@ -16,6 +18,29 @@ export default function CartDrawer({open, onClose}) {
       window.removeEventListener('storage', update);
     };
   }, []);
+
+  // Carga productos recomendados (cross-sell) una sola vez.
+  useEffect(() => {
+    let active = true;
+    fetch('/api/recommended')
+      .then((r) => r.json())
+      .then((d) => {
+        if (active) setRecommended(d.products || []);
+      })
+      .catch(() => {});
+    return () => {
+      active = false;
+    };
+  }, []);
+
+  const addRecommended = (product) => {
+    addToCart({
+      variantId: product.variantId,
+      title: product.title,
+      price: product.price,
+      image: product.image,
+    });
+  };
 
   const count = items.reduce((s, i) => s + (i.qty || 0), 0);
   const subtotal = items.reduce((s, i) => s + Number(i.price || 0) * (i.qty || 0), 0);
@@ -89,6 +114,39 @@ export default function CartDrawer({open, onClose}) {
             })
           )}
         </div>
+
+        {recommended.length > 0 ? (
+          <div className="tr-cart-reco">
+            <h3 className="tr-cart-reco-title">Completa tu look</h3>
+            <div className="tr-cart-reco-list">
+              {recommended.map((product) => (
+                <div key={product.variantId} className="tr-cart-reco-item">
+                  <Link to={`/products/${product.handle}`}>
+                    <img
+                      className="tr-cart-reco-img"
+                      src={product.image}
+                      alt={product.title}
+                      loading="lazy"
+                    />
+                  </Link>
+                  <div className="tr-cart-reco-info">
+                    <span className="tr-cart-reco-name">{product.title}</span>
+                    <span className="tr-cart-reco-price">
+                      {formatPrice(product.price)}
+                    </span>
+                    <button
+                      className="tr-cart-reco-add"
+                      type="button"
+                      onClick={() => addRecommended(product)}
+                    >
+                      Agregar
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        ) : null}
 
         {items.length > 0 ? (
           <footer className="tr-cart-foot">

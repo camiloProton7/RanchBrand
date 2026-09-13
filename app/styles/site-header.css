@@ -468,3 +468,75 @@
   text-decoration: underline;
   width: 100%;
 }
+
+/* ===== Cross-sell en el carrito (Completa tu look) ===== */
+.tr-cart-reco {
+  border-top: 1px solid rgba(11, 11, 9, 0.08);
+  padding: 14px 20px;
+}
+
+.tr-cart-reco-title {
+  color: #1a1a18;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 16px;
+  font-weight: 700;
+  margin: 0 0 12px;
+}
+
+.tr-cart-reco-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.tr-cart-reco-item {
+  align-items: center;
+  display: flex;
+  gap: 12px;
+}
+
+.tr-cart-reco-img {
+  background: #efe9dc;
+  border-radius: 8px;
+  height: 60px;
+  object-fit: cover;
+  width: 60px;
+}
+
+.tr-cart-reco-info {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.tr-cart-reco-name {
+  color: #1a1a18;
+  font-size: 13px;
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.tr-cart-reco-price {
+  color: #5a554a;
+  font-size: 13px;
+}
+
+.tr-cart-reco-add {
+  background: #1a1a18;
+  border: none;
+  border-radius: 8px;
+  color: #f5f0e6;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 7px 12px;
+  white-space: nowrap;
+}
+
+.tr-cart-reco-add:hover {
+  background: #33312c;
+}
