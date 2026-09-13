@@ -198,7 +198,7 @@ export async function loader({params, context}) {
   const {storefront} = context;
   try {
     const isCombo = handle === 'combo-5x-500';
-    const [productData, relatedData, allReviews] = await Promise.all([
+    const [productData, relatedData, licoreraData, allReviews] = await Promise.all([
       storefront.query(PRODUCT_QUERY, {
         variables: {handle},
         cache: storefront.CacheShort(),
@@ -207,10 +207,15 @@ export async function loader({params, context}) {
         variables: {handle: 'hot-ranch'},
         cache: storefront.CacheLong(),
       }),
+      storefront.query(PRODUCT_QUERY, {
+        variables: {handle: 'licorera-metalica'},
+        cache: storefront.CacheLong(),
+      }),
       fetchTrustooReviews(),
     ]);
 
     const product = productData.product || null;
+    const licorera = licoreraData.product || null;
     const title = (product?.title || '').toLowerCase();
     const matching = allReviews.filter((r) => {
       if (!title) return true;
@@ -237,11 +242,12 @@ export async function loader({params, context}) {
       );
     }
 
-    return {product, reviews, related, similar, comboGorras, isCombo};
+    return {product, licorera, reviews, related, similar, comboGorras, isCombo};
   } catch (error) {
     console.error(`Producto ${handle} falló`, error);
     return {
       product: null,
+      licorera: null,
       reviews: [],
       related: [],
       similar: [],
@@ -257,16 +263,6 @@ const SHOPIFY_DOMAIN = '1caf84-4.myshopify.com';
 const PERSONALIZACION_VARIANT_ID = '50406577111280';
 // Handles de productos que permiten personalización (grabado láser)
 const PERSONALIZABLES = ['chaqueta-ganadera-gamuza'];
-
-// Producto recomendado fijo "Llévalo con descuento" (Licorera Metalica, -10% COMBO10)
-const LICORERA = {
-  handle: 'licorera-metalica',
-  title: 'Licorera Metalica',
-  price: '100000.0',
-  image:
-    'https://cdn.shopify.com/s/files/1/0678/1386/7760/files/ChatGPTImage13sept2026_10_09_46a.m..png?v=1789312219',
-  variantId: 'gid://shopify/ProductVariant/50447145599216',
-};
 
 function toNumericId(gid) {
   return gid?.match(/\/(\d+)$/)?.[1] || gid;
@@ -376,7 +372,8 @@ function formatSize(value) {
 const ATTRS = ['Edición limitada', 'Ajuste regulable'];
 
 export default function ProductPage() {
-  const {product, reviews, related, similar, comboGorras, isCombo} = useLoaderData();
+  const {product, licorera, reviews, related, similar, comboGorras, isCombo} =
+    useLoaderData();
   const rootData = useRouteLoaderData('root');
   const logoSrc = rootData?.header?.shop?.brand?.logo?.image?.url;
 
@@ -773,21 +770,27 @@ export default function ProductPage() {
         })}
 
         {/* ===== Producto recomendado (Licorera Metalica, -10%) ===== */}
-        <RecommendedProduct
-          product={LICORERA}
-          formatPrice={formatPrice}
-          onAdd={() => {
-            const currentVid = selectedVariant?.id;
-            if (currentVid) {
-              window.location.href = getBundleCartUrl(
-                [currentVid, LICORERA.variantId],
-                'COMBO10',
-              );
-            } else {
-              window.location.href = getBundleCartUrl([LICORERA.variantId], 'COMBO10');
-            }
-          }}
-        />
+        {licorera ? (
+          <RecommendedProduct
+            product={{
+              handle: licorera.handle,
+              title: licorera.title,
+              price: licorera.priceRange?.minVariantPrice?.amount,
+              image: licorera.featuredImage?.url,
+              variantId: licorera.variants?.nodes?.[0]?.id,
+            }}
+            formatPrice={formatPrice}
+            onAdd={() => {
+              const currentVid = selectedVariant?.id;
+              const licoreraVid = licorera.variants?.nodes?.[0]?.id;
+              if (currentVid && licoreraVid) {
+                window.location.href = getBundleCartUrl([currentVid, licoreraVid], 'COMBO10');
+              } else if (licoreraVid) {
+                window.location.href = getBundleCartUrl([licoreraVid], 'COMBO10');
+              }
+            }}
+          />
+        ) : null}
 
         <ProductAccordion
           productType={product.productType}
