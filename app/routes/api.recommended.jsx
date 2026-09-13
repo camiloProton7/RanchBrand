@@ -4,40 +4,54 @@
  * Devuelve { products: [{variantId, title, handle, price, image}] }
  */
 
-const RECOMMENDED_HANDLES = [
-  'gorra-redwood',
-  'gorra-andina',
-  'chaqueta-ganadera-gamuza',
-  'saco-bordado-rebano',
-  'gorra-goat',
-  'termo-digital-the-ranch',
-];
-
-const PRODUCT_FIELDS = `
-  id
-  title
-  handle
-  availableForSale
-  featuredImage { url }
-  priceRange { minVariantPrice { amount currencyCode } }
-  variants(first: 1) { nodes { id } }
-`;
-
 export async function loader({context}) {
   const {storefront} = context;
   try {
-    const aliases = RECOMMENDED_HANDLES.map(
-      (h, i) => `r${i}: product(handle: "${h}") { ${PRODUCT_FIELDS} }`,
-    ).join('\n');
-
     const data = await storefront.query(
       `#graphql
       query Recommended {
-        ${aliases}
+        r0: product(handle: "gorra-redwood") {
+          id title handle availableForSale
+          featuredImage { url }
+          priceRange { minVariantPrice { amount currencyCode } }
+          variants(first: 1) { nodes { id } }
+        }
+        r1: product(handle: "gorra-andina") {
+          id title handle availableForSale
+          featuredImage { url }
+          priceRange { minVariantPrice { amount currencyCode } }
+          variants(first: 1) { nodes { id } }
+        }
+        r2: product(handle: "chaqueta-ganadera-gamuza") {
+          id title handle availableForSale
+          featuredImage { url }
+          priceRange { minVariantPrice { amount currencyCode } }
+          variants(first: 1) { nodes { id } }
+        }
+        r3: product(handle: "saco-bordado-rebano") {
+          id title handle availableForSale
+          featuredImage { url }
+          priceRange { minVariantPrice { amount currencyCode } }
+          variants(first: 1) { nodes { id } }
+        }
+        r4: product(handle: "gorra-goat") {
+          id title handle availableForSale
+          featuredImage { url }
+          priceRange { minVariantPrice { amount currencyCode } }
+          variants(first: 1) { nodes { id } }
+        }
+        r5: product(handle: "termo-digital-the-ranch") {
+          id title handle availableForSale
+          featuredImage { url }
+          priceRange { minVariantPrice { amount currencyCode } }
+          variants(first: 1) { nodes { id } }
+        }
       }`,
     );
 
-    const products = RECOMMENDED_HANDLES.map((_, i) => data?.[`r${i}`])
+    const keys = ['r0', 'r1', 'r2', 'r3', 'r4', 'r5'];
+    const products = keys
+      .map((k) => data?.[k])
       .filter((p) => p && p.availableForSale && p.featuredImage?.url)
       .map((p) => ({
         variantId: p.variants?.nodes?.[0]?.id || p.id,
