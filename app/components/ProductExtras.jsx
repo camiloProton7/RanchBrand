@@ -325,7 +325,7 @@ export function RecommendedProduct({product, formatPrice, onAdd}) {
           <img className="trp-reco-img" src={product.image} alt="" loading="lazy" />
         ) : null}
         <div className="trp-reco-info">
-          <span className="trp-reco-tag">Llévalo con descuento</span>
+          <span className="trp-reco-tag">🔥 Llévalo con descuento</span>
           <h3 className="trp-reco-title">{product.title}</h3>
           <div className="trp-reco-price">
             <s className="trp-reco-price-orig">{formatPrice(price)}</s>

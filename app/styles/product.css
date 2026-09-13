@@ -1452,7 +1452,7 @@
   opacity: 0.5;
 }
 
-/* ===== Producto recomendado (un solo producto, descuento visible) ===== */
+/* ===== Producto recomendado (oferta destacada, -10%) ===== */
 .trp-reco {
   margin: 20px 0;
   width: 100%;
@@ -1460,51 +1460,55 @@
 
 .trp-reco-card {
   align-items: center;
-  background: #ffffff;
-  border: 1px solid rgba(11, 11, 9, 0.08);
-  border-radius: 16px;
+  background: linear-gradient(135deg, #fff7ea 0%, #ffe8c7 50%, #ffd9a0 100%);
+  border: 1.5px solid #ffa41c;
+  border-radius: 18px;
+  box-shadow: 0 8px 24px rgba(255, 164, 28, 0.22);
   color: inherit;
   display: flex;
   flex-wrap: wrap;
   gap: 14px;
-  padding: 14px 16px;
+  padding: 16px 18px;
+  position: relative;
   text-decoration: none;
-  transition: border-color 0.2s ease, transform 0.2s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .trp-reco-card:hover {
-  border-color: rgba(255, 164, 28, 0.7);
-  transform: translateY(-2px);
+  box-shadow: 0 12px 30px rgba(255, 164, 28, 0.34);
+  transform: translateY(-3px);
 }
 
 .trp-reco-img {
-  border-radius: 12px;
+  border: 2px solid #ffffff;
+  border-radius: 14px;
+  box-shadow: 0 4px 12px rgba(11, 11, 9, 0.12);
   flex-shrink: 0;
-  height: 72px;
+  height: 80px;
   object-fit: cover;
-  width: 72px;
+  width: 80px;
 }
 
 .trp-reco-info {
   display: flex;
   flex: 1;
   flex-direction: column;
-  gap: 3px;
+  gap: 4px;
   min-width: 0;
 }
 
 .trp-reco-tag {
-  color: #8a8274;
-  font-size: 10px;
+  color: #1a1a18;
+  font-size: 11px;
   font-weight: 800;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
 }
 
 .trp-reco-title {
   color: #1a1a18;
   font-family: Georgia, 'Times New Roman', serif;
-  font-size: 16px;
+  font-size: 17px;
   font-weight: 700;
   margin: 0;
   overflow: hidden;
@@ -1513,40 +1517,41 @@
 }
 
 .trp-reco-price {
-  align-items: baseline;
+  align-items: center;
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
 }
 
 .trp-reco-price-orig {
-  color: #c0392b;
+  color: #b23a2a;
   font-size: 13px;
 }
 
 .trp-reco-price-final {
-  color: #c2410c;
-  font-size: 17px;
+  color: #b23a2a;
+  font-size: 20px;
   font-weight: 800;
 }
 
 .trp-reco-badge {
-  background: #ffa41c;
+  background: #b23a2a;
   border-radius: 999px;
-  color: #1a1a18;
-  font-size: 11px;
+  color: #fff7ea;
+  font-size: 12px;
   font-weight: 800;
-  padding: 3px 9px;
+  padding: 4px 11px;
 }
 
 .trp-reco-cta {
-  background: #ffa41c;
+  background: #1a1a18;
   border-radius: 999px;
-  color: #1a1a18;
+  box-shadow: 0 4px 10px rgba(11, 11, 9, 0.2);
+  color: #fff7ea;
   flex-shrink: 0;
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 700;
-  padding: 10px 16px;
+  padding: 11px 18px;
   white-space: nowrap;
 }
 
