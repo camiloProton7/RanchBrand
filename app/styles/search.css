@@ -1,0 +1,149 @@
+/* ===== Página de búsqueda ===== */
+
+.trs-search {
+  background: #0b0b09;
+  min-height: 100vh;
+  padding: 96px 20px 60px;
+}
+
+.trs-head {
+  margin: 0 auto 28px;
+  max-width: 1000px;
+}
+
+.trs-title {
+  color: #f4f0e7;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 26px;
+  font-weight: 700;
+  margin: 0 0 18px;
+}
+
+.trs-title em {
+  color: #f5b301;
+  font-style: normal;
+}
+
+.trs-form {
+  display: flex;
+  gap: 10px;
+  max-width: 560px;
+}
+
+.trs-form input {
+  background: rgba(244, 240, 231, 0.08);
+  border: 1px solid rgba(244, 240, 231, 0.16);
+  border-radius: 12px;
+  box-sizing: border-box;
+  color: #f4f0e7;
+  flex: 1;
+  font-size: 15px;
+  outline: none;
+  padding: 13px 16px;
+  transition: border-color 0.2s ease;
+}
+
+.trs-form input:focus {
+  border-color: #f5b301;
+}
+
+.trs-form input::placeholder {
+  color: #8a8274;
+}
+
+.trs-form button {
+  background: #ffa41c;
+  border: none;
+  border-radius: 12px;
+  color: #1a1a18;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 700;
+  padding: 13px 22px;
+  white-space: nowrap;
+}
+
+.trs-empty {
+  color: #8a8274;
+  font-size: 15px;
+  margin: 0 auto;
+  max-width: 1000px;
+}
+
+.trs-grid {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(2, 1fr);
+  margin: 0 auto;
+  max-width: 1000px;
+}
+
+.trs-card {
+  background: rgba(244, 240, 231, 0.04);
+  border: 1px solid rgba(244, 240, 231, 0.1);
+  border-radius: 14px;
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  text-decoration: none;
+  transition: border-color 0.2s ease, transform 0.2s ease;
+}
+
+.trs-card:hover {
+  border-color: rgba(245, 179, 1, 0.5);
+  transform: translateY(-2px);
+}
+
+.trs-img {
+  aspect-ratio: 1 / 1;
+  background: #151512;
+  object-fit: contain;
+  width: 100%;
+}
+
+.trs-info {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 12px 14px 14px;
+}
+
+.trs-name {
+  color: #f4f0e7;
+  font-size: 14px;
+  font-weight: 600;
+  margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.trs-price {
+  align-items: baseline;
+  display: flex;
+  gap: 8px;
+}
+
+.trs-price s {
+  color: #c0392b;
+  font-size: 12px;
+}
+
+.trs-price strong {
+  color: #f5b301;
+  font-size: 15px;
+  font-weight: 800;
+}
+
+@media (min-width: 640px) {
+  .trs-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 900px) {
+  .trs-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}

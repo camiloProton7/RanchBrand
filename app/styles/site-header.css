@@ -49,6 +49,12 @@
   transition: color 0.2s ease;
 }
 
+@media (min-width: 860px) {
+  .tr-site-cart {
+    margin-left: 0;
+  }
+}
+
 .tr-site-cart:hover {
   color: #f5b301;
 }
@@ -131,6 +137,55 @@
 
 .tr-site-dropdown a:hover {
   background: rgba(245, 179, 1, 0.12);
+}
+
+/* Buscador en el header (desktop) */
+.tr-site-search {
+  align-items: center;
+  background: rgba(244, 240, 231, 0.08);
+  border: 1px solid rgba(244, 240, 231, 0.14);
+  border-radius: 999px;
+  display: none;
+  height: 34px;
+  margin-left: auto;
+  margin-right: 12px;
+  padding: 0 6px 0 12px;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.tr-site-search:focus-within {
+  background: rgba(244, 240, 231, 0.14);
+  border-color: #f5b301;
+}
+
+.tr-site-search-btn {
+  align-items: center;
+  background: none;
+  border: none;
+  color: #d8d2c4;
+  cursor: pointer;
+  display: flex;
+  padding: 0;
+}
+
+.tr-site-search input {
+  background: none;
+  border: none;
+  color: #f4f0e7;
+  font-size: 13px;
+  outline: none;
+  padding: 6px 8px;
+  width: 150px;
+}
+
+.tr-site-search input::placeholder {
+  color: #8a8274;
+}
+
+@media (min-width: 860px) {
+  .tr-site-search {
+    display: flex;
+  }
 }
 
 /* Burger: dos líneas finas → X */

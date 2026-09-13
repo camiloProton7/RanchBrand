@@ -1,5 +1,5 @@
 import {useEffect, useRef, useState} from 'react';
-import {Link} from 'react-router';
+import {Link, Form} from 'react-router';
 import {getCartCount} from '~/lib/cart';
 import CartDrawer from '~/components/CartDrawer';
 
@@ -16,7 +16,7 @@ const MENU_ITEMS = [
   },
   {label: 'Camisetas', href: '/collections/camisetas'},
   {label: 'Botas', href: '/collections/botas-1'},
-  {label: 'Blog', href: '/blog'},
+  {label: 'Accesorios', href: '/collections/accesorios'},
 ];
 
 /**
@@ -79,6 +79,31 @@ export default function SiteHeader({logoSrc}) {
             </div>
           ))}
         </nav>
+
+        <Form action="/search" method="get" className="tr-site-search" role="search">
+          <button type="submit" className="tr-site-search-btn" aria-label="Buscar">
+            <svg
+              viewBox="0 0 24 24"
+              width="18"
+              height="18"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.8"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              aria-hidden="true"
+            >
+              <circle cx="11" cy="11" r="7" />
+              <path d="M21 21l-4.3-4.3" />
+            </svg>
+          </button>
+          <input
+            type="search"
+            name="q"
+            placeholder="Buscar productos"
+            aria-label="Buscar productos"
+          />
+        </Form>
 
         <a
           className="tr-site-cart"
