@@ -258,6 +258,16 @@ const PERSONALIZACION_VARIANT_ID = '50406577111280';
 // Handles de productos que permiten personalización (grabado láser)
 const PERSONALIZABLES = ['chaqueta-ganadera-gamuza'];
 
+// Producto recomendado fijo "Llévalo con descuento" (Licorera Metalica, -10% COMBO10)
+const LICORERA = {
+  handle: 'licorera-metalica',
+  title: 'Licorera Metalica',
+  price: '100000.0',
+  image:
+    'https://cdn.shopify.com/s/files/1/0678/1386/7760/files/ChatGPTImage13sept2026_10_09_46a.m..png?v=1789312219',
+  variantId: 'gid://shopify/ProductVariant/50447145599216',
+};
+
 function toNumericId(gid) {
   return gid?.match(/\/(\d+)$/)?.[1] || gid;
 }
@@ -762,28 +772,22 @@ export default function ProductPage() {
           );
         })}
 
-        {/* ===== Producto recomendado (antes de la descripción) ===== */}
-        {related.length > 0 && (
-          <RecommendedProduct
-            product={{
-              handle: related[0].handle,
-              title: related[0].title,
-              price: related[0].priceRange?.minVariantPrice?.amount,
-              image: related[0].featuredImage?.url,
-              variantId: related[0].variants?.nodes?.[0]?.id,
-            }}
-            formatPrice={formatPrice}
-            onAdd={() => {
-              const currentVid = selectedVariant?.id;
-              const relatedVid = related[0]?.variants?.nodes?.[0]?.id;
-              if (currentVid && relatedVid) {
-                window.location.href = getBundleCartUrl([currentVid, relatedVid], 'COMBO10');
-              } else if (relatedVid) {
-                window.location.href = getBundleCartUrl([relatedVid], 'COMBO10');
-              }
-            }}
-          />
-        )}
+        {/* ===== Producto recomendado (Licorera Metalica, -10%) ===== */}
+        <RecommendedProduct
+          product={LICORERA}
+          formatPrice={formatPrice}
+          onAdd={() => {
+            const currentVid = selectedVariant?.id;
+            if (currentVid) {
+              window.location.href = getBundleCartUrl(
+                [currentVid, LICORERA.variantId],
+                'COMBO10',
+              );
+            } else {
+              window.location.href = getBundleCartUrl([LICORERA.variantId], 'COMBO10');
+            }
+          }}
+        />
 
         <ProductAccordion
           productType={product.productType}
