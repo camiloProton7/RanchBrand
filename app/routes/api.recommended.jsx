@@ -13,29 +13,31 @@ const RECOMMENDED_HANDLES = [
   'termo-digital-the-ranch',
 ];
 
+const PRODUCT_FIELDS = `
+  id
+  title
+  handle
+  availableForSale
+  featuredImage { url }
+  priceRange { minVariantPrice { amount currencyCode } }
+  variants(first: 1) { nodes { id } }
+`;
+
 export async function loader({context}) {
   const {storefront} = context;
   try {
-    const handles = RECOMMENDED_HANDLES.map((h) => `"${h}"`).join(', ');
+    const aliases = RECOMMENDED_HANDLES.map(
+      (h, i) => `r${i}: product(handle: "${h}") { ${PRODUCT_FIELDS} }`,
+    ).join('\n');
+
     const data = await storefront.query(
       `#graphql
-      query RecommendedProducts($handles: [String!]!) {
-        nodes(ids: $handles) {
-          ... on Product {
-            id
-            title
-            handle
-            availableForSale
-            featuredImage { url }
-            priceRange { minVariantPrice { amount currencyCode } }
-            variants(first: 1) { nodes { id } }
-          }
-        }
+      query Recommended {
+        ${aliases}
       }`,
-      {variables: {handles: RECOMMENDED_HANDLES}},
     );
 
-    const products = (data?.nodes || [])
+    const products = RECOMMENDED_HANDLES.map((_, i) => data?.[`r${i}`])
       .filter((p) => p && p.availableForSale && p.featuredImage?.url)
       .map((p) => ({
         variantId: p.variants?.nodes?.[0]?.id || p.id,
