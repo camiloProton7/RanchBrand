@@ -157,6 +157,28 @@ const COMBO_QUERY = `#graphql
   }
 `;
 
+const CAMISA_COMBO_QUERY = `#graphql
+  query CamisaCombo($handle: String!) {
+    product(handle: $handle) {
+      id
+      title
+      handle
+      featuredImage {
+        url(transform: {maxWidth: 600, preferredContentType: WEBP})
+        altText
+      }
+      variants(first: 50) {
+        nodes {
+          id
+          title
+          availableForSale
+          selectedOptions { name value }
+        }
+      }
+    }
+  }
+`;
+
 const TRUSTOO_SHOP_ID = '67813867760';
 
 function mapReview(raw) {
@@ -198,6 +220,7 @@ export async function loader({params, context}) {
   const {storefront} = context;
   try {
     const isCombo = handle === 'combo-5x-500';
+    const isComboCamisa = handle === 'combo-camisa-gorra';
     const [productData, relatedData, licoreraData, allReviews] = await Promise.all([
       storefront.query(PRODUCT_QUERY, {
         variables: {handle},
@@ -232,7 +255,7 @@ export async function loader({params, context}) {
     const similar = relatedPool.slice(0, 6);
 
     let comboGorras = [];
-    if (isCombo) {
+    if (isCombo || isComboCamisa) {
       const comboData = await storefront.query(COMBO_QUERY, {
         variables: {handle: 'gorras-combo'},
         cache: storefront.CacheLong(),
@@ -242,7 +265,26 @@ export async function loader({params, context}) {
       );
     }
 
-    return {product, licorera, reviews, related, similar, comboGorras, isCombo};
+    let camisaCombo = null;
+    if (isComboCamisa) {
+      const camisaData = await storefront.query(CAMISA_COMBO_QUERY, {
+        variables: {handle: 'camisa-outdoor-the-ranch'},
+        cache: storefront.CacheLong(),
+      });
+      camisaCombo = camisaData.product || null;
+    }
+
+    return {
+      product,
+      licorera,
+      reviews,
+      related,
+      similar,
+      comboGorras,
+      isCombo,
+      isComboCamisa,
+      camisaCombo,
+    };
   } catch (error) {
     console.error(`Producto ${handle} falló`, error);
     return {
@@ -253,6 +295,8 @@ export async function loader({params, context}) {
       similar: [],
       comboGorras: [],
       isCombo: false,
+      isComboCamisa: false,
+      camisaCombo: null,
     };
   }
 }
@@ -300,6 +344,18 @@ function getComboCartUrl(comboVariantId, selectedHandles, gorras) {
     return g?.title || h;
   });
   const note = encodeURIComponent(`Gorras elegidas (5): ${titles.join(', ')}`);
+  return `https://${SHOPIFY_DOMAIN}/cart/${id}:1?note=${note}`;
+}
+
+// URL del carrito para el combo Camisa + Gorra: agrega la variante del combo
+// (precio fijo $290.000) y guarda la selección como NOTA del pedido.
+function getComboCamisaCartUrl(comboVariantId, camisaColor, camisaTalla, gorraHandle, gorras) {
+  const id = toNumericId(comboVariantId);
+  const g = gorras.find((x) => x.handle === gorraHandle);
+  const gorraTitle = g?.title || gorraHandle;
+  const note = encodeURIComponent(
+    `Combo Camisa + Gorra — Camisa: ${camisaColor} / ${camisaTalla} | Gorra: ${gorraTitle}`,
+  );
   return `https://${SHOPIFY_DOMAIN}/cart/${id}:1?note=${note}`;
 }
 
@@ -372,7 +428,7 @@ function formatSize(value) {
 const ATTRS = ['Edición limitada', 'Ajuste regulable'];
 
 export default function ProductPage() {
-  const {product, licorera, reviews, related, similar, comboGorras, isCombo} =
+  const {product, licorera, reviews, related, similar, comboGorras, isCombo, isComboCamisa, camisaCombo} =
     useLoaderData();
   const rootData = useRouteLoaderData('root');
   const logoSrc = rootData?.header?.shop?.brand?.logo?.image?.url;
@@ -385,6 +441,9 @@ export default function ProductPage() {
   const [showFullDesc, setShowFullDesc] = useState(false);
   const [options, setOptions] = useState({});
   const [selectedGorras, setSelectedGorras] = useState([]);
+  const [camisaColor, setCamisaColor] = useState(null);
+  const [camisaTalla, setCamisaTalla] = useState(null);
+  const [gorraCombo, setGorraCombo] = useState(null);
   const [personalizacion, setPersonalizacion] = useState(null);
   const trackRef = useRef(null);
 
@@ -534,6 +593,23 @@ export default function ProductPage() {
     });
   };
 
+  const camisaVariants = camisaCombo?.variants?.nodes || [];
+  const camisaColores = Array.from(
+    new Set(
+      camisaVariants
+        .map((v) => v.selectedOptions?.find((o) => o.name === 'Color')?.value)
+        .filter(Boolean),
+    ),
+  );
+  const camisaTallas = Array.from(
+    new Set(
+      camisaVariants
+        .map((v) => v.selectedOptions?.find((o) => o.name === 'Talla')?.value)
+        .filter(Boolean),
+    ),
+  );
+  const comboCamisaReady = isComboCamisa && camisaColor && camisaTalla && gorraCombo;
+
   const handlePersonalizado = async () => {
     if (!selectedVariant?.id || !personalizacion?.enabled) return false;
     try {
@@ -566,6 +642,17 @@ export default function ProductPage() {
   };
 
   const handleBuyNow = async () => {
+    if (isComboCamisa) {
+      if (!comboCamisaReady) return;
+      window.location.href = getComboCamisaCartUrl(
+        selectedVariant.id,
+        camisaColor,
+        camisaTalla,
+        gorraCombo,
+        comboGorras,
+      );
+      return;
+    }
     if (isCombo) {
       if (!comboReady) return;
       window.location.href = getComboCartUrl(selectedVariant.id, selectedGorras, comboGorras);
@@ -580,6 +667,17 @@ export default function ProductPage() {
   };
 
   const handleAddToCart = async () => {
+    if (isComboCamisa) {
+      if (!comboCamisaReady) return;
+      window.location.href = getComboCamisaCartUrl(
+        selectedVariant.id,
+        camisaColor,
+        camisaTalla,
+        gorraCombo,
+        comboGorras,
+      );
+      return;
+    }
     if (isCombo) {
       if (!comboReady) return;
       window.location.href = getComboCartUrl(selectedVariant.id, selectedGorras, comboGorras);
@@ -707,6 +805,69 @@ export default function ProductPage() {
                   className={`trp-combo-card ${isSel ? 'is-selected' : ''}`}
                   onClick={() => toggleGorra(g.handle)}
                   disabled={!isSel && selectedGorras.length >= 5}
+                  aria-pressed={isSel}
+                >
+                  {g.featuredImage?.url ? (
+                    <img src={g.featuredImage.url} alt={g.title} loading="lazy" />
+                  ) : null}
+                  <span className="trp-combo-name">{g.title}</span>
+                  <span className="trp-combo-check" aria-hidden="true">
+                    {isSel ? '✓' : ''}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+        </section>
+      ) : null}
+
+      {isComboCamisa && comboGorras.length > 0 ? (
+        <section className="trp-combo-picker" aria-label="Arma tu combo de camisa y gorra">
+          <h2 className="trp-combo-title">Arma tu combo: Camisa + Gorra</h2>
+
+          <div className="trp-option">
+            <span className="trp-option-label">Color de la camisa</span>
+            <div className="trp-option-values trp-option-colors">
+              {camisaColores.map((c) => (
+                <button
+                  key={c}
+                  type="button"
+                  className={norm(camisaColor) === norm(c) ? 'is-active' : ''}
+                  style={{background: colorToHex(c)}}
+                  onClick={() => setCamisaColor(c)}
+                  aria-label={`Color ${c}`}
+                  title={c}
+                />
+              ))}
+            </div>
+          </div>
+
+          <div className="trp-option">
+            <span className="trp-option-label">Talla de la camisa</span>
+            <div className="trp-option-values">
+              {camisaTallas.map((t) => (
+                <button
+                  key={t}
+                  type="button"
+                  className={norm(camisaTalla) === norm(t) ? 'is-active' : ''}
+                  onClick={() => setCamisaTalla(t)}
+                >
+                  {t}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <p className="trp-combo-count">Elige tu gorra</p>
+          <div className="trp-combo-grid">
+            {comboGorras.map((g) => {
+              const isSel = gorraCombo === g.handle;
+              return (
+                <button
+                  key={g.handle}
+                  type="button"
+                  className={`trp-combo-card ${isSel ? 'is-selected' : ''}`}
+                  onClick={() => setGorraCombo(g.handle)}
                   aria-pressed={isSel}
                 >
                   {g.featuredImage?.url ? (
