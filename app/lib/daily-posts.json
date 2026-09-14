@@ -1,5 +1,50 @@
 [
   {
+    "slug": "agua-pastura-logistica-silenciosa-rancho",
+    "title": "Agua y pastura: la logística silenciosa que sostiene el hato",
+    "excerpt": "En el rancho no basta con tener ganado: hay que sostenerlo. El agua y la pastura son las dos cosas que no perdonan errores, y el buen vaquero las administra como un reloj.",
+    "date": "2026-09-14",
+    "category": "Campo",
+    "blocks": [
+      {"type": "p", "text": "En el rancho no basta con tener ganado: hay que sostenerlo. Antes de que un solo animal engorde o se reproduzca, hay dos cosas que no perdonan errores: el agua y la pastura. La ganadería seria se decide en el potrero, no en el corral."},
+      {"type": "h2", "text": "El agua manda más que la hierba"},
+      {"type": "p", "text": "Un hato puede aguantar pastura corta unos días, pero no aguanta sed. El vaquero que conoce su tierra sabe dónde está cada aguada, cada caño y cada abrevadero, y planifica la rotación para que el ganado nunca tenga que caminar de más por un trago. Agua limpia y a mano es la primera regla del manejo."},
+      {"type": "h2", "text": "La pastura: rotar para no agotar la tierra"},
+      {"type": "ul", "items": ["Divide el potrero en apartos y mueve el ganado antes de que la hierba quede rasurada.", "Deja descansar cada potrero: la pastura recupera raíz y vigor si se le da tiempo.", "Observa el piso: tierra apelmazada y desnuda avisa que estás sobrepastoreando.", "No metas más cabezas de las que el potrero puede sostener: el exceso arruina la tierra."]},
+      {"type": "p", "text": "Esa atención silenciosa —llevar el agua, rotar la pastura, leer el potrero— es el oficio que nadie ve y todos necesitan. No seguimos modas, las marcamos. Explora la colección de gorras y chaquetas The Ranch, hecha para quienes trabajan la tierra con la misma constancia con que cuidan el hato."}
+    ]
+  },
+  {
+    "slug": "amanse-potro-doma-respeto-no-fuerza",
+    "title": "El amanse del potro: domar con respeto, no con fuerza",
+    "excerpt": "Amansar un potro no es quebrarle el espíritu: es ganarse su confianza para que trabaje sin miedo. El buen amansador no pelea con el animal, lo convence.",
+    "date": "2026-09-14",
+    "category": "Campo",
+    "blocks": [
+      {"type": "p", "text": "Amansar un potro no es quebrarle el espíritu: es ganarse su confianza para que trabaje sin miedo. El buen amansador no pelea con el animal, lo convence. Ahí está la diferencia entre un caballo que obedece y uno que solo se rinde."},
+      {"type": "h2", "text": "El amanse no es quebrar, es convencer"},
+      {"type": "p", "text": "Un potro que se doma a la fuerza aprende a temer, no a trabajar. El amanse de verdad es un proceso de pasos cortos: que el animal acepte el contacto, que ceda a la presión sin huir y que entienda que el hombre no es una amenaza. Todo a su tiempo, sin prisa."},
+      {"type": "h2", "text": "Pasos para un amanse limpio"},
+      {"type": "ul", "items": ["Empieza por la confianza: acercamiento, contacto y manejo a pie antes de ensillar.", "Presión y liberación: suelta la presión justo cuando el potro cede, para que asocie calma con obediencia.", "La silla llega despacio: primero el apero suelto, luego cinchado flojo, después firme.", "Las primeras montas son cortas y sin exigencias: que el animal entienda, no que sude."]},
+      {"type": "p", "text": "Un caballo amansado con respeto entrega el doble en el trabajo y en el camino. Ese mismo principio —hacer las cosas bien, sin atajos— es el que nos mueve. No seguimos modas, las marcamos. Descubre la colección de gorras y chaquetas The Ranch, hecha para quienes entienden que el buen trabajo se gana con calma."}
+    ]
+  },
+  {
+    "slug": "mujer-llanera-vaquera-historia-llano",
+    "title": "La mujer llanera: la vaquera que también forjó el llano",
+    "excerpt": "El campo no se sostiene solo con jinetes: la mujer llanera ha estado al pie del trabajo desde siempre, montando, cuidando el hato y guardando la tradición sin pedir permiso.",
+    "date": "2026-09-14",
+    "category": "Campo",
+    "blocks": [
+      {"type": "p", "text": "Cuando se habla del llano, casi siempre se habla del hombre a caballo. Pero el campo no se sostiene solo con jinetes: la mujer llanera —jinete, vaquera, criadora y guardiana de la casa y del hato— ha estado al pie del trabajo desde siempre, con el mismo carácter y sin pedir permiso."},
+      {"type": "h2", "text": "De la cocina al hato, sin bajar del caballo"},
+      {"type": "p", "text": "La llanera no es solo compañía: es mano de obra. Monta, ordeña, cura al ganado, conoce las plantas, carga el agua y sostiene la faena cuando el hombre no está. En muchas fincas, la mujer es la que lleva las cuentas y la que no deja caer la cerca ni el ánimo."},
+      {"type": "h2", "text": "Lo que la mujer vaquera le enseñó al campo"},
+      {"type": "ul", "items": ["Resistencia callada: trabaja a la par y pocas veces busca aplauso.", "Criterio: decide sobre el hato, la casa y la cría con la misma firmeza.", "Oficio múltiple: monta, cocina, cura y administra sin perder el ritmo.", "Lealtad a la tierra: cuida el rancho como cuida a los suyos."]},
+      {"type": "p", "text": "Hoy la mujer llanera compite en el coleo, doma, monta y mantiene viva la tradición que heredó: su lugar en el campo se lo ganó a punta de trabajo. Ese carácter es el que honramos. No seguimos modas, las marcamos. Lleva contigo el espíritu de la mujer llanera: explora la colección de gorras y chaquetas The Ranch."}
+    ]
+  },
+  {
     "slug": "la-marca-del-ganado-hierro-identidad-hato",
     "title": "La marca del ganado: el hierro que da identidad al hato",
     "excerpt": "Marcar el ganado es más que un trámite: es un ritual que une al rancho con su historia. Así se forja, se aplica y se respeta el hierro.",
