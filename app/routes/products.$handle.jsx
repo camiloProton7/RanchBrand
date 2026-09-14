@@ -179,6 +179,10 @@ const CAMISA_COMBO_QUERY = `#graphql
           title
           availableForSale
           selectedOptions { name value }
+          image {
+            url(transform: {maxWidth: 900, preferredContentType: WEBP})
+            altText
+          }
         }
       }
     }
@@ -618,6 +622,19 @@ export default function ProductPage() {
   );
   const comboCamisaReady = isComboCamisa && camisaColor && camisaTalla && gorraCombo;
 
+  // Al elegir color de camisa, cambia la foto de la galería a la de ese color.
+  const handleCamisaColor = (c) => {
+    setCamisaColor(c);
+    const variant = camisaVariants.find(
+      (v) => v.selectedOptions?.find((o) => o.name === 'Color')?.value === c,
+    );
+    const imgUrl = variant?.image?.url;
+    if (imgUrl) {
+      const idx = allImages.findIndex((i) => i.url === imgUrl);
+      if (idx >= 0) setActiveImage(idx);
+    }
+  };
+
   const handlePersonalizado = async () => {
     if (!selectedVariant?.id || !personalizacion?.enabled) return false;
     try {
@@ -831,7 +848,8 @@ export default function ProductPage() {
 
       {isComboCamisa && comboGorras.length > 0 ? (
         <section className="trp-combo-picker" aria-label="Arma tu combo de camisa y gorra">
-          <h2 className="trp-combo-title">Arma tu combo: Camisa + Gorra</h2>
+          <h1 className="trp-combo-title">{product.title}</h1>
+          <p className="trp-combo-sub">Elige tu camisa (color y talla) y tu gorra favorita</p>
 
           <div className="trp-option">
             <span className="trp-option-label">Color de la camisa</span>
@@ -842,7 +860,7 @@ export default function ProductPage() {
                   type="button"
                   className={norm(camisaColor) === norm(c) ? 'is-active' : ''}
                   style={{background: colorToHex(c)}}
-                  onClick={() => setCamisaColor(c)}
+                  onClick={() => handleCamisaColor(c)}
                   aria-label={`Color ${c}`}
                   title={c}
                 />
@@ -894,8 +912,12 @@ export default function ProductPage() {
 
       {/* ===== Info ===== */}
       <div className="trp-info">
-        <p className="trp-variant">Colección Western — The Ranch</p>
-        <h1 className="trp-title">{product.title}</h1>
+        {!isComboCamisa ? (
+          <>
+            <p className="trp-variant">Colección Western — The Ranch</p>
+            <h1 className="trp-title">{product.title}</h1>
+          </>
+        ) : null}
 
         <span className="trp-tag">{isOut ? 'Agotado' : 'Edición limitada'}</span>
 

@@ -716,9 +716,17 @@
 .trp-combo-title {
   color: #1a1a18;
   font-family: Georgia, 'Times New Roman', serif;
-  font-size: 20px;
+  font-size: 26px;
   font-weight: 700;
-  margin: 0 0 4px;
+  line-height: 1.1;
+  margin: 0 0 6px;
+}
+
+.trp-combo-sub {
+  color: #6b6457;
+  font-size: 14px;
+  line-height: 1.4;
+  margin: 0 0 16px;
 }
 
 .trp-combo-count {
