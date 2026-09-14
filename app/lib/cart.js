@@ -15,9 +15,18 @@ export function formatPrice(amount, currency = 'COP') {
   }).format(Number(amount));
 }
 
+function generateEventId() {
+  return (
+    'tr_' +
+    Date.now().toString(36) +
+    '_' +
+    Math.random().toString(36).slice(2, 10)
+  );
+}
+
 function trackEvent(name, data = {}) {
   if (typeof window !== 'undefined' && window.fbq) {
-    window.fbq('track', name, data);
+    window.fbq('track', name, data, {eventID: generateEventId()});
   }
 }
 

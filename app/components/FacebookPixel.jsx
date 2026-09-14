@@ -31,10 +31,21 @@ export default function FacebookPixel() {
     }
   }, []);
 
-  // 3. Rastreo de navegación (PageView)
+  // 3. Rastreo de navegación (PageView) con clave de deduplicación.
   useEffect(() => {
     if (window.fbq && PIXEL_ID) {
-      window.fbq('track', 'PageView');
+      window.fbq(
+        'track',
+        'PageView',
+        {},
+        {
+          eventID:
+            'tr_pv_' +
+            Date.now().toString(36) +
+            '_' +
+            Math.random().toString(36).slice(2, 10),
+        },
+      );
     }
   }, [location]);
 
