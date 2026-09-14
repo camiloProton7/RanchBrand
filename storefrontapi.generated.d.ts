@@ -585,6 +585,7 @@ export type CamisaComboQuery = {
       featuredImage?: StorefrontAPI.Maybe<
         Pick<StorefrontAPI.Image, 'url' | 'altText'>
       >;
+      images: {nodes: Array<Pick<StorefrontAPI.Image, 'url' | 'altText'>>};
       variants: {
         nodes: Array<
           Pick<
@@ -668,7 +669,7 @@ interface GeneratedQueryTypes {
     return: ComboProductsQuery;
     variables: ComboProductsQueryVariables;
   };
-  '#graphql\n  query CamisaCombo($handle: String!) {\n    product(handle: $handle) {\n      id\n      title\n      handle\n      featuredImage {\n        url(transform: {maxWidth: 600, preferredContentType: WEBP})\n        altText\n      }\n      variants(first: 50) {\n        nodes {\n          id\n          title\n          availableForSale\n          selectedOptions { name value }\n        }\n      }\n    }\n  }\n': {
+  '#graphql\n  query CamisaCombo($handle: String!) {\n    product(handle: $handle) {\n      id\n      title\n      handle\n      featuredImage {\n        url(transform: {maxWidth: 900, preferredContentType: WEBP})\n        altText\n      }\n      images(first: 10) {\n        nodes {\n          url(transform: {maxWidth: 900, preferredContentType: WEBP})\n          altText\n        }\n      }\n      variants(first: 50) {\n        nodes {\n          id\n          title\n          availableForSale\n          selectedOptions { name value }\n        }\n      }\n    }\n  }\n': {
     return: CamisaComboQuery;
     variables: CamisaComboQueryVariables;
   };
