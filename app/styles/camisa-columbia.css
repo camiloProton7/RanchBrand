@@ -1,0 +1,253 @@
+/* ===== Landing page Camisa Columbia ===== */
+
+.ccl {
+  background: #0b0b09;
+  min-height: 100vh;
+}
+
+/* ===== HERO ===== */
+.ccl-hero {
+  align-items: center;
+  background:
+    radial-gradient(1200px 500px at 50% -10%, rgba(255, 164, 28, 0.22), transparent 60%),
+    linear-gradient(180deg, #14120d 0%, #0b0b09 100%);
+  display: flex;
+  flex-direction: column;
+  padding: 120px 24px 60px;
+  text-align: center;
+}
+
+.ccl-badge {
+  background: linear-gradient(90deg, #ffa41c, #ff7a1c);
+  border-radius: 999px;
+  color: #1a1a18;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  margin-bottom: 22px;
+  padding: 8px 18px;
+  text-transform: uppercase;
+}
+
+.ccl-title {
+  color: #f4f0e7;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: clamp(40px, 9vw, 76px);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 0.95;
+  margin: 0;
+}
+
+.ccl-title-accent {
+  background: linear-gradient(90deg, #ffa41c, #ff7a1c);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  display: block;
+}
+
+.ccl-subtitle {
+  color: #b8b0a0;
+  font-size: clamp(16px, 2.5vw, 20px);
+  line-height: 1.5;
+  margin: 20px auto 0;
+  max-width: 560px;
+}
+
+.ccl-tallas {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 28px;
+}
+
+.ccl-talla {
+  align-items: center;
+  background: rgba(244, 240, 231, 0.06);
+  border: 1px solid rgba(244, 240, 231, 0.18);
+  border-radius: 10px;
+  color: #f4f0e7;
+  display: flex;
+  font-size: 14px;
+  font-weight: 700;
+  height: 40px;
+  justify-content: center;
+  width: 40px;
+}
+
+.ccl-talla:hover {
+  border-color: #ffa41c;
+  color: #ffa41c;
+}
+
+.ccl-cta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+  margin-top: 30px;
+}
+
+.ccl-cta {
+  align-items: center;
+  background: linear-gradient(90deg, #ffa41c, #ff7a1c);
+  border-radius: 999px;
+  box-shadow: 0 8px 24px rgba(255, 164, 28, 0.35);
+  color: #1a1a18;
+  display: flex;
+  font-size: 16px;
+  font-weight: 800;
+  justify-content: center;
+  padding: 16px 34px;
+  text-decoration: none;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.ccl-cta:hover {
+  box-shadow: 0 12px 32px rgba(255, 164, 28, 0.5);
+  transform: translateY(-2px);
+}
+
+.ccl-cta-secondary {
+  align-items: center;
+  border: 1px solid rgba(244, 240, 231, 0.3);
+  border-radius: 999px;
+  color: #f4f0e7;
+  display: flex;
+  font-size: 15px;
+  font-weight: 600;
+  justify-content: center;
+  padding: 16px 28px;
+  text-decoration: none;
+  transition: border-color 0.2s ease;
+}
+
+.ccl-cta-secondary:hover {
+  border-color: #ffa41c;
+}
+
+.ccl-trust {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+  justify-content: center;
+  margin-top: 34px;
+}
+
+.ccl-trust span {
+  color: #8a8274;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+/* ===== CARACTERÍSTICAS ===== */
+.ccl-features {
+  padding: 70px 24px;
+}
+
+.ccl-features-title {
+  color: #f4f0e7;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: clamp(26px, 4vw, 36px);
+  font-weight: 700;
+  margin: 0 0 40px;
+  text-align: center;
+}
+
+.ccl-features-grid {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(2, 1fr);
+  margin: 0 auto;
+  max-width: 800px;
+}
+
+.ccl-feature {
+  background: rgba(244, 240, 231, 0.04);
+  border: 1px solid rgba(244, 240, 231, 0.1);
+  border-radius: 16px;
+  padding: 22px 20px;
+  transition: border-color 0.2s ease, transform 0.2s ease;
+}
+
+.ccl-feature:hover {
+  border-color: rgba(255, 164, 28, 0.5);
+  transform: translateY(-2px);
+}
+
+.ccl-feature-icon {
+  display: block;
+  font-size: 30px;
+  margin-bottom: 12px;
+}
+
+.ccl-feature-title {
+  color: #f4f0e7;
+  font-size: 16px;
+  font-weight: 700;
+  margin: 0 0 6px;
+}
+
+.ccl-feature-desc {
+  color: #8a8274;
+  font-size: 14px;
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* ===== CTA FINAL ===== */
+.ccl-final {
+  align-items: center;
+  background:
+    radial-gradient(800px 400px at 50% 100%, rgba(255, 164, 28, 0.18), transparent 60%),
+    #0b0b09;
+  display: flex;
+  flex-direction: column;
+  padding: 70px 24px 90px;
+  text-align: center;
+}
+
+.ccl-final-title {
+  color: #f4f0e7;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: clamp(28px, 5vw, 44px);
+  font-weight: 700;
+  margin: 0;
+}
+
+.ccl-final-title em {
+  background: linear-gradient(90deg, #ffa41c, #ff7a1c);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  font-style: normal;
+}
+
+.ccl-final-sub {
+  color: #8a8274;
+  font-size: 16px;
+  margin: 14px 0 30px;
+}
+
+.ccl-cta-big {
+  font-size: 18px;
+  padding: 18px 46px;
+}
+
+.ccl-back {
+  color: #8a8274;
+  font-size: 14px;
+  margin-top: 24px;
+  text-decoration: none;
+}
+
+.ccl-back:hover {
+  color: #f4f0e7;
+}
+
+@media (min-width: 640px) {
+  .ccl-features-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
