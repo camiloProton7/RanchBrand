@@ -1,4 +1,5 @@
 import FacebookPixel from './components/FacebookPixel';
+import GoogleAnalytics from './components/GoogleAnalytics';
 import SiteHeader from './components/SiteHeader';
 import Footer from './components/Footer';
 import {useNonce} from '@shopify/hydrogen';
@@ -87,6 +88,7 @@ export function Layout({children}) {
       <body>
         {/* El Pixel se inserta al inicio del cuerpo */}
         <FacebookPixel />
+        <GoogleAnalytics />
 
         {children}
         <ScrollRestoration nonce={nonce} />
