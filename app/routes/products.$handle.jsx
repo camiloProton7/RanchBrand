@@ -631,7 +631,7 @@ export default function ProductPage() {
     const imgUrl = variant?.image?.url;
     if (imgUrl) {
       const idx = allImages.findIndex((i) => i.url === imgUrl);
-      if (idx >= 0) setActiveImage(idx);
+      if (idx >= 0) scrollToImage(idx);
     }
   };
 
