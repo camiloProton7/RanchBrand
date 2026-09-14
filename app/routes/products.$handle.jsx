@@ -164,8 +164,14 @@ const CAMISA_COMBO_QUERY = `#graphql
       title
       handle
       featuredImage {
-        url(transform: {maxWidth: 600, preferredContentType: WEBP})
+        url(transform: {maxWidth: 900, preferredContentType: WEBP})
         altText
+      }
+      images(first: 10) {
+        nodes {
+          url(transform: {maxWidth: 900, preferredContentType: WEBP})
+          altText
+        }
       }
       variants(first: 50) {
         nodes {
@@ -450,15 +456,17 @@ export default function ProductPage() {
   const variants = product?.variants?.nodes || [];
 
   const allImages = useMemo(() => {
-    const imgs = (product?.images?.nodes || []).map((i) => ({
+    // En el combo Camisa + Gorra, la camisa es el producto principal (galería).
+    const source = isComboCamisa && camisaCombo ? camisaCombo : product;
+    const imgs = (source?.images?.nodes || []).map((i) => ({
       url: i.url,
-      alt: i.altText || product?.title || '',
+      alt: i.altText || source?.title || '',
     }));
-    if (!imgs.length && product?.featuredImage?.url) {
-      imgs.push({url: product.featuredImage.url, alt: product?.featuredImage?.altText || ''});
+    if (!imgs.length && source?.featuredImage?.url) {
+      imgs.push({url: source.featuredImage.url, alt: source?.featuredImage?.altText || ''});
     }
     return imgs;
-  }, [product]);
+  }, [product, camisaCombo, isComboCamisa]);
 
   // Colores disponibles (de variantes con opción "Color")
   const colors = useMemo(() => {
