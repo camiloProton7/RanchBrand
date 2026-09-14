@@ -44,7 +44,7 @@ export default function SiteHeader({logoSrc}) {
   // Oculta el header al bajar el scroll (mobile) y lo muestra al subir.
   useEffect(() => {
     const onScroll = () => {
-      if (window.innerWidth > 860) return;
+      if (window.innerWidth > 1024) return;
       const y = window.scrollY;
       setHidden(y > lastY.current && y > 140);
       lastY.current = y;
