@@ -49,7 +49,7 @@
   transition: color 0.2s ease;
 }
 
-@media (min-width: 860px) {
+@media (min-width: 1024px) {
   .tr-site-cart {
     margin-left: 0;
   }
@@ -82,14 +82,14 @@
 
 .tr-site-nav {
   display: none;
-  gap: 26px;
+  gap: 16px;
 }
 
 .tr-site-nav a {
   color: #d8d2c4;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 600;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.1em;
   text-decoration: none;
   text-transform: uppercase;
   transition: color 0.2s ease;
@@ -182,7 +182,7 @@
   color: #8a8274;
 }
 
-@media (min-width: 860px) {
+@media (min-width: 1024px) {
   .tr-site-search {
     display: flex;
   }
@@ -308,7 +308,7 @@
 }
 
 /* Nav visible en escritorio (centrado) */
-@media (min-width: 860px) {
+@media (min-width: 1024px) {
   .tr-site-nav {
     display: flex;
     left: 50%;
