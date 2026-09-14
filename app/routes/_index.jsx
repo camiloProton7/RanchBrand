@@ -4,7 +4,9 @@ import {ScrollVideoHero} from '~/components/ScrollVideoHero';
 import ChaquetaHero from '~/components/ChaquetaHero';
 import DesertCampaign from '~/components/DesertCampaign';
 import UtilityLinks from '~/components/UtilityLinks';
+import CamisaFeature from '~/components/CamisaFeature';
 import homeStyles from '~/styles/scroll-video-hero.css?url';
+import camisaFeatureStyles from '~/styles/camisa-feature.css?url';
 
 export const meta = () => [
   {title: 'The Ranch — No seguimos modas'},
@@ -39,6 +41,7 @@ export const meta = () => [
 export function links() {
   return [
     {rel: 'stylesheet', href: homeStyles},
+    {rel: 'stylesheet', href: camisaFeatureStyles},
     {rel: 'preload', as: 'video', href: '/home-video-hevc.mp4?v=6', type: 'video/mp4; codecs="hvc1"'},
     {rel: 'preload', as: 'image', href: '/home-poster.jpg?v=6'},
   ];
@@ -126,6 +129,7 @@ export default function Home() {
   return (
     <div className="tr-home">
       <ScrollVideoHero logoSrc={logoSrc} />
+      <CamisaFeature />
       <CategoryMenu />
       <TrustBar />
       <ProductScroll
