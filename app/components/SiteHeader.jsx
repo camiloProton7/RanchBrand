@@ -14,7 +14,7 @@ const MENU_ITEMS = [
       {label: 'Mujer', href: '/collections/chaquetas-mujer'},
     ],
   },
-  {label: 'Camisetas', href: '/collections/camisetas'},
+  {label: 'Camisas y Camisetas', href: '/collections/camisetas'},
   {label: 'Botas', href: '/collections/botas-1'},
   {label: 'Accesorios', href: '/collections/accesorios'},
 ];
