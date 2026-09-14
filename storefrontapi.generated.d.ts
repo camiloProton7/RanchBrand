@@ -421,7 +421,10 @@ export type CollectionByHandleQueryVariables = StorefrontAPI.Exact<{
 
 export type CollectionByHandleQuery = {
   collection?: StorefrontAPI.Maybe<
-    Pick<StorefrontAPI.Collection, 'id' | 'title' | 'description'> & {
+    Pick<
+      StorefrontAPI.Collection,
+      'id' | 'handle' | 'title' | 'description'
+    > & {
       image?: StorefrontAPI.Maybe<Pick<StorefrontAPI.Image, 'url' | 'altText'>>;
       products: {
         nodes: Array<
@@ -619,7 +622,7 @@ interface GeneratedQueryTypes {
     return: RecommendedQuery;
     variables: RecommendedQueryVariables;
   };
-  '#graphql\n  query CollectionByHandle($handle: String!) {\n    collection(handle: $handle) {\n      id\n      title\n      description\n      image {\n        url\n        altText\n      }\n      products(first: 48) {\n        nodes {\n          id\n          title\n          handle\n          featuredImage {\n            url(transform: {maxWidth: 700, preferredContentType: WEBP})\n            altText\n          }\n          images(first: 2) {\n            nodes {\n              url(transform: {maxWidth: 700, preferredContentType: WEBP})\n              altText\n            }\n          }\n          priceRange {\n            minVariantPrice { amount currencyCode }\n          }\n          compareAtPriceRange {\n            minVariantPrice { amount currencyCode }\n          }\n          variants(first: 10) {\n            nodes {\n              id\n              selectedOptions { name value }\n              price { amount currencyCode }\n            }\n          }\n        }\n      }\n    }\n  }\n': {
+  '#graphql\n  query CollectionByHandle($handle: String!) {\n    collection(handle: $handle) {\n      id\n      handle\n      title\n      description\n      image {\n        url\n        altText\n      }\n      products(first: 48) {\n        nodes {\n          id\n          title\n          handle\n          featuredImage {\n            url(transform: {maxWidth: 700, preferredContentType: WEBP})\n            altText\n          }\n          images(first: 2) {\n            nodes {\n              url(transform: {maxWidth: 700, preferredContentType: WEBP})\n              altText\n            }\n          }\n          priceRange {\n            minVariantPrice { amount currencyCode }\n          }\n          compareAtPriceRange {\n            minVariantPrice { amount currencyCode }\n          }\n          variants(first: 10) {\n            nodes {\n              id\n              selectedOptions { name value }\n              price { amount currencyCode }\n            }\n          }\n        }\n      }\n    }\n  }\n': {
     return: CollectionByHandleQuery;
     variables: CollectionByHandleQueryVariables;
   };

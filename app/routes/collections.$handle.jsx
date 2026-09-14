@@ -10,7 +10,9 @@ export const meta = ({data}) => {
   const url = collection?.handle
     ? `https://ranch.com.co/collections/${collection.handle}`
     : 'https://ranch.com.co';
-  const description = collection?.description || 'Colección de The Ranch — Colombia.';
+  const description =
+    collection?.description ||
+    `${collection?.title || 'Colección'} de The Ranch. Calidad premium, envío gratis en Colombia.`;
   return [
     {title},
     {name: 'description', content: description},
@@ -27,6 +29,7 @@ const COLLECTION_QUERY = `#graphql
   query CollectionByHandle($handle: String!) {
     collection(handle: $handle) {
       id
+      handle
       title
       description
       image {
