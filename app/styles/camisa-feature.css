@@ -1,4 +1,4 @@
-/* ===== Banner destacado Camisa Outdoor ===== */
+/* ===== Banner destacado Camisa Outdoor (estética The Ranch) ===== */
 
 .tr-camisa-feature {
   background: #0b0b09;
@@ -7,15 +7,14 @@
 
 .tr-camisa-feature-inner {
   align-items: center;
-  background: linear-gradient(120deg, #1a1712 0%, #241a0e 55%, #2e1d0a 100%);
-  border: 1px solid rgba(255, 164, 28, 0.25);
-  border-radius: 20px;
+  background: #f5f0e6;
+  border-radius: 16px;
   display: flex;
   gap: 24px;
   margin: 0 auto;
   max-width: 1000px;
   overflow: hidden;
-  padding: 30px 26px;
+  padding: 30px 28px;
 }
 
 .tr-camisa-feature-info {
@@ -28,9 +27,9 @@
 
 .tr-camisa-feature-badge {
   align-self: flex-start;
-  background: linear-gradient(90deg, #ffa41c, #ff7a1c);
+  background: #b34a2a;
   border-radius: 999px;
-  color: #1a1a18;
+  color: #f5f0e6;
   font-size: 11px;
   font-weight: 800;
   letter-spacing: 0.08em;
@@ -39,7 +38,7 @@
 }
 
 .tr-camisa-feature-title {
-  color: #f4f0e7;
+  color: #1a1a18;
   font-family: Georgia, 'Times New Roman', serif;
   font-size: clamp(24px, 4vw, 36px);
   font-weight: 700;
@@ -48,7 +47,7 @@
 }
 
 .tr-camisa-feature-desc {
-  color: #b8b0a0;
+  color: #5a554a;
   font-size: 15px;
   line-height: 1.5;
   margin: 0;
@@ -58,20 +57,20 @@
 .tr-camisa-feature-cta {
   align-items: center;
   align-self: flex-start;
-  background: #ffa41c;
+  background: #1a1a18;
   border-radius: 999px;
-  color: #1a1a18;
+  color: #f5f0e6;
   display: flex;
   font-size: 14px;
   font-weight: 800;
   margin-top: 4px;
   padding: 13px 26px;
   text-decoration: none;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition: transform 0.2s ease, background 0.2s ease;
 }
 
 .tr-camisa-feature-cta:hover {
-  box-shadow: 0 8px 20px rgba(255, 164, 28, 0.4);
+  background: #b34a2a;
   transform: translateY(-2px);
 }
 
@@ -82,7 +81,7 @@
 }
 
 .tr-camisa-feature-img {
-  border-radius: 14px;
+  border-radius: 12px;
   display: block;
   height: auto;
   width: 100%;
