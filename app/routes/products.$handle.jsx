@@ -234,7 +234,7 @@ export async function loader({params, context}) {
     let comboGorras = [];
     if (isCombo) {
       const comboData = await storefront.query(COMBO_QUERY, {
-        variables: {handle: 'gorras-truckers'},
+        variables: {handle: 'gorras-combo'},
         cache: storefront.CacheLong(),
       });
       comboGorras = (comboData.collection?.products?.nodes || []).filter(
