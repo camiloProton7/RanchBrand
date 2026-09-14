@@ -1,7 +1,14 @@
 export async function loader({context}) {
   const {storefront} = context;
 
-  const collections = ['gorras-truckers', 'chaquetas', 'camisetas'];
+  const collections = [
+    'gorras-truckers',
+    'chaquetas',
+    'camisetas',
+    'botas-1',
+    'accesorios',
+    'hot-ranch',
+  ];
   const urls = [{loc: 'https://ranch.com.co/'}];
 
   for (const handle of collections) {
