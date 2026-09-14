@@ -575,6 +575,32 @@ export type ComboProductsQuery = {
   }>;
 };
 
+export type CamisaComboQueryVariables = StorefrontAPI.Exact<{
+  handle: StorefrontAPI.Scalars['String']['input'];
+}>;
+
+export type CamisaComboQuery = {
+  product?: StorefrontAPI.Maybe<
+    Pick<StorefrontAPI.Product, 'id' | 'title' | 'handle'> & {
+      featuredImage?: StorefrontAPI.Maybe<
+        Pick<StorefrontAPI.Image, 'url' | 'altText'>
+      >;
+      variants: {
+        nodes: Array<
+          Pick<
+            StorefrontAPI.ProductVariant,
+            'id' | 'title' | 'availableForSale'
+          > & {
+            selectedOptions: Array<
+              Pick<StorefrontAPI.SelectedOption, 'name' | 'value'>
+            >;
+          }
+        >;
+      };
+    }
+  >;
+};
+
 export type SearchProductsQueryVariables = StorefrontAPI.Exact<{
   query: StorefrontAPI.Scalars['String']['input'];
 }>;
@@ -641,6 +667,10 @@ interface GeneratedQueryTypes {
   '#graphql\n  query ComboProducts($handle: String!) {\n    collection(handle: $handle) {\n      products(first: 50) {\n        nodes {\n          id\n          title\n          handle\n          featuredImage {\n            url(transform: {maxWidth: 400, preferredContentType: WEBP})\n            altText\n          }\n          variants(first: 1) {\n            nodes {\n              id\n            }\n          }\n        }\n      }\n    }\n  }\n': {
     return: ComboProductsQuery;
     variables: ComboProductsQueryVariables;
+  };
+  '#graphql\n  query CamisaCombo($handle: String!) {\n    product(handle: $handle) {\n      id\n      title\n      handle\n      featuredImage {\n        url(transform: {maxWidth: 600, preferredContentType: WEBP})\n        altText\n      }\n      variants(first: 50) {\n        nodes {\n          id\n          title\n          availableForSale\n          selectedOptions { name value }\n        }\n      }\n    }\n  }\n': {
+    return: CamisaComboQuery;
+    variables: CamisaComboQueryVariables;
   };
   '#graphql\n  query SearchProducts($query: String!) {\n    search(first: 24, query: $query, types: PRODUCT) {\n      nodes {\n        ... on Product {\n          id\n          title\n          handle\n          availableForSale\n          featuredImage {\n            url(transform: {maxWidth: 500, preferredContentType: WEBP})\n          }\n          priceRange { minVariantPrice { amount currencyCode } }\n          compareAtPriceRange { minVariantPrice { amount } }\n        }\n      }\n    }\n  }\n': {
     return: SearchProductsQuery;
