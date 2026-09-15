@@ -231,6 +231,7 @@ export async function loader({params, context}) {
   try {
     const isCombo = handle === 'combo-5x-500';
     const isComboCamisa = handle === 'combo-camisa-gorra';
+    const isCamisa = handle === 'camisa-outdoor-the-ranch';
     const [productData, relatedData, licoreraData, allReviews] = await Promise.all([
       storefront.query(PRODUCT_QUERY, {
         variables: {handle},
@@ -284,6 +285,15 @@ export async function loader({params, context}) {
       camisaCombo = camisaData.product || null;
     }
 
+    let comboCamisaProduct = null;
+    if (isCamisa) {
+      const comboData = await storefront.query(PRODUCT_QUERY, {
+        variables: {handle: 'combo-camisa-gorra'},
+        cache: storefront.CacheLong(),
+      });
+      comboCamisaProduct = comboData.product || null;
+    }
+
     return {
       product,
       licorera,
@@ -294,6 +304,8 @@ export async function loader({params, context}) {
       isCombo,
       isComboCamisa,
       camisaCombo,
+      isCamisa,
+      comboCamisaProduct,
     };
   } catch (error) {
     console.error(`Producto ${handle} falló`, error);
@@ -307,6 +319,8 @@ export async function loader({params, context}) {
       isCombo: false,
       isComboCamisa: false,
       camisaCombo: null,
+      isCamisa: false,
+      comboCamisaProduct: null,
     };
   }
 }
@@ -438,7 +452,7 @@ function formatSize(value) {
 const ATTRS = ['Edición limitada', 'Ajuste regulable'];
 
 export default function ProductPage() {
-  const {product, licorera, reviews, related, similar, comboGorras, isCombo, isComboCamisa, camisaCombo} =
+  const {product, licorera, reviews, related, similar, comboGorras, isCombo, isComboCamisa, camisaCombo, isCamisa, comboCamisaProduct} =
     useLoaderData();
   const rootData = useRouteLoaderData('root');
   const logoSrc = rootData?.header?.shop?.brand?.logo?.image?.url;
@@ -968,8 +982,34 @@ export default function ProductPage() {
           );
         })}
 
-        {/* ===== Producto recomendado (Licorera Metalica, -10%) ===== */}
-        {licorera ? (
+        {/* ===== Upsell: combo para la camisa, licorera para el resto ===== */}
+        {isCamisa && comboCamisaProduct ? (
+          <section className="trp-reco" aria-label="Llévalo en combo con la gorra">
+            <Link className="trp-reco-card" to="/products/combo-camisa-gorra">
+              {comboCamisaProduct.featuredImage?.url ? (
+                <img className="trp-reco-img" src={comboCamisaProduct.featuredImage.url} alt="" loading="lazy" />
+              ) : product.featuredImage?.url ? (
+                <img className="trp-reco-img" src={product.featuredImage.url} alt="" loading="lazy" />
+              ) : null}
+              <div className="trp-reco-info">
+                <span className="trp-reco-tag">🔥 Llévalo en combo con la gorra</span>
+                <h3 className="trp-reco-title">Combo Camisa + Gorra</h3>
+                <div className="trp-reco-price">
+                  {comboCamisaProduct.compareAtPriceRange?.minVariantPrice?.amount ? (
+                    <s className="trp-reco-price-orig">
+                      {formatPrice(comboCamisaProduct.compareAtPriceRange.minVariantPrice.amount)}
+                    </s>
+                  ) : null}
+                  <strong className="trp-reco-price-final">
+                    {formatPrice(comboCamisaProduct.priceRange?.minVariantPrice?.amount)}
+                  </strong>
+                  <span className="trp-reco-badge">Combo</span>
+                </div>
+              </div>
+              <span className="trp-reco-cta">Ver combo</span>
+            </Link>
+          </section>
+        ) : licorera ? (
           <RecommendedProduct
             product={{
               handle: licorera.handle,
