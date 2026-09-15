@@ -727,6 +727,10 @@ export default function ProductPage() {
       await handlePersonalizado();
       return;
     }
+    const variantOptions = (selectedVariant.selectedOptions || [])
+      .filter((o) => o.name !== 'Title')
+      .map((o) => o.value)
+      .join(' / ');
     addToCart({
       variantId: selectedVariant.id,
       qty,
@@ -735,6 +739,7 @@ export default function ProductPage() {
       price: selectedVariant.price?.amount,
       compareAtPrice: compare,
       handle: product.handle,
+      options: variantOptions || undefined,
     });
     setAdded(true);
     setTimeout(() => setAdded(false), 2000);
