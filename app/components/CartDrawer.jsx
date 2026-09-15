@@ -97,7 +97,9 @@ export default function CartDrawer({open, onClose}) {
                   ) : null}
                   <div className="tr-cart-item-info">
                     <span className="tr-cart-item-title">{item.title}</span>
-                    <span className="tr-cart-item-meta">Cantidad: {item.qty}</span>
+                    <span className="tr-cart-item-meta">
+                      {item.options ? `${item.options} · ` : ''}Cantidad: {item.qty}
+                    </span>
                   </div>
                   <div className="tr-cart-item-prices">
                     {hasDiscount ? (
