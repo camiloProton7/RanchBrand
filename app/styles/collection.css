@@ -581,18 +581,60 @@
   width: 100%;
 }
 
-.tr-col-card-img-2 {
-  opacity: 0;
-  transition: opacity 0.4s ease;
+/* Crossfade premium: primaria y secundaria se funden limpiamente */
+.tr-col-card-img-1 {
+  opacity: 1;
 }
 
-/* Crossfade: primaria se desvanece y secundaria aparece (hover escritorio) */
+.tr-col-card-img-2 {
+  opacity: 0;
+}
+
+/* Desktop (mouse): crossfade al hover */
 @media (hover: hover) {
-  .tr-col-card-link:hover .tr-col-card-img:not(.tr-col-card-img-2) {
+  .tr-col-card-link:hover .tr-col-card-img-1 {
     opacity: 0;
   }
   .tr-col-card-link:hover .tr-col-card-img-2 {
     opacity: 1;
+  }
+}
+
+/* Mobile (touch): crossfade automático suave */
+@media (hover: none) {
+  .tr-col-card-img-1 {
+    animation: tr-col-crossfade-1 6s ease-in-out infinite;
+  }
+  .tr-col-card-img-2 {
+    animation: tr-col-crossfade-2 6s ease-in-out infinite;
+  }
+}
+
+@keyframes tr-col-crossfade-1 {
+  0%,
+  42% {
+    opacity: 1;
+  }
+  50%,
+  92% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes tr-col-crossfade-2 {
+  0%,
+  42% {
+    opacity: 0;
+  }
+  50%,
+  92% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
   }
 }
 

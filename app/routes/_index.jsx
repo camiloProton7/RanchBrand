@@ -473,6 +473,7 @@ function ProductScroll({products, collectionUrl, ariaLabel, title}) {
       <div className="tr-gorras-scroll">
         {products.map((product) => {
           const primary = product.featuredImage;
+          const second = product.images?.nodes?.[1];
           const price = product.priceRange?.minVariantPrice?.amount;
           const compare = product.compareAtPriceRange?.minVariantPrice?.amount;
           const hasDiscount = compare && Number(compare) > Number(price);
@@ -486,9 +487,17 @@ function ProductScroll({products, collectionUrl, ariaLabel, title}) {
               <div className="tr-gorra-media">
                 {primary?.url ? (
                   <img
-                    className="tr-gorra-img"
+                    className="tr-gorra-img tr-gorra-img-1"
                     src={primary.url}
                     alt={primary.altText || product.title}
+                    loading="lazy"
+                  />
+                ) : null}
+                {second?.url ? (
+                  <img
+                    className="tr-gorra-img tr-gorra-img-2"
+                    src={second.url}
+                    alt=""
                     loading="lazy"
                   />
                 ) : null}

@@ -810,23 +810,65 @@
   width: 100%;
 }
 
+/* Crossfade premium: primaria y secundaria se funden limpiamente */
+.tr-gorra-img-1 {
+  opacity: 1;
+}
+
 .tr-gorra-img-2 {
   opacity: 0;
-  transition: opacity 0.4s ease;
 }
 
-.tr-gorra-card:hover .tr-gorra-img {
-  transform: scale(1.05);
-}
-
-/* Crossfade: primaria se desvanece y secundaria aparece (hover escritorio) */
+/* Desktop (mouse): crossfade al hover */
 @media (hover: hover) {
-  .tr-gorra-card:hover .tr-gorra-img:not(.tr-gorra-img-2) {
+  .tr-gorra-card:hover .tr-gorra-img-1 {
     opacity: 0;
   }
   .tr-gorra-card:hover .tr-gorra-img-2 {
     opacity: 1;
   }
+}
+
+/* Mobile (touch): crossfade automático suave (no interfiere con el tap) */
+@media (hover: none) {
+  .tr-gorra-img-1 {
+    animation: tr-img-crossfade-1 6s ease-in-out infinite;
+  }
+  .tr-gorra-img-2 {
+    animation: tr-img-crossfade-2 6s ease-in-out infinite;
+  }
+}
+
+@keyframes tr-img-crossfade-1 {
+  0%,
+  42% {
+    opacity: 1;
+  }
+  50%,
+  92% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes tr-img-crossfade-2 {
+  0%,
+  42% {
+    opacity: 0;
+  }
+  50%,
+  92% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.tr-gorra-card:hover .tr-gorra-img {
+  transform: scale(1.05);
 }
 
 /* ── Labels (badges + rating) ── */
