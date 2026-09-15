@@ -1076,9 +1076,15 @@ export default function ProductPage() {
             className="trp-add"
             type="button"
             onClick={handleBuyNow}
-            disabled={isOut || (isCombo && !comboReady)}
+            disabled={isComboCamisa ? !comboCamisaReady : isOut || (isCombo && !comboReady)}
           >
-            {isCombo && !comboReady ? 'Elige 5 gorras' : 'Comprar ahora'}
+            {isComboCamisa
+              ? comboCamisaReady
+                ? 'Comprar ahora'
+                : 'Elige camisa y gorra'
+              : isCombo && !comboReady
+                ? 'Elige 5 gorras'
+                : 'Comprar ahora'}
           </button>
           <div className="trp-qty" aria-label="Cantidad">
             <button
@@ -1101,13 +1107,19 @@ export default function ProductPage() {
             className={`trp-add-cart ${added ? 'is-added' : ''}`}
             type="button"
             onClick={handleAddToCart}
-            disabled={isOut || (isCombo && !comboReady)}
+            disabled={isComboCamisa ? !comboCamisaReady : isOut || (isCombo && !comboReady)}
           >
-            {isCombo && !comboReady
-              ? 'Elige 5 gorras'
-              : added
-                ? '✓ Añadido'
-                : 'Agregar al carrito'}
+            {isComboCamisa
+              ? comboCamisaReady
+                ? added
+                  ? '✓ Añadido'
+                  : 'Agregar al carrito'
+                : 'Elige camisa y gorra'
+              : isCombo && !comboReady
+                ? 'Elige 5 gorras'
+                : added
+                  ? '✓ Añadido'
+                  : 'Agregar al carrito'}
           </button>
         </div>
       </div>
