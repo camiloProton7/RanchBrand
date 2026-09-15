@@ -1049,13 +1049,13 @@ export default function ProductPage() {
 
       <div className="trp-info-bottom">
         <div className="trp-shipping-badge">
-          <span aria-hidden="true">🚚</span> Envío gratis a toda Colombia
+          <span aria-hidden="true">🔒</span> Pago 100% seguro y cifrado
           <span className="trp-shipping-sep" aria-hidden="true">·</span>
-          <span aria-hidden="true">🔒</span> Pago 100% seguro
+          <span aria-hidden="true">🛡️</span> Garantía de devolución 7 días
         </div>
 
         <div className="trp-guarantee-badge">
-          <span aria-hidden="true">🛡️</span> Devolución garantizada 7 días
+          <span aria-hidden="true">✅</span> Compra protegida de principio a fin
           <span className="trp-guarantee-cards">VISA · MASTERCARD · PSE</span>
         </div>
       </div>
