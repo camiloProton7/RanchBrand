@@ -35,10 +35,10 @@ function suggestSize(weightKg, heightCm) {
   const imc = weightKg / (meters * meters);
 
   let base;
-  if (heightCm < 158) base = 0;
-  else if (heightCm < 165) base = 1;
-  else if (heightCm < 172) base = 2;
-  else if (heightCm < 179) base = 3;
+  if (heightCm < 160) base = 0;
+  else if (heightCm < 168) base = 1;
+  else if (heightCm < 176) base = 2;
+  else if (heightCm < 184) base = 3;
   else base = 4;
 
   let adjust = 0;
