@@ -576,16 +576,21 @@
   inset: 0;
   object-fit: contain;
   position: absolute;
-  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.4s ease;
   width: 100%;
 }
 
 .tr-col-card-img-2 {
   opacity: 0;
-  transition: opacity 0.45s ease;
+  transition: opacity 0.4s ease;
 }
 
+/* Crossfade: primaria se desvanece y secundaria aparece (hover escritorio) */
 @media (hover: hover) {
+  .tr-col-card-link:hover .tr-col-card-img:not(.tr-col-card-img-2) {
+    opacity: 0;
+  }
   .tr-col-card-link:hover .tr-col-card-img-2 {
     opacity: 1;
   }
