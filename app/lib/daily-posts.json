@@ -1,5 +1,52 @@
 [
   {
+    "slug": "vaqueria-llanera-faena-oficio-llanero",
+    "title": "La vaquería llanera: la faena que forjó el oficio del llanero",
+    "excerpt": "Antes del coleo y del joropo estuvo la vaquería: la faena de reunir, marcar y repartir el ganado cimarrón que forjó el carácter del llanero.",
+    "date": "2026-09-15",
+    "category": "Campo",
+    "blocks": [
+      {"type": "p", "text": "Antes del coleo y del joropo, antes de las marcas y los corrales, el llano tuvo una faena que lo definió: la vaquería. Reunir el ganado cimarrón, contarlo y repartirlo a campo abierto fue la escuela donde el llanero se hizo jinete, vaquero y hombre de palabra."},
+      {"type": "h2", "text": "¿Qué es la vaquería?"},
+      {"type": "p", "text": "La vaquería es la faena de arrear y reunir el ganado que pasta suelto en la sabana para contarlo, marcarlo y apartar lo que corresponde a cada hato. No es un simple rodeo: es un trabajo colectivo, duro y paciente, donde decenas de jinetes se coordinan sin radio ni reloj, guiándose solo por el grito, la seña y el conocimiento del terreno."},
+      {"type": "h2", "text": "La faena, paso a paso"},
+      {"type": "ul", "items": ["Se planifica la ruta: los vaqueros conocen los caños, las matas y los pasos por donde se mueve el ganado.", "Se arrea en punta y por los lados: cada jinete tiene su puesto y no lo abandona.", "Se reúne el hato en un punto de aparta, con calma para no desmadrarlo.", "Se cuenta, se marca y se reparte lo de cada dueño, con testigos y palabra empeñada."]},
+      {"type": "p", "text": "La vaquería forjó el oficio del llanero: ahí se aprendió que el ganado no se domina a gritos y que la palabra vale más que cualquier papel. No seguimos modas, las marcamos. Lleva contigo ese espíritu: explora la colección de gorras y chaquetas The Ranch, hecha para quienes viven el campo de verdad."}
+    ]
+  },
+  {
+    "slug": "calendario-llano-verano-invierno-hato",
+    "title": "El calendario del llano: verano e invierno, los dos tiempos que mandan en el hato",
+    "excerpt": "El llanero no consulta el almanaque: consulta el cielo y la sabana. Así se trabaja el hato cuando el llano cambia de cara entre el verano y el invierno.",
+    "date": "2026-09-15",
+    "category": "Campo",
+    "blocks": [
+      {"type": "p", "text": "El llanero no consulta el almanaque: consulta el cielo y la sabana. El año del hato se divide en dos tiempos que mandan sobre todo lo demás —el verano y el invierno— y quien no los lee a tiempo pierde animales, pastura y trabajo."},
+      {"type": "h2", "text": "Verano: el tiempo en que el agua manda"},
+      {"type": "p", "text": "En verano los caños se secan y la pastura se pone dura. Todo el trabajo gira en torno a una sola cosa: el agua. Se abre camino hasta los caños que todavía corren, se limpian los abrevaderos y se mueve el ganado antes de que un potrero quede sin nada. La sequía no perdona al que improvisa."},
+      {"type": "h2", "text": "Invierno: el llano se vuelve agua"},
+      {"type": "p", "text": "En invierno la sabana se inunda y las distancias cambian: un caño que se cruzaba a pie se convierte en barrera. Hay que subir el ganado a las partes altas —las matas y los médanos— y estar atento a las crecientes. El exceso de agua estresa tanto al hato como la falta."},
+      {"type": "h2", "text": "Cómo se prepara el rancho"},
+      {"type": "ul", "items": ["Reservar pasto en los potreros altos para que el ganado no se amontone en invierno.", "Reparar cercas y pasos antes de la entrada de aguas, no después.", "Contar el hato y anotar los movimientos: en invierno se pierde ganado fácil.", "Guardar sal y suplemento para los días en que la pastura no rinde."]},
+      {"type": "p", "text": "El que trabaja con el llano, no contra él, es el que dura. Ese respeto por los ciclos de la tierra es el mismo con que hacemos las cosas en The Ranch. No seguimos modas, las marcamos. Descubre la colección de gorras y chaquetas para quienes leen el campo como un libro abierto."}
+    ]
+  },
+  {
+    "slug": "herrador-oficio-cascos-caballo",
+    "title": "El herrador: el oficio que cuida los cascos y sostiene al caballo",
+    "excerpt": "Sin cascos sanos no hay caballo que aguante el trabajo. El herrador es el artesano silencioso que mantiene de pie al mejor compañero del llanero.",
+    "date": "2026-09-15",
+    "category": "Campo",
+    "blocks": [
+      {"type": "p", "text": "Sin cascos sanos no hay caballo que aguante el trabajo. El herrador es el artesano silencioso que mantiene de pie al mejor compañero del llanero, y su oficio es tan viejo como la montura."},
+      {"type": "h2", "text": "El casco: la base que sostiene todo"},
+      {"type": "p", "text": "El casco aguanta el peso, el golpe y el terreno. Un casco agrietado, con la ranilla podrida o desbalanceado hace que el animal cojee, se lastime y se niegue al trabajo. Muchas 'mañas' del caballo son en realidad dolor de cascos mal cuidados: el herrador lo detecta antes de que el problema se vuelva cojera."},
+      {"type": "h2", "text": "La faena del herrado, paso a paso"},
+      {"type": "ul", "items": ["Se revisa el casco en reposo y en movimiento para ver el apoyo y el desgaste.", "Se limpia la ranilla y se sacan barro y piedras que causan infección.", "Se recorta el exceso de casco con cuchilla y tenaza, respetando el ángulo natural.", "Se ajusta la herradura al casco, no al revés: la herradura se adapta al pie.", "Se clava con precisión y se remacha sin lastimar la línea blanca."]},
+      {"type": "p", "text": "Herrar no es un trámite: es un acto de respeto hacia el animal que te sostiene. Ese cuidado por el detalle es el que llevamos a cada prenda. No seguimos modas, las marcamos. Explora la colección de gorras y chaquetas The Ranch y haz las cosas con el mismo oficio."}
+    ]
+  },
+  {
     "slug": "agua-pastura-logistica-silenciosa-rancho",
     "title": "Agua y pastura: la logística silenciosa que sostiene el hato",
     "excerpt": "En el rancho no basta con tener ganado: hay que sostenerlo. El agua y la pastura son las dos cosas que no perdonan errores, y el buen vaquero las administra como un reloj.",
