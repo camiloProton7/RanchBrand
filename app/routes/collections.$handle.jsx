@@ -293,6 +293,7 @@ export default function CollectionPage() {
 
 function CollectionCard({product, index, onQuickView}) {
   const primary = product.featuredImage;
+  const second = product.images?.nodes?.[1];
   const price = product.priceRange?.minVariantPrice?.amount;
   const compare = product.compareAtPriceRange?.minVariantPrice?.amount;
   const hasDiscount = compare && Number(compare) > Number(price);
@@ -303,9 +304,17 @@ function CollectionCard({product, index, onQuickView}) {
           <div className="tr-col-card-media">
             {primary?.url ? (
               <img
-                className="tr-col-card-img"
+                className="tr-col-card-img tr-col-card-img-1"
                 src={primary.url}
                 alt={primary.altText || product.title}
+                loading="lazy"
+              />
+            ) : null}
+            {second?.url ? (
+              <img
+                className="tr-col-card-img tr-col-card-img-2"
+                src={second.url}
+                alt=""
                 loading="lazy"
               />
             ) : null}
