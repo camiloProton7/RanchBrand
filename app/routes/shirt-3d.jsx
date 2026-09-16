@@ -23,7 +23,7 @@ export default function Shirt3DTest() {
         Arrastra para rotar · Toca/agarra la tela para moverla
       </p>
 
-      <Shirt3D modelUrl="/models/camisa_low.glb" imageUrl={CAMISA_IMG} alt="Camisa Outdoor The Ranch" />
+      <Shirt3D modelUrl="/models/camisa.glb" imageUrl={CAMISA_IMG} alt="Camisa Outdoor The Ranch" />
     </main>
   );
 }
