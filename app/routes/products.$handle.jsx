@@ -575,7 +575,7 @@ export default function ProductPage() {
           content_name: product.title,
           content_type: 'product',
           value: Number(product.priceRange?.minVariantPrice?.amount) || 0,
-          currency: product.priceRange?.minVariantPrice?.currencyCode || 'COP',
+          currency: 'COP',
         },
         {
           eventID:
@@ -710,7 +710,7 @@ export default function ProductPage() {
       await handlePersonalizado();
       return;
     }
-    buyNow(selectedVariant.id, qty);
+    buyNow(selectedVariant.id, qty, selectedVariant.price?.amount);
   };
 
   const handleAddToCart = async () => {

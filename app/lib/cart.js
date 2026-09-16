@@ -81,7 +81,7 @@ export function getBundleCartUrl(variantIds, discountCode) {
   return `https://${SHOPIFY_DOMAIN}${cartPath}`;
 }
 
-export function buyNow(variantId, qty = 1) {
+export function buyNow(variantId, qty = 1, price = 0) {
   const id = toNumericId(variantId);
   if (!id) return;
 
@@ -89,6 +89,7 @@ export function buyNow(variantId, qty = 1) {
     content_ids: [id],
     content_type: 'product',
     num_items: qty,
+    value: Math.round(Number(price) * qty) || 0,
     currency: 'COP',
   });
 
