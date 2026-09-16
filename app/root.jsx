@@ -66,18 +66,26 @@ export async function loader(args) {
     },
   });
 
-  // Analytics nativo de Shopify (embudo de conversión en el admin)
-  const shop = await getShopAnalytics({
-    storefront,
-    publicStorefrontId: env.PUBLIC_STOREFRONT_ID,
-  });
+  // Analytics nativo de Shopify (embudo de conversión en el admin).
+  // Solo se activa si las env vars están configuradas en Oxygen.
+  const analyticsReady =
+    env.PUBLIC_CHECKOUT_DOMAIN && env.PUBLIC_STOREFRONT_API_TOKEN;
 
-  const consent = {
-    checkoutDomain: env.PUBLIC_CHECKOUT_DOMAIN,
-    storefrontAccessToken: env.PUBLIC_STOREFRONT_API_TOKEN,
-    country: 'CO',
-    language: 'ES',
-  };
+  const shop = analyticsReady
+    ? await getShopAnalytics({
+        storefront,
+        publicStorefrontId: env.PUBLIC_STOREFRONT_ID,
+      })
+    : null;
+
+  const consent = analyticsReady
+    ? {
+        checkoutDomain: env.PUBLIC_CHECKOUT_DOMAIN,
+        storefrontAccessToken: env.PUBLIC_STOREFRONT_API_TOKEN,
+        country: 'CO',
+        language: 'ES',
+      }
+    : null;
 
   return {header, shop, consent};
 }
