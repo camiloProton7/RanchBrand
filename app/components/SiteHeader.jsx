@@ -11,7 +11,7 @@ const MENU_ITEMS = [
     href: '/collections/chaquetas',
     children: [
       {label: 'Hombre', href: '/collections/chaquetas'},
-      {label: 'Mujer', href: '/collections/chaquetas-mujer'},
+      {label: 'Mujer', href: '/collections/superior-chaquetas-mujer'},
     ],
   },
   {label: 'Camisas y Camisetas', href: '/collections/camisetas'},
