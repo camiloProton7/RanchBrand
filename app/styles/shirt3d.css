@@ -1,0 +1,66 @@
+/* Visor 3D de la camisa (simulación de tela) */
+.tr-shirt3d {
+  border-radius: 14px;
+  display: block;
+  height: 520px;
+  overflow: hidden;
+  position: relative;
+  touch-action: none; /* evita que el gesto de arrastre haga scroll en móvil */
+  user-select: none;
+  width: 100%;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Toggle Fotos / Vista 3D */
+.trp-view-toggle {
+  display: flex;
+  gap: 6px;
+  justify-content: center;
+  margin: 0 0 10px;
+}
+
+.trp-view-toggle button {
+  background: #efe9dc;
+  border: 1px solid rgba(11, 11, 9, 0.14);
+  border-radius: 999px;
+  color: #6b6255;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 7px 14px;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.trp-view-toggle button.is-active {
+  background: #0b0b09;
+  border-color: #0b0b09;
+  color: #f5f0e6;
+}
+
+.tr-shirt3d canvas {
+  display: block;
+}
+
+.tr-shirt3d-hint {
+  align-items: center;
+  background: rgba(11, 11, 9, 0.62);
+  border-radius: 999px;
+  bottom: 14px;
+  color: #f5f0e6;
+  display: flex;
+  font-size: 12px;
+  gap: 6px;
+  left: 50%;
+  padding: 7px 14px;
+  pointer-events: none;
+  position: absolute;
+  transform: translateX(-50%);
+  white-space: nowrap;
+}
+
+@media (max-width: 640px) {
+  .tr-shirt3d {
+    height: 420px;
+  }
+}
