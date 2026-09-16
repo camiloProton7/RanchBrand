@@ -271,7 +271,6 @@ export default function Shirt3D({modelUrl = '/models/camisa_low.glb', imageUrl =
           color: 0xffffff,
           side: THREE.DoubleSide,
           roughness: 0.85,
-          flatShading: true,
         });
 
         if (!map && imageUrl) {
@@ -316,8 +315,8 @@ export default function Shirt3D({modelUrl = '/models/camisa_low.glb', imageUrl =
           const x = restPositions[i * 3];
           const z = restPositions[i * 3 + 2];
           // onda de viento: más amplitud cuanto más abajo esté el vértice
-          ox = Math.sin(t * 1.5 + x * 2.6 + z * 1.7) * 0.035 * w;
-          oz = Math.cos(t * 1.15 + x * 1.6 + z * 2.4) * 0.03 * w;
+          ox = Math.sin(t * 1.5 + x * 2.6 + z * 1.7) * 0.0 * w;
+          oz = Math.cos(t * 1.15 + x * 1.6 + z * 2.4) * 0.0 * w;
         }
         // el desplazamiento de agarre decae suavemente a 0 (vuelve a reposo)
         grabOffsets[i * 3] *= 0.92;
