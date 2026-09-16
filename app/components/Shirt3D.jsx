@@ -26,9 +26,10 @@ export default function Shirt3D({imageUrl, alt = ''}) {
     camera.position.set(0, 0.4, 2.6);
     camera.lookAt(0, -0.1, 0);
 
-    const renderer = new THREE.WebGLRenderer({antialias: true, alpha: true});
+    const renderer = new THREE.WebGLRenderer({antialias: true});
     renderer.setSize(width, height);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setClearColor(0xf5f0e6, 1);
     renderer.shadowMap.enabled = true;
     renderer.shadowMap.type = THREE.PCFSoftShadowMap;
     container.appendChild(renderer.domElement);
