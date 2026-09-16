@@ -11,10 +11,8 @@ import {
 } from '~/components/ProductExtras';
 import {SocialProof} from '~/components/SocialProof';
 import Personalizador from '~/components/Personalizador';
-import Shirt3D from '~/components/Shirt3D';
 import productStyles from '~/styles/product.css?url';
 import persoStyles from '~/styles/perso.css?url';
-import shirt3dStyles from '~/styles/shirt3d.css?url';
 
 export const meta = ({data}) => {
   const product = data?.product;
@@ -65,7 +63,6 @@ export const meta = ({data}) => {
 export const links = () => [
   {rel: 'stylesheet', href: productStyles},
   {rel: 'stylesheet', href: persoStyles},
-  {rel: 'stylesheet', href: shirt3dStyles},
   {
     rel: 'stylesheet',
     href: 'https://fonts.googleapis.com/css2?family=Rye&family=Playfair+Display:wght@700&family=Great+Vibes&family=Oswald:wght@600&display=swap',
@@ -461,7 +458,6 @@ export default function ProductPage() {
   const logoSrc = rootData?.header?.shop?.brand?.logo?.image?.url;
 
   const [activeImage, setActiveImage] = useState(0);
-  const [view3D, setView3D] = useState(false);
   const [color, setColor] = useState(null);
   const [fav, setFav] = useState(false);
   const [qty, setQty] = useState(1);
@@ -753,33 +749,7 @@ export default function ProductPage() {
     <div className="trp">
       <div className="trp-media">
         <div className="trp-gallery">
-        {/* ===== Toggle 3D (solo camisa) ===== */}
-        {isCamisa && (
-          <div className="trp-view-toggle">
-            <button
-              type="button"
-              className={!view3D ? 'is-active' : ''}
-              onClick={() => setView3D(false)}
-            >
-              📷 Fotos
-            </button>
-            <button
-              type="button"
-              className={view3D ? 'is-active' : ''}
-              onClick={() => setView3D(true)}
-            >
-              🧵 Vista 3D
-            </button>
-          </div>
-        )}
-
         {/* ===== Visor visual ===== */}
-        {isCamisa && view3D ? (
-          <Shirt3D
-            imageUrl={selectedVariant?.image?.url || product.featuredImage?.url}
-            alt={product.title}
-          />
-        ) : (
         <div className="trp-viewer">
         <div
           ref={trackRef}
@@ -827,7 +797,6 @@ export default function ProductPage() {
 
         <div className="trp-lasso" aria-hidden="true" />
       </div>
-        )}
 
       {/* ===== Miniaturas ===== */}
       {allImages.length > 1 && (
