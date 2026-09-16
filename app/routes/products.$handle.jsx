@@ -1,6 +1,7 @@
 import {useEffect, useMemo, useRef, useState} from 'react';
 import {Link, useLoaderData, useRouteLoaderData} from 'react-router';
 import {addToCart, buyNow} from '~/lib/cart';
+import {Analytics} from '@shopify/hydrogen';
 import {
   TrustBadges,
   SizeGuide,
@@ -68,6 +69,13 @@ export const links = () => [
     href: 'https://fonts.googleapis.com/css2?family=Rye&family=Playfair+Display:wght@700&family=Great+Vibes&family=Oswald:wght@600&display=swap',
   },
 ];
+
+// Full-page cache de Oxygen para páginas de producto (estáticas).
+export const headers = () => ({
+  'Oxygen-Cache-Control':
+    'public, max-age=300, s-maxage=300, stale-while-revalidate=3600',
+  Vary: 'Accept-Encoding, Accept-Language',
+});
 
 const PRODUCT_QUERY = `#graphql
   query Product($handle: String!) {
@@ -747,6 +755,19 @@ export default function ProductPage() {
 
   return (
     <div className="trp">
+      <Analytics.ProductView
+        data={{
+          products: [
+            {
+              id: product?.id,
+              title: product?.title,
+              price: product?.priceRange?.minVariantPrice?.amount,
+              vendor: product?.vendor,
+              quantity: 1,
+            },
+          ],
+        }}
+      />
       <div className="trp-media">
         <div className="trp-gallery">
         {/* ===== Visor visual ===== */}

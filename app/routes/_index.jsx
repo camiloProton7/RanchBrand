@@ -483,6 +483,7 @@ function ProductScroll({products, collectionUrl, ariaLabel, title}) {
               key={product.id}
               className="tr-gorra-card"
               to={`/products/${product.handle}`}
+              prefetch="intent"
             >
               <div className="tr-gorra-media">
                 {primary?.url ? (

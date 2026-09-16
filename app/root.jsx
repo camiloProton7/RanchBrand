@@ -2,7 +2,7 @@ import FacebookPixel from './components/FacebookPixel';
 import GoogleAnalytics from './components/GoogleAnalytics';
 import SiteHeader from './components/SiteHeader';
 import Footer from './components/Footer';
-import {useNonce} from '@shopify/hydrogen';
+import {Analytics, getShopAnalytics, useNonce} from '@shopify/hydrogen';
 import {
   Outlet,
   useRouteError,
@@ -57,6 +57,7 @@ export function links() {
  */
 export async function loader(args) {
   const {storefront} = args.context;
+  const env = args.context.env || {};
 
   const header = await storefront.query(HEADER_QUERY, {
     cache: storefront.CacheLong(),
@@ -65,7 +66,20 @@ export async function loader(args) {
     },
   });
 
-  return {header};
+  // Analytics nativo de Shopify (embudo de conversión en el admin)
+  const shop = await getShopAnalytics({
+    storefront,
+    publicStorefrontId: env.PUBLIC_STOREFRONT_ID,
+  });
+
+  const consent = {
+    checkoutDomain: env.PUBLIC_CHECKOUT_DOMAIN,
+    storefrontAccessToken: env.PUBLIC_STOREFRONT_API_TOKEN,
+    country: 'CO',
+    language: 'ES',
+  };
+
+  return {header, shop, consent};
 }
 
 /**
@@ -102,11 +116,11 @@ export default function App() {
   const data = useLoaderData();
   const logoSrc = data?.header?.shop?.brand?.logo?.image?.url;
   return (
-    <>
+    <Analytics.Provider shop={data?.shop} consent={data?.consent}>
       <SiteHeader logoSrc={logoSrc} />
       <Outlet />
       <Footer logoSrc={logoSrc} />
-    </>
+    </Analytics.Provider>
   );
 }
 

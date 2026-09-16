@@ -1,8 +1,16 @@
 import {useEffect, useMemo, useRef, useState} from 'react';
 import {Link, useLoaderData} from 'react-router';
+import {Analytics} from '@shopify/hydrogen';
 import collectionStyles from '~/styles/collection.css?url';
 
 export const links = () => [{rel: 'stylesheet', href: collectionStyles}];
+
+// Full-page cache de Oxygen: sirve el HTML desde el edge (páginas estáticas).
+export const headers = () => ({
+  'Oxygen-Cache-Control':
+    'public, max-age=3600, s-maxage=3600, stale-while-revalidate=82800',
+  Vary: 'Accept-Encoding, Accept-Language',
+});
 
 export const meta = ({data}) => {
   const collection = data?.collection;
@@ -162,6 +170,9 @@ export default function CollectionPage() {
 
   return (
     <div className="tr-col">
+      <Analytics.CollectionView
+        data={{collection: {id: collection.id, handle: collection.handle}}}
+      />
       <header className="tr-col-hero">
         <div className="tr-col-hero-inner">
           <span className="tr-col-eyebrow">Colección</span>
@@ -300,7 +311,11 @@ function CollectionCard({product, index, onQuickView}) {
 
   return (
     <article className="tr-col-card">
-      <Link className="tr-col-card-link" to={`/products/${product.handle}`}>
+      <Link
+        className="tr-col-card-link"
+        to={`/products/${product.handle}`}
+        prefetch="intent"
+      >
           <div className="tr-col-card-media">
             {primary?.url ? (
               <img
