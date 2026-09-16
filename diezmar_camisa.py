@@ -9,6 +9,12 @@ src = 'public/models/camisa.glb'
 m = trimesh.load(src, force='mesh')
 print(f'Original: {len(m.vertices)} vértices, {len(m.faces)} caras')
 
+# Soldar vértices duplicados (Trellis usa vertex splitting por islas UV)
+m.merge_vertices()
+m.update_faces(m.nondegenerate_faces())
+m.remove_unreferenced_vertices()
+print(f'Tras soldar: {len(m.vertices)} vértices, {len(m.faces)} caras')
+
 orig_uvs = m.visual.uv if hasattr(m.visual, 'uv') else None
 orig_mat = m.visual.material if hasattr(m.visual, 'material') else None
 

@@ -4,13 +4,12 @@ import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls.js';
 import {GLTFLoader} from 'three/examples/jsm/loaders/GLTFLoader.js';
 
 /**
- * Visor 3D de la camisa con simulación de tela (Verlet).
- * Carga un modelo .glb y lo convierte en una malla de tela que:
+ * Visor 3D de la camisa con ondulación de tela suave.
  * - Rota 360° (OrbitControls).
- * - Cuelga y ondula con gravedad + viento.
- * - Se puede agarrar con el cursor y arrastrar.
+ * - La tela ondula con el viento (onda sinusoidal, más abajo del dobladillo).
+ * - Al agarrar un punto, se deforma localmente y vuelve suave al soltar.
  */
-export default function Shirt3D({modelUrl = '/models/camisa.glb', imageUrl = '', alt = ''}) {
+export default function Shirt3D({modelUrl = '/models/camisa_low.glb', imageUrl = '', alt = ''}) {
   const mountRef = useRef(null);
 
   useEffect(() => {
@@ -37,7 +36,7 @@ export default function Shirt3D({modelUrl = '/models/camisa.glb', imageUrl = '',
     container.appendChild(renderer.domElement);
 
     // ── Luces ──────────────────────────────────────────────
-    scene.add(new THREE.AmbientLight(0xffffff, 1.35));
+    scene.add(new THREE.AmbientLight(0xffffff, 1.4));
     const key = new THREE.DirectionalLight(0xffffff, 2.0);
     key.position.set(2, 3, 2);
     key.castShadow = true;
@@ -75,18 +74,17 @@ export default function Shirt3D({modelUrl = '/models/camisa.glb', imageUrl = '',
     hanger.add(bar);
     scene.add(hanger);
 
-    // ── Física (Verlet) + interacción ──────────────────────
+    // ── Estado de la tela ──────────────────────────────────
     let cloth = null;
     let clothGeom = null;
-    let positions = null;
-    let prev = null;
-    let restLen = [];
-    let restC = [];
+    let restPositions = null; // posición de reposo (original)
+    let positions = null; // posición renderizada
+    let grabOffsets = null; // desplazamiento por agarre (decae a 0)
+    let weights = null; // peso de ondulación por vértice (0 arriba, 1 abajo)
     let pinned = null;
+    let neighbors = null; // lista de vecinos por vértice (para deformación local)
     let vertexCount = 0;
     let clothMat = null;
-    const GRAVITY = -9.8;
-    const DAMPING = 0.985;
 
     const raycaster = new THREE.Raycaster();
     const pointer = new THREE.Vector2();
@@ -103,7 +101,7 @@ export default function Shirt3D({modelUrl = '/models/camisa.glb', imageUrl = '',
       if (!hits.length) return -1;
       const pos = hits[0].point;
       let best = -1;
-      let bestDist = 0.12;
+      let bestDist = 0.14;
       for (let i = 0; i < vertexCount; i++) {
         if (pinned[i]) continue;
         const dx = pos.x - positions[i * 3];
@@ -125,6 +123,7 @@ export default function Shirt3D({modelUrl = '/models/camisa.glb', imageUrl = '',
         controls.enabled = false;
       }
     }
+
     function onMove(evt) {
       if (!dragging || grabbed < 0) return;
       const rect = renderer.domElement.getBoundingClientRect();
@@ -137,15 +136,32 @@ export default function Shirt3D({modelUrl = '/models/camisa.glb', imageUrl = '',
       );
       const pt = new THREE.Vector3();
       raycaster.ray.intersectPlane(plane, pt);
-      if (pt) {
-        positions[grabbed * 3] = pt.x;
-        positions[grabbed * 3 + 1] = pt.y;
-        positions[grabbed * 3 + 2] = pt.z;
-        prev[grabbed * 3] = pt.x;
-        prev[grabbed * 3 + 1] = pt.y;
-        prev[grabbed * 3 + 2] = pt.z;
+      if (!pt) return;
+
+      // Desplazar el vértice agarrado hacia el cursor
+      grabOffsets[grabbed * 3] = pt.x - restPositions[grabbed * 3];
+      grabOffsets[grabbed * 3 + 1] = pt.y - restPositions[grabbed * 3 + 1];
+      grabOffsets[grabbed * 3 + 2] = pt.z - restPositions[grabbed * 3 + 2];
+
+      // Deformación local: vecinos directos e indirectos siguen con caída
+      const applyInfluence = (v, factor) => {
+        const ox = pt.x - restPositions[v * 3];
+        const oy = pt.y - restPositions[v * 3 + 1];
+        const oz = pt.z - restPositions[v * 3 + 2];
+        grabOffsets[v * 3] = ox * factor;
+        grabOffsets[v * 3 + 1] = oy * factor;
+        grabOffsets[v * 3 + 2] = oz * factor;
+      };
+      const direct = neighbors[grabbed] || [];
+      for (const n of direct) applyInfluence(n, 0.45);
+      for (const n of direct) {
+        for (const n2 of neighbors[n] || []) {
+          if (n2 === grabbed || direct.includes(n2)) continue;
+          applyInfluence(n2, 0.2);
+        }
       }
     }
+
     function onUp() {
       dragging = false;
       grabbed = -1;
@@ -164,7 +180,6 @@ export default function Shirt3D({modelUrl = '/models/camisa.glb', imageUrl = '',
         const mesh = gltf.scene.getObjectByProperty('type', 'Mesh') || gltf.scene;
         const geo = mesh.geometry;
 
-        // Centrar y escalar el modelo
         geo.computeBoundingBox();
         const bb = geo.boundingBox;
         const center = new THREE.Vector3();
@@ -172,52 +187,56 @@ export default function Shirt3D({modelUrl = '/models/camisa.glb', imageUrl = '',
         const size = new THREE.Vector3();
         bb.getSize(size);
         const maxDim = Math.max(size.x, size.y, size.z) || 1;
-        const scale = 1.6 / maxDim; // altura objetivo ~1.6
+        const scale = 1.6 / maxDim;
 
-        // Extraer geometría
         const posAttr = geo.attributes.position;
         const idxAttr = geo.index;
         const uvAttr = geo.attributes.uv;
         vertexCount = posAttr.count;
-        positions = new Float32Array(vertexCount * 3);
-        prev = new Float32Array(vertexCount * 3);
-        const uvs = uvAttr ? new Float32Array(uvAttr.array) : null;
 
+        restPositions = new Float32Array(vertexCount * 3);
+        positions = new Float32Array(vertexCount * 3);
+        grabOffsets = new Float32Array(vertexCount * 3);
+        weights = new Float32Array(vertexCount);
+        pinned = new Uint8Array(vertexCount);
+
+        let maxY = -Infinity;
+        let minY = Infinity;
         for (let i = 0; i < vertexCount; i++) {
           const x = (posAttr.getX(i) - center.x) * scale;
           const y = (posAttr.getY(i) - center.y) * scale;
           const z = (posAttr.getZ(i) - center.z) * scale;
+          restPositions[i * 3] = x;
+          restPositions[i * 3 + 1] = y;
+          restPositions[i * 3 + 2] = z;
           positions[i * 3] = x;
           positions[i * 3 + 1] = y;
           positions[i * 3 + 2] = z;
-          prev[i * 3] = x;
-          prev[i * 3 + 1] = y;
-          prev[i * 3 + 2] = z;
+          if (y > maxY) maxY = y;
+          if (y < minY) minY = y;
         }
 
-        // Índices (triángulos) → aristas únicas para restricciones
+        // Fijar vértices superiores (hombros/cuello) y calcular peso de ondulación
+        const threshold = maxY - (maxY - minY) * 0.12;
+        for (let i = 0; i < vertexCount; i++) {
+          const y = restPositions[i * 3 + 1];
+          if (y >= threshold) pinned[i] = 1;
+          weights[i] = Math.min(1, Math.max(0, (maxY - y) / (maxY - minY)));
+        }
+
+        // Adyacencia (vecinos directos) para deformación local
+        neighbors = Array.from({length: vertexCount}, () => []);
         const indexArray = idxAttr ? idxAttr.array : null;
         const triCount = indexArray ? indexArray.length / 3 : Math.floor(vertexCount / 3);
-        const indices = [];
-        const edgeSet = new Set();
-        const edgeKey = (a, b) => (a < b ? a + '_' + b : b + '_' + a);
-
-        const pushEdge = (a, b) => {
+        const seen = new Set();
+        const addEdge = (a, b) => {
           if (a === b) return;
-          const k = edgeKey(a, b);
-          if (!edgeSet.has(k)) {
-            edgeSet.add(k);
-            restC.push(a, b);
-            restLen.push(
-              Math.sqrt(
-                Math.pow(positions[a * 3] - positions[b * 3], 2) +
-                  Math.pow(positions[a * 3 + 1] - positions[b * 3 + 1], 2) +
-                  Math.pow(positions[a * 3 + 2] - positions[b * 3 + 2], 2),
-              ),
-            );
-          }
+          const key = a < b ? a + '_' + b : b + '_' + a;
+          if (seen.has(key)) return;
+          seen.add(key);
+          neighbors[a].push(b);
+          neighbors[b].push(a);
         };
-
         for (let t = 0; t < triCount; t++) {
           let a, b, c;
           if (indexArray) {
@@ -229,77 +248,31 @@ export default function Shirt3D({modelUrl = '/models/camisa.glb', imageUrl = '',
             b = t * 3 + 1;
             c = t * 3 + 2;
           }
-          indices.push(a, b, c);
-          pushEdge(a, b);
-          pushEdge(b, c);
-          pushEdge(c, a);
+          addEdge(a, b);
+          addEdge(b, c);
+          addEdge(c, a);
         }
 
-        // Restricciones de flexión (bending): conecta vértices a 2 saltos para
-        // mantener la forma de la superficie y evitar "desgarros".
-        const adjacency = new Map();
-        for (let i = 0; i < vertexCount; i++) adjacency.set(i, new Set());
-        for (let k = 0; k < restC.length; k += 2) {
-          adjacency.get(restC[k]).add(restC[k + 1]);
-          adjacency.get(restC[k + 1]).add(restC[k]);
-        }
-        const distBetween = (i, j) =>
-          Math.sqrt(
-            Math.pow(positions[i * 3] - positions[j * 3], 2) +
-              Math.pow(positions[i * 3 + 1] - positions[j * 3 + 1], 2) +
-              Math.pow(positions[i * 3 + 2] - positions[j * 3 + 2], 2),
-          );
-        let bendAdded = 0;
-        for (let i = 0; i < vertexCount; i++) {
-          const neighbors = Array.from(adjacency.get(i));
-          for (let a = 0; a < neighbors.length; a++) {
-            for (let b = a + 1; b < neighbors.length; b++) {
-              const j = neighbors[a];
-              const k = neighbors[b];
-              if (adjacency.get(j).has(k)) continue;
-              restC.push(j, k);
-              restLen.push(distBetween(j, k));
-              bendAdded++;
-            }
-          }
-        }
+        const indices = indexArray ? Array.from(indexArray) : null;
+        const uvs = uvAttr ? new Float32Array(uvAttr.array) : null;
 
-        // Fijar los vértices superiores (hombros/cuello = 12% más altos)
-        let maxY = -Infinity;
-        let minY = Infinity;
-        for (let i = 0; i < vertexCount; i++) {
-          const y = positions[i * 3 + 1];
-          if (y > maxY) maxY = y;
-          if (y < minY) minY = y;
-        }
-        const threshold = maxY - (maxY - minY) * 0.12;
-        pinned = new Uint8Array(vertexCount);
-        for (let i = 0; i < vertexCount; i++) {
-          if (positions[i * 3 + 1] >= threshold) pinned[i] = 1;
-        }
-
-        // Geometría Verlet
         clothGeom = new THREE.BufferGeometry();
         clothGeom.setAttribute('position', new THREE.BufferAttribute(positions, 3));
         if (uvs) clothGeom.setAttribute('uv', new THREE.BufferAttribute(uvs, 2));
-        clothGeom.setIndex(indices);
+        if (indices) clothGeom.setIndex(indices);
         clothGeom.computeVertexNormals();
 
-        // Material: reutilizar la textura del GLB o la imagen pasada
         let map = null;
-        if (mesh.material && mesh.material.map) {
-          map = mesh.material.map;
-        } else if (Array.isArray(mesh.material) && mesh.material[0] && mesh.material[0].map) {
-          map = mesh.material[0].map;
-        }
+        if (mesh.material && mesh.material.map) map = mesh.material.map;
+        else if (Array.isArray(mesh.material) && mesh.material[0] && mesh.material[0].map) map = mesh.material[0].map;
+
         clothMat = new THREE.MeshStandardMaterial({
           map: map || null,
-          color: map ? 0xffffff : 0xffffff,
+          color: 0xffffff,
           side: THREE.DoubleSide,
           roughness: 0.85,
         });
 
-        // Fallback: si no hay textura en el GLB, usar imageUrl
         if (!map && imageUrl) {
           const tl = new THREE.TextureLoader();
           tl.load(imageUrl, (tex) => {
@@ -314,12 +287,9 @@ export default function Shirt3D({modelUrl = '/models/camisa.glb', imageUrl = '',
         cloth.receiveShadow = true;
         scene.add(cloth);
 
-        // Ocultar el mesh original del GLB
         if (mesh.parent) mesh.parent.remove(mesh);
         else mesh.visible = false;
 
-        // Ajustar cámara al modelo
-        const v3 = new THREE.Vector3();
         clothGeom.computeBoundingBox();
         const cb = clothGeom.boundingBox;
         const cSize = new THREE.Vector3();
@@ -333,74 +303,44 @@ export default function Shirt3D({modelUrl = '/models/camisa.glb', imageUrl = '',
       (err) => console.error('Error cargando GLB:', err),
     );
 
-    // ── Paso de simulación ────────────────────────────────
-    function step(dt) {
+    // ── Ondulación de tela (cada frame) ────────────────────
+    function updateCloth(now) {
       if (!cloth) return;
-      const sdt = dt * dt;
-      const wind = Math.sin(performance.now() * 0.0012) * 0.22;
-
+      const t = now * 0.001;
       for (let i = 0; i < vertexCount; i++) {
-        if (pinned[i]) continue;
-        const ix = i * 3;
-        const px = positions[ix];
-        const py = positions[ix + 1];
-        const pz = positions[ix + 2];
-        const vx = (px - prev[ix]) * DAMPING;
-        const vy = (py - prev[ix + 1]) * DAMPING;
-        const vz = (pz - prev[ix + 2]) * DAMPING;
-        prev[ix] = px;
-        prev[ix + 1] = py;
-        prev[ix + 2] = pz;
-        positions[ix] = px + vx + wind * sdt * 0.35;
-        positions[ix + 1] = py + vy + GRAVITY * sdt * 0.05;
-        positions[ix + 2] = pz + vz;
-      }
-
-      for (let iter = 0; iter < 6; iter++) {
-        for (let k = 0; k < restLen.length; k++) {
-          const i = restC[k * 2];
-          const j = restC[k * 2 + 1];
-          const ix = i * 3;
-          const jx = j * 3;
-          let dx = positions[jx] - positions[ix];
-          let dy = positions[jx + 1] - positions[ix + 1];
-          let dz = positions[jx + 2] - positions[ix + 2];
-          let d = Math.sqrt(dx * dx + dy * dy + dz * dz) || 1e-6;
-          const diff = (d - restLen[k]) / d;
-          const pi = pinned[i] ? 0 : 1;
-          const pj = pinned[j] ? 0 : 1;
-          const w = pi + pj || 1;
-          dx *= diff * (pi / w);
-          dy *= diff * (pi / w);
-          dz *= diff * (pi / w);
-          positions[ix] += dx;
-          positions[ix + 1] += dy;
-          positions[ix + 2] += dz;
-          positions[jx] -= dx * (pj / (pi || 1));
-          positions[jx + 1] -= dy * (pj / (pi || 1));
-          positions[jx + 2] -= dz * (pj / (pi || 1));
+        const w = weights[i];
+        let ox = 0;
+        let oz = 0;
+        if (w > 0.001) {
+          const x = restPositions[i * 3];
+          const z = restPositions[i * 3 + 2];
+          // onda de viento: más amplitud cuanto más abajo esté el vértice
+          ox = Math.sin(t * 1.5 + x * 2.6 + z * 1.7) * 0.035 * w;
+          oz = Math.cos(t * 1.15 + x * 1.6 + z * 2.4) * 0.03 * w;
         }
+        // el desplazamiento de agarre decae suavemente a 0 (vuelve a reposo)
+        grabOffsets[i * 3] *= 0.92;
+        grabOffsets[i * 3 + 1] *= 0.92;
+        grabOffsets[i * 3 + 2] *= 0.92;
+
+        positions[i * 3] = restPositions[i * 3] + ox + grabOffsets[i * 3];
+        positions[i * 3 + 1] = restPositions[i * 3 + 1] + grabOffsets[i * 3 + 1];
+        positions[i * 3 + 2] = restPositions[i * 3 + 2] + oz + grabOffsets[i * 3 + 2];
       }
+      clothGeom.attributes.position.needsUpdate = true;
+      clothGeom.computeVertexNormals();
     }
 
     // ── Loop de animación ──────────────────────────────────
     let raf;
-    let last = performance.now();
     function animate(now) {
-      const dt = Math.min((now - last) / 1000, 0.033);
-      last = now;
-      if (!dragging) step(dt);
-      if (clothGeom) {
-        clothGeom.attributes.position.needsUpdate = true;
-        clothGeom.computeVertexNormals();
-      }
+      updateCloth(now);
       controls.update();
       renderer.render(scene, camera);
       raf = requestAnimationFrame(animate);
     }
     raf = requestAnimationFrame(animate);
 
-    // ── Resize ─────────────────────────────────────────────
     function onResize() {
       const w = container.clientWidth || 400;
       const h = container.clientHeight || 520;
@@ -410,7 +350,6 @@ export default function Shirt3D({modelUrl = '/models/camisa.glb', imageUrl = '',
     }
     window.addEventListener('resize', onResize);
 
-    // ── Limpieza ───────────────────────────────────────────
     return () => {
       cancelAnimationFrame(raf);
       window.removeEventListener('resize', onResize);
