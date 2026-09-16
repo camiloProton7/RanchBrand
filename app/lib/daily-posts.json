@@ -1,5 +1,50 @@
 [
   {
+    "slug": "crianza-becerro-nacimiento-destete",
+    "title": "Crianza del becerro: del nacimiento al destete sin perder una cría",
+    "excerpt": "Los primeros meses definen si un becerro llega fuerte al destete o se queda en el camino. Así se cría una cría con oficio, sin improvisar.",
+    "date": "2026-09-16",
+    "category": "Campo",
+    "blocks": [
+      {"type": "p", "text": "Ningún hato crece solo: crece becerro a becerro. La diferencia entre un animal que se desteta fuerte y otro que se queda en el camino se decide en los primeros meses de vida, y ahí es donde la improvisación se paga cara."},
+      {"type": "h2", "text": "Las primeras horas: el calostro no se negocia"},
+      {"type": "p", "text": "El calostro —esa primera leche espesa de la madre— es la vacuna natural del becerro. Si no lo toma en las primeras horas de vida, arranca desprotegido y lo termina pagando en enfermedad. Antes de cualquier otro cuidado hay que asegurar que la cría mame temprano, varias veces y a fondo."},
+      {"type": "h2", "text": "Del nacimiento al destete: lo que no se puede saltar"},
+      {"type": "ul", "items": ["Revisa y desinfecta el ombligo: es la puerta de entrada de infecciones que nadie vigila.", "Garantiza leche a voluntad las primeras semanas: ahí se decide el desarrollo del rumen.", "Observa a diario: un becerro apagado o que no mama avisa mucho antes de enfermarse de verdad.", "Identifica a tiempo y sin estrés para llevar cuenta real de cada cría del hato."]},
+      {"type": "p", "text": "Criar bien una cría es sembrar el futuro del rancho. Ese cuidado por lo que apenas empieza es el mismo que ponemos en cada prenda. No seguimos modas, las marcamos. Explora la colección de gorras y chaquetas The Ranch, hecha para quienes crían con oficio."}
+    ]
+  },
+  {
+    "slug": "alimentacion-caballo-trabajo-racion",
+    "title": "Alimentar al caballo de trabajo: la ración que sostiene la faena",
+    "excerpt": "Un caballo que rinde no se sostiene con suerte: se sostiene con una ración bien pensada. Esto es lo que come el caballo que aguanta la jornada.",
+    "date": "2026-09-16",
+    "category": "Campo",
+    "blocks": [
+      {"type": "p", "text": "El caballo de trabajo es un atleta que se entrega todos los días, y su rendimiento no se decide solo en la monta: se decide en el comedero. Alimentarlo bien es la diferencia entre un animal que aguanta la jornada y uno que se apaga a mitad de camino."},
+      {"type": "h2", "text": "El forraje primero, el grano después"},
+      {"type": "p", "text": "El pasto y el heno son la base; el grano es el complemento, no al revés. Un caballo se alimenta de forraje de calidad a diario, y solo se le suma concentrado según el trabajo que hace. Meterle grano de más a un caballo que no lo quema es pedir cólicos y patas calientes."},
+      {"type": "h2", "text": "Agua, sal y lo que nunca debe faltar"},
+      {"type": "ul", "items": ["Agua limpia y a mano todo el día: un caballo deshidratado no rinde ni se recupera.", "Sal mineral a libre disposición: repone lo que el sudor se lleva en la faena.", "Raciones divididas: mejor varias comidas pequeñas que una sola pesada.", "Cambia la ración poco a poco: el sistema del caballo castiga los cambios bruscos."]},
+      {"type": "p", "text": "El caballo que rinde es el que se cuida cuando nadie lo ve. Ese principio de constancia es el que vestimos. No seguimos modas, las marcamos. Descubre la colección de gorras y chaquetas The Ranch, hecha para quienes cuidan al que los lleva."}
+    ]
+  },
+  {
+    "slug": "como-elegir-chaqueta-western",
+    "title": "Cómo elegir la chaqueta western: material, corte y el ajuste que manda",
+    "excerpt": "La chaqueta western es la pieza que define el look. Aprende a elegir material, corte y ajuste para que trabaje a tu favor, no en tu contra.",
+    "date": "2026-09-16",
+    "category": "Campo",
+    "blocks": [
+      {"type": "p", "text": "La chaqueta es la pieza que más dice de un look western, y también la que más se equivoca. Elegirla bien no es cuestión de marca: es cuestión de material, de corte y de saber qué va a hacer por ti. No seguimos modas, las marcamos."},
+      {"type": "h2", "text": "El material: cuero, gamuza o denim"},
+      {"type": "p", "text": "Cada material cuenta una historia distinta. El denim es el caballo de trabajo: resistente, versátil y sin pretensiones. La gamuza aporta textura y calidez para el entretiempo. El cuero es la declaración: envejece contigo y se gana su carácter con los años. Elige según tu rutina, no según el maniquí."},
+      {"type": "h2", "text": "El corte que asienta, no cuelga"},
+      {"type": "ul", "items": ["Hombros en su sitio: la costura debe caer justo en el borde del hombro.", "Manga sin sobra: termina en el hueso de la muñeca, ni antes ni después.", "Cierre limpio sin tensión: si tira del botón, no es tu talla.", "Largo de cadera: una chaqueta western asienta el torso, no lo entierra."]},
+      {"type": "p", "text": "Una chaqueta bien elegida no se nota por lo que cuesta, sino por cómo cae. Esa es la diferencia entre vestir con intención y simplemente abrigarse. Encuentra la chaqueta que te define y explora la colección de gorras y chaquetas The Ranch."}
+    ]
+  },
+  {
     "slug": "vaqueria-llanera-faena-oficio-llanero",
     "title": "La vaquería llanera: la faena que forjó el oficio del llanero",
     "excerpt": "Antes del coleo y del joropo estuvo la vaquería: la faena de reunir, marcar y repartir el ganado cimarrón que forjó el carácter del llanero.",
