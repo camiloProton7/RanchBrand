@@ -235,6 +235,35 @@ export default function Shirt3D({modelUrl = '/models/camisa.glb', imageUrl = '',
           pushEdge(c, a);
         }
 
+        // Restricciones de flexión (bending): conecta vértices a 2 saltos para
+        // mantener la forma de la superficie y evitar "desgarros".
+        const adjacency = new Map();
+        for (let i = 0; i < vertexCount; i++) adjacency.set(i, new Set());
+        for (let k = 0; k < restC.length; k += 2) {
+          adjacency.get(restC[k]).add(restC[k + 1]);
+          adjacency.get(restC[k + 1]).add(restC[k]);
+        }
+        const distBetween = (i, j) =>
+          Math.sqrt(
+            Math.pow(positions[i * 3] - positions[j * 3], 2) +
+              Math.pow(positions[i * 3 + 1] - positions[j * 3 + 1], 2) +
+              Math.pow(positions[i * 3 + 2] - positions[j * 3 + 2], 2),
+          );
+        let bendAdded = 0;
+        for (let i = 0; i < vertexCount; i++) {
+          const neighbors = Array.from(adjacency.get(i));
+          for (let a = 0; a < neighbors.length; a++) {
+            for (let b = a + 1; b < neighbors.length; b++) {
+              const j = neighbors[a];
+              const k = neighbors[b];
+              if (adjacency.get(j).has(k)) continue;
+              restC.push(j, k);
+              restLen.push(distBetween(j, k));
+              bendAdded++;
+            }
+          }
+        }
+
         // Fijar los vértices superiores (hombros/cuello = 12% más altos)
         let maxY = -Infinity;
         let minY = Infinity;
@@ -323,11 +352,11 @@ export default function Shirt3D({modelUrl = '/models/camisa.glb', imageUrl = '',
         prev[ix + 1] = py;
         prev[ix + 2] = pz;
         positions[ix] = px + vx + wind * sdt * 0.35;
-        positions[ix + 1] = py + vy + GRAVITY * sdt * 0.12;
+        positions[ix + 1] = py + vy + GRAVITY * sdt * 0.05;
         positions[ix + 2] = pz + vz;
       }
 
-      for (let iter = 0; iter < 3; iter++) {
+      for (let iter = 0; iter < 6; iter++) {
         for (let k = 0; k < restLen.length; k++) {
           const i = restC[k * 2];
           const j = restC[k * 2 + 1];
