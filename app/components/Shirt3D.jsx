@@ -271,6 +271,7 @@ export default function Shirt3D({modelUrl = '/models/camisa_low.glb', imageUrl =
           color: 0xffffff,
           side: THREE.DoubleSide,
           roughness: 0.85,
+          flatShading: true,
         });
 
         if (!map && imageUrl) {
