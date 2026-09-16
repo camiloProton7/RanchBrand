@@ -26,8 +26,12 @@ if orig_uvs is not None:
     new_uvs = orig_uvs[idx]
 
 new = trimesh.Trimesh(vertices=v, faces=f, process=False)
+# Arreglar orientación de triángulos (winding) — causa el aspecto fragmentado
+new.fix_normals()
 if new_uvs is not None:
     new.visual = TextureVisuals(uv=new_uvs, material=orig_mat)
+
+print(f'winding_consistent tras fix: {new.is_winding_consistent}')
 
 out = 'public/models/beige_shirt_low.glb'
 new.export(out)
