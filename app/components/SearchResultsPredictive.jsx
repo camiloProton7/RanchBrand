@@ -1,4 +1,5 @@
 import {Link, useFetcher} from 'react-router';
+import {optimizeImage} from '~/lib/image';
 import {Image, Money} from '@shopify/hydrogen';
 import React, {useRef, useEffect} from 'react';
 import {
@@ -74,7 +75,7 @@ function SearchResultsPredictiveArticles({term, articles, closeSearch}) {
                 {article.image?.url && (
                   <Image
                     alt={article.image.altText ?? ''}
-                    src={article.image.url}
+                    src={optimizeImage(article.image.url, 200)}
                     width={50}
                     height={50}
                   />
@@ -114,7 +115,7 @@ function SearchResultsPredictiveCollections({term, collections, closeSearch}) {
                 {collection.image?.url && (
                   <Image
                     alt={collection.image.altText ?? ''}
-                    src={collection.image.url}
+                    src={optimizeImage(collection.image.url, 200)}
                     width={50}
                     height={50}
                   />
@@ -188,7 +189,7 @@ function SearchResultsPredictiveProducts({term, products, closeSearch}) {
                 {image && (
                   <Image
                     alt={image.altText ?? ''}
-                    src={image.url}
+                    src={optimizeImage(image.url, 200)}
                     width={50}
                     height={50}
                   />

@@ -1,4 +1,5 @@
 import {useEffect, useRef, useState} from 'react';
+import {optimizeImage} from '~/lib/image';
 
 const FONTS = [
   {id: 'rye', label: 'Western', family: '"Rye", serif'},
@@ -173,7 +174,7 @@ export default function Personalizador({product, onChange}) {
       {enabled ? (
         <div className="perso-editor">
           <div className="perso-stage" ref={stageRef}>
-            {img ? <img className="perso-img" src={img} alt={product?.title} draggable={false} /> : null}
+            {img ? <img className="perso-img" src={optimizeImage(img, 800)} alt={product?.title} draggable={false} /> : null}
             <div
               className={`perso-design ${dragging ? 'is-dragging' : ''}`}
               style={{

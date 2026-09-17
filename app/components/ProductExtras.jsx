@@ -1,5 +1,6 @@
 import {useState} from 'react';
 import {Link} from 'react-router';
+import {optimizeImage} from '~/lib/image';
 
 /**
  * Extras de conversión para la PDP: sellos de confianza, ayuda de tallas,
@@ -322,7 +323,7 @@ export function RecommendedProduct({product, formatPrice, onAdd}) {
         }}
       >
         {product.image ? (
-          <img className="trp-reco-img" src={product.image} alt="" loading="lazy" />
+          <img className="trp-reco-img" src={optimizeImage(product.image, 400)} alt="" loading="lazy" />
         ) : null}
         <div className="trp-reco-info">
           <span className="trp-reco-tag">🔥 Llévalo con descuento</span>

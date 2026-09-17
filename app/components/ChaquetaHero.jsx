@@ -1,4 +1,5 @@
 import {useEffect, useRef, useState} from 'react';
+import {optimizeImage} from '~/lib/image';
 
 /**
  * ChaquetaHero — hero premium de chaquetas.
@@ -184,7 +185,7 @@ export default function ChaquetaHero({products}) {
             <img
               key={active.id}
               className="tr-chaqueta-hero-jacket"
-              src={mainImage}
+              src={optimizeImage(mainImage, 1200)}
               alt={active.title}
               draggable={false}
             />
@@ -223,7 +224,7 @@ export default function ChaquetaHero({products}) {
               onClick={() => setImageIndex(i)}
               aria-label={`Foto ${i + 1}`}
             >
-              <img src={img.url} alt="" loading="lazy" draggable={false} />
+              <img src={optimizeImage(img.url, 200)} alt="" loading="lazy" draggable={false} />
             </button>
           ))}
         </div>

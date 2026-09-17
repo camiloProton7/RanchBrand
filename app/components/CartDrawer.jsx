@@ -1,6 +1,7 @@
 import {useEffect, useState} from 'react';
 import {Link} from 'react-router';
 import {getCart, getCartUrl, formatPrice, addToCart} from '~/lib/cart';
+import {optimizeImage} from '~/lib/image';
 
 export default function CartDrawer({open, onClose}) {
   const [items, setItems] = useState([]);
@@ -93,7 +94,7 @@ export default function CartDrawer({open, onClose}) {
               return (
                 <div key={item.variantId} className="tr-cart-item">
                   {item.image ? (
-                    <img className="tr-cart-item-img" src={item.image} alt="" loading="lazy" />
+                    <img className="tr-cart-item-img" src={optimizeImage(item.image, 200)} alt="" loading="lazy" />
                   ) : null}
                   <div className="tr-cart-item-info">
                     <span className="tr-cart-item-title">{item.title}</span>
@@ -126,7 +127,7 @@ export default function CartDrawer({open, onClose}) {
                   <Link to={`/products/${product.handle}`}>
                     <img
                       className="tr-cart-reco-img"
-                      src={product.image}
+                      src={optimizeImage(product.image, 200)}
                       alt={product.title}
                       loading="lazy"
                     />

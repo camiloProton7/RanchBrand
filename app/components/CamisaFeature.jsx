@@ -1,4 +1,5 @@
 import {Link} from 'react-router';
+import {optimizeImage} from '~/lib/image';
 
 const CAMISA = {
   title: 'Camisa Outdoor The Ranch',
@@ -25,7 +26,7 @@ export default function CamisaFeature() {
         <Link className="tr-camisa-feature-media" to={`/products/${CAMISA.handle}`}>
           <img
             className="tr-camisa-feature-img"
-            src={CAMISA.image}
+            src={optimizeImage(CAMISA.image, 1200)}
             alt={CAMISA.title}
             loading="lazy"
           />
