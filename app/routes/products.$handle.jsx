@@ -1,6 +1,7 @@
 import {useEffect, useMemo, useRef, useState} from 'react';
 import {Link, useLoaderData, useRouteLoaderData} from 'react-router';
 import {addToCart, buyNow} from '~/lib/cart';
+import {optimizeImage} from '~/lib/image';
 import {Analytics} from '@shopify/hydrogen';
 import {
   TrustBadges,
@@ -485,11 +486,14 @@ export default function ProductPage() {
     // En el combo Camisa + Gorra, la camisa es el producto principal (galería).
     const source = isComboCamisa && camisaCombo ? camisaCombo : product;
     const imgs = (source?.images?.nodes || []).map((i) => ({
-      url: i.url,
+      url: optimizeImage(i.url, 800),
       alt: i.altText || source?.title || '',
     }));
     if (!imgs.length && source?.featuredImage?.url) {
-      imgs.push({url: source.featuredImage.url, alt: source?.featuredImage?.altText || ''});
+      imgs.push({
+        url: optimizeImage(source.featuredImage.url, 800),
+        alt: source?.featuredImage?.altText || '',
+      });
     }
     return imgs;
   }, [product, camisaCombo, isComboCamisa]);
