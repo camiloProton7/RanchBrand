@@ -1,5 +1,6 @@
 import {Link, useLoaderData, useRouteLoaderData} from 'react-router';
 import {useEffect, useRef, useState} from 'react';
+import {optimizeImage} from '~/lib/image';
 import {ScrollVideoHero} from '~/components/ScrollVideoHero';
 import ChaquetaHero from '~/components/ChaquetaHero';
 import DesertCampaign from '~/components/DesertCampaign';
@@ -489,7 +490,7 @@ function ProductScroll({products, collectionUrl, ariaLabel, title}) {
                 {primary?.url ? (
                   <img
                     className="tr-gorra-img tr-gorra-img-1"
-                    src={primary.url}
+                    src={optimizeImage(primary.url, 600)}
                     alt={primary.altText || product.title}
                     loading="lazy"
                   />
@@ -497,7 +498,7 @@ function ProductScroll({products, collectionUrl, ariaLabel, title}) {
                 {second?.url ? (
                   <img
                     className="tr-gorra-img tr-gorra-img-2"
-                    src={second.url}
+                    src={optimizeImage(second.url, 600)}
                     alt=""
                     loading="lazy"
                   />

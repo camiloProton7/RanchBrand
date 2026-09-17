@@ -186,7 +186,7 @@ export default function CollectionPage() {
         </div>
         {heroImage ? (
           <div className="tr-col-hero-media" aria-hidden="true">
-            <img src={heroImage} alt="" />
+            <img src={optimizeImage(heroImage, 1200)} alt="" />
           </div>
         ) : null}
       </header>
@@ -264,7 +264,7 @@ export default function CollectionPage() {
             {quickView.featuredImage?.url ? (
               <img
                 className="tr-col-qv-img"
-                src={quickView.featuredImage.url}
+                src={optimizeImage(quickView.featuredImage.url, 600)}
                 alt={quickView.featuredImage.altText || quickView.title}
               />
             ) : null}
