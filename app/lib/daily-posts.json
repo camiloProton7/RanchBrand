@@ -1,5 +1,50 @@
 [
   {
+    "slug": "cuadrillas-san-martin-tradicion-llanera",
+    "title": "Las Cuadrillas de San Martín: la tradición llanera que se baila a caballo",
+    "excerpt": "En San Martín (Meta) el caballo no solo se monta: se baila. Las Cuadrillas son la tradición ecuestre y folclórica donde el llano se cruza con la historia.",
+    "date": "2026-09-17",
+    "category": "Campo",
+    "blocks": [
+      {"type": "p", "text": "Hay tradiciones que se cantan, otras que se montan y una que se baila a caballo. Las Cuadrillas de San Martín, en el Meta, son la cita anual donde el llano se cruza con la historia: jinetes vestidos de gala, caballos engalanados y coreografías ecuestres que se repiten desde hace siglos."},
+      {"type": "h2", "text": "¿Qué son las Cuadrillas de San Martín?"},
+      {"type": "p", "text": "Cada año, en las festividades de San Martín, los llaneros se organizan en cuadrillas —grupos de jinetes— que representan a caballo el enfrentamiento entre moros y cristianos y otras escenas de la historia. No es un desfile: es una coreografía montada, con pasos medidos, carreras en formación y figuras que exigen caballo manso y jinete seguro."},
+      {"type": "h2", "text": "La fiesta, paso a paso"},
+      {"type": "ul", "items": ["El desfile de apertura: caballos bañados, crines trenzadas y jinetes de gala.", "Las escenas a caballo: diálogos, carreras y choques controlados entre cuadrillas.", "El acompañamiento musical: joropo, arpa y cuatro marcando el paso.", "El cierre de fiesta: comilona, coleo y baile hasta que el cuerpo aguante."]},
+      {"type": "p", "text": "Las Cuadrillas son la prueba de que la tradición llanera no se guarda en un museo: se monta, se baila y se hereda. No seguimos modas, las marcamos. Si vives el campo así, explora la colección de gorras y chaquetas The Ranch y llévalo puesto."}
+    ]
+  },
+  {
+    "slug": "cuidar-gorras-cuero-clima-tropical",
+    "title": "Cuidar gorras y cuero en clima tropical: humedad, sol y sudor",
+    "excerpt": "El calor y la humedad del trópico castigan el cuero y la tela como ningún invierno. Así se cuidan las prendas de campo cuando el sol y el sudor no dan tregua.",
+    "date": "2026-09-17",
+    "category": "Campo",
+    "blocks": [
+      {"type": "p", "text": "En el campo colombiano el clima no es un detalle: es una faena diaria. El sol vertical, la humedad que no suelta y el sudor de la jornada castigan la gorra y el cuero como ningún invierno. Quien cuida su equipo bajo este sol lo hace durar años; quien no, lo ve morir en una temporada."},
+      {"type": "h2", "text": "La humedad: el enemigo que no se ve"},
+      {"type": "p", "text": "El cuero reseco se cuartea, pero el cuero húmedo se pudre y cría hongo. En el trópico el peligro real no es el frío, es la humedad guardada: sudor en la banda interior de la gorra, transpiración en el cuello de la chaqueta, rocío de la madrugada. Todo eso hay que sacarlo a tiempo."},
+      {"type": "h2", "text": "Lo que pide el trópico, prenda por prenda"},
+      {"type": "ul", "items": ["Seca la gorra después de cada jornada: nunca la guardes sudada, la banda interior cría hongo.", "Airea el cuero a la sombra: el sol directo lo reseca y lo cuartea; la sombra lo seca sin castigarlo.", "Acondiciona el cuero cada pocos meses: con el calor se reseca más rápido que en clima frío.", "Lava la tela con agua fría y sécala al aire: la secadora encoge y deforma.", "Guarda en un lugar ventilado, nunca en bolsas plásticas cerradas."]},
+      {"type": "p", "text": "El trópico no perdona al que descuida, pero premia al que cuida. Una gorra con visera en cuero y una chaqueta bien mantenidas envejecen con dignidad, no se deshacen. No seguimos modas, las marcamos. Explora la colección de gorras y chaquetas The Ranch y cuida tu equipo como se cuida un buen caballo."}
+    ]
+  },
+  {
+    "slug": "apero-llanero-silla-cincha-ensillar",
+    "title": "El apero llanero: la silla, la cincha y el oficio de ensillar bien",
+    "excerpt": "El apero es lo que está entre el jinete y el caballo, y de él depende la seguridad de ambos. Así se compone y se asienta el apero llanero.",
+    "date": "2026-09-17",
+    "category": "Campo",
+    "blocks": [
+      {"type": "p", "text": "Entre el jinete y el caballo no hay nada más importante que el apero. Una silla mal puesta o una cincha floja no son un detalle: son una caída esperando el peor momento. El llanero que se respeta conoce su apero pieza por pieza y lo revisa antes de cada salida."},
+      {"type": "h2", "text": "Las piezas que sostienen al jinete"},
+      {"type": "ul", "items": ["El fuste o la silla: la base que reparte el peso sobre el lomo del caballo.", "El sudadero: la pieza que absorbe el sudor y protege el lomo del roce.", "La cincha: la correa que sujeta la silla; de ella depende que nada se corra.", "Las aciones y los estribos: donde el jinete apoya el peso y se equilibra.", "La gurupera y el pechero: las amarras que evitan que la silla se deslice en lomas y barro."]},
+      {"type": "h2", "text": "Ensillar bien no es amarrar: es asentar"},
+      {"type": "p", "text": "Se empieza por el sudadero limpio y bien extendido, sin arrugas que lastimen el lomo. La silla se asienta en el centro, ni muy atrás ni muy adelante, y la cincha se ajusta pareja, sin apretar de más ni dejar flojo. Antes de montar, se vuelve a templar: el caballo infla el vientre al cinchar y afloja después."},
+      {"type": "p", "text": "El apero bien cuidado y bien puesto es la firma del jinete serio: el caballo no se lastima y el jinete vuelve entero. No seguimos modas, las marcamos. Si el oficio es lo tuyo, explora la colección de gorras y chaquetas The Ranch, hecha para quienes ensillan todos los días."}
+    ]
+  },
+  {
     "slug": "crianza-becerro-nacimiento-destete",
     "title": "Crianza del becerro: del nacimiento al destete sin perder una cría",
     "excerpt": "Los primeros meses definen si un becerro llega fuerte al destete o se queda en el camino. Así se cría una cría con oficio, sin improvisar.",
