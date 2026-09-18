@@ -68,6 +68,9 @@ export async function loader(args) {
 
   // Analytics nativo de Shopify (embudo de conversión en el admin).
   // Solo se activa si las env vars están configuradas en Oxygen.
+  // Requisitos: PUBLIC_CHECKOUT_DOMAIN + PUBLIC_STOREFRONT_API_TOKEN.
+  // cookieDomain="ranch.com.co" mantiene las cookies de visitante en el
+  // dominio raíz para que el checkout de Shopify las lea (atribución).
   const analyticsReady =
     env.PUBLIC_CHECKOUT_DOMAIN && env.PUBLIC_STOREFRONT_API_TOKEN;
 
