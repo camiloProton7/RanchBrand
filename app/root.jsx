@@ -124,7 +124,11 @@ export default function App() {
   const data = useLoaderData();
   const logoSrc = data?.header?.shop?.brand?.logo?.image?.url;
   return (
-    <Analytics.Provider shop={data?.shop} consent={data?.consent}>
+    <Analytics.Provider
+      shop={data?.shop}
+      consent={data?.consent}
+      cookieDomain="ranch.com.co"
+    >
       <SiteHeader logoSrc={logoSrc} />
       <Outlet />
       <Footer logoSrc={logoSrc} />
