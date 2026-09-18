@@ -1,5 +1,50 @@
 [
   {
+    "slug": "ordeno-madrugada-faena-rancho",
+    "title": "El ordeño: la faena de la madrugada que abre el rancho",
+    "excerpt": "Antes de que salga el sol, la leche ya espera. El ordeño es la primera faena del día y una de las que más oficio exige: se hace bien o no se hace.",
+    "date": "2026-09-18",
+    "category": "Campo",
+    "blocks": [
+      {"type": "p", "text": "El rancho no abre con el sol: abre con el ordeño. Cuando todavía está oscuro, la vaca ya espera en el corral y el ordeñador llega con su banco y su balde, como quien cumple una cita que no admite excusas. Es la faena que más se repite en la vida del campo y, quizá, la que menos se perdona cuando se hace a las carreras."},
+      {"type": "h2", "text": "La madrugada no se negocia"},
+      {"type": "p", "text": "La leche tiene hora, y la vaca también. Ordeñar tarde significa menos leche, una vaca incómoda y una mastitis esperando a la vuelta. Por eso el ordeñador madruga antes que nadie, con la rutina ya aprendida: la vaca se reconoce, se habla en tono parejo y se trabaja sin gritos. El animal responde a la calma, no al apuro."},
+      {"type": "h2", "text": "Ordeñar bien no es apretar: es esperar"},
+      {"type": "ul", "items": ["Prepara el corral limpio y el animal atado con la pata firme, sin asustarlo.", "Lava y seca la ubre antes de empezar: la higiene es la mitad del oficio.", "Despunta los primeros chorros y revisa la leche antes de recogerla.", "Ordeña con ritmo parejo y completa la vaca a fondo: la que queda es la que enferma.", "Enfría la leche pronto y limpia el equipo al terminar, sin dejarlo para después."]},
+      {"type": "p", "text": "El ordeño enseña lo mismo que el resto del campo: la constancia vale más que la fuerza y el orden más que la prisa. Quien lo hace bien todos los días tiene leche, queso y un hato sano. No seguimos modas, las marcamos. Si madrugas como se debe, explora la colección de gorras y chaquetas The Ranch, hecha para quienes abren el rancho antes que el sol."}
+    ]
+  },
+  {
+    "slug": "amanecer-llanero-serenta-festival",
+    "title": "El Amanecer Llanero: la serenata que despierta al festival",
+    "excerpt": "En Villavicencio el festival no empieza con un telón: empieza de madrugada, con arpa, cuatro y una serenata que recorre las calles antes de que salga el sol.",
+    "date": "2026-09-18",
+    "category": "Campo",
+    "blocks": [
+      {"type": "p", "text": "Hay fiestas que abren con un discurso y otras que abren con un madrugón. El Amanecer Llanero es de las segundas: la tradición con la que Villavicencio despierta en plena fiesta llanera, cuando el arpa y el cuatro le cantan a la ciudad antes de que aclare."},
+      {"type": "h2", "text": "¿Qué es el Amanecer Llanero?"},
+      {"type": "p", "text": "Es una serenata colectiva que recorre las calles de madrugada, durante el Festival Internacional del Joropo. Grupos de músicos, jinetes y vecinos salen a despertar a la ciudad con joropo, pasaje y coplas, casa por casa, hasta que el sol les responde. No es un concierto: es un saludo del llano a quien lo habita."},
+      {"type": "h2", "text": "Lo que se vive en la madrugada"},
+      {"type": "ul", "items": ["El recorrido a pie y a caballo, con faroles y velas encendidas.", "El arpa, el cuatro y las maracas marcando el paso de la caravana.", "Las coplas y los versos improvisados a cada puerta que se abre.", "El café, el guarapo y la hallaca que reciben al que canta.", "El amanecer en el parque, donde la serenata se vuelve baile."]},
+      {"type": "p", "text": "El Amanecer Llanero es la prueba de que la tradición no se guarda: se despierta, se canta y se comparte antes de que salga el sol. No seguimos modas, las marcamos. Si el llano te corre por dentro, explora la colección de gorras y chaquetas The Ranch y llévalo puesto en la próxima fiesta."}
+    ]
+  },
+  {
+    "slug": "bano-cepillado-caballo-cuidado",
+    "title": "Bañar y cepillar al caballo: el cuidado que antecede a la monta",
+    "excerpt": "Un caballo limpio no es un lujo de feria: es un caballo sano, que rinde y que te avisa a tiempo. Así se baña y se cepilla antes de ensillar.",
+    "date": "2026-09-18",
+    "category": "Campo",
+    "blocks": [
+      {"type": "p", "text": "Antes de ensillar hay una faena que muchos saltan y el caballo sí siente: el cepillado. No es cuestión de que se vea bonito; es cuestión de salud, de circulación y de leer al animal antes de montarlo. Un caballo que se cepilla a diario es un caballo que se conoce."},
+      {"type": "h2", "text": "El cepillado: mucho más que estética"},
+      {"type": "p", "text": "El cepillo levanta el polvo, reparte la grasa natural del pelo y activa la circulación. De paso, la mano recorre el lomo, las patas y la barriga y detecta heridas, garrapatas o zonas calientes antes de que se vuelvan problema. Cepillar es la revisión de rutina que ningún veterinario puede hacer por ti todos los días."},
+      {"type": "h2", "text": "El baño, bien hecho y sin apuro"},
+      {"type": "ul", "items": ["Moja desde el casco hacia arriba, nunca el agua fría de golpe sobre el lomo caliente.", "Usa champú para equinos o jabón neutro, sin productos que resequen la piel.", "Enjuaga a fondo: el residuo de jabón pica y pela.", "Saca el exceso de agua con una rasqueta y seca las zonas sensibles.", "No ensilles con el lomo húmedo: la humedad bajo la silla lastima la piel."]},
+      {"type": "p", "text": "El caballo que se cuida antes de la monta rinde más y se lastima menos. Ese cuidado del detalle, hecho todos los días sin que nadie lo vea, es el mismo que ponemos en cada prenda. No seguimos modas, las marcamos. Explora la colección de gorras y chaquetas The Ranch, hecha para quienes cuidan al que los lleva."}
+    ]
+  },
+  {
     "slug": "cuadrillas-san-martin-tradicion-llanera",
     "title": "Las Cuadrillas de San Martín: la tradición llanera que se baila a caballo",
     "excerpt": "En San Martín (Meta) el caballo no solo se monta: se baila. Las Cuadrillas son la tradición ecuestre y folclórica donde el llano se cruza con la historia.",
