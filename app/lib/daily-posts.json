@@ -1,5 +1,50 @@
 [
   {
+    "slug": "perro-vaquero-arreador-ganado-rancho",
+    "title": "El perro vaquero: el arreador de cuatro patas que sostiene la faena",
+    "excerpt": "Detrás de mucho hato bien llevado hay un perro de trabajo que arrea, aparta y cuida sin soltar la vista del ganado. Así se cría y se trabaja con el perro vaquero.",
+    "date": "2026-09-20",
+    "category": "Campo",
+    "blocks": [
+      {"type": "p", "text": "El llanero no trabaja solo: a su lado, callado y atento, va el perro vaquero. No es una mascota de patio, es mano de obra pura: el compañero que arrea lo que el caballo no alcanza, aparta lo que hay que apartar y no suelta la vista del hato ni cuando el jinete se distrae."},
+      {"type": "h2", "text": "Un perro de trabajo no nace, se hace"},
+      {"type": "p", "text": "La raza importa menos que la cabeza. Un buen perro vaquero tiene instinto de arrear, pero ese instinto sin oficio es un desastre: corre de más, muerde lo que no debe y dispersa el ganado. Por eso se le enseña con calma, en faenas cortas y con órdenes claras, hasta que entiende que su trabajo es mover el ganado, no asustarlo."},
+      {"type": "h2", "text": "Lo que distingue al perro que rinde"},
+      {"type": "ul", "items": ["Arrea por instinto y frena a la orden: el perro que no suelta al ganado no sirve para el trabajo.", "Trabaja en equipo con el jinete: lee el grito, la seña y el silbido.", "No muerde por rabia: acosa con la mirada y la posición, no con los dientes.", "Aguanta la jornada y vuelve entero: se cuida la pata, el agua y el descanso como a un compañero."]},
+      {"type": "p", "text": "El perro vaquero le recuerda al campo lo mismo que un buen apero o una buena silla: el trabajo serio se hace con los que responden. No seguimos modas, las marcamos. Si trabajas el ganado con la misma entrega, explora la colección de gorras y chaquetas The Ranch, hecha para quienes no sueltan la faena."}
+    ]
+  },
+  {
+    "slug": "cantos-de-trabajo-llano-tonada-ordeno",
+    "title": "Los cantos de trabajo del llano: la voz que arrea y ordeña",
+    "excerpt": "Antes del joropo de fiesta estuvo el canto de trabajo: la tonada con la que el llanero ordeña, arrea y se acompaña en la sabana cuando nadie lo escucha.",
+    "date": "2026-09-20",
+    "category": "Campo",
+    "blocks": [
+      {"type": "p", "text": "El joropo no es el único canto del llano. Antes de la fiesta hubo una voz más antigua, más callada y más útil: el canto de trabajo. Es la tonada con la que el llanero ordeña de madrugada, arrea el ganado en la sabana y se hace compañía en las jornadas largas donde el silencio pesa."},
+      {"type": "h2", "text": "La tonada de ordeño: calmar para que la vaca suelte"},
+      {"type": "p", "text": "El canto de ordeño no es adorno, es herramienta. La vaca se deja ordeñar cuando está tranquila, y la voz pareja del ordeñador la aquieta más que cualquier forcejeo. Por eso se canta bajito, con versos que hablan del animal, del trabajo y del cariño que se le tiene a la faena de todos los días."},
+      {"type": "h2", "text": "Cantos de arreo y de vaquería"},
+      {"type": "ul", "items": ["El canto de arreo marca el paso del ganado y lleva al hato sin gritos ni carreras.", "En la vaquería, la copla corta coordina a los jinetes que no se ven entre la polvareda.", "El canto de camino acompaña las travesías largas y espanta el cansancio.", "La copla de trabajo guarda la memoria: por ella pasan los nombres, los amores y las historias del hato."]},
+      {"type": "p", "text": "Ese canto nació de la necesidad y se volvió identidad: la prueba de que el llanero canta como trabaja, sin adornos y con verdad. No seguimos modas, las marcamos. Si esa cultura te corre por dentro, explora la colección de gorras y chaquetas The Ranch y llévala puesta."}
+    ]
+  },
+  {
+    "slug": "combinar-gorra-cuero-chaqueta-western",
+    "title": "Gorra de cuero y chaqueta western: cómo combinar el par que manda",
+    "excerpt": "La gorra con visera en cuero y la chaqueta western son el par que más dice de un look. Aprende a combinarlas por color, textura y ocasión sin caer en el exceso.",
+    "date": "2026-09-20",
+    "category": "Campo",
+    "blocks": [
+      {"type": "p", "text": "En el western hay una regla que casi nadie respeta: una pieza manda y las demás acompañan. Y cuando la gorra de visera en cuero se junta con la chaqueta, el riesgo de ruido es real. Combinarlas bien no es sumar más cuero: es medir el color, la textura y el momento."},
+      {"type": "h2", "text": "Color: que hablen el mismo idioma"},
+      {"type": "p", "text": "La gorra y la chaqueta no tienen que ser idénticas, pero sí de la misma familia. Un cuero tabaco con una chaqueta en tono tierra asienta; un cuero negro con una chaqueta denim clara contrasta con intención. Lo que falla es mezclar tonos que no se saludan: si la gorra es cálida y la chaqueta fría, el conjunto se parte en dos."},
+      {"type": "h2", "text": "Textura y ocasión: el par que nunca falla"},
+      {"type": "ul", "items": ["Gorra de cuero liso + chaqueta de gamuza: texturas distintas que se respetan, ideal para el entretiempo.", "Gorra de cuero + chaqueta denim: el clásico de trabajo, sin esfuerzo y para todos los días.", "Un solo cuero por look: si la visera es de cuero, deja que la chaqueta sea tela o denim.", "Tonos tierra para el día, tonos oscuros para la noche: el western también se viste de ocasión."]},
+      {"type": "p", "text": "El par bien armado no se nota por lo que cuesta, sino por cómo cae: con intención, sin disfraz. No seguimos modas, las marcamos. Encuentra la gorra y la chaqueta que te definen y explora la colección The Ranch."}
+    ]
+  },
+  {
     "slug": "ordeno-madrugada-faena-rancho",
     "title": "El ordeño: la faena de la madrugada que abre el rancho",
     "excerpt": "Antes de que salga el sol, la leche ya espera. El ordeño es la primera faena del día y una de las que más oficio exige: se hace bien o no se hace.",
