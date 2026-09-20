@@ -316,7 +316,29 @@ function CollectionCard({product, index, onQuickView}) {
         to={`/products/${product.handle}`}
         prefetch="intent"
       >
-          <div className="tr-col-card-media">
+          <div
+            className="tr-col-card-media"
+            onPointerMove={(e) => {
+              // Scrub: deslizar el dedo revela la 2ª imagen (solo touch)
+              if (e.pointerType !== 'touch') return;
+              const el = e.currentTarget;
+              const rect = el.getBoundingClientRect();
+              const p = Math.max(
+                0,
+                Math.min(1, (e.clientX - rect.left) / rect.width),
+              );
+              const img1 = el.querySelector('.tr-col-card-img-1');
+              const img2 = el.querySelector('.tr-col-card-img-2');
+              if (img1) img1.style.opacity = String(1 - p);
+              if (img2) img2.style.opacity = String(p);
+            }}
+            onPointerLeave={(e) => {
+              const img1 = e.currentTarget.querySelector('.tr-col-card-img-1');
+              const img2 = e.currentTarget.querySelector('.tr-col-card-img-2');
+              if (img1) img1.style.opacity = '1';
+              if (img2) img2.style.opacity = '0';
+            }}
+          >
             {primary?.url ? (
               <img
                 className="tr-col-card-img tr-col-card-img-1"

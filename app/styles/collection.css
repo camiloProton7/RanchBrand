@@ -568,6 +568,7 @@
   border-radius: 16px;
   overflow: hidden;
   position: relative;
+  touch-action: pan-y;
   width: 100%;
 }
 
@@ -600,15 +601,8 @@
   }
 }
 
-/* Mobile (touch): crossfade automático suave */
-@media (hover: none) {
-  .tr-col-card-img-1 {
-    animation: tr-col-crossfade-1 6s ease-in-out infinite;
-  }
-  .tr-col-card-img-2 {
-    animation: tr-col-crossfade-2 6s ease-in-out infinite;
-  }
-}
+/* Mobile (touch): sin crossfade automático.
+   La 2ª imagen se revela al deslizar el dedo (scrub) vía onPointerMove. */
 
 @keyframes tr-col-crossfade-1 {
   0%,
