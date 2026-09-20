@@ -789,6 +789,7 @@
   margin: 10px;
   overflow: hidden;
   position: relative;
+  touch-action: pan-y;
   transition: margin 0.5s cubic-bezier(0.22, 1, 0.36, 1),
     border-radius 0.5s ease;
 }
@@ -829,17 +830,8 @@
   }
 }
 
-/* Mobile (touch): crossfade automático suave (no interfiere con el tap).
-   Solo se anima cuando la 2ª imagen ya cargó (clase .tr-gorra-ready),
-   para evitar que "aparezca y desaparezca" por lazy-loading. */
-@media (hover: none) {
-  .tr-gorra-media.tr-gorra-ready .tr-gorra-img-1 {
-    animation: tr-img-crossfade-1 6s ease-in-out infinite;
-  }
-  .tr-gorra-media.tr-gorra-ready .tr-gorra-img-2 {
-    animation: tr-img-crossfade-2 6s ease-in-out infinite;
-  }
-}
+/* Mobile (touch): sin crossfade automático.
+   La 2ª imagen se revela al deslizar el dedo (scrub) vía onPointerMove. */
 
 @keyframes tr-img-crossfade-1 {
   0%,
