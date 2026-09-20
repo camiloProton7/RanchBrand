@@ -501,6 +501,13 @@ function ProductScroll({products, collectionUrl, ariaLabel, title}) {
                     src={optimizeImage(second.url, 600)}
                     alt=""
                     loading="lazy"
+                    decoding="async"
+                    onLoad={(e) => {
+                      // Activa el crossfade solo cuando la 2ª imagen ya cargó
+                      e.currentTarget
+                        .closest('.tr-gorra-media')
+                        ?.classList.add('tr-gorra-ready');
+                    }}
                   />
                 ) : null}
 

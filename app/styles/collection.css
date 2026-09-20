@@ -600,12 +600,13 @@
   }
 }
 
-/* Mobile (touch): crossfade automático suave */
+/* Mobile (touch): crossfade automático suave.
+   Solo se anima cuando la 2ª imagen ya cargó (clase .tr-gorra-ready). */
 @media (hover: none) {
-  .tr-col-card-img-1 {
+  .tr-col-card-media.tr-gorra-ready .tr-col-card-img-1 {
     animation: tr-col-crossfade-1 6s ease-in-out infinite;
   }
-  .tr-col-card-img-2 {
+  .tr-col-card-media.tr-gorra-ready .tr-col-card-img-2 {
     animation: tr-col-crossfade-2 6s ease-in-out infinite;
   }
 }

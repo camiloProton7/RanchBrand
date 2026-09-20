@@ -829,12 +829,14 @@
   }
 }
 
-/* Mobile (touch): crossfade automático suave (no interfiere con el tap) */
+/* Mobile (touch): crossfade automático suave (no interfiere con el tap).
+   Solo se anima cuando la 2ª imagen ya cargó (clase .tr-gorra-ready),
+   para evitar que "aparezca y desaparezca" por lazy-loading. */
 @media (hover: none) {
-  .tr-gorra-img-1 {
+  .tr-gorra-media.tr-gorra-ready .tr-gorra-img-1 {
     animation: tr-img-crossfade-1 6s ease-in-out infinite;
   }
-  .tr-gorra-img-2 {
+  .tr-gorra-media.tr-gorra-ready .tr-gorra-img-2 {
     animation: tr-img-crossfade-2 6s ease-in-out infinite;
   }
 }

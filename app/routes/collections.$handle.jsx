@@ -332,6 +332,13 @@ function CollectionCard({product, index, onQuickView}) {
                 src={optimizeImage(second.url, 600)}
                 alt=""
                 loading="lazy"
+                decoding="async"
+                onLoad={(e) => {
+                  // Activa el crossfade solo cuando la 2ª imagen ya cargó
+                  e.currentTarget
+                    .closest('.tr-col-card-media')
+                    ?.classList.add('tr-gorra-ready');
+                }}
               />
             ) : null}
             <span className="tr-col-rating-badge">
