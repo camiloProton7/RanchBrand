@@ -513,7 +513,7 @@ function ProductScroll({products, collectionUrl, ariaLabel, title}) {
                 {primary?.url ? (
                   <img
                     className="tr-gorra-img tr-gorra-img-1"
-                    src={optimizeImage(primary.url, 600)}
+                    src={optimizeImage(primary.url, 480)}
                     alt={primary.altText || product.title}
                     loading="lazy"
                   />
@@ -521,7 +521,7 @@ function ProductScroll({products, collectionUrl, ariaLabel, title}) {
                 {second?.url ? (
                   <img
                     className="tr-gorra-img tr-gorra-img-2"
-                    src={optimizeImage(second.url, 600)}
+                    src={optimizeImage(second.url, 480)}
                     alt=""
                     loading="lazy"
                     decoding="async"

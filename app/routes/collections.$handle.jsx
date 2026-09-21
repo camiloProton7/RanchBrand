@@ -343,7 +343,7 @@ function CollectionCard({product, index, onQuickView}) {
             {primary?.url ? (
               <img
                 className="tr-col-card-img tr-col-card-img-1"
-                src={optimizeImage(primary.url, 600)}
+                src={optimizeImage(primary.url, 480)}
                 alt={primary.altText || product.title}
                 loading="lazy"
               />
@@ -351,7 +351,7 @@ function CollectionCard({product, index, onQuickView}) {
             {second?.url ? (
               <img
                 className="tr-col-card-img tr-col-card-img-2"
-                src={optimizeImage(second.url, 600)}
+                src={optimizeImage(second.url, 480)}
                 alt=""
                 loading="lazy"
                 decoding="async"
