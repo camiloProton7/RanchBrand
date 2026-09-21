@@ -15,8 +15,8 @@ const clamp = (value, min = 0, max = 1) =>
  * playhead and the editorial navigation's spatial transition.
  */
 export function ScrollVideoHero({
-  videoSrc = '/home-video.mp4?v=6',
-  posterSrc = '/home-poster.jpg?v=6',
+  videoSrc = '/home-video.mp4?v=7',
+  posterSrc = '/home-poster.jpg?v=7',
   logoSrc,
 }) {
   const sectionRef = useRef(null);
@@ -157,7 +157,7 @@ export function ScrollVideoHero({
             onLoadedData={() => setIsVideoReady(true)}
             onCanPlay={() => setIsVideoReady(true)}
           >
-            <source src="/home-video-hevc.mp4?v=6" type='video/mp4; codecs="hvc1"' />
+            <source src="/home-video-hevc.mp4?v=7" type='video/mp4; codecs="hvc1"' />
             <source src={videoSrc} type="video/mp4" />
           </video>
         </div>
