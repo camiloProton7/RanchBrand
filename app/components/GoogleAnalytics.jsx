@@ -2,8 +2,8 @@ import {useEffect} from 'react';
 import {useLocation} from 'react-router';
 
 // ID de medición de Google Analytics 4 (GA4). Formato: G-XXXXXXXXXX
-// Se configura en la variable de entorno PUBLIC_GA4_ID (Vercel/Oxygen).
-const GA4_ID = (import.meta.env?.PUBLIC_GA4_ID || '').trim();
+// Prioriza la variable de entorno PUBLIC_GA4_ID; si no está definida usa el ID de The Ranch.
+const GA4_ID = (import.meta.env?.PUBLIC_GA4_ID || "G-BRJH54Y39N").trim();
 
 export default function GoogleAnalytics() {
   const location = useLocation();
