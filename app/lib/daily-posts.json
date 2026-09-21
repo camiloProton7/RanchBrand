@@ -1,5 +1,50 @@
 [
   {
+    "slug": "freno-riendas-comunicacion-jinete-caballo",
+    "title": "El freno y las riendas: la comunicación fina entre jinete y caballo",
+    "excerpt": "La monta no se manda a tirones: se conversa a través del freno y las riendas. Así se trabaja la boca del caballo sin lastimarla y con mando real.",
+    "date": "2026-09-21",
+    "category": "Campo",
+    "blocks": [
+      {"type": "p", "text": "Muchos creen que montar es agarrarse de las riendas y tirar. En realidad, la monta fina se decide en la boca del caballo: el freno y las riendas son el hilo por el que jinete y animal se entienden, y una mano torpe lo rompe para siempre."},
+      {"type": "h2", "text": "La boca del caballo no es un timón"},
+      {"type": "p", "text": "El freno actúa sobre zonas sensibles —las barras, la lengua, las comisuras— que no están hechas para soportar tirones. Una mano dura lastima, y un caballo lastimado se vuelve insensible o asustadizo. La rienda se sostiene como se sostiene la rienda de una conversación: firme, pareja y sin sobresaltos."},
+      {"type": "h2", "text": "Del bocado suave al freno completo"},
+      {"type": "ul", "items": ["Elige la embocadura según el caballo y el trabajo, no según la moda del apero.", "Mantén un contacto constante pero liviano: ni rienda floja que abandona, ni tensión que pelea.", "Monta con pierna, peso y asiento antes que con la rienda; la rienda es el último recurso.", "Revisa boca y comisuras antes y después de cada jornada: una herida se paga en mañas.", "Limpia el freno al terminar y guárdalo seco: el metal sucio corta como una cuchilla."]},
+      {"type": "p", "text": "El caballo que responde a la mano liviana es el que se entrega entero. No seguimos modas, las marcamos. Si la equitación fina es lo tuyo, explora la colección de gorras y chaquetas The Ranch, hecha para quienes montan con oficio."}
+    ]
+  },
+  {
+    "slug": "el-lazo-herramienta-vaquero-enlazado",
+    "title": "El lazo: la herramienta que define al vaquero",
+    "excerpt": "Antes del corral y de la cerca, el vaquero contó con una cuerda y un nudo. El lazo es la extensión de la mano, y enlazar bien es puro oficio.",
+    "date": "2026-09-21",
+    "category": "Campo",
+    "blocks": [
+      {"type": "p", "text": "Hay herramientas que se cuelgan de la silla y otras que se cuelgan del brazo. El lazo es de las que definen al vaquero: una cuerda, un nudo y la capacidad de leer al animal en pleno movimiento. Quien lo domina no necesita gritar."},
+      {"type": "h2", "text": "Enlazar no es tirar: es calcular"},
+      {"type": "p", "text": "El lazo no se lanza a la suerte. Se calcula la distancia, el ángulo y el punto exacto de la presa, con el brazo relajado y la vista puesta en el animal, no en la cuerda. La fuerza no enlaza; enlaza la puntería que nace de repetir el gesto mil veces."},
+      {"type": "h2", "text": "Lo que se necesita para enlazar bien"},
+      {"type": "ul", "items": ["Una soga de la medida y el peso correctos para el tipo de ganado que se trabaja.", "El nudo que abre y cierra la honda por sí solo, sin trabarse ni aflojarse de más.", "Lanzar desde la posición correcta y soltar en el momento justo, no antes ni después.", "Asegurar el tiro sin tironeos bruscos: el animal se sujeta, no se castiga.", "Cuidar la soga seca, limpia y enrollada: una soga torcida falla en el peor momento."]},
+      {"type": "p", "text": "El lazo bien manejado es la firma del vaquero que no improvisa. No seguimos modas, las marcamos. Si el oficio del campo es lo tuyo, explora la colección de gorras y chaquetas The Ranch, hecha para quienes trabajan con la mano firme."}
+    ]
+  },
+  {
+    "slug": "parranda-llanera-fogon-copla-tradicion",
+    "title": "La parranda llanera: el fogón, la copla y la tradición que no se duerme",
+    "excerpt": "Hay fiestas que se organizan y parrandas que simplemente ocurren. La parranda llanera es la fiesta sin escenario, donde el fogón y la copla mandan hasta que aclara.",
+    "date": "2026-09-21",
+    "category": "Campo",
+    "blocks": [
+      {"type": "p", "text": "Hay fiestas que se montan con telón y programa, y hay parrandas que simplemente ocurren. La parranda llanera es de las segundas: no necesita escenario, porque su escenario es el fogón, la hamaca y el patio de tierra donde el llano se junta a celebrar sin pedir permiso."},
+      {"type": "h2", "text": "El fogón manda: carne a la llanera y café cerrero"},
+      {"type": "p", "text": "En la parranda todo gira alrededor del fogón. La carne asada a la llanera —la mamona— se come con las manos, el café cerrero se toma sin afán y el guarapo corre de mano en mano. La comida no es un anexo de la fiesta: es su centro, y quien llega tarde se queda sin su parte."},
+      {"type": "h2", "text": "Arpa, cuatro y coplas hasta que aclare"},
+      {"type": "ul", "items": ["El arpa y el cuatro no se reservan para el escenario: en la parranda se tocan en círculo, a ras de fogón.", "Las coplas se improvisan entre trago y trago, y el que no contesta pierde el honor.", "El joropo se baila descalzo en el patio, al ritmo que marca el trote.", "La palabra se empeña en el brindis: lo que se promete en parranda se cumple de día."]},
+      {"type": "p", "text": "La parranda llanera es la prueba de que la tradición se celebra como se vive: de frente, sin protocolo y hasta que el cuerpo aguante. No seguimos modas, las marcamos. Si el llano te corre por dentro, explora la colección de gorras y chaquetas The Ranch y llévalo puesto en la próxima parranda."}
+    ]
+  },
+  {
     "slug": "perro-vaquero-arreador-ganado-rancho",
     "title": "El perro vaquero: el arreador de cuatro patas que sostiene la faena",
     "excerpt": "Detrás de mucho hato bien llevado hay un perro de trabajo que arrea, aparta y cuida sin soltar la vista del ganado. Así se cría y se trabaja con el perro vaquero.",
