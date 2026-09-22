@@ -1,5 +1,50 @@
 [
   {
+    "slug": "alambrado-cercas-oficio-sostiene-rancho",
+    "title": "El alambrado y las cercas: el oficio que sostiene el rancho",
+    "excerpt": "Ningún hato se sostiene sobre una cerca floja. Así se tiende el alambrado y se cuida la línea que guarda lo tuyo, ordena la pastura y protege al ganado.",
+    "date": "2026-09-22",
+    "category": "Campo",
+    "blocks": [
+      {"type": "p", "text": "Ningún hato se sostiene sobre una cerca floja. Antes de hablar de marcas, coleo o caballos, hay un oficio callado que separa al rancho serio del potrero improvisado: el alambrado. Es la línea que guarda lo tuyo, ordena la pastura y le pone orden a lo que el ganado, solo, desordenaría."},
+      {"type": "h2", "text": "La cerca es la primera defensa del hato"},
+      {"type": "p", "text": "Un animal que se sale no es un descuido: es una cerca que avisó y nadie escuchó. La cerca contiene, pero también protege: evita que el ganado caiga a un caño, que se cruce a la carretera o que se pierda en el monte. Por eso el buen vaquero la recorre a diario, palo a palo, antes de que el hueco se vuelva fuga."},
+      {"type": "h2", "text": "Cercar bien es leer el terreno, no clavar postes"},
+      {"type": "ul", "items": ["El poste de esquina y de tensión es el que manda: se entierra hondo y firme, porque es el que aguanta toda la línea.", "El alambre se templa parejo, sin dejar ni flojo que se enrede ni tenso que reviente con el primer viento.", "Se respetan los pasos de agua y los potreros altos: una cerca mal trazada corta el camino del ganado al agua.", "El alambre de púas va a la altura justa del animal, ni tan bajo que se salta ni tan alto que se lastima.", "La revisión es parte del oficio: una grapa floja o un poste podrido se corrigen hoy, no cuando ya hay fuga."]},
+      {"type": "p", "text": "La cerca bien hecha es como el trabajo bien hecho: no se ve, se nota. Sostiene el rancho en silencio, todos los días, y nadie la aplaude hasta que falta. No seguimos modas, las marcamos. Si haces el trabajo de todos los días con esa constancia, explora la colección de gorras y chaquetas The Ranch, hecha para quienes sostienen el rancho sin pedir permiso."}
+    ]
+  },
+  {
+    "slug": "silencios-del-campo-filosofia-rancho",
+    "title": "Los silencios del campo: la filosofía que se aprende sin hablar",
+    "excerpt": "El campo habla poco y enseña mucho. Hay una filosofía que no se dicta ni se escribe: se aprende en los silencios del rancho, cuando el trabajo y la tierra dicen todo.",
+    "date": "2026-09-22",
+    "category": "Campo",
+    "blocks": [
+      {"type": "p", "text": "El campo habla poco y enseña mucho. Hay una filosofía que no se dicta ni se escribe: se aprende en los silencios del rancho, cuando nadie habla y el trabajo, el animal y la tierra dicen todo lo que hace falta."},
+      {"type": "h2", "text": "El silencio del que sabe escuchar"},
+      {"type": "p", "text": "Quien grita en el corral no entiende al ganado. El vaquero de verdad trabaja en calma, porque aprendió que el animal responde al tono parejo y a la seña precisa, no al ruido. El silencio no es vacío: es atención. Es la forma de leer la oreja del caballo, el paso del hato y la nube que anuncia el aguacero antes que ningún pronóstico."},
+      {"type": "h2", "text": "Lo que el silencio del rancho enseña"},
+      {"type": "ul", "items": ["A observar antes de actuar: el que mira dos veces, corrige una vez.", "A medir la palabra: en el campo se habla poco porque la palabra vale, y lo que se dice se cumple.", "A respetar los tiempos: la tierra y el animal no se apuran, se acompañan.", "A estar presente: el oficio se hace con las manos, pero también con la atención completa.", "A no buscar aplauso: el trabajo bien hecho no necesita testigos."]},
+      {"type": "p", "text": "Los silencios del campo son la mejor escuela de carácter: ahí se aprende a escuchar de verdad, a decidir sin ruido y a sostener lo que se empieza. No seguimos modas, las marcamos. Si compartes esa calma que manda, explora la colección de gorras y chaquetas The Ranch y llévala puesta donde se trabaja callado."}
+    ]
+  },
+  {
+    "slug": "denim-western-tejido-de-trabajo",
+    "title": "El denim en el western: el tejido de trabajo que no pasa de moda",
+    "excerpt": "Antes de ser moda, el denim fue uniforme de trabajo. Así se lleva el tejido que nació para aguantar y envejecer con carácter, sin caer en el cliché.",
+    "date": "2026-09-22",
+    "category": "Campo",
+    "blocks": [
+      {"type": "p", "text": "Antes de ser moda, el denim fue uniforme de trabajo. Es el tejido con el que se abrió el oeste, se tendieron cercas y se aguantaron jornadas enteras, y por eso el western lo lleva en el ADN. No es casualidad que siga mandando: es la tela que nació para aguantar y envejecer con dignidad."},
+      {"type": "h2", "text": "Por qué el denim nunca falla"},
+      {"type": "p", "text": "El denim no se deshace con el uso: se le va formando carácter. Cada doblez, cada desgaste en el lugar justo cuenta una historia que el tejido nuevo no puede fingir. Es resistente sin ser pesado, sobrio sin ser aburrido, y combina con el cuero como si hubieran nacido para encontrarse."},
+      {"type": "h2", "text": "Cómo llevarlo sin caer en el cliché"},
+      {"type": "ul", "items": ["Denim crudo y oscuro para el día: la base neutra que sostiene cualquier gorra de cuero.", "Denim desgastado en los puntos de trabajo, no a la altura de moda: el desgaste se gana, no se compra.", "Chaqueta denim + gorra de cuero: el par de trabajo que nunca necesita presentación.", "Un solo denim por look: si la chaqueta es denim, deja el resto en tonos tierra y cuero.", "El denim se lava poco y con agua fría: cada lavado le roba un año de vida."]},
+      {"type": "p", "text": "El denim es la prueba de que lo que nace del trabajo no pasa de moda: se vuelve uniforme. No seguimos modas, las marcamos. Si tu estilo nace de la faena y no del maniquí, explora la colección de gorras y chaquetas The Ranch y deja que el denim haga su trabajo."}
+    ]
+  },
+  {
     "slug": "freno-riendas-comunicacion-jinete-caballo",
     "title": "El freno y las riendas: la comunicación fina entre jinete y caballo",
     "excerpt": "La monta no se manda a tirones: se conversa a través del freno y las riendas. Así se trabaja la boca del caballo sin lastimarla y con mando real.",
