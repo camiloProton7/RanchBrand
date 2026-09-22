@@ -91,7 +91,7 @@ const PRODUCT_QUERY = `#graphql
         url(transform: {maxWidth: 900, preferredContentType: WEBP})
         altText
       }
-      images(first: 10) {
+      images(first: 50) {
         nodes {
           url(transform: {maxWidth: 900, preferredContentType: WEBP})
           altText
@@ -176,7 +176,7 @@ const CAMISA_COMBO_QUERY = `#graphql
         url(transform: {maxWidth: 900, preferredContentType: WEBP})
         altText
       }
-      images(first: 10) {
+      images(first: 50) {
         nodes {
           url(transform: {maxWidth: 900, preferredContentType: WEBP})
           altText
