@@ -1,5 +1,49 @@
 [
   {
+    "slug": "vocabulario-llanero-palabras-campo",
+    "title": "El vocabulario del llano: las palabras que solo el campo entiende",
+    "excerpt": "Cabrestear, cimarrón, rejo o guarapo: el llano tiene su propio idioma. Estas son las palabras que separan al que es de la sabana del que solo la visita.",
+    "date": "2026-09-23",
+    "category": "Campo",
+    "blocks": [
+      {"type": "p", "text": "El llano no solo se monta y se trabaja: se habla. Hay un vocabulario entero que nació en la sabana, entre el ganado, el caballo y el fogón, y que ningún diccionario enseña. Conocerlo no es adorno: es entender de dónde viene el oficio y reconocer, de lejos, al que es de la sabana y al que solo la visita."},
+      {"type": "h2", "text": "Palabras que nacieron del trabajo"},
+      {"type": "ul", "items": ["Cabrestear: guiar al ganado por delante, manso y sin apuro. El animal cabrestea cuando confía en el que lo lleva.", "Cimarrón: el animal que se cría suelto, sin dueño ni hierro, y que solo se deja agarrar con oficio.", "Rejo: la soga de cuero crudo, herramienta y símbolo del llanero que trabaja a mano.", "Guarapo y café cerrero: las bebidas del fogón, lo que se comparte cuando se sella una palabra.", "Apearse: bajarse del caballo con calma, no de cualquier manera; bajar es un acto, apearse es un oficio."]},
+      {"type": "h2", "text": "Hablar el llano es respetar el llano"},
+      {"type": "p", "text": "Cada palabra guarda una manera de hacer las cosas. El que dice cabrestear en vez de jalar entiende que al ganado no se le arrastra, se le guía. Por eso este vocabulario no es un diccionario de museo: es la forma en que el campo se nombra y se respeta. No seguimos modas, las marcamos. Si el llano te corre por dentro, explora la colección de gorras y chaquetas The Ranch y llévalo puesto donde se habla como se trabaja."}
+    ]
+  },
+  {
+    "slug": "machete-herramienta-maestra-campo",
+    "title": "El machete: la herramienta maestra que nunca falta en el campo",
+    "excerpt": "Ni el lazo ni el cuchillo: el machete es la herramienta que acompaña al campesino desde que abre el ojo hasta que cierra la jornada. Así se elige, se afila y se respeta.",
+    "date": "2026-09-23",
+    "category": "Campo",
+    "blocks": [
+      {"type": "p", "text": "Antes del lazo y del cuchillo, la primera herramienta que se cuelga al cinto es el machete. Abre camino, corta la pastura, despeja la cerca y acompaña al campesino desde que abre el ojo hasta que cierra la jornada. Es, sencillamente, la herramienta maestra del campo."},
+      {"type": "h2", "text": "No es un arma: es una extensión del brazo"},
+      {"type": "p", "text": "El machete del campo no se carga para imponer, se carga para trabajar. Con él se tumba el monte, se pica la caña, se desyerba el potrero y se abren los caminos de la finca. Quien lo maneja bien no lo luce: lo usa, y la hoja responde como si supiera lo que la mano piensa."},
+      {"type": "h2", "text": "Elegirlo y afilarlo como se debe"},
+      {"type": "ul", "items": ["Elige el machete según el trabajo: hoja ancha para desyerbar, más angosta y pesada para tumbar monte.", "El cabo de madera firme y bien remachado: la seguridad empieza por el agarre.", "Afilado parejo, con lima o piedra, respetando el ángulo de la hoja: un filo disparejo corta mal y gasta de más.", "Límpialo y engrásalo al terminar, y guárdalo seco y envainado: el óxido es el enemigo callado.", "La funda o vaina es parte de la herramienta: protege la hoja y protege a quien la lleva."]},
+      {"type": "p", "text": "El machete bien cuidado dura una vida y se hereda, como las buenas herramientas del campo. Ese respeto por lo que se usa todos los días es el mismo con que hacemos cada prenda. No seguimos modas, las marcamos. Si tu oficio empieza al cinto, explora la colección de gorras y chaquetas The Ranch, hecha para quienes trabajan de sol a sol."}
+    ]
+  },
+  {
+    "slug": "cinturon-hebilla-remate-look-western",
+    "title": "El cinturón y la hebilla: el remate que cierra el look western",
+    "excerpt": "Un look western no se termina en la chaqueta ni en la gorra: se remata en la cintura. La hebilla y el cinturón son el detalle que separa al que sabe vestir del que solo se disfraza.",
+    "date": "2026-09-23",
+    "category": "Campo",
+    "blocks": [
+      {"type": "p", "text": "Un look western no se termina en la chaqueta ni en la gorra: se remata en la cintura. El cinturón y la hebilla son el detalle que separa al que sabe vestir del que solo se disfraza, porque ahí, a la altura de la hebilla, es donde el estilo se vuelve firma."},
+      {"type": "h2", "text": "La hebilla: una pieza que cuenta historia"},
+      {"type": "p", "text": "En el campo la hebilla nunca fue adorno vacío: se ganaba. El lazo, el coleo, la doma y los años de trabajo tienen su hebilla, y quien la lleva no necesita explicar de dónde salió. Por eso una hebilla con peso y carácter cierra el look mejor que cualquier otro accesorio: cuenta una historia sin decir una palabra."},
+      {"type": "h2", "text": "Cómo rematar el look sin pasarse"},
+      {"type": "ul", "items": ["Un solo punto brillante: si la hebilla es protagonista, que el resto de la cintura calle.", "Cuero grueso y parejo: el cinturón western se asienta, no se retuerce ni cuelga.", "La hebilla se combina con el tono del resto: plata con tonos fríos, latón con tonos tierra.", "El cinturón remata al mismo nivel que la gorra y la chaqueta: todo habla el mismo idioma.", "Menos es más: una hebilla con oficio vale más que tres que pelean entre sí."]},
+      {"type": "p", "text": "El buen remate no se nota por lo que brilla, sino por cómo cierra el conjunto: con intención y sin ruido. No seguimos modas, las marcamos. Encuentra la gorra y la chaqueta que abren tu look y explora la colección The Ranch para rematarlo como se debe."}
+    ]
+  },
+  {
     "slug": "alambrado-cercas-oficio-sostiene-rancho",
     "title": "El alambrado y las cercas: el oficio que sostiene el rancho",
     "excerpt": "Ningún hato se sostiene sobre una cerca floja. Así se tiende el alambrado y se cuida la línea que guarda lo tuyo, ordena la pastura y protege al ganado.",
