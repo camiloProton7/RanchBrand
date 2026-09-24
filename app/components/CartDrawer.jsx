@@ -1,6 +1,6 @@
 import {useEffect, useState} from 'react';
 import {Link} from 'react-router';
-import {getCart, getCartUrl, formatPrice, addToCart} from '~/lib/cart';
+import {getCart, getCartUrl, formatPrice, addToCart, removeFromCart} from '~/lib/cart';
 import {optimizeImage} from '~/lib/image';
 
 export default function CartDrawer({open, onClose}) {
@@ -112,6 +112,14 @@ export default function CartDrawer({open, onClose}) {
                       {formatPrice(Number(item.price || 0) * (item.qty || 0))}
                     </span>
                   </div>
+                  <button
+                    className="tr-cart-item-remove"
+                    type="button"
+                    onClick={() => removeFromCart(item.variantId)}
+                    aria-label={`Eliminar ${item.title}`}
+                  >
+                    ×
+                  </button>
                 </div>
               );
             })

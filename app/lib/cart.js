@@ -60,6 +60,13 @@ export function addToCart(item) {
   return cart;
 }
 
+export function removeFromCart(variantId) {
+  const cart = getCart().filter((i) => i.variantId !== variantId);
+  window.localStorage.setItem(CART_KEY, JSON.stringify(cart));
+  window.dispatchEvent(new Event('ranch-cart-updated'));
+  return cart;
+}
+
 export function getCartCount() {
   return getCart().reduce((sum, i) => sum + (i.qty || 0), 0);
 }

@@ -434,6 +434,27 @@
   gap: 2px;
 }
 
+.tr-cart-item-remove {
+  align-items: center;
+  background: none;
+  border: none;
+  color: #b34a2a;
+  cursor: pointer;
+  display: flex;
+  flex-shrink: 0;
+  font-size: 22px;
+  font-weight: 700;
+  height: 32px;
+  justify-content: center;
+  line-height: 1;
+  padding: 0;
+  width: 32px;
+}
+
+.tr-cart-item-remove:hover {
+  color: #913d31;
+}
+
 .tr-cart-item-compare {
   color: #c0392b;
   font-size: 12px;
