@@ -1,17 +1,107 @@
 [
   {
+    "slug": "sequia-rancho-manejo-pastos",
+    "title": "Sequía en el rancho: 5 decisiones que salvan el pasto (y tu ganado)",
+    "excerpt": "Cuando el cielo no manda agua, manda el oficio. Rotar potreros, reservar agua y suplementar a tiempo separa al rancho que aguanta la sequía del que se quiebra.",
+    "date": "2026-09-24",
+    "category": "Campo",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/03/Drought_on_a_Montana_cattle_ranch%2C_May_2022.jpg/1920px-Drought_on_a_Montana_cattle_ranch%2C_May_2022.jpg",
+    "imageAlt": "Paisaje seco de un rancho de ganado en época de sequía",
+    "blocks": [
+      {
+        "type": "p",
+        "text": "La sequía no llega de golpe: avisa. Primero se amarillan los potreros, después el ganado camina más de la cuenta buscando qué comer y al final el agua empieza a faltar. El ranchero que aguanta no es el que espera a que llueva, es el que se prepara desde el primer día seco. Estas son las cinco decisiones que hacen la diferencia."
+      },
+      {
+        "type": "h2",
+        "text": "1. Rotar potreros antes de que se acabe el pasto"
+      },
+      {
+        "type": "p",
+        "text": "El pasto no se recupera solo en plena sequía. Si dejas al ganado libre en un solo potrero, se lo come hasta la raíz y no vuelve a crecer en meses. La rotación —mover el ganado por potreros pequeños y dejar descansar los otros— reparte el desgaste y conserva la reserva. En sequía se rota más rápido, no menos."
+      },
+      {
+        "type": "h2",
+        "text": "2. Reservar agua: el ganado bebe más de lo que parece"
+      },
+      {
+        "type": "p",
+        "text": "Una vaca adulta puede beber entre 40 y 70 litros al día, y con calor, más. Si el agua escasea, se cae todo lo demás: el animal come menos, produce menos y se enferma. Tener bebederos limpios, tanques de reserva y un plan de acarreo es tan importante como el pasto."
+      },
+      {
+        "type": "h2",
+        "text": "3. Suplementar a tiempo, no cuando ya se nota"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Heno o ensilaje para cubrir la fibra que el pasto seco ya no da.",
+          "Sal mineralizada para mantener el apetito y la salud del ganado.",
+          "Melaza o bloques energéticos cuando la energía del pasto baja."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "El error clásico es esperar a ver al ganado flaco para suplementar. Para entonces ya perdiste peso y tiempo. Suplementa antes, como parte de la rutina, no como reacción."
+      },
+      {
+        "type": "h2",
+        "text": "4. Ajustar la carga animal sin miedo"
+      },
+      {
+        "type": "p",
+        "text": "Más animales del que el pasto puede sostener es una cuenta que se cobra en sequía. Reducir la carga —vender, mover o separar— suena duro, pero es más barato que perder el ganado por hambre o desnutrición. Es una decisión de administración, no de derrota."
+      },
+      {
+        "type": "h2",
+        "text": "5. Guardar heno y ensilaje para el día seco"
+      },
+      {
+        "type": "p",
+        "text": "El que guarda en abundancia tiene con qué aguantar. Henificar y ensilar en la época de lluvia, cuando el pasto sobra, es la reserva que te salva cuando el cielo se cierra. La sequía no se improvisa: se anticipa."
+      },
+      {
+        "type": "p",
+        "text": "La sequía es una prueba de oficio, no de suerte. El que administra agua, pasto y carga con cabeza, aguanta la temporada y sale más fuerte. No seguimos modas, las marcamos. Y al que trabaja la tierra con ese oficio, lo vestimos: explora la colección de gorras y chaquetas The Ranch, hecha para quienes aguantan a sol y a sequía."
+      }
+    ]
+  },
+  {
     "slug": "gastronomia-llanera-fogon-tradicion",
     "title": "La gastronomía del llano: el fogón donde nace la tradición",
     "excerpt": "La mamona, la hallaca y el guarapo no acompañan al campo: lo definen. Así se cocina —y se respeta— la mesa del llanero.",
     "date": "2026-09-24",
     "category": "Campo",
     "blocks": [
-      {"type": "p", "text": "En el llano la comida no es un capricho del paladar: es parte del oficio. El fogón llanero nació de la jornada larga, del calor de la sabana y de la necesidad de alimentar a quien trabaja de sol a sol. Por eso la mesa llanera se entiende como se entiende el trabajo: sin adornos y con sustancia."},
-      {"type": "h2", "text": "La mamona: carne a la llanera, lenta y sin apuro"},
-      {"type": "p", "text": "La mamona es la carne de res asada a la llanera, colgada en varas de guadua o en estacas sobre el fuego, y no se hace con prisa. Se sala con antelación, se pone al calor parejo y se deja que el humo y el tiempo hagan su trabajo. El que la apura la arruina: la buena mamona se espera, como se espera todo lo que vale la pena en la sabana."},
-      {"type": "h2", "text": "Hallaca, pan de arroz y guarapo: la mesa que no se improvisa"},
-      {"type": "ul", "items": ["Hallaca llanera: la masa envuelta en hoja que se guarda para las fechas grandes y se comparte de a mano.", "Pan de arroz: el acompañante sencillo y rendidor que nunca falta junto al asado.", "Guarapo y café cerrero: lo que se bebe para sellar un trato o sostener una conversación larga.", "Carne a la llanera al fogón de leña: el centro de toda parranda que se respete."]},
-      {"type": "p", "text": "La cocina del llano enseña lo mismo que el resto del campo: que lo bueno no se inventa de la noche a la mañana, se hace con paciencia y con respeto por la materia prima. No seguimos modas, las marcamos. Si esa tradición te corre por dentro, explora la colección de gorras y chaquetas The Ranch y llévala puesta donde se come como se vive."}
+      {
+        "type": "p",
+        "text": "En el llano la comida no es un capricho del paladar: es parte del oficio. El fogón llanero nació de la jornada larga, del calor de la sabana y de la necesidad de alimentar a quien trabaja de sol a sol. Por eso la mesa llanera se entiende como se entiende el trabajo: sin adornos y con sustancia."
+      },
+      {
+        "type": "h2",
+        "text": "La mamona: carne a la llanera, lenta y sin apuro"
+      },
+      {
+        "type": "p",
+        "text": "La mamona es la carne de res asada a la llanera, colgada en varas de guadua o en estacas sobre el fuego, y no se hace con prisa. Se sala con antelación, se pone al calor parejo y se deja que el humo y el tiempo hagan su trabajo. El que la apura la arruina: la buena mamona se espera, como se espera todo lo que vale la pena en la sabana."
+      },
+      {
+        "type": "h2",
+        "text": "Hallaca, pan de arroz y guarapo: la mesa que no se improvisa"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Hallaca llanera: la masa envuelta en hoja que se guarda para las fechas grandes y se comparte de a mano.",
+          "Pan de arroz: el acompañante sencillo y rendidor que nunca falta junto al asado.",
+          "Guarapo y café cerrero: lo que se bebe para sellar un trato o sostener una conversación larga.",
+          "Carne a la llanera al fogón de leña: el centro de toda parranda que se respete."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "La cocina del llano enseña lo mismo que el resto del campo: que lo bueno no se inventa de la noche a la mañana, se hace con paciencia y con respeto por la materia prima. No seguimos modas, las marcamos. Si esa tradición te corre por dentro, explora la colección de gorras y chaquetas The Ranch y llévala puesta donde se come como se vive."
+      }
     ]
   },
   {
@@ -21,12 +111,35 @@
     "date": "2026-09-24",
     "category": "Campo",
     "blocks": [
-      {"type": "p", "text": "Muchos arman el look western desde la chaqueta o la gorra y olvidan la pieza que lo sostiene: la camisa de trabajo. Es la prenda que nació en la faena, la que va pegada al cuerpo cuando todo lo demás se quita, y por eso merece elegirse con el mismo oficio con que se elige un buen apero."},
-      {"type": "h2", "text": "Por qué la camisa manda más de lo que parece"},
-      {"type": "p", "text": "La camisa es el fondo sobre el que trabaja todo lo demás. Una camisa de algodón grueso, con el corte correcto y el cuello firme, le da estructura al conjunto; una camisa floja o de tela delgada lo arruina desde la base. No es el relleno del look: es su cimiento."},
-      {"type": "h2", "text": "Cómo elegirla: tela, corte y detalle"},
-      {"type": "ul", "items": ["Algodón grueso y de tejido apretado: aguanta la jornada y envejece con carácter, no se deforma.", "Corte entallado pero sin apretar: los hombros en su sitio y la manga al hueso de la muñeca.", "Cuello con estructura: es lo que distingue una camisa de trabajo de una de paseo.", "Tonos tierra, denim y cuadros sobrios: la base neutra que deja brillar a la gorra y la chaqueta."]},
-      {"type": "p", "text": "La camisa de trabajo bien elegida no pide atención: sostiene el conjunto con la misma discreción con que el rancho sostiene al que lo trabaja. No seguimos modas, las marcamos. Arma tu look desde la base y explora la colección de gorras y chaquetas The Ranch para rematarlo como se debe."}
+      {
+        "type": "p",
+        "text": "Muchos arman el look western desde la chaqueta o la gorra y olvidan la pieza que lo sostiene: la camisa de trabajo. Es la prenda que nació en la faena, la que va pegada al cuerpo cuando todo lo demás se quita, y por eso merece elegirse con el mismo oficio con que se elige un buen apero."
+      },
+      {
+        "type": "h2",
+        "text": "Por qué la camisa manda más de lo que parece"
+      },
+      {
+        "type": "p",
+        "text": "La camisa es el fondo sobre el que trabaja todo lo demás. Una camisa de algodón grueso, con el corte correcto y el cuello firme, le da estructura al conjunto; una camisa floja o de tela delgada lo arruina desde la base. No es el relleno del look: es su cimiento."
+      },
+      {
+        "type": "h2",
+        "text": "Cómo elegirla: tela, corte y detalle"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Algodón grueso y de tejido apretado: aguanta la jornada y envejece con carácter, no se deforma.",
+          "Corte entallado pero sin apretar: los hombros en su sitio y la manga al hueso de la muñeca.",
+          "Cuello con estructura: es lo que distingue una camisa de trabajo de una de paseo.",
+          "Tonos tierra, denim y cuadros sobrios: la base neutra que deja brillar a la gorra y la chaqueta."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "La camisa de trabajo bien elegida no pide atención: sostiene el conjunto con la misma discreción con que el rancho sostiene al que lo trabaja. No seguimos modas, las marcamos. Arma tu look desde la base y explora la colección de gorras y chaquetas The Ranch para rematarlo como se debe."
+      }
     ]
   },
   {
@@ -36,12 +149,35 @@
     "date": "2026-09-24",
     "category": "Campo",
     "blocks": [
-      {"type": "p", "text": "El buen jinete no se sienta igual en un trote que en un galope, y mucho menos en un paso fino. Cada andar tiene su ritmo, su función y su manera de montarse, y confundirlos es la forma más rápida de cansar al caballo y a uno mismo. Leer el andar es la mitad de la equitación."},
-      {"type": "h2", "text": "El paso: el andar que descansa y se trabaja"},
-      {"type": "p", "text": "El paso es el andar de cuatro tiempos, el más lento y el más noble: es con el que se recorre la sabana entera sin desfondar al animal. Se monta suelto, acompañando el balanceo con la cadera, sin pelear con las riendas. El que no sabe andar al paso no sabe montar de verdad, porque ahí es donde el jinete y el caballo se conocen."},
-      {"type": "h2", "text": "Trote y galope: cuándo usarlos y cómo sentarse"},
-      {"type": "ul", "items": ["El trote: andar de dos tiempos que exige asiento firme; en el trote sentado se acompaña, en el levantado se aligera el lomo del animal.", "El galope: andar de tres tiempos para terreno abierto; se usa para cubrir distancia, no para lucirse en el corral.", "Cambia de andar con la pierna y el peso, no a tirones de rienda: el caballo responde a la seña, no a la fuerza.", "Dosifica el andar según el terreno y la jornada: el que galopa todo el camino llega con el caballo fundido."]},
-      {"type": "p", "text": "Montar cada andar con respeto es la diferencia entre el que usa al caballo y el que lo entiende. El animal se entrega entero al jinete que lo cuida y lo lee. No seguimos modas, las marcamos. Si la monta fina es lo tuyo, explora la colección de gorras y chaquetas The Ranch, hecha para quienes cabalgan con oficio."}
+      {
+        "type": "p",
+        "text": "El buen jinete no se sienta igual en un trote que en un galope, y mucho menos en un paso fino. Cada andar tiene su ritmo, su función y su manera de montarse, y confundirlos es la forma más rápida de cansar al caballo y a uno mismo. Leer el andar es la mitad de la equitación."
+      },
+      {
+        "type": "h2",
+        "text": "El paso: el andar que descansa y se trabaja"
+      },
+      {
+        "type": "p",
+        "text": "El paso es el andar de cuatro tiempos, el más lento y el más noble: es con el que se recorre la sabana entera sin desfondar al animal. Se monta suelto, acompañando el balanceo con la cadera, sin pelear con las riendas. El que no sabe andar al paso no sabe montar de verdad, porque ahí es donde el jinete y el caballo se conocen."
+      },
+      {
+        "type": "h2",
+        "text": "Trote y galope: cuándo usarlos y cómo sentarse"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "El trote: andar de dos tiempos que exige asiento firme; en el trote sentado se acompaña, en el levantado se aligera el lomo del animal.",
+          "El galope: andar de tres tiempos para terreno abierto; se usa para cubrir distancia, no para lucirse en el corral.",
+          "Cambia de andar con la pierna y el peso, no a tirones de rienda: el caballo responde a la seña, no a la fuerza.",
+          "Dosifica el andar según el terreno y la jornada: el que galopa todo el camino llega con el caballo fundido."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "Montar cada andar con respeto es la diferencia entre el que usa al caballo y el que lo entiende. El animal se entrega entero al jinete que lo cuida y lo lee. No seguimos modas, las marcamos. Si la monta fina es lo tuyo, explora la colección de gorras y chaquetas The Ranch, hecha para quienes cabalgan con oficio."
+      }
     ]
   },
   {
@@ -51,11 +187,32 @@
     "date": "2026-09-23",
     "category": "Campo",
     "blocks": [
-      {"type": "p", "text": "El llano no solo se monta y se trabaja: se habla. Hay un vocabulario entero que nació en la sabana, entre el ganado, el caballo y el fogón, y que ningún diccionario enseña. Conocerlo no es adorno: es entender de dónde viene el oficio y reconocer, de lejos, al que es de la sabana y al que solo la visita."},
-      {"type": "h2", "text": "Palabras que nacieron del trabajo"},
-      {"type": "ul", "items": ["Cabrestear: guiar al ganado por delante, manso y sin apuro. El animal cabrestea cuando confía en el que lo lleva.", "Cimarrón: el animal que se cría suelto, sin dueño ni hierro, y que solo se deja agarrar con oficio.", "Rejo: la soga de cuero crudo, herramienta y símbolo del llanero que trabaja a mano.", "Guarapo y café cerrero: las bebidas del fogón, lo que se comparte cuando se sella una palabra.", "Apearse: bajarse del caballo con calma, no de cualquier manera; bajar es un acto, apearse es un oficio."]},
-      {"type": "h2", "text": "Hablar el llano es respetar el llano"},
-      {"type": "p", "text": "Cada palabra guarda una manera de hacer las cosas. El que dice cabrestear en vez de jalar entiende que al ganado no se le arrastra, se le guía. Por eso este vocabulario no es un diccionario de museo: es la forma en que el campo se nombra y se respeta. No seguimos modas, las marcamos. Si el llano te corre por dentro, explora la colección de gorras y chaquetas The Ranch y llévalo puesto donde se habla como se trabaja."}
+      {
+        "type": "p",
+        "text": "El llano no solo se monta y se trabaja: se habla. Hay un vocabulario entero que nació en la sabana, entre el ganado, el caballo y el fogón, y que ningún diccionario enseña. Conocerlo no es adorno: es entender de dónde viene el oficio y reconocer, de lejos, al que es de la sabana y al que solo la visita."
+      },
+      {
+        "type": "h2",
+        "text": "Palabras que nacieron del trabajo"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Cabrestear: guiar al ganado por delante, manso y sin apuro. El animal cabrestea cuando confía en el que lo lleva.",
+          "Cimarrón: el animal que se cría suelto, sin dueño ni hierro, y que solo se deja agarrar con oficio.",
+          "Rejo: la soga de cuero crudo, herramienta y símbolo del llanero que trabaja a mano.",
+          "Guarapo y café cerrero: las bebidas del fogón, lo que se comparte cuando se sella una palabra.",
+          "Apearse: bajarse del caballo con calma, no de cualquier manera; bajar es un acto, apearse es un oficio."
+        ]
+      },
+      {
+        "type": "h2",
+        "text": "Hablar el llano es respetar el llano"
+      },
+      {
+        "type": "p",
+        "text": "Cada palabra guarda una manera de hacer las cosas. El que dice cabrestear en vez de jalar entiende que al ganado no se le arrastra, se le guía. Por eso este vocabulario no es un diccionario de museo: es la forma en que el campo se nombra y se respeta. No seguimos modas, las marcamos. Si el llano te corre por dentro, explora la colección de gorras y chaquetas The Ranch y llévalo puesto donde se habla como se trabaja."
+      }
     ]
   },
   {
@@ -65,12 +222,36 @@
     "date": "2026-09-23",
     "category": "Campo",
     "blocks": [
-      {"type": "p", "text": "Antes del lazo y del cuchillo, la primera herramienta que se cuelga al cinto es el machete. Abre camino, corta la pastura, despeja la cerca y acompaña al campesino desde que abre el ojo hasta que cierra la jornada. Es, sencillamente, la herramienta maestra del campo."},
-      {"type": "h2", "text": "No es un arma: es una extensión del brazo"},
-      {"type": "p", "text": "El machete del campo no se carga para imponer, se carga para trabajar. Con él se tumba el monte, se pica la caña, se desyerba el potrero y se abren los caminos de la finca. Quien lo maneja bien no lo luce: lo usa, y la hoja responde como si supiera lo que la mano piensa."},
-      {"type": "h2", "text": "Elegirlo y afilarlo como se debe"},
-      {"type": "ul", "items": ["Elige el machete según el trabajo: hoja ancha para desyerbar, más angosta y pesada para tumbar monte.", "El cabo de madera firme y bien remachado: la seguridad empieza por el agarre.", "Afilado parejo, con lima o piedra, respetando el ángulo de la hoja: un filo disparejo corta mal y gasta de más.", "Límpialo y engrásalo al terminar, y guárdalo seco y envainado: el óxido es el enemigo callado.", "La funda o vaina es parte de la herramienta: protege la hoja y protege a quien la lleva."]},
-      {"type": "p", "text": "El machete bien cuidado dura una vida y se hereda, como las buenas herramientas del campo. Ese respeto por lo que se usa todos los días es el mismo con que hacemos cada prenda. No seguimos modas, las marcamos. Si tu oficio empieza al cinto, explora la colección de gorras y chaquetas The Ranch, hecha para quienes trabajan de sol a sol."}
+      {
+        "type": "p",
+        "text": "Antes del lazo y del cuchillo, la primera herramienta que se cuelga al cinto es el machete. Abre camino, corta la pastura, despeja la cerca y acompaña al campesino desde que abre el ojo hasta que cierra la jornada. Es, sencillamente, la herramienta maestra del campo."
+      },
+      {
+        "type": "h2",
+        "text": "No es un arma: es una extensión del brazo"
+      },
+      {
+        "type": "p",
+        "text": "El machete del campo no se carga para imponer, se carga para trabajar. Con él se tumba el monte, se pica la caña, se desyerba el potrero y se abren los caminos de la finca. Quien lo maneja bien no lo luce: lo usa, y la hoja responde como si supiera lo que la mano piensa."
+      },
+      {
+        "type": "h2",
+        "text": "Elegirlo y afilarlo como se debe"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Elige el machete según el trabajo: hoja ancha para desyerbar, más angosta y pesada para tumbar monte.",
+          "El cabo de madera firme y bien remachado: la seguridad empieza por el agarre.",
+          "Afilado parejo, con lima o piedra, respetando el ángulo de la hoja: un filo disparejo corta mal y gasta de más.",
+          "Límpialo y engrásalo al terminar, y guárdalo seco y envainado: el óxido es el enemigo callado.",
+          "La funda o vaina es parte de la herramienta: protege la hoja y protege a quien la lleva."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "El machete bien cuidado dura una vida y se hereda, como las buenas herramientas del campo. Ese respeto por lo que se usa todos los días es el mismo con que hacemos cada prenda. No seguimos modas, las marcamos. Si tu oficio empieza al cinto, explora la colección de gorras y chaquetas The Ranch, hecha para quienes trabajan de sol a sol."
+      }
     ]
   },
   {
@@ -80,12 +261,36 @@
     "date": "2026-09-23",
     "category": "Campo",
     "blocks": [
-      {"type": "p", "text": "Un look western no se termina en la chaqueta ni en la gorra: se remata en la cintura. El cinturón y la hebilla son el detalle que separa al que sabe vestir del que solo se disfraza, porque ahí, a la altura de la hebilla, es donde el estilo se vuelve firma."},
-      {"type": "h2", "text": "La hebilla: una pieza que cuenta historia"},
-      {"type": "p", "text": "En el campo la hebilla nunca fue adorno vacío: se ganaba. El lazo, el coleo, la doma y los años de trabajo tienen su hebilla, y quien la lleva no necesita explicar de dónde salió. Por eso una hebilla con peso y carácter cierra el look mejor que cualquier otro accesorio: cuenta una historia sin decir una palabra."},
-      {"type": "h2", "text": "Cómo rematar el look sin pasarse"},
-      {"type": "ul", "items": ["Un solo punto brillante: si la hebilla es protagonista, que el resto de la cintura calle.", "Cuero grueso y parejo: el cinturón western se asienta, no se retuerce ni cuelga.", "La hebilla se combina con el tono del resto: plata con tonos fríos, latón con tonos tierra.", "El cinturón remata al mismo nivel que la gorra y la chaqueta: todo habla el mismo idioma.", "Menos es más: una hebilla con oficio vale más que tres que pelean entre sí."]},
-      {"type": "p", "text": "El buen remate no se nota por lo que brilla, sino por cómo cierra el conjunto: con intención y sin ruido. No seguimos modas, las marcamos. Encuentra la gorra y la chaqueta que abren tu look y explora la colección The Ranch para rematarlo como se debe."}
+      {
+        "type": "p",
+        "text": "Un look western no se termina en la chaqueta ni en la gorra: se remata en la cintura. El cinturón y la hebilla son el detalle que separa al que sabe vestir del que solo se disfraza, porque ahí, a la altura de la hebilla, es donde el estilo se vuelve firma."
+      },
+      {
+        "type": "h2",
+        "text": "La hebilla: una pieza que cuenta historia"
+      },
+      {
+        "type": "p",
+        "text": "En el campo la hebilla nunca fue adorno vacío: se ganaba. El lazo, el coleo, la doma y los años de trabajo tienen su hebilla, y quien la lleva no necesita explicar de dónde salió. Por eso una hebilla con peso y carácter cierra el look mejor que cualquier otro accesorio: cuenta una historia sin decir una palabra."
+      },
+      {
+        "type": "h2",
+        "text": "Cómo rematar el look sin pasarse"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Un solo punto brillante: si la hebilla es protagonista, que el resto de la cintura calle.",
+          "Cuero grueso y parejo: el cinturón western se asienta, no se retuerce ni cuelga.",
+          "La hebilla se combina con el tono del resto: plata con tonos fríos, latón con tonos tierra.",
+          "El cinturón remata al mismo nivel que la gorra y la chaqueta: todo habla el mismo idioma.",
+          "Menos es más: una hebilla con oficio vale más que tres que pelean entre sí."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "El buen remate no se nota por lo que brilla, sino por cómo cierra el conjunto: con intención y sin ruido. No seguimos modas, las marcamos. Encuentra la gorra y la chaqueta que abren tu look y explora la colección The Ranch para rematarlo como se debe."
+      }
     ]
   },
   {
@@ -95,12 +300,36 @@
     "date": "2026-09-22",
     "category": "Campo",
     "blocks": [
-      {"type": "p", "text": "Ningún hato se sostiene sobre una cerca floja. Antes de hablar de marcas, coleo o caballos, hay un oficio callado que separa al rancho serio del potrero improvisado: el alambrado. Es la línea que guarda lo tuyo, ordena la pastura y le pone orden a lo que el ganado, solo, desordenaría."},
-      {"type": "h2", "text": "La cerca es la primera defensa del hato"},
-      {"type": "p", "text": "Un animal que se sale no es un descuido: es una cerca que avisó y nadie escuchó. La cerca contiene, pero también protege: evita que el ganado caiga a un caño, que se cruce a la carretera o que se pierda en el monte. Por eso el buen vaquero la recorre a diario, palo a palo, antes de que el hueco se vuelva fuga."},
-      {"type": "h2", "text": "Cercar bien es leer el terreno, no clavar postes"},
-      {"type": "ul", "items": ["El poste de esquina y de tensión es el que manda: se entierra hondo y firme, porque es el que aguanta toda la línea.", "El alambre se templa parejo, sin dejar ni flojo que se enrede ni tenso que reviente con el primer viento.", "Se respetan los pasos de agua y los potreros altos: una cerca mal trazada corta el camino del ganado al agua.", "El alambre de púas va a la altura justa del animal, ni tan bajo que se salta ni tan alto que se lastima.", "La revisión es parte del oficio: una grapa floja o un poste podrido se corrigen hoy, no cuando ya hay fuga."]},
-      {"type": "p", "text": "La cerca bien hecha es como el trabajo bien hecho: no se ve, se nota. Sostiene el rancho en silencio, todos los días, y nadie la aplaude hasta que falta. No seguimos modas, las marcamos. Si haces el trabajo de todos los días con esa constancia, explora la colección de gorras y chaquetas The Ranch, hecha para quienes sostienen el rancho sin pedir permiso."}
+      {
+        "type": "p",
+        "text": "Ningún hato se sostiene sobre una cerca floja. Antes de hablar de marcas, coleo o caballos, hay un oficio callado que separa al rancho serio del potrero improvisado: el alambrado. Es la línea que guarda lo tuyo, ordena la pastura y le pone orden a lo que el ganado, solo, desordenaría."
+      },
+      {
+        "type": "h2",
+        "text": "La cerca es la primera defensa del hato"
+      },
+      {
+        "type": "p",
+        "text": "Un animal que se sale no es un descuido: es una cerca que avisó y nadie escuchó. La cerca contiene, pero también protege: evita que el ganado caiga a un caño, que se cruce a la carretera o que se pierda en el monte. Por eso el buen vaquero la recorre a diario, palo a palo, antes de que el hueco se vuelva fuga."
+      },
+      {
+        "type": "h2",
+        "text": "Cercar bien es leer el terreno, no clavar postes"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "El poste de esquina y de tensión es el que manda: se entierra hondo y firme, porque es el que aguanta toda la línea.",
+          "El alambre se templa parejo, sin dejar ni flojo que se enrede ni tenso que reviente con el primer viento.",
+          "Se respetan los pasos de agua y los potreros altos: una cerca mal trazada corta el camino del ganado al agua.",
+          "El alambre de púas va a la altura justa del animal, ni tan bajo que se salta ni tan alto que se lastima.",
+          "La revisión es parte del oficio: una grapa floja o un poste podrido se corrigen hoy, no cuando ya hay fuga."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "La cerca bien hecha es como el trabajo bien hecho: no se ve, se nota. Sostiene el rancho en silencio, todos los días, y nadie la aplaude hasta que falta. No seguimos modas, las marcamos. Si haces el trabajo de todos los días con esa constancia, explora la colección de gorras y chaquetas The Ranch, hecha para quienes sostienen el rancho sin pedir permiso."
+      }
     ]
   },
   {
@@ -110,12 +339,36 @@
     "date": "2026-09-22",
     "category": "Campo",
     "blocks": [
-      {"type": "p", "text": "El campo habla poco y enseña mucho. Hay una filosofía que no se dicta ni se escribe: se aprende en los silencios del rancho, cuando nadie habla y el trabajo, el animal y la tierra dicen todo lo que hace falta."},
-      {"type": "h2", "text": "El silencio del que sabe escuchar"},
-      {"type": "p", "text": "Quien grita en el corral no entiende al ganado. El vaquero de verdad trabaja en calma, porque aprendió que el animal responde al tono parejo y a la seña precisa, no al ruido. El silencio no es vacío: es atención. Es la forma de leer la oreja del caballo, el paso del hato y la nube que anuncia el aguacero antes que ningún pronóstico."},
-      {"type": "h2", "text": "Lo que el silencio del rancho enseña"},
-      {"type": "ul", "items": ["A observar antes de actuar: el que mira dos veces, corrige una vez.", "A medir la palabra: en el campo se habla poco porque la palabra vale, y lo que se dice se cumple.", "A respetar los tiempos: la tierra y el animal no se apuran, se acompañan.", "A estar presente: el oficio se hace con las manos, pero también con la atención completa.", "A no buscar aplauso: el trabajo bien hecho no necesita testigos."]},
-      {"type": "p", "text": "Los silencios del campo son la mejor escuela de carácter: ahí se aprende a escuchar de verdad, a decidir sin ruido y a sostener lo que se empieza. No seguimos modas, las marcamos. Si compartes esa calma que manda, explora la colección de gorras y chaquetas The Ranch y llévala puesta donde se trabaja callado."}
+      {
+        "type": "p",
+        "text": "El campo habla poco y enseña mucho. Hay una filosofía que no se dicta ni se escribe: se aprende en los silencios del rancho, cuando nadie habla y el trabajo, el animal y la tierra dicen todo lo que hace falta."
+      },
+      {
+        "type": "h2",
+        "text": "El silencio del que sabe escuchar"
+      },
+      {
+        "type": "p",
+        "text": "Quien grita en el corral no entiende al ganado. El vaquero de verdad trabaja en calma, porque aprendió que el animal responde al tono parejo y a la seña precisa, no al ruido. El silencio no es vacío: es atención. Es la forma de leer la oreja del caballo, el paso del hato y la nube que anuncia el aguacero antes que ningún pronóstico."
+      },
+      {
+        "type": "h2",
+        "text": "Lo que el silencio del rancho enseña"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "A observar antes de actuar: el que mira dos veces, corrige una vez.",
+          "A medir la palabra: en el campo se habla poco porque la palabra vale, y lo que se dice se cumple.",
+          "A respetar los tiempos: la tierra y el animal no se apuran, se acompañan.",
+          "A estar presente: el oficio se hace con las manos, pero también con la atención completa.",
+          "A no buscar aplauso: el trabajo bien hecho no necesita testigos."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "Los silencios del campo son la mejor escuela de carácter: ahí se aprende a escuchar de verdad, a decidir sin ruido y a sostener lo que se empieza. No seguimos modas, las marcamos. Si compartes esa calma que manda, explora la colección de gorras y chaquetas The Ranch y llévala puesta donde se trabaja callado."
+      }
     ]
   },
   {
@@ -125,12 +378,36 @@
     "date": "2026-09-22",
     "category": "Campo",
     "blocks": [
-      {"type": "p", "text": "Antes de ser moda, el denim fue uniforme de trabajo. Es el tejido con el que se abrió el oeste, se tendieron cercas y se aguantaron jornadas enteras, y por eso el western lo lleva en el ADN. No es casualidad que siga mandando: es la tela que nació para aguantar y envejecer con dignidad."},
-      {"type": "h2", "text": "Por qué el denim nunca falla"},
-      {"type": "p", "text": "El denim no se deshace con el uso: se le va formando carácter. Cada doblez, cada desgaste en el lugar justo cuenta una historia que el tejido nuevo no puede fingir. Es resistente sin ser pesado, sobrio sin ser aburrido, y combina con el cuero como si hubieran nacido para encontrarse."},
-      {"type": "h2", "text": "Cómo llevarlo sin caer en el cliché"},
-      {"type": "ul", "items": ["Denim crudo y oscuro para el día: la base neutra que sostiene cualquier gorra de cuero.", "Denim desgastado en los puntos de trabajo, no a la altura de moda: el desgaste se gana, no se compra.", "Chaqueta denim + gorra de cuero: el par de trabajo que nunca necesita presentación.", "Un solo denim por look: si la chaqueta es denim, deja el resto en tonos tierra y cuero.", "El denim se lava poco y con agua fría: cada lavado le roba un año de vida."]},
-      {"type": "p", "text": "El denim es la prueba de que lo que nace del trabajo no pasa de moda: se vuelve uniforme. No seguimos modas, las marcamos. Si tu estilo nace de la faena y no del maniquí, explora la colección de gorras y chaquetas The Ranch y deja que el denim haga su trabajo."}
+      {
+        "type": "p",
+        "text": "Antes de ser moda, el denim fue uniforme de trabajo. Es el tejido con el que se abrió el oeste, se tendieron cercas y se aguantaron jornadas enteras, y por eso el western lo lleva en el ADN. No es casualidad que siga mandando: es la tela que nació para aguantar y envejecer con dignidad."
+      },
+      {
+        "type": "h2",
+        "text": "Por qué el denim nunca falla"
+      },
+      {
+        "type": "p",
+        "text": "El denim no se deshace con el uso: se le va formando carácter. Cada doblez, cada desgaste en el lugar justo cuenta una historia que el tejido nuevo no puede fingir. Es resistente sin ser pesado, sobrio sin ser aburrido, y combina con el cuero como si hubieran nacido para encontrarse."
+      },
+      {
+        "type": "h2",
+        "text": "Cómo llevarlo sin caer en el cliché"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Denim crudo y oscuro para el día: la base neutra que sostiene cualquier gorra de cuero.",
+          "Denim desgastado en los puntos de trabajo, no a la altura de moda: el desgaste se gana, no se compra.",
+          "Chaqueta denim + gorra de cuero: el par de trabajo que nunca necesita presentación.",
+          "Un solo denim por look: si la chaqueta es denim, deja el resto en tonos tierra y cuero.",
+          "El denim se lava poco y con agua fría: cada lavado le roba un año de vida."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "El denim es la prueba de que lo que nace del trabajo no pasa de moda: se vuelve uniforme. No seguimos modas, las marcamos. Si tu estilo nace de la faena y no del maniquí, explora la colección de gorras y chaquetas The Ranch y deja que el denim haga su trabajo."
+      }
     ]
   },
   {
@@ -140,12 +417,36 @@
     "date": "2026-09-21",
     "category": "Campo",
     "blocks": [
-      {"type": "p", "text": "Muchos creen que montar es agarrarse de las riendas y tirar. En realidad, la monta fina se decide en la boca del caballo: el freno y las riendas son el hilo por el que jinete y animal se entienden, y una mano torpe lo rompe para siempre."},
-      {"type": "h2", "text": "La boca del caballo no es un timón"},
-      {"type": "p", "text": "El freno actúa sobre zonas sensibles —las barras, la lengua, las comisuras— que no están hechas para soportar tirones. Una mano dura lastima, y un caballo lastimado se vuelve insensible o asustadizo. La rienda se sostiene como se sostiene la rienda de una conversación: firme, pareja y sin sobresaltos."},
-      {"type": "h2", "text": "Del bocado suave al freno completo"},
-      {"type": "ul", "items": ["Elige la embocadura según el caballo y el trabajo, no según la moda del apero.", "Mantén un contacto constante pero liviano: ni rienda floja que abandona, ni tensión que pelea.", "Monta con pierna, peso y asiento antes que con la rienda; la rienda es el último recurso.", "Revisa boca y comisuras antes y después de cada jornada: una herida se paga en mañas.", "Limpia el freno al terminar y guárdalo seco: el metal sucio corta como una cuchilla."]},
-      {"type": "p", "text": "El caballo que responde a la mano liviana es el que se entrega entero. No seguimos modas, las marcamos. Si la equitación fina es lo tuyo, explora la colección de gorras y chaquetas The Ranch, hecha para quienes montan con oficio."}
+      {
+        "type": "p",
+        "text": "Muchos creen que montar es agarrarse de las riendas y tirar. En realidad, la monta fina se decide en la boca del caballo: el freno y las riendas son el hilo por el que jinete y animal se entienden, y una mano torpe lo rompe para siempre."
+      },
+      {
+        "type": "h2",
+        "text": "La boca del caballo no es un timón"
+      },
+      {
+        "type": "p",
+        "text": "El freno actúa sobre zonas sensibles —las barras, la lengua, las comisuras— que no están hechas para soportar tirones. Una mano dura lastima, y un caballo lastimado se vuelve insensible o asustadizo. La rienda se sostiene como se sostiene la rienda de una conversación: firme, pareja y sin sobresaltos."
+      },
+      {
+        "type": "h2",
+        "text": "Del bocado suave al freno completo"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Elige la embocadura según el caballo y el trabajo, no según la moda del apero.",
+          "Mantén un contacto constante pero liviano: ni rienda floja que abandona, ni tensión que pelea.",
+          "Monta con pierna, peso y asiento antes que con la rienda; la rienda es el último recurso.",
+          "Revisa boca y comisuras antes y después de cada jornada: una herida se paga en mañas.",
+          "Limpia el freno al terminar y guárdalo seco: el metal sucio corta como una cuchilla."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "El caballo que responde a la mano liviana es el que se entrega entero. No seguimos modas, las marcamos. Si la equitación fina es lo tuyo, explora la colección de gorras y chaquetas The Ranch, hecha para quienes montan con oficio."
+      }
     ]
   },
   {
@@ -155,12 +456,36 @@
     "date": "2026-09-21",
     "category": "Campo",
     "blocks": [
-      {"type": "p", "text": "Hay herramientas que se cuelgan de la silla y otras que se cuelgan del brazo. El lazo es de las que definen al vaquero: una cuerda, un nudo y la capacidad de leer al animal en pleno movimiento. Quien lo domina no necesita gritar."},
-      {"type": "h2", "text": "Enlazar no es tirar: es calcular"},
-      {"type": "p", "text": "El lazo no se lanza a la suerte. Se calcula la distancia, el ángulo y el punto exacto de la presa, con el brazo relajado y la vista puesta en el animal, no en la cuerda. La fuerza no enlaza; enlaza la puntería que nace de repetir el gesto mil veces."},
-      {"type": "h2", "text": "Lo que se necesita para enlazar bien"},
-      {"type": "ul", "items": ["Una soga de la medida y el peso correctos para el tipo de ganado que se trabaja.", "El nudo que abre y cierra la honda por sí solo, sin trabarse ni aflojarse de más.", "Lanzar desde la posición correcta y soltar en el momento justo, no antes ni después.", "Asegurar el tiro sin tironeos bruscos: el animal se sujeta, no se castiga.", "Cuidar la soga seca, limpia y enrollada: una soga torcida falla en el peor momento."]},
-      {"type": "p", "text": "El lazo bien manejado es la firma del vaquero que no improvisa. No seguimos modas, las marcamos. Si el oficio del campo es lo tuyo, explora la colección de gorras y chaquetas The Ranch, hecha para quienes trabajan con la mano firme."}
+      {
+        "type": "p",
+        "text": "Hay herramientas que se cuelgan de la silla y otras que se cuelgan del brazo. El lazo es de las que definen al vaquero: una cuerda, un nudo y la capacidad de leer al animal en pleno movimiento. Quien lo domina no necesita gritar."
+      },
+      {
+        "type": "h2",
+        "text": "Enlazar no es tirar: es calcular"
+      },
+      {
+        "type": "p",
+        "text": "El lazo no se lanza a la suerte. Se calcula la distancia, el ángulo y el punto exacto de la presa, con el brazo relajado y la vista puesta en el animal, no en la cuerda. La fuerza no enlaza; enlaza la puntería que nace de repetir el gesto mil veces."
+      },
+      {
+        "type": "h2",
+        "text": "Lo que se necesita para enlazar bien"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Una soga de la medida y el peso correctos para el tipo de ganado que se trabaja.",
+          "El nudo que abre y cierra la honda por sí solo, sin trabarse ni aflojarse de más.",
+          "Lanzar desde la posición correcta y soltar en el momento justo, no antes ni después.",
+          "Asegurar el tiro sin tironeos bruscos: el animal se sujeta, no se castiga.",
+          "Cuidar la soga seca, limpia y enrollada: una soga torcida falla en el peor momento."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "El lazo bien manejado es la firma del vaquero que no improvisa. No seguimos modas, las marcamos. Si el oficio del campo es lo tuyo, explora la colección de gorras y chaquetas The Ranch, hecha para quienes trabajan con la mano firme."
+      }
     ]
   },
   {
@@ -170,12 +495,35 @@
     "date": "2026-09-21",
     "category": "Campo",
     "blocks": [
-      {"type": "p", "text": "Hay fiestas que se montan con telón y programa, y hay parrandas que simplemente ocurren. La parranda llanera es de las segundas: no necesita escenario, porque su escenario es el fogón, la hamaca y el patio de tierra donde el llano se junta a celebrar sin pedir permiso."},
-      {"type": "h2", "text": "El fogón manda: carne a la llanera y café cerrero"},
-      {"type": "p", "text": "En la parranda todo gira alrededor del fogón. La carne asada a la llanera —la mamona— se come con las manos, el café cerrero se toma sin afán y el guarapo corre de mano en mano. La comida no es un anexo de la fiesta: es su centro, y quien llega tarde se queda sin su parte."},
-      {"type": "h2", "text": "Arpa, cuatro y coplas hasta que aclare"},
-      {"type": "ul", "items": ["El arpa y el cuatro no se reservan para el escenario: en la parranda se tocan en círculo, a ras de fogón.", "Las coplas se improvisan entre trago y trago, y el que no contesta pierde el honor.", "El joropo se baila descalzo en el patio, al ritmo que marca el trote.", "La palabra se empeña en el brindis: lo que se promete en parranda se cumple de día."]},
-      {"type": "p", "text": "La parranda llanera es la prueba de que la tradición se celebra como se vive: de frente, sin protocolo y hasta que el cuerpo aguante. No seguimos modas, las marcamos. Si el llano te corre por dentro, explora la colección de gorras y chaquetas The Ranch y llévalo puesto en la próxima parranda."}
+      {
+        "type": "p",
+        "text": "Hay fiestas que se montan con telón y programa, y hay parrandas que simplemente ocurren. La parranda llanera es de las segundas: no necesita escenario, porque su escenario es el fogón, la hamaca y el patio de tierra donde el llano se junta a celebrar sin pedir permiso."
+      },
+      {
+        "type": "h2",
+        "text": "El fogón manda: carne a la llanera y café cerrero"
+      },
+      {
+        "type": "p",
+        "text": "En la parranda todo gira alrededor del fogón. La carne asada a la llanera —la mamona— se come con las manos, el café cerrero se toma sin afán y el guarapo corre de mano en mano. La comida no es un anexo de la fiesta: es su centro, y quien llega tarde se queda sin su parte."
+      },
+      {
+        "type": "h2",
+        "text": "Arpa, cuatro y coplas hasta que aclare"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "El arpa y el cuatro no se reservan para el escenario: en la parranda se tocan en círculo, a ras de fogón.",
+          "Las coplas se improvisan entre trago y trago, y el que no contesta pierde el honor.",
+          "El joropo se baila descalzo en el patio, al ritmo que marca el trote.",
+          "La palabra se empeña en el brindis: lo que se promete en parranda se cumple de día."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "La parranda llanera es la prueba de que la tradición se celebra como se vive: de frente, sin protocolo y hasta que el cuerpo aguante. No seguimos modas, las marcamos. Si el llano te corre por dentro, explora la colección de gorras y chaquetas The Ranch y llévalo puesto en la próxima parranda."
+      }
     ]
   },
   {
@@ -185,12 +533,35 @@
     "date": "2026-09-20",
     "category": "Campo",
     "blocks": [
-      {"type": "p", "text": "El llanero no trabaja solo: a su lado, callado y atento, va el perro vaquero. No es una mascota de patio, es mano de obra pura: el compañero que arrea lo que el caballo no alcanza, aparta lo que hay que apartar y no suelta la vista del hato ni cuando el jinete se distrae."},
-      {"type": "h2", "text": "Un perro de trabajo no nace, se hace"},
-      {"type": "p", "text": "La raza importa menos que la cabeza. Un buen perro vaquero tiene instinto de arrear, pero ese instinto sin oficio es un desastre: corre de más, muerde lo que no debe y dispersa el ganado. Por eso se le enseña con calma, en faenas cortas y con órdenes claras, hasta que entiende que su trabajo es mover el ganado, no asustarlo."},
-      {"type": "h2", "text": "Lo que distingue al perro que rinde"},
-      {"type": "ul", "items": ["Arrea por instinto y frena a la orden: el perro que no suelta al ganado no sirve para el trabajo.", "Trabaja en equipo con el jinete: lee el grito, la seña y el silbido.", "No muerde por rabia: acosa con la mirada y la posición, no con los dientes.", "Aguanta la jornada y vuelve entero: se cuida la pata, el agua y el descanso como a un compañero."]},
-      {"type": "p", "text": "El perro vaquero le recuerda al campo lo mismo que un buen apero o una buena silla: el trabajo serio se hace con los que responden. No seguimos modas, las marcamos. Si trabajas el ganado con la misma entrega, explora la colección de gorras y chaquetas The Ranch, hecha para quienes no sueltan la faena."}
+      {
+        "type": "p",
+        "text": "El llanero no trabaja solo: a su lado, callado y atento, va el perro vaquero. No es una mascota de patio, es mano de obra pura: el compañero que arrea lo que el caballo no alcanza, aparta lo que hay que apartar y no suelta la vista del hato ni cuando el jinete se distrae."
+      },
+      {
+        "type": "h2",
+        "text": "Un perro de trabajo no nace, se hace"
+      },
+      {
+        "type": "p",
+        "text": "La raza importa menos que la cabeza. Un buen perro vaquero tiene instinto de arrear, pero ese instinto sin oficio es un desastre: corre de más, muerde lo que no debe y dispersa el ganado. Por eso se le enseña con calma, en faenas cortas y con órdenes claras, hasta que entiende que su trabajo es mover el ganado, no asustarlo."
+      },
+      {
+        "type": "h2",
+        "text": "Lo que distingue al perro que rinde"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Arrea por instinto y frena a la orden: el perro que no suelta al ganado no sirve para el trabajo.",
+          "Trabaja en equipo con el jinete: lee el grito, la seña y el silbido.",
+          "No muerde por rabia: acosa con la mirada y la posición, no con los dientes.",
+          "Aguanta la jornada y vuelve entero: se cuida la pata, el agua y el descanso como a un compañero."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "El perro vaquero le recuerda al campo lo mismo que un buen apero o una buena silla: el trabajo serio se hace con los que responden. No seguimos modas, las marcamos. Si trabajas el ganado con la misma entrega, explora la colección de gorras y chaquetas The Ranch, hecha para quienes no sueltan la faena."
+      }
     ]
   },
   {
@@ -200,12 +571,35 @@
     "date": "2026-09-20",
     "category": "Campo",
     "blocks": [
-      {"type": "p", "text": "El joropo no es el único canto del llano. Antes de la fiesta hubo una voz más antigua, más callada y más útil: el canto de trabajo. Es la tonada con la que el llanero ordeña de madrugada, arrea el ganado en la sabana y se hace compañía en las jornadas largas donde el silencio pesa."},
-      {"type": "h2", "text": "La tonada de ordeño: calmar para que la vaca suelte"},
-      {"type": "p", "text": "El canto de ordeño no es adorno, es herramienta. La vaca se deja ordeñar cuando está tranquila, y la voz pareja del ordeñador la aquieta más que cualquier forcejeo. Por eso se canta bajito, con versos que hablan del animal, del trabajo y del cariño que se le tiene a la faena de todos los días."},
-      {"type": "h2", "text": "Cantos de arreo y de vaquería"},
-      {"type": "ul", "items": ["El canto de arreo marca el paso del ganado y lleva al hato sin gritos ni carreras.", "En la vaquería, la copla corta coordina a los jinetes que no se ven entre la polvareda.", "El canto de camino acompaña las travesías largas y espanta el cansancio.", "La copla de trabajo guarda la memoria: por ella pasan los nombres, los amores y las historias del hato."]},
-      {"type": "p", "text": "Ese canto nació de la necesidad y se volvió identidad: la prueba de que el llanero canta como trabaja, sin adornos y con verdad. No seguimos modas, las marcamos. Si esa cultura te corre por dentro, explora la colección de gorras y chaquetas The Ranch y llévala puesta."}
+      {
+        "type": "p",
+        "text": "El joropo no es el único canto del llano. Antes de la fiesta hubo una voz más antigua, más callada y más útil: el canto de trabajo. Es la tonada con la que el llanero ordeña de madrugada, arrea el ganado en la sabana y se hace compañía en las jornadas largas donde el silencio pesa."
+      },
+      {
+        "type": "h2",
+        "text": "La tonada de ordeño: calmar para que la vaca suelte"
+      },
+      {
+        "type": "p",
+        "text": "El canto de ordeño no es adorno, es herramienta. La vaca se deja ordeñar cuando está tranquila, y la voz pareja del ordeñador la aquieta más que cualquier forcejeo. Por eso se canta bajito, con versos que hablan del animal, del trabajo y del cariño que se le tiene a la faena de todos los días."
+      },
+      {
+        "type": "h2",
+        "text": "Cantos de arreo y de vaquería"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "El canto de arreo marca el paso del ganado y lleva al hato sin gritos ni carreras.",
+          "En la vaquería, la copla corta coordina a los jinetes que no se ven entre la polvareda.",
+          "El canto de camino acompaña las travesías largas y espanta el cansancio.",
+          "La copla de trabajo guarda la memoria: por ella pasan los nombres, los amores y las historias del hato."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "Ese canto nació de la necesidad y se volvió identidad: la prueba de que el llanero canta como trabaja, sin adornos y con verdad. No seguimos modas, las marcamos. Si esa cultura te corre por dentro, explora la colección de gorras y chaquetas The Ranch y llévala puesta."
+      }
     ]
   },
   {
@@ -215,12 +609,35 @@
     "date": "2026-09-20",
     "category": "Campo",
     "blocks": [
-      {"type": "p", "text": "En el western hay una regla que casi nadie respeta: una pieza manda y las demás acompañan. Y cuando la gorra de visera en cuero se junta con la chaqueta, el riesgo de ruido es real. Combinarlas bien no es sumar más cuero: es medir el color, la textura y el momento."},
-      {"type": "h2", "text": "Color: que hablen el mismo idioma"},
-      {"type": "p", "text": "La gorra y la chaqueta no tienen que ser idénticas, pero sí de la misma familia. Un cuero tabaco con una chaqueta en tono tierra asienta; un cuero negro con una chaqueta denim clara contrasta con intención. Lo que falla es mezclar tonos que no se saludan: si la gorra es cálida y la chaqueta fría, el conjunto se parte en dos."},
-      {"type": "h2", "text": "Textura y ocasión: el par que nunca falla"},
-      {"type": "ul", "items": ["Gorra de cuero liso + chaqueta de gamuza: texturas distintas que se respetan, ideal para el entretiempo.", "Gorra de cuero + chaqueta denim: el clásico de trabajo, sin esfuerzo y para todos los días.", "Un solo cuero por look: si la visera es de cuero, deja que la chaqueta sea tela o denim.", "Tonos tierra para el día, tonos oscuros para la noche: el western también se viste de ocasión."]},
-      {"type": "p", "text": "El par bien armado no se nota por lo que cuesta, sino por cómo cae: con intención, sin disfraz. No seguimos modas, las marcamos. Encuentra la gorra y la chaqueta que te definen y explora la colección The Ranch."}
+      {
+        "type": "p",
+        "text": "En el western hay una regla que casi nadie respeta: una pieza manda y las demás acompañan. Y cuando la gorra de visera en cuero se junta con la chaqueta, el riesgo de ruido es real. Combinarlas bien no es sumar más cuero: es medir el color, la textura y el momento."
+      },
+      {
+        "type": "h2",
+        "text": "Color: que hablen el mismo idioma"
+      },
+      {
+        "type": "p",
+        "text": "La gorra y la chaqueta no tienen que ser idénticas, pero sí de la misma familia. Un cuero tabaco con una chaqueta en tono tierra asienta; un cuero negro con una chaqueta denim clara contrasta con intención. Lo que falla es mezclar tonos que no se saludan: si la gorra es cálida y la chaqueta fría, el conjunto se parte en dos."
+      },
+      {
+        "type": "h2",
+        "text": "Textura y ocasión: el par que nunca falla"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Gorra de cuero liso + chaqueta de gamuza: texturas distintas que se respetan, ideal para el entretiempo.",
+          "Gorra de cuero + chaqueta denim: el clásico de trabajo, sin esfuerzo y para todos los días.",
+          "Un solo cuero por look: si la visera es de cuero, deja que la chaqueta sea tela o denim.",
+          "Tonos tierra para el día, tonos oscuros para la noche: el western también se viste de ocasión."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "El par bien armado no se nota por lo que cuesta, sino por cómo cae: con intención, sin disfraz. No seguimos modas, las marcamos. Encuentra la gorra y la chaqueta que te definen y explora la colección The Ranch."
+      }
     ]
   },
   {
@@ -230,12 +647,36 @@
     "date": "2026-09-18",
     "category": "Campo",
     "blocks": [
-      {"type": "p", "text": "El rancho no abre con el sol: abre con el ordeño. Cuando todavía está oscuro, la vaca ya espera en el corral y el ordeñador llega con su banco y su balde, como quien cumple una cita que no admite excusas. Es la faena que más se repite en la vida del campo y, quizá, la que menos se perdona cuando se hace a las carreras."},
-      {"type": "h2", "text": "La madrugada no se negocia"},
-      {"type": "p", "text": "La leche tiene hora, y la vaca también. Ordeñar tarde significa menos leche, una vaca incómoda y una mastitis esperando a la vuelta. Por eso el ordeñador madruga antes que nadie, con la rutina ya aprendida: la vaca se reconoce, se habla en tono parejo y se trabaja sin gritos. El animal responde a la calma, no al apuro."},
-      {"type": "h2", "text": "Ordeñar bien no es apretar: es esperar"},
-      {"type": "ul", "items": ["Prepara el corral limpio y el animal atado con la pata firme, sin asustarlo.", "Lava y seca la ubre antes de empezar: la higiene es la mitad del oficio.", "Despunta los primeros chorros y revisa la leche antes de recogerla.", "Ordeña con ritmo parejo y completa la vaca a fondo: la que queda es la que enferma.", "Enfría la leche pronto y limpia el equipo al terminar, sin dejarlo para después."]},
-      {"type": "p", "text": "El ordeño enseña lo mismo que el resto del campo: la constancia vale más que la fuerza y el orden más que la prisa. Quien lo hace bien todos los días tiene leche, queso y un hato sano. No seguimos modas, las marcamos. Si madrugas como se debe, explora la colección de gorras y chaquetas The Ranch, hecha para quienes abren el rancho antes que el sol."}
+      {
+        "type": "p",
+        "text": "El rancho no abre con el sol: abre con el ordeño. Cuando todavía está oscuro, la vaca ya espera en el corral y el ordeñador llega con su banco y su balde, como quien cumple una cita que no admite excusas. Es la faena que más se repite en la vida del campo y, quizá, la que menos se perdona cuando se hace a las carreras."
+      },
+      {
+        "type": "h2",
+        "text": "La madrugada no se negocia"
+      },
+      {
+        "type": "p",
+        "text": "La leche tiene hora, y la vaca también. Ordeñar tarde significa menos leche, una vaca incómoda y una mastitis esperando a la vuelta. Por eso el ordeñador madruga antes que nadie, con la rutina ya aprendida: la vaca se reconoce, se habla en tono parejo y se trabaja sin gritos. El animal responde a la calma, no al apuro."
+      },
+      {
+        "type": "h2",
+        "text": "Ordeñar bien no es apretar: es esperar"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Prepara el corral limpio y el animal atado con la pata firme, sin asustarlo.",
+          "Lava y seca la ubre antes de empezar: la higiene es la mitad del oficio.",
+          "Despunta los primeros chorros y revisa la leche antes de recogerla.",
+          "Ordeña con ritmo parejo y completa la vaca a fondo: la que queda es la que enferma.",
+          "Enfría la leche pronto y limpia el equipo al terminar, sin dejarlo para después."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "El ordeño enseña lo mismo que el resto del campo: la constancia vale más que la fuerza y el orden más que la prisa. Quien lo hace bien todos los días tiene leche, queso y un hato sano. No seguimos modas, las marcamos. Si madrugas como se debe, explora la colección de gorras y chaquetas The Ranch, hecha para quienes abren el rancho antes que el sol."
+      }
     ]
   },
   {
@@ -245,12 +686,36 @@
     "date": "2026-09-18",
     "category": "Campo",
     "blocks": [
-      {"type": "p", "text": "Hay fiestas que abren con un discurso y otras que abren con un madrugón. El Amanecer Llanero es de las segundas: la tradición con la que Villavicencio despierta en plena fiesta llanera, cuando el arpa y el cuatro le cantan a la ciudad antes de que aclare."},
-      {"type": "h2", "text": "¿Qué es el Amanecer Llanero?"},
-      {"type": "p", "text": "Es una serenata colectiva que recorre las calles de madrugada, durante el Festival Internacional del Joropo. Grupos de músicos, jinetes y vecinos salen a despertar a la ciudad con joropo, pasaje y coplas, casa por casa, hasta que el sol les responde. No es un concierto: es un saludo del llano a quien lo habita."},
-      {"type": "h2", "text": "Lo que se vive en la madrugada"},
-      {"type": "ul", "items": ["El recorrido a pie y a caballo, con faroles y velas encendidas.", "El arpa, el cuatro y las maracas marcando el paso de la caravana.", "Las coplas y los versos improvisados a cada puerta que se abre.", "El café, el guarapo y la hallaca que reciben al que canta.", "El amanecer en el parque, donde la serenata se vuelve baile."]},
-      {"type": "p", "text": "El Amanecer Llanero es la prueba de que la tradición no se guarda: se despierta, se canta y se comparte antes de que salga el sol. No seguimos modas, las marcamos. Si el llano te corre por dentro, explora la colección de gorras y chaquetas The Ranch y llévalo puesto en la próxima fiesta."}
+      {
+        "type": "p",
+        "text": "Hay fiestas que abren con un discurso y otras que abren con un madrugón. El Amanecer Llanero es de las segundas: la tradición con la que Villavicencio despierta en plena fiesta llanera, cuando el arpa y el cuatro le cantan a la ciudad antes de que aclare."
+      },
+      {
+        "type": "h2",
+        "text": "¿Qué es el Amanecer Llanero?"
+      },
+      {
+        "type": "p",
+        "text": "Es una serenata colectiva que recorre las calles de madrugada, durante el Festival Internacional del Joropo. Grupos de músicos, jinetes y vecinos salen a despertar a la ciudad con joropo, pasaje y coplas, casa por casa, hasta que el sol les responde. No es un concierto: es un saludo del llano a quien lo habita."
+      },
+      {
+        "type": "h2",
+        "text": "Lo que se vive en la madrugada"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "El recorrido a pie y a caballo, con faroles y velas encendidas.",
+          "El arpa, el cuatro y las maracas marcando el paso de la caravana.",
+          "Las coplas y los versos improvisados a cada puerta que se abre.",
+          "El café, el guarapo y la hallaca que reciben al que canta.",
+          "El amanecer en el parque, donde la serenata se vuelve baile."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "El Amanecer Llanero es la prueba de que la tradición no se guarda: se despierta, se canta y se comparte antes de que salga el sol. No seguimos modas, las marcamos. Si el llano te corre por dentro, explora la colección de gorras y chaquetas The Ranch y llévalo puesto en la próxima fiesta."
+      }
     ]
   },
   {
@@ -260,12 +725,36 @@
     "date": "2026-09-18",
     "category": "Campo",
     "blocks": [
-      {"type": "p", "text": "Antes de ensillar hay una faena que muchos saltan y el caballo sí siente: el cepillado. No es cuestión de que se vea bonito; es cuestión de salud, de circulación y de leer al animal antes de montarlo. Un caballo que se cepilla a diario es un caballo que se conoce."},
-      {"type": "h2", "text": "El cepillado: mucho más que estética"},
-      {"type": "p", "text": "El cepillo levanta el polvo, reparte la grasa natural del pelo y activa la circulación. De paso, la mano recorre el lomo, las patas y la barriga y detecta heridas, garrapatas o zonas calientes antes de que se vuelvan problema. Cepillar es la revisión de rutina que ningún veterinario puede hacer por ti todos los días."},
-      {"type": "h2", "text": "El baño, bien hecho y sin apuro"},
-      {"type": "ul", "items": ["Moja desde el casco hacia arriba, nunca el agua fría de golpe sobre el lomo caliente.", "Usa champú para equinos o jabón neutro, sin productos que resequen la piel.", "Enjuaga a fondo: el residuo de jabón pica y pela.", "Saca el exceso de agua con una rasqueta y seca las zonas sensibles.", "No ensilles con el lomo húmedo: la humedad bajo la silla lastima la piel."]},
-      {"type": "p", "text": "El caballo que se cuida antes de la monta rinde más y se lastima menos. Ese cuidado del detalle, hecho todos los días sin que nadie lo vea, es el mismo que ponemos en cada prenda. No seguimos modas, las marcamos. Explora la colección de gorras y chaquetas The Ranch, hecha para quienes cuidan al que los lleva."}
+      {
+        "type": "p",
+        "text": "Antes de ensillar hay una faena que muchos saltan y el caballo sí siente: el cepillado. No es cuestión de que se vea bonito; es cuestión de salud, de circulación y de leer al animal antes de montarlo. Un caballo que se cepilla a diario es un caballo que se conoce."
+      },
+      {
+        "type": "h2",
+        "text": "El cepillado: mucho más que estética"
+      },
+      {
+        "type": "p",
+        "text": "El cepillo levanta el polvo, reparte la grasa natural del pelo y activa la circulación. De paso, la mano recorre el lomo, las patas y la barriga y detecta heridas, garrapatas o zonas calientes antes de que se vuelvan problema. Cepillar es la revisión de rutina que ningún veterinario puede hacer por ti todos los días."
+      },
+      {
+        "type": "h2",
+        "text": "El baño, bien hecho y sin apuro"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Moja desde el casco hacia arriba, nunca el agua fría de golpe sobre el lomo caliente.",
+          "Usa champú para equinos o jabón neutro, sin productos que resequen la piel.",
+          "Enjuaga a fondo: el residuo de jabón pica y pela.",
+          "Saca el exceso de agua con una rasqueta y seca las zonas sensibles.",
+          "No ensilles con el lomo húmedo: la humedad bajo la silla lastima la piel."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "El caballo que se cuida antes de la monta rinde más y se lastima menos. Ese cuidado del detalle, hecho todos los días sin que nadie lo vea, es el mismo que ponemos en cada prenda. No seguimos modas, las marcamos. Explora la colección de gorras y chaquetas The Ranch, hecha para quienes cuidan al que los lleva."
+      }
     ]
   },
   {
@@ -275,12 +764,35 @@
     "date": "2026-09-17",
     "category": "Campo",
     "blocks": [
-      {"type": "p", "text": "Hay tradiciones que se cantan, otras que se montan y una que se baila a caballo. Las Cuadrillas de San Martín, en el Meta, son la cita anual donde el llano se cruza con la historia: jinetes vestidos de gala, caballos engalanados y coreografías ecuestres que se repiten desde hace siglos."},
-      {"type": "h2", "text": "¿Qué son las Cuadrillas de San Martín?"},
-      {"type": "p", "text": "Cada año, en las festividades de San Martín, los llaneros se organizan en cuadrillas —grupos de jinetes— que representan a caballo el enfrentamiento entre moros y cristianos y otras escenas de la historia. No es un desfile: es una coreografía montada, con pasos medidos, carreras en formación y figuras que exigen caballo manso y jinete seguro."},
-      {"type": "h2", "text": "La fiesta, paso a paso"},
-      {"type": "ul", "items": ["El desfile de apertura: caballos bañados, crines trenzadas y jinetes de gala.", "Las escenas a caballo: diálogos, carreras y choques controlados entre cuadrillas.", "El acompañamiento musical: joropo, arpa y cuatro marcando el paso.", "El cierre de fiesta: comilona, coleo y baile hasta que el cuerpo aguante."]},
-      {"type": "p", "text": "Las Cuadrillas son la prueba de que la tradición llanera no se guarda en un museo: se monta, se baila y se hereda. No seguimos modas, las marcamos. Si vives el campo así, explora la colección de gorras y chaquetas The Ranch y llévalo puesto."}
+      {
+        "type": "p",
+        "text": "Hay tradiciones que se cantan, otras que se montan y una que se baila a caballo. Las Cuadrillas de San Martín, en el Meta, son la cita anual donde el llano se cruza con la historia: jinetes vestidos de gala, caballos engalanados y coreografías ecuestres que se repiten desde hace siglos."
+      },
+      {
+        "type": "h2",
+        "text": "¿Qué son las Cuadrillas de San Martín?"
+      },
+      {
+        "type": "p",
+        "text": "Cada año, en las festividades de San Martín, los llaneros se organizan en cuadrillas —grupos de jinetes— que representan a caballo el enfrentamiento entre moros y cristianos y otras escenas de la historia. No es un desfile: es una coreografía montada, con pasos medidos, carreras en formación y figuras que exigen caballo manso y jinete seguro."
+      },
+      {
+        "type": "h2",
+        "text": "La fiesta, paso a paso"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "El desfile de apertura: caballos bañados, crines trenzadas y jinetes de gala.",
+          "Las escenas a caballo: diálogos, carreras y choques controlados entre cuadrillas.",
+          "El acompañamiento musical: joropo, arpa y cuatro marcando el paso.",
+          "El cierre de fiesta: comilona, coleo y baile hasta que el cuerpo aguante."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "Las Cuadrillas son la prueba de que la tradición llanera no se guarda en un museo: se monta, se baila y se hereda. No seguimos modas, las marcamos. Si vives el campo así, explora la colección de gorras y chaquetas The Ranch y llévalo puesto."
+      }
     ]
   },
   {
@@ -290,12 +802,36 @@
     "date": "2026-09-17",
     "category": "Campo",
     "blocks": [
-      {"type": "p", "text": "En el campo colombiano el clima no es un detalle: es una faena diaria. El sol vertical, la humedad que no suelta y el sudor de la jornada castigan la gorra y el cuero como ningún invierno. Quien cuida su equipo bajo este sol lo hace durar años; quien no, lo ve morir en una temporada."},
-      {"type": "h2", "text": "La humedad: el enemigo que no se ve"},
-      {"type": "p", "text": "El cuero reseco se cuartea, pero el cuero húmedo se pudre y cría hongo. En el trópico el peligro real no es el frío, es la humedad guardada: sudor en la banda interior de la gorra, transpiración en el cuello de la chaqueta, rocío de la madrugada. Todo eso hay que sacarlo a tiempo."},
-      {"type": "h2", "text": "Lo que pide el trópico, prenda por prenda"},
-      {"type": "ul", "items": ["Seca la gorra después de cada jornada: nunca la guardes sudada, la banda interior cría hongo.", "Airea el cuero a la sombra: el sol directo lo reseca y lo cuartea; la sombra lo seca sin castigarlo.", "Acondiciona el cuero cada pocos meses: con el calor se reseca más rápido que en clima frío.", "Lava la tela con agua fría y sécala al aire: la secadora encoge y deforma.", "Guarda en un lugar ventilado, nunca en bolsas plásticas cerradas."]},
-      {"type": "p", "text": "El trópico no perdona al que descuida, pero premia al que cuida. Una gorra con visera en cuero y una chaqueta bien mantenidas envejecen con dignidad, no se deshacen. No seguimos modas, las marcamos. Explora la colección de gorras y chaquetas The Ranch y cuida tu equipo como se cuida un buen caballo."}
+      {
+        "type": "p",
+        "text": "En el campo colombiano el clima no es un detalle: es una faena diaria. El sol vertical, la humedad que no suelta y el sudor de la jornada castigan la gorra y el cuero como ningún invierno. Quien cuida su equipo bajo este sol lo hace durar años; quien no, lo ve morir en una temporada."
+      },
+      {
+        "type": "h2",
+        "text": "La humedad: el enemigo que no se ve"
+      },
+      {
+        "type": "p",
+        "text": "El cuero reseco se cuartea, pero el cuero húmedo se pudre y cría hongo. En el trópico el peligro real no es el frío, es la humedad guardada: sudor en la banda interior de la gorra, transpiración en el cuello de la chaqueta, rocío de la madrugada. Todo eso hay que sacarlo a tiempo."
+      },
+      {
+        "type": "h2",
+        "text": "Lo que pide el trópico, prenda por prenda"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Seca la gorra después de cada jornada: nunca la guardes sudada, la banda interior cría hongo.",
+          "Airea el cuero a la sombra: el sol directo lo reseca y lo cuartea; la sombra lo seca sin castigarlo.",
+          "Acondiciona el cuero cada pocos meses: con el calor se reseca más rápido que en clima frío.",
+          "Lava la tela con agua fría y sécala al aire: la secadora encoge y deforma.",
+          "Guarda en un lugar ventilado, nunca en bolsas plásticas cerradas."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "El trópico no perdona al que descuida, pero premia al que cuida. Una gorra con visera en cuero y una chaqueta bien mantenidas envejecen con dignidad, no se deshacen. No seguimos modas, las marcamos. Explora la colección de gorras y chaquetas The Ranch y cuida tu equipo como se cuida un buen caballo."
+      }
     ]
   },
   {
@@ -305,12 +841,36 @@
     "date": "2026-09-17",
     "category": "Campo",
     "blocks": [
-      {"type": "p", "text": "Entre el jinete y el caballo no hay nada más importante que el apero. Una silla mal puesta o una cincha floja no son un detalle: son una caída esperando el peor momento. El llanero que se respeta conoce su apero pieza por pieza y lo revisa antes de cada salida."},
-      {"type": "h2", "text": "Las piezas que sostienen al jinete"},
-      {"type": "ul", "items": ["El fuste o la silla: la base que reparte el peso sobre el lomo del caballo.", "El sudadero: la pieza que absorbe el sudor y protege el lomo del roce.", "La cincha: la correa que sujeta la silla; de ella depende que nada se corra.", "Las aciones y los estribos: donde el jinete apoya el peso y se equilibra.", "La gurupera y el pechero: las amarras que evitan que la silla se deslice en lomas y barro."]},
-      {"type": "h2", "text": "Ensillar bien no es amarrar: es asentar"},
-      {"type": "p", "text": "Se empieza por el sudadero limpio y bien extendido, sin arrugas que lastimen el lomo. La silla se asienta en el centro, ni muy atrás ni muy adelante, y la cincha se ajusta pareja, sin apretar de más ni dejar flojo. Antes de montar, se vuelve a templar: el caballo infla el vientre al cinchar y afloja después."},
-      {"type": "p", "text": "El apero bien cuidado y bien puesto es la firma del jinete serio: el caballo no se lastima y el jinete vuelve entero. No seguimos modas, las marcamos. Si el oficio es lo tuyo, explora la colección de gorras y chaquetas The Ranch, hecha para quienes ensillan todos los días."}
+      {
+        "type": "p",
+        "text": "Entre el jinete y el caballo no hay nada más importante que el apero. Una silla mal puesta o una cincha floja no son un detalle: son una caída esperando el peor momento. El llanero que se respeta conoce su apero pieza por pieza y lo revisa antes de cada salida."
+      },
+      {
+        "type": "h2",
+        "text": "Las piezas que sostienen al jinete"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "El fuste o la silla: la base que reparte el peso sobre el lomo del caballo.",
+          "El sudadero: la pieza que absorbe el sudor y protege el lomo del roce.",
+          "La cincha: la correa que sujeta la silla; de ella depende que nada se corra.",
+          "Las aciones y los estribos: donde el jinete apoya el peso y se equilibra.",
+          "La gurupera y el pechero: las amarras que evitan que la silla se deslice en lomas y barro."
+        ]
+      },
+      {
+        "type": "h2",
+        "text": "Ensillar bien no es amarrar: es asentar"
+      },
+      {
+        "type": "p",
+        "text": "Se empieza por el sudadero limpio y bien extendido, sin arrugas que lastimen el lomo. La silla se asienta en el centro, ni muy atrás ni muy adelante, y la cincha se ajusta pareja, sin apretar de más ni dejar flojo. Antes de montar, se vuelve a templar: el caballo infla el vientre al cinchar y afloja después."
+      },
+      {
+        "type": "p",
+        "text": "El apero bien cuidado y bien puesto es la firma del jinete serio: el caballo no se lastima y el jinete vuelve entero. No seguimos modas, las marcamos. Si el oficio es lo tuyo, explora la colección de gorras y chaquetas The Ranch, hecha para quienes ensillan todos los días."
+      }
     ]
   },
   {
@@ -320,12 +880,35 @@
     "date": "2026-09-16",
     "category": "Campo",
     "blocks": [
-      {"type": "p", "text": "Ningún hato crece solo: crece becerro a becerro. La diferencia entre un animal que se desteta fuerte y otro que se queda en el camino se decide en los primeros meses de vida, y ahí es donde la improvisación se paga cara."},
-      {"type": "h2", "text": "Las primeras horas: el calostro no se negocia"},
-      {"type": "p", "text": "El calostro —esa primera leche espesa de la madre— es la vacuna natural del becerro. Si no lo toma en las primeras horas de vida, arranca desprotegido y lo termina pagando en enfermedad. Antes de cualquier otro cuidado hay que asegurar que la cría mame temprano, varias veces y a fondo."},
-      {"type": "h2", "text": "Del nacimiento al destete: lo que no se puede saltar"},
-      {"type": "ul", "items": ["Revisa y desinfecta el ombligo: es la puerta de entrada de infecciones que nadie vigila.", "Garantiza leche a voluntad las primeras semanas: ahí se decide el desarrollo del rumen.", "Observa a diario: un becerro apagado o que no mama avisa mucho antes de enfermarse de verdad.", "Identifica a tiempo y sin estrés para llevar cuenta real de cada cría del hato."]},
-      {"type": "p", "text": "Criar bien una cría es sembrar el futuro del rancho. Ese cuidado por lo que apenas empieza es el mismo que ponemos en cada prenda. No seguimos modas, las marcamos. Explora la colección de gorras y chaquetas The Ranch, hecha para quienes crían con oficio."}
+      {
+        "type": "p",
+        "text": "Ningún hato crece solo: crece becerro a becerro. La diferencia entre un animal que se desteta fuerte y otro que se queda en el camino se decide en los primeros meses de vida, y ahí es donde la improvisación se paga cara."
+      },
+      {
+        "type": "h2",
+        "text": "Las primeras horas: el calostro no se negocia"
+      },
+      {
+        "type": "p",
+        "text": "El calostro —esa primera leche espesa de la madre— es la vacuna natural del becerro. Si no lo toma en las primeras horas de vida, arranca desprotegido y lo termina pagando en enfermedad. Antes de cualquier otro cuidado hay que asegurar que la cría mame temprano, varias veces y a fondo."
+      },
+      {
+        "type": "h2",
+        "text": "Del nacimiento al destete: lo que no se puede saltar"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Revisa y desinfecta el ombligo: es la puerta de entrada de infecciones que nadie vigila.",
+          "Garantiza leche a voluntad las primeras semanas: ahí se decide el desarrollo del rumen.",
+          "Observa a diario: un becerro apagado o que no mama avisa mucho antes de enfermarse de verdad.",
+          "Identifica a tiempo y sin estrés para llevar cuenta real de cada cría del hato."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "Criar bien una cría es sembrar el futuro del rancho. Ese cuidado por lo que apenas empieza es el mismo que ponemos en cada prenda. No seguimos modas, las marcamos. Explora la colección de gorras y chaquetas The Ranch, hecha para quienes crían con oficio."
+      }
     ]
   },
   {
@@ -335,12 +918,35 @@
     "date": "2026-09-16",
     "category": "Campo",
     "blocks": [
-      {"type": "p", "text": "El caballo de trabajo es un atleta que se entrega todos los días, y su rendimiento no se decide solo en la monta: se decide en el comedero. Alimentarlo bien es la diferencia entre un animal que aguanta la jornada y uno que se apaga a mitad de camino."},
-      {"type": "h2", "text": "El forraje primero, el grano después"},
-      {"type": "p", "text": "El pasto y el heno son la base; el grano es el complemento, no al revés. Un caballo se alimenta de forraje de calidad a diario, y solo se le suma concentrado según el trabajo que hace. Meterle grano de más a un caballo que no lo quema es pedir cólicos y patas calientes."},
-      {"type": "h2", "text": "Agua, sal y lo que nunca debe faltar"},
-      {"type": "ul", "items": ["Agua limpia y a mano todo el día: un caballo deshidratado no rinde ni se recupera.", "Sal mineral a libre disposición: repone lo que el sudor se lleva en la faena.", "Raciones divididas: mejor varias comidas pequeñas que una sola pesada.", "Cambia la ración poco a poco: el sistema del caballo castiga los cambios bruscos."]},
-      {"type": "p", "text": "El caballo que rinde es el que se cuida cuando nadie lo ve. Ese principio de constancia es el que vestimos. No seguimos modas, las marcamos. Descubre la colección de gorras y chaquetas The Ranch, hecha para quienes cuidan al que los lleva."}
+      {
+        "type": "p",
+        "text": "El caballo de trabajo es un atleta que se entrega todos los días, y su rendimiento no se decide solo en la monta: se decide en el comedero. Alimentarlo bien es la diferencia entre un animal que aguanta la jornada y uno que se apaga a mitad de camino."
+      },
+      {
+        "type": "h2",
+        "text": "El forraje primero, el grano después"
+      },
+      {
+        "type": "p",
+        "text": "El pasto y el heno son la base; el grano es el complemento, no al revés. Un caballo se alimenta de forraje de calidad a diario, y solo se le suma concentrado según el trabajo que hace. Meterle grano de más a un caballo que no lo quema es pedir cólicos y patas calientes."
+      },
+      {
+        "type": "h2",
+        "text": "Agua, sal y lo que nunca debe faltar"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Agua limpia y a mano todo el día: un caballo deshidratado no rinde ni se recupera.",
+          "Sal mineral a libre disposición: repone lo que el sudor se lleva en la faena.",
+          "Raciones divididas: mejor varias comidas pequeñas que una sola pesada.",
+          "Cambia la ración poco a poco: el sistema del caballo castiga los cambios bruscos."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "El caballo que rinde es el que se cuida cuando nadie lo ve. Ese principio de constancia es el que vestimos. No seguimos modas, las marcamos. Descubre la colección de gorras y chaquetas The Ranch, hecha para quienes cuidan al que los lleva."
+      }
     ]
   },
   {
@@ -350,12 +956,35 @@
     "date": "2026-09-16",
     "category": "Campo",
     "blocks": [
-      {"type": "p", "text": "La chaqueta es la pieza que más dice de un look western, y también la que más se equivoca. Elegirla bien no es cuestión de marca: es cuestión de material, de corte y de saber qué va a hacer por ti. No seguimos modas, las marcamos."},
-      {"type": "h2", "text": "El material: cuero, gamuza o denim"},
-      {"type": "p", "text": "Cada material cuenta una historia distinta. El denim es el caballo de trabajo: resistente, versátil y sin pretensiones. La gamuza aporta textura y calidez para el entretiempo. El cuero es la declaración: envejece contigo y se gana su carácter con los años. Elige según tu rutina, no según el maniquí."},
-      {"type": "h2", "text": "El corte que asienta, no cuelga"},
-      {"type": "ul", "items": ["Hombros en su sitio: la costura debe caer justo en el borde del hombro.", "Manga sin sobra: termina en el hueso de la muñeca, ni antes ni después.", "Cierre limpio sin tensión: si tira del botón, no es tu talla.", "Largo de cadera: una chaqueta western asienta el torso, no lo entierra."]},
-      {"type": "p", "text": "Una chaqueta bien elegida no se nota por lo que cuesta, sino por cómo cae. Esa es la diferencia entre vestir con intención y simplemente abrigarse. Encuentra la chaqueta que te define y explora la colección de gorras y chaquetas The Ranch."}
+      {
+        "type": "p",
+        "text": "La chaqueta es la pieza que más dice de un look western, y también la que más se equivoca. Elegirla bien no es cuestión de marca: es cuestión de material, de corte y de saber qué va a hacer por ti. No seguimos modas, las marcamos."
+      },
+      {
+        "type": "h2",
+        "text": "El material: cuero, gamuza o denim"
+      },
+      {
+        "type": "p",
+        "text": "Cada material cuenta una historia distinta. El denim es el caballo de trabajo: resistente, versátil y sin pretensiones. La gamuza aporta textura y calidez para el entretiempo. El cuero es la declaración: envejece contigo y se gana su carácter con los años. Elige según tu rutina, no según el maniquí."
+      },
+      {
+        "type": "h2",
+        "text": "El corte que asienta, no cuelga"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Hombros en su sitio: la costura debe caer justo en el borde del hombro.",
+          "Manga sin sobra: termina en el hueso de la muñeca, ni antes ni después.",
+          "Cierre limpio sin tensión: si tira del botón, no es tu talla.",
+          "Largo de cadera: una chaqueta western asienta el torso, no lo entierra."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "Una chaqueta bien elegida no se nota por lo que cuesta, sino por cómo cae. Esa es la diferencia entre vestir con intención y simplemente abrigarse. Encuentra la chaqueta que te define y explora la colección de gorras y chaquetas The Ranch."
+      }
     ]
   },
   {
@@ -365,12 +994,35 @@
     "date": "2026-09-15",
     "category": "Campo",
     "blocks": [
-      {"type": "p", "text": "Antes del coleo y del joropo, antes de las marcas y los corrales, el llano tuvo una faena que lo definió: la vaquería. Reunir el ganado cimarrón, contarlo y repartirlo a campo abierto fue la escuela donde el llanero se hizo jinete, vaquero y hombre de palabra."},
-      {"type": "h2", "text": "¿Qué es la vaquería?"},
-      {"type": "p", "text": "La vaquería es la faena de arrear y reunir el ganado que pasta suelto en la sabana para contarlo, marcarlo y apartar lo que corresponde a cada hato. No es un simple rodeo: es un trabajo colectivo, duro y paciente, donde decenas de jinetes se coordinan sin radio ni reloj, guiándose solo por el grito, la seña y el conocimiento del terreno."},
-      {"type": "h2", "text": "La faena, paso a paso"},
-      {"type": "ul", "items": ["Se planifica la ruta: los vaqueros conocen los caños, las matas y los pasos por donde se mueve el ganado.", "Se arrea en punta y por los lados: cada jinete tiene su puesto y no lo abandona.", "Se reúne el hato en un punto de aparta, con calma para no desmadrarlo.", "Se cuenta, se marca y se reparte lo de cada dueño, con testigos y palabra empeñada."]},
-      {"type": "p", "text": "La vaquería forjó el oficio del llanero: ahí se aprendió que el ganado no se domina a gritos y que la palabra vale más que cualquier papel. No seguimos modas, las marcamos. Lleva contigo ese espíritu: explora la colección de gorras y chaquetas The Ranch, hecha para quienes viven el campo de verdad."}
+      {
+        "type": "p",
+        "text": "Antes del coleo y del joropo, antes de las marcas y los corrales, el llano tuvo una faena que lo definió: la vaquería. Reunir el ganado cimarrón, contarlo y repartirlo a campo abierto fue la escuela donde el llanero se hizo jinete, vaquero y hombre de palabra."
+      },
+      {
+        "type": "h2",
+        "text": "¿Qué es la vaquería?"
+      },
+      {
+        "type": "p",
+        "text": "La vaquería es la faena de arrear y reunir el ganado que pasta suelto en la sabana para contarlo, marcarlo y apartar lo que corresponde a cada hato. No es un simple rodeo: es un trabajo colectivo, duro y paciente, donde decenas de jinetes se coordinan sin radio ni reloj, guiándose solo por el grito, la seña y el conocimiento del terreno."
+      },
+      {
+        "type": "h2",
+        "text": "La faena, paso a paso"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Se planifica la ruta: los vaqueros conocen los caños, las matas y los pasos por donde se mueve el ganado.",
+          "Se arrea en punta y por los lados: cada jinete tiene su puesto y no lo abandona.",
+          "Se reúne el hato en un punto de aparta, con calma para no desmadrarlo.",
+          "Se cuenta, se marca y se reparte lo de cada dueño, con testigos y palabra empeñada."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "La vaquería forjó el oficio del llanero: ahí se aprendió que el ganado no se domina a gritos y que la palabra vale más que cualquier papel. No seguimos modas, las marcamos. Lleva contigo ese espíritu: explora la colección de gorras y chaquetas The Ranch, hecha para quienes viven el campo de verdad."
+      }
     ]
   },
   {
@@ -380,12 +1032,35 @@
     "date": "2026-09-15",
     "category": "Campo",
     "blocks": [
-      {"type": "p", "text": "El llanero no consulta el almanaque: consulta el cielo y la sabana. El año del hato se divide en dos tiempos que mandan sobre todo lo demás —el verano y el invierno— y quien no los lee a tiempo pierde animales, pastura y trabajo."},
-      {"type": "h2", "text": "Verano e invierno: los dos tiempos que mandan"},
-      {"type": "p", "text": "En verano los caños se secan, la pastura se pone dura y todo el trabajo gira en torno al agua. En invierno la sabana se inunda, las distancias cambian y hay que subir el ganado a las partes altas antes de que lleguen las crecientes. Un tiempo castiga por falta y el otro por exceso: el llanero que aguanta es el que se prepara para ambos."},
-      {"type": "h2", "text": "Cómo se prepara el rancho"},
-      {"type": "ul", "items": ["Reservar pasto en los potreros altos para que el ganado no se amontone en invierno.", "Reparar cercas y pasos antes de la entrada de aguas, no después.", "Contar el hato y anotar los movimientos: en invierno se pierde ganado fácil.", "Guardar sal y suplemento para los días en que la pastura no rinde."]},
-      {"type": "p", "text": "El que trabaja con el llano, no contra él, es el que dura. Ese respeto por los ciclos de la tierra es el mismo con que hacemos las cosas en The Ranch. No seguimos modas, las marcamos. Descubre la colección de gorras y chaquetas para quienes leen el campo como un libro abierto."}
+      {
+        "type": "p",
+        "text": "El llanero no consulta el almanaque: consulta el cielo y la sabana. El año del hato se divide en dos tiempos que mandan sobre todo lo demás —el verano y el invierno— y quien no los lee a tiempo pierde animales, pastura y trabajo."
+      },
+      {
+        "type": "h2",
+        "text": "Verano e invierno: los dos tiempos que mandan"
+      },
+      {
+        "type": "p",
+        "text": "En verano los caños se secan, la pastura se pone dura y todo el trabajo gira en torno al agua. En invierno la sabana se inunda, las distancias cambian y hay que subir el ganado a las partes altas antes de que lleguen las crecientes. Un tiempo castiga por falta y el otro por exceso: el llanero que aguanta es el que se prepara para ambos."
+      },
+      {
+        "type": "h2",
+        "text": "Cómo se prepara el rancho"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Reservar pasto en los potreros altos para que el ganado no se amontone en invierno.",
+          "Reparar cercas y pasos antes de la entrada de aguas, no después.",
+          "Contar el hato y anotar los movimientos: en invierno se pierde ganado fácil.",
+          "Guardar sal y suplemento para los días en que la pastura no rinde."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "El que trabaja con el llano, no contra él, es el que dura. Ese respeto por los ciclos de la tierra es el mismo con que hacemos las cosas en The Ranch. No seguimos modas, las marcamos. Descubre la colección de gorras y chaquetas para quienes leen el campo como un libro abierto."
+      }
     ]
   },
   {
@@ -395,12 +1070,36 @@
     "date": "2026-09-15",
     "category": "Campo",
     "blocks": [
-      {"type": "p", "text": "Sin cascos sanos no hay caballo que aguante el trabajo. El herrador es el artesano silencioso que mantiene de pie al mejor compañero del llanero, y su oficio es tan viejo como la montura."},
-      {"type": "h2", "text": "El casco: la base que sostiene todo"},
-      {"type": "p", "text": "El casco aguanta el peso, el golpe y el terreno. Un casco agrietado, con la ranilla podrida o desbalanceado hace que el animal cojee, se lastime y se niegue al trabajo. Muchas 'mañas' del caballo son en realidad dolor de cascos mal cuidados: el herrador lo detecta antes de que el problema se vuelva cojera."},
-      {"type": "h2", "text": "La faena del herrado, paso a paso"},
-      {"type": "ul", "items": ["Se revisa el casco en reposo y en movimiento para ver el apoyo y el desgaste.", "Se limpia la ranilla y se sacan barro y piedras que causan infección.", "Se recorta el exceso de casco con cuchilla y tenaza, respetando el ángulo natural.", "Se ajusta la herradura al casco, no al revés: la herradura se adapta al pie.", "Se clava con precisión y se remacha sin lastimar la línea blanca."]},
-      {"type": "p", "text": "Herrar no es un trámite: es un acto de respeto hacia el animal que te sostiene. Ese cuidado por el detalle es el que llevamos a cada prenda. No seguimos modas, las marcamos. Explora la colección de gorras y chaquetas The Ranch y haz las cosas con el mismo oficio."}
+      {
+        "type": "p",
+        "text": "Sin cascos sanos no hay caballo que aguante el trabajo. El herrador es el artesano silencioso que mantiene de pie al mejor compañero del llanero, y su oficio es tan viejo como la montura."
+      },
+      {
+        "type": "h2",
+        "text": "El casco: la base que sostiene todo"
+      },
+      {
+        "type": "p",
+        "text": "El casco aguanta el peso, el golpe y el terreno. Un casco agrietado, con la ranilla podrida o desbalanceado hace que el animal cojee, se lastime y se niegue al trabajo. Muchas 'mañas' del caballo son en realidad dolor de cascos mal cuidados: el herrador lo detecta antes de que el problema se vuelva cojera."
+      },
+      {
+        "type": "h2",
+        "text": "La faena del herrado, paso a paso"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Se revisa el casco en reposo y en movimiento para ver el apoyo y el desgaste.",
+          "Se limpia la ranilla y se sacan barro y piedras que causan infección.",
+          "Se recorta el exceso de casco con cuchilla y tenaza, respetando el ángulo natural.",
+          "Se ajusta la herradura al casco, no al revés: la herradura se adapta al pie.",
+          "Se clava con precisión y se remacha sin lastimar la línea blanca."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "Herrar no es un trámite: es un acto de respeto hacia el animal que te sostiene. Ese cuidado por el detalle es el que llevamos a cada prenda. No seguimos modas, las marcamos. Explora la colección de gorras y chaquetas The Ranch y haz las cosas con el mismo oficio."
+      }
     ]
   },
   {
@@ -410,12 +1109,35 @@
     "date": "2026-09-14",
     "category": "Campo",
     "blocks": [
-      {"type": "p", "text": "En el rancho no basta con tener ganado: hay que sostenerlo. Antes de que un solo animal engorde o se reproduzca, hay dos cosas que no perdonan errores: el agua y la pastura. La ganadería seria se decide en el potrero, no en el corral."},
-      {"type": "h2", "text": "El agua manda más que la hierba"},
-      {"type": "p", "text": "Un hato puede aguantar pastura corta unos días, pero no aguanta sed. El vaquero que conoce su tierra sabe dónde está cada aguada, cada caño y cada abrevadero, y planifica la rotación para que el ganado nunca tenga que caminar de más por un trago. Agua limpia y a mano es la primera regla del manejo."},
-      {"type": "h2", "text": "La pastura: rotar para no agotar la tierra"},
-      {"type": "ul", "items": ["Divide el potrero en apartos y mueve el ganado antes de que la hierba quede rasurada.", "Deja descansar cada potrero: la pastura recupera raíz y vigor si se le da tiempo.", "Observa el piso: tierra apelmazada y desnuda avisa que estás sobrepastoreando.", "No metas más cabezas de las que el potrero puede sostener: el exceso arruina la tierra."]},
-      {"type": "p", "text": "Esa atención silenciosa —llevar el agua, rotar la pastura, leer el potrero— es el oficio que nadie ve y todos necesitan. No seguimos modas, las marcamos. Explora la colección de gorras y chaquetas The Ranch, hecha para quienes trabajan la tierra con la misma constancia con que cuidan el hato."}
+      {
+        "type": "p",
+        "text": "En el rancho no basta con tener ganado: hay que sostenerlo. Antes de que un solo animal engorde o se reproduzca, hay dos cosas que no perdonan errores: el agua y la pastura. La ganadería seria se decide en el potrero, no en el corral."
+      },
+      {
+        "type": "h2",
+        "text": "El agua manda más que la hierba"
+      },
+      {
+        "type": "p",
+        "text": "Un hato puede aguantar pastura corta unos días, pero no aguanta sed. El vaquero que conoce su tierra sabe dónde está cada aguada, cada caño y cada abrevadero, y planifica la rotación para que el ganado nunca tenga que caminar de más por un trago. Agua limpia y a mano es la primera regla del manejo."
+      },
+      {
+        "type": "h2",
+        "text": "La pastura: rotar para no agotar la tierra"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Divide el potrero en apartos y mueve el ganado antes de que la hierba quede rasurada.",
+          "Deja descansar cada potrero: la pastura recupera raíz y vigor si se le da tiempo.",
+          "Observa el piso: tierra apelmazada y desnuda avisa que estás sobrepastoreando.",
+          "No metas más cabezas de las que el potrero puede sostener: el exceso arruina la tierra."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "Esa atención silenciosa —llevar el agua, rotar la pastura, leer el potrero— es el oficio que nadie ve y todos necesitan. No seguimos modas, las marcamos. Explora la colección de gorras y chaquetas The Ranch, hecha para quienes trabajan la tierra con la misma constancia con que cuidan el hato."
+      }
     ]
   },
   {
@@ -425,12 +1147,35 @@
     "date": "2026-09-14",
     "category": "Campo",
     "blocks": [
-      {"type": "p", "text": "Amansar un potro no es quebrarle el espíritu: es ganarse su confianza para que trabaje sin miedo. El buen amansador no pelea con el animal, lo convence. Ahí está la diferencia entre un caballo que obedece y uno que solo se rinde."},
-      {"type": "h2", "text": "El amanse no es quebrar, es convencer"},
-      {"type": "p", "text": "Un potro que se doma a la fuerza aprende a temer, no a trabajar. El amanse de verdad es un proceso de pasos cortos: que el animal acepte el contacto, que ceda a la presión sin huir y que entienda que el hombre no es una amenaza. Todo a su tiempo, sin prisa."},
-      {"type": "h2", "text": "Pasos para un amanse limpio"},
-      {"type": "ul", "items": ["Empieza por la confianza: acercamiento, contacto y manejo a pie antes de ensillar.", "Presión y liberación: suelta la presión justo cuando el potro cede, para que asocie calma con obediencia.", "La silla llega despacio: primero el apero suelto, luego cinchado flojo, después firme.", "Las primeras montas son cortas y sin exigencias: que el animal entienda, no que sude."]},
-      {"type": "p", "text": "Un caballo amansado con respeto entrega el doble en el trabajo y en el camino. Ese mismo principio —hacer las cosas bien, sin atajos— es el que nos mueve. No seguimos modas, las marcamos. Descubre la colección de gorras y chaquetas The Ranch, hecha para quienes entienden que el buen trabajo se gana con calma."}
+      {
+        "type": "p",
+        "text": "Amansar un potro no es quebrarle el espíritu: es ganarse su confianza para que trabaje sin miedo. El buen amansador no pelea con el animal, lo convence. Ahí está la diferencia entre un caballo que obedece y uno que solo se rinde."
+      },
+      {
+        "type": "h2",
+        "text": "El amanse no es quebrar, es convencer"
+      },
+      {
+        "type": "p",
+        "text": "Un potro que se doma a la fuerza aprende a temer, no a trabajar. El amanse de verdad es un proceso de pasos cortos: que el animal acepte el contacto, que ceda a la presión sin huir y que entienda que el hombre no es una amenaza. Todo a su tiempo, sin prisa."
+      },
+      {
+        "type": "h2",
+        "text": "Pasos para un amanse limpio"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Empieza por la confianza: acercamiento, contacto y manejo a pie antes de ensillar.",
+          "Presión y liberación: suelta la presión justo cuando el potro cede, para que asocie calma con obediencia.",
+          "La silla llega despacio: primero el apero suelto, luego cinchado flojo, después firme.",
+          "Las primeras montas son cortas y sin exigencias: que el animal entienda, no que sude."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "Un caballo amansado con respeto entrega el doble en el trabajo y en el camino. Ese mismo principio —hacer las cosas bien, sin atajos— es el que nos mueve. No seguimos modas, las marcamos. Descubre la colección de gorras y chaquetas The Ranch, hecha para quienes entienden que el buen trabajo se gana con calma."
+      }
     ]
   },
   {
@@ -440,12 +1185,35 @@
     "date": "2026-09-14",
     "category": "Campo",
     "blocks": [
-      {"type": "p", "text": "Cuando se habla del llano, casi siempre se habla del hombre a caballo. Pero el campo no se sostiene solo con jinetes: la mujer llanera —jinete, vaquera, criadora y guardiana de la casa y del hato— ha estado al pie del trabajo desde siempre, con el mismo carácter y sin pedir permiso."},
-      {"type": "h2", "text": "De la cocina al hato, sin bajar del caballo"},
-      {"type": "p", "text": "La llanera no es solo compañía: es mano de obra. Monta, ordeña, cura al ganado, conoce las plantas, carga el agua y sostiene la faena cuando el hombre no está. En muchas fincas, la mujer es la que lleva las cuentas y la que no deja caer la cerca ni el ánimo."},
-      {"type": "h2", "text": "Lo que la mujer vaquera le enseñó al campo"},
-      {"type": "ul", "items": ["Resistencia callada: trabaja a la par y pocas veces busca aplauso.", "Criterio: decide sobre el hato, la casa y la cría con la misma firmeza.", "Oficio múltiple: monta, cocina, cura y administra sin perder el ritmo.", "Lealtad a la tierra: cuida el rancho como cuida a los suyos."]},
-      {"type": "p", "text": "Hoy la mujer llanera compite en el coleo, doma, monta y mantiene viva la tradición que heredó: su lugar en el campo se lo ganó a punta de trabajo. Ese carácter es el que honramos. No seguimos modas, las marcamos. Lleva contigo el espíritu de la mujer llanera: explora la colección de gorras y chaquetas The Ranch."}
+      {
+        "type": "p",
+        "text": "Cuando se habla del llano, casi siempre se habla del hombre a caballo. Pero el campo no se sostiene solo con jinetes: la mujer llanera —jinete, vaquera, criadora y guardiana de la casa y del hato— ha estado al pie del trabajo desde siempre, con el mismo carácter y sin pedir permiso."
+      },
+      {
+        "type": "h2",
+        "text": "De la cocina al hato, sin bajar del caballo"
+      },
+      {
+        "type": "p",
+        "text": "La llanera no es solo compañía: es mano de obra. Monta, ordeña, cura al ganado, conoce las plantas, carga el agua y sostiene la faena cuando el hombre no está. En muchas fincas, la mujer es la que lleva las cuentas y la que no deja caer la cerca ni el ánimo."
+      },
+      {
+        "type": "h2",
+        "text": "Lo que la mujer vaquera le enseñó al campo"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Resistencia callada: trabaja a la par y pocas veces busca aplauso.",
+          "Criterio: decide sobre el hato, la casa y la cría con la misma firmeza.",
+          "Oficio múltiple: monta, cocina, cura y administra sin perder el ritmo.",
+          "Lealtad a la tierra: cuida el rancho como cuida a los suyos."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "Hoy la mujer llanera compite en el coleo, doma, monta y mantiene viva la tradición que heredó: su lugar en el campo se lo ganó a punta de trabajo. Ese carácter es el que honramos. No seguimos modas, las marcamos. Lleva contigo el espíritu de la mujer llanera: explora la colección de gorras y chaquetas The Ranch."
+      }
     ]
   },
   {
@@ -455,12 +1223,35 @@
     "date": "2026-09-12",
     "category": "Campo",
     "blocks": [
-      {"type": "p", "text": "En el rancho, el hierro no es un adorno: es la firma del dueño sobre su ganado. Marcar el hato es un ritual que une trabajo, identidad y orgullo, y que se ha transmitido sin manuales durante generaciones."},
-      {"type": "h2", "text": "El hierro: una firma que se forja en fuego"},
-      {"type": "p", "text": "Cada marca es un diseño único que se dibuja, se forja en hierro y se hereda. Reconocerla a distancia es leer de quién es cada animal, de qué finca viene y qué historia lleva. Por eso un buen hierro se cuida como se cuida el apellido."},
-      {"type": "h2", "text": "Cómo se marca bien, sin lastimar de más"},
-      {"type": "ul", "items": ["Hierro bien caliente, contacto corto y firme: marca limpia, sin quemar de más.", "Se marca en el costado, sobre piel firme y con el animal inmovilizado con calma.", "Un solo operario marca: la prisa y el desorden lastiman al animal.", "Se cura la marca y se vigila los días siguientes para evitar infección."]},
-      {"type": "p", "text": "Marcar es un acto de responsabilidad: el que marca responde por el animal. Ese mismo principio de dejar huella es el que nos mueve. No seguimos modas, las marcamos. Descubre la colección de gorras y chaquetas The Ranch, hecha para quienes dejan marca."}
+      {
+        "type": "p",
+        "text": "En el rancho, el hierro no es un adorno: es la firma del dueño sobre su ganado. Marcar el hato es un ritual que une trabajo, identidad y orgullo, y que se ha transmitido sin manuales durante generaciones."
+      },
+      {
+        "type": "h2",
+        "text": "El hierro: una firma que se forja en fuego"
+      },
+      {
+        "type": "p",
+        "text": "Cada marca es un diseño único que se dibuja, se forja en hierro y se hereda. Reconocerla a distancia es leer de quién es cada animal, de qué finca viene y qué historia lleva. Por eso un buen hierro se cuida como se cuida el apellido."
+      },
+      {
+        "type": "h2",
+        "text": "Cómo se marca bien, sin lastimar de más"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Hierro bien caliente, contacto corto y firme: marca limpia, sin quemar de más.",
+          "Se marca en el costado, sobre piel firme y con el animal inmovilizado con calma.",
+          "Un solo operario marca: la prisa y el desorden lastiman al animal.",
+          "Se cura la marca y se vigila los días siguientes para evitar infección."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "Marcar es un acto de responsabilidad: el que marca responde por el animal. Ese mismo principio de dejar huella es el que nos mueve. No seguimos modas, las marcamos. Descubre la colección de gorras y chaquetas The Ranch, hecha para quienes dejan marca."
+      }
     ]
   },
   {
@@ -470,12 +1261,35 @@
     "date": "2026-09-12",
     "category": "Campo",
     "blocks": [
-      {"type": "p", "text": "El joropo no nació en un escenario: nació en la sabana, entre jornadas de ganado y noches de fogata. Es la música del llano colombiano, y se canta como se trabaja: con fuerza y sin adornos."},
-      {"type": "h2", "text": "El arpa, el cuatro y las maracas"},
-      {"type": "p", "text": "Tres instrumentos bastan para sostener el joropo. El arpa marca la melodía, el cuatro lleva el ritmo y las maracas le dan el pulso que recuerda el trote del caballo. No hace falta más: el llano no pide orquesta, pide verdad."},
-      {"type": "h2", "text": "El contrapunteo: un duelo de ingenio improvisado"},
-      {"type": "ul", "items": ["Dos copleros se enfrentan improvisando versos sobre un mismo pie forzado.", "Gana quien responde más rápido y con más ingenio, sin perder el compás.", "Se canta la historia, el amor, el trabajo y las travesías del llano.", "El público acompaña con palmas y coros, como una sola voz."]},
-      {"type": "p", "text": "Esa música es la memoria viva del campo que inspira a The Ranch. No seguimos modas, las marcamos. Explora la colección de gorras y chaquetas The Ranch y lleva el espíritu del llano contigo."}
+      {
+        "type": "p",
+        "text": "El joropo no nació en un escenario: nació en la sabana, entre jornadas de ganado y noches de fogata. Es la música del llano colombiano, y se canta como se trabaja: con fuerza y sin adornos."
+      },
+      {
+        "type": "h2",
+        "text": "El arpa, el cuatro y las maracas"
+      },
+      {
+        "type": "p",
+        "text": "Tres instrumentos bastan para sostener el joropo. El arpa marca la melodía, el cuatro lleva el ritmo y las maracas le dan el pulso que recuerda el trote del caballo. No hace falta más: el llano no pide orquesta, pide verdad."
+      },
+      {
+        "type": "h2",
+        "text": "El contrapunteo: un duelo de ingenio improvisado"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Dos copleros se enfrentan improvisando versos sobre un mismo pie forzado.",
+          "Gana quien responde más rápido y con más ingenio, sin perder el compás.",
+          "Se canta la historia, el amor, el trabajo y las travesías del llano.",
+          "El público acompaña con palmas y coros, como una sola voz."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "Esa música es la memoria viva del campo que inspira a The Ranch. No seguimos modas, las marcamos. Explora la colección de gorras y chaquetas The Ranch y lleva el espíritu del llano contigo."
+      }
     ]
   },
   {
@@ -485,12 +1299,35 @@
     "date": "2026-09-12",
     "category": "Campo",
     "blocks": [
-      {"type": "p", "text": "Detrás de cada silla de montar, cincha y pieza de cuero hay un artesano que domina el material como si fuera su propia mano. El talabartero es uno de los oficios más antiguos y respetados del campo."},
-      {"type": "h2", "text": "Un oficio que no se improvisa"},
-      {"type": "p", "text": "El talabartero corta, cose y da forma al cuero con herramientas que han cambiado poco en siglos: cuchilla, lezna, aguja e hilo encerado. Su trabajo sostiene la seguridad del jinete: una cincha mal cosida no es un detalle, es un riesgo."},
-      {"type": "h2", "text": "Lo que distingue a un buen talabartero"},
-      {"type": "ul", "items": ["Conoce el cuero: sabe qué pieza sirve para cada trabajo según su flexibilidad y resistencia.", "Costura firme y pareja: cada puntada soporta tensión y peso real.", "Acabado honesto: sin pegamentos que escondan malas uniones.", "Repara antes que reemplazar: el buen cuero se cuida, no se desecha."]},
-      {"type": "p", "text": "El respeto por el cuero bien trabajado es el mismo con el que hacemos nuestras piezas. No seguimos modas, las marcamos. Conoce la colección de gorras con visera en cuero y chaquetas The Ranch, hechas con oficio."}
+      {
+        "type": "p",
+        "text": "Detrás de cada silla de montar, cincha y pieza de cuero hay un artesano que domina el material como si fuera su propia mano. El talabartero es uno de los oficios más antiguos y respetados del campo."
+      },
+      {
+        "type": "h2",
+        "text": "Un oficio que no se improvisa"
+      },
+      {
+        "type": "p",
+        "text": "El talabartero corta, cose y da forma al cuero con herramientas que han cambiado poco en siglos: cuchilla, lezna, aguja e hilo encerado. Su trabajo sostiene la seguridad del jinete: una cincha mal cosida no es un detalle, es un riesgo."
+      },
+      {
+        "type": "h2",
+        "text": "Lo que distingue a un buen talabartero"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Conoce el cuero: sabe qué pieza sirve para cada trabajo según su flexibilidad y resistencia.",
+          "Costura firme y pareja: cada puntada soporta tensión y peso real.",
+          "Acabado honesto: sin pegamentos que escondan malas uniones.",
+          "Repara antes que reemplazar: el buen cuero se cuida, no se desecha."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "El respeto por el cuero bien trabajado es el mismo con el que hacemos nuestras piezas. No seguimos modas, las marcamos. Conoce la colección de gorras con visera en cuero y chaquetas The Ranch, hechas con oficio."
+      }
     ]
   },
   {
@@ -500,14 +1337,43 @@
     "date": "2026-09-11",
     "category": "Campo",
     "blocks": [
-      {"type": "p", "text": "El vaquero no nació en el cine: se forjó durante siglos de trabajo a caballo. De los llanos de la península ibérica a los llanos colombianos, el oficio de mover ganado montado forjó una forma de vestir, de pensar y de vivir que sigue mandando."},
-      {"type": "h2", "text": "Del campo español al llano americano"},
-      {"type": "p", "text": "La palabra lo dice: vaquero viene de vaca. Las técnicas de arrear, marcar y cuidar el hato cruzaron el Atlántico con los españoles y se mezclaron con el conocimiento de la tierra. De esa mezcla nació el llanero: jinete incansable y guardián de una tradición que no conoce fronteras."},
-      {"type": "h2", "text": "Lo que el vaquero de verdad heredó"},
-      {"type": "ul", "items": ["El oficio antes que el adorno: cada prenda nació de una función real.", "El caballo como compañero, no como herramienta desechable.", "La palabra empeñada y el trabajo hecho a mano.", "El respeto por la tierra y por el hato que la habita."]},
-      {"type": "h2", "text": "Por qué su legado sigue mandando"},
-      {"type": "p", "text": "Porque los valores del vaquero —trabajo, palabra y resistencia— siguen separando al que tiene carácter del que solo aparenta. Su estilo nació de la función, y por eso no envejece."},
-      {"type": "p", "text": "No seguimos modas, las marcamos. Lleva contigo el legado del vaquero: explora la colección de gorras y chaquetas The Ranch."}
+      {
+        "type": "p",
+        "text": "El vaquero no nació en el cine: se forjó durante siglos de trabajo a caballo. De los llanos de la península ibérica a los llanos colombianos, el oficio de mover ganado montado forjó una forma de vestir, de pensar y de vivir que sigue mandando."
+      },
+      {
+        "type": "h2",
+        "text": "Del campo español al llano americano"
+      },
+      {
+        "type": "p",
+        "text": "La palabra lo dice: vaquero viene de vaca. Las técnicas de arrear, marcar y cuidar el hato cruzaron el Atlántico con los españoles y se mezclaron con el conocimiento de la tierra. De esa mezcla nació el llanero: jinete incansable y guardián de una tradición que no conoce fronteras."
+      },
+      {
+        "type": "h2",
+        "text": "Lo que el vaquero de verdad heredó"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "El oficio antes que el adorno: cada prenda nació de una función real.",
+          "El caballo como compañero, no como herramienta desechable.",
+          "La palabra empeñada y el trabajo hecho a mano.",
+          "El respeto por la tierra y por el hato que la habita."
+        ]
+      },
+      {
+        "type": "h2",
+        "text": "Por qué su legado sigue mandando"
+      },
+      {
+        "type": "p",
+        "text": "Porque los valores del vaquero —trabajo, palabra y resistencia— siguen separando al que tiene carácter del que solo aparenta. Su estilo nació de la función, y por eso no envejece."
+      },
+      {
+        "type": "p",
+        "text": "No seguimos modas, las marcamos. Lleva contigo el legado del vaquero: explora la colección de gorras y chaquetas The Ranch."
+      }
     ]
   },
   {
@@ -517,14 +1383,43 @@
     "date": "2026-09-11",
     "category": "Campo",
     "blocks": [
-      {"type": "p", "text": "El coleo es la más llanera de las tradiciones: una muestra de jineta, fuerza y honor que se transmite de generación en generación. Más que un deporte, es un ritual que mantiene vivo el vínculo entre el llanero y su caballo."},
-      {"type": "h2", "text": "¿Qué es el coleo?"},
-      {"type": "p", "text": "Un grupo de jinetes persigue a un toro a todo galope; uno de ellos lo toma por la cola y, con un movimiento preciso, lo derriba dentro de una zona marcada. Parece fuerza bruta, pero es pura técnica: un tirón mal dado lastima al animal y deshonra al coleador."},
-      {"type": "h2", "text": "Las reglas de oro del coleador"},
-      {"type": "ul", "items": ["El caballo lo es todo: se entrena y se cuida tanto como al jinete.", "La técnica vale más que la fuerza: se derriba con precisión, no con rabia.", "El respeto por el toro es parte del honor del coleador.", "La faena es colectiva: se gana y se pierde en equipo."]},
-      {"type": "h2", "text": "Deporte, fiesta y memoria"},
-      {"type": "p", "text": "El coleo es el corazón de muchas festividades llaneras, junto al joropo y la vaquería. En cada enlazada y cada derribo se transmite, sin manuales, la relación del llanero con el caballo y el hato."},
-      {"type": "p", "text": "La tradición se honra viviéndola y vistiéndola. No seguimos modas, las marcamos. Explora la colección de gorras y chaquetas The Ranch."}
+      {
+        "type": "p",
+        "text": "El coleo es la más llanera de las tradiciones: una muestra de jineta, fuerza y honor que se transmite de generación en generación. Más que un deporte, es un ritual que mantiene vivo el vínculo entre el llanero y su caballo."
+      },
+      {
+        "type": "h2",
+        "text": "¿Qué es el coleo?"
+      },
+      {
+        "type": "p",
+        "text": "Un grupo de jinetes persigue a un toro a todo galope; uno de ellos lo toma por la cola y, con un movimiento preciso, lo derriba dentro de una zona marcada. Parece fuerza bruta, pero es pura técnica: un tirón mal dado lastima al animal y deshonra al coleador."
+      },
+      {
+        "type": "h2",
+        "text": "Las reglas de oro del coleador"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "El caballo lo es todo: se entrena y se cuida tanto como al jinete.",
+          "La técnica vale más que la fuerza: se derriba con precisión, no con rabia.",
+          "El respeto por el toro es parte del honor del coleador.",
+          "La faena es colectiva: se gana y se pierde en equipo."
+        ]
+      },
+      {
+        "type": "h2",
+        "text": "Deporte, fiesta y memoria"
+      },
+      {
+        "type": "p",
+        "text": "El coleo es el corazón de muchas festividades llaneras, junto al joropo y la vaquería. En cada enlazada y cada derribo se transmite, sin manuales, la relación del llanero con el caballo y el hato."
+      },
+      {
+        "type": "p",
+        "text": "La tradición se honra viviéndola y vistiéndola. No seguimos modas, las marcamos. Explora la colección de gorras y chaquetas The Ranch."
+      }
     ]
   },
   {
@@ -534,14 +1429,43 @@
     "date": "2026-09-11",
     "category": "Campo",
     "blocks": [
-      {"type": "p", "text": "El caballo criollo colombiano no es solo una raza: es el resultado de siglos de selección para el campo. Su paso fino, suave y seguro, lo convirtió en la monta ideal para las largas jornadas del llano."},
-      {"type": "h2", "text": "El paso fino: comodidad que no se improvisa"},
-      {"type": "p", "text": "A diferencia del trote, que sacude al jinete, el paso fino es un andar lateral de cuatro tiempos que se siente casi como flotar. No se aprende: se hereda en la genética, refinada por generaciones de criadores."},
-      {"type": "h2", "text": "Un caballo hecho para el trabajo de llano"},
-      {"type": "ul", "items": ["Resistencia: aguanta jornadas largas sin desfondarse.", "Seguridad: su paso firme da estabilidad en terrenos irregulares.", "Temperamento: dócil y valiente a la vez, ideal para el ganado.", "Nobleza: se entrega al jinete que lo respeta."]},
-      {"type": "h2", "text": "Cabalgarlo es un arte, no un paseo"},
-      {"type": "p", "text": "Montar bien un paso fino exige dejar fluir el andar sin pelear con las riendas. El buen jinete acompaña, dosifica y lee al animal: ahí la equitación se vuelve conversación, no forcejeo."},
-      {"type": "p", "text": "El caballo y su jinete comparten camino y carácter. No seguimos modas, las marcamos. Descubre la colección de gorras y chaquetas The Ranch, pensada para quien monta y trabaja."}
+      {
+        "type": "p",
+        "text": "El caballo criollo colombiano no es solo una raza: es el resultado de siglos de selección para el campo. Su paso fino, suave y seguro, lo convirtió en la monta ideal para las largas jornadas del llano."
+      },
+      {
+        "type": "h2",
+        "text": "El paso fino: comodidad que no se improvisa"
+      },
+      {
+        "type": "p",
+        "text": "A diferencia del trote, que sacude al jinete, el paso fino es un andar lateral de cuatro tiempos que se siente casi como flotar. No se aprende: se hereda en la genética, refinada por generaciones de criadores."
+      },
+      {
+        "type": "h2",
+        "text": "Un caballo hecho para el trabajo de llano"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Resistencia: aguanta jornadas largas sin desfondarse.",
+          "Seguridad: su paso firme da estabilidad en terrenos irregulares.",
+          "Temperamento: dócil y valiente a la vez, ideal para el ganado.",
+          "Nobleza: se entrega al jinete que lo respeta."
+        ]
+      },
+      {
+        "type": "h2",
+        "text": "Cabalgarlo es un arte, no un paseo"
+      },
+      {
+        "type": "p",
+        "text": "Montar bien un paso fino exige dejar fluir el andar sin pelear con las riendas. El buen jinete acompaña, dosifica y lee al animal: ahí la equitación se vuelve conversación, no forcejeo."
+      },
+      {
+        "type": "p",
+        "text": "El caballo y su jinete comparten camino y carácter. No seguimos modas, las marcamos. Descubre la colección de gorras y chaquetas The Ranch, pensada para quien monta y trabaja."
+      }
     ]
   },
   {
@@ -551,14 +1475,43 @@
     "date": "2026-09-10",
     "category": "Campo",
     "blocks": [
-      {"type": "p", "text": "El ganado no obedece al grito, obedece a la calma. El vaquero que conoce su oficio mueve un hato entero sin alzar la voz, porque entiende cómo piensa el animal: en grupo, por instinto y con un punto de fuga siempre a la vista."},
-      {"type": "h2", "text": "La zona de fuga: el secreto que nadie te enseña"},
-      {"type": "p", "text": "Cada animal tiene una distancia a la que se siente seguro. Si la invades de frente, retrocede; si la presionas por el flanco, avanza. Trabajar con esa zona —ni demasiado cerca, ni demasiado lejos— es lo que separa al que guía del que persigue."},
-      {"type": "h2", "text": "Reglas para mover ganado sin estrés"},
-      {"type": "ul", "items": ["Trabaja por el flanco, nunca de frente: el animal avanza cuando lo flanqueas con calma.", "Presión y liberación: suelta la presión en cuanto el animal da el paso correcto.", "Sin griterío: el ganado estresado se dispersa, no se mueve.", "Un solo punto de mando: si todos mandan, nadie guía."]},
-      {"type": "h2", "text": "¿Por qué importa?"},
-      {"type": "p", "text": "Un animal estresado pierde peso, se lastima y vuelve lenta la faena. Un hato bien manejado trabaja solo y llega entero. El buen vaquero no se ve desde lejos: se nota en cómo camina el ganado."},
-      {"type": "p", "text": "Ese oficio silencioso es el que honramos en The Ranch. No seguimos modas, las marcamos. Descubre la colección de gorras y chaquetas hechas para quienes trabajan el campo como se debe."}
+      {
+        "type": "p",
+        "text": "El ganado no obedece al grito, obedece a la calma. El vaquero que conoce su oficio mueve un hato entero sin alzar la voz, porque entiende cómo piensa el animal: en grupo, por instinto y con un punto de fuga siempre a la vista."
+      },
+      {
+        "type": "h2",
+        "text": "La zona de fuga: el secreto que nadie te enseña"
+      },
+      {
+        "type": "p",
+        "text": "Cada animal tiene una distancia a la que se siente seguro. Si la invades de frente, retrocede; si la presionas por el flanco, avanza. Trabajar con esa zona —ni demasiado cerca, ni demasiado lejos— es lo que separa al que guía del que persigue."
+      },
+      {
+        "type": "h2",
+        "text": "Reglas para mover ganado sin estrés"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Trabaja por el flanco, nunca de frente: el animal avanza cuando lo flanqueas con calma.",
+          "Presión y liberación: suelta la presión en cuanto el animal da el paso correcto.",
+          "Sin griterío: el ganado estresado se dispersa, no se mueve.",
+          "Un solo punto de mando: si todos mandan, nadie guía."
+        ]
+      },
+      {
+        "type": "h2",
+        "text": "¿Por qué importa?"
+      },
+      {
+        "type": "p",
+        "text": "Un animal estresado pierde peso, se lastima y vuelve lenta la faena. Un hato bien manejado trabaja solo y llega entero. El buen vaquero no se ve desde lejos: se nota en cómo camina el ganado."
+      },
+      {
+        "type": "p",
+        "text": "Ese oficio silencioso es el que honramos en The Ranch. No seguimos modas, las marcamos. Descubre la colección de gorras y chaquetas hechas para quienes trabajan el campo como se debe."
+      }
     ]
   },
   {
@@ -568,14 +1521,43 @@
     "date": "2026-09-10",
     "category": "Campo",
     "blocks": [
-      {"type": "p", "text": "Cuando el calor afloja, el western se vuelve cuestión de capas. Es el momento en que una chaqueta ligera, un tono tierra bien elegido y un detalle de cuero hacen todo el trabajo. No seguimos modas, las marcamos."},
-      {"type": "h2", "text": "La capa correcta, no la más gruesa"},
-      {"type": "p", "text": "El entretiempo castiga al que se abriga de más. Una chaqueta de gamuza o una camisa de trabajo con peso medio funcionan mejor que una prenda gruesa que termina amarrada a la cintura. La idea es sumar y quitar capas sin perder el corte."},
-      {"type": "h2", "text": "La paleta del entretiempo"},
-      {"type": "ul", "items": ["Tabaco y caqui: los tonos que conectan con la tierra seca.", "Cuero envejecido: el detalle que le da carácter sin estridencia.", "Azul denim oscuro: la base neutra que sostiene todo lo demás.", "Acentos de gamuza: textura sin ruido, presencia sin exceso."]},
-      {"type": "h2", "text": "Detalles que elevan el conjunto"},
-      {"type": "p", "text": "Una gorra con visera en cuero cierra el look con la misma naturalidad con que se remata un lazo: sin esfuerzo, pero con oficio. Los puños, el cuello y el corte de la prenda son los que delatan si sabes lo que haces."},
-      {"type": "p", "text": "Vestir de entretiempo es una declaración de calma. Encuentra la capa y el detalle que te definen en la colección de gorras y chaquetas The Ranch."}
+      {
+        "type": "p",
+        "text": "Cuando el calor afloja, el western se vuelve cuestión de capas. Es el momento en que una chaqueta ligera, un tono tierra bien elegido y un detalle de cuero hacen todo el trabajo. No seguimos modas, las marcamos."
+      },
+      {
+        "type": "h2",
+        "text": "La capa correcta, no la más gruesa"
+      },
+      {
+        "type": "p",
+        "text": "El entretiempo castiga al que se abriga de más. Una chaqueta de gamuza o una camisa de trabajo con peso medio funcionan mejor que una prenda gruesa que termina amarrada a la cintura. La idea es sumar y quitar capas sin perder el corte."
+      },
+      {
+        "type": "h2",
+        "text": "La paleta del entretiempo"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Tabaco y caqui: los tonos que conectan con la tierra seca.",
+          "Cuero envejecido: el detalle que le da carácter sin estridencia.",
+          "Azul denim oscuro: la base neutra que sostiene todo lo demás.",
+          "Acentos de gamuza: textura sin ruido, presencia sin exceso."
+        ]
+      },
+      {
+        "type": "h2",
+        "text": "Detalles que elevan el conjunto"
+      },
+      {
+        "type": "p",
+        "text": "Una gorra con visera en cuero cierra el look con la misma naturalidad con que se remata un lazo: sin esfuerzo, pero con oficio. Los puños, el cuello y el corte de la prenda son los que delatan si sabes lo que haces."
+      },
+      {
+        "type": "p",
+        "text": "Vestir de entretiempo es una declaración de calma. Encuentra la capa y el detalle que te definen en la colección de gorras y chaquetas The Ranch."
+      }
     ]
   },
   {
@@ -585,14 +1567,44 @@
     "date": "2026-09-10",
     "category": "Campo",
     "blocks": [
-      {"type": "p", "text": "El buen jinete no monta a ciegas: lee. El caballo comunica su estado mucho antes de que pongas el pie en el estribo, y quien sabe escuchar evita sustos, caídas y malos ratos."},
-      {"type": "h2", "text": "Las señales que no mienten"},
-      {"type": "ul", "items": ["Orejas hacia atrás: alerta o molestia, pide espacio y calma.", "Orejas hacia delante: atención y curiosidad, buena señal.", "Cola tensa o en látigo: nervios o incomodidad.", "Bostezo y labios relajados: calma y confianza.", "Pateo o balanceo: ansiedad, hay que revisar el entorno."]},
-      {"type": "h2", "text": "Antes de ensillar, lee el ánimo"},
-      {"type": "p", "text": "Acércate por el costado, nunca por sorpresa, y habla en un tono parejo. Si el animal gira la grupa o aprieta la boca, no es el día para apurarlo. Un caballo sereno se ensilla solo; uno nervioso te avisa antes de que sea tarde."},
-      {"type": "h2", "text": "Montar es conversar"},
-      {"type": "p", "text": "Una vez arriba, la monta es un diálogo de peso, pierna y rienda. Cuanto mejor leas las señales sutiles del animal, menos fuerza necesitarás. El mejor jinete no es el que domina, es el que se hace entender."},
-      {"type": "p", "text": "Esa conexión entre jinete y caballo es parte del espíritu The Ranch. No seguimos modas, las marcamos. Explora la colección de gorras y chaquetas para el camino."}
+      {
+        "type": "p",
+        "text": "El buen jinete no monta a ciegas: lee. El caballo comunica su estado mucho antes de que pongas el pie en el estribo, y quien sabe escuchar evita sustos, caídas y malos ratos."
+      },
+      {
+        "type": "h2",
+        "text": "Las señales que no mienten"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Orejas hacia atrás: alerta o molestia, pide espacio y calma.",
+          "Orejas hacia delante: atención y curiosidad, buena señal.",
+          "Cola tensa o en látigo: nervios o incomodidad.",
+          "Bostezo y labios relajados: calma y confianza.",
+          "Pateo o balanceo: ansiedad, hay que revisar el entorno."
+        ]
+      },
+      {
+        "type": "h2",
+        "text": "Antes de ensillar, lee el ánimo"
+      },
+      {
+        "type": "p",
+        "text": "Acércate por el costado, nunca por sorpresa, y habla en un tono parejo. Si el animal gira la grupa o aprieta la boca, no es el día para apurarlo. Un caballo sereno se ensilla solo; uno nervioso te avisa antes de que sea tarde."
+      },
+      {
+        "type": "h2",
+        "text": "Montar es conversar"
+      },
+      {
+        "type": "p",
+        "text": "Una vez arriba, la monta es un diálogo de peso, pierna y rienda. Cuanto mejor leas las señales sutiles del animal, menos fuerza necesitarás. El mejor jinete no es el que domina, es el que se hace entender."
+      },
+      {
+        "type": "p",
+        "text": "Esa conexión entre jinete y caballo es parte del espíritu The Ranch. No seguimos modas, las marcamos. Explora la colección de gorras y chaquetas para el camino."
+      }
     ]
   },
   {
@@ -602,14 +1614,46 @@
     "date": "2026-09-09",
     "category": "Campo",
     "blocks": [
-      {"type": "p", "text": "La ropa de campo no se usa: se lleva. Y quien la lleva de verdad la cuida. Una gorra con visera en cuero o una chaqueta de trabajo bien mantenidas no solo se ven mejor, duran lo que debe durar un oficio."},
-      {"type": "h2", "text": "La gorra: el cuero pide poco, pero pide"},
-      {"type": "ul", "items": ["Visera de cuero: límpiala en seco con un paño suave y un toque de acondicionador cada tanto.", "Tela y bordado: cepillo de cerdas suaves para el polvo; manchas puntuales con paño húmedo, sin restregar.", "Guardado: nunca aplastes la copa; dale forma y guárdala en un lugar seco y ventilado."]},
-      {"type": "h2", "text": "El cuero de las chaquetas y prendas de campo"},
-      {"type": "p", "text": "El cuero reseco se cuartea; el cuero húmedo se pudre. Hidrátalo cada pocos meses con acondicionador específico y déjalo respirar. Evita el sol directo y las bolsas plásticas cerradas: el cuero necesita aire."},
-      {"type": "h2", "text": "Lo que nunca debes hacer"},
-      {"type": "ul", "items": ["No laves el cuero en lavadora ni lo sumerjas en agua.", "No uses secadora ni calor directo para secar prendas mojadas.", "No apliques betún sobre la gamuza: pierde su textura para siempre."]},
-      {"type": "p", "text": "No seguimos modas, las marcamos; y lo que marcamos se cuida. Una prenda bien tratada te acompaña tantos años como las que heredaste. Explora la colección de gorras y chaquetas The Ranch y dale a tu equipo el cuidado que merece."}
+      {
+        "type": "p",
+        "text": "La ropa de campo no se usa: se lleva. Y quien la lleva de verdad la cuida. Una gorra con visera en cuero o una chaqueta de trabajo bien mantenidas no solo se ven mejor, duran lo que debe durar un oficio."
+      },
+      {
+        "type": "h2",
+        "text": "La gorra: el cuero pide poco, pero pide"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Visera de cuero: límpiala en seco con un paño suave y un toque de acondicionador cada tanto.",
+          "Tela y bordado: cepillo de cerdas suaves para el polvo; manchas puntuales con paño húmedo, sin restregar.",
+          "Guardado: nunca aplastes la copa; dale forma y guárdala en un lugar seco y ventilado."
+        ]
+      },
+      {
+        "type": "h2",
+        "text": "El cuero de las chaquetas y prendas de campo"
+      },
+      {
+        "type": "p",
+        "text": "El cuero reseco se cuartea; el cuero húmedo se pudre. Hidrátalo cada pocos meses con acondicionador específico y déjalo respirar. Evita el sol directo y las bolsas plásticas cerradas: el cuero necesita aire."
+      },
+      {
+        "type": "h2",
+        "text": "Lo que nunca debes hacer"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "No laves el cuero en lavadora ni lo sumerjas en agua.",
+          "No uses secadora ni calor directo para secar prendas mojadas.",
+          "No apliques betún sobre la gamuza: pierde su textura para siempre."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "No seguimos modas, las marcamos; y lo que marcamos se cuida. Una prenda bien tratada te acompaña tantos años como las que heredaste. Explora la colección de gorras y chaquetas The Ranch y dale a tu equipo el cuidado que merece."
+      }
     ]
   },
   {
@@ -619,14 +1663,47 @@
     "date": "2026-09-09",
     "category": "Campo",
     "blocks": [
-      {"type": "p", "text": "Hay una diferencia enorme entre vestir western y parecer que sales de un set de película. El estilo western premium se gana con cabeza fría: pocos elementos, de buena factura, y una sola pieza que manda. No seguimos modas, las marcamos."},
-      {"type": "h2", "text": "Una sola pieza protagonista"},
-      {"type": "p", "text": "El error más común es cargar el look entero: sombrero, hebilla, botas y chaqueta a la vez. El resultado es ruido. Elige UNA pieza con carácter —una chaqueta de gamuza, una gorra de cuero— y deja que el resto sea neutral."},
-      {"type": "h2", "text": "El truco está en los materiales y el corte"},
-      {"type": "ul", "items": ["Tonos tierra y neutros: arena, tabaco, cuero, caqui. Siempre funcionan.", "Cortes limpios y entallados: el western premium no cuelga, se asienta.", "Materiales nobles: cuero, gamuza, algodón grueso. Lo barato se nota a metros.", "Una textura protagonista por look: o cuero, o gamuza, no ambos."]},
-      {"type": "h2", "text": "Combinaciones que nunca fallan"},
-      {"type": "ul", "items": ["Gorra de cuero + camisa blanca + jeans rectos: sobrio y seguro.", "Chaqueta de gamuza + t-shirt lisa + botas de trabajo: el clásico del campo.", "Total look tierra con una hebilla discreta: presencia sin estridencia."]},
-      {"type": "p", "text": "Vestir bien no es gritar: es que te lean sin que digas nada. Encuentra la pieza que te define en la colección de gorras y chaquetas The Ranch."}
+      {
+        "type": "p",
+        "text": "Hay una diferencia enorme entre vestir western y parecer que sales de un set de película. El estilo western premium se gana con cabeza fría: pocos elementos, de buena factura, y una sola pieza que manda. No seguimos modas, las marcamos."
+      },
+      {
+        "type": "h2",
+        "text": "Una sola pieza protagonista"
+      },
+      {
+        "type": "p",
+        "text": "El error más común es cargar el look entero: sombrero, hebilla, botas y chaqueta a la vez. El resultado es ruido. Elige UNA pieza con carácter —una chaqueta de gamuza, una gorra de cuero— y deja que el resto sea neutral."
+      },
+      {
+        "type": "h2",
+        "text": "El truco está en los materiales y el corte"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Tonos tierra y neutros: arena, tabaco, cuero, caqui. Siempre funcionan.",
+          "Cortes limpios y entallados: el western premium no cuelga, se asienta.",
+          "Materiales nobles: cuero, gamuza, algodón grueso. Lo barato se nota a metros.",
+          "Una textura protagonista por look: o cuero, o gamuza, no ambos."
+        ]
+      },
+      {
+        "type": "h2",
+        "text": "Combinaciones que nunca fallan"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Gorra de cuero + camisa blanca + jeans rectos: sobrio y seguro.",
+          "Chaqueta de gamuza + t-shirt lisa + botas de trabajo: el clásico del campo.",
+          "Total look tierra con una hebilla discreta: presencia sin estridencia."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "Vestir bien no es gritar: es que te lean sin que digas nada. Encuentra la pieza que te define en la colección de gorras y chaquetas The Ranch."
+      }
     ]
   },
   {
@@ -636,14 +1713,43 @@
     "date": "2026-09-09",
     "category": "Campo",
     "blocks": [
-      {"type": "p", "text": "El campo no dicta lecciones: las muestra. Quien madruga, ensilla y responde por su ganado aprende un código que ningún salón enseña. Esa es la filosofía vaquera, y se lleva puesta."},
-      {"type": "h2", "text": "La palabra vale más que la firma"},
-      {"type": "p", "text": "En el rancho un apretón de manos cierra un trato y una promesa se cumple aunque cueste. El carácter no se declara: se demuestra cada vez que haces lo que dijiste, sin excusas ni atajos."},
-      {"type": "h2", "text": "Responsabilidad: el animal y la tierra dependen de ti"},
-      {"type": "ul", "items": ["No se abandona la faena a mitad: se termina lo que se empieza.", "Se cuida lo ajeno como lo propio: la cerca, el agua, el ganado.", "El error se asume y se corrige, no se esconde.", "La madrugada no se negocia: el trabajo manda sobre la comodidad."]},
-      {"type": "h2", "text": "Sin atajos: lo bien hecho habla solo"},
-      {"type": "p", "text": "El que busca atajos llega antes y dura menos. El campo premia al que hace las cosas bien la primera vez, al que entrena la constancia como un músculo. Ahí se forja la reputación que nadie te puede quitar."},
-      {"type": "p", "text": "Ese es el espíritu que vestimos. No seguimos modas, las marcamos. Si compartes este código, explora la colección de gorras y chaquetas The Ranch, hecha para quienes viven así."}
+      {
+        "type": "p",
+        "text": "El campo no dicta lecciones: las muestra. Quien madruga, ensilla y responde por su ganado aprende un código que ningún salón enseña. Esa es la filosofía vaquera, y se lleva puesta."
+      },
+      {
+        "type": "h2",
+        "text": "La palabra vale más que la firma"
+      },
+      {
+        "type": "p",
+        "text": "En el rancho un apretón de manos cierra un trato y una promesa se cumple aunque cueste. El carácter no se declara: se demuestra cada vez que haces lo que dijiste, sin excusas ni atajos."
+      },
+      {
+        "type": "h2",
+        "text": "Responsabilidad: el animal y la tierra dependen de ti"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "No se abandona la faena a mitad: se termina lo que se empieza.",
+          "Se cuida lo ajeno como lo propio: la cerca, el agua, el ganado.",
+          "El error se asume y se corrige, no se esconde.",
+          "La madrugada no se negocia: el trabajo manda sobre la comodidad."
+        ]
+      },
+      {
+        "type": "h2",
+        "text": "Sin atajos: lo bien hecho habla solo"
+      },
+      {
+        "type": "p",
+        "text": "El que busca atajos llega antes y dura menos. El campo premia al que hace las cosas bien la primera vez, al que entrena la constancia como un músculo. Ahí se forja la reputación que nadie te puede quitar."
+      },
+      {
+        "type": "p",
+        "text": "Ese es el espíritu que vestimos. No seguimos modas, las marcamos. Si compartes este código, explora la colección de gorras y chaquetas The Ranch, hecha para quienes viven así."
+      }
     ]
   },
   {
@@ -653,12 +1759,35 @@
     "date": "2026-09-08",
     "category": "Campo",
     "blocks": [
-      {"type": "p", "text": "El rancho no se construye solo con trabajo: se sostiene con principios. Hay frases que se repiten de generación en generación, no por costumbre, sino porque encierran la verdad del campo."},
-      {"type": "h2", "text": "Los principios que no se negocian"},
-      {"type": "p", "text": "La filosofía del rancho es simple y exigente: haz las cosas bien la primera vez, respeta al que trabaja contigo y deja que tu trabajo hable por ti. No seguimos modas, las marcamos."},
-      {"type": "h2", "text": "Frases que marcan carácter"},
-      {"type": "ul", "items": ["El que madruga no llega tarde a nada.", "Las cosas bien hechas no piden explicación.", "El campo no miente: te devuelve lo que le das.", "Más vale un hombre de palabra que cien de promesas."]},
-      {"type": "p", "text": "Lleva estos principios contigo en cada jornada. Explora la colección de gorras y chaquetas The Ranch, hecha para quienes viven esta filosofía."}
+      {
+        "type": "p",
+        "text": "El rancho no se construye solo con trabajo: se sostiene con principios. Hay frases que se repiten de generación en generación, no por costumbre, sino porque encierran la verdad del campo."
+      },
+      {
+        "type": "h2",
+        "text": "Los principios que no se negocian"
+      },
+      {
+        "type": "p",
+        "text": "La filosofía del rancho es simple y exigente: haz las cosas bien la primera vez, respeta al que trabaja contigo y deja que tu trabajo hable por ti. No seguimos modas, las marcamos."
+      },
+      {
+        "type": "h2",
+        "text": "Frases que marcan carácter"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "El que madruga no llega tarde a nada.",
+          "Las cosas bien hechas no piden explicación.",
+          "El campo no miente: te devuelve lo que le das.",
+          "Más vale un hombre de palabra que cien de promesas."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "Lleva estos principios contigo en cada jornada. Explora la colección de gorras y chaquetas The Ranch, hecha para quienes viven esta filosofía."
+      }
     ]
   },
   {
@@ -668,12 +1797,35 @@
     "date": "2026-09-08",
     "category": "Campo",
     "blocks": [
-      {"type": "p", "text": "En el campo, la herramienta no es un accesorio: es una extensión de la mano. Saber elegirla y cuidarla separa al que improvisa del que de verdad trabaja."},
-      {"type": "h2", "text": "Las que nunca faltan"},
-      {"type": "ul", "items": ["El machete: para abrir camino, cortar y despejar.", "El lazo y la soga: el oficio del ganado en su esencia.", "El cuchillo de cacha: herramienta, no adorno.", "El apero y la cincha: donde descansa la seguridad del jinete."]},
-      {"type": "h2", "text": "Cuidarlas es respetarlas"},
-      {"type": "p", "text": "Una herramienta bien cuidada trabaja mejor y dura más. Límpiala, engrasa el metal y guárdala seca. Quien descuida sus herramientas descuida su trabajo."},
-      {"type": "p", "text": "El oficio del campo se respeta con hechos. Explora la colección de gorras y chaquetas The Ranch para quienes trabajan duro."}
+      {
+        "type": "p",
+        "text": "En el campo, la herramienta no es un accesorio: es una extensión de la mano. Saber elegirla y cuidarla separa al que improvisa del que de verdad trabaja."
+      },
+      {
+        "type": "h2",
+        "text": "Las que nunca faltan"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "El machete: para abrir camino, cortar y despejar.",
+          "El lazo y la soga: el oficio del ganado en su esencia.",
+          "El cuchillo de cacha: herramienta, no adorno.",
+          "El apero y la cincha: donde descansa la seguridad del jinete."
+        ]
+      },
+      {
+        "type": "h2",
+        "text": "Cuidarlas es respetarlas"
+      },
+      {
+        "type": "p",
+        "text": "Una herramienta bien cuidada trabaja mejor y dura más. Límpiala, engrasa el metal y guárdala seca. Quien descuida sus herramientas descuida su trabajo."
+      },
+      {
+        "type": "p",
+        "text": "El oficio del campo se respeta con hechos. Explora la colección de gorras y chaquetas The Ranch para quienes trabajan duro."
+      }
     ]
   },
   {
@@ -683,12 +1835,35 @@
     "date": "2026-09-08",
     "category": "Campo",
     "blocks": [
-      {"type": "p", "text": "Detrás de cada hato y cada cosecha hay oficios que pocos ven y todos necesitan. El campo se sostiene sobre manos que dominan su arte con silencio y precisión."},
-      {"type": "h2", "text": "Los oficios que mantienen vivo el rancho"},
-      {"type": "ul", "items": ["El vaquero o llanero: el que lee al ganado y al caballo.", "El herrador: cuida los cascos, la base de todo jinete.", "El talabartero: trabaja el cuero con maestría de artesano.", "El caporal: ordena la faena y responde por el hato."]},
-      {"type": "h2", "text": "Oficios que no pasan de moda"},
-      {"type": "p", "text": "Estos oficios no se aprenden en un manual: se heredan, se practican y se perfeccionan con los años. Son la columna vertebral de la vida en el rancho."},
-      {"type": "p", "text": "El trabajo honesto merece buen equipo. Explora la colección de gorras y chaquetas The Ranch."}
+      {
+        "type": "p",
+        "text": "Detrás de cada hato y cada cosecha hay oficios que pocos ven y todos necesitan. El campo se sostiene sobre manos que dominan su arte con silencio y precisión."
+      },
+      {
+        "type": "h2",
+        "text": "Los oficios que mantienen vivo el rancho"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "El vaquero o llanero: el que lee al ganado y al caballo.",
+          "El herrador: cuida los cascos, la base de todo jinete.",
+          "El talabartero: trabaja el cuero con maestría de artesano.",
+          "El caporal: ordena la faena y responde por el hato."
+        ]
+      },
+      {
+        "type": "h2",
+        "text": "Oficios que no pasan de moda"
+      },
+      {
+        "type": "p",
+        "text": "Estos oficios no se aprenden en un manual: se heredan, se practican y se perfeccionan con los años. Son la columna vertebral de la vida en el rancho."
+      },
+      {
+        "type": "p",
+        "text": "El trabajo honesto merece buen equipo. Explora la colección de gorras y chaquetas The Ranch."
+      }
     ]
   },
   {
@@ -698,12 +1873,35 @@
     "date": "2026-09-07",
     "category": "Campo",
     "blocks": [
-      {"type": "p", "text": "El rancho no perdona la pereza. Antes de que salga el sol ya hay trabajo: el ganado no espera, el agua no se acarrea sola y la jornada se mide en hechos, no en intenciones."},
-      {"type": "h2", "text": "El día empieza antes del amanecer"},
-      {"type": "p", "text": "La revisión del hato es el primer ritual. Se cuentan cabezas, se mira el estado de cada animal y se mueve el ganado según el clima y la pastura. Todo a mano, con calma: el ganado responde al trato firme y sereno, nunca al grito."},
-      {"type": "h2", "text": "Lo que el trabajo de campo enseña"},
-      {"type": "ul", "items": ["Constancia: el hato se cuida todos los días, sin excepción.", "Paciencia: un animal no se apura, se acompaña.", "Responsabilidad: la vida de muchos depende de tu criterio.", "Orden: cada herramienta y cada cerca tienen su lugar."]},
-      {"type": "p", "text": "Esa es la vida que inspira a The Ranch. Prendas pensadas para quienes madrugan y trabajan duro. Llévala contigo: explora la colección de gorras y chaquetas The Ranch."}
+      {
+        "type": "p",
+        "text": "El rancho no perdona la pereza. Antes de que salga el sol ya hay trabajo: el ganado no espera, el agua no se acarrea sola y la jornada se mide en hechos, no en intenciones."
+      },
+      {
+        "type": "h2",
+        "text": "El día empieza antes del amanecer"
+      },
+      {
+        "type": "p",
+        "text": "La revisión del hato es el primer ritual. Se cuentan cabezas, se mira el estado de cada animal y se mueve el ganado según el clima y la pastura. Todo a mano, con calma: el ganado responde al trato firme y sereno, nunca al grito."
+      },
+      {
+        "type": "h2",
+        "text": "Lo que el trabajo de campo enseña"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Constancia: el hato se cuida todos los días, sin excepción.",
+          "Paciencia: un animal no se apura, se acompaña.",
+          "Responsabilidad: la vida de muchos depende de tu criterio.",
+          "Orden: cada herramienta y cada cerca tienen su lugar."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "Esa es la vida que inspira a The Ranch. Prendas pensadas para quienes madrugan y trabajan duro. Llévala contigo: explora la colección de gorras y chaquetas The Ranch."
+      }
     ]
   },
   {
@@ -713,12 +1911,35 @@
     "date": "2026-09-07",
     "category": "Campo",
     "blocks": [
-      {"type": "p", "text": "Vestir western no es disfrazarse de vaquero. Es sumar carácter a tu ropa de siempre con piezas bien elegidas y detalles que hablan por ti. No seguimos modas, las marcamos."},
-      {"type": "h2", "text": "Empieza por una sola pieza"},
-      {"type": "p", "text": "La clave está en la dosificación. Una gorra con visera en cuero o una chaqueta de gamuza transforman un básico sin esfuerzo. No necesitas el outfit completo: necesitas la pieza correcta."},
-      {"type": "h2", "text": "Cómo combinar sin pasarte"},
-      {"type": "ul", "items": ["Gorra de cuero + camisa blanca + jeans: sobrio y seguro.", "Chaqueta de gamuza + t-shirt lisa + botas: el clásico del campo.", "Un solo acento western por look: el exceso mata el estilo.", "Tonos tierra (arena, tabaco, cuero) siempre funcionan."]},
-      {"type": "p", "text": "El estilo western premium se trata de intención, no de volumen. Menos piezas, mejores materiales. Así se viste quien manda sin gritar. Encuentra la pieza que te define y explora la colección de gorras y chaquetas The Ranch."}
+      {
+        "type": "p",
+        "text": "Vestir western no es disfrazarse de vaquero. Es sumar carácter a tu ropa de siempre con piezas bien elegidas y detalles que hablan por ti. No seguimos modas, las marcamos."
+      },
+      {
+        "type": "h2",
+        "text": "Empieza por una sola pieza"
+      },
+      {
+        "type": "p",
+        "text": "La clave está en la dosificación. Una gorra con visera en cuero o una chaqueta de gamuza transforman un básico sin esfuerzo. No necesitas el outfit completo: necesitas la pieza correcta."
+      },
+      {
+        "type": "h2",
+        "text": "Cómo combinar sin pasarte"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Gorra de cuero + camisa blanca + jeans: sobrio y seguro.",
+          "Chaqueta de gamuza + t-shirt lisa + botas: el clásico del campo.",
+          "Un solo acento western por look: el exceso mata el estilo.",
+          "Tonos tierra (arena, tabaco, cuero) siempre funcionan."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "El estilo western premium se trata de intención, no de volumen. Menos piezas, mejores materiales. Así se viste quien manda sin gritar. Encuentra la pieza que te define y explora la colección de gorras y chaquetas The Ranch."
+      }
     ]
   },
   {
@@ -728,12 +1949,35 @@
     "date": "2026-09-07",
     "category": "Campo",
     "blocks": [
-      {"type": "p", "text": "El caballo no es un accesorio: es un compañero de trabajo y de camino. Antes de montar, hay cosas que ningún jinete serio puede ignorar."},
-      {"type": "h2", "text": "Primero el caballo, después el jinete"},
-      {"type": "p", "text": "Revisa el estado del animal antes de ensillar: cascos, lomo y boca. Un caballo incómodo o lastimado es un accidente esperando. El buen jinete se ocupa del caballo antes que de sí mismo."},
-      {"type": "h2", "text": "Lo esencial para una cabalgata larga"},
-      {"type": "ul", "items": ["Hidratación para ti y para el caballo, con paradas programadas.", "Ensillar bien: un sudadero mal puesto lastima al animal.", "Respetar el paso del caballo en terrenos difíciles.", "Conocer la ruta y avisar el plan antes de salir."]},
-      {"type": "p", "text": "Cabalgata no es galopar sin rumbo. Es leer el terreno, dosificar la energía del animal y volver a casa entero. Ahí está el verdadero oficio del jinete. Para el campo y el camino, viste como se debe: explora la colección de gorras y chaquetas The Ranch."}
+      {
+        "type": "p",
+        "text": "El caballo no es un accesorio: es un compañero de trabajo y de camino. Antes de montar, hay cosas que ningún jinete serio puede ignorar."
+      },
+      {
+        "type": "h2",
+        "text": "Primero el caballo, después el jinete"
+      },
+      {
+        "type": "p",
+        "text": "Revisa el estado del animal antes de ensillar: cascos, lomo y boca. Un caballo incómodo o lastimado es un accidente esperando. El buen jinete se ocupa del caballo antes que de sí mismo."
+      },
+      {
+        "type": "h2",
+        "text": "Lo esencial para una cabalgata larga"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Hidratación para ti y para el caballo, con paradas programadas.",
+          "Ensillar bien: un sudadero mal puesto lastima al animal.",
+          "Respetar el paso del caballo en terrenos difíciles.",
+          "Conocer la ruta y avisar el plan antes de salir."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "Cabalgata no es galopar sin rumbo. Es leer el terreno, dosificar la energía del animal y volver a casa entero. Ahí está el verdadero oficio del jinete. Para el campo y el camino, viste como se debe: explora la colección de gorras y chaquetas The Ranch."
+      }
     ]
   },
   {
@@ -743,13 +1987,39 @@
     "date": "2026-09-06",
     "category": "Campo",
     "blocks": [
-      {"type": "p", "text": "Antes de las gorras y las chaquetas, hubo hombres que hicieron del campo su hogar. En los llanos orientales de Colombia, el llanero es el símbolo del vaquero criollo: jinete incansable, trabajador del hato y guardián de una tradición que sigue viva."},
-      {"type": "h2", "text": "¿Quién es el llanero?"},
-      {"type": "p", "text": "El llanero es el vaquero de la región de la Orinoquía. Monta a caballo, trabaja el ganado, doma potros y conoce el territorio como nadie. Su vestimenta —sombrero, camisa de trabajo y botas— nació de la necesidad, no de la moda."},
-      {"type": "h2", "text": "Lo que el llanero nos enseña"},
-      {"type": "ul", "items": ["El trabajo honesto y a mano vale más que cualquier atajo.", "Las cosas bien hechas duran generaciones.", "El estilo nace de la función: si sirve, se ve bien.", "La lealtad a la tierra es una forma de carácter."]},
-      {"type": "p", "text": "En The Ranch recogemos ese espíritu. No seguimos modas, las marcamos. Cada gorra y chaqueta está hecha para quienes hacen las cosas bien, como el llanero."},
-      {"type": "p", "text": "Lleva el espíritu del campo contigo. Explora la colección de gorras y chaquetas The Ranch."}
+      {
+        "type": "p",
+        "text": "Antes de las gorras y las chaquetas, hubo hombres que hicieron del campo su hogar. En los llanos orientales de Colombia, el llanero es el símbolo del vaquero criollo: jinete incansable, trabajador del hato y guardián de una tradición que sigue viva."
+      },
+      {
+        "type": "h2",
+        "text": "¿Quién es el llanero?"
+      },
+      {
+        "type": "p",
+        "text": "El llanero es el vaquero de la región de la Orinoquía. Monta a caballo, trabaja el ganado, doma potros y conoce el territorio como nadie. Su vestimenta —sombrero, camisa de trabajo y botas— nació de la necesidad, no de la moda."
+      },
+      {
+        "type": "h2",
+        "text": "Lo que el llanero nos enseña"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "El trabajo honesto y a mano vale más que cualquier atajo.",
+          "Las cosas bien hechas duran generaciones.",
+          "El estilo nace de la función: si sirve, se ve bien.",
+          "La lealtad a la tierra es una forma de carácter."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "En The Ranch recogemos ese espíritu. No seguimos modas, las marcamos. Cada gorra y chaqueta está hecha para quienes hacen las cosas bien, como el llanero."
+      },
+      {
+        "type": "p",
+        "text": "Lleva el espíritu del campo contigo. Explora la colección de gorras y chaquetas The Ranch."
+      }
     ]
   },
   {
@@ -759,14 +2029,46 @@
     "date": "2026-09-06",
     "category": "Campo",
     "blocks": [
-      {"type": "p", "text": "El cuero y la gamuza dan ese acabado premium que distingue a las gorras y chaquetas The Ranch. Pero como todo material noble, piden un cuidado mínimo para envejecer con dignidad."},
-      {"type": "h2", "text": "Limpieza básica"},
-      {"type": "ul", "items": ["Polvo y suciedad: cepillo de cerdas suaves, siempre en seco.", "Manchas en gamuza: goma de borrar específica, con suavidad.", "Cuero liso: paño ligeramente húmedo, sin empapar."]},
-      {"type": "h2", "text": "Hidratación y guardado"},
-      {"type": "p", "text": "Cada pocos meses, aplica un acondicionador para cuero para evitar que se reseque y se cuartee. Guarda las prendas en un lugar seco, lejos del sol directo y de la humedad, y nunca en bolsas plásticas cerradas."},
-      {"type": "h2", "text": "Lo que nunca debes hacer"},
-      {"type": "ul", "items": ["No uses agua abundante ni sumerjas el cuero.", "No seques con secadora ni fuentes de calor directas.", "No apliques betún en la gamuza: pierde su textura."]},
-      {"type": "p", "text": "Con estos cuidados, tu gorra con visera en cuero y tus chaquetas de gamuza te acompañarán muchos años. Descubre la colección The Ranch."}
+      {
+        "type": "p",
+        "text": "El cuero y la gamuza dan ese acabado premium que distingue a las gorras y chaquetas The Ranch. Pero como todo material noble, piden un cuidado mínimo para envejecer con dignidad."
+      },
+      {
+        "type": "h2",
+        "text": "Limpieza básica"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Polvo y suciedad: cepillo de cerdas suaves, siempre en seco.",
+          "Manchas en gamuza: goma de borrar específica, con suavidad.",
+          "Cuero liso: paño ligeramente húmedo, sin empapar."
+        ]
+      },
+      {
+        "type": "h2",
+        "text": "Hidratación y guardado"
+      },
+      {
+        "type": "p",
+        "text": "Cada pocos meses, aplica un acondicionador para cuero para evitar que se reseque y se cuartee. Guarda las prendas en un lugar seco, lejos del sol directo y de la humedad, y nunca en bolsas plásticas cerradas."
+      },
+      {
+        "type": "h2",
+        "text": "Lo que nunca debes hacer"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "No uses agua abundante ni sumerjas el cuero.",
+          "No seques con secadora ni fuentes de calor directas.",
+          "No apliques betún en la gamuza: pierde su textura."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "Con estos cuidados, tu gorra con visera en cuero y tus chaquetas de gamuza te acompañarán muchos años. Descubre la colección The Ranch."
+      }
     ]
   },
   {
@@ -776,12 +2078,35 @@
     "date": "2026-09-06",
     "category": "Campo",
     "blocks": [
-      {"type": "p", "text": "Colombia respira campo a través de sus festivales. Son el escenario donde la cultura vaquera, la música y la tradición se encuentran. Estos son algunos imperdibles."},
-      {"type": "h2", "text": "Festivales que mantienen viva la tradición"},
-      {"type": "ul", "items": ["Festival Internacional del Joropo (Villavicencio): la cuna de la música llanera.", "Expo de la Vaquería (Llanos Orientales): el orgullo del hato y el caballo.", "Feria de las Flores (Medellín): silleteros y tradición antioqueña.", "Cabalgatas regionales: el encuentro de jinetes y ganaderos."]},
-      {"type": "h2", "text": "Por qué importan"},
-      {"type": "p", "text": "Estos festivales no son solo fiesta: son la memoria viva del campo. En ellos se transmiten oficios, se honra al caballo y se celebra una forma de vida que The Ranch lleva en cada diseño."},
-      {"type": "p", "text": "Si te mueves por el campo, hazlo con estilo. Conoce la colección de gorras y chaquetas The Ranch, hecha para quienes viven esta tradición."}
+      {
+        "type": "p",
+        "text": "Colombia respira campo a través de sus festivales. Son el escenario donde la cultura vaquera, la música y la tradición se encuentran. Estos son algunos imperdibles."
+      },
+      {
+        "type": "h2",
+        "text": "Festivales que mantienen viva la tradición"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Festival Internacional del Joropo (Villavicencio): la cuna de la música llanera.",
+          "Expo de la Vaquería (Llanos Orientales): el orgullo del hato y el caballo.",
+          "Feria de las Flores (Medellín): silleteros y tradición antioqueña.",
+          "Cabalgatas regionales: el encuentro de jinetes y ganaderos."
+        ]
+      },
+      {
+        "type": "h2",
+        "text": "Por qué importan"
+      },
+      {
+        "type": "p",
+        "text": "Estos festivales no son solo fiesta: son la memoria viva del campo. En ellos se transmiten oficios, se honra al caballo y se celebra una forma de vida que The Ranch lleva en cada diseño."
+      },
+      {
+        "type": "p",
+        "text": "Si te mueves por el campo, hazlo con estilo. Conoce la colección de gorras y chaquetas The Ranch, hecha para quienes viven esta tradición."
+      }
     ]
   }
 ]
