@@ -28,7 +28,8 @@ export default function CamisaFeature() {
             className="tr-camisa-feature-img"
             src={optimizeImage(CAMISA.image, 1200)}
             alt={CAMISA.title}
-            loading="lazy"
+            loading="eager"
+            fetchpriority="high"
           />
         </Link>
       </div>
