@@ -402,6 +402,25 @@ function formatPrice(amount, currency = 'COP') {
   }).format(Number(amount));
 }
 
+// Beneficios clave del producto (bullets visibles bajo el título)
+function getBenefits(productType, title) {
+  const t = `${productType || ''} ${title || ''}`.toLowerCase();
+  const b = [];
+  if (t.includes('chaqueta') || t.includes('saco') || t.includes('chaleco') || t.includes('abrigo') || t.includes('ruana')) {
+    b.push('☔ Impermeable', '🔥 Termo-regulación', '☀️ Protección UV');
+  } else if (t.includes('gorra')) {
+    b.push('✨ Bordado premium', '☀️ Protección UV', '🧢 Ajuste cómodo');
+  } else if (t.includes('camisa') || t.includes('camiseta') || t.includes('polo')) {
+    b.push('✨ Tela premium', '🌬️ Transpirable', '🧵 Costuras reforzadas');
+  } else if (t.includes('bota')) {
+    b.push('👢 Cuero premium', '🛡️ Suela antideslizante', '💪 Alta duración');
+  } else {
+    b.push('✨ Calidad premium', '✅ Garantía de devolución', '🛡️ Compra protegida');
+  }
+  b.push('🚚 Envío a toda Colombia');
+  return b.slice(0, 4);
+}
+
 const norm = (s) => (s || '').trim().toLowerCase();
 
 // Mapeo de nombres de color comunes a hex (para los círculos del selector)
@@ -604,6 +623,7 @@ export default function ProductPage() {
   const isOut = selectedVariant?.availableForSale === false;
   const totalPrice = (Number(price) || 0) * qty;
   const totalCompare = (Number(compare) || 0) * qty;
+  const discountPct = hasDiscount ? Math.round((1 - Number(price) / Number(compare)) * 100) : 0;
 
   const handleScroll = (e) => {
     const el = e.currentTarget;
@@ -960,6 +980,30 @@ export default function ProductPage() {
           <>
             <p className="trp-variant">Colección Western — The Ranch</p>
             <h1 className="trp-title">{product.title}</h1>
+
+            {/* Precio + descuento arriba */}
+            <div className="trp-price-top">
+              <span className="trp-price-top-now">{formatPrice(price)}</span>
+              {hasDiscount ? <s className="trp-price-top-compare">{formatPrice(compare)}</s> : null}
+              {discountPct > 0 ? <span className="trp-price-top-off">-{discountPct}%</span> : null}
+            </div>
+
+            {/* Prueba social */}
+            <button
+              type="button"
+              className="trp-stars"
+              onClick={() => document.getElementById('trp-reviews')?.scrollIntoView({behavior: 'smooth'})}
+            >
+              <span aria-hidden="true">★★★★★</span> <span className="trp-stars-num">4.8</span>
+              <span className="trp-stars-link">Ver reseñas</span>
+            </button>
+
+            {/* Beneficios clave */}
+            <ul className="trp-benefits">
+              {getBenefits(product.productType, product.title).map((b) => (
+                <li key={b}>{b}</li>
+              ))}
+            </ul>
           </>
         ) : null}
 
@@ -1162,7 +1206,7 @@ export default function ProductPage() {
 
       {/* ===== Reseñas (carrusel) ===== */}
       {reviews.length > 0 && (
-        <section className="trp-reviews">
+        <section className="trp-reviews" id="trp-reviews">
           <h2 className="trp-reviews-title">Lo que dicen en el campo</h2>
           <div className="trp-reviews-track">
             <div className="trp-reviews-row">

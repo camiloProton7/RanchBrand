@@ -272,6 +272,82 @@
   margin: 0 0 12px;
 }
 
+/* Precio arriba (junto al título) */
+.trp-price-top {
+  align-items: baseline;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 0 0 10px;
+}
+
+.trp-price-top-now {
+  color: #1a1a18;
+  font-size: 26px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.trp-price-top-compare {
+  color: #9a938a;
+  font-size: 16px;
+  font-weight: 500;
+  text-decoration: line-through;
+}
+
+.trp-price-top-off {
+  background: #b34a2a;
+  border-radius: 6px;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 3px 8px;
+}
+
+/* Prueba social */
+.trp-stars {
+  align-items: center;
+  background: none;
+  border: none;
+  color: #d5a832;
+  cursor: pointer;
+  display: inline-flex;
+  font-size: 15px;
+  gap: 6px;
+  margin: 0 0 14px;
+  padding: 0;
+}
+
+.trp-stars-num {
+  color: #1a1a18;
+  font-weight: 700;
+}
+
+.trp-stars-link {
+  color: #8a6d3b;
+  font-size: 12px;
+  text-decoration: underline;
+}
+
+/* Beneficios (bullets) */
+.trp-benefits {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  list-style: none;
+  margin: 0 0 16px;
+  padding: 0;
+}
+
+.trp-benefits li {
+  background: #f1ede2;
+  border-radius: 999px;
+  color: #4a4438;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 6px 12px;
+}
+
 .trp-tag {
   background: #6b4a2b;
   border-radius: 999px;
