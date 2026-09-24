@@ -1,5 +1,50 @@
 [
   {
+    "slug": "gastronomia-llanera-fogon-tradicion",
+    "title": "La gastronomía del llano: el fogón donde nace la tradición",
+    "excerpt": "La mamona, la hallaca y el guarapo no acompañan al campo: lo definen. Así se cocina —y se respeta— la mesa del llanero.",
+    "date": "2026-09-24",
+    "category": "Campo",
+    "blocks": [
+      {"type": "p", "text": "En el llano la comida no es un capricho del paladar: es parte del oficio. El fogón llanero nació de la jornada larga, del calor de la sabana y de la necesidad de alimentar a quien trabaja de sol a sol. Por eso la mesa llanera se entiende como se entiende el trabajo: sin adornos y con sustancia."},
+      {"type": "h2", "text": "La mamona: carne a la llanera, lenta y sin apuro"},
+      {"type": "p", "text": "La mamona es la carne de res asada a la llanera, colgada en varas de guadua o en estacas sobre el fuego, y no se hace con prisa. Se sala con antelación, se pone al calor parejo y se deja que el humo y el tiempo hagan su trabajo. El que la apura la arruina: la buena mamona se espera, como se espera todo lo que vale la pena en la sabana."},
+      {"type": "h2", "text": "Hallaca, pan de arroz y guarapo: la mesa que no se improvisa"},
+      {"type": "ul", "items": ["Hallaca llanera: la masa envuelta en hoja que se guarda para las fechas grandes y se comparte de a mano.", "Pan de arroz: el acompañante sencillo y rendidor que nunca falta junto al asado.", "Guarapo y café cerrero: lo que se bebe para sellar un trato o sostener una conversación larga.", "Carne a la llanera al fogón de leña: el centro de toda parranda que se respete."]},
+      {"type": "p", "text": "La cocina del llano enseña lo mismo que el resto del campo: que lo bueno no se inventa de la noche a la mañana, se hace con paciencia y con respeto por la materia prima. No seguimos modas, las marcamos. Si esa tradición te corre por dentro, explora la colección de gorras y chaquetas The Ranch y llévala puesta donde se come como se vive."}
+    ]
+  },
+  {
+    "slug": "camisa-trabajo-western-basico",
+    "title": "La camisa de trabajo: el básico western que sostiene el look",
+    "excerpt": "Antes que la chaqueta y la gorra, hubo una prenda que nació de la faena: la camisa de trabajo. Así se elige y se lleva sin caer en el cliché.",
+    "date": "2026-09-24",
+    "category": "Campo",
+    "blocks": [
+      {"type": "p", "text": "Muchos arman el look western desde la chaqueta o la gorra y olvidan la pieza que lo sostiene: la camisa de trabajo. Es la prenda que nació en la faena, la que va pegada al cuerpo cuando todo lo demás se quita, y por eso merece elegirse con el mismo oficio con que se elige un buen apero."},
+      {"type": "h2", "text": "Por qué la camisa manda más de lo que parece"},
+      {"type": "p", "text": "La camisa es el fondo sobre el que trabaja todo lo demás. Una camisa de algodón grueso, con el corte correcto y el cuello firme, le da estructura al conjunto; una camisa floja o de tela delgada lo arruina desde la base. No es el relleno del look: es su cimiento."},
+      {"type": "h2", "text": "Cómo elegirla: tela, corte y detalle"},
+      {"type": "ul", "items": ["Algodón grueso y de tejido apretado: aguanta la jornada y envejece con carácter, no se deforma.", "Corte entallado pero sin apretar: los hombros en su sitio y la manga al hueso de la muñeca.", "Cuello con estructura: es lo que distingue una camisa de trabajo de una de paseo.", "Tonos tierra, denim y cuadros sobrios: la base neutra que deja brillar a la gorra y la chaqueta."]},
+      {"type": "p", "text": "La camisa de trabajo bien elegida no pide atención: sostiene el conjunto con la misma discreción con que el rancho sostiene al que lo trabaja. No seguimos modas, las marcamos. Arma tu look desde la base y explora la colección de gorras y chaquetas The Ranch para rematarlo como se debe."}
+    ]
+  },
+  {
+    "slug": "andares-caballo-trote-galope-paso",
+    "title": "Los andares del caballo: trote, galope y el paso que no cansa",
+    "excerpt": "No es lo mismo sentarse sobre un trote que flotar en un paso fino. Aprende a leer los andares del caballo y a montar cada uno sin castigarlo.",
+    "date": "2026-09-24",
+    "category": "Campo",
+    "blocks": [
+      {"type": "p", "text": "El buen jinete no se sienta igual en un trote que en un galope, y mucho menos en un paso fino. Cada andar tiene su ritmo, su función y su manera de montarse, y confundirlos es la forma más rápida de cansar al caballo y a uno mismo. Leer el andar es la mitad de la equitación."},
+      {"type": "h2", "text": "El paso: el andar que descansa y se trabaja"},
+      {"type": "p", "text": "El paso es el andar de cuatro tiempos, el más lento y el más noble: es con el que se recorre la sabana entera sin desfondar al animal. Se monta suelto, acompañando el balanceo con la cadera, sin pelear con las riendas. El que no sabe andar al paso no sabe montar de verdad, porque ahí es donde el jinete y el caballo se conocen."},
+      {"type": "h2", "text": "Trote y galope: cuándo usarlos y cómo sentarse"},
+      {"type": "ul", "items": ["El trote: andar de dos tiempos que exige asiento firme; en el trote sentado se acompaña, en el levantado se aligera el lomo del animal.", "El galope: andar de tres tiempos para terreno abierto; se usa para cubrir distancia, no para lucirse en el corral.", "Cambia de andar con la pierna y el peso, no a tirones de rienda: el caballo responde a la seña, no a la fuerza.", "Dosifica el andar según el terreno y la jornada: el que galopa todo el camino llega con el caballo fundido."]},
+      {"type": "p", "text": "Montar cada andar con respeto es la diferencia entre el que usa al caballo y el que lo entiende. El animal se entrega entero al jinete que lo cuida y lo lee. No seguimos modas, las marcamos. Si la monta fina es lo tuyo, explora la colección de gorras y chaquetas The Ranch, hecha para quienes cabalgan con oficio."}
+    ]
+  },
+  {
     "slug": "vocabulario-llanero-palabras-campo",
     "title": "El vocabulario del llano: las palabras que solo el campo entiende",
     "excerpt": "Cabrestear, cimarrón, rejo o guarapo: el llano tiene su propio idioma. Estas son las palabras que separan al que es de la sabana del que solo la visita.",
