@@ -97,6 +97,15 @@
   margin-top: auto;
 }
 
+.blog-card-img {
+  aspect-ratio: 16 / 9;
+  border-radius: 12px 12px 0 0;
+  display: block;
+  margin: -24px -24px 6px;
+  object-fit: cover;
+  width: calc(100% + 48px);
+}
+
 /* ===== Artículo individual ===== */
 .blog-post {
   background: #f5f0e6;
@@ -122,6 +131,16 @@
 
 .blog-post-head {
   margin-bottom: 28px;
+}
+
+.blog-post-hero {
+  aspect-ratio: 21 / 9;
+  border-radius: 16px;
+  display: block;
+  height: auto;
+  margin: 0 0 24px;
+  object-fit: cover;
+  width: 100%;
 }
 
 .blog-post-title {

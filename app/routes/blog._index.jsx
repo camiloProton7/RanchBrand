@@ -30,6 +30,14 @@ export default function BlogIndex() {
       <div className="blog-grid">
         {POSTS.map((post) => (
           <Link key={post.slug} to={`/blog/${post.slug}`} className="blog-card">
+            {post.image ? (
+              <img
+                className="blog-card-img"
+                src={post.image}
+                alt={post.imageAlt || post.title}
+                loading="lazy"
+              />
+            ) : null}
             <span className="blog-card-cat">{post.category}</span>
             <h2 className="blog-card-title">{post.title}</h2>
             <p className="blog-card-excerpt">{post.excerpt}</p>

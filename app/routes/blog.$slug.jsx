@@ -20,6 +20,7 @@ export const meta = ({data}) => {
     {name: 'description', content: post.excerpt},
     {property: 'og:title', content: post.title},
     {property: 'og:description', content: post.excerpt},
+    {property: 'og:image', content: post.image || ''},
     {property: 'og:type', content: 'article'},
     {property: 'og:url', content: `https://ranch.com.co/blog/${post.slug}`},
     {
@@ -53,6 +54,13 @@ export default function BlogPost() {
         <h1 className="blog-post-title">{post.title}</h1>
         <time className="blog-post-date">{post.date}</time>
       </header>
+      {post.image ? (
+        <img
+          className="blog-post-hero"
+          src={post.image}
+          alt={post.imageAlt || post.title}
+        />
+      ) : null}
       <div className="blog-post-body">
         {post.blocks.map((block, i) => {
           if (block.type === 'h2') {
