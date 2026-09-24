@@ -769,10 +769,10 @@
 
 /* ===== Barra de compra (sticky, en flujo) ===== */
 .trp-buybar {
-  background: rgba(22, 22, 20, 0.92);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(244, 240, 231, 0.08);
+  background: rgba(22, 22, 20, 0.72);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(244, 240, 231, 0.1);
   border-radius: 18px;
   bottom: 12px;
   display: grid;
@@ -782,6 +782,15 @@
   padding: 14px;
   position: sticky;
   z-index: 20;
+}
+
+/* Mobile: barra más arriba (no tapa el contenido) */
+@media (max-width: 640px) {
+  .trp-buybar {
+    bottom: calc(18px + env(safe-area-inset-bottom));
+    gap: 8px;
+    padding: 12px;
+  }
 }
 
 /* ===== Combo: selector de gorras ===== */
