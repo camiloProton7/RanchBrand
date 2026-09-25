@@ -1,5 +1,126 @@
 [
   {
+    "slug": "agua-ganado-temporada-seca-bebederos",
+    "title": "Agua para el ganado en temporada seca: bebederos, almacenamiento y pozos",
+    "excerpt": "Cuando la temporada seca aprieta, el primer recurso que se agota no es el pasto: es el agua. Así se asegura el agua del hato con bebederos, reservas y pozos bien administrados.",
+    "date": "2026-09-25",
+    "category": "Campo",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Cattle_in_Dam_Drinking_Water_in_Northern_Ghana.jpg/1920px-Cattle_in_Dam_Drinking_Water_in_Northern_Ghana.jpg",
+    "imageAlt": "Ganado bebiendo agua de un jagüey en plena temporada seca",
+    "blocks": [
+      {
+        "type": "p",
+        "text": "En temporada seca, el primer recurso que se acaba no es el pasto: es el agua. Un potrero seco se aguanta unos días con suplemento, pero un hato sin agua se cae en cuestión de horas. Por eso el agua se administra antes que cualquier otra cosa, y se administra con oficio, no con urgencia."
+      },
+      {
+        "type": "h2",
+        "text": "El agua manda más que el pasto"
+      },
+      {
+        "type": "p",
+        "text": "Una vaca adulta bebe entre 40 y 70 litros al día, y con calor, más todavía; si está lactando, el consumo sube y el riesgo se duplica. Cuando el agua escasea o se ensucia, el animal come menos, digiere peor y pierde condición. De nada sirve tener potrero si el agua no alcanza: sin agua, el pasto no se aprovecha."
+      },
+      {
+        "type": "h2",
+        "text": "Bebederos, almacenamiento y pozos: el triángulo del agua"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Bebederos limpios y bien repartidos: un bebedero sucio o lejano hace que el animal beba menos de lo que necesita.",
+          "Tanques y jagüeyes de reserva: calcula capacidad según el número de cabezas y los litros por día, con margen para los días más duros.",
+          "Pozos con bombeo confiable: si el agua es profunda, un pozo con bombeo (solar, si se puede) es la diferencia entre aguantar y quebrarse.",
+          "Revisa fugas, sedimentos y sombra: un tanque que gotea o un jagüey lodoso es agua que se pierde antes de llegar al ganado."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "El ranchero que administra el agua no reacciona a la sequía: la anticipa. La sed se evita en la mañana, cuando se revisan los bebederos, no al mediodía cuando el hato ya se agolpa. No seguimos modas, las marcamos. Y al que trabaja el campo con ese oficio, lo vestimos: explora la colección de gorras y chaquetas The Ranch, hecha para quienes aguantan a sol y a sequía."
+      }
+    ]
+  },
+  {
+    "slug": "estres-hidrico-ganado-senales-prevenir",
+    "title": "Estrés hídrico en el ganado: las señales que avisan y cómo prevenirlo",
+    "excerpt": "El ganado no pide agua con palabras: la pide con señales. Aprende a leerlas a tiempo para que la sed no te cueste kilos ni cabezas.",
+    "date": "2026-09-25",
+    "category": "Campo",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Montana_drought%2C_aerial_view%2C_cattle_ranch_in_Fallon_County%2C_MT._June_2021.jpg/1920px-Montana_drought%2C_aerial_view%2C_cattle_ranch_in_Fallon_County%2C_MT._June_2021.jpg",
+    "imageAlt": "Vista aérea de un rancho de ganado en una llanura reseca por la sequía",
+    "blocks": [
+      {
+        "type": "p",
+        "text": "El ganado no pide agua con palabras: la pide con señales. El problema es que la sed no duele hasta que ya está haciendo daño, y para cuando el animal se ve mal, ya perdiste kilos, litros y días. Leer las señales de estrés hídrico a tiempo es lo que separa al ranchero que corrige del que lamenta."
+      },
+      {
+        "type": "h2",
+        "text": "Las señales que no se pueden ignorar"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Ojos hundidos y mirada apagada: la deshidratación se nota primero en la cara, no en el costillar.",
+          "Heces secas, duras y escasas: un bosteo sano es húmedo; la sequedad delata falta de agua o forraje seco.",
+          "Menos rumia y menos pastoreo: un animal sediento deja de comer para no gastar, y eso se ve en la panza.",
+          "Se agolpan en el bebedero o pelean por la sombra: cuando el hato se amontona, el agua o el calor ya están ganando.",
+          "Pérdida de condición y pelo áspero: la sed sostenida se cobra en peso, y se nota antes en la piel que en la balanza."
+        ]
+      },
+      {
+        "type": "h2",
+        "text": "Prevenir antes que curar"
+      },
+      {
+        "type": "p",
+        "text": "El estrés hídrico no se trata con urgencia, se previene con rutina: agua limpia y disponible a toda hora, sombra en los potreros calientes, pastoreo en las horas frescas y sal mineral para que el animal no deje de beber ni de comer. Revisa el agua dos veces al día, como revisas la cerca: la constancia es la medicina del hato."
+      },
+      {
+        "type": "p",
+        "text": "Un hato bien aguado se nota en la mirada: el animal está tranquilo, rumia y camina sin apuro. Ese es el termómetro del rancho, y no se compra en ninguna agropecuaria. No seguimos modas, las marcamos. Si tu oficio es leer el campo y adelantarte a lo que viene, explora la colección de gorras y chaquetas The Ranch, hecha para quienes no esperan a que el problema avise dos veces."
+      }
+    ]
+  },
+  {
+    "slug": "reservas-pasto-heno-ensilaje-sequia",
+    "title": "Reservas de pasto, heno y ensilaje: el seguro del rancho para la sequía",
+    "excerpt": "El rancho que aguanta la sequía no improvisa: guarda. Heno y ensilaje bien hechos son el seguro que te salva cuando el cielo se cierra.",
+    "date": "2026-09-25",
+    "category": "Campo",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/Harvest_Straw_Bales_in_Schleswig-Holstein.jpg/1920px-Harvest_Straw_Bales_in_Schleswig-Holstein.jpg",
+    "imageAlt": "Pacas de heno dorado almacenadas en el campo como reserva para la temporada seca",
+    "blocks": [
+      {
+        "type": "p",
+        "text": "La sequía no se improvisa: se anticipa. El ranchero que aguanta la temporada seca no es el que tiene más suerte, es el que guardó en abundancia cuando el pasto sobraba. Heno y ensilaje son el seguro del rancho: la reserva que convierte una sequía en una temporada más y no en una crisis."
+      },
+      {
+        "type": "h2",
+        "text": "Heno: el pasto guardado para el día seco"
+      },
+      {
+        "type": "p",
+        "text": "Henificar es cortar el pasto en su punto justo —ni muy tierno ni muy maduro—, secarlo bien y guardarlo protegido de la humedad. Un buen heno conserva la fibra y la energía del potrero para cuando el campo se pone amarillo. El secreto no está en la cantidad sino en el momento: se henifica en la época de lluvia, cuando el pasto sobra, no cuando ya falta."
+      },
+      {
+        "type": "h2",
+        "text": "Ensilaje: la reserva fermentada que rinde más"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Ensila cuando el forraje tiene la humedad correcta: ni tan seco que no fermente, ni tan mojado que se pudra.",
+          "Compacta y sella sin dejar aire: el silo que respira se echa a perder, el que queda hermético se conserva.",
+          "Usa maíz, sorgo o pasto de corte según lo que dé tu tierra: lo importante es guardar lo que la finca ya produce bien.",
+          "Calcula la reserva contra tu carga animal: guarda pensando en los días secos que vienen, no en los que ya pasaron."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "La reserva bien hecha es la tranquilidad del rancho: sabes que, pase lo que pase con el cielo, el hato tiene qué comer. Guardar no es gastar, es administrar con visión. No seguimos modas, las marcamos. Si trabajas la tierra con esa visión de largo plazo, explora la colección de gorras y chaquetas The Ranch, hecha para quienes siembran pensando en la cosecha que viene."
+      }
+    ]
+  },
+  {
     "slug": "sequia-rancho-manejo-pastos",
     "title": "Sequía en el rancho: 5 decisiones que salvan el pasto (y tu ganado)",
     "excerpt": "Cuando el cielo no manda agua, manda el oficio. Rotar potreros, reservar agua y suplementar a tiempo separa al rancho que aguanta la sequía del que se quiebra.",
