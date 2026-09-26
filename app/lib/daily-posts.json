@@ -1,5 +1,127 @@
 [
   {
+    "slug": "manejo-pastos-sequia-rotacion-potreros",
+    "title": "Manejo de pastos en sequía: rotación de potreros y pastoreo racional",
+    "excerpt": "El pasto seco no se recupera solo. Rotar potreros y pastorear con cabeza es lo que separa al rancho que conserva su pastura del que la agota en la primera seca.",
+    "date": "2026-09-26",
+    "category": "Campo",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/Cross_fencing_installed_in_pastureland_field_and_is_being_utilized_in_a_rotational_grazing_system_%2825090222296%29.jpg/1920px-Cross_fencing_installed_in_pastureland_field_and_is_being_utilized_in_a_rotational_grazing_system_%2825090222296%29.jpg",
+    "imageAlt": "Cercas divisorias en un potrero para pastoreo rotacional en plena temporada seca",
+    "blocks": [
+      {
+        "type": "p",
+        "text": "En temporada seca el pasto deja de crecer, y lo que hay en el potrero es lo único que hay. La diferencia entre el rancho que conserva su pastura y el que la agota en la primera seca no está en el clima: está en cómo se mueve el ganado. Rotar potreros y pastorear con cabeza es la herramienta más barata y más rendidora del ranchero."
+      },
+      {
+        "type": "h2",
+        "text": "El pasto seco también se administra"
+      },
+      {
+        "type": "p",
+        "text": "Muchos creen que la rotación es cosa de la época de lluvia, cuando el pasto sobra. Es al revés: en sequía es cuando más se necesita. Un potrero sobreado —comido hasta la raíz— tarda meses en recuperarse, y en plena seca quizá no se recupera. La regla es simple: el ganado no come del pasto, come del potrero que descansó. Por eso se rota más rápido en sequía, no menos."
+      },
+      {
+        "type": "h2",
+        "text": "Cómo rotar sin agotar la reserva"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Divide en potreros pequeños y móviles: el ganado come lo justo en cada uno y el resto descansa, en vez de arrasar un solo lote.",
+          "Respeta el residuo: no dejes que el animal coma por debajo de 8 a 10 cm de pasto; lo que queda de pie es lo que captura agua y rebrota.",
+          "Tiempos cortos de ocupación y descansos largos: en seca, entra y saca rápido, y dale al potrero el doble o el triple de descanso.",
+          "Pastorea en las horas frescas: mover el hato al amanecer o al atardecer reduce el pisoteo y el gasto del animal.",
+          "Lleva agua a cada potrero de rotación: un potrero sin agua es un potrero que no sirve, por bueno que esté el pasto."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "Rotar no es moverse por moverse: es leer el pasto y darle a cada potrero lo que necesita. El que pastorea con cabeza no espera a que el potrero se vea pelado para actuar, lo decide antes. No seguimos modas, las marcamos. Y al que administra su pastura con ese oficio, lo vestimos: explora la colección de gorras y chaquetas The Ranch, hecha para quienes cuidan el campo a punta de criterio."
+      }
+    ]
+  },
+  {
+    "slug": "forrajes-suplementos-ganado-sequia",
+    "title": "Forrajes y suplementos: cómo alimentar el ganado en plena sequía",
+    "excerpt": "Cuando el potrero se pone amarillo, el hato come pero deja de nutrirse. Así se suplementa con forraje, heno y sales para que la sequía no se cobre el peso.",
+    "date": "2026-09-26",
+    "category": "Campo",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b8/Round_hay_bales_on_a_field%2C_with_hawkweed_in_the_foreground%2C_near_Durnal%2C_Yvoir%2C_2025.jpg/1920px-Round_hay_bales_on_a_field%2C_with_hawkweed_in_the_foreground%2C_near_Durnal%2C_Yvoir%2C_2025.jpg",
+    "imageAlt": "Pacas de heno redondas en el campo, reserva de forraje para la temporada seca",
+    "blocks": [
+      {
+        "type": "p",
+        "text": "Cuando el potrero se pone amarillo, el ganado sigue comiendo, pero deja de nutrirse. El pasto seco pierde fibra, energía y proteína, y el animal que solo come pasto seco pierde peso sin que nadie lo note hasta que ya es tarde. Suplementar en sequía no es un gasto: es la diferencia entre sacar el hato entero o verlo caer de a poco."
+      },
+      {
+        "type": "h2",
+        "text": "Forraje: la base que no puede faltar"
+      },
+      {
+        "type": "p",
+        "text": "El forraje conservado —heno, ensilaje o pasto de corte guardado— es lo primero que sostiene al hato cuando el potrero ya no da. Cubre la fibra que mantiene el rumen trabajando y la energía que el pasto seco dejó de aportar. La clave está en darlo a diario y en cantidad, sin esperar a que el ganado baje de condición para empezar."
+      },
+      {
+        "type": "h2",
+        "text": "Suplementos que marcan la diferencia"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Sal mineralizada con fósforo: mantiene el apetito y la digestión cuando el pasto seco aporta poco.",
+          "Bloques o melaza energética: energía rápida para sostener a las vacas en lactancia y a los animales más exigidos.",
+          "Suplemento proteico: en sequía el pasto maduro casi no tiene proteína, y sin proteína el animal no aprovecha la fibra que come.",
+          "Agua limpia y a voluntad: sin agua, ningún suplemento se aprovecha; es la primera ración del día."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "Suplementar bien es suplementar a tiempo y en orden: primero el agua, después la fibra, y por encima la energía y la proteína que el potrero dejó de dar. El que espera a ver al ganado flaco ya llegó tarde. No seguimos modas, las marcamos. Si administras tu hato con esa precisión, explora la colección de gorras y chaquetas The Ranch, hecha para quienes no improvisan ni en el campo ni en el día a día."
+      }
+    ]
+  },
+  {
+    "slug": "preparar-finca-rancho-ante-sequia",
+    "title": "Cómo preparar la finca o el rancho antes de que llegue la sequía",
+    "excerpt": "La sequía no se enfrenta, se anticipa. Este es el plan para dejar la finca lista antes de que el cielo se cierre: agua asegurada, forraje de reserva y carga ajustada.",
+    "date": "2026-09-26",
+    "category": "Campo",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/A_dry%2C_sandy_range_in_New_Mexico_%2830472766780%29.jpg/1920px-A_dry%2C_sandy_range_in_New_Mexico_%2830472766780%29.jpg",
+    "imageAlt": "Llanura seca y arenosa de un rancho en plena temporada de sequía",
+    "blocks": [
+      {
+        "type": "p",
+        "text": "La sequía no se enfrenta cuando llega: se anticipa cuando todavía llueve. El ranchero que aguanta la temporada seca no es el que reacciona rápido, es el que preparó la finca meses antes, con agua asegurada, pasto de reserva y una carga animal que la tierra puede sostener. Prepararse es la inversión que no se ve hasta que hace falta."
+      },
+      {
+        "type": "h2",
+        "text": "Lo que se decide antes de que falte el agua"
+      },
+      {
+        "type": "p",
+        "text": "El agua es lo primero que se acaba y lo primero que se asegura. Antes de la seca hay que revisar pozos, limpiar jagüeyes, reparar bebederos y calcular cuántos litros va a necesitar el hato en los meses duros. Un tanque de reserva bien dimensionado vale más que cien urgencias de última hora."
+      },
+      {
+        "type": "h2",
+        "text": "El plan de preparación, punto por punto"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Asegura el agua: pozos con bombeo confiable, jagüeyes limpios y bebederos repartidos en cada potrero.",
+          "Guarda forraje en abundancia: heno y ensilaje hechos en la época de lluvia, calculados contra tu carga animal y los días secos que vienen.",
+          "Ajusta la carga a la pastura: menos animales de los que el potrero seco puede sostener es administración, no derrota.",
+          "Conserva el suelo y la sombra: árboles y cobertura reducen el calor y la evaporación, y le dan respiro al ganado y al pasto.",
+          "Escribe el plan por escrito: qué se guarda, cuánto se compra y cuándo se vende, para no decidir con el agua al cuello."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "Preparar la finca es decidir en calma lo que la sequía te obligaría a decidir con urgencia. El que llega a la temporada seca con agua, forraje y carga ajustada, la atraviesa como una temporada más y no como una crisis. No seguimos modas, las marcamos. Si tu oficio es anticiparte a lo que viene, explora la colección de gorras y chaquetas The Ranch, hecha para quienes trabajan el campo mirando siempre un poco más adelante."
+      }
+    ]
+  },
+  {
     "slug": "agua-ganado-temporada-seca-bebederos",
     "title": "Agua para el ganado en temporada seca: bebederos, almacenamiento y pozos",
     "excerpt": "Cuando la temporada seca aprieta, el primer recurso que se agota no es el pasto: es el agua. Así se asegura el agua del hato con bebederos, reservas y pozos bien administrados.",
