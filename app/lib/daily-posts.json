@@ -1,5 +1,127 @@
 [
   {
+    "slug": "recuperar-potrero-despues-sequia",
+    "title": "Después de la sequía: cómo recuperar el potrero sin castigar la tierra",
+    "excerpt": "Cuando vuelve la lluvia, el potrero no se recupera solo. Soltar el ganado antes de tiempo arruina meses de descanso: así se devuelve la pradera a su mejor versión.",
+    "date": "2026-09-28",
+    "category": "Campo",
+    "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/20/Grass_Track_descending_over_Green_Scar_Pasture_-_geograph.org.uk_-_5355406.jpg/1920px-Grass_Track_descending_over_Green_Scar_Pasture_-_geograph.org.uk_-_5355406.jpg",
+    "imageAlt": "Potrero verde y recuperado después de las lluvias",
+    "blocks": [
+      {
+        "type": "p",
+        "text": "La sequía termina con la primera lluvia, pero el potrero no se recupera con ella. El error más caro del ranchero es ver el primer verde y soltar el ganado de golpe: esa prisa se come la recuperación antes de que empiece. El potrero que se respeta en el regreso es el que rinde el resto del año."
+      },
+      {
+        "type": "h2",
+        "text": "El primer verde engaña"
+      },
+      {
+        "type": "p",
+        "text": "Después de una seca, la pradera rebrota débil y con la raíz todavía lastimada. Lo que se ve verde en la superficie no significa que el pasto esté listo para cargar: si el ganado entra temprano, arranca el rebrote y la raíz no llega a reconstruirse. La regla es sencilla: el primer verde es para la planta, no para el hato."
+      },
+      {
+        "type": "h2",
+        "text": "El plan para devolverle la vida al potrero"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Espera a que el pasto alcance entre 20 y 30 cm antes de soltar el ganado, y entra con carga liviana y rotación rápida.",
+          "Resiembra los parches pelados apenas haya humedad, antes de que la maleza los tome.",
+          "Abona con criterio una vez que la raíz responda: la fertilización temprana es lo que convierte la lluvia en pasto.",
+          "Deja descansar más tiempo los potreros más castigados: el descanso extra es la medicina de la pradera.",
+          "Sigue midiendo el residuo: no dejes que el animal coma por debajo de 8 a 10 cm, ni siquiera en la recuperación."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "Recuperar el potrero es un acto de paciencia que se cobra en pasto todo el año. El que respeta el rebrote sale de la sequía con la pradera más fuerte que antes; el que se apura, la condena a la siguiente. No seguimos modas, las marcamos. Si cuidas tu tierra con esa constancia, explora la colección de gorras y chaquetas The Ranch, hecha para quienes hacen que el campo vuelva a su mejor forma."
+      }
+    ]
+  },
+  {
+    "slug": "sombra-calor-bienestar-termico-ganado-sequia",
+    "title": "Sombra y calor: cómo cuidar al ganado del golpe de calor en sequía",
+    "excerpt": "En temporada seca el sol también mata. La sombra y el manejo del calor son tan importantes como el agua: así se protege al hato del golpe de calor.",
+    "date": "2026-09-28",
+    "category": "Campo",
+    "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/03/Cows_shading_under_a_tree_on_Pen-y-crug.jpg/1920px-Cows_shading_under_a_tree_on_Pen-y-crug.jpg",
+    "imageAlt": "Ganado descansando a la sombra de un árbol para protegerse del calor",
+    "blocks": [
+      {
+        "type": "p",
+        "text": "Cuando se habla de sequía se piensa en agua y pasto, pero hay un enemigo que actúa antes y en silencio: el calor. Un hato que pasa el día entero al sol pierde condición, come menos y se estresa sin que nadie lo note. La sombra no es un lujo del rancho: es una herramienta de trabajo tan seria como el bebedero."
+      },
+      {
+        "type": "h2",
+        "text": "El golpe de calor no avisa: cobra"
+      },
+      {
+        "type": "p",
+        "text": "El ganado disipa calor respirando y buscando sombra, y cuando no la encuentra sube la temperatura corporal hasta niveles peligrosos. El animal jadea, deja de rumiar, se agolpa y, en los casos graves, se cae. La pérdida no siempre se ve en cabezas: se ve en kilos que no se recuperan y en vacas que no preñan."
+      },
+      {
+        "type": "h2",
+        "text": "Sombra, aire y horario: el manejo del calor"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Árboles en los potreros: la sombra natural más barata y la que más dura; un potrero sin sombra es un potrero incompleto.",
+          "Sombras móviles o techadas en los corrales de manejo: donde el ganado se concentra, el calor se multiplica.",
+          "Pastorea en las horas frescas y deja al hato quieto al mediodía: mover ganado al rayo del sol es trabajo perdido.",
+          "Agua fresca y a la sombra: un bebedero al sol entibia el agua y el animal bebe menos de lo que necesita.",
+          "Ventilación en corrales y salas de espera: el aire en movimiento vale oro cuando no corre una brisa."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "El ranchero que cuida el calor no espera a ver al ganado jadeando: reparte sombra desde antes y mueve el trabajo a las horas que convienen. El calor se administra como el agua, con anticipación y sin urgencias. No seguimos modas, las marcamos. Si trabajas tu hato con ese criterio, explora la colección de gorras y chaquetas The Ranch, hecha para quienes aguantan el sol a punta de oficio."
+      }
+    ]
+  },
+  {
+    "slug": "pastos-resistentes-sequia-especies-praderas",
+    "title": "Pastos resistentes a la sequía: las especies que aguantan cuando el cielo se cierra",
+    "excerpt": "No todos los pastos se secan igual. Elegir especies de raíz profunda y manejar la pradera como un cultivo es lo que sostiene el potrero cuando deja de llover.",
+    "date": "2026-09-28",
+    "category": "Campo",
+    "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/94/Savanna_Grasslands_%28199168845%29.jpeg/1920px-Savanna_Grasslands_%28199168845%29.jpeg",
+    "imageAlt": "Pradera de sabana con pastos resistentes en plena temporada seca",
+    "blocks": [
+      {
+        "type": "p",
+        "text": "Cuando el cielo se cierra, el pasto deja de crecer y cada potrero queda a merced de lo que plantaste antes. La diferencia entre el rancho que se pone amarillo en dos semanas y el que aguanta la seca entera no está en el clima: está en la especie que sembraste y en cómo cuidaste la raíz. Un pasto de raíz profunda y bien establecido es la reserva que no se ve, la que sostiene el hato cuando lo verde se acaba."
+      },
+      {
+        "type": "h2",
+        "text": "El secreto está abajo, no arriba"
+      },
+      {
+        "type": "p",
+        "text": "La resistencia a la sequía no se mide en lo verde de la hoja, sino en la profundidad de la raíz. Los pastos de raíz profunda buscan humedad donde el sol no alcanza, y por eso aguantan semanas sin lluvia cuando otros ya se rindieron. La pradera no se sostiene con lo que se ve: se sostiene con lo que hunde bajo la tierra."
+      },
+      {
+        "type": "h2",
+        "text": "Especies que rinden cuando falta el agua"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Brachiaria (decumbens, brizantha, humidicola): aguanta sequía, pisa y suelos ácidos, y es la base de las praderas del trópico bajo.",
+          "Pasto buffel (Cenchrus ciliaris): tolera calor extremo y sequía larga, y se adapta a suelos secos y arenosos.",
+          "Estrella africana y angleton: aguantan el verano y rebrotan rápido cuando vuelve la lluvia.",
+          "Leguminosas como el guandul o la leucaena: fijan nitrógeno y aportan forraje y proteína cuando el pasto seco ya no da."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "Elegir el pasto es decidir el futuro del potrero, y eso no se improvisa cuando ya falta el agua. Se siembra en lluvia, se abona con criterio y se respeta el descanso para que la raíz se profundice. No seguimos modas, las marcamos. Si administras tu tierra mirando más allá de la temporada, explora la colección de gorras y chaquetas The Ranch, hecha para quienes siembran pensando en la seca que viene."
+      }
+    ]
+  },
+  {
     "slug": "manejo-pastos-sequia-rotacion-potreros",
     "title": "Manejo de pastos en sequía: rotación de potreros y pastoreo racional",
     "excerpt": "El pasto seco no se recupera solo. Rotar potreros y pastorear con cabeza es lo que separa al rancho que conserva su pastura del que la agota en la primera seca.",
