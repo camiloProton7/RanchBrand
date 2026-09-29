@@ -1,5 +1,128 @@
 [
   {
+    "slug": "aforo-potreros-sequia-carga-animal",
+    "title": "Aforo de potreros en sequía: cuántos animales aguanta tu pasto antes de que se acabe",
+    "excerpt": "En sequía el potrero no se administra a ojo: se mide. Aprende a aforar el pasto y calcular la carga para que el hato coma sin agotar la reserva.",
+    "date": "2026-09-29",
+    "category": "Campo",
+    "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/92/Rough_pasture_at_Leorin_with_cattle_-_geograph.org.uk_-_3983705.jpg/1920px-Rough_pasture_at_Leorin_with_cattle_-_geograph.org.uk_-_3983705.jpg",
+    "imageAlt": "Ganado pastando en un potrero de pasto seco y áspero para calcular la carga animal",
+    "blocks": [
+      {
+        "type": "p",
+        "text": "Cuando el pasto deja de crecer, la pregunta que define todo es una sola: ¿cuánto forraje hay de verdad en el potrero y cuántos animales puede sostener? A ojo, el ranchero se equivoca casi siempre, y en sequía equivocarse se cobra en kilos y en pasto que no vuelve. Aforar —medir cuánto pasto hay— es lo que convierte un presentimiento en un número."
+      },
+      {
+        "type": "h2",
+        "text": "Aforar es medir, no adivinar"
+      },
+      {
+        "type": "p",
+        "text": "El aforo es un cálculo sencillo que no necesita equipos caros: se corta el pasto de varios cuadros de medio metro por medio metro, se pesa y se estima cuántos kilos de forraje hay por hectárea. Ese número, multiplicado por las hectáreas de cada potrero, te dice exactamente cuántos días de comida tienes guardados y cuántos animales puedes soltar sin llegar al residuo."
+      },
+      {
+        "type": "h2",
+        "text": "El cálculo de carga, punto por punto"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Corta y pesa en varios puntos del potrero, no solo en el mejor: el promedio honesto es lo que sirve, no la ilusión.",
+          "Descuenta lo que no se come: maleza, pasto viejo y pisoteado no son forraje, son decoración.",
+          "Calcula cuántos kilos de materia seca necesita cada animal por día (entre 2% y 3% de su peso vivo) y cuántos días quieres aguantar.",
+          "Respeta el residuo: deja siempre entre 8 y 10 cm de pasto en pie; eso es lo que rebrota, no lo que sobra.",
+          "Ajusta la carga al número, no el número a la carga: si el pasto no alcanza, se sacan animales o se suplementa, no se estira el potrero."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "El aforo no es un trámite de técnico: es la decisión más barata que puedes tomar en plena seca, porque te avisa con días de anticipación lo que el ojo solo ve cuando ya es tarde. No seguimos modas, las marcamos. Si administras tu pasto con números y no con ilusiones, explora la colección de gorras y chaquetas The Ranch, hecha para quienes deciden mirando la tierra y no el deseo."
+      }
+    ]
+  },
+  {
+    "slug": "sanidad-ganado-sequia-parasitos-riesgos",
+    "title": "Sanidad del ganado en época seca: parásitos y riesgos que llegan con el pasto corto",
+    "excerpt": "El pasto corto no solo es poco: es más sucio. Parásitos, toxinas y deficiencias aparecen cuando el hato come pegado al suelo; así se cuida la sanidad en plena sequía.",
+    "date": "2026-09-29",
+    "category": "Campo",
+    "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/62/Cattle_inspected_for_ticks.jpg/1920px-Cattle_inspected_for_ticks.jpg",
+    "imageAlt": "Revisión sanitaria del ganado para detectar parásitos en plena época seca",
+    "blocks": [
+      {
+        "type": "p",
+        "text": "Cuando el pasto se acaba, el ganado come más pegado al suelo, y ahí es donde vive el problema que nadie ve: parásitos, malezas tóxicas y un forraje que llena pero no nutre. La sequía no solo mata de hambre; también baja las defensas del hato y abre la puerta a enfermedades que en época de lluvia no aparecen."
+      },
+      {
+        "type": "h2",
+        "text": "Parásitos: el enemigo del pasto corto"
+      },
+      {
+        "type": "p",
+        "text": "El ganado que pasta a ras del suelo ingiere larvas de parásitos internos con cada bocado, y la infestación se multiplica cuando los animales se concentran en los pocos potreros con algo verde. La señal es clara: vientre abultado, pelo áspero y animales que comen y no engordan. En sequía, desparasitar con criterio y rotar es la primera línea de defensa."
+      },
+      {
+        "type": "h2",
+        "text": "Los riesgos que trae la temporada seca"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Parásitos internos y garrapatas: con el calor y la concentración se disparan; revisa y desparasita por diagnóstico, no por calendario.",
+          "Intoxicación por nitratos: el pasto y el heno fertilizados o estresados acumulan nitratos que matan; no suplementes con verde sospechoso.",
+          "Deficiencias de minerales: el pasto seco pierde fósforo y vitaminas; la sal mineralizada no es un extra, es parte de la ración.",
+          "Agua sucia y estancada: cuando el agua escasea, el ganado bebe lo que encuentra; el agua lodosa es fuente de diarreas y parásitos.",
+          "Vigila la condición corporal: un animal que pierde estado en sequía avisa de un problema antes de que se caiga."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "La sanidad en sequía se resuelve con observación diaria y sin improvisar: revisar, desparasitar con cabeza y suplementar mineral es lo que mantiene al hato de pie cuando el potrero flojea. No seguimos modas, las marcamos. Si tu oficio es leer al animal antes de que avise dos veces, explora la colección de gorras y chaquetas The Ranch, hecha para quienes no sueltan la vista del hato."
+      }
+    ]
+  },
+  {
+    "slug": "destete-descarte-sequia-ajuste-carga",
+    "title": "Destete y descarte en sequía: ajustar la carga antes de que el potrero lo haga",
+    "excerpt": "Cuando el pasto no alcanza, la mejor decisión es soltar peso a tiempo. Destetar temprano y descartar lo que no rinde es administración, no derrota.",
+    "date": "2026-09-29",
+    "category": "Campo",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/4/46/Cattle_in_corral_waiting_to_be_weighed_before_being_trailed_to_railroad%2C1a35023v.jpg",
+    "imageAlt": "Ganado en el corral listo para pesar y separar antes de ajustar la carga del hato",
+    "blocks": [
+      {
+        "type": "p",
+        "text": "En sequía, el ranchero que se aferra a todas sus cabezas termina perdiendo más de lo que conserva. Ajustar la carga —destetar temprano, descartar lo que no produce y vender a tiempo— no es una derrota: es la decisión que salva al resto del hato. El que suelta peso a tiempo llega a las lluvias con los animales que de verdad rinden."
+      },
+      {
+        "type": "h2",
+        "text": "El destete temprano: aliviar a la vaca y a la pastura"
+      },
+      {
+        "type": "p",
+        "text": "Una vaca que amamanta come hasta un 30% más, justo cuando el pasto no alcanza. Destetar al becerro antes —cuando ya toma forraje y suplemento— libera a la madre de esa exigencia y le devuelve condición para preñarse de nuevo. El becerro no pierde: con una buena dieta de arranque, crece mejor de lo que crecería colgado de una vaca flaca."
+      },
+      {
+        "type": "h2",
+        "text": "Descarte: soltar lo que no suma para salvar lo que sí"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Descarta primero a las vacas vacías y a las viejas: sostenerlas en sequía es alimentar un problema que no se paga.",
+          "Identifica a los animales de peor condición y sepáralos: la competencia por el pasto castiga primero al más débil.",
+          "Vende o mueve a los animales de levante que aún no producen: son los que más pasto consumen sin retorno inmediato.",
+          "Lleva el ajuste por números, no por cariño: el que se decide con la calculadora, no con el corazón, es el que aguanta.",
+          "Planifica la salida antes de que el pasto se acabe: vender temprano es vender caro y con el animal todavía fuerte."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "Ajustar la carga es de las decisiones más difíciles del campo, y por eso mismo es de las más serias: el que lo hace a tiempo llega a la siguiente temporada con un hato más sano y una tierra que no quedó arrasada. No seguimos modas, las marcamos. Si administras tu hato con la cabeza fría y el ojo en el futuro, explora la colección de gorras y chaquetas The Ranch, hecha para quienes deciden pensando en la temporada que viene."
+      }
+    ]
+  },
+  {
     "slug": "recuperar-potrero-despues-sequia",
     "title": "Después de la sequía: cómo recuperar el potrero sin castigar la tierra",
     "excerpt": "Cuando vuelve la lluvia, el potrero no se recupera solo. Soltar el ganado antes de tiempo arruina meses de descanso: así se devuelve la pradera a su mejor versión.",
