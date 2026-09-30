@@ -1051,7 +1051,7 @@
 .tr-reviews {
   background:
     linear-gradient(rgba(15, 9, 4, 0.4), rgba(15, 9, 4, 0.5)),
-    url('/wood-texture.jpg') center / cover no-repeat;
+    url('/wood-texture.webp') center / cover no-repeat;
   color: #f4f0e7;
   overflow: hidden;
   padding: 90px 20px 120px;

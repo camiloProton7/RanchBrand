@@ -24,11 +24,11 @@ const BASE =
 const BG = (file) => `${BASE}/${file}`;
 
 const BACKGROUND_IMAGES = {
-  Yellowstone: BG('yellowstone-bg.jpg'),
-  Armor: BG('armor-bg.jpg'),
-  Mojave: BG('mojave-desert.jpg'),
-  Laredo: BG('laredo-bg.jpg'),
-  Sahara: BG('sahara-bg.jpg'),
+  Yellowstone: BG('yellowstone-bg.webp'),
+  Armor: BG('armor-bg.webp'),
+  Mojave: BG('mojave-desert.webp'),
+  Laredo: BG('laredo-bg.webp'),
+  Sahara: BG('sahara-bg.webp'),
 };
 
 const DESCRIPTIONS = {
