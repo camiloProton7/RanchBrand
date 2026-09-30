@@ -43,8 +43,8 @@ export function links() {
   return [
     {rel: 'stylesheet', href: homeStyles},
     {rel: 'stylesheet', href: camisaFeatureStyles},
-    {rel: 'preload', as: 'video', href: '/home-video-hevc.mp4?v=6', type: 'video/mp4; codecs="hvc1"'},
-    {rel: 'preload', as: 'image', href: '/home-poster.jpg?v=6'},
+    {rel: 'preload', as: 'video', href: '/home-video-hevc.mp4?v=8', type: 'video/mp4; codecs="hvc1"'},
+    {rel: 'preload', as: 'image', href: '/home-poster.jpg?v=8'},
   ];
 }
 
