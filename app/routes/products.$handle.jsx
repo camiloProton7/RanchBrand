@@ -1,7 +1,7 @@
 import {useEffect, useMemo, useRef, useState} from 'react';
 import {Link, useLoaderData, useRouteLoaderData} from 'react-router';
 import {addToCart, buyNow} from '~/lib/cart';
-import {optimizeImage} from '~/lib/image';
+import {optimizeImage, imageSrcSet} from '~/lib/image';
 import {Analytics} from '@shopify/hydrogen';
 import {
   TrustBadges,
@@ -506,11 +506,13 @@ export default function ProductPage() {
     const source = isComboCamisa && camisaCombo ? camisaCombo : product;
     const imgs = (source?.images?.nodes || []).map((i) => ({
       url: optimizeImage(i.url, 800),
+      raw: i.url,
       alt: i.altText || source?.title || '',
     }));
     if (!imgs.length && source?.featuredImage?.url) {
       imgs.push({
         url: optimizeImage(source.featuredImage.url, 800),
+        raw: source.featuredImage.url,
         alt: source?.featuredImage?.altText || '',
       });
     }
@@ -804,7 +806,13 @@ export default function ProductPage() {
         >
           {allImages.map((img, i) => (
             <div key={i} className="trp-viewer-slide">
-              <img src={img.url} alt={img.alt} draggable={false} />
+              <img
+                src={img.url}
+                srcSet={imageSrcSet(img.raw, [480, 720, 900, 1200])}
+                sizes="(min-width: 1024px) 640px, 100vw"
+                alt={img.alt}
+                draggable={false}
+              />
             </div>
           ))}
         </div>
@@ -854,7 +862,12 @@ export default function ProductPage() {
               onClick={() => scrollToImage(i)}
               aria-label={`Foto ${i + 1}`}
             >
-              <img src={img.url} alt="" />
+              <img
+                src={optimizeImage(img.raw, 96)}
+                srcSet={imageSrcSet(img.raw, [64, 96, 160])}
+                sizes="80px"
+                alt=""
+              />
             </button>
           ))}
         </div>

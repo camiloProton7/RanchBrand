@@ -1,7 +1,7 @@
 import {useEffect, useMemo, useRef, useState} from 'react';
 import {Link, useLoaderData} from 'react-router';
 import {Analytics} from '@shopify/hydrogen';
-import {optimizeImage} from '~/lib/image';
+import {optimizeImage, imageSrcSet} from '~/lib/image';
 import collectionStyles from '~/styles/collection.css?url';
 
 export const links = () => [{rel: 'stylesheet', href: collectionStyles}];
@@ -344,6 +344,8 @@ function CollectionCard({product, index, onQuickView}) {
               <img
                 className="tr-col-card-img tr-col-card-img-1"
                 src={optimizeImage(primary.url, 480)}
+                srcSet={imageSrcSet(primary.url, [240, 360, 480, 720])}
+                sizes="(min-width: 1000px) 330px, (min-width: 640px) 33vw, 50vw"
                 alt={primary.altText || product.title}
                 loading="lazy"
               />
@@ -352,6 +354,8 @@ function CollectionCard({product, index, onQuickView}) {
               <img
                 className="tr-col-card-img tr-col-card-img-2"
                 src={optimizeImage(second.url, 480)}
+                srcSet={imageSrcSet(second.url, [240, 360, 480, 720])}
+                sizes="(min-width: 1000px) 330px, (min-width: 640px) 33vw, 50vw"
                 alt=""
                 loading="lazy"
                 decoding="async"
