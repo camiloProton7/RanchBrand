@@ -33,8 +33,13 @@ export function ScrollVideoHero({
 
     if (!section || !video || !videoLayer || !menu) return;
 
-    // Forzar la carga del video (iOS/Android ignoran preload="auto").
-    video.load();
+    // Forzar la carga del video SOLO si el navegador aún no arrancó
+    // (iOS/Android a veces ignoran preload="auto"). Nunca llamar load() si ya
+    // está descargando: aborta la descarga en curso y la reinicia, y el video
+    // terminaba bajándose DOS veces (~830 KB desperdiciados por visita).
+    if (video.networkState === 0) {
+      video.load();
+    }
 
     // Si el video ya cargó (caché / carga rápida), marcarlo listo de inmediato
     // para que no quede invisible en la primera visita.
