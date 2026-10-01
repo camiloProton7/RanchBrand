@@ -84,6 +84,7 @@ const PRODUCT_QUERY = `#graphql
       id
       title
       handle
+      vendor
       description
       productType
       tags
