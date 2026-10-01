@@ -1,5 +1,6 @@
 import {Link} from 'react-router';
 import {POSTS} from '~/lib/blog';
+import {blogImageUrl, blogCardSrcSet} from '~/lib/blog-image';
 import blogStyles from '~/styles/blog.css?url';
 
 export const links = () => [{rel: 'stylesheet', href: blogStyles}];
@@ -33,7 +34,9 @@ export default function BlogIndex() {
             {post.image ? (
               <img
                 className="blog-card-img"
-                src={post.image}
+                src={blogImageUrl(post.image, 480)}
+                srcSet={blogCardSrcSet(post.image)}
+                sizes="(min-width: 980px) 360px, (min-width: 700px) 45vw, 90vw"
                 alt={post.imageAlt || post.title}
                 loading="lazy"
               />

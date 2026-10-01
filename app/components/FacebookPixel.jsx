@@ -28,6 +28,20 @@ export default function FacebookPixel() {
       'https://connect.facebook.net/en_US/fbevents.js');
       
       window.fbq('init', PIXEL_ID);
+
+      // Desactivar SOLO la "configuración automática" de Meta (autoConfig).
+      //
+      // Por qué: Meta escanea el DOM buscando precios para adivinar la moneda.
+      // Nuestros precios usan formato colombiano ("$185.000"), eso lo confunde,
+      // deriva una moneda inválida y ensucia la consola con
+      // "Invalid parameter format for currency". Además sus endpoints de eventos
+      // automáticos (run.app / on.aws) están bloqueados por nuestra CSP, así que
+      // no aportaban nada: solo generaban 4 errores de consola por página.
+      //
+      // OJO: esto NO apaga nada nuestro. Todos los eventos reales (PageView,
+      // ViewContent, AddToCart, InitiateCheckout, Purchase) siguen enviándose
+      // manualmente con currency 'COP' y verificados como válidos.
+      window.fbq('set', 'autoConfig', false, PIXEL_ID);
     }
   }, []);
 

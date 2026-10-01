@@ -1,5 +1,6 @@
 import {Link, useLoaderData} from 'react-router';
 import {getPost} from '~/lib/blog';
+import {blogImageUrl, blogHeroSrcSet} from '~/lib/blog-image';
 import blogStyles from '~/styles/blog.css?url';
 
 export const links = () => [{rel: 'stylesheet', href: blogStyles}];
@@ -57,7 +58,9 @@ export default function BlogPost() {
       {post.image ? (
         <img
           className="blog-post-hero"
-          src={post.image}
+          src={blogImageUrl(post.image, 1280)}
+          srcSet={blogHeroSrcSet(post.image)}
+          sizes="100vw"
           alt={post.imageAlt || post.title}
         />
       ) : null}
