@@ -910,7 +910,13 @@ export default function ProductPage() {
                   aria-pressed={isSel}
                 >
                   {g.featuredImage?.url ? (
-                    <img src={g.featuredImage.url} alt={g.title} loading="lazy" />
+                    <img
+                      src={optimizeImage(g.featuredImage.url, 200)}
+                      srcSet={imageSrcSet(g.featuredImage.url, [160, 200, 300])}
+                      sizes="140px"
+                      alt={g.title}
+                      loading="lazy"
+                    />
                   ) : null}
                   <span className="trp-combo-name">{g.title}</span>
                   <span className="trp-combo-check" aria-hidden="true">
@@ -974,7 +980,13 @@ export default function ProductPage() {
                   aria-pressed={isSel}
                 >
                   {g.featuredImage?.url ? (
-                    <img src={g.featuredImage.url} alt={g.title} loading="lazy" />
+                    <img
+                      src={optimizeImage(g.featuredImage.url, 200)}
+                      srcSet={imageSrcSet(g.featuredImage.url, [160, 200, 300])}
+                      sizes="140px"
+                      alt={g.title}
+                      loading="lazy"
+                    />
                   ) : null}
                   <span className="trp-combo-name">{g.title}</span>
                   <span className="trp-combo-check" aria-hidden="true">
@@ -1074,9 +1086,23 @@ export default function ProductPage() {
           <section className="trp-reco" aria-label="Llévalo en combo con la gorra">
             <Link className="trp-reco-card" to="/products/combo-camisa-gorra">
               {comboCamisaProduct.featuredImage?.url ? (
-                <img className="trp-reco-img" src={comboCamisaProduct.featuredImage.url} alt="" loading="lazy" />
+                <img
+                  className="trp-reco-img"
+                  src={optimizeImage(comboCamisaProduct.featuredImage.url, 400)}
+                  srcSet={imageSrcSet(comboCamisaProduct.featuredImage.url, [300, 400, 600])}
+                  sizes="(min-width: 900px) 380px, 45vw"
+                  alt=""
+                  loading="lazy"
+                />
               ) : product.featuredImage?.url ? (
-                <img className="trp-reco-img" src={product.featuredImage.url} alt="" loading="lazy" />
+                <img
+                  className="trp-reco-img"
+                  src={optimizeImage(product.featuredImage.url, 400)}
+                  srcSet={imageSrcSet(product.featuredImage.url, [300, 400, 600])}
+                  sizes="(min-width: 900px) 380px, 45vw"
+                  alt=""
+                  loading="lazy"
+                />
               ) : null}
               <div className="trp-reco-info">
                 <span className="trp-reco-tag">🔥 Llévalo en combo con la gorra</span>
@@ -1260,7 +1286,9 @@ export default function ProductPage() {
                 <div className="trp-similar-media">
                   {p.featuredImage?.url ? (
                     <img
-                      src={p.featuredImage.url}
+                      src={optimizeImage(p.featuredImage.url, 300)}
+                      srcSet={imageSrcSet(p.featuredImage.url, [200, 300, 400])}
+                      sizes="(min-width: 1000px) 200px, 33vw"
                       alt={p.featuredImage.altText || p.title}
                       loading="lazy"
                     />

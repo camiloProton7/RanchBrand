@@ -1,5 +1,6 @@
 import {Link, useLoaderData} from 'react-router';
 import {formatPrice} from '~/lib/cart';
+import {optimizeImage, imageSrcSet} from '~/lib/image';
 import searchStyles from '~/styles/search.css?url';
 
 export const meta = ({data}) => [
@@ -95,7 +96,14 @@ export default function SearchPage() {
           return (
             <Link key={p.id} to={`/products/${p.handle}`} className="trs-card">
               {p.featuredImage?.url ? (
-                <img className="trs-img" src={p.featuredImage.url} alt={p.title} loading="lazy" />
+                <img
+                  className="trs-img"
+                  src={optimizeImage(p.featuredImage.url, 300)}
+                  srcSet={imageSrcSet(p.featuredImage.url, [200, 300, 480])}
+                  sizes="(min-width: 1000px) 220px, 33vw"
+                  alt={p.title}
+                  loading="lazy"
+                />
               ) : null}
               <div className="trs-info">
                 <h2 className="trs-name">{p.title}</h2>
