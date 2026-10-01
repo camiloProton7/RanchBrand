@@ -790,6 +790,10 @@ export default function ProductPage() {
               title: product?.title,
               price: product?.priceRange?.minVariantPrice?.amount,
               vendor: product?.vendor,
+              variantId: selectedVariant?.id,
+              variantTitle: (selectedVariant?.selectedOptions || [])
+                .map((o) => o.value)
+                .join(' / '),
               quantity: 1,
             },
           ],
