@@ -1,5 +1,129 @@
 [
   {
+    "slug": "pastoreo-racional-franjas-sequia",
+    "title": "Pastoreo racional en sequía: la franja diaria que no deja pelar el potrero",
+    "excerpt": "En sequía el pastoreo racional no se relaja: se aprieta. Dividir en franjas diarias, entrar y salir rápido y dar descanso largo es lo que conserva el pasto que queda.",
+    "date": "2026-10-01",
+    "category": "Campo",
+    "image": "https://images.unsplash.com/photo-1666367475952-7c481f25090d?fm=jpg&q=80&w=1600&auto=format&fit=crop",
+    "imageAlt": "Hato de vacas pastando en un potrero cercado de la pradera",
+    "blocks": [
+      {
+        "type": "p",
+        "text": "Cuando el pasto deja de crecer, el error más común es soltar el hato en el potrero grande \"para que coma lo que encuentre\". Eso es exactamente lo que agota la reserva: el animal escoge lo mejor, pisa lo demás y el rebrote se queda sin hoja para volver. El pastoreo racional en sequía no se relaja, se aprieta: menos área por día, ocupación más corta y descanso más largo."
+      },
+      {
+        "type": "h2",
+        "text": "La franja diaria: el potrero se sirve por porciones"
+      },
+      {
+        "type": "p",
+        "text": "En lugar de un potrero entero, se le asigna al hato una franja: el área que alcanza a comer en un día, delimitada con cerca eléctrica o con una línea de alambre y estacas. Al día siguiente se corre la franja y se pone la cerca trasera, para que el animal no vuelva sobre el rebrote. Ese solo gesto —pasar de potrero abierto a franja diaria— es el que más pasto conserva por menos plata."
+      },
+      {
+        "type": "h2",
+        "text": "Cómo calcular la franja, con números"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Estima el forraje disponible: peso del pasto por hectárea menos el residuo que no se debe tocar (8 a 10 cm de pasto en pie).",
+          "Calcula el consumo del hato: cada animal come entre 2,5% y 3% de su peso vivo en materia seca por día. 30 vacas de 400 kg son unos 330 kg de pasto seco al día.",
+          "Divide: si el potrero tiene 1.500 kg de materia seca disponible por hectárea, esas 30 vacas necesitan alrededor de 0,22 hectáreas diarias.",
+          "Ocupa corto: máximo uno a dos días por franja. En sequía, el animal que se queda tres días en el mismo sitio ya está comiendo el rebrote.",
+          "Descansa largo: entre 45 y 90 días de descanso en seca, según la humedad de la zona. El potrero no se toca hasta que el pasto alcance de nuevo 20 a 30 cm."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "El pastoreo racional en sequía es la versión más exigente del oficio: menos margen, más lectura del potrero y decisiones tomadas con números, no con el deseo de que llueva. No seguimos modas, las marcamos. Si administras tu pastura así, con el criterio de quien trabaja la tierra todos los días, explora la colección de gorras y chaquetas The Ranch: prendas hechas para quienes sostienen el campo a punta de oficio."
+      }
+    ]
+  },
+  {
+    "slug": "agua-ganado-sequia-cuanta-necesita",
+    "title": "Agua para el ganado en sequía: cuántos litros necesita el hato y cómo asegurarla",
+    "excerpt": "En temporada seca el agua se calcula, no se estima. Aprende cuántos litros bebe cada categoría, cómo dimensionar la reserva y qué revisar en bebederos y pozos.",
+    "date": "2026-10-01",
+    "category": "Campo",
+    "image": "https://images.unsplash.com/photo-1752932016096-1ce0c57b1054?fm=jpg&q=80&w=1600&auto=format&fit=crop",
+    "imageAlt": "Ganado bebiendo agua de un bebedero en el potrero durante la temporada seca",
+    "blocks": [
+      {
+        "type": "p",
+        "text": "En sequía todo el mundo calcula el pasto y nadie calcula el agua. Y el agua es la única ración que no admite espera: un hato sin pasto se sostiene unos días con suplemento, un hato sin agua se cae en horas. El primer número que hay que tener claro en el rancho no es cuántas hectáreas de pasto quedan, es cuántos litros por día se necesitan."
+      },
+      {
+        "type": "h2",
+        "text": "El cálculo por cabeza: cada categoría bebe distinto"
+      },
+      {
+        "type": "p",
+        "text": "La referencia práctica es un litro de agua por cada 10 kilos de peso vivo como mínimo, y de ahí hacia arriba según lo que come y lo que sufre con el calor. En pasto seco y con temperaturas por encima de 30 grados, el consumo sube entre 20% y 50%: el animal compensa el forraje maduro con más agua para poder digerirlo. Así se reparte el consumo en un hato de cría."
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Vaca seca: entre 40 y 55 litros al día.",
+          "Vaca en lactancia: entre 60 y 90 litros, y sube con la producción de leche.",
+          "Novilla o animal de levante: entre 25 y 40 litros.",
+          "Toro adulto: entre 45 y 60 litros, más si está en servicio.",
+          "Multiplica por el hato: 30 vacas lactantes son más de 2.000 litros diarios, no 600."
+        ]
+      },
+      {
+        "type": "h2",
+        "text": "Reserva, bebederos y pérdidas: lo que se olvida"
+      },
+      {
+        "type": "p",
+        "text": "El tanque se dimensiona para aguantar de tres a siete días de consumo total, con margen, y se tapa o se pone a la sombra: un espejo de agua al sol pierde entre 5 y 10 litros por metro cuadrado al día solo por evaporación. Cada bebedero debe rellenarse rápido cuando el hato bebe junto y ofrecer de 10 a 15 centímetros lineales de canaleta por animal, o los mansos beben y los débiles quedan atrás. Límpialo cada semana —el agua con lama o barro baja el consumo— y revisa las sales disueltas, porque un agua muy cargada también frena la bebida. Si toca acarrear, haz la cuenta honesta del viaje del tanque contra el costo de vender unas cabezas: casi siempre gana asegurar el pozo o la bomba solar. No seguimos modas, las marcamos. Si administras tu rancho con esa previsión, explora la colección de gorras y chaquetas The Ranch, hecha para quienes no esperan a que falte el agua para contar los litros."
+      }
+    ]
+  },
+  {
+    "slug": "suplementacion-sequia-condicion-corporal-racion",
+    "title": "Suplementar en sequía: leer la condición corporal antes de ajustar la ración",
+    "excerpt": "Antes de comprar suplemento, hay que leer al animal. La condición corporal dice cuánta energía y proteína falta, y en qué orden se corrige la ración sin botar plata.",
+    "date": "2026-10-01",
+    "category": "Campo",
+    "image": "https://images.pexels.com/photos/4840956/pexels-photo-4840956.jpeg?auto=compress&cs=tinysrgb&w=1600",
+    "imageAlt": "Dos vacas comiendo concentrado en un comedero del rancho",
+    "blocks": [
+      {
+        "type": "p",
+        "text": "El ranchero que compra suplemento sin medir al animal termina alimentando la desesperación, no al hato. En sequía la pregunta no es qué suplemento hay, sino cuánto le falta y a quién. Y eso lo dice una sola herramienta: la condición corporal, leída con la mano sobre el lomo y las costillas."
+      },
+      {
+        "type": "h2",
+        "text": "La lectura de condición corporal en plena seca"
+      },
+      {
+        "type": "p",
+        "text": "Se palpa, no se mira de lejos. En el lomo, las vértebras que se sienten pero no se ven; en las costillas, una capa fina de carne sobre el hueso; en la cadera, la distancia entre el anca y la cola. En la escala de uno a cinco, el animal de tres está bien: hueso que se palpa bajo piel firme. El dos tiene las apuestas y las costillas marcadas; el uno es un animal que ya está gastando su músculo para sobrevivir. La vaca que va a parir debe llegar seca a tres, nunca a dos."
+      },
+      {
+        "type": "h2",
+        "text": "El orden en que se corrige la ración"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Primero el agua, siempre: sin agua a voluntad ningún suplemento se aprovecha y el animal deja de comer antes.",
+          "Segundo la fibra: heno, ensilaje o pasto de corte para que el rumen siga trabajando; un rumen vacío no digiere nada de lo que se le eche encima.",
+          "Tercero la proteína: el pasto maduro de sequía baja de 6% de proteína cruda, y con esa falta el animal come menos y digiere peor.",
+          "Cuarto la energía: melaza, bloque energético o grano para las vacas lactantes y los animales que ya perdieron estado.",
+          "Siempre los minerales: la sal mineralizada con fósforo es ración, no adorno; en pasto seco la deficiencia es la norma.",
+          "El ajuste es progresivo: la ración se sube de a poco durante una semana. Un cambio brusco de concentrado termina en acidosis, no en kilos."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "Antes de soltar el suplemento en el potrero, sepáralo: un bebedero y un comedero por grupo, con espacio para todos, porque lo que se desperdicia al piso no alimenta a nadie y en sequía cada kilo se paga caro. Revisa de nuevo la condición a los quince días: si no subió, o la ración es corta o el problema es otro —parásitos, dentición o agua sucia—, y ahí se corrige. No seguimos modas, las marcamos. Si trabajas tu hato con ese rigor, explora la colección de gorras y chaquetas The Ranch, hecha para quienes administran el campo con la cuenta clara."
+      }
+    ]
+  },
+  {
     "slug": "aforo-potreros-sequia-carga-animal",
     "title": "Aforo de potreros en sequía: cuántos animales aguanta tu pasto antes de que se acabe",
     "excerpt": "En sequía el potrero no se administra a ojo: se mide. Aprende a aforar el pasto y calcular la carga para que el hato coma sin agotar la reserva.",
