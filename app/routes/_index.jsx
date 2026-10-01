@@ -759,14 +759,14 @@ const COLLECTION_QUERY = `#graphql
           handle
           description
           featuredImage {
-            url(transform: {maxWidth: 700, preferredContentType: WEBP})
+            url
             altText
             width
             height
           }
           images(first: 5) {
             nodes {
-              url(transform: {maxWidth: 400, preferredContentType: WEBP})
+              url
               altText
             }
           }

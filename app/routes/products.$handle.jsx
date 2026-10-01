@@ -88,12 +88,12 @@ const PRODUCT_QUERY = `#graphql
       productType
       tags
       featuredImage {
-        url(transform: {maxWidth: 900, preferredContentType: WEBP})
+        url
         altText
       }
       images(first: 50) {
         nodes {
-          url(transform: {maxWidth: 900, preferredContentType: WEBP})
+          url
           altText
         }
       }
@@ -105,7 +105,7 @@ const PRODUCT_QUERY = `#graphql
           availableForSale
           selectedOptions { name value }
           price { amount currencyCode }
-          image { url(transform: {maxWidth: 900, preferredContentType: WEBP}) altText }
+          image { url altText }
         }
       }
     }
@@ -121,7 +121,7 @@ const RELATED_QUERY = `#graphql
           title
           handle
           featuredImage {
-            url(transform: {maxWidth: 600, preferredContentType: WEBP})
+            url
             altText
           }
           priceRange {
@@ -152,7 +152,7 @@ const COMBO_QUERY = `#graphql
           title
           handle
           featuredImage {
-            url(transform: {maxWidth: 400, preferredContentType: WEBP})
+            url
             altText
           }
           variants(first: 1) {
@@ -173,12 +173,12 @@ const CAMISA_COMBO_QUERY = `#graphql
       title
       handle
       featuredImage {
-        url(transform: {maxWidth: 900, preferredContentType: WEBP})
+        url
         altText
       }
       images(first: 50) {
         nodes {
-          url(transform: {maxWidth: 900, preferredContentType: WEBP})
+          url
           altText
         }
       }
@@ -189,7 +189,7 @@ const CAMISA_COMBO_QUERY = `#graphql
           availableForSale
           selectedOptions { name value }
           image {
-            url(transform: {maxWidth: 900, preferredContentType: WEBP})
+            url
             altText
           }
         }

@@ -51,12 +51,12 @@ const COLLECTION_QUERY = `#graphql
           title
           handle
           featuredImage {
-            url(transform: {maxWidth: 700, preferredContentType: WEBP})
+            url
             altText
           }
           images(first: 2) {
             nodes {
-              url(transform: {maxWidth: 700, preferredContentType: WEBP})
+              url
               altText
             }
           }

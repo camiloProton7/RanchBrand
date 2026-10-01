@@ -20,7 +20,7 @@ const SEARCH_QUERY = `#graphql
           handle
           availableForSale
           featuredImage {
-            url(transform: {maxWidth: 500, preferredContentType: WEBP})
+            url
           }
           priceRange { minVariantPrice { amount currencyCode } }
           compareAtPriceRange { minVariantPrice { amount } }

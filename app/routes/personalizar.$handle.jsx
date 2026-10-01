@@ -9,7 +9,7 @@ const PRODUCT_QUERY = `#graphql
       title
       handle
       featuredImage {
-        url(transform: {maxWidth: 900, preferredContentType: WEBP})
+        url
         altText
       }
       priceRange {
