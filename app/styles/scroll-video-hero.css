@@ -2761,3 +2761,15 @@
   background: #93391f;
   transform: translateY(-1px);
 }
+
+/* Móvil: no existe hover, así que un toque muestra la segunda foto.
+   La clase la pone el JS en app/routes/_index.jsx. Va al final del archivo
+   para ganarle en orden a las reglas :hover de la tarjeta (misma
+   especificidad), que en táctil no aplican igual. */
+.tr-gorra-media.tr-gorra-shown .tr-gorra-img-1 {
+  opacity: 0;
+}
+
+.tr-gorra-media.tr-gorra-shown .tr-gorra-img-2 {
+  opacity: 1;
+}

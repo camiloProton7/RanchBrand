@@ -444,20 +444,6 @@ function WhatsAppFloat() {
   );
 }
 
-/** Devuelve la tarjeta a la imagen principal.
- *
- *  Se llama al soltar el dedo, al salir de la tarjeta y —esto es lo que
- *  faltaba— cuando el navegador cancela el gesto. En móvil, al deslizar para
- *  hacer scroll el navegador cancela el puntero: sin atender pointercancel la
- *  opacidad quedaba escrita a medias y la tarjeta se veía rara para siempre.
- */
-function resetScrub(e) {
-  const img1 = e.currentTarget.querySelector('.tr-gorra-img-1');
-  const img2 = e.currentTarget.querySelector('.tr-gorra-img-2');
-  if (img1) img1.style.opacity = '1';
-  if (img2) img2.style.opacity = '0';
-}
-
 function ProductScroll({products, collectionUrl, ariaLabel, title}) {
   const sectionRef = useRef(null);
 
@@ -509,23 +495,44 @@ function ProductScroll({products, collectionUrl, ariaLabel, title}) {
             >
               <div
                 className="tr-gorra-media"
-                onPointerMove={(e) => {
-                  // Scrub: deslizar el dedo revela la 2ª imagen (solo touch)
+                onPointerDown={(e) => {
+                  // En táctil no existe hover. Guardamos dónde empezó el toque
+                  // para distinguir un toque de un deslizamiento (el deslizar
+                  // es para mover el carrusel, no para cambiar la foto).
                   if (e.pointerType !== 'touch') return;
                   const el = e.currentTarget;
-                  const rect = el.getBoundingClientRect();
-                  const p = Math.max(
-                    0,
-                    Math.min(1, (e.clientX - rect.left) / rect.width),
-                  );
-                  const img1 = el.querySelector('.tr-gorra-img-1');
-                  const img2 = el.querySelector('.tr-gorra-img-2');
-                  if (img1) img1.style.opacity = String(1 - p);
-                  if (img2) img2.style.opacity = String(p);
+                  el.dataset.startX = String(e.clientX);
+                  el.dataset.startY = String(e.clientY);
+                  el.dataset.esToque = '1';
+                  delete el.dataset.acabaDeMostrar;
                 }}
-                onPointerLeave={resetScrub}
-                onPointerCancel={resetScrub}
-                onPointerUp={resetScrub}
+                onPointerMove={(e) => {
+                  if (e.pointerType !== 'touch') return;
+                  const el = e.currentTarget;
+                  if (el.dataset.esToque !== '1') return;
+                  const dx = Math.abs(e.clientX - Number(el.dataset.startX || 0));
+                  const dy = Math.abs(e.clientY - Number(el.dataset.startY || 0));
+                  if (dx > 10 || dy > 10) el.dataset.esToque = '0';
+                }}
+                onPointerUp={(e) => {
+                  if (e.pointerType !== 'touch') return;
+                  const el = e.currentTarget;
+                  if (el.dataset.esToque !== '1') return;
+                  // Primer toque: muestra la segunda foto y NO abre el producto.
+                  // Segundo toque: ya está mostrada, así que abre normal.
+                  if (!el.classList.contains('tr-gorra-shown')) {
+                    el.classList.add('tr-gorra-shown');
+                    el.dataset.acabaDeMostrar = '1';
+                  }
+                }}
+                onClick={(e) => {
+                  // El toque que solo mostró la segunda foto no debe navegar.
+                  const el = e.currentTarget;
+                  if (el.dataset.acabaDeMostrar === '1') {
+                    delete el.dataset.acabaDeMostrar;
+                    e.preventDefault();
+                  }
+                }}
               >
                 {primary?.url ? (
                   <img
