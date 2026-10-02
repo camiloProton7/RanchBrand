@@ -438,19 +438,34 @@ function WhatsAppFloat() {
   );
 }
 
+/** Devuelve la tarjeta a la imagen principal.
+ *
+ *  Se llama al soltar el dedo, al salir de la tarjeta y —esto es lo que
+ *  faltaba— cuando el navegador cancela el gesto. En móvil, al deslizar para
+ *  hacer scroll el navegador cancela el puntero: sin atender pointercancel la
+ *  opacidad quedaba escrita a medias y la tarjeta se veía rara para siempre.
+ */
+function resetScrub(e) {
+  const img1 = e.currentTarget.querySelector('.tr-gorra-img-1');
+  const img2 = e.currentTarget.querySelector('.tr-gorra-img-2');
+  if (img1) img1.style.opacity = '1';
+  if (img2) img2.style.opacity = '0';
+}
+
 function ProductScroll({products, collectionUrl, ariaLabel, title}) {
   const sectionRef = useRef(null);
 
   useEffect(() => {
     const section = sectionRef.current;
     if (!section) return;
+    // La clase se agrega y se quita según la sección entre o salga de pantalla:
+    // así la entrada se repite cada vez que el cliente vuelve a subir o bajar.
+    // Antes se hacía observer.disconnect() tras la primera vez, la clase quedaba
+    // pegada para siempre y al volver la sección ya no animaba.
     const observer = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
-          if (entry.isIntersecting) {
-            section.classList.add('is-visible');
-            observer.disconnect();
-          }
+          section.classList.toggle('is-visible', entry.isIntersecting);
         }
       },
       {threshold: 0.02},
@@ -502,13 +517,9 @@ function ProductScroll({products, collectionUrl, ariaLabel, title}) {
                   if (img1) img1.style.opacity = String(1 - p);
                   if (img2) img2.style.opacity = String(p);
                 }}
-                onPointerLeave={(e) => {
-                  // Al soltar, vuelve a la imagen principal
-                  const img1 = e.currentTarget.querySelector('.tr-gorra-img-1');
-                  const img2 = e.currentTarget.querySelector('.tr-gorra-img-2');
-                  if (img1) img1.style.opacity = '1';
-                  if (img2) img2.style.opacity = '0';
-                }}
+                onPointerLeave={resetScrub}
+                onPointerCancel={resetScrub}
+                onPointerUp={resetScrub}
               >
                 {primary?.url ? (
                   <img
