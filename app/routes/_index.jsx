@@ -125,12 +125,18 @@ const clamp01 = (v) => Math.min(1, Math.max(0, v));
 export default function Home() {
   const rootData = useRouteLoaderData('root');
   const {gorras, chaquetas, camisetas, hotRanch, reviews} = useLoaderData();
+  // La camisa destacada toma su foto del producto real de Shopify. Antes la
+  // tenía escrita a mano en el componente y quedó rota cuando borraron el
+  // archivo del CDN: la sección se veía sin imagen.
+  const camisaDestacada = (camisetas ?? []).find(
+    (p) => p.handle === 'camisa-outdoor-the-ranch',
+  );
   const logoSrc = rootData?.header?.shop?.brand?.logo?.image?.url;
 
   return (
     <div className="tr-home">
       <ScrollVideoHero logoSrc={logoSrc} />
-      <CamisaFeature />
+      <CamisaFeature product={camisaDestacada} />
       <CategoryMenu />
       <TrustBar />
       <ProductScroll
