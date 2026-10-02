@@ -1,5 +1,147 @@
 [
   {
+    "slug": "heno-y-ensilaje-guardar-pasto-para-la-sequia",
+    "title": "Heno y ensilaje: cómo guardar el pasto que va a sostener el hato en sequía",
+    "excerpt": "El punto de corte, el secado y el almacenamiento deciden si tu reserva de heno y ensilaje llega viva a la época seca o se pierde en el potrero. Aquí van los números.",
+    "date": "2026-10-02",
+    "category": "Campo",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/5/5a/20130712-AMS-LSC-0479_%289303675379%29.jpg",
+    "imageAlt": "Vacas Angus pastando junto a pacas envueltas de ensilaje en el potrero",
+    "blocks": [
+      {
+        "type": "p",
+        "text": "La reserva no se hace cuando falta el pasto: se hace cuando sobra. En el trópico eso significa cortar, secar y guardar en plena época de lluvias, con el potrero lleno y el cielo a favor. El que espera a ver el verano apretando para pensar en heno ya perdió la mitad del forraje, porque el pasto que sobra en junio no se puede fabricar en enero. Heno y ensilaje son dos maneras de guardar lo mismo: forraje que después vale oro."
+      },
+      {
+        "type": "h2",
+        "text": "El punto de corte manda más que la máquina"
+      },
+      {
+        "type": "p",
+        "text": "Un pasto cortado joven es proteína y azúcar; cortado viejo es fibra con palo. La referencia es entrar entre los 35 y los 45 días de rebrote, cuando la planta está en prefloración y todavía no ha lignificado: en pasto de corte tipo mombasa o elefante eso es alrededor de 60 a 90 cm de altura, según la variedad y la humedad del suelo. Para heno hay un detalle que casi nadie respeta: cortar después de que suba el rocío, extender el material en capas finas y darle vuelta una o dos veces hasta que la humedad baje a 15-18%. Empacar heno a 25% de humedad es empacar hongos: el calor sube, la paca se mancha y aparecen micotoxinas que tumban la fertilidad del hato."
+      },
+      {
+        "type": "h2",
+        "text": "Ensilaje: el negocio está en sacar el aire"
+      },
+      {
+        "type": "p",
+        "text": "El ensilaje no se conserva por el plástico, se conserva por la fermentación: sin oxígeno, el azúcar del pasto se vuelve ácido láctico y el material queda estable. Por eso el proceso es picar (partícula de 1 a 2 cm), compactar por capas delgadas, sellar en el mismo día y no destapar hasta que pasen tres semanas. Se abre por el frente y se avanza como un bloque, nunca picando huecos en el centro. Maíz forrajero y sorgo son los reyes, pero pasto de corte bien picado también ensila bien y en zonas de lluvia fuerte suele ser más seguro que intentar hacer heno."
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Cuánto guardar: el hato come entre 2,5% y 3% de su peso vivo en materia seca por día. 30 vacas de 400 kg son unos 330 kg diarios.",
+          "Cuatro meses de seca con esas 30 vacas son cerca de 40 toneladas de materia seca: entre 45 y 50 toneladas de heno, o unas 120 toneladas de forraje verde si ensilas.",
+          "Heno a la intemperie pierde entre 20% y 30% en seis meses. Bajo techo o con lona sobre estibas, menos del 10%.",
+          "Ensilaje mal sellado pierde entre 15% y 25%. Si el frente se recalienta o huele a quemado, el aire está entrando.",
+          "Sitio de guardado: estibas para que el piso no chupe humedad, pacas separadas del muro, ventilación arriba y control de roedores. Una reserva con ratas es una reserva a medias.",
+          "Rotación de la reserva: lo primero que entra es lo primero que sale. El heno viejo de hace dos años no sirve para parir, sirve para mantener."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "No seguimos modas, las marcamos. Guardar forraje es la versión silenciosa del oficio: nadie lo ve, pero es lo que sostiene el rancho cuando el cielo se cierra. Si administras tu reserva con esa disciplina, explora la colección de gorras y chaquetas The Ranch, hecha para quienes trabajan pensando en la temporada que viene."
+      }
+    ]
+  },
+  {
+    "slug": "pozos-jagueyes-bebederos-agua-ganado-sequia",
+    "title": "Pozos, jagüeyes y bebederos: cómo asegurar el agua del hato cuando aprieta la sequía",
+    "excerpt": "Fuentes, almacenamiento, conducción y mantenimiento: el agua se planea en invierno y se sufre en verano. Esto es lo que hay que tener resuelto antes de que se seque el jagüey.",
+    "date": "2026-10-02",
+    "category": "Campo",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/3/3e/Range_Planting_%28CP550%29_at_Jennings_Ranch_in_Spearfish%2C_SD_%2820210722-NRCS-LSC-0335%29.jpg",
+    "imageAlt": "Bebederos de agua que sirven dos potreros en un rancho ganadero",
+    "blocks": [
+      {
+        "type": "p",
+        "text": "Un hato aguanta sin pasto unos días con suplemento. Sin agua se cae en horas. Aun así, el agua es lo último que se revisa en el rancho, porque casi siempre hay un caño, un jagüey o una represa que viene funcionando desde que el abuelo. Y esa es justamente la trampa: la fuente más barata es la primera que se cae en la seca, y se cae sin avisar. El agua se planifica en invierno, cuando todavía sobra."
+      },
+      {
+        "type": "h2",
+        "text": "Las fuentes, en orden de confiabilidad"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Pozo profundo con bomba (eléctrica o solar): la fuente más estable del rancho. Antes de la seca se le hace prueba de bombeo de cuatro a ocho horas midiendo el nivel, para saber el caudal real y si recupera.",
+          "Bombeo solar: bombea cuando más se necesita (sol de mediodía), no consume combustible y se paga solo en una o dos secas. Exige tanque de almacenamiento grande, porque no bombea de noche.",
+          "Jagüey o represa: barato de mantener y muy sensible al ciclo. Calcula la capacidad real (largo por ancho por profundidad promedio, por 0,7) y réstale la evaporación: en clima cálido se pierden entre 5 y 10 litros por metro cuadrado al día, o sea una lámina de agua desapareciendo sola.",
+          "Molino de viento o noria: sirve y es tradición, pero pide mantenimiento constante y revisar el pozo antes de que llegue la carga.",
+          "Acarreo en carrotanque: el último recurso y el más caro. Vale la pena calcular el costo por viaje y compararlo con vender unas cabezas; casi siempre gana invertir en pozo o en bomba."
+        ]
+      },
+      {
+        "type": "h2",
+        "text": "Almacenamiento, conducción y bebederos: los litros que se pierden sin darse cuenta"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Dimensiona el tanque para tres a siete días de consumo total. 30 vacas lactantes beben entre 2.000 y 2.700 litros diarios, no 600.",
+          "Tapa el tanque y ponlo a la sombra: el agua caliente baja el consumo del animal y la evaporación se come la reserva.",
+          "Prefiere conducción por gravedad antes que bombeo. Una manguera delgada y larga no da caudal por más bomba que le pongas: calcula el diámetro por longitud y caudal esperado.",
+          "De 10 a 15 centímetros lineales de canaleta por animal en cada bebedero. Si el hato bebe junto y el bebedero es corto, los mansos toman y los débiles quedan atrás.",
+          "Limpia los bebederos cada semana: el agua con lama reduce el consumo igual que el pasto seco. Revisa sólidos disueltos (idealmente por debajo de 3.000 ppm), porque un agua muy cargada también frena la bebida.",
+          "Deja repuestos en el rancho: flotador, llaves, empaques y un tramo de tubería. La falla de un flotador un domingo de enero cuesta más que el repuesto.",
+          "Camina la línea de agua cada 15 días, con el hato bebiendo. Es la única forma de ver fugas, aire en la tubería y bebederos que se quedan sin presión."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "No seguimos modas, las marcamos. Tener el agua resuelta es el lujo más terrenal que existe: significa que el hato come tranquilo cualquier día de sol. Si trabajas tu rancho con esa previsión, explora la colección de gorras y chaquetas The Ranch, hecha para gente que no deja para mañana lo que se puede asegurar hoy."
+      }
+    ]
+  },
+  {
+    "slug": "plan-escalonado-sequia-cuatro-niveles-rancho",
+    "title": "El plan escalonado contra la sequía: cuatro niveles para decidir antes de que el potrero se acabe",
+    "excerpt": "Umbrales claros de pasto, agua y condición corporal para saber exactamente cuándo suplementar, destetar, descartar o vender. La sequía no se gana con plata, se gana con decisiones a tiempo.",
+    "date": "2026-10-02",
+    "category": "Campo",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/1/1b/Drought%2C_Cammack_Buffalo_Ranch%2C_Stoneville%2C_SD.jpg",
+    "imageAlt": "Potrero seco por la sequía con ganado buscando pasto",
+    "blocks": [
+      {
+        "type": "p",
+        "text": "En una seca no gana el rancho que tiene más plata, gana el que decide antes. El error clásico es esperar a que llueva para no tocar el hato, y terminar vendiendo flaco, barato y en el mismo mes en que todos los vecinos venden. La salida no es adivinar: es tener un plan escrito con umbrales medibles de pasto, agua y condición corporal, y respetarlo como se respeta un cierre de cerca."
+      },
+      {
+        "type": "h2",
+        "text": "Los cuatro niveles, con su umbral y su decisión"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Verde — pasto por encima de 20 cm, jagüey o pozo con caudal probado, condición corporal 3,0 o más en escala de 1 a 5. Qué se hace: seguir la rotación normal, adelantar la reserva de heno y ensilaje, probar pozos, revisar cercas y arreglar lo que esté flojo. Es el momento de gastar, no de esperar.",
+          "Amarillo — pasto entre 12 y 20 cm, lluvias atrasadas tres o cuatro semanas, tanques al 80%. Qué se hace: ajustar carga de inmediato y sacar entre 10% y 20% del hato: vacas viejas, vacías, con problemas de ubre o de patas, y toros sobrantes. Suplementar solo el lote más exigente y empezar a pesar el suplemento, porque el bulto que se sirve a ojo se va en una semana.",
+          "Naranja — pasto entre 8 y 12 cm, condición corporal cayendo hacia 2,75, agua con reserva para menos de 15 días. Qué se hace: destetar temprano (el becerro come menos y cuesta menos que la vaca lactando), suplementar con proteína y mineral en sal, y sacar el descarte que quedó del nivel anterior. Aquí ya no se discute: se ejecuta.",
+          "Rojo — pasto por debajo de 8 cm, condición corporal bajo 2,5, fuente de agua crítica. Qué se hace: quedarse con el núcleo bueno —vientres jóvenes, madres probadas, toros sanos— y vender el resto sin adornos. Mantenimiento con ensilaje, heno o caña tratada, cuidando el residuo del potrero: nunca bajar de 8 a 10 cm de pasto en pie."
+        ]
+      },
+      {
+        "type": "h2",
+        "text": "Las reglas que sostienen el plan"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Medir, no adivinar: aforo de potreros cada 15 días, litros de agua consumidos, registro de lluvia y pesaje del suplemento. Sin números, el nivel se declara por cansancio y no por evidencia.",
+          "Umbrales escritos y acordados antes de la seca, con el equipo en la mesa. Un plan que se decide en medio del verano es un plan que se decide con el bolsillo apretado.",
+          "Un responsable claro de cada decisión y un presupuesto apartado para el plan. Suplementar sin plata reservada es quedarse a mitad de camino.",
+          "No vender en el pánico: el mercado castiga el animal flaco. Mejor vender bueno, temprano y a precio, que regalar el mismo animal dos meses después.",
+          "Nunca tocar el capital primero: se vende descarte, después se desteta y solo al final se tocan vientres. Ese orden es lo que permite volver a llenar el potrero cuando llueva.",
+          "Recuperar después: potrero descansado, carga reducida y siembra de lo que se perdió. La seca se gana en el verano y se cobra en el invierno siguiente."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "No seguimos modas, las marcamos. Planear la sequía es el oficio en su forma más honesta: decidir con números y con calma cuando todo el mundo decide con afán. Si administras tu rancho con ese temple, explora la colección de gorras y chaquetas The Ranch, hecha para gente que se anticipa y no improvisa."
+      }
+    ]
+  },
+  {
     "slug": "pastoreo-racional-franjas-sequia",
     "title": "Pastoreo racional en sequía: la franja diaria que no deja pelar el potrero",
     "excerpt": "En sequía el pastoreo racional no se relaja: se aprieta. Dividir en franjas diarias, entrar y salir rápido y dar descanso largo es lo que conserva el pasto que queda.",
