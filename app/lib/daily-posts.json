@@ -5,7 +5,7 @@
     "excerpt": "El punto de corte, el secado y el almacenamiento deciden si tu reserva de heno y ensilaje llega viva a la época seca o se pierde en el potrero. Aquí van los números.",
     "date": "2026-10-02",
     "category": "Campo",
-    "image": "https://upload.wikimedia.org/wikipedia/commons/5/5a/20130712-AMS-LSC-0479_%289303675379%29.jpg",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/20130712-AMS-LSC-0479_%289303675379%29.jpg/1920px-20130712-AMS-LSC-0479_%289303675379%29.jpg",
     "imageAlt": "Vacas Angus pastando junto a pacas envueltas de ensilaje en el potrero",
     "blocks": [
       {
@@ -22,15 +22,14 @@
       },
       {
         "type": "h2",
-        "text": "Ensilaje: el negocio está en sacar el aire"
-      },
-      {
-        "type": "p",
-        "text": "El ensilaje no se conserva por el plástico, se conserva por la fermentación: sin oxígeno, el azúcar del pasto se vuelve ácido láctico y el material queda estable. Por eso el proceso es picar (partícula de 1 a 2 cm), compactar por capas delgadas, sellar en el mismo día y no destapar hasta que pasen tres semanas. Se abre por el frente y se avanza como un bloque, nunca picando huecos en el centro. Maíz forrajero y sorgo son los reyes, pero pasto de corte bien picado también ensila bien y en zonas de lluvia fuerte suele ser más seguro que intentar hacer heno."
+        "text": "Ensilaje y almacenamiento: lo que decide si la reserva llega viva"
       },
       {
         "type": "ul",
         "items": [
+          "Ensilaje: picar la partícula a 1 o 2 cm, compactar por capas delgadas, sellar el mismo día y no destapar hasta que pasen tres semanas. Se conserva por fermentación, no por el plástico.",
+          "Se abre por el frente y se avanza como un bloque. Picar huecos en el centro deja entrar aire, el material se recalienta y se pierde.",
+          "Maíz forrajero y sorgo ensilan mejor, pero pasto de corte bien picado también funciona y en zonas de lluvia fuerte es más seguro que intentar hacer heno.",
           "Cuánto guardar: el hato come entre 2,5% y 3% de su peso vivo en materia seca por día. 30 vacas de 400 kg son unos 330 kg diarios.",
           "Cuatro meses de seca con esas 30 vacas son cerca de 40 toneladas de materia seca: entre 45 y 50 toneladas de heno, o unas 120 toneladas de forraje verde si ensilas.",
           "Heno a la intemperie pierde entre 20% y 30% en seis meses. Bajo techo o con lona sobre estibas, menos del 10%.",
@@ -51,7 +50,7 @@
     "excerpt": "Fuentes, almacenamiento, conducción y mantenimiento: el agua se planea en invierno y se sufre en verano. Esto es lo que hay que tener resuelto antes de que se seque el jagüey.",
     "date": "2026-10-02",
     "category": "Campo",
-    "image": "https://upload.wikimedia.org/wikipedia/commons/3/3e/Range_Planting_%28CP550%29_at_Jennings_Ranch_in_Spearfish%2C_SD_%2820210722-NRCS-LSC-0335%29.jpg",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Range_Planting_%28CP550%29_at_Jennings_Ranch_in_Spearfish%2C_SD_%2820210722-NRCS-LSC-0335%29.jpg/1920px-Range_Planting_%28CP550%29_at_Jennings_Ranch_in_Spearfish%2C_SD_%2820210722-NRCS-LSC-0335%29.jpg",
     "imageAlt": "Bebederos de agua que sirven dos potreros en un rancho ganadero",
     "blocks": [
       {
@@ -100,7 +99,7 @@
     "excerpt": "Umbrales claros de pasto, agua y condición corporal para saber exactamente cuándo suplementar, destetar, descartar o vender. La sequía no se gana con plata, se gana con decisiones a tiempo.",
     "date": "2026-10-02",
     "category": "Campo",
-    "image": "https://upload.wikimedia.org/wikipedia/commons/1/1b/Drought%2C_Cammack_Buffalo_Ranch%2C_Stoneville%2C_SD.jpg",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Drought%2C_Cammack_Buffalo_Ranch%2C_Stoneville%2C_SD.jpg/1920px-Drought%2C_Cammack_Buffalo_Ranch%2C_Stoneville%2C_SD.jpg",
     "imageAlt": "Potrero seco por la sequía con ganado buscando pasto",
     "blocks": [
       {
