@@ -1,5 +1,156 @@
 [
   {
+    "slug": "pastoreo-diferido-pastos-en-pie-sequia",
+    "title": "Pastoreo diferido: el potrero que se guarda en pie para la sequía",
+    "excerpt": "Diferir un potrero es guardar pasto sin cortarlo: se deja crecer durante la época de lluvias y se pastorea cuando aprieta la seca. Aquí, cómo elegir el potrero, cuánto dejarlo crecer y cómo usarlo sin pelarlo.",
+    "date": "2026-10-04",
+    "category": "Campo",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/Warm_shot_of_meadow_grass_%28Unsplash%29.jpg/1920px-Warm_shot_of_meadow_grass_%28Unsplash%29.jpg",
+    "imageAlt": "Pasto alto y dorado en pie en un potrero diferido como reserva para la época seca",
+    "blocks": [
+      {
+        "type": "p",
+        "text": "La reserva más barata del rancho no es el heno: es el pasto que se guarda en pie. Se llama pastoreo diferido y consiste en clausurar un potrero en pleno crecimiento, dejarlo madurar sin que nadie lo toque y abrirlo meses después, cuando el verano ya apretó y el resto de la pradera está amarilla. No hay corte, no hay flete, no hay plástico ni galpón: la reserva se guarda sola, donde creció. Lo que cuesta es el área que dejas de usar hoy, y por eso se paga con creces en la seca."
+      },
+      {
+        "type": "h2",
+        "text": "Cómo se difiere un potrero, paso por paso"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Elige el mejor potrero, no el peor: suelo profundo, pasto de buena base y, sobre todo, agua cerca. Un potrero diferido sin bebedero no sirve para nada, porque no vas a poder pastorearlo.",
+          "Clausúralo en el pico de crecimiento de la temporada de lluvias, cuando el pasto crece más rápido, no al final. Un potrero clausurado tarde guarda poco pasto y mucho palo.",
+          "Deja que acumule entre 60 y 90 días de crecimiento sin pastorearlo. En pastos tropicales la altura objetivo al abrirlo es de 30 a 45 cm; si pasa de ahí, el material se cae, se acama y se pierde.",
+          "Si la pradera es tropical y madura muy rápido, haz un corte de limpieza o despunte a mitad del período: se cortan las puntas viejas, entra luz y el pasto rebrota tierno. Con eso el diferido llega mejor al verano, con menos tallo y mejor proteína.",
+          "Revísalo cada 15 días: cerca firme, sin fuga de ganado y sin entrada de animales ajenos. Un diferido con hueco en la cerca es un diferido que se pastorea antes de tiempo.",
+          "Al abrirlo, pastorea en franjas y no suelto: dos o tres franjas por semana, con cerca trasera, y deja 10 a 15 cm de residuo. El diferido se come hasta el final, en orden, no en desorden.",
+          "Úsalo cuando el pasto verde escasee, no antes: el diferido es la reserva del momento más apretado, y cada día que se gana pastoreando otro potrero es un día más de reserva guardada."
+        ]
+      },
+      {
+        "type": "h2",
+        "text": "Los errores que botan la reserva a la basura"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Diferir un potrero degradado: un lote con poco pasto y mucha maleza no se convierte en reserva por dejarlo quieto; solo se llena de material que el animal no come.",
+          "Dejar el pasto envejecer de más: cuando la planta pasa de floración, la proteína cae por debajo del 6% y el animal llena la panza sin nutrirse. El diferido largo no siempre es el mejor, es el más barato de mantener.",
+          "No dejar sombra ni agua en el lote: el hato concentrado en un diferido sin sombra come menos, se estresa y desperdicia el pasto que pisotea.",
+          "Pelarlo en el primer pastoreo: si en la primera entrada se come hasta el suelo, se acaba la reserva y se acaba el rebrote para la temporada siguiente.",
+          "Olvidar la carga: un potrero diferido aguanta el hato solo los días que su pasto alcanza. Si el número no da, toca vender o suplementar, no estirar el lote."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "El pastoreo diferido es el gesto más silencioso y más rendidor del manejo de pastos: guardar sin gastar, decidir en lluvia lo que se va a necesitar en seco. No seguimos modas, las marcamos. Si administras tu pradera con ese criterio, explora la colección de gorras y chaquetas The Ranch, hecha para quienes trabajan pensando en la temporada que viene."
+      }
+    ]
+  },
+  {
+    "slug": "calidad-agua-ganado-sequia-sales-solidos",
+    "title": "Calidad del agua para el ganado en sequía: la prueba que casi nadie hace",
+    "excerpt": "Cuando baja el nivel de la represa o el jagüey, el agua se concentra: suben las sales, los sulfatos y las algas. Así se mide, se interpreta y se corrige la calidad del agua que bebe el hato en la sequía.",
+    "date": "2026-10-04",
+    "category": "Campo",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/Drought_Mitigation_-_Solar_Powered_Cattle_Watering_%2820150416-NRCS-LSC-0270%29.jpg/1920px-Drought_Mitigation_-_Solar_Powered_Cattle_Watering_%2820150416-NRCS-LSC-0270%29.jpg",
+    "imageAlt": "Bebedero abastecido con bombeo solar para el ganado en plena sequía",
+    "blocks": [
+      {
+        "type": "p",
+        "text": "En sequía todo el mundo cuenta litros y nadie mide calidad. Y una vaca que tiene agua delante pero no la quiere beber está tan sedienta como la que no la tiene. El agua cargada de sales, con lama, con hierro o con una nata verde de algas baja el consumo, frena la digestión y en el peor caso mata. Hay un detalle que se olvida casi siempre: cuando el nivel de la represa baja, el agua no solo escasea, se concentra. Si se evapora la mitad del volumen, la salinidad de lo que queda prácticamente se duplica, y la fuente que en invierno era buena se vuelve un problema justo en el mes más apretado."
+      },
+      {
+        "type": "h2",
+        "text": "Qué se mide y qué significan los números"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Sólidos totales disueltos (sales): por debajo de 1.000 ppm, agua excelente; entre 3.000 y 5.000 ppm ya puede causar rechazo o diarrea en animales no acostumbrados; por encima de 7.000 ppm no se recomienda para vientres en lactancia. Se mide con un medidor de conductividad: 1 dS/m equivale a unos 640 ppm.",
+          "Sulfatos: por encima de 500 ppm ya hay riesgo de diarrea y de que el animal beba menos; sobre 2.000 ppm aparecen problemas neurológicos, sobre todo en animales jóvenes.",
+          "Nitratos: el agua contaminada por fertilizantes o por estiércol acumulado puede pasar de 100 ppm de nitrógeno nítrico, y ahí empieza el riesgo real de intoxicación.",
+          "Hierro y manganeso: aunque el ganado tolera más que nosotros, un hierro por encima de 4 o 5 ppm le da sabor al agua y baja el consumo. El agua con sabor a metal es agua que el animal raciona solo.",
+          "pH: entre 6,5 y 8,5 es el rango cómodo. Fuera de ahí, la digestión y el consumo se resienten.",
+          "Algas y materia orgánica: agua quieta, caliente y con nutrientes cría florecimientos de algas verdeazules, que pueden intoxicar un hato en horas. Si la orilla tiene una nata verde o azul, ahí no se deja beber."
+        ]
+      },
+      {
+        "type": "h2",
+        "text": "Cómo corregirla sin hacer obra nueva"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Cerca la fuente y bombea: que el ganado no entre a la represa ni al jagüey. Se bombea desde el centro, donde el agua es más profunda y limpia, a un bebedero afuera. Se acaba el pisoteo, el barro y el estiércol en la orilla.",
+          "Pon un tanque de sedimentación antes del bebedero: la arena y el limo se van al fondo, y el animal bebe agua clara. Un tanque adicional, tapado, filtro de bolsa o de arena, hace más de lo que parece.",
+          "Tapa y sombrea los tanques: el sol cría algas y se come la reserva por evaporación. Un tanque destapado y caliente es un tanque a medias.",
+          "Limpia los bebederos cada semana: la lama y el fondo verdoso reducen el consumo igual que la escasez, y son la fuente más común de diarreas en verano.",
+          "Deja una rampa de escape dentro del bebedero o del reservorio: becerros y animales pequeños que caen al agua se ahogan sin ella, y una tabla con textura cuesta menos que una cabeza.",
+          "Lleva el registro del tanque todos los días: si el consumo del hato cae más del 10% de un día para otro y el clima no cambió, revisa la calidad antes de buscar otra causa. Ese registro es el diagnóstico más barato del rancho."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "El agua del hato se juzga por lo que el animal bebe, no por lo que se ve en el balde. Medirla una vez al año y revisarla cada semana es la diferencia entre tener agua y tener agua que sirve. No seguimos modas, las marcamos. Si administras tu rancho con esa rigurosidad, explora la colección de gorras y chaquetas The Ranch, hecha para quienes no dejan nada librado al azar."
+      }
+    ]
+  },
+  {
+    "slug": "bloques-multinutricionales-suplementos-sequia",
+    "title": "Bloques multinutricionales y suplementos para el pasto seco de la sequía",
+    "excerpt": "Cuando el pasto maduro baja del 8% de proteína, el hato come menos y digiere peor. Los bloques multinutricionales y el forraje tratado con urea devuelven al rumen lo que la sequía le quitó, con reglas claras.",
+    "date": "2026-10-04",
+    "category": "Campo",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Cattle_eating_corn_silage.jpg/1920px-Cattle_eating_corn_silage.jpg",
+    "imageAlt": "Ganado comiendo ensilaje en el comedero durante la temporada seca",
+    "blocks": [
+      {
+        "type": "p",
+        "text": "En sequía el problema no suele ser que falte pasto, sino que el pasto que hay ya no alimenta. El forraje maduro baja del 6% al 8% de proteína cruda, la fibra se endurece y la digestibilidad se cae: el animal llena la panza y aun así pierde condición, porque el rumen no tiene con qué fermentar. La salida clásica de la ganadería de trópico es darle al rumen lo que le falta por vía de nitrógeno no proteico y energía: bloque multinutricional, melaza y forraje tratado con urea. Barato, efectivo y con reglas que no se pueden saltar."
+      },
+      {
+        "type": "h2",
+        "text": "Qué lleva un bloque multinutricional y para qué sirve cada cosa"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Melaza (40% a 45%): es la energía que fermenta rápido y el vehículo de la mezcla. Sin energía disponible, la urea no se aprovecha y el bloque queda en un gasto.",
+          "Urea (6% a 10%): el nitrógeno no proteico que las bacterias del rumen convierten en proteína microbiana. Es la proteína más barata que existe, siempre que la sepan usar.",
+          "Sal común (5% a 8%): regula el consumo del bloque y aporta sodio y cloro. Es la llave que evita que el hato se coma el bloque en dos días.",
+          "Caliza o cal (8% a 12%): aporta calcio y sirve de carga. También el azufre (alrededor del 1%) va con la urea: sin azufre las bacterias no aprovechan el nitrógeno.",
+          "Afrecho de maíz, semolina o mogolla (15% a 20%): fibra y almidón que dan cuerpo, sostienen la fermentación y ayudan a cuajar el bloque.",
+          "Cemento o arcilla (8% a 12%): el endurecedor. Es lo que hace que el bloque dure en el comedero y no se deshaga con la lluvia.",
+          "Minerales y correctores (5%): fósforo, calcio, oligoelementos. En pasto seco la deficiencia mineral es la norma, no la excepción.",
+          "Alternativa en bloque húmedo: caña de azúcar picada tratada con urea al 1% al 1,5%, humedecida y tapada de 7 a 21 días. La urea rompe la lignina y la caña deja de ser relleno para volverse forraje."
+        ]
+      },
+      {
+        "type": "h2",
+        "text": "Las reglas que no se negocian con la urea"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Adaptación gradual: de 7 a 10 días, empezando con poca disponibilidad y aumentando. Un hato que pasa del pasto seco al bloque de golpe se intoxica.",
+          "Tope de urea: no más del 1% de la materia seca total de la dieta. Para una vaca de 400 kg que consume unos 10 kg de materia seca al día, eso es un techo cercano a los 100 g de urea diarios, incluyendo lo de los bloques y lo del forraje tratado.",
+          "Nunca a animales hambrientos ni muy desnutridos: la urea entra por el torrente y satura el hígado cuando el rumen está vacío. Primero fibra, después proteína; siempre en ese orden.",
+          "Agua a voluntad, siempre: la urea aumenta la demanda de agua. Un bloque multinutricional con el bebedero lejos es una bomba de tiempo.",
+          "Nunca a caballos ni a otras especies de estómago simple: la urea es tóxica para ellos. Un bloque en el potrero de las yeguas es un error que se paga.",
+          "Si aparece salivación abundante, tambaleo o respiración agitada, sospecha intoxicación por amoníaco: retira el bloque de inmediato y rehidrata al animal con agua limpia en pequeñas tandas. La prisa aquí mata.",
+          "Mezcla y curado: la urea se disuelve primero en la melaza y luego se incorpora al resto; el bloque se apisona en el molde y se cura 2 o 3 semanas a la sombra antes de llevarlo al potrero. Un bloque mal curado no endurece y se pierde.",
+          "Guarda y ofrece bajo techo: los bloques al aguacero se disuelven y el hato bebe melaza en vez de comerla. Bajo sombra y en comedero techado, el bloque rinde hasta tres veces más."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "El bloque multinutricional no es un milagro: es una herramienta fina que exige número, orden y agua limpia. Bien usado, convierte en carne y leche un potrero que ya no daba nada; mal usado, es la forma más rápida de perder cabezas. No seguimos modas, las marcamos. Si administras tu hato con esa precisión, explora la colección de gorras y chaquetas The Ranch, hecha para quienes hacen cuentas antes de improvisar."
+      }
+    ]
+  },
+  {
     "slug": "manejo-pastos-sequia-residuo-descanso-potrero",
     "title": "Manejo de pastos en sequía: residuo y descanso, las dos reglas que conservan el potrero",
     "excerpt": "En sequía el pasto no se administra por lo que come el hato, sino por lo que queda de pie. El residuo y el descanso son los dos números que deciden si la pradera rebrota cuando vuelva la lluvia o si se pierde para siempre.",
