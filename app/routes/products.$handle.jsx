@@ -1265,18 +1265,22 @@ export default function ProductPage() {
             ) : null}
           </div>
           <button
-            className="trp-add"
+            className={`trp-add-cart ${added ? 'is-added' : ''}`}
             type="button"
-            onClick={handleBuyNow}
+            onClick={handleAddToCart}
             disabled={isComboCamisa ? !comboCamisaReady : isOut || (isCombo && !comboReady)}
           >
             {isComboCamisa
               ? comboCamisaReady
-                ? 'Comprar ahora'
+                ? added
+                  ? '✓ Añadido'
+                  : 'Agregar al carrito'
                 : 'Elige camisa y gorra'
               : isCombo && !comboReady
                 ? 'Elige 5 gorras'
-                : 'Comprar ahora'}
+                : added
+                  ? '✓ Añadido'
+                  : 'Agregar al carrito'}
           </button>
           <div className="trp-qty" aria-label="Cantidad">
             <button
@@ -1295,23 +1299,22 @@ export default function ProductPage() {
               +
             </button>
           </div>
+          {/* "Comprar ahora" va DEBAJO de "Agregar al carrito": el camino normal es
+              agregar al carrito, y el salto directo a pagar queda como acción secundaria
+              (el grid 2x2 sigue el orden del DOM, así que el orden aquí es el visual). */}
           <button
-            className={`trp-add-cart ${added ? 'is-added' : ''}`}
+            className="trp-add"
             type="button"
-            onClick={handleAddToCart}
+            onClick={handleBuyNow}
             disabled={isComboCamisa ? !comboCamisaReady : isOut || (isCombo && !comboReady)}
           >
             {isComboCamisa
               ? comboCamisaReady
-                ? added
-                  ? '✓ Añadido'
-                  : 'Agregar al carrito'
+                ? 'Comprar ahora'
                 : 'Elige camisa y gorra'
               : isCombo && !comboReady
                 ? 'Elige 5 gorras'
-                : added
-                  ? '✓ Añadido'
-                  : 'Agregar al carrito'}
+                : 'Comprar ahora'}
           </button>
         </div>
       </div>
