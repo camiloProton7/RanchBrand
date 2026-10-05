@@ -100,7 +100,7 @@ const PRODUCT_QUERY = `#graphql
       }
       priceRange { minVariantPrice { amount currencyCode } }
       compareAtPriceRange { minVariantPrice { amount } }
-      variants(first: 50) {
+      variants(first: 250) {
         nodes {
           id
           availableForSale
