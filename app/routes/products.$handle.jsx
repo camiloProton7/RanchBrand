@@ -423,50 +423,79 @@ function getBenefits(productType, title) {
 }
 
 const norm = (s) => (s || '').trim().toLowerCase();
+// "Marrón" y "marron" son el mismo color: se comparan sin tildes.
+const sinTildes = (s) => norm(s).normalize('NFD').replace(/[\u0300-\u036f]/g, '');
 
-// Mapeo de nombres de color comunes a hex (para los círculos del selector)
+// Mapeo de nombres de color a hex para los círculos del selector de la ficha.
+// Hecho con los nombres que existen DE VERDAD en el catálogo (revisados en Shopify):
+// Negro, Blanco, Cafe, Verde Militar, Desert, Miel, Beige, Berenjena, Azul Navy,
+// Ocre, Vinotinto, Camuflaje, Arena, Verde Oliva, Azul, Verde.
+// Antes: "Blanco" devolvía #e8e2d4 (un beige) y todo color no previsto caía en
+// #c9bfa8 (beige), así que el círculo mentía sobre el color de la prenda.
 const COLOR_HEX = {
+  // neutros
   negro: '#1a1a18',
   black: '#1a1a18',
-  blanco: '#e8e2d4',
-  white: '#e8e2d4',
-  crema: '#e6d9bf',
-  arena: '#d8c9a8',
-  beige: '#d8c9a8',
-  'verde oliva': '#5a6b3c',
-  verde: '#3a6b35',
-  olive: '#5a6b3c',
-  marrón: '#6b4a2b',
-  brown: '#6b4a2b',
-  cuero: '#8a5a2b',
-  camuflaje: '#4a5240',
-  camo: '#4a5240',
-  azul: '#3a4a5a',
-  rojo: '#7a3a2a',
+  blanco: '#ffffff',
+  white: '#ffffff',
   gris: '#8a8a8a',
   gray: '#8a8a8a',
+  // tierras y beiges
+  crema: '#f2e9d6',
+  beige: '#e0d5bc',
+  arena: '#d6c7a5',
+  sand: '#d6c7a5',
+  desert: '#cfc0a0',
   camel: '#b58a5a',
-  naranja: '#d97a2b',
-  amarillo: '#d9c23a',
+  miel: '#c8912e',
+  honey: '#c8912e',
+  ocre: '#bf8a2c',
+  ochre: '#bf8a2c',
+  cafe: '#6b4a2b',
+  marron: '#6b4a2b',
+  brown: '#6b4a2b',
+  cuero: '#8a5a2b',
+  leather: '#8a5a2b',
+  // verdes
+  verde: '#3f6b3a',
+  'verde oliva': '#5a6b3c',
+  olive: '#5a6b3c',
+  'verde militar': '#4f5d3a',
+  camuflaje: '#4a5240',
+  camo: '#4a5240',
+  // azules y vinos
+  azul: '#2f4a6b',
+  blue: '#2f4a6b',
+  'azul navy': '#1f2f4a',
+  'azul marino': '#1f2f4a',
+  navy: '#1f2f4a',
+  berenjena: '#4a2b3d',
+  vinotinto: '#6e1f2a',
+  vino: '#6e1f2a',
   morado: '#6b4a8a',
-  rosa: '#c97a8a',
+  purple: '#6b4a8a',
+  // cálidos
+  rojo: '#b3261e',
+  red: '#b3261e',
+  naranja: '#d97a2b',
+  orange: '#d97a2b',
+  amarillo: '#d9c23a',
+  yellow: '#d9c23a',
+  rosa: '#d98a99',
+  pink: '#d98a99',
 };
 
+const CLAVES_COLOR = Object.keys(COLOR_HEX).sort((a, b) => b.length - a.length);
+
 function colorToHex(name) {
-  const key = norm(name);
+  const key = sinTildes(name);
   if (COLOR_HEX[key]) return COLOR_HEX[key];
-  if (key.includes('verde')) return '#3a6b35';
-  if (key.includes('negro')) return '#1a1a18';
-  if (key.includes('blanco')) return '#e8e2d4';
-  if (key.includes('azul')) return '#3a4a5a';
-  if (key.includes('rojo')) return '#7a3a2a';
-  if (key.includes('marr') || key.includes('cuero') || key.includes('cafe')) return '#6b4a2b';
-  if (key.includes('gris')) return '#8a8a8a';
-  if (key.includes('naranja')) return '#d97a2b';
-  if (key.includes('amarillo')) return '#d9c23a';
-  if (key.includes('camuflaje') || key.includes('camo')) return '#4a5240';
-  if (key.includes('arena') || key.includes('beige') || key.includes('crema') || key.includes('camel') || key.includes('desert')) return '#d8c9a8';
-  return '#c9bfa8';
+  // El valor puede traer extras ("Camuflaje verde", "Azul navy oscuro"): se busca
+  // la clave más específica dentro del nombre, de la más larga a la más corta.
+  for (const k of CLAVES_COLOR) {
+    if (key.includes(k)) return COLOR_HEX[k];
+  }
+  return '#c4c4c4';   // gris neutro: si no se reconoce, no se inventa un beige
 }
 
 // Abrevia tallas: "Pequeño (S)" -> "S", "Doble extragrande (XXL)" -> "2XL"

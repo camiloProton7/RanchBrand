@@ -434,7 +434,8 @@
 }
 
 .trp-option-colors button {
-  border: 2px solid rgba(26, 26, 24, 0.18);
+  /* el borde sostiene los colores claros: un círculo blanco sin borde no se ve */
+  border: 2px solid rgba(26, 26, 24, 0.28);
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.12);
   height: 30px;
   min-width: 0;
