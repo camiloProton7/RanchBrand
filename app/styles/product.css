@@ -1599,6 +1599,51 @@
   transform: translateY(-3px);
 }
 
+/* En móvil la tarjeta de combo ocupaba demasiado: texto grande y foto chica.
+   Se compacta el texto y se agranda la foto, que es lo que vende. */
+@media (max-width: 640px) {
+  .trp-reco {
+    gap: 10px;
+  }
+
+  .trp-reco-card {
+    gap: 11px;
+    padding: 12px 13px;
+  }
+
+  .trp-reco-img {
+    width: 96px;
+  }
+
+  .trp-reco-tag {
+    font-size: 9.5px;
+    letter-spacing: 0.04em;
+  }
+
+  .trp-reco-title {
+    font-size: 14.5px;
+    line-height: 1.2;
+  }
+
+  .trp-reco-price-orig {
+    font-size: 11.5px;
+  }
+
+  .trp-reco-price-final {
+    font-size: 17px;
+  }
+
+  .trp-reco-badge {
+    font-size: 10px;
+    padding: 3px 8px;
+  }
+
+  .trp-reco-cta {
+    font-size: 11px;
+    padding: 9px 13px;
+  }
+}
+
 .trp-reco-img {
   border: 2px solid #ffffff;
   border-radius: 14px;

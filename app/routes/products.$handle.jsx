@@ -1207,7 +1207,7 @@ export default function ProductPage() {
                   />
                 ) : null}
                 <div className="trp-reco-info">
-                  <span className="trp-reco-tag">🔥 Llévalo en combo {combo.etiqueta}</span>
+                  <span className="trp-reco-tag">🔥 Combo {combo.etiqueta}</span>
                   <h3 className="trp-reco-title">{combo.title}</h3>
                   <div className="trp-reco-price">
                     {combo.compareAtPriceRange?.minVariantPrice?.amount ? (
