@@ -425,6 +425,9 @@ function getBenefits(productType, title) {
 const norm = (s) => (s || '').trim().toLowerCase();
 // "Marrón" y "marron" son el mismo color: se comparan sin tildes.
 const sinTildes = (s) => norm(s).normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+// Las URLs de Shopify cambian por versión y por tamaño (?v=..., ?width=...): dos
+// referencias a la MISMA foto se reconocen comparando solo la ruta.
+const rutaImagen = (u) => (u || '').split('?')[0];
 
 // Mapeo de nombres de color a hex para los círculos del selector de la ficha.
 // Hecho con los nombres que existen DE VERDAD en el catálogo (revisados en Shopify):
@@ -601,23 +604,53 @@ export default function ProductPage() {
     });
   }, [optionNames, variants, options]);
 
-  // Cambia la imagen activa cuando cambia la variante seleccionada (color/talla).
+  // Cambia la foto principal cuando cambia el color (o la talla): se usa la imagen
+  // que cada variante tiene enlazada en Shopify.
+  //
+  // Antes comparaba la URL CRUDA de la variante contra las de la galería, que están
+  // optimizadas (?width=800): nunca coincidía, así que la foto no cambiaba. Y el
+  // plan B usaba la posición del color (colors.findIndex) como índice de foto, o sea
+  // saltaba a una imagen cualquiera del producto.
+  //
+  // Se compara por RUTA (sin ?v= ni ?width=), que es estable. Si la variante elegida
+  // no tiene foto propia se busca otra variante del mismo color; y si ese color no
+  // tiene ninguna foto enlazada, se deja la foto actual en vez de saltar a otra.
+  const primerColor = useRef(true);
+
   useEffect(() => {
-    let idx = -1;
-    const img = selectedVariant?.image?.url;
-    if (img) {
-      idx = allImages.findIndex((i) => i.url === img);
+    if (!color) return;
+    if (primerColor.current) {
+      // La primera vez el color lo pone la ficha sola (el primero disponible): no
+      // se toca la foto, la ficha debe abrir con la primera de la galería.
+      primerColor.current = false;
+      return;
     }
-    if (idx < 0 && colors.length > 1 && color) {
-      idx = colors.findIndex((c) => norm(c) === norm(color));
+
+    const buscar = (url) => {
+      const r = rutaImagen(url);
+      return r ? allImages.findIndex((i) => rutaImagen(i.raw) === r) : -1;
+    };
+
+    let idx = buscar(selectedVariant?.image?.url);
+    if (idx < 0) {
+      const hermanas = variants.filter((v) =>
+        (v.selectedOptions || []).some(
+          (o) => norm(o.name) === 'color' && norm(o.value) === norm(color),
+        ),
+      );
+      for (const v of hermanas) {
+        idx = buscar(v.image?.url);
+        if (idx >= 0) break;
+      }
     }
+
     if (idx >= 0 && idx < allImages.length) {
       setActiveImage(idx);
       const track = trackRef.current;
       const slide = track?.children?.[idx];
       if (slide) slide.scrollIntoView({behavior: 'smooth', inline: 'center'});
     }
-  }, [selectedVariant, allImages, colors, color]);
+  }, [selectedVariant, allImages, color, variants]);
 
   // Pixel de Meta: ViewContent cuando el producto carga.
   useEffect(() => {
