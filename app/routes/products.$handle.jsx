@@ -615,16 +615,13 @@ export default function ProductPage() {
   // Se compara por RUTA (sin ?v= ni ?width=), que es estable. Si la variante elegida
   // no tiene foto propia se busca otra variante del mismo color; y si ese color no
   // tiene ninguna foto enlazada, se deja la foto actual en vez de saltar a otra.
-  const primerColor = useRef(true);
-
+  //
+  // Corre también al abrir la ficha: si el selector ya trae marcado el primer color
+  // (la ficha lo pone sola), la foto que se muestra es la de ESE color. Antes abría
+  // con la primera de la galería y quedaba descuadrado: el selector marcaba Desert y
+  // la foto era de otro color, y al tocar Desert (ya marcado) no pasaba nada.
   useEffect(() => {
     if (!color) return;
-    if (primerColor.current) {
-      // La primera vez el color lo pone la ficha sola (el primero disponible): no
-      // se toca la foto, la ficha debe abrir con la primera de la galería.
-      primerColor.current = false;
-      return;
-    }
 
     const buscar = (url) => {
       const r = rutaImagen(url);
