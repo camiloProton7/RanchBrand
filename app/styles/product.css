@@ -1644,6 +1644,22 @@
   }
 }
 
+/* El calculador de talla iba arriba y empujaba los selectores fuera de vista
+   en el telefono. En movil se muestra despues del area de compra. */
+.trp-size-movil {
+  display: none;
+}
+
+@media (max-width: 899px) {
+  .trp-size-escritorio {
+    display: none;
+  }
+
+  .trp-size-movil {
+    display: block;
+  }
+}
+
 .trp-reco-img {
   border: 2px solid #ffffff;
   border-radius: 14px;

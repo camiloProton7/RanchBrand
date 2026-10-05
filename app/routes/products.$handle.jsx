@@ -974,7 +974,9 @@ export default function ProductPage() {
         <TrustBadges />
 
         {isApparel(product.productType, product.title) ? (
-          <SizeGuide />
+          <div className="trp-size-escritorio">
+            <SizeGuide />
+          </div>
         ) : null}
       </div>
 
@@ -1281,6 +1283,13 @@ export default function ProductPage() {
       ) : null}
 
       {/* ===== Barra de compra (grid 2x2) ===== */}
+      {/* En movil el calculador va despues de elegir, para que no tape los selectores */}
+      {isApparel(product.productType, product.title) ? (
+        <div className="trp-size-movil">
+          <SizeGuide />
+        </div>
+      ) : null}
+
       <div className="trp-buybar">
           <div className="trp-buybar-price">
             <span className="trp-buybar-price-now">{formatPrice(totalPrice)}</span>
