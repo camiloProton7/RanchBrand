@@ -1180,7 +1180,8 @@ export default function ProductPage() {
           );
         })}
 
-        {/* ===== Upsell: los combos de la camisa (gorra y chaqueta); licorera para el resto (no en combos) ===== */}
+        {/* ===== Upsell: los combos de la camisa (gorra y chaqueta); licorera para el resto ===== */}
+        {/* (el combo camisa + chaqueta Laredo no lleva licorera, por pedido de Camilo) */}
         {isCamisa && combosCamisa.length ? (
           <section className="trp-reco" aria-label="Llévalo en combo">
             {combosCamisa.map((combo) => (
@@ -1227,7 +1228,7 @@ export default function ProductPage() {
               </Link>
             ))}
           </section>
-        ) : licorera && !/^combo-/i.test(product.handle || '') ? (
+        ) : licorera && product.handle !== 'combo-camisa-outdoor-chaqueta-laredo' ? (
           <RecommendedProduct
             product={{
               handle: licorera.handle,
