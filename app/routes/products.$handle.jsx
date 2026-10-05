@@ -531,6 +531,10 @@ export default function ProductPage() {
   const [gorraCombo, setGorraCombo] = useState(null);
   const [personalizacion, setPersonalizacion] = useState(null);
   const trackRef = useRef(null);
+  // Mientras la ficha mueve la galería sola (al elegir color), el onScroll del track
+  // no debe mandar: sus eventos llegan a mitad de la animación y pisaban la foto
+  // elegida (se elegía Verde Militar y quedaba la Foto 2, la de Beige).
+  const scrollPropio = useRef(false);
 
   const variants = product?.variants?.nodes || [];
 
@@ -645,7 +649,14 @@ export default function ProductPage() {
       setActiveImage(idx);
       const track = trackRef.current;
       const slide = track?.children?.[idx];
-      if (slide) slide.scrollIntoView({behavior: 'smooth', inline: 'center'});
+      if (slide) {
+        scrollPropio.current = true;
+        clearTimeout(scrollPropio.t);
+        scrollPropio.t = setTimeout(() => {
+          scrollPropio.current = false;
+        }, 800);
+        slide.scrollIntoView({behavior: 'smooth', inline: 'center', block: 'nearest'});
+      }
     }
   }, [selectedVariant, allImages, color, variants]);
 
@@ -688,6 +699,10 @@ export default function ProductPage() {
   const discountPct = hasDiscount ? Math.round((1 - Number(price) / Number(compare)) * 100) : 0;
 
   const handleScroll = (e) => {
+    // Si el movimiento lo hizo la ficha al elegir color, no se toca la foto: los
+    // eventos del desplazamiento suave llegan a mitad de la animación y dejaban la
+    // foto del color anterior (elegías Verde Militar y quedaba la de Beige).
+    if (scrollPropio.current) return;
     const el = e.currentTarget;
     const idx = Math.round(el.scrollLeft / el.clientWidth);
     if (idx >= 0 && idx < allImages.length) setActiveImage(idx);
