@@ -598,6 +598,29 @@ export default function ProductPage() {
     return names;
   }, [variants]);
 
+  // Combo camisa + chaqueta Laredo: Shopify solo admite 3 opciones por producto, así
+  // que en los datos la chaqueta va junta ("Negro / M") pero en la ficha se muestra
+  // como dos filas separadas: color chaqueta y talla chaqueta.
+  const OPT_CHAQUETA = 'Chaqueta (color y talla)';
+  const esComboLaredo = product?.handle === 'combo-camisa-outdoor-chaqueta-laredo';
+
+  const partesChaqueta = useMemo(() => {
+    const colores = [];
+    const tallas = [];
+    variants.forEach((v) => {
+      const val = (v.selectedOptions || []).find((o) => o.name === OPT_CHAQUETA)?.value;
+      if (!val) return;
+      const [c, t] = val.split(' / ');
+      if (c && !colores.includes(c)) colores.push(c);
+      if (t && !tallas.includes(t)) tallas.push(t);
+    });
+    return {colores, tallas};
+  }, [variants]);
+
+  const valorChaqueta = options[norm(OPT_CHAQUETA)] || '';
+  const chaquetaColor = (valorChaqueta.split(' / ')[0] || partesChaqueta.colores[0] || '').trim();
+  const chaquetaTalla = (valorChaqueta.split(' / ')[1] || partesChaqueta.tallas[0] || '').trim();
+
   const selectedVariant = useMemo(() => {
     return (
       variants.find((v) =>
@@ -1153,32 +1176,84 @@ export default function ProductPage() {
           </div>
         )}
 
-        {optionNames.map((name) => {
-          const values = Array.from(
-            new Set(
-              variants
-                .map((v) => v.selectedOptions?.find((o) => o.name === name)?.value)
-                .filter(Boolean),
-            ),
-          );
-          return (
-            <div key={name} className="trp-option">
-              <span className="trp-option-label">{name}</span>
-              <div className="trp-option-values">
-                {values.map((value) => (
+        {esComboLaredo ? (
+          <>
+            <div className="trp-option">
+              <span className="trp-option-label">Color chaqueta</span>
+              <div className="trp-option-values trp-option-colors">
+                {partesChaqueta.colores.map((c) => (
                   <button
-                    key={value}
+                    key={c}
                     type="button"
-                    className={norm(options[norm(name)]) === norm(value) ? 'is-active' : ''}
-                    onClick={() => setOptions((prev) => ({...prev, [norm(name)]: value}))}
+                    className={norm(chaquetaColor) === norm(c) ? 'is-active' : ''}
+                    style={{background: colorToHex(c)}}
+                    onClick={() =>
+                      setOptions((prev) => ({
+                        ...prev,
+                        [norm(OPT_CHAQUETA)]: `${c} / ${chaquetaTalla}`,
+                      }))
+                    }
+                    aria-label={`Color chaqueta ${c}`}
+                    title={c}
+                  />
+                ))}
+              </div>
+            </div>
+            <div className="trp-option">
+              <span className="trp-option-label">Talla chaqueta</span>
+              <div className="trp-option-values">
+                {partesChaqueta.tallas.map((t) => (
+                  <button
+                    key={t}
+                    type="button"
+                    className={norm(chaquetaTalla) === norm(t) ? 'is-active' : ''}
+                    onClick={() =>
+                      setOptions((prev) => ({
+                        ...prev,
+                        [norm(OPT_CHAQUETA)]: `${chaquetaColor} / ${t}`,
+                      }))
+                    }
                   >
-                    {formatSize(value)}
+                    {formatSize(t)}
                   </button>
                 ))}
               </div>
             </div>
-          );
-        })}
+          </>
+        ) : null}
+
+        {optionNames
+          .filter((name) => name !== OPT_CHAQUETA)
+          .map((name) => {
+            const values = Array.from(
+              new Set(
+                variants
+                  .map((v) => v.selectedOptions?.find((o) => o.name === name)?.value)
+                  .filter(Boolean),
+              ),
+            );
+            const esFilaDeColor = norm(name) === 'color camisa';
+            return (
+              <div key={name} className="trp-option">
+                <span className="trp-option-label">{name}</span>
+                <div className={`trp-option-values${esFilaDeColor ? ' trp-option-colors' : ''}`}>
+                  {values.map((value) => (
+                    <button
+                      key={value}
+                      type="button"
+                      className={norm(options[norm(name)]) === norm(value) ? 'is-active' : ''}
+                      style={esFilaDeColor ? {background: colorToHex(value)} : undefined}
+                      onClick={() => setOptions((prev) => ({...prev, [norm(name)]: value}))}
+                      aria-label={esFilaDeColor ? `Color camisa ${value}` : undefined}
+                      title={esFilaDeColor ? value : undefined}
+                    >
+                      {esFilaDeColor ? null : formatSize(value)}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            );
+          })}
 
         {/* ===== Upsell: los combos de la camisa (gorra y chaqueta); licorera para el resto ===== */}
         {/* (el combo camisa + chaqueta Laredo no lleva licorera, por pedido de Camilo) */}
