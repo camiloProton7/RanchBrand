@@ -1180,7 +1180,7 @@ export default function ProductPage() {
           );
         })}
 
-        {/* ===== Upsell: los combos de la camisa (gorra y chaqueta); licorera para el resto ===== */}
+        {/* ===== Upsell: los combos de la camisa (gorra y chaqueta); licorera para el resto (no en combos) ===== */}
         {isCamisa && combosCamisa.length ? (
           <section className="trp-reco" aria-label="Llévalo en combo">
             {combosCamisa.map((combo) => (
@@ -1227,7 +1227,7 @@ export default function ProductPage() {
               </Link>
             ))}
           </section>
-        ) : licorera ? (
+        ) : licorera && !/^combo-/i.test(product.handle || '') ? (
           <RecommendedProduct
             product={{
               handle: licorera.handle,
