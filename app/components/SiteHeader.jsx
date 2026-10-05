@@ -1,5 +1,5 @@
 import {useEffect, useRef, useState} from 'react';
-import {Link, Form} from 'react-router';
+import {Link, Form, useLocation} from 'react-router';
 import {getCartCount} from '~/lib/cart';
 import CartDrawer from '~/components/CartDrawer';
 
@@ -29,6 +29,7 @@ export default function SiteHeader({logoSrc}) {
   const [count, setCount] = useState(0);
   const [cartOpen, setCartOpen] = useState(false);
   const lastY = useRef(0);
+  const {pathname} = useLocation();
 
   useEffect(() => {
     const update = () => setCount(getCartCount());
@@ -49,9 +50,32 @@ export default function SiteHeader({logoSrc}) {
       setHidden(y > lastY.current && y > 140);
       lastY.current = y;
     };
+    // En escritorio (o al agrandar la ventana) el header siempre debe estar a la
+    // vista. Como onScroll no corre por encima de 1024px, si quedaba oculto en
+    // mobile nadie lo volvía a mostrar y el menú "no salía" en escritorio.
+    const onResize = () => {
+      if (window.innerWidth > 1024) {
+        setHidden(false);
+        lastY.current = window.scrollY;
+      }
+    };
     window.addEventListener('scroll', onScroll, {passive: true});
-    return () => window.removeEventListener('scroll', onScroll);
+    window.addEventListener('resize', onResize);
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('resize', onResize);
+    };
   }, []);
+
+  // Al cambiar de página: el header vuelve a su sitio y el menú móvil se cierra.
+  // Antes el estado "oculto" seguía vivo entre páginas, así que navegando en mobile
+  // el menú se perdía (el header seguía escondido arriba) y el menú desplegado se
+  // quedaba abierto encima del contenido de la página nueva.
+  useEffect(() => {
+    setHidden(false);
+    setOpen(false);
+    lastY.current = typeof window === 'undefined' ? 0 : window.scrollY;
+  }, [pathname]);
 
   return (
     <>
@@ -65,7 +89,7 @@ export default function SiteHeader({logoSrc}) {
             <div key={item.label} className="tr-site-nav-item">
               <Link to={item.href}>
                 {item.label}
-                {item.children ? <span className="tr-site-nav-caret">▾</span> : null}
+                {item.children ? <span className="tr-site-nav-caret" aria-hidden="true" /> : null}
               </Link>
               {item.children ? (
                 <div className="tr-site-dropdown">

@@ -105,8 +105,15 @@
 }
 
 .tr-site-nav-caret {
-  font-size: 9px;
-  margin-left: 3px;
+  /* dibujado con CSS: el glifo ▾ no existe en la fuente de la tienda y salía un punto */
+  border-left: 3.5px solid transparent;
+  border-right: 3.5px solid transparent;
+  border-top: 4px solid currentColor;
+  display: inline-block;
+  height: 0;
+  margin-left: 5px;
+  vertical-align: middle;
+  width: 0;
 }
 
 .tr-site-dropdown {
