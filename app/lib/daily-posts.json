@@ -1,5 +1,146 @@
 [
   {
+    "slug": "cuantos-potreros-necesitas-rotacion-divisiones-sequia",
+    "title": "Cuántos potreros necesitas para rotar en sequía: el cálculo de las divisiones",
+    "excerpt": "La rotación no depende del tamaño del rancho, sino del descanso que el pasto pide y de los días que el hato se queda encima. Esta es la cuenta para saber cuántas divisiones y cuántos bebederos montar antes de la seca.",
+    "date": "2026-10-05",
+    "category": "Campo",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Milsap_Ranch_in_Deuel_County_Spotlighted_for_Excellence_in_Grazing_%283_of_4_images%29_%2814605594885%29.jpg/1920px-Milsap_Ranch_in_Deuel_County_Spotlighted_for_Excellence_in_Grazing_%283_of_4_images%29_%2814605594885%29.jpg",
+    "imageAlt": "Ganado pastando en potreros divididos con cerca para rotación en un rancho de pradera seca",
+    "blocks": [
+      {
+        "type": "p",
+        "text": "En sequía todos hablan de rotar y casi nadie dice cuántas divisiones hacen falta. El error típico es dividir por dividir: se levantan seis potreros sin calcular nada y el pasto igual se pela, porque el descanso que el hato le da a cada lote no alcanza para que la planta rebrote. El número de potreros no es un gusto ni una copia del vecino: es una cuenta que sale del descanso que el pasto necesita y de los días que el ganado se queda encima. Y en sequía esa cuenta aprieta, porque el descanso se estira y la ocupación tiene que acortarse."
+      },
+      {
+        "type": "h2",
+        "text": "La fórmula, sin adornos"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Días de descanso dividido por días de ocupación, más uno. El potrero que sobra en esa suma es el que el hato está pastoreando mientras los demás descansan; olvidarlo es el error más común y el que descuadra la rotación entera.",
+          "En época de lluvia, con 30 días de descanso y 1 día de ocupación por franja, salen 31 divisiones. En sequía, con 70 días de descanso y la misma ocupación, la cuenta sube a 71: el mismo rancho pide el doble de potreros cuando el pasto crece despacio.",
+          "Si no puedes construir 71 divisiones, no las necesitas: alargas la ocupación por franja y aceptas perder algo de eficiencia. Con 2 días de ocupación y 70 de descanso el número baja a 36; con 3 días, baja a 24.",
+          "El punto práctico: entre 20 y 30 divisiones bien trazadas y con agua rinden más que 60 mal hechas, con cerca floja y sin bebedero. La rotación se rompe por el potrero que no tiene agua, no por el que falta.",
+          "Mide el descanso real de tu pasto y no el del manual: si el potrero tarda 60 días en volver a 25 cm de altura, ese es tu número de descanso, así el papel diga 30."
+        ]
+      },
+      {
+        "type": "h2",
+        "text": "El plano lo manda el agua, no la cerca"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Traza primero las líneas de agua y después las cercas. La tubería cuesta más y no se mueve de sitio; la cerca eléctrica se rehace en una tarde cuando aprendes a leer el potrero.",
+          "Cada división necesita bebedero. Un potrero sin agua no entra a la rotación: se convierte en el lote donde el hato se queda más días de los debidos y se pela hasta el suelo.",
+          "Pon el punto de agua en el borde o en una esquina, nunca en el centro del potrero. Así el animal bebe y sigue pastoreando, y el pisoteo no se concentra sobre el mejor pasto.",
+          "Prueba la presión con el hato bebiendo. Una división nueva que se queda sin caudal descuadra toda la rotación y obliga a devolver el ganado al potrero que ya estaba descansando.",
+          "Prefiere potreros alargados y angostos antes que cuadrados grandes: el hato los pastorea parejo, en vez de escoger la mitad buena y dejar la otra sin tocar."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "Rotar en sequía no es tener muchos potreros, es tener los suficientes y con agua en cada uno. La cuenta se hace en el papel, en lluvia, y se paga sola cuando el verano llega. No seguimos modas, las marcamos. Si administras tu pradera con ese criterio, explora la colección de gorras y chaquetas The Ranch, hecha para quienes miden antes de mover el hato."
+      }
+    ]
+  },
+  {
+    "slug": "cosecha-almacenamiento-agua-ganado-sequia",
+    "title": "Cosecha y almacenamiento de agua para el ganado: la reserva que se llena en lluvia",
+    "excerpt": "El jagüey baja, el pozo se aprieta y el tanque no alcanza. La salida no es acarrear en plena seca, sino capturar y guardar el agua cuando sobra: así se calcula, se almacena y se entrega al bebedero.",
+    "date": "2026-10-05",
+    "category": "Campo",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/66/Dam_to_Row_-_Gravity_Flow_Water_at_P%26J_Ranches_%2820190828-NRCS-LSC-0292%29.jpg/1920px-Dam_to_Row_-_Gravity_Flow_Water_at_P%26J_Ranches_%2820190828-NRCS-LSC-0292%29.jpg",
+    "imageAlt": "Represa de agua en un rancho con distribución por gravedad hacia los bebederos del ganado",
+    "blocks": [
+      {
+        "type": "p",
+        "text": "El agua de la sequía no se consigue en la sequía: se guarda antes. Y guardar no es solo tener un pozo: es capturar el agua que cae sobre los techos y la que corre por los caminos del rancho, y meterla en un depósito antes de que se vaya. El que llega al verano con los tanques llenos no sufre la seca, la administra; el que llega con los tanques a la mitad sale a comprar agua al precio que le pongan."
+      },
+      {
+        "type": "h2",
+        "text": "Cuánta agua puede guardar tu rancho (el cálculo)"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Un techo de 100 metros cuadrados, en una zona de 1.000 mm de lluvia al año, captura 100 metros cúbicos: cien mil litros. Ese galpón o ese corral que ya tienes puede llenar un tanque sin obra nueva.",
+          "La lluvia sobre un terreno inclinado también se cosecha: un canal de corona o un desvío que lleve la escorrentía hacia un reservorio multiplica lo que uno imagina y descarga en el jagüey sin ensuciarlo con arrastre.",
+          "Toda captación necesita una primera descarga: los primeros 20 o 30 litros por cada 10 metros cuadrados de techo se botan por un desvío, porque ahí va el polvo, el estiércol de las aves y la suciedad acumulada del año.",
+          "Un metro cuadrado de espejo de agua libre pierde entre 5 y 10 litros al día solo por evaporación. Un reservorio destapado en zona caliente puede devolver al cielo la cuarta parte de lo que le echaste.",
+          "El depósito se mide contra el consumo, no contra el deseo: de tres a siete días de consumo total del hato como mínimo. Treinta vacas lactantes beben entre 2.000 y 2.700 litros diarios, no 600."
+        ]
+      },
+      {
+        "type": "h2",
+        "text": "De la captación al bebedero: gravedad, sedimentación y filtro"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Prefiere gravedad antes que bomba. Un reservorio en la parte alta del rancho entrega agua al bebedero sin energía y sin fallas: primero se busca la cota, después se compra la tubería.",
+          "Sedimentador antes de todo: un tanque o una pila donde la arena y el limo caigan al fondo y no lleguen al bebedero ni taponen la conducción.",
+          "Filtro de grava o de bolsa en la entrada del tanque y malla en el rebose. Lo que no entra al depósito no hay que sacarlo después con pala.",
+          "Tapa y sombrea los tanques. El sol cría algas, entibia el agua —y el animal caliente bebe menos— y se come la reserva por evaporación. Un tanque destapado es un tanque a medias.",
+          "Revisa el sedimentador y limpia los bebederos cada semana, y anota el consumo del día. Una caída mayor al 10% de un día para otro avisa de una fuga antes de que se note en el pasto."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "Guardar agua es el seguro más barato del rancho: cada techo, cada cuneta y cada cota se convierten en litros para el verano. El agua no se ruega en enero, se cosecha en mayo. No seguimos modas, las marcamos. Si trabajas tu rancho con esa previsión, explora la colección de gorras y chaquetas The Ranch, hecha para quienes resuelven hoy lo que otros van a lamentar después."
+      }
+    ]
+  },
+  {
+    "slug": "banco-forrajero-cana-pasto-corte-reserva-sequia",
+    "title": "Banco forrajero: la reserva viva que se cosecha en plena sequía",
+    "excerpt": "El heno se acaba y el potrero amarillo no da más. Lo que no se acaba es un área sembrada de caña, pasto de corte y leguminosa, dedicada a cortar y llevar forraje al hato todos los días del verano.",
+    "date": "2026-10-05",
+    "category": "Campo",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/Sugarcane_Field_Srirangapatna_Karnataka_Jul22_R16_06192.jpg/1920px-Sugarcane_Field_Srirangapatna_Karnataka_Jul22_R16_06192.jpg",
+    "imageAlt": "Cultivo de caña forrajera alto y verde, banco de forraje de corte para la época seca",
+    "blocks": [
+      {
+        "type": "p",
+        "text": "El heno se acaba, el ensilaje se acaba, y el potrero amarillo no da más. Lo que no se acaba es lo que está sembrado en un banco forrajero: un área del rancho destinada solo a producir forraje de corte, para llevarle al hato todos los días, incluso cuando la pradera ya se rindió. Es la reserva viva del rancho, la única que sigue creciendo mientras la seca aprieta, porque recibe el mejor suelo, toda el agua y toda la atención que al potrero no se le puede dar."
+      },
+      {
+        "type": "h2",
+        "text": "Qué sembrar, según la zona y el agua disponible"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Caña de azúcar o caña forrajera: la reserva más segura del trópico. Aguanta la sequía, se corta y se pica, y bien acompañada de urea y mineral da forraje de mantenimiento para todo un verano.",
+          "Pastos de corte tipo maralfalfa, mombasa, elefante o king grass: crecen rápido con agua y dan dos o tres cortes al año. Exigen buen suelo, abono y no aguantan el pisoteo.",
+          "Leguminosas intercaladas o en franja aparte —leucaena, morera, guandul—: aportan la proteína que es justo lo que falta cuando todo está seco y el forraje solo da fibra.",
+          "Las leguminosas se podan cada 45 a 60 días y se llevan al comedero picadas. Nunca se dan al pastoreo directo: no resisten el diente pegado al suelo y se pierden en una sola entrada.",
+          "Sorgo forrajero cuando hay lluvia de sobra: rápido, de altísimo rendimiento, y sirve tanto para dar fresco como para ensilar si el verano se adelanta."
+        ]
+      },
+      {
+        "type": "h2",
+        "text": "Cuánto sembrar y cómo administrar el corte"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Calcula la demanda antes de sembrar: veinte vacas de 400 kilos comen unos 220 kilos de materia seca al día. Si el banco rinde 20 toneladas de materia seca por hectárea al año, bien manejada cubre buena parte de la demanda diaria de ese hato.",
+          "Corta por franjas escalonadas y no todo el mismo día: divide el banco en secciones y cosecha una cada semana, para tener forraje fresco y tierno siempre disponible.",
+          "Respeta la altura de corte: en pastos de corte, de 10 a 15 cm sobre el suelo; en caña, parejo y bajo, sin dejarla florear del todo. Cortar muy alto desperdicia rebrote y muy bajo mata la cepa.",
+          "Abona y corrige el suelo después de cada corte. El banco forrajero se explota como cultivo, no como potrero: si se le ordeña sin devolverle nada, en dos años rinde la mitad.",
+          "Pica y ofrece en comedero, con agua limpia cerca, y guarda excedente para el pico del verano. Para el momento más duro, el forraje picado con urea al 1% —respetando el tope de urea de la dieta— o el ensilaje bien sellado son la carta que salva el hato."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "Un banco forrajero es la diferencia entre rogarle pasto al cielo y tenerlo sembrado en el mejor lote del rancho. Se establece en lluvia, se corta en seca y se paga solo el primer verano que salva. No seguimos modas, las marcamos. Si administras tu rancho con esa visión de largo plazo, explora la colección de gorras y chaquetas The Ranch, hecha para quienes siembran pensando en la temporada que viene."
+      }
+    ]
+  },
+  {
     "slug": "pastoreo-diferido-pastos-en-pie-sequia",
     "title": "Pastoreo diferido: el potrero que se guarda en pie para la sequía",
     "excerpt": "Diferir un potrero es guardar pasto sin cortarlo: se deja crecer durante la época de lluvias y se pastorea cuando aprieta la seca. Aquí, cómo elegir el potrero, cuánto dejarlo crecer y cómo usarlo sin pelarlo.",
