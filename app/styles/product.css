@@ -1563,8 +1563,19 @@
 
 /* ===== Producto recomendado (oferta destacada, -10%) ===== */
 .trp-reco {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
   margin: 20px 0;
   width: 100%;
+}
+
+/* Los títulos de combo son largos: se permiten hasta dos líneas antes de recortar */
+.trp-reco-card .trp-reco-title {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  white-space: normal;
 }
 
 .trp-reco-card {

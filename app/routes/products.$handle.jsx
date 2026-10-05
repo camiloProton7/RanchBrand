@@ -295,13 +295,31 @@ export async function loader({params, context}) {
       camisaCombo = camisaData.product || null;
     }
 
-    let comboCamisaProduct = null;
+    // Combos que se ofrecen en la ficha de la camisa. Se piden por handle explícito
+    // (no se depende de que la consulta devuelva el handle) y el orden define el de la ficha.
+    const combosCamisa = [];
     if (isCamisa) {
-      const comboData = await storefront.query(PRODUCT_QUERY, {
-        variables: {handle: 'combo-camisa-gorra'},
-        cache: storefront.CacheLong(),
+      const definiciones = [
+        {handle: 'combo-camisa-gorra', etiqueta: 'con la gorra'},
+        {handle: 'combo-camisa-outdoor-chaqueta-laredo', etiqueta: 'con la chaqueta'},
+      ];
+      const respuestas = await Promise.all(
+        definiciones.map((def) =>
+          storefront.query(PRODUCT_QUERY, {
+            variables: {handle: def.handle},
+            cache: storefront.CacheLong(),
+          }),
+        ),
+      );
+      respuestas.forEach((data, i) => {
+        if (data?.product) {
+          combosCamisa.push({
+            ...data.product,
+            handleCombo: definiciones[i].handle,
+            etiqueta: definiciones[i].etiqueta,
+          });
+        }
       });
-      comboCamisaProduct = comboData.product || null;
     }
 
     return {
@@ -315,7 +333,7 @@ export async function loader({params, context}) {
       isComboCamisa,
       camisaCombo,
       isCamisa,
-      comboCamisaProduct,
+      combosCamisa,
     };
   } catch (error) {
     console.error(`Producto ${handle} falló`, error);
@@ -330,7 +348,7 @@ export async function loader({params, context}) {
       isComboCamisa: false,
       camisaCombo: null,
       isCamisa: false,
-      comboCamisaProduct: null,
+      combosCamisa: [],
     };
   }
 }
@@ -513,7 +531,7 @@ function formatSize(value) {
 const ATTRS = ['Edición limitada', 'Ajuste regulable'];
 
 export default function ProductPage() {
-  const {product, licorera, reviews, related, similar, comboGorras, isCombo, isComboCamisa, camisaCombo, isCamisa, comboCamisaProduct} =
+  const {product, licorera, reviews, related, similar, comboGorras, isCombo, isComboCamisa, camisaCombo, isCamisa, combosCamisa} =
     useLoaderData();
   const rootData = useRouteLoaderData('root');
   const logoSrc = rootData?.header?.shop?.brand?.logo?.image?.url;
@@ -1160,46 +1178,52 @@ export default function ProductPage() {
           );
         })}
 
-        {/* ===== Upsell: combo para la camisa, licorera para el resto ===== */}
-        {isCamisa && comboCamisaProduct ? (
-          <section className="trp-reco" aria-label="Llévalo en combo con la gorra">
-            <Link className="trp-reco-card" to="/products/combo-camisa-gorra">
-              {comboCamisaProduct.featuredImage?.url ? (
-                <img
-                  className="trp-reco-img"
-                  src={optimizeImage(comboCamisaProduct.featuredImage.url, 400)}
-                  srcSet={imageSrcSet(comboCamisaProduct.featuredImage.url, [300, 400, 600])}
-                  sizes="(min-width: 900px) 380px, 45vw"
-                  alt=""
-                  loading="lazy"
-                />
-              ) : product.featuredImage?.url ? (
-                <img
-                  className="trp-reco-img"
-                  src={optimizeImage(product.featuredImage.url, 400)}
-                  srcSet={imageSrcSet(product.featuredImage.url, [300, 400, 600])}
-                  sizes="(min-width: 900px) 380px, 45vw"
-                  alt=""
-                  loading="lazy"
-                />
-              ) : null}
-              <div className="trp-reco-info">
-                <span className="trp-reco-tag">🔥 Llévalo en combo con la gorra</span>
-                <h3 className="trp-reco-title">Combo Camisa + Gorra</h3>
-                <div className="trp-reco-price">
-                  {comboCamisaProduct.compareAtPriceRange?.minVariantPrice?.amount ? (
-                    <s className="trp-reco-price-orig">
-                      {formatPrice(comboCamisaProduct.compareAtPriceRange.minVariantPrice.amount)}
-                    </s>
-                  ) : null}
-                  <strong className="trp-reco-price-final">
-                    {formatPrice(comboCamisaProduct.priceRange?.minVariantPrice?.amount)}
-                  </strong>
-                  <span className="trp-reco-badge">Combo</span>
+        {/* ===== Upsell: los combos de la camisa (gorra y chaqueta); licorera para el resto ===== */}
+        {isCamisa && combosCamisa.length ? (
+          <section className="trp-reco" aria-label="Llévalo en combo">
+            {combosCamisa.map((combo) => (
+              <Link
+                className="trp-reco-card"
+                key={combo.handleCombo}
+                to={`/products/${combo.handleCombo}`}
+              >
+                {combo.featuredImage?.url ? (
+                  <img
+                    className="trp-reco-img"
+                    src={optimizeImage(combo.featuredImage.url, 400)}
+                    srcSet={imageSrcSet(combo.featuredImage.url, [300, 400, 600])}
+                    sizes="(min-width: 900px) 380px, 45vw"
+                    alt=""
+                    loading="lazy"
+                  />
+                ) : product.featuredImage?.url ? (
+                  <img
+                    className="trp-reco-img"
+                    src={optimizeImage(product.featuredImage.url, 400)}
+                    srcSet={imageSrcSet(product.featuredImage.url, [300, 400, 600])}
+                    sizes="(min-width: 900px) 380px, 45vw"
+                    alt=""
+                    loading="lazy"
+                  />
+                ) : null}
+                <div className="trp-reco-info">
+                  <span className="trp-reco-tag">🔥 Llévalo en combo {combo.etiqueta}</span>
+                  <h3 className="trp-reco-title">{combo.title}</h3>
+                  <div className="trp-reco-price">
+                    {combo.compareAtPriceRange?.minVariantPrice?.amount ? (
+                      <s className="trp-reco-price-orig">
+                        {formatPrice(combo.compareAtPriceRange.minVariantPrice.amount)}
+                      </s>
+                    ) : null}
+                    <strong className="trp-reco-price-final">
+                      {formatPrice(combo.priceRange?.minVariantPrice?.amount)}
+                    </strong>
+                    <span className="trp-reco-badge">Combo</span>
+                  </div>
                 </div>
-              </div>
-              <span className="trp-reco-cta">Ver combo</span>
-            </Link>
+                <span className="trp-reco-cta">Ver combo</span>
+              </Link>
+            ))}
           </section>
         ) : licorera ? (
           <RecommendedProduct
