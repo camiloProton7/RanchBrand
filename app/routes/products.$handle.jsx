@@ -593,8 +593,9 @@ export default function ProductPage() {
   const ratioFotoVertical = useMemo(() => {
     const p = allImages?.[0];
     if (!p?.w || !p?.h) return null;
-    const r = p.h / p.w;
-    return r >= 1.4 ? Math.min(r, 1.8) : null;
+    // OJO: CSS aspect-ratio es ancho/alto -> para una foto 2:3 va 0.667, no 1.5.
+    const r = p.w / p.h;
+    return r <= 0.72 ? Math.max(r, 0.555) : null;
   }, [allImages]);
 
   // Colores disponibles (de variantes con opción "Color")
