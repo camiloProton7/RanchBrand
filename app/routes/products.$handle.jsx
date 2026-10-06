@@ -666,10 +666,16 @@ export default function ProductPage() {
   // Tope de unidades: el stock real de la talla/color elegidos. Antes se podía pedir 10 de una
   // prenda que solo tiene 2 (carrito imposible); ahora el stepper no pasa del disponible.
   const maxQty = useMemo(() => {
+    // 1) lo que devuelva Shopify (en esta tienda suele venir nulo)
     const disp = selectedVariant?.quantityAvailable;
     if (typeof disp === 'number' && disp > 0) return Math.min(10, disp);
+    // 2) las unidades por talla que lleva la propia ficha (metafield de la tabla de medidas)
+    const valores = (selectedVariant?.selectedOptions || []).map((o) => norm(o.value));
+    const fila = (tablaTallas?.filas || []).find((f) => valores.includes(norm(f.talla)));
+    const u = fila?.unidades;
+    if (typeof u === 'number' && u > 0) return Math.min(10, u);
     return 10;
-  }, [selectedVariant]);
+  }, [selectedVariant, tablaTallas]);
 
   useEffect(() => {
     setQty((q) => Math.min(q, maxQty));
