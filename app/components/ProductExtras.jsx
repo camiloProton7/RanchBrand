@@ -339,3 +339,83 @@ export function RecommendedProduct({product, formatPrice, onAdd}) {
     </section>
   );
 }
+
+/* ===== Tabla de medidas del proveedor (mujer) =====
+   Se llena con el metafield custom.tabla_medidas (tipo json):
+   {
+     "titulo": "Medidas", "nota": "...",
+     "columnas": ["Busto", "Cintura", "Cadera"],
+     "filas": [{"talla": "S", "valores": ["86-89", "69-74", "91-97"],
+                "pulgadas": ["34-35", "27-29", "36-38"]}]
+   }
+   Si el producto no trae el campo, no se muestra nada. */
+export function parseTablaMedidas(valor) {
+  if (!valor) return null;
+  try {
+    const datos = JSON.parse(valor);
+    return datos && Array.isArray(datos.filas) && datos.filas.length ? datos : null;
+  } catch (e) {
+    return null;
+  }
+}
+
+export function SizeTable({datos}) {
+  const [unidad, setUnidad] = useState('cm');
+  if (!datos) return null;
+
+  const columnas =
+    Array.isArray(datos.columnas) && datos.columnas.length
+      ? datos.columnas
+      : ['Busto', 'Cintura', 'Cadera'];
+  const hayPulgadas = datos.filas.some((f) => Array.isArray(f.pulgadas) && f.pulgadas.length);
+  const verPulgadas = unidad === 'in' && hayPulgadas;
+  const valores = (f) =>
+    verPulgadas && Array.isArray(f.pulgadas) && f.pulgadas.length ? f.pulgadas : f.valores || [];
+
+  return (
+    <div className="trp-medidas">
+      <div className="trp-medidas-head">
+        <div>
+          <h4 className="trp-medidas-title">{datos.titulo || 'Medidas'}</h4>
+          <p className="trp-medidas-subtitle">
+            {verPulgadas ? 'Pulgadas' : 'Centímetros'} · guía del proveedor
+          </p>
+        </div>
+        {hayPulgadas ? (
+          <button
+            type="button"
+            className="trp-medidas-toggle"
+            onClick={() => setUnidad(verPulgadas ? 'cm' : 'in')}
+          >
+            {verPulgadas ? 'Ver en cm' : 'Ver en pulgadas'}
+          </button>
+        ) : null}
+      </div>
+
+      <div className="trp-medidas-scroll">
+        <table className="trp-medidas-table">
+          <thead>
+            <tr>
+              <th scope="col">Talla</th>
+              {columnas.map((c) => (
+                <th key={c} scope="col">{c}</th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {datos.filas.map((f) => (
+              <tr key={f.talla}>
+                <th scope="row">{f.talla}</th>
+                {columnas.map((c, i) => (
+                  <td key={c}>{valores(f)[i] || '—'}</td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      {datos.nota ? <p className="trp-medidas-nota">💡 {datos.nota}</p> : null}
+    </div>
+  );
+}

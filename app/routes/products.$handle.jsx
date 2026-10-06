@@ -6,6 +6,8 @@ import {Analytics} from '@shopify/hydrogen';
 import {
   TrustBadges,
   SizeGuide,
+  SizeTable,
+  parseTablaMedidas,
   isApparel,
   ProductAccordion,
   RecommendedProduct,
@@ -88,6 +90,7 @@ const PRODUCT_QUERY = `#graphql
       description
       productType
       tags
+      metafield(namespace: "custom", key: "tabla_medidas") { value }
       featuredImage {
         url
         altText
@@ -533,6 +536,7 @@ const ATTRS = ['Edición limitada', 'Ajuste regulable'];
 export default function ProductPage() {
   const {product, licorera, reviews, related, similar, comboGorras, isCombo, isComboCamisa, camisaCombo, isCamisa, combosCamisa} =
     useLoaderData();
+  const tablaTallas = parseTablaMedidas(product?.metafield?.value);
   const rootData = useRouteLoaderData('root');
   const logoSrc = rootData?.header?.shop?.brand?.logo?.image?.url;
 
@@ -1001,6 +1005,12 @@ export default function ProductPage() {
             <SizeGuide />
           </div>
         ) : null}
+
+        {tablaTallas ? (
+          <div className="trp-size-escritorio">
+            <SizeTable datos={tablaTallas} />
+          </div>
+        ) : null}
       </div>
 
       <div className="trp-side">
@@ -1363,6 +1373,12 @@ export default function ProductPage() {
       {isApparel(product.productType, product.title) ? (
         <div className="trp-size-movil">
           <SizeGuide />
+        </div>
+      ) : null}
+
+      {tablaTallas ? (
+        <div className="trp-size-movil">
+          <SizeTable datos={tablaTallas} />
         </div>
       ) : null}
 

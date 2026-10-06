@@ -1925,3 +1925,89 @@
     grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 }
+
+/* ===== Tabla de medidas del proveedor (prendas de mujer) ===== */
+.trp-medidas {
+  margin: 16px 0;
+  padding: 16px 14px;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  border-radius: 14px;
+  background: #f5f0e6;
+  color: #111;
+}
+.trp-medidas-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+.trp-medidas-title {
+  margin: 0;
+  font-size: 15px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.trp-medidas-subtitle {
+  margin: 3px 0 0;
+  font-size: 12px;
+  opacity: 0.65;
+}
+.trp-medidas-toggle {
+  flex: none;
+  padding: 6px 12px;
+  border: 1px solid #b34a2a;
+  border-radius: 999px;
+  background: transparent;
+  color: #b34a2a;
+  font-size: 12px;
+  line-height: 1;
+  cursor: pointer;
+}
+.trp-medidas-toggle:hover {
+  background: #b34a2a;
+  color: #f5f0e6;
+}
+.trp-medidas-scroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.trp-medidas-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+.trp-medidas-table th,
+.trp-medidas-table td {
+  padding: 8px 10px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  text-align: center;
+  white-space: nowrap;
+}
+.trp-medidas-table thead th {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  opacity: 0.7;
+}
+.trp-medidas-table tbody th {
+  text-align: left;
+  font-weight: 700;
+}
+.trp-medidas-table tbody tr:last-child th,
+.trp-medidas-table tbody tr:last-child td {
+  border-bottom: 0;
+}
+.trp-medidas-nota {
+  margin: 12px 0 0;
+  font-size: 12.5px;
+  line-height: 1.45;
+  opacity: 0.8;
+}
+
+@media (min-width: 1024px) {
+  .trp-medidas {
+    padding: 18px;
+  }
+}
