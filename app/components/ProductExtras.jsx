@@ -208,7 +208,7 @@ export function SizeGuide() {
 
 /* ===== Acordeón específico por tipo de prenda ===== */
 
-function getAccordionSections(productType, title, description) {
+function getAccordionSections(productType, title, description, ficha) {
   const type = detectType(productType, title);
   const sections = [];
 
@@ -216,6 +216,9 @@ function getAccordionSections(productType, title, description) {
     sections.push({key: 'desc', title: 'Descripción', body: description});
   }
 
+  // Las prendas con ficha propia (proveedor) NO llevan los textos genéricos por tipo:
+  // decir "impermeable" de una chaqueta de algodón es información falsa.
+  if (!ficha) {
   if (type === 'jacket') {
     sections.push(
       {
@@ -243,8 +246,10 @@ function getAccordionSections(productType, title, description) {
     });
   }
 
+  } // fin de los textos por tipo
+
   // Protección UV: clave para gorras y chaquetas
-  if (type === 'cap' || type === 'jacket') {
+  if (!ficha && (type === 'cap' || type === 'jacket')) {
     sections.push({
       key: 'uv',
       title: 'Protección UV',
@@ -262,21 +267,25 @@ function getAccordionSections(productType, title, description) {
         ? 'Algodón resistente y duradero. Lava a mano con agua fría y seca a la sombra para conservar la forma y el color.'
         : 'Confeccionada con materiales de alta calidad y costuras reforzadas. Lava a máquina con agua fría, no uses blanqueador y seca a la sombra.';
 
-  sections.push(
-    {key: 'materials', title: 'Materiales y cuidado', body: materials},
-    {
-      key: 'shipping',
-      title: 'Envíos, cambios y garantía',
-      body: 'Envío gratis a toda Colombia (2–5 días hábiles). Cambios fáciles dentro de los 30 días. Garantía de 6 meses por defectos de fabricación.',
-    },
-  );
+  // Con ficha propia, los materiales reales ya están en el bloque de medidas.
+  if (!ficha) {
+    sections.push({key: 'materials', title: 'Materiales y cuidado', body: materials});
+  }
+
+  sections.push({
+    key: 'shipping',
+    title: 'Envíos, cambios y garantía',
+    body: ficha?.preventa
+      ? `Artículo en preventa: se despacha a partir del ${ficha.preventa}. Envío gratis a toda Colombia. Cambios dentro de los 30 días y garantía por defectos de fabricación.`
+      : 'Envío gratis a toda Colombia (2–5 días hábiles). Cambios fáciles dentro de los 30 días. Garantía de 6 meses por defectos de fabricación.',
+  });
 
   return sections;
 }
 
-export function ProductAccordion({productType, title, description}) {
+export function ProductAccordion({productType, title, description, ficha}) {
   const [open, setOpen] = useState(0);
-  const sections = getAccordionSections(productType, title, description);
+  const sections = getAccordionSections(productType, title, description, ficha);
 
   return (
     <div className="trp-accordion">
@@ -355,7 +364,10 @@ export function parseTablaMedidas(valor) {
     const datos = JSON.parse(valor);
     if (!datos) return null;
     const tieneFilas = Array.isArray(datos.filas) && datos.filas.length > 0;
-    const tieneFicha = Boolean(datos.materiales) || (Array.isArray(datos.cuidados) && datos.cuidados.length > 0);
+    const tieneFicha =
+      Boolean(datos.materiales) ||
+      (Array.isArray(datos.detalles) && datos.detalles.length > 0) ||
+      (Array.isArray(datos.cuidados) && datos.cuidados.length > 0);
     return tieneFilas || tieneFicha ? datos : null;
   } catch (e) {
     return null;
@@ -425,6 +437,17 @@ export function SizeTable({datos}) {
           </tbody>
         </table>
       </div>
+      ) : null}
+
+      {Array.isArray(datos.detalles) && datos.detalles.length ? (
+        <div className="trp-medidas-seccion">
+          <h5>Detalles</h5>
+          <ul>
+            {datos.detalles.map((c) => (
+              <li key={c}>{c}</li>
+            ))}
+          </ul>
+        </div>
       ) : null}
 
       {datos.materiales ? (

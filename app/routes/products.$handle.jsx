@@ -432,9 +432,15 @@ function formatPrice(amount, currency = 'COP') {
 }
 
 // Beneficios clave del producto (bullets visibles bajo el título)
-function getBenefits(productType, title) {
-  const t = `${productType || ''} ${title || ''}`.toLowerCase();
+function getBenefits(productType, title, ficha) {
   const b = [];
+  if (ficha) {
+    // Prenda con ficha propia: solo datos ciertos (nada de impermeable/UV si no aplica).
+    if (ficha.preventa) b.push(`🔔 Preventa — llega el ${ficha.preventa}`);
+    b.push('🚚 Envío gratis a toda Colombia');
+    return b;
+  }
+  const t = `${productType || ''} ${title || ''}`.toLowerCase();
   if (t.includes('chaqueta') || t.includes('saco') || t.includes('chaleco') || t.includes('abrigo') || t.includes('ruana')) {
     b.push('☔ Impermeable', '🔥 Termo-regulación', '☀️ Protección UV');
   } else if (t.includes('gorra')) {
@@ -1203,7 +1209,7 @@ export default function ProductPage() {
 
             {/* Beneficios clave */}
             <ul className="trp-benefits">
-              {getBenefits(product.productType, product.title).map((b) => (
+              {getBenefits(product.productType, product.title, tablaTallas).map((b) => (
                 <li key={b}>{b}</li>
               ))}
             </ul>
@@ -1392,6 +1398,7 @@ export default function ProductPage() {
           productType={product.productType}
           title={product.title}
           description={product.description}
+          ficha={tablaTallas}
         />
 
         <div className={`trp-stock ${isOut ? 'is-out' : ''}`}>
