@@ -111,6 +111,7 @@ const PRODUCT_QUERY = `#graphql
         nodes {
           id
           availableForSale
+          quantityAvailable
           selectedOptions { name value }
           price { amount currencyCode }
           image { url altText }
@@ -542,7 +543,12 @@ const ATTRS = ['Edición limitada', 'Ajuste regulable'];
 export default function ProductPage() {
   const {product, licorera, reviews, related, similar, comboGorras, isCombo, isComboCamisa, camisaCombo, isCamisa, combosCamisa} =
     useLoaderData();
-  const tablaTallas = parseTablaMedidas(product?.metafield?.value);  const rootData = useRouteLoaderData('root');
+  const tablaTallas = parseTablaMedidas(product?.metafield?.value);
+  // Upsell de la licorera: no se muestra si el producto lleva la etiqueta "sin-licorera"
+  // (se controla por producto desde Shopify) ni en el combo Laredo.
+  const sinLicorera =
+    (product?.tags || []).some((t) => String(t).toLowerCase().trim() === 'sin-licorera') ||
+    product?.handle === 'combo-camisa-outdoor-chaqueta-laredo';  const rootData = useRouteLoaderData('root');
   const logoSrc = rootData?.header?.shop?.brand?.logo?.image?.url;
 
   const [activeImage, setActiveImage] = useState(0);
@@ -656,6 +662,18 @@ export default function ProductPage() {
       ) || variants[0]
     );
   }, [variants, options, color]);
+
+  // Tope de unidades: el stock real de la talla/color elegidos. Antes se podía pedir 10 de una
+  // prenda que solo tiene 2 (carrito imposible); ahora el stepper no pasa del disponible.
+  const maxQty = useMemo(() => {
+    const disp = selectedVariant?.quantityAvailable;
+    if (typeof disp === 'number' && disp > 0) return Math.min(10, disp);
+    return 10;
+  }, [selectedVariant]);
+
+  useEffect(() => {
+    setQty((q) => Math.min(q, maxQty));
+  }, [maxQty]);
 
   // Inicializa color y talla con los primeros valores disponibles.
   useEffect(() => {
@@ -1342,7 +1360,7 @@ export default function ProductPage() {
               </Link>
             ))}
           </section>
-        ) : licorera && product.handle !== 'combo-camisa-outdoor-chaqueta-laredo' ? (
+        ) : licorera && !sinLicorera ? (
           <RecommendedProduct
             product={{
               handle: licorera.handle,
@@ -1447,7 +1465,8 @@ export default function ProductPage() {
             <span>{qty}</span>
             <button
               type="button"
-              onClick={() => setQty((q) => Math.min(10, q + 1))}
+              onClick={() => setQty((q) => Math.min(maxQty, q + 1))}
+              disabled={qty >= maxQty}
               aria-label="Más"
             >
               +
