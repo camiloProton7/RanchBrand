@@ -27,6 +27,7 @@ const MENU_ITEMS = [
     ],
   },
   {label: 'Combos', href: '/collections/combo-ranch-premium'},
+  {label: 'Mujer', href: '/collections/chaquetas-mujer'},
 ];
 
 /**
