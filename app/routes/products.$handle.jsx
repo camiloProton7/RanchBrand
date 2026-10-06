@@ -1209,6 +1209,12 @@ export default function ProductPage() {
               <span className="trp-stars-link">Ver reseñas</span>
             </button>
 
+            {/* La descripción va aquí en móvil: en el acordeón quedaba al final de la ficha
+                y nadie la leía. En escritorio sigue dentro del acordeón. */}
+            {product.description && tablaTallas ? (
+              <p className="trp-desc-movil">{product.description}</p>
+            ) : null}
+
             {/* Beneficios clave */}
             <ul className="trp-benefits">
               {getBenefits(product.productType, product.title, tablaTallas).map((b) => (

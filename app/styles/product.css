@@ -2073,3 +2073,23 @@
   cursor: default;
   opacity: 0.35;
 }
+
+/* Descripción de las prendas importadas: en móvil va junto al título y el precio
+   (en el acordeón quedaba al final de la ficha). En escritorio no cambia nada. */
+.trp-desc-movil {
+  display: none;
+}
+
+@media (max-width: 899px) {
+  .trp-desc-movil {
+    display: block;
+    margin: 12px 0 2px;
+    font-size: 14.5px;
+    line-height: 1.55;
+    color: #3a3730;
+  }
+
+  .trp-acc-item.trp-acc-desc {
+    display: none;
+  }
+}

@@ -290,7 +290,12 @@ export function ProductAccordion({productType, title, description, ficha}) {
   return (
     <div className="trp-accordion">
       {sections.map((s, i) => (
-        <div key={s.key} className={`trp-acc-item${open === i ? ' is-open' : ''}`}>
+        <div
+          key={s.key}
+          className={`trp-acc-item${open === i ? ' is-open' : ''}${
+            ficha && s.key === 'desc' ? ' trp-acc-desc' : ''
+          }`}
+        >
           <button
             type="button"
             className="trp-acc-head"
