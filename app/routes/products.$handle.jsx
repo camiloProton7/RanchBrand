@@ -94,11 +94,15 @@ const PRODUCT_QUERY = `#graphql
       featuredImage {
         url
         altText
+        width
+        height
       }
       images(first: 50) {
         nodes {
           url
           altText
+          width
+          height
         }
       }
       priceRange { minVariantPrice { amount currencyCode } }
@@ -184,6 +188,8 @@ const CAMISA_COMBO_QUERY = `#graphql
         nodes {
           url
           altText
+          width
+          height
         }
       }
       variants(first: 50) {
@@ -536,8 +542,7 @@ const ATTRS = ['Edición limitada', 'Ajuste regulable'];
 export default function ProductPage() {
   const {product, licorera, reviews, related, similar, comboGorras, isCombo, isComboCamisa, camisaCombo, isCamisa, combosCamisa} =
     useLoaderData();
-  const tablaTallas = parseTablaMedidas(product?.metafield?.value);
-  const rootData = useRouteLoaderData('root');
+  const tablaTallas = parseTablaMedidas(product?.metafield?.value);  const rootData = useRouteLoaderData('root');
   const logoSrc = rootData?.header?.shop?.brand?.logo?.image?.url;
 
   const [activeImage, setActiveImage] = useState(0);
@@ -567,16 +572,30 @@ export default function ProductPage() {
       url: optimizeImage(i.url, 800),
       raw: i.url,
       alt: i.altText || source?.title || '',
+      w: i.width,
+      h: i.height,
     }));
     if (!imgs.length && source?.featuredImage?.url) {
       imgs.push({
         url: optimizeImage(source.featuredImage.url, 800),
         raw: source.featuredImage.url,
         alt: source?.featuredImage?.altText || '',
+        w: source.featuredImage.width,
+        h: source.featuredImage.height,
       });
     }
     return imgs;
   }, [product, camisaCombo, isComboCamisa]);
+
+  // Marco del visor: si la primera foto es vertical (ej. 2:3), el visor toma su proporción
+  // en vez del 4:5 fijo, que recortaba arriba y abajo. Las fotos 1:1 y 4:5 (las de la casa)
+  // siguen exactamente como estaban.
+  const ratioFotoVertical = useMemo(() => {
+    const p = allImages?.[0];
+    if (!p?.w || !p?.h) return null;
+    const r = p.h / p.w;
+    return r >= 1.4 ? Math.min(r, 1.8) : null;
+  }, [allImages]);
 
   // Colores disponibles (de variantes con opción "Color")
   const colors = useMemo(() => {
@@ -921,7 +940,7 @@ export default function ProductPage() {
       <div className="trp-media">
         <div className="trp-gallery">
         {/* ===== Visor visual ===== */}
-        <div className="trp-viewer">
+        <div className="trp-viewer" style={ratioFotoVertical ? {aspectRatio: String(ratioFotoVertical)} : undefined}>
         <div
           ref={trackRef}
           className="trp-viewer-track"
