@@ -17,7 +17,7 @@ const MENU_ITEMS = [
       {label: 'Chaquetas', href: '/collections/chaquetas'},
       {label: 'Sacos Bordados', href: '/collections/bordados'},
       {label: 'Camisas', href: '/collections/camisetas'},
-      {label: 'Camisetas', href: '/perchero'},
+      {label: 'Camisetas', href: '/perchero/', plano: true},
     ],
   },
   {label: 'Combos', href: '/collections/combo-ranch-premium'},
@@ -91,7 +91,7 @@ export default function SiteHeader({logoSrc}) {
         <nav className="tr-site-nav" aria-label="Principal">
           {MENU_ITEMS.map((item) => (
             <div key={item.label} className="tr-site-nav-item">
-              <Link to={item.href}>
+              <Link to={item.href} onClick={item.plano ? (e) => { e.preventDefault(); window.location.assign(item.href); } : undefined}>
                 {item.label}
                 {item.children ? <span className="tr-site-nav-caret" aria-hidden="true" /> : null}
               </Link>
@@ -187,7 +187,14 @@ export default function SiteHeader({logoSrc}) {
               <div key={item.label} className="tr-site-menu-group">
                 <Link
                   to={item.href}
-                  onClick={() => setOpen(false)}
+                  onClick={(e) => {
+                    if (item.plano) {
+                      e.preventDefault();
+                      window.location.assign(item.href);
+                      return;
+                    }
+                    setOpen(false);
+                  }}
                   style={{animationDelay: `${0.06 + i * 0.05}s`}}
                 >
                   <span className="tr-site-menu-num">
