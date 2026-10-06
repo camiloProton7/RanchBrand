@@ -89,12 +89,17 @@ export default function SiteHeader({logoSrc}) {
         </Link>
 
         <nav className="tr-site-nav" aria-label="Principal">
-          {MENU_ITEMS.map((item) => (
+          {MENU_ITEMS.map((item) => {
+            // Los items `plano` (el perchero) se sirven como documento aparte:
+            // con <Link> la navegación de cliente deja la página en blanco.
+            const Etiqueta = item.plano ? "a" : Link;
+            const props = item.plano ? {href: item.href, rel: "external"} : {to: item.href};
+            return (
             <div key={item.label} className="tr-site-nav-item">
-              <Link to={item.href} onClick={item.plano ? (e) => { e.preventDefault(); window.location.assign(item.href); } : undefined}>
+              <Etiqueta {...props}>
                 {item.label}
                 {item.children ? <span className="tr-site-nav-caret" aria-hidden="true" /> : null}
-              </Link>
+              </Etiqueta>
               {item.children ? (
                 <div className="tr-site-dropdown">
                   {item.children.map((child) => (
@@ -105,7 +110,8 @@ export default function SiteHeader({logoSrc}) {
                 </div>
               ) : null}
             </div>
-          ))}
+            );
+          })}
         </nav>
 
         <Form action="/search" method="get" className="tr-site-search" role="search">
@@ -183,25 +189,21 @@ export default function SiteHeader({logoSrc}) {
           </div>
 
           <nav className="tr-site-menu-nav">
-            {MENU_ITEMS.map((item, i) => (
+            {MENU_ITEMS.map((item, i) => {
+              const Etiqueta = item.plano ? "a" : Link;
+              const propsMovil = item.plano ? {href: item.href, rel: "external"} : {to: item.href};
+              return (
               <div key={item.label} className="tr-site-menu-group">
-                <Link
-                  to={item.href}
-                  onClick={(e) => {
-                    if (item.plano) {
-                      e.preventDefault();
-                      window.location.assign(item.href);
-                      return;
-                    }
-                    setOpen(false);
-                  }}
+                <Etiqueta
+                  {...propsMovil}
+                  onClick={() => setOpen(false)}
                   style={{animationDelay: `${0.06 + i * 0.05}s`}}
                 >
                   <span className="tr-site-menu-num">
                     {String(i + 1).padStart(2, '0')}
                   </span>
                   {item.label}
-                </Link>
+                </Etiqueta>
                 {item.children ? (
                   <div className="tr-site-menu-sub">
                     {item.children.map((child) => (
@@ -217,7 +219,8 @@ export default function SiteHeader({logoSrc}) {
                   </div>
                 ) : null}
               </div>
-            ))}
+              );
+            })}
             <a
               className="tr-site-menu-wa"
               href="#"
