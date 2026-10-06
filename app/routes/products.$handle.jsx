@@ -678,7 +678,9 @@ export default function ProductPage() {
     // 2) las unidades por talla que lleva la propia ficha (metafield de la tabla de medidas)
     const valores = (selectedVariant?.selectedOptions || []).map((o) => norm(o.value));
     const fila = (tablaTallas?.filas || []).find((f) => valores.includes(norm(f.talla)));
-    const u = fila?.unidades;
+    const mapa = tablaTallas?.unidades || {};
+    const clave = Object.keys(mapa).find((k) => valores.includes(norm(k)));
+    const u = fila?.unidades ?? (clave ? mapa[clave] : undefined);
     if (typeof u === 'number' && u > 0) return Math.min(10, u);
     return 10;
   }, [selectedVariant, tablaTallas]);
