@@ -353,7 +353,10 @@ export function parseTablaMedidas(valor) {
   if (!valor) return null;
   try {
     const datos = JSON.parse(valor);
-    return datos && Array.isArray(datos.filas) && datos.filas.length ? datos : null;
+    if (!datos) return null;
+    const tieneFilas = Array.isArray(datos.filas) && datos.filas.length > 0;
+    const tieneFicha = Boolean(datos.materiales) || (Array.isArray(datos.cuidados) && datos.cuidados.length > 0);
+    return tieneFilas || tieneFicha ? datos : null;
   } catch (e) {
     return null;
   }
@@ -363,11 +366,12 @@ export function SizeTable({datos}) {
   const [unidad, setUnidad] = useState('cm');
   if (!datos) return null;
 
+  const filas = Array.isArray(datos.filas) ? datos.filas : [];
   const columnas =
     Array.isArray(datos.columnas) && datos.columnas.length
       ? datos.columnas
       : ['Busto', 'Cintura', 'Cadera'];
-  const hayPulgadas = datos.filas.some((f) => Array.isArray(f.pulgadas) && f.pulgadas.length);
+  const hayPulgadas = filas.some((f) => Array.isArray(f.pulgadas) && f.pulgadas.length);
   const verPulgadas = unidad === 'in' && hayPulgadas;
   const valores = (f) =>
     verPulgadas && Array.isArray(f.pulgadas) && f.pulgadas.length ? f.pulgadas : f.valores || [];
@@ -376,9 +380,11 @@ export function SizeTable({datos}) {
     <div className="trp-medidas">
       <div className="trp-medidas-head">
         <div>
-          <h4 className="trp-medidas-title">{datos.titulo || 'Medidas'}</h4>
+          <h4 className="trp-medidas-title">
+            {datos.titulo || (filas.length ? 'Medidas' : 'Detalles de la prenda')}
+          </h4>
           <p className="trp-medidas-subtitle">
-            {verPulgadas ? 'Pulgadas' : 'Centímetros'} · guía del proveedor
+            {filas.length ? `${verPulgadas ? 'Pulgadas' : 'Centímetros'} · guía del proveedor` : 'Ficha del proveedor'}
           </p>
         </div>
         {hayPulgadas ? (
@@ -392,6 +398,7 @@ export function SizeTable({datos}) {
         ) : null}
       </div>
 
+      {filas.length ? (
       <div className="trp-medidas-scroll">
         <table className="trp-medidas-table">
           <thead>
@@ -403,7 +410,7 @@ export function SizeTable({datos}) {
             </tr>
           </thead>
           <tbody>
-            {datos.filas.map((f) => (
+            {filas.map((f) => (
               <tr key={f.talla}>
                 <th scope="row">{f.talla}</th>
                 {columnas.map((c, i) => (
@@ -414,6 +421,25 @@ export function SizeTable({datos}) {
           </tbody>
         </table>
       </div>
+      ) : null}
+
+      {datos.materiales ? (
+        <div className="trp-medidas-seccion">
+          <h5>Materiales</h5>
+          <p>{datos.materiales}</p>
+        </div>
+      ) : null}
+
+      {Array.isArray(datos.cuidados) && datos.cuidados.length ? (
+        <div className="trp-medidas-seccion">
+          <h5>Cuidados</h5>
+          <ul>
+            {datos.cuidados.map((c) => (
+              <li key={c}>{c}</li>
+            ))}
+          </ul>
+        </div>
+      ) : null}
 
       {datos.nota ? <p className="trp-medidas-nota">💡 {datos.nota}</p> : null}
     </div>

@@ -2011,3 +2011,29 @@
     padding: 18px;
   }
 }
+
+.trp-medidas-seccion {
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+}
+.trp-medidas-seccion h5 {
+  margin: 0 0 4px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.7;
+}
+.trp-medidas-seccion p,
+.trp-medidas-seccion li {
+  font-size: 13.5px;
+  line-height: 1.5;
+}
+.trp-medidas-seccion p {
+  margin: 0;
+}
+.trp-medidas-seccion ul {
+  margin: 0;
+  padding-left: 18px;
+}
