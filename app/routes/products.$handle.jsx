@@ -1212,7 +1212,7 @@ export default function ProductPage() {
             {/* La descripción va aquí en móvil: en el acordeón quedaba al final de la ficha
                 y nadie la leía. En escritorio sigue dentro del acordeón. */}
             {product.description && tablaTallas ? (
-              <p className="trp-desc-movil">{product.description}</p>
+              <p className="trp-desc-ficha">{product.description}</p>
             ) : null}
 
             {/* Beneficios clave */}

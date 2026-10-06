@@ -2074,22 +2074,114 @@
   opacity: 0.35;
 }
 
-/* Descripción de las prendas importadas: en móvil va junto al título y el precio
-   (en el acordeón quedaba al final de la ficha). En escritorio no cambia nada. */
-.trp-desc-movil {
+/* Descripción de las prendas de Mujer (importadas): va junto al título y el precio,
+   en móvil y en escritorio; el acordeón ya no la repite. */
+.trp-desc-ficha {
+  margin: 14px 0 4px;
+  padding-left: 14px;
+  border-left: 2px solid rgba(179, 74, 42, 0.35);
+  font-size: 15px;
+  line-height: 1.7;
+  color: #2f2c27;
+}
+
+.trp-acc-item.trp-acc-desc {
   display: none;
 }
 
-@media (max-width: 899px) {
-  .trp-desc-movil {
-    display: block;
-    margin: 12px 0 2px;
-    font-size: 14.5px;
-    line-height: 1.55;
-    color: #3a3730;
-  }
-
-  .trp-acc-item.trp-acc-desc {
-    display: none;
-  }
+/* ------------------------------------------------------------------
+   Ficha de las prendas de Mujer (mercancía importada): acabado premium.
+   Scopeado a .trp-medidas / .trp-desc-ficha, que solo existen en las
+   prendas con ficha propia -> los productos de marca no cambian.
+   ------------------------------------------------------------------ */
+.trp-medidas {
+  padding: 26px 20px;
+  border: 1px solid rgba(179, 74, 42, 0.18);
+  border-radius: 20px;
+  background: #fbf8f2;
+  box-shadow: 0 1px 2px rgba(17, 17, 17, 0.03);
+}
+.trp-medidas-title {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 20px;
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  text-transform: none;
+}
+.trp-medidas-subtitle {
+  margin-top: 6px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #8a7f6e;
+  opacity: 1;
+}
+.trp-medidas-seccion {
+  margin-top: 22px;
+  padding-top: 18px;
+  border-top: 1px solid rgba(17, 17, 17, 0.07);
+}
+.trp-medidas-seccion h5 {
+  margin-bottom: 10px;
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  color: #8a7f6e;
+  opacity: 1;
+}
+.trp-medidas-seccion p,
+.trp-medidas-seccion li {
+  font-size: 14.5px;
+  line-height: 1.65;
+  color: #2f2c27;
+}
+.trp-medidas-seccion ul {
+  margin: 0;
+  padding-left: 0;
+  list-style: none;
+}
+.trp-medidas-seccion ul li {
+  position: relative;
+  margin-bottom: 4px;
+  padding-left: 18px;
+}
+.trp-medidas-seccion ul li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.75em;
+  width: 9px;
+  height: 1px;
+  background: #b34a2a;
+}
+.trp-medidas-preventa {
+  margin-bottom: 18px;
+  padding: 7px 14px;
+  background: rgba(179, 74, 42, 0.08);
+  border: 1px solid rgba(179, 74, 42, 0.3);
+  color: #8f3a1f;
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.trp-medidas-table thead th {
+  font-size: 10.5px;
+  letter-spacing: 0.12em;
+  color: #8a7f6e;
+  opacity: 1;
+}
+.trp-medidas-table th,
+.trp-medidas-table td {
+  padding: 10px 8px;
+  border-bottom: 1px solid rgba(17, 17, 17, 0.07);
+}
+.trp-medidas-table td {
+  font-size: 14px;
+  font-variant-numeric: tabular-nums;
+}
+.trp-medidas-nota {
+  font-size: 13px;
+  color: #8a7f6e;
 }
