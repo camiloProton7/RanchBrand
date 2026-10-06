@@ -7,6 +7,12 @@ import CartDrawer from '~/components/CartDrawer';
 // ahora a la colección más parecida que YA existe, para que ningún enlace del
 // menú quede muerto. Cuando existan las colecciones propias (handles:
 // prendas-superiores, camisas, combos) se cambian esos tres hrefs y listo.
+// Rutas que se sirven como documento suelto (no son rutas React): el perchero de
+// camisetas. Se enlazan con <a rel="external"> para forzar carga completa: si el
+// item (o un hijo del desplegable) va con <Link>, el router intercepta el clic,
+// cambia la URL y deja la pantalla en blanco.
+const esDocumentoAparte = (item) => Boolean(item && (item.plano || item.href === '/perchero/'));
+
 const MENU_ITEMS = [
   {label: 'Home', href: '/'},
   {label: 'Gorras', href: '/collections/gorras-truckers'},
@@ -92,8 +98,8 @@ export default function SiteHeader({logoSrc}) {
           {MENU_ITEMS.map((item) => {
             // Los items `plano` (el perchero) se sirven como documento aparte:
             // con <Link> la navegación de cliente deja la página en blanco.
-            const Etiqueta = item.plano ? "a" : Link;
-            const props = item.plano ? {href: item.href, rel: "external"} : {to: item.href};
+            const Etiqueta = esDocumentoAparte(item) ? "a" : Link;
+            const props = esDocumentoAparte(item) ? {href: item.href, rel: "external"} : {to: item.href};
             return (
             <div key={item.label} className="tr-site-nav-item">
               <Etiqueta {...props}>
@@ -102,11 +108,15 @@ export default function SiteHeader({logoSrc}) {
               </Etiqueta>
               {item.children ? (
                 <div className="tr-site-dropdown">
-                  {item.children.map((child) => (
-                    <Link key={child.label} to={child.href}>
-                      {child.label}
-                    </Link>
-                  ))}
+                  {item.children.map((child) => {
+                    const Hijo = esDocumentoAparte(child) ? "a" : Link;
+                    const propsHijo = esDocumentoAparte(child) ? {href: child.href, rel: "external"} : {to: child.href};
+                    return (
+                      <Hijo key={child.label} {...propsHijo}>
+                        {child.label}
+                      </Hijo>
+                    );
+                  })}
                 </div>
               ) : null}
             </div>
@@ -190,8 +200,8 @@ export default function SiteHeader({logoSrc}) {
 
           <nav className="tr-site-menu-nav">
             {MENU_ITEMS.map((item, i) => {
-              const Etiqueta = item.plano ? "a" : Link;
-              const propsMovil = item.plano ? {href: item.href, rel: "external"} : {to: item.href};
+              const Etiqueta = esDocumentoAparte(item) ? "a" : Link;
+              const propsMovil = esDocumentoAparte(item) ? {href: item.href, rel: "external"} : {to: item.href};
               return (
               <div key={item.label} className="tr-site-menu-group">
                 <Etiqueta
@@ -206,16 +216,20 @@ export default function SiteHeader({logoSrc}) {
                 </Etiqueta>
                 {item.children ? (
                   <div className="tr-site-menu-sub">
-                    {item.children.map((child) => (
-                      <Link
-                        key={child.label}
-                        to={child.href}
-                        onClick={() => setOpen(false)}
-                      >
-                        <span className="tr-site-menu-num tr-site-menu-num-sub" />
-                        {child.label}
-                      </Link>
-                    ))}
+                    {item.children.map((child) => {
+                      const Hijo = esDocumentoAparte(child) ? "a" : Link;
+                      const propsHijo = esDocumentoAparte(child) ? {href: child.href, rel: "external"} : {to: child.href};
+                      return (
+                        <Hijo
+                          key={child.label}
+                          {...propsHijo}
+                          onClick={() => setOpen(false)}
+                        >
+                          <span className="tr-site-menu-num tr-site-menu-num-sub" />
+                          {child.label}
+                        </Hijo>
+                      );
+                    })}
                   </div>
                 ) : null}
               </div>
