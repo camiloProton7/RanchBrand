@@ -378,6 +378,10 @@ export function SizeTable({datos}) {
 
   return (
     <div className="trp-medidas">
+      {datos.preventa ? (
+        <p className="trp-medidas-preventa">🔔 Preventa — llega el {datos.preventa}</p>
+      ) : null}
+
       <div className="trp-medidas-head">
         <div>
           <h4 className="trp-medidas-title">

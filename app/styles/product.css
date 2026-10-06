@@ -2037,3 +2037,15 @@
   margin: 0;
   padding-left: 18px;
 }
+
+.trp-medidas-preventa {
+  display: inline-block;
+  margin: 0 0 12px;
+  padding: 7px 13px;
+  border-radius: 999px;
+  background: #b34a2a;
+  color: #f5f0e6;
+  font-size: 12.5px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
