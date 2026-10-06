@@ -2049,3 +2049,21 @@
   font-weight: 600;
   letter-spacing: 0.02em;
 }
+
+/* Paneles de confianza (pago seguro, compra ahora-paga después, envío, cambios):
+   en escritorio viven bajo la galería (como estaban) y en móvil pasan a ir
+   después del título y el precio. Mismo patrón que el calculador de tallas. */
+.trp-trust-movil {
+  display: none;
+}
+
+@media (max-width: 899px) {
+  .trp-trust-escritorio {
+    display: none;
+  }
+
+  .trp-trust-movil {
+    display: block;
+    margin: 16px 0 2px;
+  }
+}

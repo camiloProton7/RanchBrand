@@ -1018,7 +1018,9 @@ export default function ProductPage() {
       )}
       </div>
 
-        <TrustBadges />
+        <div className="trp-trust-escritorio">
+          <TrustBadges />
+        </div>
 
         {isApparel(product.productType, product.title) ? (
           <div className="trp-size-escritorio">
@@ -1183,6 +1185,13 @@ export default function ProductPage() {
             </ul>
           </>
         ) : null}
+
+        {/* Pago seguro / envío / cambios: en móvil van DESPUÉS del título y el precio,
+            para que el cliente primero sepa qué prenda está viendo. En escritorio
+            siguen bajo la galería, como estaban. */}
+        <div className="trp-trust-movil">
+          <TrustBadges />
+        </div>
 
         <span className="trp-tag">{isOut ? 'Agotado' : 'Edición limitada'}</span>
 
