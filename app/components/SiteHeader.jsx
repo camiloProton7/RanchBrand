@@ -3,20 +3,24 @@ import {Link, Form, useLocation} from 'react-router';
 import {getCartCount} from '~/lib/cart';
 import CartDrawer from '~/components/CartDrawer';
 
+// Menú del sitio. OJO: "Prendas superiores", "Camisas" y "Combos" apuntan por
+// ahora a la colección más parecida que YA existe, para que ningún enlace del
+// menú quede muerto. Cuando existan las colecciones propias (handles:
+// prendas-superiores, camisas, combos) se cambian esos tres hrefs y listo.
 const MENU_ITEMS = [
   {label: 'Home', href: '/'},
   {label: 'Gorras', href: '/collections/gorras-truckers'},
   {
-    label: 'Chaquetas',
+    label: 'Prendas superiores',
     href: '/collections/chaquetas',
     children: [
-      {label: 'Hombre', href: '/collections/chaquetas'},
-      {label: 'Mujer', href: '/collections/superior-chaquetas-mujer'},
+      {label: 'Chaquetas', href: '/collections/chaquetas'},
+      {label: 'Sacos Bordados', href: '/collections/bordados'},
+      {label: 'Camisas', href: '/collections/camisetas'},
+      {label: 'Camisetas', href: '/collections/camisetas'},
     ],
   },
-  {label: 'Camisas y Camisetas', href: '/collections/camisetas'},
-  {label: 'Botas', href: '/collections/botas-1'},
-  {label: 'Accesorios', href: '/collections/accesorios'},
+  {label: 'Combos', href: '/collections/combo-ranch-premium'},
 ];
 
 /**
