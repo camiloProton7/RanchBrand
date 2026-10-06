@@ -1,5 +1,147 @@
 [
   {
+    "slug": "cerca-electrica-subdividir-potreros-sequia",
+    "title": "Cercas eléctricas para subdividir potreros en sequía: dividir sin gastar una fortuna",
+    "excerpt": "Subdividir el potrero es lo que hace posible la rotación, y la cerca eléctrica es la forma más barata de lograrlo. Esto es lo que necesita un cerco que de verdad aguante y cómo trazar la franja diaria sin fallar.",
+    "date": "2026-10-06",
+    "category": "Campo",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ef/NRCSAR02039_-_Arkansas_%28261%29%28NRCS_Photo_Gallery%29.jpg/1920px-NRCSAR02039_-_Arkansas_%28261%29%28NRCS_Photo_Gallery%29.jpg",
+    "imageAlt": "Potrero subdividido con cerca eléctrica: un lado ya pastoreado y el otro en descanso durante la sequía",
+    "blocks": [
+      {
+        "type": "p",
+        "text": "En sequía todo el mundo habla de rotar, pero el potrero que no se puede subdividir no se rota: se pela. Y subdividir no tiene que costar una fortuna en postes y alambre de púa. La cerca eléctrica es la herramienta más barata que existe para convertir un potrero grande en franjas de un día, y es la que decide si el pasto alcanza o no. Un energizador, un rollo de hilo conductivo y unas varillas con aislador hacen más por la pradera que cualquier compra de suplemento a última hora."
+      },
+      {
+        "type": "h2",
+        "text": "Qué necesita una cerca eléctrica que de verdad aguante"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Energizador con julios suficientes para el largo del cerco: si la cerca pasa de 500 metros o si el pasto toca el hilo, un aparato débil no alcanza. Revisa el voltaje con un probador: por debajo de 3.000 voltios el animal aprende a pasar; entre 5.000 y 6.000 el cerco enseña solo. No confundas el voltaje con el letrero del aparato: lo que detiene al animal es el pulso que llega al hilo, no lo que dice la caja.",
+          "Puesta a tierra bien hecha: dos o tres varillas de 1,80 a 2 metros, separadas unos 3 metros, clavadas en suelo húmedo y sin pintura. La mitad de las cercas eléctricas que fallan no fallan por el aparato, fallan por la tierra.",
+          "Hilo o cinta conductora y postes móviles: varillas de fibra con aislador para correr la franja todos los días, y postes de esquina fijos donde la cerca cambia de dirección y soporta tensión.",
+          "Un solo hilo bien tenso y a la altura del pecho del animal basta para ganado manso y acostumbrado; para becerros y animales que no conocen el cerco, dos hilos o cinta ancha evitan que pasen por debajo.",
+          "Vegetación bajo el hilo: el pasto alto, una rama o una maleza que toque el alambre se llevan la corriente a tierra. Un paso con machete antes de mover la franja vale más que subir el aparato de potencia."
+        ]
+      },
+      {
+        "type": "h2",
+        "text": "Cómo se traza la franja y en qué se falla"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "La franja es el área que el hato come en un día. Se delimita con la cerca móvil y se corre cada mañana, sin volver sobre el potrero que ya se pastoreó.",
+          "Siempre cerca trasera: cuando el hato pasa a la franja nueva, se cierra atrás. Sin ese gesto, el animal regresa al rebrote y la rotación se pierde.",
+          "Corrige las fallas antes de meter el ganado: un cerco flojo un solo día le enseña al hato que puede pasar, y después hay que volver a entrenarlo.",
+          "Pon el punto de agua en el límite de la franja y no en el centro: así el animal bebe y sigue pastoreando, y el pisoteo no se concentra sobre el mejor pasto.",
+          "Prueba la cerca con el hato adentro y no de noche: la mayoría de los escapes se descubren cuando ya se perdió la franja del día."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "Subdividir con cerca eléctrica es la inversión más barata del manejo de pastos: menos postes, menos alambre y una rotación que por fin se puede cumplir cuando el pasto escasea. No seguimos modas, las marcamos. Si administras tu potrero con ese criterio, explora la colección de gorras y chaquetas The Ranch, hecha para quienes dividen a tiempo y no a la carrera."
+      }
+    ]
+  },
+  {
+    "slug": "conduccion-agua-bebederos-potreros-sequia",
+    "title": "Cómo llevar agua a cada potrero en sequía: conducción, presión y bebederos que no fallan",
+    "excerpt": "La rotación se rompe por el potrero que no tiene agua, no por el que falta. Cómo dimensionar tanques, tubería, presión y bebederos para que el hato beba en cada franja de la sequía.",
+    "date": "2026-10-06",
+    "category": "Campo",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Sauerbier_Ranches%27_Rangeland_Keep_Remote_Cattle_Grazing_and_Watered_%2820190827-NRCS-LSC-0468%29.jpg/1920px-Sauerbier_Ranches%27_Rangeland_Keep_Remote_Cattle_Grazing_and_Watered_%2820190827-NRCS-LSC-0468%29.jpg",
+    "imageAlt": "Ganado caminando hacia un bebedero remoto abastecido por tubería y bombeo solar en el potrero",
+    "blocks": [
+      {
+        "type": "p",
+        "text": "La rotación no se rompe por falta de potreros: se rompe por el potrero que no tiene agua. Y no basta con que haya un jagüey cerca: el ganado necesita beber en cada franja, con caudal suficiente y sin caminar kilómetros. Llevar el agua hasta el potrero es la obra que sostiene todo el sistema, y casi siempre se posterga hasta que la sequía la vuelve urgente."
+      },
+      {
+        "type": "h2",
+        "text": "De la fuente al potrero: el recorrido que hay que dimensionar"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Primero el almacenamiento: un tanque dimensionado para tres a siete días de consumo total del hato, con tapa y sombra. Un espejo de agua destapado pierde solo por evaporación entre 5 y 10 litros por metro cuadrado al día, y cría algas.",
+          "Después la conducción: prefiere gravedad antes que bomba. Cada 10 metros de desnivel entregan alrededor de una atmósfera de presión, así que si el terreno lo permite el agua baja sola y no depende de energía ni de repuestos.",
+          "Calcula el diámetro por la longitud y el caudal, no por el gusto: una manguera delgada y larga no da caudal aunque le pongas una bomba grande. El agua pierde presión con cada metro de tubería y con cada codo.",
+          "Entierra la tubería donde puedas: el sol calienta el agua, cría algas y degrada el plástico, y bajo tierra se protege del ganado, del pisoteo y de la trocha.",
+          "Pon válvulas de purga en los puntos bajos y válvulas de aire en los altos. El aire atrapado y el golpe de ariete son la causa silenciosa de tuberías que se revientan y de bebederos que no llenan."
+        ]
+      },
+      {
+        "type": "h2",
+        "text": "El bebedero: el detalle que decide si el hato bebe"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "De 10 a 15 centímetros lineales de canaleta por animal. Si el hato bebe junto y el bebedero es corto, los mansos toman y los débiles quedan atrás.",
+          "La recarga tiene que ser más rápida que el consumo en la hora pico: el flotador debe reponer el agua a medida que el hato bebe, no en tandas que dejan a la mitad esperando.",
+          "Bebedero con flotador y nivel constante: el animal desconfía del agua que sube y baja, y el que llega y encuentra el bebedero seco deja de caminar hacia allá.",
+          "Ponle sombra y límpialo cada semana: la lama y el fondo verdoso reducen el consumo igual que la escasez, y son la fuente más común de diarreas en verano.",
+          "Deja una rampa de escape en la orilla: un becerro que cae al agua se ahoga sin ella, y una tabla con textura cuesta menos que una cabeza.",
+          "Camina la línea de agua cada quince días con el hato bebiendo: es la única forma de ver fugas, aire en la tubería y bebederos que se quedan sin presión."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "El agua que llega sola a cada franja es lo que permite rotar de verdad, sin devolver el ganado al potrero que ya estaba descansando. No seguimos modas, las marcamos. Si llevas el agua con esa previsión, explora la colección de gorras y chaquetas The Ranch, hecha para quienes resuelven hoy lo que otros lamentan mañana."
+      }
+    ]
+  },
+  {
+    "slug": "cuanto-cuesta-prepararse-sequia-presupuesto-rancho",
+    "title": "Cuánto cuesta prepararse para la sequía: la cuenta que decide el año en el rancho",
+    "excerpt": "Prepararse para la sequía tiene un costo visible hoy; no prepararse tiene uno mayor y escondido. Las dos cuentas, lado a lado, para decidir sin urgencias.",
+    "date": "2026-10-06",
+    "category": "Campo",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/A_herd_of_cows_on_the_grassland.jpg/1920px-A_herd_of_cows_on_the_grassland.jpg",
+    "imageAlt": "Hato de vacas pastando en un pastizal seco de temporada de sequía",
+    "blocks": [
+      {
+        "type": "p",
+        "text": "Prepararse para la sequía tiene precio: un pozo probado, un tanque de reserva, heno guardado, sal mineralizada y una carga animal ajustada a tiempo. La pregunta que casi nadie hace es cuánto cuesta eso contra cuánto cuesta no hacerlo, y la respuesta casi siempre es la misma: prepararse es la opción barata. El problema es que el costo de prepararse se paga hoy y se ve, mientras el costo de no prepararse llega después y se disfraza de mala suerte."
+      },
+      {
+        "type": "h2",
+        "text": "Lo que se paga por adelantado"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Agua: prueba de bombeo, limpieza de jagüeyes, tanque para tres a siete días de consumo y un bebedero por cada potrero que se piensa rotar. Es la obra más costosa y la que más barato sale, porque sin agua no hay rotación posible.",
+          "Forraje: heno y ensilaje hechos en plena época de lluvias, cuando el pasto sobra y la máquina está libre. Guardar en lluvia cuesta una fracción de comprar en seco.",
+          "Cercas, divisiones y bebederos nuevos: la infraestructura que convierte el potrero en franjas se paga una vez y rinde cada verano.",
+          "Sal mineralizada y suplemento con precio pactado y pesaje en el potrero: el bulto que se sirve a ojo se va en una semana.",
+          "Ajustar la carga antes de que el pasto apriete: vender descarte y animales de levante temprano, cuando todavía están gordos y hay mercado."
+        ]
+      },
+      {
+        "type": "h2",
+        "text": "Lo que se paga cuando no se prepara"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Acarreo de agua en carrotanque, al precio que pongan y con el riesgo de no encontrar quién la lleve cuando todos la están buscando.",
+          "Comprar forraje a precio de pánico, en el mes en que el vecino también compra lo mismo y el bulto vale el doble.",
+          "Vender ganado flaco, barato y a la carrera: el mercado castiga al animal que sale urgido y no da tiempo de esperar el precio.",
+          "Perder preñez y fertilidad: una vaca que baja de condición en la seca no se preña cuando vuelve la lluvia, y esa vaca cuesta un año entero.",
+          "Recuperar el potrero pelado: resembrar, abonar y descansar meses lo que una sola entrada mal hecha destruyó en una semana."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "La cuenta no es de contabilidad: es de criterio. El ranchero que invierte en agua y forraje cuando todo está en calma llega a la seca como a una temporada más; el que espera paga intereses con el agua al cuello. No seguimos modas, las marcamos. Si administras tu rancho como una empresa de largo plazo, explora la colección de gorras y chaquetas The Ranch, hecha para quienes invierten antes de que sea urgente."
+      }
+    ]
+  },
+  {
     "slug": "cuantos-potreros-necesitas-rotacion-divisiones-sequia",
     "title": "Cuántos potreros necesitas para rotar en sequía: el cálculo de las divisiones",
     "excerpt": "La rotación no depende del tamaño del rancho, sino del descanso que el pasto pide y de los días que el hato se queda encima. Esta es la cuenta para saber cuántas divisiones y cuántos bebederos montar antes de la seca.",
