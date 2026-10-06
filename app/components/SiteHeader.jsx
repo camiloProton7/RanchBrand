@@ -17,7 +17,7 @@ const MENU_ITEMS = [
       {label: 'Chaquetas', href: '/collections/chaquetas'},
       {label: 'Sacos Bordados', href: '/collections/bordados'},
       {label: 'Camisas', href: '/collections/camisetas'},
-      {label: 'Camisetas', href: '/collections/camisetas'},
+      {label: 'Camisetas', href: '/perchero'},
     ],
   },
   {label: 'Combos', href: '/collections/combo-ranch-premium'},

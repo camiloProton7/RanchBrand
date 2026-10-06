@@ -1,0 +1,567 @@
+<!doctype html>
+<html lang="es">
+<head>
+<base href="/perchero/">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=yes">
+<meta name="theme-color" content="#f5f0e6">
+<title>Camisetas — The Ranch</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{ --beige:#f5f0e6; --terra:#b34a2a; --tinta:#1b1a17; --gris:#6f6a60; }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{margin:0;background:var(--beige);color:var(--tinta);
+       font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+       overflow:hidden;-webkit-font-smoothing:antialiased}
+  #lienzo{position:fixed;inset:56px 0 0 0;display:block;touch-action:pinch-zoom;cursor:grab}
+  #lienzo.arrastrando{cursor:grabbing}
+  /* ===== encabezado y menu: clases y valores exactos de ranch.com.co ===== */
+  .tr-site-header{align-items:center;background:#0b0b09d1;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+                  border-bottom:1px solid rgba(244,240,231,.08);display:flex;height:56px;justify-content:space-between;
+                  left:0;padding:0 20px;position:fixed;right:0;top:0;transition:transform .3s ease;z-index:1000}
+  .tr-site-header.is-hidden{transform:translateY(-100%)}
+  .tr-site-logo{align-items:center;color:#f4f0e7;display:flex;font-family:Georgia,Times New Roman,serif;font-size:18px;
+                font-weight:700;letter-spacing:.02em;text-decoration:none}
+  .tr-site-logo img{filter:brightness(0) invert(1);height:30px;width:auto}
+  .tr-site-nav{display:none;gap:16px}
+  .tr-site-nav a{color:#d8d2c4;font-size:11px;font-weight:600;letter-spacing:.1em;text-decoration:none;
+                 text-transform:uppercase;transition:color .2s ease}
+  .tr-site-nav a:hover{color:#f5b301}
+  .tr-site-nav-item{position:relative}
+  .tr-site-nav-caret{border-left:3.5px solid transparent;border-right:3.5px solid transparent;border-top:4px solid currentColor;
+                     display:inline-block;height:0;margin-left:5px;vertical-align:middle;width:0}
+  .tr-site-dropdown{background:#11110f;border:1px solid rgba(244,240,231,.12);border-radius:10px;display:none;left:50%;
+                    min-width:140px;padding:6px;position:absolute;top:100%;transform:translate(-50%);z-index:20}
+  .tr-site-nav-item:hover .tr-site-dropdown,.tr-site-nav-item:focus-within .tr-site-dropdown{display:block}
+  .tr-site-dropdown a{border-radius:6px;display:block;padding:8px 12px;white-space:nowrap}
+  .tr-site-dropdown a:hover{background:#f5b3011f}
+  .tr-site-search{align-items:center;background:#f4f0e714;border:1px solid rgba(244,240,231,.14);border-radius:999px;
+                  display:none;height:34px;margin-left:auto;margin-right:12px;padding:0 6px 0 12px;
+                  transition:border-color .2s ease,background .2s ease}
+  .tr-site-search:focus-within{background:#f4f0e724;border-color:#f5b301}
+  .tr-site-search-btn{align-items:center;background:none;border:none;color:#d8d2c4;cursor:pointer;display:flex;padding:0}
+  .tr-site-search input{background:none;border:none;color:#f4f0e7;font-size:13px;outline:none;padding:6px 8px;width:150px}
+  .tr-site-search input::placeholder{color:#8a8274}
+  .tr-site-cart{align-items:center;color:#f4f0e7;display:flex;margin-left:auto;margin-right:14px;position:relative;
+                transition:color .2s ease}
+  .tr-site-cart:hover{color:#f5b301}
+  .tr-site-cart-count{align-items:center;background:#ffa41c;border-radius:999px;color:#1a1a18;display:flex;font-size:10px;
+                      font-weight:800;height:16px;justify-content:center;min-width:16px;padding:0 4px;position:absolute;
+                      right:-8px;top:-8px}
+  .tr-site-burger{align-items:center;background:none;border:none;cursor:pointer;display:flex;flex-direction:column;gap:6px;
+                  height:40px;justify-content:center;padding:8px;width:40px}
+  .tr-site-burger span{background:#f4f0e7;border-radius:1px;display:block;height:2px;transition:transform .28s ease,opacity .2s ease;width:20px}
+  .tr-site-burger.is-open span:first-child{transform:translateY(4px) rotate(45deg)}
+  .tr-site-burger.is-open span:last-child{transform:translateY(-4px) rotate(-45deg)}
+  .tr-site-menu{background:#0b0b09f7;top:0;right:0;bottom:0;left:0;padding:20px;position:fixed;z-index:999;
+                overflow-y:auto;animation:tr-site-menu-in .28s ease both}
+  .tr-site-menu-head{align-items:center;display:flex;justify-content:space-between;padding:4px 0}
+  .tr-site-close{background:none;border:none;color:#f4f0e7;cursor:pointer;font-size:30px;font-weight:300;line-height:1;padding:4px 8px}
+  .tr-site-menu-nav{display:flex;flex-direction:column;margin-top:32px}
+  .tr-site-menu-nav a{align-items:baseline;animation:tr-site-menu-in .4s ease both;border-bottom:1px solid rgba(244,240,231,.08);
+                      color:#f4f0e7;display:flex;font-family:Georgia,Times New Roman,serif;font-size:22px;font-weight:400;
+                      gap:14px;padding:18px 4px;text-decoration:none}
+  .tr-site-menu-num{color:#f5b301;font-family:ui-sans-serif,system-ui,sans-serif;font-size:11px;font-weight:600;letter-spacing:.08em}
+  .tr-site-menu-group{display:flex;flex-direction:column}
+  .tr-site-menu-sub{display:flex;flex-direction:column;padding-left:22px}
+  .tr-site-menu-sub a{font-size:15px;padding:10px 0}
+  .tr-site-menu-num-sub{visibility:hidden}
+  .tr-site-menu-nav a.tr-site-menu-wa{color:#f4f0e7}
+  @keyframes tr-site-menu-in{0%{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+  @media (min-width:1024px){
+    .tr-site-nav{display:flex;left:50%;position:absolute;transform:translate(-50%)}
+    .tr-site-search{display:flex}
+    .tr-site-cart{margin-left:0}
+    .tr-site-burger{display:none}
+  }
+
+  .cabecera{position:fixed;top:56px;left:0;right:0;z-index:3;pointer-events:none;
+            padding:12px 18px 14px;display:flex;align-items:center;justify-content:space-between;gap:12px;
+            background:linear-gradient(var(--beige) 44%,rgba(245,240,230,0))}
+  .cabecera h1{margin:0;font-family:"Playfair Display",Georgia,serif;font-weight:600;font-size:19px;letter-spacing:.01em}
+  .cabecera p{margin:3px 0 0;font-size:10.5px;letter-spacing:.15em;text-transform:uppercase;color:var(--gris)}
+  .anterior{pointer-events:auto;flex:none;font-size:10.5px;color:var(--gris);text-decoration:none;
+            border-bottom:1px solid rgba(111,106,96,.35);letter-spacing:.04em;white-space:nowrap}
+  .pista{position:fixed;left:50%;bottom:20px;transform:translateX(-50%);z-index:3;pointer-events:none;
+         background:rgba(27,26,23,.86);color:var(--beige);font-size:12px;padding:9px 16px;border-radius:999px;
+         white-space:nowrap;opacity:0;transition:opacity .6s ease}
+  .pista.visible{opacity:1}
+  .panel{position:fixed;left:0;right:0;bottom:0;z-index:4;pointer-events:none;
+         display:flex;flex-direction:column;align-items:center;gap:7px;text-align:center;
+         padding:24px 20px calc(54px + env(safe-area-inset-bottom));
+         background:linear-gradient(rgba(245,240,230,0),var(--beige) 46%)}
+  .panel .nombre{margin:0;font-family:"Playfair Display",Georgia,serif;font-weight:600;font-size:19px;line-height:1.1}
+  .panel .precio{margin:0;font-size:13.5px;font-weight:600;color:var(--terra)}
+  .panel a.ver{pointer-events:auto;display:inline-block;background:var(--terra);color:#fff;text-decoration:none;
+               font-size:12.5px;font-weight:600;padding:12px 22px;border-radius:999px;white-space:nowrap;
+               box-shadow:0 6px 18px rgba(179,74,42,.28)}
+    .panel .avance{position:relative;width:100%;max-width:520px;height:2px;margin:0 0 1px;
+                 background:rgba(27,26,23,.12);border-radius:2px}
+  .panel .avance i{position:absolute;top:-2px;height:6px;background:var(--terra);border-radius:3px;
+                   transition:left .28s ease,width .28s ease}
+  .panel .cuenta{margin:0;font-size:10.5px;letter-spacing:.15em;text-transform:uppercase;color:var(--gris)}
+  @media (max-width: 430px){
+    .panel .flechas{display:none}          /* en móvil la cinta y el contador ya lo explican */
+    .panel{padding:18px 16px calc(48px + env(safe-area-inset-bottom))}
+    .panel .nombre{font-size:16px}
+    .panel a.ver{padding:11px 15px;font-size:12px}
+  }
+  .carga{position:fixed;inset:0;z-index:9;background:var(--beige);display:flex;flex-direction:column;
+         align-items:center;justify-content:center;gap:16px;transition:opacity .55s ease,visibility .55s}
+  .carga.fuera{opacity:0;visibility:hidden}
+  .carga{display:none !important}   /* sin pantalla de carga: el riel arranca ya */
+  .carga .sello{font-family:"Playfair Display",Georgia,serif;font-size:14px;letter-spacing:.36em;text-transform:uppercase;color:var(--terra)}
+  .carga .texto{margin:0;font-size:12.5px;color:var(--gris)}
+  .barra{width:min(60vw,260px);height:2px;background:rgba(27,26,23,.12);border-radius:2px;overflow:hidden}
+  .barra i{display:block;height:100%;width:0;background:var(--terra);transition:width .22s ease}
+  .carga .pct{font-size:10.5px;letter-spacing:.18em;color:var(--gris)}
+</style>
+</head>
+<body>
+<header class="tr-site-header" id="cabeceraTienda">
+  <a class="tr-site-logo" href="https://ranch.com.co/" aria-label="The Ranch"><img src="https://cdn.shopify.com/s/files/1/0678/1386/7760/files/logo_the_ranch.png?v=1773757162" alt=""></a>
+  <nav class="tr-site-nav" aria-label="Principal"><div class="tr-site-nav-item"><a href="https://ranch.com.co/">Home</a></div><div class="tr-site-nav-item"><a href="https://ranch.com.co/collections/gorras-truckers">Gorras</a></div><div class="tr-site-nav-item"><a href="https://ranch.com.co/collections/chaquetas">Prendas superiores<span class="tr-site-nav-caret" aria-hidden="true"></span></a><div class="tr-site-dropdown"><a href="https://ranch.com.co/collections/chaquetas">Chaquetas</a><a href="https://ranch.com.co/collections/bordados">Sacos Bordados</a><a href="https://ranch.com.co/collections/camisetas">Camisas</a><a href="https://ranch.com.co/perchero">Camisetas</a></div></div><div class="tr-site-nav-item"><a href="https://ranch.com.co/collections/combo-ranch-premium">Combos</a></div></nav>
+  <form method="get" action="https://ranch.com.co/search" class="tr-site-search" role="search"><button type="submit" class="tr-site-search-btn" aria-label="Buscar"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path></svg></button><input type="search" name="q" placeholder="Buscar productos" aria-label="Buscar productos"></form>
+  <a class="tr-site-cart" href="https://ranch.com.co/cart" aria-label="Ver carrito"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 7h12l1 14H5L6 7z"></path><path d="M9 7a3 3 0 0 1 6 0"></path></svg></a>
+  <button class="tr-site-burger" id="botonMenu" type="button" aria-label="Abrir menú" aria-expanded="false"><span></span><span></span></button>
+</header>
+
+<div class="tr-site-menu" id="menuMovil" role="dialog" aria-label="Menú" hidden>
+  <div class="tr-site-menu-head">
+    <a class="tr-site-logo" href="https://ranch.com.co/" aria-label="The Ranch"><img src="https://cdn.shopify.com/s/files/1/0678/1386/7760/files/logo_the_ranch.png?v=1773757162" alt=""></a>
+    <button class="tr-site-close" id="cerrarMenu" type="button" aria-label="Cerrar menú">×</button>
+  </div>
+  <nav class="tr-site-menu-nav"><div class="tr-site-menu-group"><a href="https://ranch.com.co/" style="animation-delay:0.06s"><span class="tr-site-menu-num">01</span>Home</a></div><div class="tr-site-menu-group"><a href="https://ranch.com.co/collections/gorras-truckers" style="animation-delay:0.11s"><span class="tr-site-menu-num">02</span>Gorras</a></div><div class="tr-site-menu-group"><a href="https://ranch.com.co/collections/chaquetas" style="animation-delay:0.16s"><span class="tr-site-menu-num">03</span>Prendas superiores</a><div class="tr-site-menu-sub"><a href="https://ranch.com.co/collections/chaquetas"><span class="tr-site-menu-num tr-site-menu-num-sub"></span>Chaquetas</a></div><div class="tr-site-menu-sub"><a href="https://ranch.com.co/collections/bordados"><span class="tr-site-menu-num tr-site-menu-num-sub"></span>Sacos Bordados</a></div><div class="tr-site-menu-sub"><a href="https://ranch.com.co/collections/camisetas"><span class="tr-site-menu-num tr-site-menu-num-sub"></span>Camisas</a></div><div class="tr-site-menu-sub"><a href="https://ranch.com.co/perchero"><span class="tr-site-menu-num tr-site-menu-num-sub"></span>Camisetas</a></div></div><div class="tr-site-menu-group"><a href="https://ranch.com.co/collections/combo-ranch-premium" style="animation-delay:0.21s"><span class="tr-site-menu-num">04</span>Combos</a></div><a class="tr-site-menu-wa" href="https://ranch.com.co/cart" style="animation-delay:0.26s"><span class="tr-site-menu-num">05</span>Carrito</a></nav>
+</div>
+
+<canvas id="lienzo" aria-label="Perchero de camisetas The Ranch"></canvas>
+
+<header class="cabecera">
+  <div>
+    <h1>Camisetas</h1>
+    <p>The Ranch · <span id="cuantas">11</span> diseños</p>
+  </div>
+  <a class="anterior" href="perchero-clasico.html">versión anterior</a>
+</header>
+
+<div class="pista" id="pista">Desliza para recorrer · toca una camiseta para ponerla al frente · tócala otra vez para abrir su ficha</div>
+
+<div class="panel" id="panel">
+  <div class="avance" aria-hidden="true"><i id="avanceMarca"></i></div>
+  <p class="nombre" id="pNombre">—</p>
+  <p class="precio" id="pPrecio">$110.000</p>
+  <a class="ver" id="pVer" href="#" target="_blank" rel="noopener">Ver producto</a>
+  <p class="cuenta" id="pCuenta">—</p>
+</div>
+
+<div class="carga" id="carga">
+  <div class="sello">The Ranch</div>
+  <p class="texto">Preparando la colección…</p>
+  <div class="barra"><i id="progreso"></i></div>
+  <div class="pct" id="pct">0%</div>
+</div>
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  // 11 diseños reales del catálogo, cada uno con sus 3 vistas sobre el mismo gancho
+  var CATALOGO = [
+    ["camiseta-broken","Broken"],
+    ["camiseta-bufalo","Bufalo"],
+    ["camiseta-bull","Bull"],
+    ["camiseta-cowboy","CowBoy"],
+    ["camiseta-frontier","Frontier"],
+    ["camiseta-heritage","Heritage"],
+    ["camiseta-ranch-queen-copia","Horse Ranch"],
+    ["camiseta-ranch-queen","Ranch Queen"],
+    ["camiseta-rodeo-bull","Rodeo Bull"],
+    ["camiseta-western","Western"],
+    ["camiseta-western-red","Western RED"]
+  ];
+  var VISTAS = ["frente","lado"];   // dos fotos: frente y perfil (sin 3/4)
+  var PRECIO = "$110.000";
+  var ALTO_FOTO = 640;
+
+  var lienzo = document.getElementById("lienzo");
+  var ctx = lienzo.getContext("2d", { alpha:false });
+  var pista = document.getElementById("pista");
+  var carga = document.getElementById("carga");
+  var progreso = document.getElementById("progreso");
+  var pct = document.getElementById("pct");
+  var cuantas = document.getElementById("cuantas");
+  if (!carga) console.warn("perchero: falta la capa de precarga");
+  var pNombre = document.getElementById("pNombre");
+  var pPrecio = document.getElementById("pPrecio");
+  var pCuenta = document.getElementById("pCuenta");
+  var pVer = document.getElementById("pVer");
+  var avanceMarca = document.getElementById("avanceMarca");
+  var TIENDA = "https://ranch.com.co/products/";
+
+  // menu movil identico al de la tienda: overlay a pantalla completa
+  var menuMovil = document.getElementById("menuMovil");
+  var botonMenu = document.getElementById("botonMenu");
+  var cerrarMenu = document.getElementById("cerrarMenu");
+  function ponerMenu(abierto){
+    if (!menuMovil || !botonMenu) return;
+    menuMovil.hidden = !abierto;
+    botonMenu.classList.toggle("is-open", abierto);
+    botonMenu.setAttribute("aria-expanded", abierto ? "true" : "false");
+    botonMenu.setAttribute("aria-label", abierto ? "Cerrar menú" : "Abrir menú");
+  }
+  if (botonMenu) botonMenu.addEventListener("click", function(){ ponerMenu(menuMovil.hidden); });
+  if (cerrarMenu) cerrarMenu.addEventListener("click", function(){ ponerMenu(false); });
+  if (menuMovil) menuMovil.addEventListener("click", function(ev){
+    if (ev.target && ev.target.tagName === "A") ponerMenu(false);
+  });
+  document.addEventListener("keydown", function(ev){ if (ev.key === "Escape") ponerMenu(false); });
+  cuantas.textContent = CATALOGO.length;
+
+  var QUIETO = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  var W=0, H=0, DPR=1, rielY=0, esc=1, esp=1, total=0;
+  var piezas = [];
+  var offset = 0, vel = 0, arrastrando = false, ultX = 0, ultY = 0, movido = 0, t0 = 0;
+  var destinoOffset = null;
+  var listo = false, t0reloj = performance.now();
+
+  // ---------- carga de las 33 fotos con barra de progreso ----------
+  var total_fotos = CATALOGO.length * VISTAS.length;
+  var hechas = 0;
+  function avanzar(){
+    hechas++;
+    var p = Math.round(hechas / total_fotos * 100);
+    if (progreso) progreso.style.width = p + "%";
+    if (pct) pct.textContent = p + "%";
+    if (hechas >= total_fotos) setTimeout(arrancar, 320);
+  }
+
+  CATALOGO.forEach(function(par, i){
+    var slug = par[0];
+    var p = {
+      i:i, slug:slug, n:par[1], precio:PRECIO,
+      imgs:[], giro:0, destino:0, yaw:0, vel:0, etiqueta:0,
+      fase: i * 0.7 + Math.random() * 0.4, ang:0, pos:0
+    };
+    VISTAS.forEach(function(v, k){
+      var im = new Image();
+      im.decoding = "async";
+      im.alt = "Camiseta " + par[1] + " vista " + v;
+      im.onload = im.onerror = avanzar;
+      im.src = v + "/" + slug + ".webp?v=2";
+      p.imgs[k] = im;
+    });
+    piezas.push(p);
+  });
+
+  arrancar();   // sin pantalla de carga: el riel arranca ya y las fotos entran solas
+
+  // ---------- medidas ----------
+  function medir(){
+    DPR = Math.min(window.devicePixelRatio || 1, 2);
+    W = window.innerWidth; H = window.innerHeight - 56;   // 56px del encabezado de la tienda
+    lienzo.width = Math.round(W * DPR); lienzo.height = Math.round(H * DPR);
+    lienzo.style.width = W + "px"; lienzo.style.height = H + "px";
+    ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+    rielY = Math.max(54, Math.min(H * 0.165, 128));   // riel alto: el gancho queda enganchado al tubo
+    var altoDisponible = H - rielY - Math.max(96, H*0.2);   // deja aire para la etiqueta
+    esc = Math.min(H * 0.56, altoDisponible, W * 0.62 * (ALTO_FOTO/437)) / ALTO_FOTO;
+    esp = Math.max(96, Math.min(W * 0.335, 437 * esc * 0.74));
+    total = esp * piezas.length;
+    piezas.forEach(function(p, i){ p.pos = i * esp; });
+    if (!listo) {   // arranca con una prenda exactamente al frente
+      var centro = Math.floor(piezas.length / 2);
+      offset = W/2 + esp/2 - centro * esp;
+    }
+    // vista por posicion: la del centro de frente, las de los lados de perfil
+    for (var q = 0; q < piezas.length; q++) {
+      var xq = envuelve(piezas[q].pos + offset) - esp + esp/2;
+      var gq = Math.min(2, 2 * Math.abs(xq - W/2) / esp);
+      piezas[q].giro = piezas[q].destino = gq;
+    }
+  }
+
+  // ---------- dibujo ----------
+  function envuelve(v){
+    // con pocas prendas el riel puede medir menos que la pantalla: ahí no se envuelve,
+    // si no la prenda del centro se da la vuelta antes de llegar y ninguna queda al frente
+    if (total < W) return v;
+    return ((v % total) + total) % total;
+  }
+
+
+  // cuál está al frente (la del centro): manda la vista y el panel
+  function indiceAlFrente(){
+    var mejor = 0, dm = Infinity;
+    for (var i = 0; i < piezas.length; i++) {
+      var x = envuelve(piezas[i].pos + offset) - esp + esp/2;
+      var d = Math.abs(x - W/2);
+      if (d < dm) { dm = d; mejor = i; }
+    }
+    return mejor;
+  }
+
+  var idxPanel = -1;
+  function actualizaPanel(){
+    var i = indiceAlFrente();
+    if (i === idxPanel) return;
+    idxPanel = i;
+    var q = piezas[i];
+    if (!pNombre) return;
+    pNombre.textContent = q.n;
+    pPrecio.textContent = q.precio;
+    pCuenta.textContent = (i + 1) + " de " + piezas.length + " · desliza para explorar";
+    pVer.href = TIENDA + q.slug;
+    if (avanceMarca) {
+      var pasoB = 100 / piezas.length;
+      avanceMarca.style.width = pasoB + "%";
+      avanceMarca.style.left = (i * pasoB) + "%";
+    }
+  }
+
+  // la foto se estrecha (sx) para simular el giro: nunca se verán dos prendas encimadas,
+  // porque el cambio de foto ocurre cuando las dos tienen el mismo ancho (alfa casi 1).
+  var GANCHO_PX = 13;   // el gancho de la foto empieza ~11-22 px abajo del borde (por vista)
+
+  function pintaFoto(im, centro, alto, sx, alfa){
+    if (alfa === undefined) alfa = 1;
+    if (!im || !im.naturalWidth || sx < 0.02 || alfa < 0.02) return;
+    var w = im.naturalWidth * (alto / im.naturalHeight);
+    ctx.globalAlpha = alfa;
+    ctx.save();
+    ctx.translate(centro, 0); ctx.scale(sx, 1); ctx.translate(-centro, 0);
+    // el pico del gancho queda por encima del tubo: parece colgado, no flotando
+    ctx.drawImage(im, centro - w/2, rielY - GANCHO_PX * (alto / 640) - 7, w, alto);
+    ctx.restore();
+    ctx.globalAlpha = 1;
+  }
+
+  function pintaPieza(p, x, t){
+    var centro = x + esp/2;
+    var dist = Math.min(1, Math.abs(centro - W/2) / (W/2));
+    var foco = 1 - dist;
+    var k = 1 + 0.055 * foco;
+    var alto = ALTO_FOTO * esc * k;
+
+    var amp = QUIETO ? 0 : 0.018 + 0.05 * Math.min(1, Math.abs(p.vel) / 1100);
+    var vaiven = QUIETO ? 0 : amp * Math.sin(t * (0.55 + (p.fase % 0.5) * 0.5) + p.fase);
+    var ang = vaiven + p.yaw * 0.55;
+
+    var giro = Math.max(0, Math.min(1, p.giro));
+    var seg = 0;                             // siempre se parte de la foto de frente
+    var fr = giro;                           // 0 = de frente, 1 = de perfil
+    var iB = 1;
+    var wA = p.imgs[seg].naturalWidth || 1, wB = p.imgs[iB].naturalWidth || 1;
+    var sx = (wA + (wB - wA) * fr) / wA;     // la foto actual se estrecha hasta el ancho de la siguiente
+    var EMPALME = 0.12;                      // tramo corto de mezcla, ya con los dos anchos iguales
+    var mezcla = fr > 1 - EMPALME ? (fr - (1 - EMPALME)) / EMPALME : 0;
+
+    var pivY = rielY - alto * 0.004;
+    // sin espejo: el estampado nunca queda al revés; el perfil se lee igual desde los dos lados
+    ctx.save();
+    ctx.translate(centro, pivY); ctx.rotate(ang); ctx.translate(-centro, -pivY);
+    // el barrido: la foto de frente se apaga mientras entra el perfil, para que nunca se
+    // vean las dos a la vez (eso se veia como una tercera imagen tipo 3/4)
+    pintaFoto(p.imgs[seg], centro, alto, sx, 1 - mezcla);
+
+    if (mezcla > 0) pintaFoto(p.imgs[iB], centro, alto, 1, mezcla);
+    ctx.restore();
+
+    // marca bajo la prenda que está al frente: nombre, precio y contador viven en el panel de abajo
+    if (foco > 0.8) {
+      ctx.globalAlpha = Math.min(1, (foco - 0.8) / 0.15);
+      ctx.fillStyle = "#b34a2a";
+      ctx.fillRect(centro - 16, rielY + alto + 12, 32, 3);
+      ctx.globalAlpha = 1;
+    }
+  }
+
+  function dibujar(dt, t){
+    var g = ctx.createLinearGradient(0, 0, 0, H);
+    g.addColorStop(0, "#faf6ef");
+    g.addColorStop(0.5, "#f5f0e6");
+    g.addColorStop(1, "#eadfcd");
+    ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+
+    var piso = ctx.createLinearGradient(0, H*0.7, 0, H);
+    piso.addColorStop(0, "rgba(27,26,23,0)");
+    piso.addColorStop(1, "rgba(27,26,23,.075)");
+    ctx.fillStyle = piso; ctx.fillRect(0, H*0.7, W, H*0.3);
+
+    // riel
+    ctx.fillStyle = "#d6cfbf"; ctx.fillRect(0, rielY - 5, W, 10);
+    ctx.fillStyle = "rgba(255,255,255,.6)"; ctx.fillRect(0, rielY - 5, W, 2);
+    ctx.fillStyle = "rgba(27,26,23,.08)"; ctx.fillRect(0, rielY + 5, W, 3);
+    ctx.fillStyle = "rgba(27,26,23,.16)";
+    ctx.fillRect(W*0.06, rielY - 9, 4, 20);
+    ctx.fillRect(W*0.94 - 4, rielY - 9, 4, 20);
+
+    var visibles = [];
+    for (var i = 0; i < piezas.length; i++) {
+      var x = envuelve(piezas[i].pos + offset) - esp;
+      if (x > -esp * 1.4 && x < W + esp * 0.4) visibles.push([piezas[i], x]);
+    }
+    visibles.sort(function(a, b){
+      return Math.abs(b[1] + esp/2 - W/2) - Math.abs(a[1] + esp/2 - W/2);
+    });
+    for (var j = 0; j < visibles.length; j++) pintaPieza(visibles[j][0], visibles[j][1], t);
+
+  // el avance del perchero vive en el bloque de abajo (barra junto al nombre y al boton)
+  }
+
+  // ---------- física ----------
+  function paso(dt){
+    if (destinoOffset !== null && !arrastrando) {
+      offset += (destinoOffset - offset) * Math.min(1, dt * 6);
+      vel = 0;
+      if (Math.abs(destinoOffset - offset) < 0.5) { offset = destinoOffset; destinoOffset = null; }
+    } else if (!arrastrando) {
+      offset += vel * dt;
+      vel *= Math.pow(0.0025, dt);
+      if (Math.abs(vel) < 3) vel = 0;
+      // imán: con el riel quieto, se engancha la prenda más cercana al frente
+      if (destinoOffset === null && Math.abs(vel) < 120) {
+        var iF = indiceAlFrente();
+        var cF = envuelve(piezas[iF].pos + offset) - esp/2;
+        var delta = W/2 - cF;
+        if (Math.abs(delta) > 1.5) destinoOffset = offset + delta;
+      }
+    }
+    for (var i = 0; i < piezas.length; i++) {
+      var p = piezas[i];
+      var xp = envuelve(p.pos + offset) - esp;
+      var cxp = xp + esp/2;
+      p.destino = Math.min(1, Math.abs(cxp - W/2) / esp);     // centro=frente, vecinos=perfil
+      p.giro += (p.destino - p.giro) * Math.min(1, dt * 5.5);
+      p.yaw += (0 - p.yaw) * Math.min(1, dt * 2.2);
+      p.vel += (Math.abs(vel) * 0.85 - p.vel) * Math.min(1, dt * 3.2);
+      p.etiqueta *= Math.pow(0.35, dt);
+      if (Math.abs(p.giro - p.destino) < 0.002) p.giro = p.destino;
+    }
+  }
+
+  var ultimo = 0;
+  function bucle(ahora){
+    var t = (ahora - t0reloj) / 1000;
+    var dt = Math.min(0.05, (ahora - ultimo) / 1000 || 0.016);
+    ultimo = ahora;
+    paso(dt);
+    dibujar(dt, t);
+    actualizaPanel();
+    requestAnimationFrame(bucle);
+  }
+
+  function arrancar(){
+    if (listo) return;
+    medir();            // el centrado inicial usa listo=false
+    listo = true;
+    if (carga) carga.style.display = "none";   // sin pantalla de carga
+    if (progreso) progreso.style.width = "100%";
+    t0reloj = performance.now();
+    requestAnimationFrame(bucle);
+    if (pista) {
+      pista.classList.add("visible");
+      setTimeout(function(){ pista.classList.remove("visible"); }, 6500);
+    }
+  }
+
+  // ---------- gestos ----------
+  function tocar(px, py){
+    if (py < rielY - 40 || py > rielY + ALTO_FOTO * esc * 1.15) return;
+    var mejor = null, dm = Infinity;
+    for (var i = 0; i < piezas.length; i++) {
+      var x = envuelve(piezas[i].pos + offset) - esp;
+      var centro = x + esp/2;
+      var d = Math.abs(px - centro);
+      if (d < dm) { dm = d; mejor = piezas[i]; }
+    }
+    if (mejor && dm < esp * 0.62) {
+      var xm = envuelve(mejor.pos + offset) - esp/2;
+      if (mejor === piezas[indiceAlFrente()]) {
+        abrirFicha(mejor.slug);               // es la que está al frente: abre su ficha
+      } else {
+        destinoOffset = offset + (W/2 - xm);  // todavía no está al frente: la trae al centro
+      }
+    }
+  }
+
+  function abrirFicha(slug){
+    var url = TIENDA + slug;
+    window.__ultimaFicha = url;              // marca de verificación
+    var a = document.createElement("a");
+    a.href = url; a.target = "_blank"; a.rel = "noopener";
+    document.body.appendChild(a); a.click(); a.remove();
+  }
+
+  // devuelve la prenda que está bajo el dedo (para traerla al centro)
+  function piezaEn(px, py){
+    if (py < rielY - 30 || py > rielY + ALTO_FOTO * esc * 1.2) return null;
+    var mejor = null, dm = Infinity;
+    for (var i = 0; i < piezas.length; i++) {
+      var x = envuelve(piezas[i].pos + offset) - esp;
+      var d = Math.abs(px - (x + esp/2));
+      if (d < dm) { dm = d; mejor = piezas[i]; }
+    }
+    return (mejor && dm < esp * 0.55) ? mejor : null;
+  }
+
+  lienzo.addEventListener("pointerdown", function(e){
+    arrastrando = true; ultX = e.clientX; ultY = e.clientY; movido = 0; t0 = performance.now(); vel = 0;
+    destinoOffset = null;
+    lienzo.classList.add("arrastrando");
+    if (lienzo.setPointerCapture) try { lienzo.setPointerCapture(e.pointerId); } catch(_){}
+  });
+
+  lienzo.addEventListener("pointermove", function(e){
+    if (!arrastrando) return;
+    var dx = e.clientX - ultX, dy = e.clientY - ultY;
+    ultX = e.clientX; ultY = e.clientY;
+    movido += Math.abs(dx) + Math.abs(dy);
+    offset += dx;
+    vel = dx * 30;
+    for (var i = 0; i < piezas.length; i++) {
+      var p = piezas[i];
+      p.yaw = Math.max(-0.4, Math.min(0.4, p.yaw + dx * 0.004));
+    }
+    if (movido > 12) pista.classList.remove("visible");
+  });
+
+  function soltar(e){
+    if (!arrastrando) return;
+    arrastrando = false;
+    lienzo.classList.remove("arrastrando");
+    var dtms = performance.now() - t0;
+    if (movido < 9 && dtms < 550) tocar(e.clientX, e.clientY);
+  }
+  // (esto se había perdido: sin pointerup el toque nunca llegaba a tocar())
+  lienzo.addEventListener("pointerup", soltar);
+  lienzo.addEventListener("pointercancel", function(){
+    arrastrando = false; lienzo.classList.remove("arrastrando");
+  });
+
+  lienzo.addEventListener("wheel", function(e){
+    offset -= e.deltaY; vel = -e.deltaY * 22;
+    if (Math.abs(e.deltaY) > 2) pista.classList.remove("visible");
+  }, { passive:true });
+
+  window.addEventListener("keydown", function(e){
+    if (e.key === "ArrowRight") vel = 900;
+    else if (e.key === "ArrowLeft") vel = -900;
+  });
+
+  var rt = null;
+  window.addEventListener("resize", function(){
+    clearTimeout(rt);
+    rt = setTimeout(function(){ medir(); }, 160);
+  });
+  window.addEventListener("orientationchange", function(){ setTimeout(medir, 260); });
+
+  medir();
+})();
+</script>
+</body>
+</html>
