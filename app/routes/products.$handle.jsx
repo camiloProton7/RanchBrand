@@ -437,9 +437,11 @@ function formatPrice(amount, currency = 'COP') {
 function getBenefits(productType, title, ficha) {
   const b = [];
   if (ficha) {
-    // Prenda con ficha propia: solo datos ciertos (nada de impermeable/UV si no aplica).
+    // Prenda con ficha propia: las DOS etiquetas de la prenda (reemplazan a los textos
+    // genéricos que salían en todas): la fecha de entrega y UNA palabra que la resume.
     if (ficha.preventa) b.push(`🔔 Preventa — llega el ${ficha.preventa}`);
-    b.push('🚚 Envío gratis a toda Colombia');
+    if (ficha.palabra) b.push(ficha.palabra);
+    while (b.length < 2) b.push('🚚 Envío gratis a toda Colombia');
     return b;
   }
   const t = `${productType || ''} ${title || ''}`.toLowerCase();
@@ -1222,7 +1224,12 @@ export default function ProductPage() {
             {/* Beneficios clave */}
             <ul className="trp-benefits">
               {getBenefits(product.productType, product.title, tablaTallas).map((b) => (
-                <li key={b}>{b}</li>
+                <li
+                  key={b}
+                  className={tablaTallas?.palabra && b === tablaTallas.palabra ? 'trp-benefit-word' : undefined}
+                >
+                  {b}
+                </li>
               ))}
             </ul>
           </>

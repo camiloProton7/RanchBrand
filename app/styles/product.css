@@ -2185,3 +2185,13 @@
   font-size: 13px;
   color: #8a7f6e;
 }
+
+/* Etiqueta de una palabra de la prenda (la otra es la fecha de entrega) */
+.trp-benefits li.trp-benefit-word {
+  background: #fff;
+  border: 1px solid rgba(179, 74, 42, 0.35);
+  color: #8f3a1f;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
