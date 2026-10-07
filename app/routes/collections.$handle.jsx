@@ -3,9 +3,10 @@ import {Link, useLoaderData} from 'react-router';
 import {Analytics} from '@shopify/hydrogen';
 import {optimizeImage, imageSrcSet} from '~/lib/image';
 import {ratingFor} from '~/lib/rating';
+import percheroStyles from '~/styles/perchero-home.css?url';
 import collectionStyles from '~/styles/collection.css?url';
 
-export const links = () => [{rel: 'stylesheet', href: collectionStyles}];
+export const links = () => [{rel: 'stylesheet', href: collectionStyles}, {rel: 'stylesheet', href: percheroStyles}];
 
 // Full-page cache de Oxygen: sirve el HTML desde el edge (páginas estáticas).
 export const headers = () => ({
@@ -84,6 +85,17 @@ const COLLECTION_QUERY = `#graphql
 const SHOPIFY_DOMAIN = '1caf84-4.myshopify.com';
 
 // Tallas de la tarjeta: nombre + si está disponible, para verlo sin entrar al producto.
+// Colecciones que arrancan con su PERCHERO (el rack de prendas colgadas) arriba del
+// listado: es la misma página del perchero servida en modo embed, dentro de un iframe.
+const PERCHEROS = {
+  bordados: {
+    src: '/perchero/sacos.html?embed=1',
+    eyebrow: 'Colección',
+    titulo: 'Sacos bordados',
+    pista: 'Desliza para recorrer el perchero, toca un saco para ponerlo de frente y tócalo otra vez para abrir su ficha.',
+  },
+};
+
 function tallasDe(product) {
   const out = [];
   for (const v of product?.variants?.nodes || []) {
@@ -217,6 +229,23 @@ export default function CollectionPage() {
           ))}
         </div>
       </div>
+
+      {PERCHEROS[collection.handle] ? (
+        <section className="tr-perchero" id="sacos-bordados" aria-label={PERCHEROS[collection.handle].titulo}>
+          <div className="tr-perchero-head">
+            <span className="tr-perchero-eyebrow">{PERCHEROS[collection.handle].eyebrow}</span>
+            <h2 className="tr-perchero-title">{PERCHEROS[collection.handle].titulo}</h2>
+            <p className="tr-perchero-sub">{PERCHEROS[collection.handle].pista}</p>
+          </div>
+          <div className="tr-perchero-marco">
+            <iframe
+              src={PERCHEROS[collection.handle].src}
+              title={`Perchero de ${PERCHEROS[collection.handle].titulo} The Ranch`}
+              loading="lazy"
+            />
+          </div>
+        </section>
+      ) : null}
 
       {/* ===== Filtros ===== */}
       <div className="tr-col-filters">
