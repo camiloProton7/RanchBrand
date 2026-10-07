@@ -2,6 +2,7 @@ import {useEffect, useMemo, useRef, useState} from 'react';
 import {Link, useLoaderData} from 'react-router';
 import {Analytics} from '@shopify/hydrogen';
 import {optimizeImage, imageSrcSet} from '~/lib/image';
+import {ratingFor} from '~/lib/rating';
 import collectionStyles from '~/styles/collection.css?url';
 
 export const links = () => [{rel: 'stylesheet', href: collectionStyles}];
@@ -69,6 +70,7 @@ const COLLECTION_QUERY = `#graphql
           variants(first: 10) {
             nodes {
               id
+              availableForSale
               selectedOptions { name value }
               price { amount currencyCode }
             }
@@ -80,6 +82,18 @@ const COLLECTION_QUERY = `#graphql
 `;
 
 const SHOPIFY_DOMAIN = '1caf84-4.myshopify.com';
+
+// Tallas de la tarjeta: nombre + si está disponible, para verlo sin entrar al producto.
+function tallasDe(product) {
+  const out = [];
+  for (const v of product?.variants?.nodes || []) {
+    const opt = (v.selectedOptions || []).find((o) => /talla|tama|size/i.test(o.name));
+    const nombre = (opt ? opt.value : (v.title || '').split(' / ').pop() || '').trim();
+    if (!nombre || out.some((x) => x.nombre === nombre)) continue;
+    out.push({nombre, disponible: Boolean(v.availableForSale)});
+  }
+  return out;
+}
 
 function toNumericId(gid) {
   return gid?.match(/\/(\d+)$/)?.[1] || gid;
@@ -307,6 +321,8 @@ function CollectionCard({product, index, onQuickView}) {
   const primary = product.featuredImage;
   const second = product.images?.nodes?.[1];
   const price = product.priceRange?.minVariantPrice?.amount;
+  const tallas = tallasDe(product);
+  const todoAgotado = tallas.length > 0 && tallas.every((t) => !t.disponible);
   const compare = product.compareAtPriceRange?.minVariantPrice?.amount;
   const hasDiscount = compare && Number(compare) > Number(price);
 
@@ -368,12 +384,27 @@ function CollectionCard({product, index, onQuickView}) {
               />
             ) : null}
             <span className="tr-col-rating-badge">
-              <i>★</i> 4.8
+              <i>★</i> {ratingFor(product.handle).num}
             </span>
             {hasDiscount ? <span className="tr-col-offer">Oferta</span> : null}
           </div>
           <div className="tr-col-card-info">
             <h3 className="tr-col-card-name">{product.title}</h3>
+            {tallas.length > 1 ? (
+              <div className="tr-col-sizes" role="list" aria-label="Tallas disponibles">
+                {tallas.map((t) => (
+                  <span
+                    key={t.nombre}
+                    role="listitem"
+                    className={`tr-col-size ${t.disponible ? 'is-on' : 'is-off'}`}
+                    title={t.disponible ? `Talla ${t.nombre} disponible` : `Talla ${t.nombre} agotada`}
+                  >
+                    {t.nombre}
+                  </span>
+                ))}
+                {todoAgotado ? <span className="tr-col-soldout">Agotado</span> : null}
+              </div>
+            ) : null}
             <div className="tr-col-card-meta">
               <span className="tr-col-card-price">
                 {formatPrice(price)}

@@ -14,7 +14,7 @@
   --hero-progress: 0;
   background: #0b0b09;
   box-sizing: border-box;
-  height: 150svh;
+  height: 132svh;
   padding: 0;
   position: relative;
   width: 100%;
@@ -28,7 +28,7 @@
 
 .tr-scroll-stage {
   background: #0b0b09;
-  height: 100svh;
+  height: 92svh;
   overflow: hidden;
   position: sticky;
   top: 0;
@@ -627,6 +627,20 @@
 }
 
 @media (max-width: 899px) {
+  /* El hero del inicio ocupaba la pantalla completa y quedaba enorme en el teléfono:
+     se acorta el escenario (y el recorrido del scroll) para que se vea la sección siguiente. */
+  .tr-scroll-hero {
+    height: 116svh;
+  }
+
+  .tr-scroll-stage {
+    height: 84svh;
+  }
+
+  .tr-menu-logo img {
+    max-height: 46px;
+  }
+
   .tr-masthead-nav {
     display: none;
   }

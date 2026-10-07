@@ -2,6 +2,7 @@ import {Link, useLoaderData, useRouteLoaderData} from 'react-router';
 import {useEffect, useRef, useState} from 'react';
 import {optimizeImage, imageSrcSet} from '~/lib/image';
 import {ScrollVideoHero} from '~/components/ScrollVideoHero';
+import {ratingFor} from '~/lib/rating';
 import ChaquetaHero from '~/components/ChaquetaHero';
 import DesertCampaign from '~/components/DesertCampaign';
 import UtilityLinks from '~/components/UtilityLinks';
@@ -565,7 +566,7 @@ function ProductScroll({products, collectionUrl, ariaLabel, title}) {
                 <div className="tr-gorra-labels">
                   <span className="tr-badge">Premium</span>
                   <span className="tr-badge tr-badge-rating">
-                    <i className="tr-star">★</i> 4.8
+                    <i className="tr-star">★</i> {ratingFor(product.handle).num}
                   </span>
                 </div>
 

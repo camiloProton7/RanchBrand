@@ -583,3 +583,22 @@ button.reset:hover:not(:has(> *)) {
   gap: 0.75rem;
   flex-wrap: wrap;
 }
+
+/* Estrellas con relleno proporcional al rating (mismo look en ficha y colección) */
+.tr-stars {
+  display: inline-block;
+  line-height: 1;
+  position: relative;
+  white-space: nowrap;
+}
+.tr-stars-base {
+  color: rgba(17, 17, 17, 0.18);
+}
+.tr-stars-fill {
+  color: #d99326;
+  left: 0;
+  overflow: hidden;
+  position: absolute;
+  top: 0;
+  white-space: nowrap;
+}

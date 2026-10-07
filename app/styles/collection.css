@@ -711,3 +711,45 @@
   color: #f5b301;
   font-style: normal;
 }
+
+/* Tallas disponibles en la tarjeta de la colección: se ve sin entrar al producto.
+   Chancleta: tono de marca para las disponibles, apagada y tachada para las agotadas. */
+.tr-col-sizes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: 9px;
+}
+.tr-col-size {
+  align-items: center;
+  border: 1px solid rgba(17, 17, 17, 0.14);
+  border-radius: 7px;
+  color: #2f2c27;
+  display: inline-flex;
+  font-size: 11px;
+  font-weight: 600;
+  height: 23px;
+  justify-content: center;
+  letter-spacing: 0.07em;
+  min-width: 26px;
+  padding: 0 7px;
+  text-transform: uppercase;
+}
+.tr-col-size.is-on {
+  background: #f5f0e6;
+  border-color: rgba(179, 74, 42, 0.35);
+  color: #8f3a1f;
+}
+.tr-col-size.is-off {
+  border-style: dashed;
+  color: rgba(17, 17, 17, 0.3);
+  text-decoration: line-through;
+}
+.tr-col-soldout {
+  align-self: center;
+  color: #b34a2a;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}

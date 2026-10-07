@@ -1,3 +1,5 @@
+import Stars from '~/components/Stars';
+import {ratingFor} from '~/lib/rating';
 import {useEffect, useMemo, useRef, useState} from 'react';
 import {Link, useLoaderData, useRouteLoaderData} from 'react-router';
 import {addToCart, buyNow} from '~/lib/cart';
@@ -558,6 +560,8 @@ export default function ProductPage() {
   const logoSrc = rootData?.header?.shop?.brand?.logo?.image?.url;
 
   const [activeImage, setActiveImage] = useState(0);
+  // Rating de vitrina: estable por producto (4.3 a 5.0), como pidió Camilo.
+  const rating = ratingFor(product.handle);
   const [color, setColor] = useState(null);
   const [fav, setFav] = useState(false);
   const [qty, setQty] = useState(1);
@@ -1071,9 +1075,9 @@ export default function ProductPage() {
         {/* ===== Tarjeta flotante de rating ===== */}
       <div className="trp-rating-pill">
         <span className="trp-rating-pill-star">★</span>
-        <span className="trp-rating-pill-num">4.8</span>
+        <span className="trp-rating-pill-num">{rating.num}</span>
         <span className="trp-rating-pill-sep">·</span>
-        <span className="trp-rating-pill-label">672 reseñas</span>
+        <span className="trp-rating-pill-label">{rating.reviews} reseñas</span>
         <span className="trp-rating-pill-arrow">→</span>
       </div>
 
@@ -1205,7 +1209,7 @@ export default function ProductPage() {
               className="trp-stars"
               onClick={() => document.getElementById('trp-reviews')?.scrollIntoView({behavior: 'smooth'})}
             >
-              <span aria-hidden="true">★★★★★</span> <span className="trp-stars-num">4.8</span>
+              <Stars value={rating.num} /> <span className="trp-stars-num">{rating.num}</span>
               <span className="trp-stars-link">Ver reseñas</span>
             </button>
 
@@ -1570,7 +1574,7 @@ export default function ProductPage() {
                     />
                   ) : null}
                   <span className="trp-similar-rating">
-                    <i>★</i> 4.8
+                    <i>★</i> {ratingFor(p.handle).num}
                   </span>
                 </div>
                 <h3 className="trp-similar-name">{p.title}</h3>

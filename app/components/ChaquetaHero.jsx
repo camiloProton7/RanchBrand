@@ -1,5 +1,6 @@
 import {useEffect, useRef, useState} from 'react';
 import {optimizeImage} from '~/lib/image';
+import {ratingFor} from '~/lib/rating';
 
 /**
  * ChaquetaHero — hero premium de chaquetas.
@@ -39,6 +40,24 @@ const DESCRIPTIONS = {
   Mojave: 'Robusta y versátil, lista para el terreno.',
 };
 
+// Texto propio de la prenda (la ficha la sirve en texto plano): se limpia y se corta.
+function limpiar(texto, max = 150) {
+  const t = String(texto || '')
+    .replace(/<[^>]+>/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+  if (!t) return '';
+  return t.length > max ? `${t.slice(0, max - 3).trimEnd()}...` : t;
+}
+
+// Los claims se muestran SOLO si la prenda los cumple: nada de "100% impermeable" en una
+// chaqueta que no lo es (lo pidió Camilo: el texto tiene que ser de nuestras prendas).
+function esImpermeable(p) {
+  return /impermeable|waterproof|repelente al agua|resistente al agua/i.test(
+    `${p?.title || ''} ${p?.description || ''}`,
+  );
+}
+
 function formatPrice(amount) {
   const n = Number(amount);
   if (!Number.isFinite(n)) return '';
@@ -50,9 +69,10 @@ function keywordFor(title) {
 }
 
 export default function ChaquetaHero({products}) {
-  const items = products.filter((p) =>
-    KEYWORDS.some((k) => (p.title || '').includes(k)),
-  );
+  const porModelo = products.filter((p) => KEYWORDS.some((k) => (p.title || '').includes(k)));
+  // Si la colección no trae los modelos del mapa, el carrusel usa las prendas reales
+  // de la colección en vez de quedarse vacío con textos genéricos.
+  const items = porModelo.length ? porModelo : products.filter((p) => p.featuredImage);
   const initialKeyword = items[0] ? keywordFor(items[0].title) : '';
   const initialBg = BACKGROUND_IMAGES[initialKeyword] || '';
   const [index, setIndex] = useState(0);
@@ -233,9 +253,11 @@ export default function ChaquetaHero({products}) {
       <div className="tr-chaqueta-hero-info" key={active.id}>
         <div className="tr-chaqueta-hero-head">
           <span className="tr-chaqueta-hero-eyebrow">{active.title}</span>
-          <span className="tr-chaqueta-hero-rating">★ 4.9</span>
+          <span className="tr-chaqueta-hero-rating">★ {ratingFor(active.handle).num}</span>
         </div>
-        <p className="tr-chaqueta-hero-desc">{DESCRIPTIONS[keyword]}</p>
+        <p className="tr-chaqueta-hero-desc">
+          {limpiar(active.description) || DESCRIPTIONS[keyword] || ''}
+        </p>
         <div className="tr-chaqueta-hero-price-row">
           {hasDiscount ? (
             <span className="tr-chaqueta-hero-compare">
@@ -248,8 +270,9 @@ export default function ChaquetaHero({products}) {
           ) : null}
         </div>
         <ul className="tr-chaqueta-hero-benefits">
-          <li>💧 100% impermeable</li>
+          {esImpermeable(active) ? <li>💧 Impermeable</li> : null}
           <li>🚚 Envío gratis a toda Colombia</li>
+          <li>🔄 Cambios fáciles</li>
         </ul>
       </div>
 
