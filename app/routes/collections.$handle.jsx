@@ -90,7 +90,6 @@ const SHOPIFY_DOMAIN = '1caf84-4.myshopify.com';
 const PERCHEROS = {
   bordados: {
     src: '/perchero/sacos.html?embed=1',
-    eyebrow: 'Colección',
     titulo: 'Sacos bordados',
     pista: 'Desliza para recorrer el perchero, toca un saco para ponerlo de frente y tócalo otra vez para abrir su ficha.',
   },
@@ -232,9 +231,9 @@ export default function CollectionPage() {
 
       {PERCHEROS[collection.handle] ? (
         <section className="tr-perchero" id="sacos-bordados" aria-label={PERCHEROS[collection.handle].titulo}>
+          {/* Sin eyebrow ni título propios: el encabezado de la colección ya los pone,
+              repetirlos se lee como error. Aquí solo la pista del gesto. */}
           <div className="tr-perchero-head">
-            <span className="tr-perchero-eyebrow">{PERCHEROS[collection.handle].eyebrow}</span>
-            <h2 className="tr-perchero-title">{PERCHEROS[collection.handle].titulo}</h2>
             <p className="tr-perchero-sub">{PERCHEROS[collection.handle].pista}</p>
           </div>
           <div className="tr-perchero-marco">
