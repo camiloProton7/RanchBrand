@@ -753,3 +753,31 @@
   letter-spacing: 0.12em;
   text-transform: uppercase;
 }
+
+/* Etiquetas de la tarjeta: fecha de entrega + una palabra de la prenda */
+.tr-col-tags {
+  bottom: 8px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  left: 8px;
+  position: absolute;
+  z-index: 2;
+}
+.tr-col-tag {
+  border-radius: 999px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  padding: 4px 10px;
+  text-transform: uppercase;
+}
+.tr-col-tag-date {
+  background: #b34a2a;
+  color: #f5f0e6;
+}
+.tr-col-tag-word {
+  background: rgba(245, 240, 230, 0.94);
+  border: 1px solid rgba(179, 74, 42, 0.3);
+  color: #8f3a1f;
+}

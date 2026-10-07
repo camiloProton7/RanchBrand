@@ -61,6 +61,9 @@ const COLLECTION_QUERY = `#graphql
               altText
             }
           }
+          metafield(namespace: "custom", key: "tabla_medidas") {
+            value
+          }
           priceRange {
             minVariantPrice { amount currencyCode }
           }
@@ -82,6 +85,34 @@ const COLLECTION_QUERY = `#graphql
 `;
 
 const SHOPIFY_DOMAIN = '1caf84-4.myshopify.com';
+
+// Etiquetas de la tarjeta: la fecha de entrega y UNA palabra que resume la prenda.
+// Salen del metafield de la ficha, así que solo las llevan las prendas importadas.
+const MESES = {
+  enero: 'ENE', febrero: 'FEB', marzo: 'MAR', abril: 'ABR', mayo: 'MAY', junio: 'JUN',
+  julio: 'JUL', agosto: 'AGO', septiembre: 'SEP', octubre: 'OCT', noviembre: 'NOV', diciembre: 'DIC',
+};
+
+function fechaCorta(texto) {
+  const m = String(texto || '').match(/(\d{1,2})\s+de\s+([a-záéíóúñ]+)/i);
+  if (!m) return String(texto || '').toUpperCase();
+  const mes = MESES[m[2].toLowerCase()] || m[2].slice(0, 3).toUpperCase();
+  return `${m[1]} ${mes}`;
+}
+
+function etiquetasDe(product) {
+  const raw = product?.metafield?.value;
+  if (!raw) return null;
+  try {
+    const d = JSON.parse(raw);
+    const fecha = fechaCorta(d.preventa);
+    const palabra = String(d.palabra || '').trim();
+    if (!fecha && !palabra) return null;
+    return {fecha, palabra};
+  } catch {
+    return null;
+  }
+}
 
 // Tallas de la tarjeta: nombre + si está disponible, para verlo sin entrar al producto.
 function tallasDe(product) {
@@ -322,6 +353,7 @@ function CollectionCard({product, index, onQuickView}) {
   const second = product.images?.nodes?.[1];
   const price = product.priceRange?.minVariantPrice?.amount;
   const tallas = tallasDe(product);
+  const etiquetas = etiquetasDe(product);
   const todoAgotado = tallas.length > 0 && tallas.every((t) => !t.disponible);
   const compare = product.compareAtPriceRange?.minVariantPrice?.amount;
   const hasDiscount = compare && Number(compare) > Number(price);
@@ -382,6 +414,16 @@ function CollectionCard({product, index, onQuickView}) {
                     ?.classList.add('tr-gorra-ready');
                 }}
               />
+            ) : null}
+            {etiquetas ? (
+              <div className="tr-col-tags">
+                {etiquetas.fecha ? (
+                  <span className="tr-col-tag tr-col-tag-date">Preventa {etiquetas.fecha}</span>
+                ) : null}
+                {etiquetas.palabra ? (
+                  <span className="tr-col-tag tr-col-tag-word">{etiquetas.palabra}</span>
+                ) : null}
+              </div>
             ) : null}
             <span className="tr-col-rating-badge">
               <i>★</i> {ratingFor(product.handle).num}
