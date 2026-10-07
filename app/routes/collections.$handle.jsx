@@ -91,7 +91,6 @@ const PERCHEROS = {
   bordados: {
     src: '/perchero/sacos.html?embed=1',
     titulo: 'Sacos bordados',
-    pista: 'Desliza para recorrer el perchero, toca un saco para ponerlo de frente y tócalo otra vez para abrir su ficha.',
   },
 };
 
@@ -231,11 +230,8 @@ export default function CollectionPage() {
 
       {PERCHEROS[collection.handle] ? (
         <section className="tr-perchero" id="sacos-bordados" aria-label={PERCHEROS[collection.handle].titulo}>
-          {/* Sin eyebrow ni título propios: el encabezado de la colección ya los pone,
-              repetirlos se lee como error. Aquí solo la pista del gesto. */}
-          <div className="tr-perchero-head">
-            <p className="tr-perchero-sub">{PERCHEROS[collection.handle].pista}</p>
-          </div>
+          {/* Sin encabezado propio: el de la colección ya nombra la sección y el gesto lo
+              enseña el panel del perchero ("desliza para explorar"). */}
           <div className="tr-perchero-marco">
             <iframe
               src={PERCHEROS[collection.handle].src}
