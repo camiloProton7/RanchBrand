@@ -4,6 +4,7 @@ import {Analytics} from '@shopify/hydrogen';
 import {optimizeImage, imageSrcSet} from '~/lib/image';
 import {ratingFor} from '~/lib/rating';
 import percheroStyles from '~/styles/perchero-home.css?url';
+import {OG_COLECCIONES, OG_POR_DEFECTO} from '~/lib/og-colecciones';
 import collectionStyles from '~/styles/collection.css?url';
 
 export const links = () => [{rel: 'stylesheet', href: collectionStyles}, {rel: 'stylesheet', href: percheroStyles}];
@@ -24,6 +25,15 @@ export const meta = ({data}) => {
   const description =
     collection?.description ||
     `${collection?.title || 'Colección'} de The Ranch. Calidad premium, envío gratis en Colombia.`;
+  // Imagen al compartir: la portada propia de la colección (con sus prendas, generada por
+  // the-ranch/generar_og_colecciones.mjs). Si no hay, la foto de la primera prenda, y si
+  // tampoco, la portada de la tienda: nunca se comparte sin imagen.
+  const primera = collection?.products?.nodes?.find((p) => p.featuredImage?.url)?.featuredImage?.url;
+  const recortada = primera ? `${primera.split('?')[0]}?width=1200&height=630&crop=center` : null;
+  const imagen = OG_COLECCIONES[collection?.handle]
+    ? `https://ranch.com.co${OG_COLECCIONES[collection.handle]}`
+    : recortada || `https://ranch.com.co${OG_POR_DEFECTO}`;
+
   return [
     {title},
     {name: 'description', content: description},
@@ -31,7 +41,17 @@ export const meta = ({data}) => {
     {property: 'og:description', content: description},
     {property: 'og:type', content: 'website'},
     {property: 'og:url', content: url},
+    {property: 'og:site_name', content: 'The Ranch'},
+    {property: 'og:image', content: imagen},
+    {property: 'og:image:secure_url', content: imagen},
+    {property: 'og:image:width', content: '1200'},
+    {property: 'og:image:height', content: '630'},
+    {property: 'og:image:alt', content: title},
+    {property: 'og:locale', content: 'es_CO'},
     {name: 'twitter:card', content: 'summary_large_image'},
+    {name: 'twitter:title', content: title},
+    {name: 'twitter:description', content: description},
+    {name: 'twitter:image', content: imagen},
     {tagName: 'link', rel: 'canonical', href: url},
   ];
 };
