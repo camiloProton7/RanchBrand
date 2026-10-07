@@ -13,6 +13,10 @@ import CartDrawer from '~/components/CartDrawer';
 // cambia la URL y deja la pantalla en blanco.
 const esDocumentoAparte = (item) => Boolean(item && (item.plano || item.href === '/perchero/'));
 
+// Items que apuntan a una sección del home (`/#algo`). En el home se baja con scroll
+// suave —sin recargar— y desde otra ruta se navega normal, que es lo que ya hace <a>.
+const esAncla = (item) => Boolean(item && item.ancla && item.href.startsWith('/#'));
+
 const MENU_ITEMS = [
   {label: 'Home', href: '/'},
   {label: 'Gorras', href: '/collections/gorras-truckers'},
@@ -21,7 +25,9 @@ const MENU_ITEMS = [
     href: '/collections/chaquetas',
     children: [
       {label: 'Chaquetas', href: '/collections/chaquetas'},
-      {label: 'Sacos Bordados', href: '/collections/bordados'},
+      // El perchero de sacos vive como sección del home: este item baja al ancla
+      // (estando en el home hace scroll suave; desde otra página navega a /#sacos-bordados).
+      {label: 'Sacos Bordados', href: '/#sacos-bordados', ancla: true},
       {label: 'Camisas', href: '/collections/camisetas'},
       {label: 'Camisetas', href: '/perchero/', plano: true},
     ],
@@ -34,6 +40,15 @@ const MENU_ITEMS = [
  * Header global: masthead fijo (logo + nav + burger) y menú móvil compacto.
  * Presente en todas las rutas vía root.jsx.
  */
+function bajarAAncla(e, href) {
+  const id = href.slice(2);
+  const el = typeof document !== 'undefined' ? document.getElementById(id) : null;
+  if (!el) return; // no estamos en el home: que navegue el navegador
+  e.preventDefault();
+  el.scrollIntoView({behavior: 'smooth', block: 'start'});
+  window.history.replaceState(null, '', href);
+}
+
 export default function SiteHeader({logoSrc}) {
   const [open, setOpen] = useState(false);
   const [hidden, setHidden] = useState(false);
@@ -99,8 +114,12 @@ export default function SiteHeader({logoSrc}) {
           {MENU_ITEMS.map((item) => {
             // Los items `plano` (el perchero) se sirven como documento aparte:
             // con <Link> la navegación de cliente deja la página en blanco.
-            const Etiqueta = esDocumentoAparte(item) ? "a" : Link;
-            const props = esDocumentoAparte(item) ? {href: item.href, rel: "external"} : {to: item.href};
+            const Etiqueta = esDocumentoAparte(item) || esAncla(item) ? "a" : Link;
+            const props = esDocumentoAparte(item)
+              ? {href: item.href, rel: "external"}
+              : esAncla(item)
+                ? {href: item.href, onClick: (e) => bajarAAncla(e, item.href)}
+                : {to: item.href};
             return (
             <div key={item.label} className="tr-site-nav-item">
               <Etiqueta {...props}>
@@ -110,8 +129,12 @@ export default function SiteHeader({logoSrc}) {
               {item.children ? (
                 <div className="tr-site-dropdown">
                   {item.children.map((child) => {
-                    const Hijo = esDocumentoAparte(child) ? "a" : Link;
-                    const propsHijo = esDocumentoAparte(child) ? {href: child.href, rel: "external"} : {to: child.href};
+                    const Hijo = esDocumentoAparte(child) || esAncla(child) ? "a" : Link;
+                    const propsHijo = esDocumentoAparte(child)
+                      ? {href: child.href, rel: "external"}
+                      : esAncla(child)
+                        ? {href: child.href, onClick: (e) => bajarAAncla(e, child.href)}
+                        : {to: child.href};
                     return (
                       <Hijo key={child.label} {...propsHijo}>
                         {child.label}
@@ -201,14 +224,18 @@ export default function SiteHeader({logoSrc}) {
 
           <nav className="tr-site-menu-nav">
             {MENU_ITEMS.map((item, i) => {
-              const Etiqueta = esDocumentoAparte(item) ? "a" : Link;
-              const propsMovil = esDocumentoAparte(item) ? {href: item.href, rel: "external"} : {to: item.href};
+              const Etiqueta = esDocumentoAparte(item) || esAncla(item) ? "a" : Link;
+              const propsMovil = esDocumentoAparte(item)
+                ? {href: item.href, rel: "external"}
+                : esAncla(item)
+                  ? {href: item.href, onClick: (e) => bajarAAncla(e, item.href)}
+                  : {to: item.href};
               return (
               <div key={item.label} className="tr-site-menu-group">
                 <Etiqueta
-                  {...propsMovil}
                   onClick={() => setOpen(false)}
                   style={{animationDelay: `${0.06 + i * 0.05}s`}}
+                  {...propsMovil}
                 >
                   <span className="tr-site-menu-num">
                     {String(i + 1).padStart(2, '0')}
@@ -218,13 +245,17 @@ export default function SiteHeader({logoSrc}) {
                 {item.children ? (
                   <div className="tr-site-menu-sub">
                     {item.children.map((child) => {
-                      const Hijo = esDocumentoAparte(child) ? "a" : Link;
-                      const propsHijo = esDocumentoAparte(child) ? {href: child.href, rel: "external"} : {to: child.href};
+                      const Hijo = esDocumentoAparte(child) || esAncla(child) ? "a" : Link;
+                      const propsHijo = esDocumentoAparte(child)
+                        ? {href: child.href, rel: "external"}
+                        : esAncla(child)
+                          ? {href: child.href, onClick: (e) => { bajarAAncla(e, child.href); setOpen(false); }}
+                          : {to: child.href};
                       return (
                         <Hijo
                           key={child.label}
-                          {...propsHijo}
                           onClick={() => setOpen(false)}
+                          {...propsHijo}
                         >
                           <span className="tr-site-menu-num tr-site-menu-num-sub" />
                           {child.label}

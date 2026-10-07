@@ -1,11 +1,11 @@
 <!doctype html>
 <html lang="es">
 <head>
-<base href="/perchero/">
 <meta charset="utf-8">
+<base href="/perchero/">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=yes">
 <meta name="theme-color" content="#f5f0e6">
-<title>Camisetas — The Ranch</title>
+<title>Sacos — The Ranch</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -118,7 +118,17 @@
   .barra{width:min(60vw,260px);height:2px;background:rgba(27,26,23,.12);border-radius:2px;overflow:hidden}
   .barra i{display:block;height:100%;width:0;background:var(--terra);transition:width .22s ease}
   .carga .pct{font-size:10.5px;letter-spacing:.18em;color:var(--gris)}
+
+  /* --- Modo embed: el perchero entra como SECCIÓN del home, así que la cabecera de la
+     tienda, el menú, el título y la pista los pone la página; aquí sobran. --- */
+  html.embed .tr-site-header,
+  html.embed .tr-site-menu,
+  html.embed .cabecera,
+  html.embed .pista{display:none!important}
+  html.embed #lienzo{inset:0}
+  html.embed .panel{padding-bottom:calc(20px + env(safe-area-inset-bottom))}
 </style>
+<script>if (/[?&]embed=1/.test(location.search)) document.documentElement.classList.add("embed");</script>
 </head>
 <body>
 <header class="tr-site-header" id="cabeceraTienda">
@@ -137,17 +147,17 @@
   <nav class="tr-site-menu-nav"><div class="tr-site-menu-group"><a href="https://ranch.com.co/" style="animation-delay:0.06s"><span class="tr-site-menu-num">01</span>Home</a></div><div class="tr-site-menu-group"><a href="https://ranch.com.co/collections/gorras-truckers" style="animation-delay:0.11s"><span class="tr-site-menu-num">02</span>Gorras</a></div><div class="tr-site-menu-group"><a href="https://ranch.com.co/collections/chaquetas" style="animation-delay:0.16s"><span class="tr-site-menu-num">03</span>Prendas superiores</a><div class="tr-site-menu-sub"><a href="https://ranch.com.co/collections/chaquetas"><span class="tr-site-menu-num tr-site-menu-num-sub"></span>Chaquetas</a></div><div class="tr-site-menu-sub"><a href="https://ranch.com.co/collections/bordados"><span class="tr-site-menu-num tr-site-menu-num-sub"></span>Sacos Bordados</a></div><div class="tr-site-menu-sub"><a href="https://ranch.com.co/collections/camisetas"><span class="tr-site-menu-num tr-site-menu-num-sub"></span>Camisas</a></div><div class="tr-site-menu-sub"><a href="https://ranch.com.co/perchero/"><span class="tr-site-menu-num tr-site-menu-num-sub"></span>Camisetas</a></div></div><div class="tr-site-menu-group"><a href="https://ranch.com.co/collections/combo-ranch-premium" style="animation-delay:0.21s"><span class="tr-site-menu-num">04</span>Combos</a></div><a class="tr-site-menu-wa" href="https://ranch.com.co/cart" style="animation-delay:0.26s"><span class="tr-site-menu-num">05</span>Carrito</a></nav>
 </div>
 
-<canvas id="lienzo" aria-label="Perchero de camisetas The Ranch"></canvas>
+<canvas id="lienzo" aria-label="Perchero de sacos The Ranch"></canvas>
 
 <header class="cabecera">
   <div>
-    <h1>Camisetas</h1>
-    <p>The Ranch · <span id="cuantas">11</span> diseños</p>
+    <h1>Sacos</h1>
+    <p>The Ranch · <span id="cuantas">6</span> diseños</p>
   </div>
-  
+  <a class="anterior" href="https://ranch.com.co/collections/bordados">ver todos los sacos</a>
 </header>
 
-<div class="pista" id="pista">Desliza para recorrer · toca una camiseta para ponerla al frente · tócala otra vez para abrir su ficha</div>
+<div class="pista" id="pista">Desliza para recorrer · toca un saco para ponerlo al frente · tócalo otra vez para abrir su ficha</div>
 
 <div class="panel" id="panel">
   <div class="avance" aria-hidden="true"><i id="avanceMarca"></i></div>
@@ -171,19 +181,12 @@
 
   // 11 diseños reales del catálogo, cada uno con sus 3 vistas sobre el mismo gancho
   var CATALOGO = [
-    ["camiseta-broken","Broken"],
-    ["camiseta-bufalo","Bufalo"],
-    ["camiseta-bull","Bull"],
-    ["camiseta-cowboy","CowBoy"],
-    ["camiseta-frontier","Frontier"],
-    ["camiseta-heritage","Heritage"],
-    ["camiseta-ranch-queen-copia","Horse Ranch"],
-    ["camiseta-ranch-queen","Ranch Queen"],
-    ["camiseta-rodeo-bull","Rodeo Bull"],
-    ["camiseta-western","Western"],
-    ["camiseta-western-red","Western RED"]
+    ["saco-bordado-rebano","Saco Bordado Rebaño","$165.000"],
+    ["saco-bordado-horse-ranch","Saco Bordado Horse Ranch","$165.000"],
+    ["saco-bull-bordado","Saco Bull","$165.000"],
+    ["saco-cowboy-bordado","Saco Cowboy Bordado","$165.000"],
   ];
-  var VISTAS = ["frente","lado"];   // dos fotos: frente y perfil (sin 3/4)
+  var VISTAS = ["sacos/frente","sacos/lado"];   // dos fotos: frente y perfil (sin 3/4)
   var PRECIO = "$110.000";
   var ALTO_FOTO = 640;
 
@@ -243,14 +246,14 @@
   CATALOGO.forEach(function(par, i){
     var slug = par[0];
     var p = {
-      i:i, slug:slug, n:par[1], precio:PRECIO,
+      i:i, slug:slug, n:par[1], precio:par[2],
       imgs:[], giro:0, destino:0, yaw:0, vel:0, etiqueta:0,
       fase: i * 0.7 + Math.random() * 0.4, ang:0, pos:0
     };
     VISTAS.forEach(function(v, k){
       var im = new Image();
       im.decoding = "async";
-      im.alt = "Camiseta " + par[1] + " vista " + v;
+      im.alt = "Prenda " + par[1] + " vista " + v;
       im.onload = im.onerror = avanzar;
       im.src = v + "/" + slug + ".webp?v=3";
       p.imgs[k] = im;

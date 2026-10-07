@@ -1,0 +1,66 @@
+/* Perchero de sacos bordados: sección del home, anclada desde el menú (#sacos-bordados) */
+.tr-perchero {
+  background: #f5f0e6;
+  padding: 32px 0 24px;
+  scroll-margin-top: 56px; /* la cabecera fija no tapa el título al saltar al ancla */
+}
+.tr-perchero-head {padding: 0 20px 14px}
+.tr-perchero-eyebrow {
+  color: #b34a2a;
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+.tr-perchero-title {
+  color: #1a1a18;
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 26px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  margin: 6px 0 0;
+}
+.tr-perchero-sub {
+  color: #6f6757;
+  font-size: 12.5px;
+  line-height: 1.5;
+  margin: 6px 0 0;
+  max-width: 36ch;
+}
+.tr-perchero-marco {
+  background: #efe8d8;
+  border-radius: 14px;
+  height: 68svh;
+  margin: 0 12px;
+  min-height: 460px;
+  overflow: hidden;
+  position: relative;
+}
+.tr-perchero-marco iframe {
+  border: 0;
+  display: block;
+  height: 100%;
+  width: 100%;
+}
+.tr-perchero-ver {
+  align-items: center;
+  color: #b34a2a;
+  display: inline-flex;
+  font-size: 12px;
+  font-weight: 600;
+  gap: 6px;
+  letter-spacing: 0.08em;
+  margin: 14px 20px 0;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+.tr-perchero-ver:hover {color: #8f3a1f}
+
+@media (min-width: 900px) {
+  .tr-perchero {padding: 54px 0 42px}
+  .tr-perchero-head {padding: 0 40px 18px}
+  .tr-perchero-title {font-size: 34px}
+  .tr-perchero-sub {font-size: 13.5px}
+  .tr-perchero-marco {height: 74svh; margin: 0 40px; border-radius: 18px}
+  .tr-perchero-ver {margin: 16px 40px 0}
+}

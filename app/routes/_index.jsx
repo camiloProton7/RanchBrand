@@ -9,6 +9,7 @@ import UtilityLinks from '~/components/UtilityLinks';
 import CamisaFeature from '~/components/CamisaFeature';
 import homeStyles from '~/styles/scroll-video-hero.css?url';
 import camisaFeatureStyles from '~/styles/camisa-feature.css?url';
+import percheroHomeStyles from '~/styles/perchero-home.css?url';
 
 export const meta = () => [
   {title: 'The Ranch — No seguimos modas'},
@@ -44,6 +45,7 @@ export function links() {
   return [
     {rel: 'stylesheet', href: homeStyles},
     {rel: 'stylesheet', href: camisaFeatureStyles},
+    {rel: 'stylesheet', href: percheroHomeStyles},
     {rel: 'preload', as: 'video', href: '/home-video-hevc.mp4?v=8', type: 'video/mp4; codecs="hvc1"'},
     {rel: 'preload', as: 'image', href: '/home-poster.jpg?v=8'},
   ];
@@ -146,6 +148,26 @@ export default function Home() {
         ariaLabel="Colección de gorras"
       />
       <ChaquetaHero products={chaquetas} />
+
+      {/* Perchero de sacos bordados: es una página propia (canvas + fotos) que se monta
+          aquí como sección. El menú ("Prendas superiores → Sacos Bordados") salta a
+          #sacos-bordados; el modo embed le quita su cabecera para no repetir la de la tienda. */}
+      <section className="tr-perchero" id="sacos-bordados" aria-label="Sacos bordados">
+        <div className="tr-perchero-head">
+          <span className="tr-perchero-eyebrow">Prendas superiores</span>
+          <h2 className="tr-perchero-title">Sacos bordados</h2>
+          <p className="tr-perchero-sub">
+            Desliza para recorrer el perchero, toca un saco para ponerlo de frente y tócalo otra vez
+            para abrir su ficha.
+          </p>
+        </div>
+        <div className="tr-perchero-marco">
+          <iframe src="/perchero/sacos.html?embed=1" title="Perchero de sacos bordados The Ranch" loading="lazy" />
+        </div>
+        <a className="tr-perchero-ver" href="/collections/bordados">
+          Ver todos los sacos bordados →
+        </a>
+      </section>
       <ProductScroll
         products={camisetas}
         collectionUrl="https://ranch.com.co/collections/camisetas"
