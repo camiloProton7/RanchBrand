@@ -1,5 +1,152 @@
 [
   {
+    "slug": "silvopastoreo-arboles-potrero-sequia",
+    "title": "Silvopastoreo en sequía: los árboles que guardan pasto, sombra y humedad en el potrero",
+    "excerpt": "El árbol no es adorno del potrero: es sombra, humedad y reserva de forraje cuando el sol aprieta. Así se mete silvopastoreo en un rancho que ya está en producción, sin perder pasto ni plata.",
+    "date": "2026-10-07",
+    "category": "Campo",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/a/ad/Silvopasture_with_cattle%2C_Pennsylvania.jpg",
+    "imageAlt": "Ganado pastando bajo árboles dispersos en un potrero con silvopastoreo",
+    "blocks": [
+      {
+        "type": "p",
+        "text": "En sequía, el potrero sin un solo árbol es un potrero que trabaja a pleno sol. Y ahí no solo sufre el ganado: sufre el pasto. Bajo la sombra de un árbol bien manejado el suelo queda más fresco, la humedad se queda más tiempo y el lote aguanta dos o tres semanas más que el potrero abierto de al lado. El silvopastoreo —árboles dentro del potrero, no alrededor— es la forma más vieja y más barata de tener reserva verde cuando el cielo se cierra."
+      },
+      {
+        "type": "h2",
+        "text": "Lo que un árbol bien puesto le devuelve al potrero"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Sombra que baja el gasto del animal: un hato que pasa el mediodía bajo sombra natural rumia más y come mejor en las horas frescas. Menos estrés calórico es menos agua bebida y menos kilos perdidos.",
+          "Microclima en el suelo: bajo la copa baja la temperatura y se conserva la humedad. Ese suelo sombreado rebrota antes después de la lluvia y sostiene más días de seca.",
+          "Raíz profunda que bombea lo que el pasto no alcanza: el árbol saca agua y nutrientes de capas profundas y los devuelve al suelo en hojarasca cada año.",
+          "Rompevientos: el viento seco deshidrata el pasto y al animal. Una línea de árboles corta la evaporación y protege el potrero por varias veces su altura.",
+          "Reserva de forraje de emergencia: árboles forrajeros como leucaena, morera o matarratón, podados cada 45 a 60 días, entregan proteína justo cuando el potrero ya se puso amarillo.",
+          "Sombra que reparte el pastoreo: con árboles, el hato usa el potrero completo en vez de apretarse en el único rincón con techo natural."
+        ]
+      },
+      {
+        "type": "h2",
+        "text": "Cómo meterlo en un potrero que ya está produciendo"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Empieza por lo que ya tienes: bordes, cercas vivas, linderos, cañadas y esos puntos donde el pasto nunca rindió. Ahí el árbol no compite con la pradera.",
+          "Densidad moderada: entre 40 y 100 árboles por hectárea, dispersos, dan sombra sin quitar pasto. Un bosque tupido ya no es potrero.",
+          "Siembra en lluvia y protege el arbolito: sin tutor ni cerca individual, el ganado lo pela en una tarde. El hato respeta el árbol de más de dos metros, no el de cuarenta centímetros.",
+          "Elige especies que sirvan: forrajeras para poda, maderables de copa alta para sombra y nativas que ya probaron aguantar la seca de esa región. Nada exótico que no conozca el suelo.",
+          "Corre la franja de pastoreo entre los árboles, sin rodear cada uno: el hato come, el árbol se cuida y el residuo queda parejo.",
+          "Poda de formación en los primeros años: la copa se abre por encima del lomo del ganado, para que el animal sombree abajo sin ensuciar el forraje."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "El silvopastoreo no se instala en un verano: se siembra hoy para que la sombra y la humedad estén ahí cuando la sequía pregunte. No seguimos modas, las marcamos. Si administras tu rancho pensando en lo que viene, explora la colección de gorras y chaquetas The Ranch, hecha para quienes siembran antes de que haga falta."
+      }
+    ]
+  },
+  {
+    "slug": "cuanto-aguanta-el-ganado-sin-agua-sequia",
+    "title": "Cuánto aguanta el ganado sin agua: los umbrales que hay que tener claros antes de la sequía",
+    "excerpt": "El hato aguanta días sin pasto y muy pocas horas sin agua. Estos son los umbrales reales de consumo y deshidratación por categoría y temperatura, y las señales con las que el animal avisa antes de caer.",
+    "date": "2026-10-07",
+    "category": "Campo",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e5/Cattle_at_the_Water%E2%80%99s_Edge_%E2%80%93_Gubi_Dam%2C_Nigeria.jpg/1920px-Cattle_at_the_Water%E2%80%99s_Edge_%E2%80%93_Gubi_Dam%2C_Nigeria.jpg",
+    "imageAlt": "Hato de ganado bebiendo en la orilla de una represa durante la temporada seca",
+    "blocks": [
+      {
+        "type": "p",
+        "text": "En el rancho todos saben cuántos días de pasto quedan. Casi nadie sabe cuántas horas de agua quedan, y esa es la cuenta que se cobra primero. Una vaca se sostiene unos días sin pasto con suplemento; sin agua, la caída es en horas. Antes de que llegue la seca hay que tener claros tres números: cuánto bebe cada categoría, con qué señales avisa el animal y cuánto tiempo tiene uno para reaccionar."
+      },
+      {
+        "type": "h2",
+        "text": "Los umbrales: qué pasa en el cuerpo del animal cuando falta el agua"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Al perder entre 8% y 10% del peso corporal en agua empieza la deshidratación clínica: el animal baja el consumo, deja de rumiar y cae la leche. La sed ya no alcanza para reponer lo que falta.",
+          "Entre 12% y 15% aparece el riesgo real: debilidad, tambaleo, ojos hundidos y piel que no vuelve. Ahí el animal ya no se recupera solo.",
+          "Por encima del 15% el desenlace es la muerte, y todo ese camino puede recorrerse en 48 a 72 horas de calor fuerte y pasto seco, no en una semana.",
+          "El consumo sube con la temperatura: por encima de 25-30 °C el hato bebe más y come menos. Una vaca lactante puede pasar de 60 a 90 litros al día cuando el sol aprieta.",
+          "El pasto seco sube la demanda de agua: un forraje maduro se digiere con más litros que un pasto tierno, y el animal compensa bebiendo.",
+          "El agua cargada de sales, con lama o tibia baja el consumo tanto como la escasez: el hato tiene agua delante y no la quiere beber."
+        ]
+      },
+      {
+        "type": "h2",
+        "text": "Las señales con las que el hato avisa antes de caer"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Menos rumia y jornadas de pastoreo más cortas: el animal sediento deja de comer antes que de caminar.",
+          "El hato se agolpa en el bebedero en las horas de calor y pelea por el chorro: canaleta corta o caudal insuficiente.",
+          "Caída de leche en las vacas de ordeño antes de cualquier otra señal: es el aviso más temprano del rancho.",
+          "Heces secas con anillos, orina escasa y oscura, encías pegajosas; al pellizcar la piel del cuello, el pliegue tarda en alisarse más de dos o tres segundos.",
+          "Consumo del tanque que baja 10% de un día para otro sin cambio de clima: puede ser una fuga, la bomba o agua que el hato dejó de querer.",
+          "Animales que dejan de caminar hacia el bebedero lejano: el que llega y encuentra el bebedero seco no vuelve a intentarlo."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "El plan para el día en que el agua no alcanza se escribe antes, en calma: priorizar vientres lactantes, animales cercanos al parto y reproductores; racionar por tandas sin dejar nunca el bebedero seco; rehidratar al animal golpeado poco a poco, cada veinte o treinta minutos, porque el agua a discreción en un animal severamente deshidratado puede matarlo; y anotar todos los días lo que baja el tanque. No seguimos modas, las marcamos. Si tu oficio es leer al hato antes de que avise dos veces, explora la colección de gorras y chaquetas The Ranch, hecha para quienes no esperan a que el problema cobre."
+      }
+    ]
+  },
+  {
+    "slug": "forrajes-alternativos-subproductos-sequia",
+    "title": "Forrajes alternativos y subproductos: cómo alimentar el hato en sequía con lo que ya produce la finca",
+    "excerpt": "Cuando el heno escasea y el concentrado se dispara, los residuos de cosecha y los subproductos de la propia finca son la reserva que nadie contabiliza. Qué se aprovecha, cómo se trata y qué límites no se pueden pasar.",
+    "date": "2026-10-07",
+    "category": "Campo",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/Harvest_Straw_Bales_in_Schleswig-Holstein.jpg/1920px-Harvest_Straw_Bales_in_Schleswig-Holstein.jpg",
+    "imageAlt": "Pacas doradas de forraje y residuos de cosecha guardadas como reserva para la época seca",
+    "blocks": [
+      {
+        "type": "p",
+        "text": "Cuando el verano aprieta y el heno escasea, el primer reflejo es comprar concentrado al precio que pongan. Pero en la mayoría de los ranchos hay una reserva de forraje que nadie contabiliza: los residuos de las cosechas, los subproductos de la propia finca y los que se consiguen a bajo costo en la región. Bien tratados y bien mezclados sostienen el hato; mal usados llenan la panza sin nutrir o intoxican."
+      },
+      {
+        "type": "h2",
+        "text": "Lo que la finca ya produce y casi siempre se desperdicia"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Soca y tamo de maíz o de sorgo: después de la cosecha queda tallo y hoja con mucha más fibra que el silo, pero sirve de relleno si se pica y se acompaña de proteína y minerales.",
+          "Cogollo, punta y cachaza de caña: el cogollo es el forraje más noble de la caña, y la cachaza es energía que se queda en el piso si no se recoge para ensilar o secar.",
+          "Tamo de arroz, cisco y residuos de trilla: hay que tratarlos con urea o amoníaco para que el animal los digiera. En crudo llenan, pero no alimentan.",
+          "Pulpa de café, residuos de plátano y de huerta: subproductos con buen aporte energético, con límites de uso por taninos y con riesgo de hongos si se guardan húmedos.",
+          "Ramoneo dirigido: leucaena, morera, matarratón, botón de oro y guandul, podados cada 45 a 60 días, entregan la proteína que el forraje seco no tiene.",
+          "Heno de segunda, maleza chopeada a tiempo y pasto diferido de los lotes flojos: nada de esto es basura si se corta verde y se ensila en el momento justo."
+        ]
+      },
+      {
+        "type": "h2",
+        "text": "Cómo tratarlos sin arriesgar el hato"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Tratamiento con urea al 1% de la materia seca: se humedece, se apisona y se tapa de 7 a 21 días. La urea rompe la lignina y vuelve digerible el residuo; sin ese paso, la soca de maíz y el tamo de arroz son solo relleno.",
+          "Azufre con la urea, siempre: sin él las bacterias del rumen no aprovechan el nitrógeno y el tratamiento se pierde.",
+          "Punto de humedad del ensilaje: si el residuo entra muy seco no fermenta y si entra muy mojado se pudre. Se comprime un puñado en la mano: debe quedar húmedo sin escurrir agua.",
+          "Mezcla con la base de siempre: los subproductos se ofrecen con heno, ensilaje o pasto de corte, nunca solos, y con sal mineralizada a disposición.",
+          "Adaptación de 7 a 10 días y agua a voluntad: el cambio brusco de dieta es la causa número uno de acidosis y diarreas en el verano.",
+          "Nunca a caballos ni a animales de estómago simple: la urea es tóxica para ellos. Un residuo tratado en el potrero de las yeguas se paga caro."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "El forraje más barato del rancho muchas veces ya está sembrado, ya se cosechó y ya se está botando. Contabilizarlo, tratarlo y mezclarlo con criterio es lo que convierte un desperdicio en reserva y una sequía en una temporada manejable. No seguimos modas, las marcamos. Si administras tu rancho contando cada kilo de pasto, explora la colección de gorras y chaquetas The Ranch, hecha para quienes no dejan nada en el piso."
+      }
+    ]
+  },
+  {
     "slug": "cerca-electrica-subdividir-potreros-sequia",
     "title": "Cercas eléctricas para subdividir potreros en sequía: dividir sin gastar una fortuna",
     "excerpt": "Subdividir el potrero es lo que hace posible la rotación, y la cerca eléctrica es la forma más barata de lograrlo. Esto es lo que necesita un cerco que de verdad aguante y cómo trazar la franja diaria sin fallar.",
