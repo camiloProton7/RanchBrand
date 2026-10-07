@@ -437,11 +437,9 @@ function formatPrice(amount, currency = 'COP') {
 function getBenefits(productType, title, ficha) {
   const b = [];
   if (ficha) {
-    // Prenda con ficha propia: las DOS etiquetas de la prenda (reemplazan a los textos
-    // genéricos que salían en todas): la fecha de entrega y UNA palabra que la resume.
-    if (ficha.preventa) b.push(`🔔 Preventa — llega el ${ficha.preventa}`);
-    if (ficha.palabra) b.push(ficha.palabra);
-    while (b.length < 2) b.push('🚚 Envío gratis a toda Colombia');
+    // La fecha de entrega y la palabra de la prenda van como etiquetas sobre la foto:
+    // aquí solo queda el beneficio real, sin repetir el dato.
+    b.push('🚚 Envío gratis a toda Colombia');
     return b;
   }
   const t = `${productType || ''} ${title || ''}`.toLowerCase();
@@ -549,6 +547,19 @@ function formatSize(value) {
 }
 
 const ATTRS = ['Edición limitada', 'Ajuste regulable'];
+
+const MESES_CORTOS = {
+  enero: 'ENE', febrero: 'FEB', marzo: 'MAR', abril: 'ABR', mayo: 'MAY', junio: 'JUN',
+  julio: 'JUL', agosto: 'AGO', septiembre: 'SEP', octubre: 'OCT', noviembre: 'NOV', diciembre: 'DIC',
+};
+
+// "10 de diciembre" → "10 DIC": la etiqueta sobre la foto necesita ser corta.
+function fechaCorta(texto) {
+  const m = String(texto || '').match(/(\d{1,2})\s+de\s+([a-záéíóúñ]+)/i);
+  if (!m) return String(texto || '').toUpperCase();
+  const mes = MESES_CORTOS[m[2].toLowerCase()] || m[2].slice(0, 3).toUpperCase();
+  return `${m[1]} ${mes}`;
+}
 
 export default function ProductPage() {
   const {product, licorera, reviews, related, similar, comboGorras, isCombo, isComboCamisa, camisaCombo, isCamisa, combosCamisa} =
@@ -1024,10 +1035,22 @@ export default function ProductPage() {
           </div>
         )}
 
+        {/* Etiquetas sobre la foto: en prendas con ficha propia van la FECHA DE ENTREGA
+            y UNA palabra que la resume; en los productos de marca, los atributos de siempre. */}
         <div className="trp-attrs" aria-hidden="true">
-          {ATTRS.map((a) => (
-            <span key={a}>{a}</span>
-          ))}
+          {(tablaTallas?.preventa || tablaTallas?.palabra
+            ? [
+                tablaTallas?.preventa ? `Preventa · ${fechaCorta(tablaTallas.preventa)}` : null,
+                tablaTallas?.palabra || null,
+              ]
+            : ATTRS
+          )
+            .filter(Boolean)
+            .map((a) => (
+              <span key={a} className={tablaTallas?.palabra === a ? 'is-word' : undefined}>
+                {a}
+              </span>
+            ))}
         </div>
 
         <div className="trp-lasso" aria-hidden="true" />
@@ -1224,12 +1247,7 @@ export default function ProductPage() {
             {/* Beneficios clave */}
             <ul className="trp-benefits">
               {getBenefits(product.productType, product.title, tablaTallas).map((b) => (
-                <li
-                  key={b}
-                  className={tablaTallas?.palabra && b === tablaTallas.palabra ? 'trp-benefit-word' : undefined}
-                >
-                  {b}
-                </li>
+                <li key={b}>{b}</li>
               ))}
             </ul>
           </>

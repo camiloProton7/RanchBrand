@@ -2186,12 +2186,11 @@
   color: #8a7f6e;
 }
 
-/* Etiqueta de una palabra de la prenda (la otra es la fecha de entrega) */
-.trp-benefits li.trp-benefit-word {
-  background: #fff;
-  border: 1px solid rgba(179, 74, 42, 0.35);
+/* La etiqueta de UNA palabra va en outline, para distinguirse de la fecha de entrega */
+.trp-attrs span.is-word {
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid rgba(179, 74, 42, 0.45);
   color: #8f3a1f;
-  font-size: 11px;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
 }
