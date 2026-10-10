@@ -1,5 +1,146 @@
 [
   {
+    "slug": "inventario-sequia-agua-forraje-rancho",
+    "title": "El inventario de sequía: cuánta agua y cuánto forraje debe tener guardado tu rancho",
+    "excerpt": "Antes de la sequía no se compra por instinto: se cuenta. Litros disponibles, kilos de forraje guardado y días de autonomía del hato. La hoja de inventario que dice si el rancho está listo.",
+    "date": "2026-10-10",
+    "category": "Campo",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Large_Hay_Bales_Stacked_In_Field.jpg/1920px-Large_Hay_Bales_Stacked_In_Field.jpg",
+    "imageAlt": "Pacas de heno apiladas como reserva de forraje para la temporada seca",
+    "blocks": [
+      {
+        "type": "p",
+        "text": "La preparación no empieza comprando suplemento el mes en que todo el mundo compra: empieza contando lo que hay. Un rancho puede tener treinta potreros, tres jagüeyes y la bodega llena, y aun así llegar corto a la sequía, porque nadie sumó los litros ni los kilos. El inventario de sequía es una hoja con tres números —agua, forraje y días de autonomía— y es la única forma de saber si el rancho aguanta el verano o si toca ajustar ahora, cuando todavía se puede decidir con calma."
+      },
+      {
+        "type": "h2",
+        "text": "El agua, medida en días de autonomía"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Suma los litros almacenados: el volumen útil de cada tanque, más el reservorio o jagüey medido en largo por ancho por profundidad promedio, por 0,7. Ese factor existe porque la orilla nunca es vertical ni la profundidad uniforme: de ahí sale el volumen real, no el que se ve desde el borde.",
+          "Mide el caudal de la fuente en litros por hora, no en la memoria. Un pozo que siempre ha dado puede haber bajado el nivel: se prueba de cuatro a ocho horas, anotando cada cuánto recupera el agua.",
+          "Calcula el consumo diario del hato por categoría: una vaca seca entre 40 y 55 litros, una vaca lactante entre 60 y 90, un animal de levante entre 25 y 40 y un toro entre 45 y 60. Treinta vacas lactantes son más de 2.000 litros al día, no 600.",
+          "Divide litros disponibles entre litros diarios: ese resultado es el número de días de autonomía. De tres a siete días de reserva es el mínimo prudente; por debajo de dos, la sequía ya está administrando el rancho.",
+          "Resta lo que se evapora sin darse cuenta: un espejo de agua destapado devuelve al cielo entre 5 y 10 litros por metro cuadrado al día. Un estanque de 100 metros cuadrados puede perder mil litros diarios solo por sol."
+        ]
+      },
+      {
+        "type": "h2",
+        "text": "El forraje, medido en kilos de materia seca"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Pasa todo a la misma unidad. Heno, ensilaje, caña picada y pasto en pie no se comparan por bultos ni por viajes: se comparan por kilos de materia seca. El heno ronda el 85%, el ensilaje entre 30% y 35% y la caña fresca entre 25% y 30%.",
+          "Afora los potreros que piensas usar y anota el número: corta y pesa en varios puntos, y descuenta maleza, pasto pisoteado y el residuo de 8 a 10 cm que no se debe tocar.",
+          "Suma lo guardado en la bodega —pacas, silo, bolsas y canecas— cada uno por lo que de verdad pesa. Una reserva anotada de memoria siempre sale más grande de lo que es.",
+          "Calcula la demanda diaria: el hato come entre 2,5% y 3% de su peso vivo en materia seca al día. Treinta vacas de 400 kilos son unos 330 kilos diarios, se suplemente o no.",
+          "Anota la merma con las pérdidas incluidas: el heno a la intemperie pierde entre 20% y 30% en seis meses y un ensilaje mal sellado entre 15% y 25%. Inventariar de más es engañarse solo.",
+          "Deja la hoja con fecha y revisión cada quince días: el número más bajo entre días de agua y días de forraje es el que manda, y cuando baja de treinta días de forraje o siete de agua, se actúa."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "El inventario no es papeleo: es la única manera de saber, con anticipación, si el rancho va a decidir o va a reaccionar. Se hace en lluvia, se revisa cada quince días y se corrige cuando todavía hay margen. No seguimos modas, las marcamos. Si administras tu rancho con la cuenta clara y el número a la mano, explora la colección de gorras y chaquetas The Ranch, hecha para quienes se anticipan al verano."
+      }
+    ]
+  },
+  {
+    "slug": "costo-kilo-proteina-forrajes-suplementos-sequia",
+    "title": "Cada kilo de proteína a su precio: cómo comparar forrajes y suplementos en la sequía",
+    "excerpt": "Comparar suplementos por el precio del bulto es comparar peras con manzanas. Lo que ordena la compra es el precio por kilo de materia seca y por kilo de proteína, más los costos que nadie anota.",
+    "date": "2026-10-10",
+    "category": "Campo",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Cattle_at_hay_feeder%2C_Churchland_Fields_-_geograph.org.uk_-_6005467.jpg/1920px-Cattle_at_hay_feeder%2C_Churchland_Fields_-_geograph.org.uk_-_6005467.jpg",
+    "imageAlt": "Ganado comiendo heno alrededor de un comedero en plena época seca",
+    "blocks": [
+      {
+        "type": "p",
+        "text": "En sequía se compra con afán y se compara mal. Dos bultos al mismo precio pueden tener uno el doble de agua que el otro; dos forrajes que se ven parecidos pueden entregar la mitad de proteína. El precio del bulto o del viaje no dice nada por sí solo: lo que dice es el costo por kilo de materia seca y, sobre todo, el costo por kilo de proteína útil. Ahí se decide si el rancho alimenta el hato o alimenta una factura."
+      },
+      {
+        "type": "h2",
+        "text": "Paso uno: llevar todo a precio por kilo de materia seca"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Cada alimento tiene su humedad: el heno ronda 15% y da cerca de 85% de materia seca, el ensilaje entre 30% y 35%, la caña fresca apenas 25% a 30% y el concentrado comercial 88% a 90%. Comparar un bulto de heno con uno de silo sin ajustar la humedad es regalar plata.",
+          "Divide el precio entre los kilos de materia seca del bulto. Si un bulto de 25 kilos de heno cuesta X, no pagaste X por 25 kilos: pagaste X por unos 21 kilos de materia seca, porque el resto es agua.",
+          "Suma el flete por tonelada, no por viaje. La distancia convierte un forraje barato en caro en cuanto el camión tiene que subir media hora por trocha.",
+          "Mete la merma desde el principio: el heno a la intemperie pierde entre 20% y 30% en seis meses y un ensilaje mal sellado entre 15% y 25%. Si la reserva se va a perder en el patio, el precio real sube sin que nadie lo note.",
+          "Cuenta la mano de obra: picar, cargar, ensilar y repartir todos los días tiene un costo. Un forraje barato que exige dos jornales más a la semana no siempre es más barato."
+        ]
+      },
+      {
+        "type": "h2",
+        "text": "Paso dos: el kilo de proteína, que es lo que de verdad alimenta"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "El pasto maduro de sequía baja a 6% u 8% de proteína cruda, y con esa falta el animal come menos y digiere peor: no es que sobre pasto, es que el pasto deja de alcanzar.",
+          "Las referencias que sirven: heno de buena calidad entre 8% y 12%, ensilaje de maíz entre 7% y 8%, leguminosas como leucaena, morera o guandul entre 18% y 25%, y torta de soya entre 44% y 48%.",
+          "La urea no es proteína: es el nitrógeno más barato que existe —46% de nitrógeno— y la flora del rumen lo convierte en proteína microbiana solo si hay energía disponible en la dieta. Sin melaza, grano o fibra de calidad al lado, la urea se va sin dejar nada.",
+          "Divide el precio entre los kilos de proteína que el alimento entrega. Ahí el concentrado caro a veces gana al forraje barato, y una leguminosa del propio rancho le gana a los dos.",
+          "La proteína sola no es la meta: sin pasto, sin agua y sin minerales ningún suplemento rinde. La proteína es el ladrillo que falta, no la casa completa."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "Comparar bien toma media hora en un cuaderno y puede ahorrar la plata de todo un verano: el mismo rancho, con el mismo presupuesto, alimenta distinto cuando mide el kilo de materia seca y el kilo de proteína. No seguimos modas, las marcamos. Si haces las cuentas antes de soltar el billete y te gusta vestir como trabajas, explora la colección de gorras y chaquetas The Ranch, hecha para quienes administran con números."
+      }
+    ]
+  },
+  {
+    "slug": "microsilos-bolsa-caneca-ensilaje-pequena-escala",
+    "title": "Microsilos en bolsa y caneca: cómo ensilar en pequeño sin trinchera ni maquinaria",
+    "excerpt": "Guardar forraje no exige trinchera ni empacadora: con bolsas, canecas y un montón bien tapado se arma la reserva para la época seca. El proceso, paso por paso, sin errores.",
+    "date": "2026-10-10",
+    "category": "Campo",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0d/Silage_heap_coverered_with_tires.jpg/1920px-Silage_heap_coverered_with_tires.jpg",
+    "imageAlt": "Montón de forraje ensilado cubierto con plástico y llantas para que no entre aire",
+    "blocks": [
+      {
+        "type": "p",
+        "text": "En el trópico, hacer heno es apostar contra la lluvia. Por eso la reserva más segura de un rancho pequeño no es la paca al sol: es el ensilaje, que se conserva por fermentación y no por secado. Y no hace falta trinchera de concreto ni empacadora: con bolsas, canecas y un montón bien tapado —los microsilos— un rancho de diez o treinta cabezas puede guardar el forraje que va a necesitar cuando el potrero se ponga amarillo."
+      },
+      {
+        "type": "h2",
+        "text": "Los tres formatos del microsilo"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Caneca o tanque de 55 galones: el más práctico para empezar. Alrededor de 200 litros de capacidad que, bien compactados, guardan entre 130 y 160 kilos de forraje picado. Va a la sombra, tapado, y es el formato perfecto para ensayar la técnica sin arriesgar la cosecha entera.",
+          "Bolsa plástica: el formato más versátil. Se llena de forraje picado, se comprime sacando el aire por capas y se sella con doble amarre. Pide bolsa gruesa y opaca, y guardarla donde el sol y los roedores no la alcancen: un hueco en la bolsa es la puerta de la putrefacción.",
+          "Montón tapado o mini trinchera: el de mayor volumen. Se pica el forraje sobre el piso, se compacta por capas delgadas, se cubre con plástico y encima van llantas o peso muerto para que el aire no entre. Es la versión artesanal del silo de trinchera y rinde para el hato completo."
+        ]
+      },
+      {
+        "type": "h2",
+        "text": "El proceso que decide si se conserva o se pudre"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Corte en el momento justo: entre 35 y 45 días de rebrote, con la planta en prefloración y antes de que lignifique. El pasto pasado es fibra con palo, y el pasto muy tierno trae demasiada agua.",
+          "Humedad entre 60% y 70%: se aprieta un puñado en la mano y debe quedar húmedo, sin escurrir gotas entre los dedos. Muy seco no fermenta; muy mojado, se pudre.",
+          "Picado fino, de 1 a 2 cm, y compactado por capas: cada capa se apisona antes de la siguiente. El enemigo del ensilaje es el aire que se queda adentro.",
+          "Sellado el mismo día. Un silo que duerme destapado pierde la fermentación de la primera noche y ya no la recupera.",
+          "Nunca se abre por el centro, siempre por un frente y se avanza como un bloque: dejar huecos por encima mete aire, y el aire recalentado acaba con la reserva.",
+          "El olfato manda: un silo bien hecho huele ácido y agradable, a fermentado. Si huele a quemado, a podrido o a rancio, algo se selló mal y ese forraje no se le da al hato."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "El microsilo es la reserva a la medida del rancho que no tiene maquinaria grande: poca inversión, mucha disciplina y un verano entero cubierto. La técnica no es nueva —es la misma del silo grande, solo en formato menor— y se aprende haciendo el primero. No seguimos modas, las marcamos. Si guardas forraje hoy pensando en la sequía de mañana y te gusta vestir con esa misma cabeza, explora la colección de gorras y chaquetas The Ranch, hecha para quienes trabajan con la temporada que viene en la mira."
+      }
+    ]
+  },
+  {
     "slug": "silvopastoreo-arboles-potrero-sequia",
     "title": "Silvopastoreo en sequía: los árboles que guardan pasto, sombra y humedad en el potrero",
     "excerpt": "El árbol no es adorno del potrero: es sombra, humedad y reserva de forraje cuando el sol aprieta. Así se mete silvopastoreo en un rancho que ya está en producción, sin perder pasto ni plata.",
