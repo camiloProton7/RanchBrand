@@ -109,6 +109,7 @@ const PRODUCT_QUERY = `#graphql
       }
       priceRange { minVariantPrice { amount currencyCode } }
       compareAtPriceRange { minVariantPrice { amount } }
+      options { name optionValues { name } }
       variants(first: 250) {
         nodes {
           id
@@ -582,6 +583,17 @@ export default function ProductPage() {
       href: `/products/${sugerido.handle}?variant=${vid}`,
     });
   });
+  // El orden de las muestras es el que está definido en la opción Color del producto en
+  // Shopify (Miel, Cafe, Negro); las variantes que devuelve la API no lo respetan y la
+  // tarjeta abría en Cafe aunque el producto se vende como tono miel.
+  const ordenColores =
+    (sugerido?.options || [])
+      .find((o) => String(o.name).toLowerCase() === 'color')
+      ?.optionValues?.map((v) => v.name) || [];
+  coloresSugerido.sort(
+    (a, b) =>
+      (ordenColores.indexOf(a.nombre) + 1 || 99) - (ordenColores.indexOf(b.nombre) + 1 || 99),
+  );
   // Bloque de venta cruzada: no se muestra si el producto lleva la etiqueta "sin-licorera"
   // (el nombre del tag es histórico; hoy controla el sugerido de botas) ni en el combo Laredo.
   const sinLicorera =
