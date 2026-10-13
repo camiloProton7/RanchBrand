@@ -1639,8 +1639,12 @@
   }
 
   .trp-reco-cta {
-    font-size: 11px;
-    padding: 9px 13px;
+    /* En móvil el botón competía por el mismo renglón que el título y lo dejaba
+       en "Botas Gamuza…" con el texto partido en cuatro líneas: baja a su fila. */
+    flex: 1 0 100%;
+    font-size: 12px;
+    padding: 11px 13px;
+    text-align: center;
   }
 }
 
