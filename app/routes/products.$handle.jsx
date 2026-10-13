@@ -567,6 +567,22 @@ export default function ProductPage() {
   const {product, sugerido, reviews, related, similar, comboGorras, isCombo, isComboCamisa, camisaCombo, isCamisa, combosCamisa} =
     useLoaderData();
   const tablaTallas = parseTablaMedidas(product?.metafield?.value);
+  // Colores del producto sugerido (hoy las botas): la tarjeta deja elegir el color, cambia
+  // la foto y lleva a su ficha con ese color ya puesto (?variant=) y el cupón BOTAS10 cargado.
+  const coloresSugerido = [];
+  (sugerido?.variants?.nodes || []).forEach((v) => {
+    const nombre = v.selectedOptions?.find((o) => String(o.name).toLowerCase() === 'color')?.value;
+    if (!nombre || coloresSugerido.some((c) => c.nombre === nombre)) return;
+    const vid = String(v.id).split('/').pop();
+    coloresSugerido.push({
+      nombre,
+      variantId: vid,
+      image: v.image?.url || null,
+      href: `https://${SHOPIFY_DOMAIN}/discount/BOTAS10?redirect=${encodeURIComponent(
+        `/products/${sugerido.handle}?variant=${vid}`,
+      )}`,
+    });
+  });
   // Bloque de venta cruzada: no se muestra si el producto lleva la etiqueta "sin-licorera"
   // (el nombre del tag es histórico; hoy controla el sugerido de botas) ni en el combo Laredo.
   const sinLicorera =
@@ -1426,6 +1442,7 @@ export default function ProductPage() {
             }}
             formatPrice={formatPrice}
             ctaText="Elegir talla"
+            colores={coloresSugerido}
           />
         ) : null}
 

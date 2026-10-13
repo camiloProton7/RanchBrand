@@ -318,16 +318,23 @@ export function ProductAccordion({productType, title, description, ficha}) {
 
 /* ===== Producto recomendado (un solo producto) ===== */
 
-export function RecommendedProduct({product, formatPrice, onAdd, ctaText = 'Agregar al carrito'}) {
+export function RecommendedProduct({product, formatPrice, onAdd, ctaText = 'Agregar al carrito', colores = null}) {
+  const [elegido, setElegido] = useState(0);
   if (!product) return null;
   const price = Number(product.price) || 0;
   const discount = Math.round(price * 0.1);
   const final = price - discount;
+  // Si el sugerido tiene varios colores (las botas: Miel, Cafe, Negro) la tarjeta deja
+  // elegirlos y la foto cambia; el enlace de cada color ya trae su variante y el cupón.
+  const lista = colores && colores.length > 1 ? colores : null;
+  const activo = lista ? Math.min(elegido, lista.length - 1) : null;
+  const foto = activo != null ? lista[activo].image || product.image : product.image;
+  const enlace = activo != null ? lista[activo].href : product.cartUrl || '#';
 
   return (
     <section className="trp-reco" aria-label="Llévalo con descuento">
       <a
-        href={product.cartUrl || '#'}
+        href={enlace}
         className="trp-reco-card"
         onClick={(e) => {
           if (onAdd) {
@@ -336,8 +343,8 @@ export function RecommendedProduct({product, formatPrice, onAdd, ctaText = 'Agre
           }
         }}
       >
-        {product.image ? (
-          <img className="trp-reco-img" src={optimizeImage(product.image, 400)} alt="" loading="lazy" />
+        {foto ? (
+          <img className="trp-reco-img" src={optimizeImage(foto, 400)} alt="" loading="lazy" />
         ) : null}
         <div className="trp-reco-info">
           <span className="trp-reco-tag">🔥 Llévalo con descuento</span>
@@ -347,6 +354,27 @@ export function RecommendedProduct({product, formatPrice, onAdd, ctaText = 'Agre
             <strong className="trp-reco-price-final">{formatPrice(final)}</strong>
             <span className="trp-reco-badge">-10%</span>
           </div>
+          {lista ? (
+            <div className="trp-reco-colores" aria-label="Color">
+              {lista.map((c, i) => (
+                <span
+                  key={c.nombre}
+                  className={`trp-reco-color${i === activo ? ' activo' : ''}`}
+                  role="button"
+                  tabIndex={-1}
+                  title={c.nombre}
+                  aria-label={`Color ${c.nombre}`}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    setElegido(i);
+                  }}
+                >
+                  {c.image ? <img src={optimizeImage(c.image, 120)} alt="" loading="lazy" /> : null}
+                </span>
+              ))}
+            </div>
+          ) : null}
         </div>
         <span className="trp-reco-cta">{ctaText}</span>
       </a>

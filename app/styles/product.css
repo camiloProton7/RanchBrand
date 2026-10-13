@@ -1599,6 +1599,38 @@
   transform: translateY(-3px);
 }
 
+/* Muestras de color del sugerido (las botas: Miel, Cafe, Negro).
+   Son la foto real de cada color; al tocarlas cambia la foto de la tarjeta. */
+.trp-reco-colores {
+  align-items: center;
+  display: flex;
+  gap: 7px;
+  margin-top: 9px;
+}
+
+.trp-reco-color {
+  border: 2px solid #e3d9c6;
+  border-radius: 50%;
+  cursor: pointer;
+  display: block;
+  height: 30px;
+  overflow: hidden;
+  transition: border-color 0.15s ease, transform 0.15s ease;
+  width: 30px;
+}
+
+.trp-reco-color img {
+  display: block;
+  height: 100%;
+  object-fit: cover;
+  width: 100%;
+}
+
+.trp-reco-color.activo {
+  border-color: #b34a2a;
+  transform: scale(1.08);
+}
+
 /* En móvil la tarjeta de combo ocupaba demasiado: texto grande y foto chica.
    Se compacta el texto y se agranda la foto, que es lo que vende. */
 @media (max-width: 640px) {
@@ -1636,6 +1668,16 @@
   .trp-reco-badge {
     font-size: 10px;
     padding: 3px 8px;
+  }
+
+  .trp-reco-colores {
+    gap: 6px;
+    margin-top: 7px;
+  }
+
+  .trp-reco-color {
+    height: 26px;
+    width: 26px;
   }
 
   .trp-reco-cta {
