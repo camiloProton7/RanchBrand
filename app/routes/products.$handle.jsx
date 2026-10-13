@@ -442,7 +442,7 @@ function getBenefits(productType, title, ficha) {
   if (ficha) {
     // La fecha de entrega y la palabra de la prenda van como etiquetas sobre la foto:
     // aquí solo queda el beneficio real, sin repetir el dato.
-    b.push('🚚 Envío gratis a toda Colombia');
+    b.push('🚚 Envío a todo Colombia');
     return b;
   }
   const t = `${productType || ''} ${title || ''}`.toLowerCase();

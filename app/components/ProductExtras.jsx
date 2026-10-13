@@ -25,7 +25,7 @@ function detectType(productType = '', title = '') {
 const TRUST_ITEMS = [
   {icon: '🔒', title: 'Pago 100% seguro', desc: 'Bold, Addi y tarjetas'},
   {icon: '💳', title: 'Compra ahora, paga después', desc: 'Con Addi en cuotas'},
-  {icon: '🚚', title: 'Envío gratis', desc: 'A toda Colombia'},
+  {icon: '🚚', title: 'Envío a todo Colombia', desc: 'Llega a tu puerta'},
   {icon: '🔄', title: 'Cambios fáciles', desc: 'Sin complicaciones'},
 ];
 
@@ -276,8 +276,8 @@ function getAccordionSections(productType, title, description, ficha) {
     key: 'shipping',
     title: 'Envíos, cambios y garantía',
     body: ficha?.preventa
-      ? `Artículo en preventa: se despacha a partir del ${ficha.preventa}. Envío gratis a toda Colombia. Cambios dentro de los 30 días y garantía por defectos de fabricación.`
-      : 'Envío gratis a toda Colombia (2–5 días hábiles). Cambios fáciles dentro de los 30 días. Garantía de 6 meses por defectos de fabricación.',
+      ? `Artículo en preventa: se despacha a partir del ${ficha.preventa}. Envío a todo Colombia. Cambios dentro de los 30 días y garantía por defectos de fabricación.`
+      : 'Envío a todo Colombia (2–5 días hábiles). Cambios fáciles dentro de los 30 días. Garantía de 6 meses por defectos de fabricación.',
   });
 
   return sections;

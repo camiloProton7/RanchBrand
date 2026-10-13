@@ -6,7 +6,7 @@ export const meta = () => [
   {
     name: 'description',
     content:
-      'Camisa tipo Columbia con protección UPF 50, secado rápido y bolsillos funcionales. Tallas S a XL. Envío gratis en Colombia.',
+      'Camisa tipo Columbia con protección UPF 50, secado rápido y bolsillos funcionales. Tallas S a XL. Envío a todo Colombia.',
   },
   {property: 'og:title', content: 'Camisa Outdoor Columbia The Ranch'},
   {property: 'og:type', content: 'product'},
@@ -62,7 +62,7 @@ export default function CamisaColumbia() {
         </div>
 
         <div className="ccl-trust">
-          <span>🚚 Envío gratis</span>
+          <span>🚚 Envío a todo Colombia</span>
           <span>🔒 Pago seguro</span>
           <span>🔄 Cambios fáciles</span>
         </div>
@@ -89,7 +89,7 @@ export default function CamisaColumbia() {
         <h2 className="ccl-final-title">
           No seguimos modas, <em>las marcamos</em>.
         </h2>
-        <p className="ccl-final-sub">Tallas S a XL. Envío gratis a toda Colombia.</p>
+        <p className="ccl-final-sub">Tallas S a XL. Envío a todo Colombia.</p>
         <a className="ccl-cta ccl-cta-big" href="/products/camisa-columbia">
           Llévala puesta 🤠
         </a>

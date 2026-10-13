@@ -480,9 +480,9 @@
   color: #c0392b;
 }
 
-.tr-cart-free {
-  color: #2e7d32;
-  font-weight: 700;
+.tr-cart-ship {
+  color: inherit;
+  font-weight: 600;
 }
 
 .tr-cart-foot {

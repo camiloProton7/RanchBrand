@@ -15,13 +15,13 @@ export const meta = () => [
   {
     name: 'description',
     content:
-      'The Ranch: gorras, chaquetas y camisetas para quienes hacen las cosas bien. Envío gratis en Colombia.',
+      'The Ranch: gorras, chaquetas y camisetas para quienes hacen las cosas bien. Envío a todo Colombia.',
   },
   {property: 'og:title', content: 'The Ranch — No seguimos modas'},
   {
     property: 'og:description',
     content:
-      'Gorras, chaquetas y camisetas para quienes hacen las cosas bien. Envío gratis en Colombia.',
+      'Gorras, chaquetas y camisetas para quienes hacen las cosas bien. Envío a todo Colombia.',
   },
   {property: 'og:type', content: 'website'},
   {property: 'og:url', content: 'https://ranch.com.co/'},
@@ -169,7 +169,7 @@ export default function Home() {
 
 function TrustBar() {
   const items = [
-    'Envío gratis a toda Colombia',
+    'Envío a todo Colombia',
     'Garantía de calidad',
     'Pago 100% seguro',
     'Pagos por Addi',

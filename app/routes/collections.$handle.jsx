@@ -24,7 +24,7 @@ export const meta = ({data}) => {
     : 'https://ranch.com.co';
   const description =
     collection?.description ||
-    `${collection?.title || 'Colección'} de The Ranch. Calidad premium, envío gratis en Colombia.`;
+    `${collection?.title || 'Colección'} de The Ranch. Calidad premium, envío a todo Colombia.`;
   // Imagen al compartir: la portada propia de la colección (con sus prendas, generada por
   // the-ranch/generar_og_colecciones.mjs). Si no hay, la foto de la primera prenda, y si
   // tampoco, la portada de la tienda: nunca se comparte sin imagen.
@@ -140,7 +140,7 @@ function formatPrice(amount, currency = 'COP') {
 }
 
 const MARQUEE_ITEMS = [
-  'ENVÍO GRATIS',
+  'ENVÍO A TODO COLOMBIA',
   'PROTECCIÓN UV',
   'HECHO EN COLOMBIA',
   'CAMBIOS FÁCILES',

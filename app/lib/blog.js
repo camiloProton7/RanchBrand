@@ -39,7 +39,7 @@ const STATIC_POSTS = [
       },
       {
         type: 'p',
-        text: 'Explora la colección completa de gorras The Ranch y encuentra la tuya. Envío gratis a toda Colombia y pago 100% seguro.',
+        text: 'Explora la colección completa de gorras The Ranch y encuentra la tuya. Envío a todo Colombia y pago 100% seguro.',
       },
     ],
   },
@@ -111,7 +111,7 @@ const STATIC_POSTS = [
       },
       {
         type: 'p',
-        text: 'Explora la colección y elige una gorra con carácter. Todas incluyen envío gratis a toda Colombia.',
+        text: 'Explora la colección y elige una gorra con carácter. Todas incluyen envío a todo Colombia.',
       },
     ],
   },
@@ -143,7 +143,7 @@ const STATIC_POSTS = [
       },
       {
         type: 'p',
-        text: 'Encuentra la gorra que va con tu estilo en la colección The Ranch. Envío gratis y cambios fáciles.',
+        text: 'Encuentra la gorra que va con tu estilo en la colección The Ranch. Envío a todo Colombia y cambios fáciles.',
       },
     ],
   },
@@ -176,7 +176,7 @@ const STATIC_POSTS = [
       },
       {
         type: 'p',
-        text: 'Descubre la colección completa y únete al ranch. Envío gratis a toda Colombia.',
+        text: 'Descubre la colección completa y únete al ranch. Envío a todo Colombia.',
       },
     ],
   },

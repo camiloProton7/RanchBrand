@@ -173,7 +173,7 @@ export default function CartDrawer({open, onClose}) {
             ) : null}
             <div className="tr-cart-row">
               <span>Envío</span>
-              <span className="tr-cart-free">Gratis</span>
+              <span className="tr-cart-ship">En el pago</span>
             </div>
             <div className="tr-cart-total">
               <span>Total</span>
