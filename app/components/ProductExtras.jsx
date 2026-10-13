@@ -318,7 +318,7 @@ export function ProductAccordion({productType, title, description, ficha}) {
 
 /* ===== Producto recomendado (un solo producto) ===== */
 
-export function RecommendedProduct({product, formatPrice, onAdd}) {
+export function RecommendedProduct({product, formatPrice, onAdd, ctaText = 'Agregar al carrito'}) {
   if (!product) return null;
   const price = Number(product.price) || 0;
   const discount = Math.round(price * 0.1);
@@ -348,7 +348,7 @@ export function RecommendedProduct({product, formatPrice, onAdd}) {
             <span className="trp-reco-badge">-10%</span>
           </div>
         </div>
-        <span className="trp-reco-cta">Agregar al carrito</span>
+        <span className="trp-reco-cta">{ctaText}</span>
       </a>
     </section>
   );

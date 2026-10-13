@@ -254,7 +254,7 @@ export async function loader({params, context}) {
     const isCombo = handle === 'combo-5x-500';
     const isComboCamisa = handle === 'combo-camisa-gorra';
     const isCamisa = handle === 'camisa-outdoor-the-ranch';
-    const [productData, relatedData, licoreraData, allReviews] = await Promise.all([
+    const [productData, relatedData, sugeridoData, allReviews] = await Promise.all([
       storefront.query(PRODUCT_QUERY, {
         variables: {handle},
         cache: storefront.CacheShort(),
@@ -263,15 +263,17 @@ export async function loader({params, context}) {
         variables: {handle: 'hot-ranch'},
         cache: storefront.CacheLong(),
       }),
+      // Producto sugerido del bloque de venta cruzada: las botas, en lugar de la licorera
+      // (Camilo: en las fichas de gorras y chaquetas va la bota, no la licorera).
       storefront.query(PRODUCT_QUERY, {
-        variables: {handle: 'licorera-metalica'},
+        variables: {handle: 'botas-gamuza-lariat'},
         cache: storefront.CacheLong(),
       }),
       fetchTrustooReviews(),
     ]);
 
     const product = productData.product || null;
-    const licorera = licoreraData.product || null;
+    const sugerido = sugeridoData.product || null;
     const title = (product?.title || '').toLowerCase();
     const matching = allReviews.filter((r) => {
       if (!title) return true;
@@ -336,7 +338,7 @@ export async function loader({params, context}) {
 
     return {
       product,
-      licorera,
+      sugerido,
       reviews,
       related,
       similar,
@@ -351,7 +353,7 @@ export async function loader({params, context}) {
     console.error(`Producto ${handle} falló`, error);
     return {
       product: null,
-      licorera: null,
+      sugerido: null,
       reviews: [],
       related: [],
       similar: [],
@@ -562,11 +564,11 @@ function fechaCorta(texto) {
 }
 
 export default function ProductPage() {
-  const {product, licorera, reviews, related, similar, comboGorras, isCombo, isComboCamisa, camisaCombo, isCamisa, combosCamisa} =
+  const {product, sugerido, reviews, related, similar, comboGorras, isCombo, isComboCamisa, camisaCombo, isCamisa, combosCamisa} =
     useLoaderData();
   const tablaTallas = parseTablaMedidas(product?.metafield?.value);
-  // Upsell de la licorera: no se muestra si el producto lleva la etiqueta "sin-licorera"
-  // (se controla por producto desde Shopify) ni en el combo Laredo.
+  // Bloque de venta cruzada: no se muestra si el producto lleva la etiqueta "sin-licorera"
+  // (el nombre del tag es histórico; hoy controla el sugerido de botas) ni en el combo Laredo.
   const sinLicorera =
     (product?.tags || []).some((t) => String(t).toLowerCase().trim() === 'sin-licorera') ||
     product?.handle === 'combo-camisa-outdoor-chaqueta-laredo';  const rootData = useRouteLoaderData('root');
@@ -1361,8 +1363,8 @@ export default function ProductPage() {
             );
           })}
 
-        {/* ===== Upsell: los combos de la camisa (gorra y chaqueta); licorera para el resto ===== */}
-        {/* (el combo camisa + chaqueta Laredo no lleva licorera, por pedido de Camilo) */}
+        {/* ===== Upsell: los combos de la camisa (gorra y chaqueta); las botas para el resto ===== */}
+        {/* (el combo camisa + chaqueta Laredo no lleva sugerido, por pedido de Camilo) */}
         {isCamisa && combosCamisa.length ? (
           <section className="trp-reco" aria-label="Llévalo en combo">
             {combosCamisa.map((combo) => (
@@ -1409,25 +1411,21 @@ export default function ProductPage() {
               </Link>
             ))}
           </section>
-        ) : licorera && !sinLicorera ? (
+        ) : sugerido && !sinLicorera ? (
           <RecommendedProduct
             product={{
-              handle: licorera.handle,
-              title: licorera.title,
-              price: licorera.priceRange?.minVariantPrice?.amount,
-              image: licorera.featuredImage?.url,
-              variantId: licorera.variants?.nodes?.[0]?.id,
+              handle: sugerido.handle,
+              title: sugerido.title,
+              price: sugerido.priceRange?.minVariantPrice?.amount,
+              image: sugerido.featuredImage?.url,
+              variantId: sugerido.variants?.nodes?.[0]?.id,
+              // Las botas se venden por talla y color: en vez de meter una variante al azar
+              // al carrito, el CTA lleva a su ficha con el cupón BOTAS10 (10% en la colección
+              // Botas) ya cargado, para que el cliente elija la talla y pague el 10%.
+              cartUrl: `https://${SHOPIFY_DOMAIN}/discount/BOTAS10?redirect=/products/${sugerido.handle}`,
             }}
             formatPrice={formatPrice}
-            onAdd={() => {
-              const currentVid = selectedVariant?.id;
-              const licoreraVid = licorera.variants?.nodes?.[0]?.id;
-              if (currentVid && licoreraVid) {
-                window.location.href = getBundleCartUrl([currentVid, licoreraVid], 'COMBO10');
-              } else if (licoreraVid) {
-                window.location.href = getBundleCartUrl([licoreraVid], 'COMBO10');
-              }
-            }}
+            ctaText="Elegir talla"
           />
         ) : null}
 
