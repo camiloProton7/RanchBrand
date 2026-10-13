@@ -401,7 +401,10 @@ export function SizeTable({datos}) {
             {datos.titulo || (filas.length ? 'Medidas' : 'Detalles de la prenda')}
           </h4>
           <p className="trp-medidas-subtitle">
-            {filas.length ? `${verPulgadas ? 'Pulgadas' : 'Centímetros'} · guía del proveedor` : 'Ficha del proveedor'}
+            {datos.subtitulo ||
+              (filas.length
+                ? `${verPulgadas ? 'Pulgadas' : 'Centímetros'} · guía del proveedor`
+                : 'Ficha del proveedor')}
           </p>
         </div>
         {hayPulgadas ? (
