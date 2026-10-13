@@ -567,8 +567,9 @@ export default function ProductPage() {
   const {product, sugerido, reviews, related, similar, comboGorras, isCombo, isComboCamisa, camisaCombo, isCamisa, combosCamisa} =
     useLoaderData();
   const tablaTallas = parseTablaMedidas(product?.metafield?.value);
-  // Colores del producto sugerido (hoy las botas): la tarjeta deja elegir el color, cambia
-  // la foto y lleva a su ficha con ese color ya puesto (?variant=) y el cupón BOTAS10 cargado.
+  // Colores del producto sugerido (hoy las botas): la tarjeta deja elegir el color y lleva
+  // a SU FICHA EN OXYGEN con ese color ya puesto (?variant=). Nada de mandar al cliente al
+  // dominio de Shopify: el 10% lo aplica solo el descuento automático de la colección Botas.
   const coloresSugerido = [];
   (sugerido?.variants?.nodes || []).forEach((v) => {
     const nombre = v.selectedOptions?.find((o) => String(o.name).toLowerCase() === 'color')?.value;
@@ -578,9 +579,7 @@ export default function ProductPage() {
       nombre,
       variantId: vid,
       image: v.image?.url || null,
-      href: `https://${SHOPIFY_DOMAIN}/discount/BOTAS10?redirect=${encodeURIComponent(
-        `/products/${sugerido.handle}?variant=${vid}`,
-      )}`,
+      href: `/products/${sugerido.handle}?variant=${vid}`,
     });
   });
   // Bloque de venta cruzada: no se muestra si el producto lleva la etiqueta "sin-licorera"
@@ -1436,13 +1435,36 @@ export default function ProductPage() {
               image: sugerido.featuredImage?.url,
               variantId: sugerido.variants?.nodes?.[0]?.id,
               // Las botas se venden por talla y color: en vez de meter una variante al azar
-              // al carrito, el CTA lleva a su ficha con el cupón BOTAS10 (10% en la colección
-              // Botas) ya cargado, para que el cliente elija la talla y pague el 10%.
-              cartUrl: `https://${SHOPIFY_DOMAIN}/discount/BOTAS10?redirect=/products/${sugerido.handle}`,
+              // al carrito, el CTA lleva a SU ficha en Oxygen para que elija talla y color.
+              // El 10% lo aplica solo el descuento automático de la colección Botas.
+              cartUrl: `/products/${sugerido.handle}`,
             }}
             formatPrice={formatPrice}
             ctaText="Elegir talla"
             colores={coloresSugerido}
+            onAdd={(vidBota) => {
+              // El cliente está viendo una gorra (o chaqueta): al mandarlo a elegir la talla
+              // de las botas, su prenda se suma ya al carrito. Si no, se iba solo con las botas.
+              if (selectedVariant?.id && selectedVariant?.availableForSale !== false) {
+                const variantOptions = (selectedVariant.selectedOptions || [])
+                  .filter((o) => o.name !== 'Title')
+                  .map((o) => o.value)
+                  .join(' / ');
+                addToCart({
+                  variantId: selectedVariant.id,
+                  qty,
+                  title: product.title,
+                  image: selectedVariant.image?.url || product.featuredImage?.url,
+                  price: selectedVariant.price?.amount,
+                  compareAtPrice: compare,
+                  handle: product.handle,
+                  options: variantOptions || undefined,
+                });
+              }
+              window.location.href = vidBota
+                ? `/products/${sugerido.handle}?variant=${vidBota}`
+                : `/products/${sugerido.handle}`;
+            }}
           />
         ) : null}
 

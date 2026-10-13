@@ -339,7 +339,8 @@ export function RecommendedProduct({product, formatPrice, onAdd, ctaText = 'Agre
         onClick={(e) => {
           if (onAdd) {
             e.preventDefault();
-            onAdd();
+            // Le pasa al padre el color elegido para que sepa a qué variante llevar.
+            onAdd(activo != null ? lista[activo].variantId : undefined);
           }
         }}
       >
