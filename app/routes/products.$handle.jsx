@@ -1,7 +1,7 @@
 import Stars from '~/components/Stars';
 import {ratingFor} from '~/lib/rating';
 import {useEffect, useMemo, useRef, useState} from 'react';
-import {Link, useLoaderData, useRouteLoaderData} from 'react-router';
+import {Link, useLoaderData, useRouteLoaderData, useSearchParams} from 'react-router';
 import {addToCart, buyNow} from '~/lib/cart';
 import {optimizeImage, imageSrcSet} from '~/lib/image';
 import {Analytics} from '@shopify/hydrogen';
@@ -592,12 +592,33 @@ export default function ProductPage() {
   const [activeImage, setActiveImage] = useState(0);
   // Rating de vitrina: estable por producto (4.3 a 5.0), como pidió Camilo.
   const rating = ratingFor(product.handle);
-  const [color, setColor] = useState(null);
+  // Si el cliente llega con un ?variant= (por ejemplo desde el bloque que sugiere las botas),
+  // la ficha abre con ESE color y esa talla puestos, no con los primeros de la lista.
+  const [searchParams] = useSearchParams();
+  const varianteUrl = useMemo(() => {
+    const pedido = searchParams.get('variant');
+    if (!pedido) return null;
+    return (
+      (product?.variants?.nodes || []).find(
+        (v) => String(v.id).split('/').pop() === String(pedido),
+      ) || null
+    );
+  }, [searchParams, product]);
+  const [color, setColor] = useState(() => {
+    const c = (varianteUrl?.selectedOptions || []).find((o) => norm(o.name) === 'color')?.value;
+    return c || null;
+  });
   const [fav, setFav] = useState(false);
   const [qty, setQty] = useState(1);
   const [added, setAdded] = useState(false);
   const [showFullDesc, setShowFullDesc] = useState(false);
-  const [options, setOptions] = useState({});
+  const [options, setOptions] = useState(() => {
+    const ini = {};
+    (varianteUrl?.selectedOptions || []).forEach((o) => {
+      ini[norm(o.name)] = o.value;
+    });
+    return ini;
+  });
   const [selectedGorras, setSelectedGorras] = useState([]);
   const [camisaColor, setCamisaColor] = useState(null);
   const [camisaTalla, setCamisaTalla] = useState(null);
