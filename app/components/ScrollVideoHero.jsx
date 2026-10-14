@@ -1,11 +1,11 @@
 import {useEffect, useRef, useState} from 'react';
 
-const MENU_ITEMS = [
-  {label: 'Home', href: '/'},
-  {label: 'Gorras', href: '/collections/gorras-truckers'},
-  {label: 'Chaquetas', href: '/collections/chaquetas'},
-  {label: 'Camisetas', href: '/collections/camisetas'},
-];
+import {NAV_ITEMS} from '~/lib/nav';
+
+// Menú editorial de la portada: sale de la fuente única de navegación (app/lib/nav.js).
+// Se queda con las cuatro categorías cabecera para no alterar esta sección: los retardos
+// de animación y las posiciones están pensados para cuatro items.
+const MENU_ITEMS = NAV_ITEMS.slice(0, 4);
 
 const clamp = (value, min = 0, max = 1) =>
   Math.min(max, Math.max(min, value));
@@ -186,8 +186,8 @@ export function ScrollVideoHero({
           <div className="tr-menu-bottom">
             <p>No seguimos modas. Seguimos principios.</p>
             <ol className="tr-menu-list">
-              {MENU_ITEMS.map((item, index) => (
-                <li key={item.label} className={index === 0 ? 'is-active' : ''}>
+              {MENU_ITEMS.map((item) => (
+                <li key={item.label}>
                   <a href={item.href}>
                     <span className="tr-menu-label">{item.label}</span>
                   </a>

@@ -254,6 +254,47 @@
   padding: 4px 8px;
 }
 
+/* Buscador dentro del menú móvil: por debajo de 1024px el buscador del header está
+   oculto y no había ninguna forma de buscar desde el celular. */
+.tr-site-menu-search {
+  display: flex;
+  gap: 8px;
+  margin: 0 0 18px;
+}
+
+.tr-site-menu-search input {
+  flex: 1;
+  min-width: 0;
+  padding: 13px 16px;
+  border: 1px solid rgba(28, 26, 23, 0.16);
+  border-radius: 999px;
+  background: #ffffff;
+  color: #1c1a17;
+  font: inherit;
+  font-size: 15px;
+}
+
+.tr-site-menu-search input::placeholder {
+  color: rgba(28, 26, 23, 0.45);
+}
+
+.tr-site-menu-search button {
+  padding: 0 20px;
+  border: 0;
+  border-radius: 999px;
+  background: #b34a2a;
+  color: #f5f0e6;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+}
+
+.tr-site-menu-search button:active {
+  transform: translateY(1px);
+}
+
 .tr-site-menu-nav {
   display: flex;
   flex-direction: column;

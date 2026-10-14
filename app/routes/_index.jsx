@@ -370,13 +370,12 @@ function ExchangeModal({onClose}) {
   );
 }
 
+import {NAV_ITEMS} from '~/lib/nav';
+
 function CategoryMenu() {
-  const items = [
-    {label: 'Home', href: '/'},
-    {label: 'Gorras', href: '/collections/gorras-truckers'},
-    {label: 'Chaquetas', href: '/collections/chaquetas'},
-    {label: 'Camisetas', href: '/collections/camisetas'},
-  ];
+  // Sale de la fuente única de navegación (app/lib/nav.js): antes esta barra tenía su
+  // propia lista y la home decía cosas distintas en el hero, el header y aquí.
+  const items = NAV_ITEMS;
   return (
     <section className="tr-catmenu" aria-label="Categorías">
       <div className="tr-catmenu-inner">

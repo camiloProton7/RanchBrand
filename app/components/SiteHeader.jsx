@@ -2,34 +2,12 @@ import {useEffect, useRef, useState} from 'react';
 import {Link, Form, useLocation} from 'react-router';
 import {getCartCount} from '~/lib/cart';
 import CartDrawer from '~/components/CartDrawer';
+import {NAV_ITEMS as MENU_ITEMS} from '~/lib/nav';
 
-// Menú del sitio. OJO: "Prendas superiores", "Camisas" y "Combos" apuntan por
-// ahora a la colección más parecida que YA existe, para que ningún enlace del
-// menú quede muerto. Cuando existan las colecciones propias (handles:
-// prendas-superiores, camisas, combos) se cambian esos tres hrefs y listo.
-// Rutas que se sirven como documento suelto (no son rutas React): el perchero de
-// camisetas. Se enlazan con <a rel="external"> para forzar carga completa: si el
-// item (o un hijo del desplegable) va con <Link>, el router intercepta el clic,
-// cambia la URL y deja la pantalla en blanco.
+// Los items de documento suelto (el perchero de camisetas) se enlazan con
+// <a rel="external"> para forzar carga completa: si el item (o un hijo del desplegable)
+// va con <Link>, el router intercepta el clic, cambia la URL y deja la pantalla en blanco.
 const esDocumentoAparte = (item) => Boolean(item && (item.plano || item.href === '/perchero/'));
-
-const MENU_ITEMS = [
-  {label: 'Home', href: '/'},
-  {label: 'Gorras', href: '/collections/gorras-truckers'},
-  {
-    label: 'Prendas superiores',
-    href: '/collections/chaquetas',
-    children: [
-      {label: 'Chaquetas', href: '/collections/chaquetas'},
-      // La colección arranca con su propio perchero (sección del rack arriba del listado).
-      {label: 'Sacos Bordados', href: '/collections/bordados'},
-      {label: 'Camisas', href: '/collections/camisetas'},
-      {label: 'Camisetas', href: '/perchero/', plano: true},
-    ],
-  },
-  {label: 'Combos', href: '/collections/combo-ranch-premium'},
-  {label: 'Mujer', href: '/collections/chaquetas-mujer'},
-];
 
 /**
  * Header global: masthead fijo (logo + nav + burger) y menú móvil compacto.
@@ -199,6 +177,24 @@ export default function SiteHeader({logoSrc}) {
               ×
             </button>
           </div>
+
+          {/* Buscador dentro del menú móvil: en celular el del header está oculto
+              (display:none por debajo de 1024px) y no había forma de buscar. */}
+          <Form
+            action="/search"
+            method="get"
+            className="tr-site-menu-search"
+            role="search"
+            onSubmit={() => setOpen(false)}
+          >
+            <input
+              type="search"
+              name="q"
+              placeholder="Buscar gorras, botas, camisetas…"
+              aria-label="Buscar productos"
+            />
+            <button type="submit">Buscar</button>
+          </Form>
 
           <nav className="tr-site-menu-nav">
             {MENU_ITEMS.map((item, i) => {
