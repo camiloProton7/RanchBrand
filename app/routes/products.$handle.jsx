@@ -19,6 +19,7 @@ import {SocialProof} from '~/components/SocialProof';
 import Personalizador from '~/components/Personalizador';
 import productStyles from '~/styles/product.css?url';
 import persoStyles from '~/styles/perso.css?url';
+import {COMBO_BOTAS_GORRA, GORRAS_COMBO} from '~/lib/gorras-combo';
 
 export const meta = ({data}) => {
   const product = data?.product;
@@ -1464,24 +1465,57 @@ export default function ProductPage() {
               ),
             );
             const esFilaDeColor = norm(name) === 'color camisa';
+            const esFilaDeGorras = product?.handle === COMBO_BOTAS_GORRA && norm(name) === 'gorra';
+            const gorraElegida = esFilaDeGorras ? GORRAS_COMBO[options[norm(name)] || ''] : null;
             return (
               <div key={name} className="trp-option">
                 <span className="trp-option-label">{name}</span>
-                <div className={`trp-option-values${esFilaDeColor ? ' trp-option-colors' : ''}`}>
-                  {values.map((value) => (
-                    <button
-                      key={value}
-                      type="button"
-                      className={norm(options[norm(name)]) === norm(value) ? 'is-active' : ''}
-                      style={esFilaDeColor ? {background: colorToHex(value)} : undefined}
-                      onClick={() => setOptions((prev) => ({...prev, [norm(name)]: value}))}
-                      aria-label={esFilaDeColor ? `Color camisa ${value}` : undefined}
-                      title={esFilaDeColor ? value : undefined}
-                    >
-                      {esFilaDeColor ? null : formatSize(value)}
-                    </button>
-                  ))}
+                <div className={`trp-option-values${esFilaDeColor ? ' trp-option-colors' : ''}${esFilaDeGorras ? ' trp-option-gorras' : ''}`}>
+                  {values.map((value) => {
+                    const foto = esFilaDeGorras ? GORRAS_COMBO[value]?.img : null;
+                    const activo = norm(options[norm(name)]) === norm(value);
+                    if (foto) {
+                      return (
+                        <button
+                          key={value}
+                          type="button"
+                          className={`trp-gorra-btn${activo ? ' is-active' : ''}`}
+                          onClick={() => setOptions((prev) => ({...prev, [norm(name)]: value}))}
+                          aria-label={value}
+                          title={value}
+                        >
+                          <img
+                            src={optimizeImage(foto, 160)}
+                            alt={value}
+                            loading="lazy"
+                            width="56"
+                            height="56"
+                          />
+                          <span>{value.replace(/^Gorra\s+/i, '')}</span>
+                        </button>
+                      );
+                    }
+                    return (
+                      <button
+                        key={value}
+                        type="button"
+                        className={activo ? 'is-active' : ''}
+                        style={esFilaDeColor ? {background: colorToHex(value)} : undefined}
+                        onClick={() => setOptions((prev) => ({...prev, [norm(name)]: value}))}
+                        aria-label={esFilaDeColor ? `Color camisa ${value}` : undefined}
+                        title={esFilaDeColor ? value : undefined}
+                      >
+                        {esFilaDeColor ? null : formatSize(value)}
+                      </button>
+                    );
+                  })}
                 </div>
+                {gorraElegida ? (
+                  <p className="trp-gorra-ahorro">
+                    Esta gorra sola vale <s>{'$' + gorraElegida.antes.toLocaleString('es-CO')}</s> — en el
+                    combo te <strong>ahorras {'$' + gorraElegida.ahorro.toLocaleString('es-CO')}</strong>
+                  </p>
+                ) : null}
               </div>
             );
           })}

@@ -448,6 +448,68 @@
   box-shadow: 0 0 0 2px #f5f0e6 inset;
 }
 
+/* Gorras del combo Botas + Gorra: se eligen por foto, no por texto */
+.trp-option-gorras {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: repeat(auto-fill, minmax(74px, 1fr));
+}
+
+.trp-option-gorras .trp-gorra-btn {
+  align-items: center;
+  background: #ffffff;
+  border: 1px solid rgba(26, 26, 24, 0.16);
+  border-radius: 10px;
+  color: #1a1a18;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  height: auto;
+  min-width: 0;
+  padding: 6px 4px 7px;
+  width: 100%;
+}
+
+.trp-option-gorras .trp-gorra-btn img {
+  background: #f5f0e6;
+  border-radius: 50%;
+  display: block;
+  height: 56px;
+  object-fit: cover;
+  width: 56px;
+}
+
+.trp-option-gorras .trp-gorra-btn span {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  line-height: 1.15;
+  text-align: center;
+}
+
+.trp-option-gorras .trp-gorra-btn.is-active {
+  background: #1a1a18;
+  border-color: #1a1a18;
+  color: #f5f0e6;
+}
+
+.trp-gorra-ahorro {
+  color: #5a554a;
+  font-size: 12px;
+  line-height: 1.5;
+  margin: 8px 0 0;
+}
+
+.trp-gorra-ahorro s {
+  color: #8a8274;
+}
+
+.trp-gorra-ahorro strong {
+  color: #b34a2a;
+  white-space: nowrap;
+}
+
 /* Stock */
 .trp-stock {
   color: #b34a2a;
