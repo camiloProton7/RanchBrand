@@ -93,6 +93,7 @@ const PRODUCT_QUERY = `#graphql
       description
       productType
       tags
+      collections(first: 8) { nodes { handle } }
       metafield(namespace: "custom", key: "tabla_medidas") { value }
       featuredImage {
         url
@@ -256,7 +257,7 @@ export async function loader({params, context}) {
     const isCombo = handle === 'combo-5x-500';
     const isComboCamisa = handle === 'combo-camisa-gorra';
     const isCamisa = handle === 'camisa-outdoor-the-ranch';
-    const [productData, relatedData, sugeridoData, allReviews] = await Promise.all([
+    const [productData, relatedData, sugeridoData, comboBotasData, allReviews] = await Promise.all([
       storefront.query(PRODUCT_QUERY, {
         variables: {handle},
         cache: storefront.CacheShort(),
@@ -271,11 +272,19 @@ export async function loader({params, context}) {
         variables: {handle: 'botas-gamuza-lariat'},
         cache: storefront.CacheLong(),
       }),
+      // El combo Botas + Gorra. En las fichas de GORRAS reemplaza a las botas sueltas
+      // (mismo precio y además gorra); en el resto se sigue ofreciendo solo la bota.
+      storefront.query(PRODUCT_QUERY, {
+        variables: {handle: 'botas-gorra'},
+        cache: storefront.CacheLong(),
+      }),
       fetchTrustooReviews(),
     ]);
 
     const product = productData.product || null;
     const sugerido = sugeridoData.product || null;
+    // El combo Botas + Gorra (se usa en las fichas de gorras, ver más abajo).
+    const comboBotas = comboBotasData.product || null;
     const title = (product?.title || '').toLowerCase();
     const matching = allReviews.filter((r) => {
       if (!title) return true;
@@ -341,6 +350,7 @@ export async function loader({params, context}) {
     return {
       product,
       sugerido,
+      comboBotas,
       reviews,
       related,
       similar,
@@ -566,7 +576,7 @@ function fechaCorta(texto) {
 }
 
 export default function ProductPage() {
-  const {product, sugerido, reviews, related, similar, comboGorras, isCombo, isComboCamisa, camisaCombo, isCamisa, combosCamisa} =
+  const {product, sugerido, comboBotas, reviews, related, similar, comboGorras, isCombo, isComboCamisa, camisaCombo, isCamisa, combosCamisa} =
     useLoaderData();
   const tablaTallas = parseTablaMedidas(product?.metafield?.value);
   // Colores del producto sugerido (hoy las botas): la tarjeta deja elegir el color y lleva
@@ -599,7 +609,16 @@ export default function ProductPage() {
   // (el nombre del tag es histórico; hoy controla el sugerido de botas) ni en el combo Laredo.
   const sinLicorera =
     (product?.tags || []).some((t) => String(t).toLowerCase().trim() === 'sin-licorera') ||
-    product?.handle === 'combo-camisa-outdoor-chaqueta-laredo';  const rootData = useRouteLoaderData('root');
+    product?.handle === 'combo-camisa-outdoor-chaqueta-laredo';
+  // Fichas de GORRAS: el bloque de venta cruzada ofrece el combo Botas + Gorra en vez de
+  // las botas sueltas (mismo precio, pero con la gorra incluida).
+  const esGorraCombo = Boolean(
+    product &&
+      comboBotas &&
+      (product.collections?.nodes || []).some((c) => /gorra/i.test(c.handle || '')),
+  );
+  const sugeridoMostrado = esGorraCombo ? comboBotas : sugerido;
+  const rootData = useRouteLoaderData('root');
   const logoSrc = rootData?.header?.shop?.brand?.logo?.image?.url;
 
   const [activeImage, setActiveImage] = useState(0);
@@ -1571,23 +1590,27 @@ export default function ProductPage() {
               </Link>
             ))}
           </section>
-        ) : sugerido && !sinLicorera ? (
+        ) : sugeridoMostrado && !sinLicorera ? (
           <RecommendedProduct
             product={{
-              handle: sugerido.handle,
-              title: sugerido.title,
-              price: sugerido.priceRange?.minVariantPrice?.amount,
-              image: sugerido.featuredImage?.url,
-              variantId: sugerido.variants?.nodes?.[0]?.id,
-              // Las botas se venden por talla y color: en vez de meter una variante al azar
-              // al carrito, el CTA lleva a SU ficha en Oxygen para que elija talla y color.
-              // El 10% lo aplica solo el descuento automático de la colección Botas.
-              cartUrl: `/products/${sugerido.handle}`,
+              handle: sugeridoMostrado.handle,
+              title: sugeridoMostrado.title,
+              price: sugeridoMostrado.priceRange?.minVariantPrice?.amount,
+              image: sugeridoMostrado.featuredImage?.url,
+              variantId: sugeridoMostrado.variants?.nodes?.[0]?.id,
+              // Ni las botas ni el combo entran al carrito desde aquí: el CTA lleva a su
+              // ficha en Oxygen para elegir color y talla (y la gorra, en el combo).
+              cartUrl: `/products/${sugeridoMostrado.handle}`,
             }}
             formatPrice={formatPrice}
-            ctaText="Elegir talla"
-            colores={coloresSugerido}
-            onAdd={(vidBota) => {
+            antes={
+              esGorraCombo
+                ? sugeridoMostrado.compareAtPriceRange?.minVariantPrice?.amount
+                : null
+            }
+            ctaText={esGorraCombo ? 'Ver combo' : 'Elegir talla'}
+            colores={esGorraCombo ? [] : coloresSugerido}
+            onAdd={esGorraCombo ? undefined : (vidBota) => {
               // El cliente está viendo una gorra (o chaqueta): al mandarlo a elegir la talla
               // de las botas, su prenda se suma ya al carrito. Si no, se iba solo con las botas.
               if (selectedVariant?.id && selectedVariant?.availableForSale !== false) {

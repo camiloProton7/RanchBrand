@@ -318,12 +318,25 @@ export function ProductAccordion({productType, title, description, ficha}) {
 
 /* ===== Producto recomendado (un solo producto) ===== */
 
-export function RecommendedProduct({product, formatPrice, onAdd, ctaText = 'Agregar al carrito', colores = null}) {
+export function RecommendedProduct({
+  product,
+  formatPrice,
+  onAdd,
+  ctaText = 'Agregar al carrito',
+  colores = null,
+  antes = null,
+}) {
   const [elegido, setElegido] = useState(0);
   if (!product) return null;
   const price = Number(product.price) || 0;
-  const discount = Math.round(price * 0.1);
-  const final = price - discount;
+  // El combo Botas + Gorra ya viene con su precio final y su "antes" real: cuando llega
+  // `antes` se muestra ESE ahorro. Sin él (las botas) se mantiene el 10% de su descuento
+  // automático. Así la tarjeta nunca anuncia un porcentaje que la tienda no está dando.
+  const antesNum = Number(antes) || 0;
+  const esComboPropio = antesNum > price;
+  const discount = esComboPropio ? antesNum - price : Math.round(price * 0.1);
+  const final = esComboPropio ? price : price - discount;
+  const porcentaje = esComboPropio ? Math.round((discount / antesNum) * 100) : 10;
   // Si el sugerido tiene varios colores (las botas: Miel, Cafe, Negro) la tarjeta deja
   // elegirlos y la foto cambia; el enlace de cada color ya trae su variante y el cupón.
   const lista = colores && colores.length > 1 ? colores : null;
@@ -351,9 +364,11 @@ export function RecommendedProduct({product, formatPrice, onAdd, ctaText = 'Agre
           <span className="trp-reco-tag">🔥 Llévalo con descuento</span>
           <h3 className="trp-reco-title">{product.title}</h3>
           <div className="trp-reco-price">
-            <s className="trp-reco-price-orig">{formatPrice(price)}</s>
+            <s className="trp-reco-price-orig">
+              {formatPrice(esComboPropio ? antesNum : price)}
+            </s>
             <strong className="trp-reco-price-final">{formatPrice(final)}</strong>
-            <span className="trp-reco-badge">-10%</span>
+            <span className="trp-reco-badge">{`-${porcentaje}%`}</span>
           </div>
           {lista ? (
             <div className="trp-reco-colores" aria-label="Color">
