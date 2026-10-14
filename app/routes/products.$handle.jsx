@@ -622,6 +622,77 @@ export default function ProductPage() {
   });
   const [fav, setFav] = useState(false);
   const [qty, setQty] = useState(1);
+
+  /**
+   * Bloque de compra (precio, unidades, agregar al carrito, comprar ahora).
+   * Va pegado bajo el título —no al final de la ficha— porque en móvil el botón flotante
+   * que Meta inyecta en el navegador de Facebook se montaba encima de la barra vieja
+   * (que estaba fija abajo) y tapaba el CTA. En CSS queda sticky bajo el header.
+   * Se usa en las dos fichas: la normal y la de combos.
+   */
+  const renderBuyBar = () => (
+      <div className="trp-buybar">
+          <div className="trp-buybar-price">
+            <span className="trp-buybar-price-now">{formatPrice(totalPrice)}</span>
+            {hasDiscount ? (
+              <s className="trp-buybar-price-compare">{formatPrice(totalCompare)}</s>
+            ) : null}
+          </div>
+          <button
+            className={`trp-add-cart ${added ? 'is-added' : ''}`}
+            type="button"
+            onClick={handleAddToCart}
+            disabled={isComboCamisa ? !comboCamisaReady : isOut || (isCombo && !comboReady)}
+          >
+            {isComboCamisa
+              ? comboCamisaReady
+                ? added
+                  ? '✓ Añadido'
+                  : 'Agregar al carrito'
+                : 'Elige camisa y gorra'
+              : isCombo && !comboReady
+                ? 'Elige 5 gorras'
+                : added
+                  ? '✓ Añadido'
+                  : 'Agregar al carrito'}
+          </button>
+          <div className="trp-qty" aria-label="Cantidad">
+            <button
+              type="button"
+              onClick={() => setQty((q) => Math.max(1, q - 1))}
+              aria-label="Menos"
+            >
+              −
+            </button>
+            <span>{qty}</span>
+            <button
+              type="button"
+              onClick={() => setQty((q) => Math.min(maxQty, q + 1))}
+              disabled={qty >= maxQty}
+              aria-label="Más"
+            >
+              +
+            </button>
+          </div>
+          {/* "Comprar ahora" va DEBAJO de "Agregar al carrito": el camino normal es
+              agregar al carrito, y el salto directo a pagar queda como acción secundaria
+              (el grid 2x2 sigue el orden del DOM, así que el orden aquí es el visual). */}
+          <button
+            className="trp-add"
+            type="button"
+            onClick={handleBuyNow}
+            disabled={isComboCamisa ? !comboCamisaReady : isOut || (isCombo && !comboReady)}
+          >
+            {isComboCamisa
+              ? comboCamisaReady
+                ? 'Comprar ahora'
+                : 'Elige camisa y gorra'
+              : isCombo && !comboReady
+                ? 'Elige 5 gorras'
+                : 'Comprar ahora'}
+          </button>
+      </div>
+  );
   const [added, setAdded] = useState(false);
   const [showFullDesc, setShowFullDesc] = useState(false);
   const [options, setOptions] = useState(() => {
@@ -1198,6 +1269,7 @@ export default function ProductPage() {
         <section className="trp-combo-picker" aria-label="Arma tu combo de camisa y gorra">
           <h1 className="trp-combo-title">{product.title}</h1>
           <p className="trp-combo-sub">Elige tu camisa (color y talla) y tu gorra favorita</p>
+          {renderBuyBar()}
 
           <div className="trp-option">
             <span className="trp-option-label">Color de la camisa</span>
@@ -1287,6 +1359,9 @@ export default function ProductPage() {
               <Stars value={rating.num} /> <span className="trp-stars-num">{rating.num}</span>
               <span className="trp-stars-link">Ver reseñas</span>
             </button>
+
+            {/* Compra fija bajo el título: precio, unidades y botones a la vista de una */}
+            {renderBuyBar()}
 
             {/* La descripción va aquí en móvil: en el acordeón quedaba al final de la ficha
                 y nadie la leía. En escritorio sigue dentro del acordeón. */}
@@ -1549,67 +1624,6 @@ export default function ProductPage() {
         </div>
       ) : null}
 
-      <div className="trp-buybar">
-          <div className="trp-buybar-price">
-            <span className="trp-buybar-price-now">{formatPrice(totalPrice)}</span>
-            {hasDiscount ? (
-              <s className="trp-buybar-price-compare">{formatPrice(totalCompare)}</s>
-            ) : null}
-          </div>
-          <button
-            className={`trp-add-cart ${added ? 'is-added' : ''}`}
-            type="button"
-            onClick={handleAddToCart}
-            disabled={isComboCamisa ? !comboCamisaReady : isOut || (isCombo && !comboReady)}
-          >
-            {isComboCamisa
-              ? comboCamisaReady
-                ? added
-                  ? '✓ Añadido'
-                  : 'Agregar al carrito'
-                : 'Elige camisa y gorra'
-              : isCombo && !comboReady
-                ? 'Elige 5 gorras'
-                : added
-                  ? '✓ Añadido'
-                  : 'Agregar al carrito'}
-          </button>
-          <div className="trp-qty" aria-label="Cantidad">
-            <button
-              type="button"
-              onClick={() => setQty((q) => Math.max(1, q - 1))}
-              aria-label="Menos"
-            >
-              −
-            </button>
-            <span>{qty}</span>
-            <button
-              type="button"
-              onClick={() => setQty((q) => Math.min(maxQty, q + 1))}
-              disabled={qty >= maxQty}
-              aria-label="Más"
-            >
-              +
-            </button>
-          </div>
-          {/* "Comprar ahora" va DEBAJO de "Agregar al carrito": el camino normal es
-              agregar al carrito, y el salto directo a pagar queda como acción secundaria
-              (el grid 2x2 sigue el orden del DOM, así que el orden aquí es el visual). */}
-          <button
-            className="trp-add"
-            type="button"
-            onClick={handleBuyNow}
-            disabled={isComboCamisa ? !comboCamisaReady : isOut || (isCombo && !comboReady)}
-          >
-            {isComboCamisa
-              ? comboCamisaReady
-                ? 'Comprar ahora'
-                : 'Elige camisa y gorra'
-              : isCombo && !comboReady
-                ? 'Elige 5 gorras'
-                : 'Comprar ahora'}
-          </button>
-        </div>
       </div>
 
       {/* ===== Medios de pago (confianza) ===== */}

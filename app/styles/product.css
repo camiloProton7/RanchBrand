@@ -1069,7 +1069,11 @@
   }
 
   .trp-buybar {
-    bottom: 24px;
+    /* Compra fija BAJO EL TÍTULO: se pega arriba (bajo el header) al hacer scroll.
+       Antes iba pegada al fondo y en el navegador de Facebook el flotante que inyecta
+       Meta se montaba encima y tapaba el botón. */
+    bottom: auto;
+    top: 62px;
   }
 
   .trp-reviews,
