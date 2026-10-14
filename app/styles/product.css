@@ -1069,11 +1069,7 @@
   }
 
   .trp-buybar {
-    /* Compra fija BAJO EL TÍTULO: se pega arriba (bajo el header) al hacer scroll.
-       Antes iba pegada al fondo y en el navegador de Facebook el flotante que inyecta
-       Meta se montaba encima y tapaba el botón. */
-    bottom: auto;
-    top: 62px;
+    bottom: 24px;
   }
 
   .trp-reviews,
@@ -2115,6 +2111,15 @@
   .trp-trust-movil {
     display: block;
     margin: 16px 0 2px;
+  }
+
+  /* Compra fija BAJO EL TÍTULO: el bloque de compra se pega arriba (bajo el header) al
+     hacer scroll. No puede vivir pegado al fondo: en el navegador de Facebook, el botón
+     flotante que inyecta Meta se monta encima del CTA y lo tapa (y no se puede quitar
+     desde el sitio, porque no es nuestro). */
+  .trp-buybar {
+    bottom: auto;
+    top: 60px;
   }
 }
 
