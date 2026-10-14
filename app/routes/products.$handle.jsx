@@ -157,6 +157,30 @@ const RELATED_QUERY = `#graphql
   }
 `;
 
+// Consulta ligera para el combo Botas + Gorra: SIN quantityAvailable (el token del
+// Storefront no tiene el permiso de inventario y ese campo tumba la consulta entera
+// cuando el producto trae cientos de variantes) y sin campos que la tarjeta no use.
+const COMBO_BOTAS_QUERY = `#graphql
+  query ComboBotas($handle: String!) {
+    product(handle: $handle) {
+      id
+      title
+      handle
+      featuredImage {
+        url
+        altText
+      }
+      priceRange { minVariantPrice { amount currencyCode } }
+      compareAtPriceRange { minVariantPrice { amount } }
+      variants(first: 1) {
+        nodes {
+          id
+        }
+      }
+    }
+  }
+`;
+
 const COMBO_QUERY = `#graphql
   query ComboProducts($handle: String!) {
     collection(handle: $handle) {
@@ -274,7 +298,7 @@ export async function loader({params, context}) {
       }),
       // El combo Botas + Gorra. En las fichas de GORRAS reemplaza a las botas sueltas
       // (mismo precio y además gorra); en el resto se sigue ofreciendo solo la bota.
-      storefront.query(PRODUCT_QUERY, {
+      storefront.query(COMBO_BOTAS_QUERY, {
         variables: {handle: 'botas-gorra'},
         cache: storefront.CacheLong(),
       }),
