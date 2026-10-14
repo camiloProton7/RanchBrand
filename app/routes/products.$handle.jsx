@@ -19,7 +19,7 @@ import {SocialProof} from '~/components/SocialProof';
 import Personalizador from '~/components/Personalizador';
 import productStyles from '~/styles/product.css?url';
 import persoStyles from '~/styles/perso.css?url';
-import {COMBO_BOTAS_GORRA, GORRAS_COMBO} from '~/lib/gorras-combo';
+import {GORRAS_COMBO} from '~/lib/gorras-combo';
 
 export const meta = ({data}) => {
   const product = data?.product;
@@ -1465,7 +1465,10 @@ export default function ProductPage() {
               ),
             );
             const esFilaDeColor = norm(name) === 'color camisa';
-            const esFilaDeGorras = product?.handle === COMBO_BOTAS_GORRA && norm(name) === 'gorra';
+            // Solo el combo Botas + Gorra tiene valores de gorra en el mapa: así esto
+            // no cambia ninguna otra ficha, sin depender de dónde venga el handle.
+            const esFilaDeGorras =
+              norm(name) === 'gorra' && values.some((v) => GORRAS_COMBO[v]?.img);
             const gorraElegida = esFilaDeGorras ? GORRAS_COMBO[options[norm(name)] || ''] : null;
             return (
               <div key={name} className="trp-option">
