@@ -1,72 +1,104 @@
-import {useMemo} from 'react';
-
 /**
- * Ficha editorial de la Camisa Outdoor UPF 50+ (verde oliva / beige).
- * Solo se monta para ese handle: el resto de las fichas siguen igual.
+ * Ficha infográfica de la Camisa Outdoor UPF 50+ (verde oliva / beige).
+ * Solo se monta para ese handle: el resto de las fichas sigue igual.
  * Todo el copy sale de los atributos reales del producto; nada inventado.
  */
+
+const DATOS = [
+  {valor: 'UPF 50+', etiqueta: 'Protección solar'},
+  {valor: '100%', etiqueta: 'Poliéster'},
+  {valor: 'Secado', etiqueta: 'Rápido'},
+];
 
 const DETALLES = [
   {
     titulo: 'Bolsillos de carga',
-    texto: 'Doble capa para el almacenamiento diario: lo que usas todo el día, siempre a mano.'
+    texto: 'Doble capa para el almacenamiento diario.',
+    icono: (
+      <>
+        <path d="M4 9.5h16v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-8Z" />
+        <path d="M4 12.5h16" />
+        <path d="M9.5 6.5h5" />
+      </>
+    ),
   },
   {
     titulo: 'Cremallera segura',
-    texto: 'Bolsillo con cierre para guardar objetos de valor sin que se salgan en el movimiento.'
+    texto: 'Lo de valor, guardado sin que se salga.',
+    icono: (
+      <>
+        <path d="M8 3v18" />
+        <path d="M8 5h3M8 8h3M8 11h3M8 14h3M8 17h3" />
+        <path d="M14 11.5 18 9" />
+      </>
+    ),
   },
   {
     titulo: 'Malla en la espalda',
-    texto: 'Ventilación de malla que mantiene la circulación de aire y la comodidad todo el día.'
+    texto: 'Aire que corre todo el día.',
+    icono: (
+      <>
+        <path d="M3 9h9a3 3 0 1 0-3-3" />
+        <path d="M3 14h13a3 3 0 1 1-3 3" />
+        <path d="M3 19h6" />
+      </>
+    ),
   },
   {
     titulo: 'Manga convertible',
-    texto: 'Se remanga fácilmente y se convierte en manga corta cuando aprieta el calor.'
+    texto: 'Se remanga y queda manga corta.',
+    icono: (
+      <>
+        <path d="M7 4h6l3 5-2.5 2.5L16 15l-3 5H8l-2-6 2-2-1-8Z" />
+        <path d="M13.5 12.5h2" />
+      </>
+    ),
   },
 ];
 
-const SPECS = [
-  ['Protección', 'UPF 50+'],
-  ['Tela', '100% poliéster'],
-  ['Secado', 'Rápido'],
-  ['Manga', 'Convertible'],
-];
+const SELLOS = ['✨ Tela premium', '🌬️ Transpirable', '🧵 Costuras reforzadas', '🚚 Envío a toda Colombia'];
 
 export default function ProductStory() {
-  const detalles = useMemo(() => DETALLES, []);
   return (
     <section className="trp-story" aria-label="Por qué esta camisa">
       <p className="trp-story-kicker">The Ranch · Outdoor</p>
       <h2 className="trp-story-title">Hecha para el sol y el agua</h2>
       <p className="trp-story-lead">
-        Una camisa de faena para los días largos afuera: liviana, fresca y con la protección que el sol de acá no
-        perdona. El poliéster de alta calidad aguanta el uso y el tejido transpirable seca rápido, así que el sudor y
-        las salpicaduras se van solos.
-      </p>
-      <p className="trp-story-lead">
-        Corte cómodo, movimiento libre y detalles pensados para llevar el equipo encima sin cargar las manos.
+        Liviana y fresca para los días largos afuera. Seca rápido, ventila por la espalda y lleva el equipo encima.
       </p>
 
+      <div className="trp-story-datos">
+        {DATOS.map((d) => (
+          <div key={d.etiqueta} className="trp-story-dato">
+            <strong>{d.valor}</strong>
+            <span>{d.etiqueta}</span>
+          </div>
+        ))}
+      </div>
+
       <div className="trp-story-detalles">
-        {detalles.map((d) => (
+        {DETALLES.map((d) => (
           <article key={d.titulo} className="trp-story-detalle">
             <span className="trp-story-icono" aria-hidden="true">
-              {String(detalles.indexOf(d) + 1).padStart(2, '0')}
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                {d.icono}
+              </svg>
             </span>
-            <h3>{d.titulo}</h3>
-            <p>{d.texto}</p>
+            <div>
+              <h3>{d.titulo}</h3>
+              <p>{d.texto}</p>
+            </div>
           </article>
         ))}
       </div>
 
-      <ul className="trp-story-specs">
-        {SPECS.map(([k, v]) => (
-          <li key={k}>
-            <span>{k}</span>
-            <strong>{v}</strong>
-          </li>
+      <ul className="trp-story-sellos">
+        {SELLOS.map((s) => (
+          <li key={s}>{s}</li>
         ))}
       </ul>
+
+      <p className="trp-story-edicion">Edición limitada</p>
 
       <div className="trp-story-cuidado">
         <div>

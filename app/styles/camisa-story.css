@@ -1,13 +1,12 @@
 /* ==================================================================
-   Ficha editorial de la Camisa Outdoor UPF 50+.
+   Ficha infográfica de la Camisa Outdoor UPF 50+.
    Solo se usa cuando ProductStory se monta (handle camisa-outdoor-
    proteccion-solar-upf-50). Paleta de marca: beige + terracota.
-   Mobile first: una columna; a partir de 560px se abren los detalles.
    ================================================================== */
 
 .trp-story {
   margin: 22px 0 8px;
-  padding: 26px 20px 22px;
+  padding: 24px 18px 20px;
   border: 1px solid rgba(179, 74, 42, 0.16);
   border-radius: 20px;
   background: #f5f0e6;
@@ -26,8 +25,8 @@ body:has(.trp-story) {
 }
 
 .trp-story-kicker {
-  margin: 0 0 8px;
-  font-size: 10.5px;
+  margin: 0 0 7px;
+  font-size: 10px;
   font-weight: 700;
   letter-spacing: 0.18em;
   text-transform: uppercase;
@@ -35,114 +34,160 @@ body:has(.trp-story) {
 }
 
 .trp-story-title {
-  margin: 0 0 12px;
+  margin: 0 0 8px;
   font-family: Georgia, 'Times New Roman', serif;
-  font-size: 24px;
+  font-size: 23px;
   font-weight: 400;
-  line-height: 1.15;
+  line-height: 1.14;
   letter-spacing: -0.01em;
   color: #1b1a17;
 }
 
 .trp-story-lead {
-  margin: 0 0 10px;
-  font-size: 14.5px;
-  line-height: 1.72;
-  color: #3b3831;
+  margin: 0 0 16px;
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: #4a4640;
 }
 
+/* ---- Cifras grandes: el ancla visual del bloque ---- */
+.trp-story-datos {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1px;
+  overflow: hidden;
+  margin: 0 0 16px;
+  border-radius: 14px;
+  background: rgba(27, 26, 23, 0.08);
+}
+
+.trp-story-dato {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  padding: 14px 8px 12px;
+  background: #fffdf9;
+  text-align: center;
+}
+
+.trp-story-dato strong {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 21px;
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: -0.01em;
+  color: #b34a2a;
+}
+
+.trp-story-dato span {
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #8d877c;
+}
+
+/* ---- Los cuatro detalles: tarjetas con icono grande ---- */
 .trp-story-detalles {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 10px;
-  margin: 18px 0 16px;
+  gap: 8px;
+  margin: 0 0 14px;
 }
 
 .trp-story-detalle {
-  padding: 15px 16px 14px;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 13px 14px;
   border: 1px solid rgba(27, 26, 23, 0.06);
   border-radius: 14px;
   background: #fffdf9;
 }
 
 .trp-story-icono {
+  flex: 0 0 auto;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 30px;
-  height: 30px;
-  margin-bottom: 10px;
-  border: 1px solid rgba(179, 74, 42, 0.3);
-  border-radius: 999px;
-  font-family: Georgia, 'Times New Roman', serif;
-  font-size: 12px;
-  letter-spacing: 0.02em;
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  background: rgba(179, 74, 42, 0.1);
   color: #b34a2a;
 }
 
+.trp-story-icono svg {
+  width: 21px;
+  height: 21px;
+}
+
 .trp-story-detalle h3 {
-  margin: 0 0 5px;
+  margin: 1px 0 3px;
   font-family: Georgia, 'Times New Roman', serif;
-  font-size: 15.5px;
+  font-size: 15px;
   font-weight: 400;
-  letter-spacing: 0.005em;
+  line-height: 1.2;
   color: #1b1a17;
 }
 
 .trp-story-detalle p {
   margin: 0;
-  font-size: 12.8px;
-  line-height: 1.55;
-  color: #5f5b53;
+  font-size: 12.5px;
+  line-height: 1.45;
+  color: #615d55;
 }
 
-.trp-story-specs {
+/* ---- Sellos de confianza ---- */
+.trp-story-sellos {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 1px;
-  margin: 0 0 18px;
+  gap: 6px;
+  margin: 0 0 12px;
   padding: 0;
   list-style: none;
-  overflow: hidden;
-  border-radius: 14px;
-  background: rgba(27, 26, 23, 0.07);
 }
 
-.trp-story-specs li {
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
-  padding: 12px 14px;
+.trp-story-sellos li {
+  padding: 7px 10px;
+  border: 1px solid rgba(179, 74, 42, 0.22);
+  border-radius: 10px;
   background: #fffdf9;
+  font-size: 10.5px;
+  line-height: 1.3;
+  font-weight: 500;
+  color: #4a4640;
 }
 
-.trp-story-specs span {
+/* Sello de edición limitada: cierra el bloque con la escasez a la vista. */
+.trp-story-edicion {
+  display: inline-block;
+  margin: 0 0 14px;
+  padding: 5px 11px;
+  border-radius: 999px;
+  background: rgba(179, 74, 42, 0.12);
   font-size: 9.5px;
-  font-weight: 600;
-  letter-spacing: 0.07em;
+  font-weight: 700;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: #8d877c;
+  color: #8a3428;
 }
 
-.trp-story-specs strong {
-  font-family: Georgia, 'Times New Roman', serif;
-  font-size: 14px;
-  font-weight: 400;
-  color: #1b1a17;
-}
-
+/* ---- Materiales y cuidados ---- */
 .trp-story-cuidado {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 16px;
-  padding-top: 16px;
+  gap: 14px;
+  padding-top: 15px;
   border-top: 1px solid rgba(27, 26, 23, 0.1);
 }
 
 .trp-story-cuidado h3 {
-  margin: 0 0 8px;
+  margin: 0 0 7px;
   font-family: Georgia, 'Times New Roman', serif;
-  font-size: 16px;
+  font-size: 15.5px;
   font-weight: 400;
   color: #1b1a17;
 }
@@ -155,43 +200,45 @@ body:has(.trp-story) {
 
 .trp-story-cuidado li {
   position: relative;
-  margin-bottom: 6px;
-  padding-left: 14px;
-  font-size: 12.8px;
-  line-height: 1.55;
-  color: #5f5b53;
+  margin-bottom: 5px;
+  padding-left: 13px;
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: #615d55;
 }
 
 .trp-story-cuidado li::before {
   content: '';
   position: absolute;
-  top: 7px;
+  top: 6.5px;
   left: 0;
-  width: 5px;
-  height: 5px;
+  width: 4px;
+  height: 4px;
   border-radius: 999px;
   background: #b34a2a;
   opacity: 0.55;
 }
 
-/* En escritorio la ficha abre dos columnas y el bloque respira; en móvil va
-   todo apilado. (Se probó @container y el build no lo emitió.) */
+/* En escritorio la ficha abre dos columnas y el bloque respira. */
 @media (min-width: 900px) {
+  .trp-story {
+    padding: 30px 26px 24px;
+  }
+  .trp-story-title {
+    font-size: 28px;
+  }
+  .trp-story-dato strong {
+    font-size: 25px;
+  }
   .trp-story-detalles {
     grid-template-columns: 1fr 1fr;
-    gap: 12px;
+    gap: 10px;
+  }
+  .trp-story-sellos {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
   .trp-story-cuidado {
     grid-template-columns: 1fr 1fr;
-    gap: 28px;
-  }
-}
-
-@media (min-width: 560px) {
-  .trp-story {
-    padding: 32px 28px 26px;
-  }
-  .trp-story-title {
-    font-size: 29px;
+    gap: 26px;
   }
 }
