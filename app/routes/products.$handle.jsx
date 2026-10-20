@@ -1,4 +1,5 @@
 import Stars from '~/components/Stars';
+import ProductStory from '~/components/ProductStory';
 import {ratingFor} from '~/lib/rating';
 import {useEffect, useMemo, useRef, useState} from 'react';
 import {Link, useLoaderData, useRouteLoaderData, useSearchParams} from 'react-router';
@@ -18,6 +19,7 @@ import {
 import {SocialProof} from '~/components/SocialProof';
 import Personalizador from '~/components/Personalizador';
 import productStyles from '~/styles/product.css?url';
+import camisaStoryStyles from '~/styles/camisa-story.css?url';
 import persoStyles from '~/styles/perso.css?url';
 import {GORRAS_COMBO} from '~/lib/gorras-combo';
 
@@ -69,6 +71,7 @@ export const meta = ({data}) => {
 
 export const links = () => [
   {rel: 'stylesheet', href: productStyles},
+  {rel: 'stylesheet', href: camisaStoryStyles},
   {rel: 'stylesheet', href: persoStyles},
   {
     rel: 'stylesheet',
@@ -1409,7 +1412,9 @@ export default function ProductPage() {
 
             {/* La descripción va aquí en móvil: en el acordeón quedaba al final de la ficha
                 y nadie la leía. En escritorio sigue dentro del acordeón. */}
-            {product.description && tablaTallas ? (
+            {product.handle === 'camisa-outdoor-proteccion-solar-upf-50' ? (
+              <ProductStory />
+            ) : product.description && tablaTallas ? (
               <p className="trp-desc-ficha">{product.description}</p>
             ) : null}
 

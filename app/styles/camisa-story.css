@@ -1,0 +1,195 @@
+/* ==================================================================
+   Ficha editorial de la Camisa Outdoor UPF 50+.
+   Solo se usa cuando ProductStory se monta (handle camisa-outdoor-
+   proteccion-solar-upf-50). Paleta de marca: beige + terracota.
+   Mobile first: una columna; a partir de 560px se abren los detalles.
+   ================================================================== */
+
+.trp-story {
+  margin: 22px 0 8px;
+  padding: 26px 20px 22px;
+  border: 1px solid rgba(179, 74, 42, 0.16);
+  border-radius: 20px;
+  background: #f5f0e6;
+  max-width: 100%;
+  overflow-wrap: break-word;
+}
+
+/* El badge de edición limitada y la fila de miniaturas empujan el documento
+   más allá del viewport en móvil y la ficha se veía cortada a la derecha.
+   `clip` recorta sin crear contenedor de scroll, así no rompe el sticky de
+   la barra de compra. Solo aplica en esta ficha (la que monta .trp-story). */
+html:has(.trp-story),
+body:has(.trp-story) {
+  overflow-x: clip;
+  max-width: 100%;
+}
+
+.trp-story-kicker {
+  margin: 0 0 8px;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #b34a2a;
+}
+
+.trp-story-title {
+  margin: 0 0 12px;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  color: #1b1a17;
+}
+
+.trp-story-lead {
+  margin: 0 0 10px;
+  font-size: 14.5px;
+  line-height: 1.72;
+  color: #3b3831;
+}
+
+.trp-story-detalles {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+  margin: 18px 0 16px;
+}
+
+.trp-story-detalle {
+  padding: 15px 16px 14px;
+  border: 1px solid rgba(27, 26, 23, 0.06);
+  border-radius: 14px;
+  background: #fffdf9;
+}
+
+.trp-story-icono {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  margin-bottom: 10px;
+  border: 1px solid rgba(179, 74, 42, 0.3);
+  border-radius: 999px;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 12px;
+  letter-spacing: 0.02em;
+  color: #b34a2a;
+}
+
+.trp-story-detalle h3 {
+  margin: 0 0 5px;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 15.5px;
+  font-weight: 400;
+  letter-spacing: 0.005em;
+  color: #1b1a17;
+}
+
+.trp-story-detalle p {
+  margin: 0;
+  font-size: 12.8px;
+  line-height: 1.55;
+  color: #5f5b53;
+}
+
+.trp-story-specs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  margin: 0 0 18px;
+  padding: 0;
+  list-style: none;
+  overflow: hidden;
+  border-radius: 14px;
+  background: rgba(27, 26, 23, 0.07);
+}
+
+.trp-story-specs li {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: 12px 14px;
+  background: #fffdf9;
+}
+
+.trp-story-specs span {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #8d877c;
+}
+
+.trp-story-specs strong {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: #1b1a17;
+}
+
+.trp-story-cuidado {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(27, 26, 23, 0.1);
+}
+
+.trp-story-cuidado h3 {
+  margin: 0 0 8px;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 16px;
+  font-weight: 400;
+  color: #1b1a17;
+}
+
+.trp-story-cuidado ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.trp-story-cuidado li {
+  position: relative;
+  margin-bottom: 6px;
+  padding-left: 14px;
+  font-size: 12.8px;
+  line-height: 1.55;
+  color: #5f5b53;
+}
+
+.trp-story-cuidado li::before {
+  content: '';
+  position: absolute;
+  top: 7px;
+  left: 0;
+  width: 5px;
+  height: 5px;
+  border-radius: 999px;
+  background: #b34a2a;
+  opacity: 0.55;
+}
+
+@media (min-width: 560px) {
+  .trp-story {
+    padding: 32px 28px 26px;
+  }
+  .trp-story-title {
+    font-size: 29px;
+  }
+  .trp-story-detalles {
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .trp-story-specs {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  .trp-story-cuidado {
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+  }
+}
