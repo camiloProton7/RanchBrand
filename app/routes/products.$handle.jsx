@@ -1407,6 +1407,141 @@ export default function ProductPage() {
               <span className="trp-stars-link">Ver reseñas</span>
             </button>
 
+            {/* ===== Selectores de talla/color (debajo del título) ===== */}
+            {colors.length > 1 && (
+              <div className="trp-option">
+                <span className="trp-option-label">Color</span>
+                <div className="trp-option-values trp-option-colors">
+                  {colors.map((c) => (
+                    <button
+                      key={c}
+                      type="button"
+                      className={norm(color) === norm(c) ? 'is-active' : ''}
+                      style={{background: colorToHex(c)}}
+                      onClick={() => setColor(c)}
+                      aria-label={`Color ${c}`}
+                      title={c}
+                    />
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {esComboLaredo ? (
+              <>
+                <div className="trp-option">
+                  <span className="trp-option-label">Color chaqueta</span>
+                  <div className="trp-option-values trp-option-colors">
+                    {partesChaqueta.colores.map((c) => (
+                      <button
+                        key={c}
+                        type="button"
+                        className={norm(chaquetaColor) === norm(c) ? 'is-active' : ''}
+                        style={{background: colorToHex(c)}}
+                        onClick={() =>
+                          setOptions((prev) => ({
+                            ...prev,
+                            [norm(OPT_CHAQUETA)]: `${c} / ${chaquetaTalla}`,
+                          }))
+                        }
+                        aria-label={`Color chaqueta ${c}`}
+                        title={c}
+                      />
+                    ))}
+                  </div>
+                </div>
+                <div className="trp-option">
+                  <span className="trp-option-label">Talla chaqueta</span>
+                  <div className="trp-option-values">
+                    {partesChaqueta.tallas.map((t) => (
+                      <button
+                        key={t}
+                        type="button"
+                        className={norm(chaquetaTalla) === norm(t) ? 'is-active' : ''}
+                        onClick={() =>
+                          setOptions((prev) => ({
+                            ...prev,
+                            [norm(OPT_CHAQUETA)]: `${chaquetaColor} / ${t}`,
+                          }))
+                        }
+                      >
+                        {formatSize(t)}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              </>
+            ) : null}
+
+            {optionNames
+              .filter((name) => name !== OPT_CHAQUETA)
+              .map((name) => {
+                const values = Array.from(
+                  new Set(
+                    variants
+                      .map((v) => v.selectedOptions?.find((o) => o.name === name)?.value)
+                      .filter(Boolean),
+                  ),
+                );
+                const esFilaDeColor = norm(name) === 'color camisa';
+                // Solo el combo Botas + Gorra tiene valores de gorra en el mapa: así esto
+                // no cambia ninguna otra ficha, sin depender de dónde venga el handle.
+                const esFilaDeGorras =
+                  norm(name) === 'gorra' && values.some((v) => GORRAS_COMBO[v]?.img);
+                const gorraElegida = esFilaDeGorras ? GORRAS_COMBO[options[norm(name)] || ''] : null;
+                return (
+                  <div key={name} className="trp-option">
+                    <span className="trp-option-label">{name}</span>
+                    <div className={`trp-option-values${esFilaDeColor ? ' trp-option-colors' : ''}${esFilaDeGorras ? ' trp-option-gorras' : ''}`}>
+                      {values.map((value) => {
+                        const foto = esFilaDeGorras ? GORRAS_COMBO[value]?.img : null;
+                        const activo = norm(options[norm(name)]) === norm(value);
+                        if (foto) {
+                          return (
+                            <button
+                              key={value}
+                              type="button"
+                              className={`trp-gorra-btn${activo ? ' is-active' : ''}`}
+                              onClick={() => setOptions((prev) => ({...prev, [norm(name)]: value}))}
+                              aria-label={value}
+                              title={value}
+                            >
+                              <img
+                                src={optimizeImage(foto, 160)}
+                                alt={value}
+                                loading="lazy"
+                                width="56"
+                                height="56"
+                              />
+                              <span>{value.replace(/^Gorra\s+/i, '')}</span>
+                            </button>
+                          );
+                        }
+                        return (
+                          <button
+                            key={value}
+                            type="button"
+                            className={activo ? 'is-active' : ''}
+                            style={esFilaDeColor ? {background: colorToHex(value)} : undefined}
+                            onClick={() => setOptions((prev) => ({...prev, [norm(name)]: value}))}
+                            aria-label={esFilaDeColor ? `Color camisa ${value}` : undefined}
+                            title={esFilaDeColor ? value : undefined}
+                          >
+                            {esFilaDeColor ? null : formatSize(value)}
+                          </button>
+                        );
+                      })}
+                    </div>
+                    {gorraElegida ? (
+                      <p className="trp-gorra-ahorro">
+                        Esta gorra sola vale <s>{'$' + gorraElegida.antes.toLocaleString('es-CO')}</s> — en el
+                        combo te <strong>ahorras {'$' + gorraElegida.ahorro.toLocaleString('es-CO')}</strong>
+                      </p>
+                    ) : null}
+                  </div>
+                );
+              })}
+
             {/* Compra fija bajo el título: precio, unidades y botones a la vista de una */}
             {renderBuyBar()}
 
@@ -1435,141 +1570,6 @@ export default function ProductPage() {
         </div>
 
         <span className="trp-tag">{isOut ? 'Agotado' : 'Edición limitada'}</span>
-
-        {/* ===== Selectores de talla/color (debajo del título) ===== */}
-        {colors.length > 1 && (
-          <div className="trp-option">
-            <span className="trp-option-label">Color</span>
-            <div className="trp-option-values trp-option-colors">
-              {colors.map((c) => (
-                <button
-                  key={c}
-                  type="button"
-                  className={norm(color) === norm(c) ? 'is-active' : ''}
-                  style={{background: colorToHex(c)}}
-                  onClick={() => setColor(c)}
-                  aria-label={`Color ${c}`}
-                  title={c}
-                />
-              ))}
-            </div>
-          </div>
-        )}
-
-        {esComboLaredo ? (
-          <>
-            <div className="trp-option">
-              <span className="trp-option-label">Color chaqueta</span>
-              <div className="trp-option-values trp-option-colors">
-                {partesChaqueta.colores.map((c) => (
-                  <button
-                    key={c}
-                    type="button"
-                    className={norm(chaquetaColor) === norm(c) ? 'is-active' : ''}
-                    style={{background: colorToHex(c)}}
-                    onClick={() =>
-                      setOptions((prev) => ({
-                        ...prev,
-                        [norm(OPT_CHAQUETA)]: `${c} / ${chaquetaTalla}`,
-                      }))
-                    }
-                    aria-label={`Color chaqueta ${c}`}
-                    title={c}
-                  />
-                ))}
-              </div>
-            </div>
-            <div className="trp-option">
-              <span className="trp-option-label">Talla chaqueta</span>
-              <div className="trp-option-values">
-                {partesChaqueta.tallas.map((t) => (
-                  <button
-                    key={t}
-                    type="button"
-                    className={norm(chaquetaTalla) === norm(t) ? 'is-active' : ''}
-                    onClick={() =>
-                      setOptions((prev) => ({
-                        ...prev,
-                        [norm(OPT_CHAQUETA)]: `${chaquetaColor} / ${t}`,
-                      }))
-                    }
-                  >
-                    {formatSize(t)}
-                  </button>
-                ))}
-              </div>
-            </div>
-          </>
-        ) : null}
-
-        {optionNames
-          .filter((name) => name !== OPT_CHAQUETA)
-          .map((name) => {
-            const values = Array.from(
-              new Set(
-                variants
-                  .map((v) => v.selectedOptions?.find((o) => o.name === name)?.value)
-                  .filter(Boolean),
-              ),
-            );
-            const esFilaDeColor = norm(name) === 'color camisa';
-            // Solo el combo Botas + Gorra tiene valores de gorra en el mapa: así esto
-            // no cambia ninguna otra ficha, sin depender de dónde venga el handle.
-            const esFilaDeGorras =
-              norm(name) === 'gorra' && values.some((v) => GORRAS_COMBO[v]?.img);
-            const gorraElegida = esFilaDeGorras ? GORRAS_COMBO[options[norm(name)] || ''] : null;
-            return (
-              <div key={name} className="trp-option">
-                <span className="trp-option-label">{name}</span>
-                <div className={`trp-option-values${esFilaDeColor ? ' trp-option-colors' : ''}${esFilaDeGorras ? ' trp-option-gorras' : ''}`}>
-                  {values.map((value) => {
-                    const foto = esFilaDeGorras ? GORRAS_COMBO[value]?.img : null;
-                    const activo = norm(options[norm(name)]) === norm(value);
-                    if (foto) {
-                      return (
-                        <button
-                          key={value}
-                          type="button"
-                          className={`trp-gorra-btn${activo ? ' is-active' : ''}`}
-                          onClick={() => setOptions((prev) => ({...prev, [norm(name)]: value}))}
-                          aria-label={value}
-                          title={value}
-                        >
-                          <img
-                            src={optimizeImage(foto, 160)}
-                            alt={value}
-                            loading="lazy"
-                            width="56"
-                            height="56"
-                          />
-                          <span>{value.replace(/^Gorra\s+/i, '')}</span>
-                        </button>
-                      );
-                    }
-                    return (
-                      <button
-                        key={value}
-                        type="button"
-                        className={activo ? 'is-active' : ''}
-                        style={esFilaDeColor ? {background: colorToHex(value)} : undefined}
-                        onClick={() => setOptions((prev) => ({...prev, [norm(name)]: value}))}
-                        aria-label={esFilaDeColor ? `Color camisa ${value}` : undefined}
-                        title={esFilaDeColor ? value : undefined}
-                      >
-                        {esFilaDeColor ? null : formatSize(value)}
-                      </button>
-                    );
-                  })}
-                </div>
-                {gorraElegida ? (
-                  <p className="trp-gorra-ahorro">
-                    Esta gorra sola vale <s>{'$' + gorraElegida.antes.toLocaleString('es-CO')}</s> — en el
-                    combo te <strong>ahorras {'$' + gorraElegida.ahorro.toLocaleString('es-CO')}</strong>
-                  </p>
-                ) : null}
-              </div>
-            );
-          })}
 
         {/* ===== Upsell: los combos de la camisa (gorra y chaqueta); las botas para el resto ===== */}
         {/* (el combo camisa + chaqueta Laredo no lleva sugerido, por pedido de Camilo) */}
