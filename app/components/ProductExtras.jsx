@@ -208,7 +208,7 @@ export function SizeGuide() {
 
 /* ===== Acordeón específico por tipo de prenda ===== */
 
-function getAccordionSections(productType, title, description, ficha) {
+function getAccordionSections(productType, title, description, ficha, notaEnvio) {
   const type = detectType(productType, title);
   const sections = [];
 
@@ -275,17 +275,19 @@ function getAccordionSections(productType, title, description, ficha) {
   sections.push({
     key: 'shipping',
     title: 'Envíos, cambios y garantía',
-    body: ficha?.preventa
-      ? `Artículo en preventa: se despacha a partir del ${ficha.preventa}. Envío a todo Colombia. Cambios dentro de los 30 días y garantía por defectos de fabricación.`
-      : 'Envío a todo Colombia (2–5 días hábiles). Cambios fáciles dentro de los 30 días. Garantía de 6 meses por defectos de fabricación.',
+    body: notaEnvio
+      ? notaEnvio
+      : ficha?.preventa
+        ? `Artículo en preventa: se despacha a partir del ${ficha.preventa}. Envío a todo Colombia. Cambios dentro de los 30 días y garantía por defectos de fabricación.`
+        : 'Envío a todo Colombia (2–5 días hábiles). Cambios fáciles dentro de los 30 días. Garantía de 6 meses por defectos de fabricación.',
   });
 
   return sections;
 }
 
-export function ProductAccordion({productType, title, description, ficha}) {
+export function ProductAccordion({productType, title, description, ficha, notaEnvio}) {
   const [open, setOpen] = useState(0);
-  const sections = getAccordionSections(productType, title, description, ficha);
+  const sections = getAccordionSections(productType, title, description, ficha, notaEnvio);
 
   return (
     <div className="trp-accordion">

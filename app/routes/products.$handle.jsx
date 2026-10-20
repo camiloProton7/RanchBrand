@@ -1542,6 +1542,13 @@ export default function ProductPage() {
                 );
               })}
 
+            {/* Preventa: la fecha de entrega se ve antes de decidir la compra. */}
+            {product.handle === 'camisa-outdoor-proteccion-solar-upf-50' ? (
+              <p className="trp-entrega">
+                <span>Preventa</span> Entrega del 10 al 15 de noviembre
+              </p>
+            ) : null}
+
             {/* Compra fija bajo el título: precio, unidades y botones a la vista de una */}
             {renderBuyBar()}
 
@@ -1670,6 +1677,11 @@ export default function ProductPage() {
           title={product.title}
           description={product.description}
           ficha={tablaTallas}
+          notaEnvio={
+            product.handle === 'camisa-outdoor-proteccion-solar-upf-50'
+              ? 'Artículo en preventa: se despacha para entrega entre el 10 y el 15 de noviembre. Envío a todo Colombia. Cambios dentro de los 30 días y garantía por defectos de fabricación.'
+              : undefined
+          }
         />
 
         <div className={`trp-stock ${isOut ? 'is-out' : ''}`}>

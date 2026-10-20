@@ -175,6 +175,34 @@ body:has(.trp-story) {
   color: #8a3428;
 }
 
+/* ---- Aviso de preventa con fecha de entrega ---- */
+.trp-entrega {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 14px 0 2px;
+  padding: 10px 12px;
+  border: 1px solid rgba(179, 74, 42, 0.28);
+  border-radius: 12px;
+  background: rgba(179, 74, 42, 0.06);
+  font-size: 12.5px;
+  font-weight: 500;
+  line-height: 1.4;
+  color: #3b3831;
+}
+
+.trp-entrega span {
+  flex: 0 0 auto;
+  padding: 3px 7px;
+  border-radius: 999px;
+  background: #b34a2a;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #fff;
+}
+
 /* ---- Materiales y cuidados ---- */
 .trp-story-cuidado {
   display: grid;
