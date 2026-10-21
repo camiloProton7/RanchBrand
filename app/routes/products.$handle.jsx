@@ -1544,9 +1544,14 @@ export default function ProductPage() {
 
             {/* Preventa: la fecha de entrega se ve antes de decidir la compra. */}
             {product.handle === 'camisa-outdoor-proteccion-solar-upf-50' ? (
-              <p className="trp-entrega">
-                <span>Preventa</span> Entrega del 10 al 15 de noviembre
-              </p>
+              <div className="trp-entrega">
+                <span>Preventa</span>
+                <strong>
+                  <s>{formatPrice(compare)}</s>
+                  {formatPrice(price)}
+                </strong>
+                <em>Entrega del 10 al 15 de noviembre</em>
+              </div>
             ) : null}
 
             {/* Compra fija bajo el título: precio, unidades y botones a la vista de una */}
