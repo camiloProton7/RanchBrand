@@ -298,6 +298,27 @@ export type CollectionProductsQuery = {
   }>;
 };
 
+export type ProductoQueryVariables = StorefrontAPI.Exact<{
+  handle: StorefrontAPI.Scalars['String']['input'];
+}>;
+
+export type ProductoQuery = {
+  product?: StorefrontAPI.Maybe<
+    Pick<StorefrontAPI.Product, 'id' | 'title' | 'handle'> & {
+      featuredImage?: StorefrontAPI.Maybe<
+        Pick<StorefrontAPI.Image, 'url' | 'altText'>
+      >;
+      images: {nodes: Array<Pick<StorefrontAPI.Image, 'url' | 'altText'>>};
+      priceRange: {
+        minVariantPrice: Pick<StorefrontAPI.MoneyV2, 'amount' | 'currencyCode'>;
+      };
+      compareAtPriceRange: {
+        minVariantPrice: Pick<StorefrontAPI.MoneyV2, 'amount' | 'currencyCode'>;
+      };
+    }
+  >;
+};
+
 export type CollectionQueryVariables = StorefrontAPI.Exact<{
   handle: StorefrontAPI.Scalars['String']['input'];
 }>;
@@ -449,7 +470,10 @@ export type CollectionByHandleQuery = {
             };
             variants: {
               nodes: Array<
-                Pick<StorefrontAPI.ProductVariant, 'id'> & {
+                Pick<
+                  StorefrontAPI.ProductVariant,
+                  'id' | 'availableForSale'
+                > & {
                   selectedOptions: Array<
                     Pick<StorefrontAPI.SelectedOption, 'name' | 'value'>
                   >;
@@ -482,6 +506,27 @@ export type PersonalizableProductQuery = {
   >;
 };
 
+export type ShopPoliciesQueryVariables = StorefrontAPI.Exact<{
+  [key: string]: never;
+}>;
+
+export type ShopPoliciesQuery = {
+  shop: Pick<StorefrontAPI.Shop, 'name'> & {
+    privacyPolicy?: StorefrontAPI.Maybe<
+      Pick<StorefrontAPI.ShopPolicy, 'title' | 'body'>
+    >;
+    refundPolicy?: StorefrontAPI.Maybe<
+      Pick<StorefrontAPI.ShopPolicy, 'title' | 'body'>
+    >;
+    shippingPolicy?: StorefrontAPI.Maybe<
+      Pick<StorefrontAPI.ShopPolicy, 'title' | 'body'>
+    >;
+    termsOfService?: StorefrontAPI.Maybe<
+      Pick<StorefrontAPI.ShopPolicy, 'title' | 'body'>
+    >;
+  };
+};
+
 export type ProductQueryVariables = StorefrontAPI.Exact<{
   handle: StorefrontAPI.Scalars['String']['input'];
 }>;
@@ -490,21 +535,41 @@ export type ProductQuery = {
   product?: StorefrontAPI.Maybe<
     Pick<
       StorefrontAPI.Product,
-      'id' | 'title' | 'handle' | 'description' | 'productType' | 'tags'
+      | 'id'
+      | 'title'
+      | 'handle'
+      | 'vendor'
+      | 'description'
+      | 'productType'
+      | 'tags'
     > & {
+      collections: {nodes: Array<Pick<StorefrontAPI.Collection, 'handle'>>};
+      metafield?: StorefrontAPI.Maybe<Pick<StorefrontAPI.Metafield, 'value'>>;
       featuredImage?: StorefrontAPI.Maybe<
-        Pick<StorefrontAPI.Image, 'url' | 'altText'>
+        Pick<StorefrontAPI.Image, 'url' | 'altText' | 'width' | 'height'>
       >;
-      images: {nodes: Array<Pick<StorefrontAPI.Image, 'url' | 'altText'>>};
+      images: {
+        nodes: Array<
+          Pick<StorefrontAPI.Image, 'url' | 'altText' | 'width' | 'height'>
+        >;
+      };
       priceRange: {
         minVariantPrice: Pick<StorefrontAPI.MoneyV2, 'amount' | 'currencyCode'>;
       };
       compareAtPriceRange: {
         minVariantPrice: Pick<StorefrontAPI.MoneyV2, 'amount'>;
       };
+      options: Array<
+        Pick<StorefrontAPI.ProductOption, 'name'> & {
+          optionValues: Array<Pick<StorefrontAPI.ProductOptionValue, 'name'>>;
+        }
+      >;
       variants: {
         nodes: Array<
-          Pick<StorefrontAPI.ProductVariant, 'id' | 'availableForSale'> & {
+          Pick<
+            StorefrontAPI.ProductVariant,
+            'id' | 'availableForSale' | 'quantityAvailable'
+          > & {
             selectedOptions: Array<
               Pick<StorefrontAPI.SelectedOption, 'name' | 'value'>
             >;
@@ -556,6 +621,27 @@ export type RelatedProductsQuery = {
   }>;
 };
 
+export type ComboBotasQueryVariables = StorefrontAPI.Exact<{
+  handle: StorefrontAPI.Scalars['String']['input'];
+}>;
+
+export type ComboBotasQuery = {
+  product?: StorefrontAPI.Maybe<
+    Pick<StorefrontAPI.Product, 'id' | 'title' | 'handle'> & {
+      featuredImage?: StorefrontAPI.Maybe<
+        Pick<StorefrontAPI.Image, 'url' | 'altText'>
+      >;
+      priceRange: {
+        minVariantPrice: Pick<StorefrontAPI.MoneyV2, 'amount' | 'currencyCode'>;
+      };
+      compareAtPriceRange: {
+        minVariantPrice: Pick<StorefrontAPI.MoneyV2, 'amount'>;
+      };
+      variants: {nodes: Array<Pick<StorefrontAPI.ProductVariant, 'id'>>};
+    }
+  >;
+};
+
 export type ComboProductsQueryVariables = StorefrontAPI.Exact<{
   handle: StorefrontAPI.Scalars['String']['input'];
 }>;
@@ -585,7 +671,11 @@ export type CamisaComboQuery = {
       featuredImage?: StorefrontAPI.Maybe<
         Pick<StorefrontAPI.Image, 'url' | 'altText'>
       >;
-      images: {nodes: Array<Pick<StorefrontAPI.Image, 'url' | 'altText'>>};
+      images: {
+        nodes: Array<
+          Pick<StorefrontAPI.Image, 'url' | 'altText' | 'width' | 'height'>
+        >;
+      };
       variants: {
         nodes: Array<
           Pick<
@@ -644,6 +734,10 @@ interface GeneratedQueryTypes {
     return: CollectionProductsQuery;
     variables: CollectionProductsQueryVariables;
   };
+  '#graphql\n  query Producto($handle: String!) {\n    product(handle: $handle) {\n      id\n      title\n      handle\n      featuredImage { url altText }\n      images(first: 10) { nodes { url altText } }\n      priceRange { minVariantPrice { amount currencyCode } }\n      compareAtPriceRange { minVariantPrice { amount currencyCode } }\n    }\n  }\n': {
+    return: ProductoQuery;
+    variables: ProductoQueryVariables;
+  };
   '#graphql\n  query Collection($handle: String!) {\n    collection(handle: $handle) {\n      title\n      handle\n      products(first: 15) {\n        nodes {\n          id\n          title\n          handle\n          description\n          featuredImage {\n            url\n            altText\n            width\n            height\n          }\n          images(first: 5) {\n            nodes {\n              url\n              altText\n            }\n          }\n          priceRange {\n            minVariantPrice {\n              amount\n              currencyCode\n            }\n          }\n          compareAtPriceRange {\n            minVariantPrice {\n              amount\n              currencyCode\n            }\n          }\n        }\n      }\n    }\n  }\n': {
     return: CollectionQuery;
     variables: CollectionQueryVariables;
@@ -652,7 +746,7 @@ interface GeneratedQueryTypes {
     return: RecommendedQuery;
     variables: RecommendedQueryVariables;
   };
-  '#graphql\n  query CollectionByHandle($handle: String!) {\n    collection(handle: $handle) {\n      id\n      handle\n      title\n      description\n      image {\n        url\n        altText\n      }\n      products(first: 48) {\n        nodes {\n          id\n          title\n          handle\n          featuredImage {\n            url\n            altText\n          }\n          images(first: 2) {\n            nodes {\n              url\n              altText\n            }\n          }\n          priceRange {\n            minVariantPrice { amount currencyCode }\n          }\n          compareAtPriceRange {\n            minVariantPrice { amount currencyCode }\n          }\n          variants(first: 10) {\n            nodes {\n              id\n              selectedOptions { name value }\n              price { amount currencyCode }\n            }\n          }\n        }\n      }\n    }\n  }\n': {
+  '#graphql\n  query CollectionByHandle($handle: String!) {\n    collection(handle: $handle) {\n      id\n      handle\n      title\n      description\n      image {\n        url\n        altText\n      }\n      products(first: 48) {\n        nodes {\n          id\n          title\n          handle\n          featuredImage {\n            url\n            altText\n          }\n          images(first: 2) {\n            nodes {\n              url\n              altText\n            }\n          }\n          priceRange {\n            minVariantPrice { amount currencyCode }\n          }\n          compareAtPriceRange {\n            minVariantPrice { amount currencyCode }\n          }\n          variants(first: 10) {\n            nodes {\n              id\n              availableForSale\n              selectedOptions { name value }\n              price { amount currencyCode }\n            }\n          }\n        }\n      }\n    }\n  }\n': {
     return: CollectionByHandleQuery;
     variables: CollectionByHandleQueryVariables;
   };
@@ -660,7 +754,11 @@ interface GeneratedQueryTypes {
     return: PersonalizableProductQuery;
     variables: PersonalizableProductQueryVariables;
   };
-  '#graphql\n  query Product($handle: String!) {\n    product(handle: $handle) {\n      id\n      title\n      handle\n      description\n      productType\n      tags\n      featuredImage {\n        url\n        altText\n      }\n      images(first: 50) {\n        nodes {\n          url\n          altText\n        }\n      }\n      priceRange { minVariantPrice { amount currencyCode } }\n      compareAtPriceRange { minVariantPrice { amount } }\n      variants(first: 50) {\n        nodes {\n          id\n          availableForSale\n          selectedOptions { name value }\n          price { amount currencyCode }\n          image { url altText }\n        }\n      }\n    }\n  }\n': {
+  '#graphql\n  query ShopPolicies {\n    shop {\n      name\n      privacyPolicy {\n        title\n        body\n      }\n      refundPolicy {\n        title\n        body\n      }\n      shippingPolicy {\n        title\n        body\n      }\n      termsOfService {\n        title\n        body\n      }\n    }\n  }\n': {
+    return: ShopPoliciesQuery;
+    variables: ShopPoliciesQueryVariables;
+  };
+  '#graphql\n  query Product($handle: String!) {\n    product(handle: $handle) {\n      id\n      title\n      handle\n      vendor\n      description\n      productType\n      tags\n      collections(first: 8) { nodes { handle } }\n      metafield(namespace: "custom", key: "tabla_medidas") { value }\n      featuredImage {\n        url\n        altText\n        width\n        height\n      }\n      images(first: 50) {\n        nodes {\n          url\n          altText\n          width\n          height\n        }\n      }\n      priceRange { minVariantPrice { amount currencyCode } }\n      compareAtPriceRange { minVariantPrice { amount } }\n      options { name optionValues { name } }\n      variants(first: 250) {\n        nodes {\n          id\n          availableForSale\n          quantityAvailable\n          selectedOptions { name value }\n          price { amount currencyCode }\n          image { url altText }\n        }\n      }\n    }\n  }\n': {
     return: ProductQuery;
     variables: ProductQueryVariables;
   };
@@ -668,11 +766,15 @@ interface GeneratedQueryTypes {
     return: RelatedProductsQuery;
     variables: RelatedProductsQueryVariables;
   };
+  '#graphql\n  query ComboBotas($handle: String!) {\n    product(handle: $handle) {\n      id\n      title\n      handle\n      featuredImage {\n        url\n        altText\n      }\n      priceRange { minVariantPrice { amount currencyCode } }\n      compareAtPriceRange { minVariantPrice { amount } }\n      variants(first: 1) {\n        nodes {\n          id\n        }\n      }\n    }\n  }\n': {
+    return: ComboBotasQuery;
+    variables: ComboBotasQueryVariables;
+  };
   '#graphql\n  query ComboProducts($handle: String!) {\n    collection(handle: $handle) {\n      products(first: 50) {\n        nodes {\n          id\n          title\n          handle\n          featuredImage {\n            url\n            altText\n          }\n          variants(first: 1) {\n            nodes {\n              id\n            }\n          }\n        }\n      }\n    }\n  }\n': {
     return: ComboProductsQuery;
     variables: ComboProductsQueryVariables;
   };
-  '#graphql\n  query CamisaCombo($handle: String!) {\n    product(handle: $handle) {\n      id\n      title\n      handle\n      featuredImage {\n        url\n        altText\n      }\n      images(first: 50) {\n        nodes {\n          url\n          altText\n        }\n      }\n      variants(first: 50) {\n        nodes {\n          id\n          title\n          availableForSale\n          selectedOptions { name value }\n          image {\n            url\n            altText\n          }\n        }\n      }\n    }\n  }\n': {
+  '#graphql\n  query CamisaCombo($handle: String!) {\n    product(handle: $handle) {\n      id\n      title\n      handle\n      featuredImage {\n        url\n        altText\n      }\n      images(first: 50) {\n        nodes {\n          url\n          altText\n          width\n          height\n        }\n      }\n      variants(first: 50) {\n        nodes {\n          id\n          title\n          availableForSale\n          selectedOptions { name value }\n          image {\n            url\n            altText\n          }\n        }\n      }\n    }\n  }\n': {
     return: CamisaComboQuery;
     variables: CamisaComboQueryVariables;
   };

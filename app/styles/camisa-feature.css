@@ -54,6 +54,37 @@
   max-width: 420px;
 }
 
+.tr-camisa-feature-price {
+  align-items: baseline;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 9px;
+  margin: 0;
+}
+
+.tr-camisa-feature-price s {
+  color: #8a8274;
+  font-size: 16px;
+}
+
+.tr-camisa-feature-price strong {
+  color: #b34a2a;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 26px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.tr-camisa-feature-price em {
+  color: #5a554a;
+  flex-basis: 100%;
+  font-size: 11px;
+  font-style: normal;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  margin-top: 2px;
+}
+
 .tr-camisa-feature-cta {
   align-items: center;
   align-self: flex-start;

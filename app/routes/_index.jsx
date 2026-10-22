@@ -88,14 +88,43 @@ function mapReview(raw) {
 
 export async function loader({context}) {
   const {storefront} = context;
-  const [gorras, chaquetas, camisetas, hotRanch, reviews] = await Promise.all([
+  const [gorras, chaquetas, camisetas, hotRanch, reviews, camisaNueva] = await Promise.all([
     fetchCollection(storefront, 'gorras-truckers'),
     fetchCollection(storefront, 'chaquetas'),
     fetchCollection(storefront, 'camisetas'),
     fetchCollection(storefront, 'hot-ranch'),
     fetchTrustooReviews(),
+    fetchProduct(storefront, CAMISA_NUEVA),
   ]);
-  return {gorras, chaquetas, camisetas, hotRanch, reviews};
+  return {gorras, chaquetas, camisetas, hotRanch, reviews, camisaNueva};
+}
+
+// La camisa nueva se pide por handle, no por colección: así el destacado del
+// home no depende de que esté primera en la lista ni del orden de la colección.
+const CAMISA_NUEVA = 'camisa-outdoor-proteccion-solar-upf-50';
+
+const PRODUCT_QUERY = `#graphql
+  query Producto($handle: String!) {
+    product(handle: $handle) {
+      id
+      title
+      handle
+      featuredImage { url altText }
+      images(first: 10) { nodes { url altText } }
+      priceRange { minVariantPrice { amount currencyCode } }
+      compareAtPriceRange { minVariantPrice { amount currencyCode } }
+    }
+  }
+`;
+
+async function fetchProduct(storefront, handle) {
+  try {
+    const data = await storefront.query(PRODUCT_QUERY, {variables: {handle}});
+    return data?.product || null;
+  } catch (error) {
+    console.error(`Producto ${handle} falló`, error);
+    return null;
+  }
 }
 
 async function fetchCollection(storefront, handle) {
@@ -125,13 +154,13 @@ const clamp01 = (v) => Math.min(1, Math.max(0, v));
 
 export default function Home() {
   const rootData = useRouteLoaderData('root');
-  const {gorras, chaquetas, camisetas, hotRanch, reviews} = useLoaderData();
+  const {gorras, chaquetas, camisetas, hotRanch, reviews, camisaNueva} = useLoaderData();
   // La camisa destacada toma su foto del producto real de Shopify. Antes la
   // tenía escrita a mano en el componente y quedó rota cuando borraron el
   // archivo del CDN: la sección se veía sin imagen.
-  const camisaDestacada = (camisetas ?? []).find(
-    (p) => p.handle === 'camisa-outdoor-the-ranch',
-  );
+  const camisaDestacada =
+    camisaNueva ||
+    (camisetas ?? []).find((p) => p.handle === 'camisa-outdoor-proteccion-solar-upf-50');
   const logoSrc = rootData?.header?.shop?.brand?.logo?.image?.url;
 
   return (
