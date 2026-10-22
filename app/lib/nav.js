@@ -20,17 +20,7 @@
  */
 export const NAV_ITEMS = [
   {label: 'Gorras', href: '/collections/gorras'},
-  {
-    label: 'Camisas',
-    href: '/collections/camisetas',
-    children: [
-      {label: 'Camisas y camisetas', href: '/collections/camisetas'},
-      {
-        label: 'Camisa Outdoor UPF 50+',
-        href: '/products/camisa-outdoor-proteccion-solar-upf-50',
-      },
-    ],
-  },
+  {label: 'Camisas', href: '/collections/camisetas'},
   {
     label: 'Chaquetas',
     href: '/collections/chaquetas',
