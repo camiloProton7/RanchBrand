@@ -1554,6 +1554,18 @@ export default function ProductPage() {
               </div>
             ) : null}
 
+            {/* Windsor: la fecha de entrega va destacada bajo el precio, no escondida en la descripción. */}
+            {product.handle === 'chaqueta-windsor' ? (
+              <div className="trp-entrega trp-entrega--fuerte">
+                <span aria-hidden="true" className="trp-entrega-icono">
+                  🚚
+                </span>
+                <span className="trp-entrega-kicker">Entrega</span>
+                <strong>Jueves 12 de noviembre</strong>
+                <em>Tu chaqueta llega ese día · Envío a todo Colombia</em>
+              </div>
+            ) : null}
+
             {/* Compra fija bajo el título: precio, unidades y botones a la vista de una */}
             {renderBuyBar()}
 
