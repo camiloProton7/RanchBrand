@@ -1084,7 +1084,9 @@
   .trp {
     column-gap: 44px;
     display: grid;
-    grid-template-columns: 1.1fr 0.9fr;
+    /* minmax(0, …) para que la galería (muchas fotos) no comprima la columna de compra:
+       con fr puro, el min-content de los thumbnails se comía la ficha. */
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
     grid-template-rows: auto;
     margin: 0 auto;
     width: 100%;
@@ -1097,6 +1099,7 @@
     flex-direction: column;
     gap: 20px;
     grid-column: 1;
+    min-width: 0;
   }
 
   .trp-side {
