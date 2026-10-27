@@ -27,6 +27,8 @@ const SEARCH_QUERY = `#graphql
           title
           handle
           availableForSale
+          tags
+          productType
           featuredImage { url }
           priceRange { minVariantPrice { amount currencyCode } }
           compareAtPriceRange { minVariantPrice { amount } }
@@ -44,6 +46,8 @@ const SUGGESTIONS_QUERY = `#graphql
         title
         handle
         availableForSale
+        tags
+        productType
         featuredImage { url }
         priceRange { minVariantPrice { amount } }
         compareAtPriceRange { minVariantPrice { amount } }
@@ -70,16 +74,19 @@ function limpiar(texto) {
   return texto.replace(/[*:()"'\\]/g, ' ').replace(/\s+/g, ' ').trim();
 }
 
-function puntaje(titulo, termino) {
+function puntaje(titulo, termino, extras = '') {
   const t = SIN_TILDE(titulo);
+  const x = SIN_TILDE(extras);
   const q = SIN_TILDE(termino);
   if (!q) return 0;
   if (t === q) return 100;
   if (t.startsWith(q)) return 80;
   if (t.includes(q)) return 60;
   const palabras = q.split(' ').filter((w) => w.length > 2);
-  const encontradas = palabras.filter((w) => t.includes(w)).length;
-  return encontradas * 15;
+  const enTitulo = palabras.filter((w) => t.includes(w)).length;
+  const enExtras = palabras.filter((w) => x.includes(w)).length;
+  if (enTitulo || enExtras) return enTitulo * 25 + enExtras * 10;
+  return 0;
 }
 
 export async function loader({request, context}) {
@@ -135,10 +142,18 @@ export async function loader({request, context}) {
   }
 
   // Orden: coincidencia en el título primero, luego disponibles antes que agotados.
-  const ordenados = productos
-    .map((p, i) => ({p, i, s: puntaje(p.title, q) + (p.availableForSale ? 0 : -1)}))
-    .sort((a, b) => b.s - a.s || a.i - b.i)
-    .map(({p}) => p);
+  const conPuntaje = productos.map((p, i) => ({
+    p,
+    i,
+    s: puntaje(p.title, q, `${(p.tags || []).join(' ')} ${p.productType || ''}`) +
+      (p.availableForSale ? 0 : -1),
+  }));
+
+  // Si nada coincide de verdad (Shopify a veces devuelve ruido), se trata como vacío.
+  const hayCoincidencia = conPuntaje.some(({s}) => s > 0);
+  const ordenados = hayCoincidencia
+    ? conPuntaje.sort((a, b) => b.s - a.s || a.i - b.i).map(({p}) => p)
+    : [];
 
   // Sugerencias solo cuando no hay resultados.
   let sugerencias = [];
