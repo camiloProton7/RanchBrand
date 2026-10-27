@@ -697,10 +697,11 @@ export type CamisaComboQuery = {
 
 export type SearchProductsQueryVariables = StorefrontAPI.Exact<{
   query: StorefrontAPI.Scalars['String']['input'];
+  first: StorefrontAPI.Scalars['Int']['input'];
 }>;
 
 export type SearchProductsQuery = {
-  search: {
+  search: Pick<StorefrontAPI.SearchResultItemConnection, 'totalCount'> & {
     nodes: Array<
       Pick<
         StorefrontAPI.Product,
@@ -713,6 +714,27 @@ export type SearchProductsQuery = {
             'amount' | 'currencyCode'
           >;
         };
+        compareAtPriceRange: {
+          minVariantPrice: Pick<StorefrontAPI.MoneyV2, 'amount'>;
+        };
+      }
+    >;
+  };
+};
+
+export type BestSellersQueryVariables = StorefrontAPI.Exact<{
+  first: StorefrontAPI.Scalars['Int']['input'];
+}>;
+
+export type BestSellersQuery = {
+  products: {
+    nodes: Array<
+      Pick<
+        StorefrontAPI.Product,
+        'id' | 'title' | 'handle' | 'availableForSale'
+      > & {
+        featuredImage?: StorefrontAPI.Maybe<Pick<StorefrontAPI.Image, 'url'>>;
+        priceRange: {minVariantPrice: Pick<StorefrontAPI.MoneyV2, 'amount'>};
         compareAtPriceRange: {
           minVariantPrice: Pick<StorefrontAPI.MoneyV2, 'amount'>;
         };
@@ -778,9 +800,13 @@ interface GeneratedQueryTypes {
     return: CamisaComboQuery;
     variables: CamisaComboQueryVariables;
   };
-  '#graphql\n  query SearchProducts($query: String!) {\n    search(first: 24, query: $query, types: PRODUCT) {\n      nodes {\n        ... on Product {\n          id\n          title\n          handle\n          availableForSale\n          featuredImage {\n            url\n          }\n          priceRange { minVariantPrice { amount currencyCode } }\n          compareAtPriceRange { minVariantPrice { amount } }\n        }\n      }\n    }\n  }\n': {
+  '#graphql\n  query SearchProducts($query: String!, $first: Int!) {\n    search(\n      first: $first\n      query: $query\n      types: PRODUCT\n      sortKey: RELEVANCE\n      unavailableProducts: LAST\n    ) {\n      totalCount\n      nodes {\n        ... on Product {\n          id\n          title\n          handle\n          availableForSale\n          featuredImage { url }\n          priceRange { minVariantPrice { amount currencyCode } }\n          compareAtPriceRange { minVariantPrice { amount } }\n        }\n      }\n    }\n  }\n': {
     return: SearchProductsQuery;
     variables: SearchProductsQueryVariables;
+  };
+  '#graphql\n  query BestSellers($first: Int!) {\n    products(first: $first, sortKey: BEST_SELLING) {\n      nodes {\n        id\n        title\n        handle\n        availableForSale\n        featuredImage { url }\n        priceRange { minVariantPrice { amount } }\n        compareAtPriceRange { minVariantPrice { amount } }\n      }\n    }\n  }\n': {
+    return: BestSellersQuery;
+    variables: BestSellersQueryVariables;
   };
 }
 
