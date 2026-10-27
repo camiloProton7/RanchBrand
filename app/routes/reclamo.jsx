@@ -10,8 +10,35 @@ export const meta = () => [
   {name: 'robots', content: 'noindex, nofollow'},
 ];
 
-// Mismo origen: la tienda reenvía a la función de Supabase (ver api.reclamo.jsx).
-const ENDPOINT = '/api/reclamo';
+// El envío va a la action de esta misma ruta (mismo origen) y la tienda lo reenvía
+// a la función `reclamo` de Supabase. Así no depende de CORS ni de /api/*.
+const ENDPOINT = '/reclamo';
+const SUPABASE_RECLAMO = 'https://rattwfjkxgqvxmxlybcz.supabase.co/functions/v1/reclamo';
+
+/** POST /reclamo → crea el ticket con radicado. */
+export async function action({request}) {
+  if (request.method !== 'POST') {
+    return Response.json({error: 'Método no permitido'}, {status: 405});
+  }
+  let body;
+  try {
+    body = await request.json();
+  } catch {
+    return Response.json({error: 'No pudimos leer los datos.'}, {status: 400});
+  }
+  try {
+    const r = await fetch(SUPABASE_RECLAMO, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(body),
+    });
+    const data = await r.json().catch(() => ({}));
+    return Response.json(data, {status: r.status});
+  } catch (error) {
+    console.error('reclamo action', error);
+    return Response.json({error: 'No pudimos enviar tu caso. Intenta otra vez.'}, {status: 502});
+  }
+}
 
 const S = {
   wrap: {maxWidth: 620, margin: '0 auto', padding: '32px 20px 64px'},
@@ -170,9 +197,6 @@ export default function Reclamo() {
         <button type="submit" disabled={estado === 'enviando'} style={{...S.btn, opacity: estado === 'enviando' ? 0.75 : 1}}>
           {estado === 'enviando' ? 'Enviando…' : 'Enviar mi caso'}
         </button>
-        <p style={{fontSize: 12, color: '#8a8175', margin: 0, textAlign: 'center', lineHeight: 1.5}}>
-          Te respondemos por WhatsApp. Si es urgente, escríbenos al 350 271 2645.
-        </p>
       </form>
     </div>
   );
