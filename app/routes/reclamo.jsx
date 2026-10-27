@@ -10,8 +10,8 @@ export const meta = () => [
   {name: 'robots', content: 'noindex, nofollow'},
 ];
 
-// El envío va a la action de esta misma ruta (mismo origen) y la tienda lo reenvía
-// a la función `reclamo` de Supabase. Así no depende de CORS ni de /api/*.
+// El envío pasa por el puente /api/reclamo de la tienda (mismo origen).
+// Si ese puente no responde, va directo a la función de Supabase.
 const ENDPOINT = '/api/reclamo';
 const SUPABASE_RECLAMO = 'https://rattwfjkxgqvxmxlybcz.supabase.co/functions/v1/reclamo';
 
@@ -97,11 +97,14 @@ export default function Reclamo() {
     setError('');
     setEstado('enviando');
     try {
-      const r = await fetch(ENDPOINT, {
+      const payload = {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(f),
-      });
+      };
+      let r = await fetch(ENDPOINT, payload);
+      // Si el puente de la tienda aún no está publicado, se va directo a Supabase.
+      if (r.status === 404) r = await fetch(SUPABASE_RECLAMO, payload);
       const data = await r.json();
       if (!r.ok) {
         setError(data.error || 'Algo salió mal. Intenta otra vez.');
