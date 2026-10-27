@@ -12,7 +12,7 @@ export const meta = () => [
 
 // El envío va a la action de esta misma ruta (mismo origen) y la tienda lo reenvía
 // a la función `reclamo` de Supabase. Así no depende de CORS ni de /api/*.
-const ENDPOINT = '/reclamo';
+const ENDPOINT = '/api/reclamo';
 const SUPABASE_RECLAMO = 'https://rattwfjkxgqvxmxlybcz.supabase.co/functions/v1/reclamo';
 
 /** POST /reclamo → crea el ticket con radicado. */
