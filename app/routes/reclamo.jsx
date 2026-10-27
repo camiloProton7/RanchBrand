@@ -10,7 +10,8 @@ export const meta = () => [
   {name: 'robots', content: 'noindex, nofollow'},
 ];
 
-const ENDPOINT = 'https://rattwfjkxgqvxmxlybcz.supabase.co/functions/v1/reclamo';
+// Mismo origen: la tienda reenvía a la función de Supabase (ver api.reclamo.jsx).
+const ENDPOINT = '/api/reclamo';
 
 const S = {
   wrap: {maxWidth: 620, margin: '0 auto', padding: '32px 20px 64px'},
