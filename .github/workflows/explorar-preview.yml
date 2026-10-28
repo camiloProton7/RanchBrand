@@ -25,3 +25,24 @@ jobs:
         run: npx shopify hydrogen deploy --preview
         env:
           SHOPIFY_HYDROGEN_DEPLOYMENT_TOKEN: ${{ secrets.OXYGEN_DEPLOYMENT_TOKEN_1000068751 }}
+      - name: Print preview URL from Oxygen deployment record
+        run: |
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs';
+          const path = 'h2_deploy_log.json';
+          if (!fs.existsSync(path)) {console.log('Oxygen deployment record not found');process.exit(0);}
+          const data = JSON.parse(fs.readFileSync(path, 'utf8'));
+          const urls = new Set();
+          function walk(value) {
+            if (typeof value === 'string') {
+              for (const match of value.matchAll(/https:\/\/[^\s"'<>]+/g)) {
+                const url = match[0].replace(/[),;]+$/, '');
+                if (/\.oxygen\.shopify\.dev|\.myshopify\.com|\.hydrogen\.shop/i.test(url)) urls.add(url);
+              }
+            } else if (Array.isArray(value)) value.forEach(walk);
+            else if (value && typeof value === 'object') Object.values(value).forEach(walk);
+          }
+          walk(data);
+          for (const url of urls) console.log('OXYGEN_PREVIEW_URL=' + url);
+          if (!urls.size) console.log('No preview URL identified in Oxygen deployment metadata');
+          NODE
