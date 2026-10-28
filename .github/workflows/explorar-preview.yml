@@ -25,7 +25,7 @@ jobs:
         run: npx shopify hydrogen deploy --preview
         env:
           SHOPIFY_HYDROGEN_DEPLOYMENT_TOKEN: ${{ secrets.OXYGEN_DEPLOYMENT_TOKEN_1000068751 }}
-      - name: Print preview URL from Oxygen deployment record
+      - name: Print public preview origin without authentication parameters
         run: |
           node --input-type=module <<'NODE'
           import fs from 'node:fs';
@@ -36,13 +36,17 @@ jobs:
           function walk(value) {
             if (typeof value === 'string') {
               for (const match of value.matchAll(/https:\/\/[^\s"'<>]+/g)) {
-                const url = match[0].replace(/[),;]+$/, '');
-                if (/\.oxygen\.shopify\.dev|\.myshopify\.com|\.hydrogen\.shop/i.test(url)) urls.add(url);
+                try {
+                  const url = new URL(match[0].replace(/[),;]+$/, ''));
+                  if (url.hostname.endsWith('.myshopify.dev') || url.hostname.endsWith('.oxygen.shopify.dev')) {
+                    urls.add(url.origin + '/explorar');
+                  }
+                } catch {}
               }
             } else if (Array.isArray(value)) value.forEach(walk);
             else if (value && typeof value === 'object') Object.values(value).forEach(walk);
           }
           walk(data);
           for (const url of urls) console.log('OXYGEN_PREVIEW_URL=' + url);
-          if (!urls.size) console.log('No preview URL identified in Oxygen deployment metadata');
+          if (!urls.size) console.log('No public preview origin found in deployment metadata');
           NODE
