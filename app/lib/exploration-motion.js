@@ -32,7 +32,7 @@ export function mountExploration(root, navigate) {
     rider.classList.remove('is-walking');
   }
   function cancel() {
-    pause(); selected = null; route.setAttribute('d', ''); skip.hidden = true;
+    pause(); selected = null; route.setAttribute('d', ''); skip.hidden = true; rider.style.width = '';
     links.forEach(link => link.classList.remove('is-active'));
     status.textContent = 'Arrastra el caballo o toca una colección';
   }
@@ -78,17 +78,20 @@ export function mountExploration(root, navigate) {
     skip.href = link.href; skip.hidden = false;
     status.textContent = 'Rumbo a '+link.textContent.trim()+'…';
     const origin = {...position}, end = targetOf(link);
-    const control = {x:(origin.x+end.x)/2-5,y:(origin.y+end.y)/2-5};
+    const control = {x:(origin.x+end.x)/2-6,y:(origin.y+end.y)/2-5};
     route.setAttribute('d',`M${origin.x} ${origin.y} Q${control.x} ${control.y} ${end.x} ${end.y}`);
-    const length = route.getTotalLength();
-    route.style.strokeDasharray = length; route.style.strokeDashoffset = length;
+    route.style.strokeDasharray = 'none'; route.style.strokeDashoffset = '0';
+    const total = distance(origin, end);
+    const noseClearance = Math.min(80, bounds().width * .18 * 205 / 71 * .44);
+    const arrivalAt = total > noseClearance ? (total - noseClearance) / total : 0;
+    if (arrivalAt < .05) {visit(link); return;}
+    rider.style.width = '18%';
     const started = performance.now(), duration = Math.min(1150,Math.max(550,distance(origin,end)*3));
     function tick(now) {
       if (destroyed || dragging || document.hidden) {pause(); return;}
-      const t = Math.min(1,(now-started)/duration), u = t*t*(3-2*t);
+      const t = Math.min(1,(now-started)/duration), u = t*t*(3-2*t)*arrivalAt;
       move({x:(1-u)**2*origin.x+2*(1-u)*u*control.x+u*u*end.x,
             y:(1-u)**2*origin.y+2*(1-u)*u*control.y+u*u*end.y});
-      route.style.strokeDashoffset = length*(1-u);
       if (t < 1) frame = requestAnimationFrame(tick);
       else {
         rider.classList.remove('is-walking');
