@@ -13,6 +13,7 @@ export const links = () => [
 const PACK = 500000;
 const CUANTAS = 5;
 const ENDPOINT = 'https://the-ranch-premium.vercel.app/api/pack';
+const STOCK_ENDPOINT = 'https://the-ranch-premium.vercel.app/api/stock';
 
 const QUERY = `#graphql
   query GorrasCombo {
@@ -62,6 +63,22 @@ export async function loader({context}) {
   // Stock real por variante (el storefront puede decir "disponible" con la política de venta sin stock).
   const token = context?.env?.SHOPIFY_ADMIN_TOKEN;
   let stock = {};
+
+  if (!token && base.length) {
+    // En producción no hay token de administración: el stock real lo entrega el endpoint del pack.
+    try {
+      const r = await fetch(STOCK_ENDPOINT, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({vids: base.map((g) => g.vid)}),
+      });
+      const j = await r.json();
+      stock = j?.stock || {};
+    } catch (e) {
+      stock = {};
+    }
+  }
+
   if (token && base.length) {
     try {
       const ids = base.map((g) => `gid://shopify/ProductVariant/${g.vid}`);
