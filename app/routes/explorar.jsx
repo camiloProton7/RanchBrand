@@ -78,7 +78,9 @@ export default function Explorar() {
     function frame(now) {
       const progress = duration === 0 ? 1 : Math.min(1, (now - started) / duration);
       const eased = progress * progress * (3 - 2 * progress);
-      move(origin.x + (point.x - origin.x) * eased, origin.y + (point.y - origin.y) * eased);
+      const control={x:(origin.x+point.x)/2-4,y:(origin.y+point.y)/2-7};
+      move((1-eased)*(1-eased)*origin.x + 2*(1-eased)*eased*control.x + eased*eased*point.x,
+           (1-eased)*(1-eased)*origin.y + 2*(1-eased)*eased*control.y + eased*eased*point.y);
       if (progress < 1) {
         animationRef.current = requestAnimationFrame(frame);
       } else {
@@ -118,7 +120,31 @@ export default function Explorar() {
       </section>
       <div className="ranch-explore__board" ref={boardRef} aria-label="Mapa interactivo de colecciones">
         <svg className="ranch-explore__terrain" aria-hidden="true" viewBox="0 0 100 100" preserveAspectRatio="none">
-          <path d="M-8 18 C18 -3 29 47 52 15 S83 12 108 -2 M-9 27 C18 6 29 56 52 24 S83 21 108 7 M-9 36 C18 15 29 65 52 33 S83 30 108 16 M-9 45 C18 24 29 74 52 42 S83 39 108 25 M-9 54 C18 33 29 83 52 51 S83 48 108 34 M-9 63 C18 42 29 92 52 60 S83 57 108 43 M-9 72 C18 51 29 101 52 69 S83 66 108 52 M-9 81 C18 60 29 110 52 78 S83 75 108 61" />
+          {Array.from({length:22}, (_, j) => {
+            const x=4+j*4.6;
+            const path=Array.from({length:63}, (_,i)=>{
+              const y=-12+i*2;
+              const x1=x+Math.sin(y*.09+j*.38)*5.2+Math.sin(y*.21+j*.17)*1.4;
+              return (i===0?'M':'L')+x1.toFixed(1)+' '+y;
+            }).join(' ');
+            return <path key={j} d={path}/>;
+          })}
+          <g className="ranch-explore__mountain" transform="translate(12 14) scale(.65)">
+            <path d="M-26 19L-13-6 1-20 10-3 18-9 30 18Z" fill="#e7e6df" stroke="#cccac1" strokeWidth=".8"/>
+            <path d="M1-20L-4-5 2-9 8 1M-13-6L-6 2M18-9L13 1" fill="none" stroke="#bfbdb4" strokeWidth=".7"/>
+          </g>
+          <g className="ranch-explore__mountain" transform="translate(88 13) scale(.7)">
+            <path d="M-26 19L-13-6 1-20 10-3 18-9 30 18Z" fill="#e8e7e1" stroke="#cccac1" strokeWidth=".8"/>
+            <path d="M1-20L-4-5 2-9 8 1M-13-6L-6 2M18-9L13 1" fill="none" stroke="#bfbdb4" strokeWidth=".7"/>
+          </g>
+          <g className="ranch-explore__mountain" transform="translate(10 91) scale(.8)">
+            <path d="M-26 19L-13-6 1-20 10-3 18-9 30 18Z" fill="#e7e6df" stroke="#cccac1" strokeWidth=".8"/>
+            <path d="M1-20L-4-5 2-9 8 1M-13-6L-6 2M18-9L13 1" fill="none" stroke="#bfbdb4" strokeWidth=".7"/>
+          </g>
+          <g className="ranch-explore__mountain" transform="translate(93 84) scale(.9)">
+            <path d="M-26 19L-13-6 1-20 10-3 18-9 30 18Z" fill="#e7e6df" stroke="#cccac1" strokeWidth=".8"/>
+            <path d="M1-20L-4-5 2-9 8 1M-13-6L-6 2M18-9L13 1" fill="none" stroke="#bfbdb4" strokeWidth=".7"/>
+          </g>
         </svg>
         <svg className="ranch-explore__roads" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
           {DESTINATIONS.map((item) => (
@@ -126,7 +152,7 @@ export default function Explorar() {
           ))}
         </svg>
         {prints.map((print) => (
-          <span key={print.id} className="ranch-explore__print" style={{left: `${print.x}%`, top: `${print.y}%`}} aria-hidden="true">⌁</span>
+          <span key={print.id} className="ranch-explore__print" style={{left: `${print.x}%`, top: `${print.y}%`}} aria-hidden="true">♞</span>
         ))}
         {DESTINATIONS.map((item) => (
           <button
@@ -137,7 +163,7 @@ export default function Explorar() {
             type="button"
             aria-label={`Ir a la colección ${item.name}`}
           >
-            <span className="ranch-explore__marker" aria-hidden="true">✦</span>
+            <span className="ranch-explore__marker" aria-hidden="true">{item.name==='Gorras'?'♧':item.name==='Botas'?'♙':item.name==='Chaquetas'?'♜':item.name==='Camisas'?'♧':'✧'}</span>
             <span>{item.name}</span>
           </button>
         ))}
@@ -151,18 +177,22 @@ export default function Explorar() {
           onPointerUp={handlePointerEnd}
           onPointerCancel={handlePointerEnd}
         >
-          <svg viewBox="0 0 100 140" width="76" height="106" aria-hidden="true">
-            <ellipse cx="54" cy="89" rx="35" ry="44" fill="#484135" opacity=".10" />
-            <path d="M34 67 L19 105 M66 67 L81 105 M36 28 L20 11 M64 28 L80 11" stroke="#54392b" strokeWidth="10" strokeLinecap="round" />
-            <ellipse cx="50" cy="69" rx="30" ry="45" fill="#805237" stroke="#67432e" strokeWidth="3" />
-            <path d="M41 29 L38 4 Q50 -4 62 4 L59 29" fill="#8f6244" stroke="#67432e" strokeWidth="3" />
-            <path d="M50 111 Q57 127 47 138" stroke="#4b352a" strokeWidth="6" fill="none" strokeLinecap="round" />
-            <ellipse cx="50" cy="74" rx="23" ry="22" fill="#332f2b" />
-            <path d="M30 73 Q50 82 70 73" stroke="#bcab8b" strokeWidth="5" fill="none" />
-            <ellipse cx="50" cy="70" rx="21" ry="15" fill="#b8a484" />
-            <ellipse cx="50" cy="67" rx="12" ry="13" fill="#71604b" />
-            <ellipse cx="50" cy="62" rx="26" ry="11" fill="#d3c3a7" stroke="#a8906d" strokeWidth="2" />
-            <ellipse cx="50" cy="58" rx="12" ry="8" fill="#ab946f" />
+          <svg viewBox="0 0 100 140" width="86" height="122" aria-hidden="true">
+            <defs><linearGradient id="horse-body" x1="0" x2="1"><stop stopColor="#573822"/><stop offset=".35" stopColor="#b17b4b"/><stop offset=".7" stopColor="#99623c"/><stop offset="1" stopColor="#573822"/></linearGradient><radialGradient id="hat-grad"><stop stopColor="#d0bd9c"/><stop offset=".85" stopColor="#b59d78"/><stop offset="1" stopColor="#817054"/></radialGradient></defs>
+            <ellipse cx="58" cy="90" rx="34" ry="46" fill="#272119" opacity=".10"/>
+            <path d="M31 53 L15 68 12 95 M69 53 L86 69 89 95 M34 97 L23 119 M65 97 L77 119" stroke="#64442c" strokeWidth="11" strokeLinecap="round" fill="none"/>
+            <ellipse cx="50" cy="75" rx="31" ry="46" fill="url(#horse-body)" stroke="#5c3d28" strokeWidth="2"/>
+            <path d="M41 39 L37 12 40 2 46 9 52 3 60 10 65 3 67 17 59 39" fill="url(#horse-body)" stroke="#5b3b28" strokeWidth="2"/>
+            <path d="M41 7l-2 11m24-11 2 11" stroke="#4e3224" strokeWidth="4"/>
+            <path d="M50 116 Q57 128 51 140" stroke="#473225" strokeWidth="8" fill="none" strokeLinecap="round"/>
+            <ellipse cx="50" cy="79" rx="26" ry="28" fill="#2c302e"/>
+            <path d="M28 77Q50 88 72 77" fill="none" stroke="#c4b59b" strokeWidth="5"/>
+            <path d="M30 66L20 77m50-11 10 11" stroke="#28313a" strokeWidth="9" strokeLinecap="round"/>
+            <ellipse cx="50" cy="74" rx="23" ry="18" fill="#c2b096"/>
+            <ellipse cx="50" cy="70" rx="14" ry="17" fill="#665940"/>
+            <ellipse cx="50" cy="66" rx="29" ry="13" fill="url(#hat-grad)" stroke="#8b795b" strokeWidth="2"/>
+            <ellipse cx="50" cy="61" rx="13" ry="11" fill="#a58d69"/>
+            <path d="M38 66Q50 71 62 66" stroke="#62543f" strokeWidth="2" fill="none"/>
           </svg>
         </div>
         <div className="ranch-explore__hint" role="status">
@@ -180,26 +210,30 @@ export default function Explorar() {
 }
 
 const STYLES = `
+.ranch-explore__board{background:#faf9f6}
+.ranch-explore__destination:focus-visible{outline:3px solid #b99c62;outline-offset:3px}
+.ranch-explore__mountain{opacity:.75}
+
 .ranch-explore{--cream:#fafaf7;--ink:#36362f;--line:#d7d6d0;background:var(--cream);color:var(--ink);min-height:100svh;font-family:Arial,Helvetica,sans-serif}
 .ranch-explore__intro{text-align:center;padding:34px 16px 10px}
 .ranch-explore__intro p{font-size:10px;letter-spacing:2.6px;color:#77766e;margin:0 0 12px}
 .ranch-explore__intro h1{font:normal 32px/1.15 Georgia,serif;margin:0 0 8px}
 .ranch-explore__intro>span{font-size:12px;letter-spacing:.3px;color:#77766e}
-.ranch-explore__board{position:relative;max-width:660px;margin:0 auto;height:min(66svh,620px);min-height:440px;overflow:hidden;isolation:isolate;touch-action:pan-y}
+.ranch-explore__board{position:relative;max-width:660px;margin:0 auto;height:calc(100svh - 100px);min-height:580px;overflow:hidden;isolation:isolate;touch-action:pan-y}
 .ranch-explore__terrain,.ranch-explore__roads{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
-.ranch-explore__terrain path{stroke:#deded8;stroke-width:.22;fill:none;opacity:.7}
-.ranch-explore__roads path{stroke:#c9c7bd;stroke-width:.45;stroke-dasharray:1.5 1.3;fill:none}
-.ranch-explore__destination{position:absolute;z-index:2;transform:translate(-50%,-50%);width:83px;height:83px;background:rgba(250,250,247,.94);border:1px solid #cac8bf;border-radius:100%;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:5px;font-size:10px;text-transform:uppercase;letter-spacing:1px;cursor:pointer;color:#3b3933;box-shadow:0 3px 14px #42403509}
+.ranch-explore__terrain path{stroke:#d6d5cd;stroke-width:.18;fill:none;opacity:.55}
+.ranch-explore__roads path{stroke:#acaaa0;stroke-width:.4;stroke-dasharray:1.3 1.1;fill:none}
+.ranch-explore__destination{position:absolute;z-index:2;transform:translate(-50%,-50%);width:83px;height:83px;background:rgba(253,252,249,.96);border:1px solid #cac8bf;border-radius:100%;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:5px;font-size:10px;text-transform:uppercase;letter-spacing:1px;cursor:pointer;color:#3b3933;box-shadow:0 3px 14px #42403512}
 .ranch-explore__destination:hover,.ranch-explore__destination:focus-visible{border-color:#736a56;outline-offset:3px}
-.ranch-explore__marker{color:#988a72;font-size:18px}
-.ranch-explore__rider{position:absolute;z-index:3;width:76px;height:106px;cursor:grab;touch-action:none;user-select:none;filter:drop-shadow(8px 12px 6px #0002);transform-origin:center center}
+.ranch-explore__marker{color:#292923;font-size:25px}
+.ranch-explore__rider{position:absolute;z-index:3;width:86px;height:122px;cursor:grab;touch-action:none;user-select:none;filter:drop-shadow(8px 12px 6px #0002);transform-origin:center center}
 .ranch-explore__rider.is-dragging{cursor:grabbing}
-.ranch-explore__print{position:absolute;transform:translate(-50%,-50%);font-size:20px;color:#b1ada4;opacity:.6;pointer-events:none}
+.ranch-explore__print{position:absolute;transform:translate(-50%,-50%);font-size:14px;color:#a49b89;opacity:.45;pointer-events:none}
 .ranch-explore__hint{position:absolute;left:50%;bottom:9px;transform:translateX(-50%);border:1px solid #e0ded6;background:#fafaf7ee;border-radius:30px;padding:11px 16px;font-size:11px;color:#6b6860;text-align:center;white-space:nowrap}
 .ranch-explore__direct{max-width:660px;margin:0 auto;padding:17px 16px 45px;text-align:center}
 .ranch-explore__direct>span{display:block;font-size:10px;letter-spacing:1.7px;color:#858176;margin-bottom:14px}
 .ranch-explore__direct>div{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
 .ranch-explore__direct a{border:1px solid #c9c6bb;color:#37352f;text-decoration:none;font-size:12px;padding:10px 13px;display:inline-flex;gap:8px}
-@media(max-width:500px){.ranch-explore__intro{padding-top:25px}.ranch-explore__intro h1{font-size:29px}.ranch-explore__board{height:58svh;min-height:400px}.ranch-explore__destination{width:75px;height:75px;font-size:9px}.ranch-explore__direct{padding-bottom:36px}}
+@media(max-width:500px){.ranch-explore__intro{padding-top:25px}.ranch-explore__intro h1{font-size:29px}.ranch-explore__board{height:calc(100svh - 85px);min-height:560px}.ranch-explore__destination{width:75px;height:75px;font-size:9px}.ranch-explore__direct{padding-bottom:36px}}
 @media(prefers-reduced-motion:reduce){.ranch-explore *, .ranch-explore *::before,.ranch-explore *::after{animation:none!important;transition:none!important}}
 `;
