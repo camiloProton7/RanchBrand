@@ -1,0 +1,27 @@
+name: The Ranch Explore - Oxygen Preview
+on:
+  push:
+    branches:
+      - feature/ranch-interactive-exploration
+
+permissions:
+  contents: read
+  deployments: write
+
+jobs:
+  preview:
+    if: github.ref == 'refs/heads/feature/ranch-interactive-exploration'
+    name: Deploy exploration to Oxygen Preview ONLY
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci
+      - name: Deploy to Oxygen PREVIEW (never production)
+        run: npx shopify hydrogen deploy --preview
+        env:
+          SHOPIFY_HYDROGEN_DEPLOYMENT_TOKEN: ${{ secrets.OXYGEN_DEPLOYMENT_TOKEN_1000068751 }}
