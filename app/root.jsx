@@ -2,6 +2,7 @@ import FacebookPixel from './components/FacebookPixel';
 import GoogleAnalytics from './components/GoogleAnalytics';
 import SiteHeader from './components/SiteHeader';
 import Footer from './components/Footer';
+import Progreso from '~/components/Progreso';
 import {Analytics, getShopAnalytics, useNonce} from '@shopify/hydrogen';
 import {
   Outlet,
@@ -12,6 +13,7 @@ import {
   Scripts,
   ScrollRestoration,
   useLoaderData,
+  useLocation,
 } from 'react-router';
 import {HEADER_QUERY} from '~/lib/fragments';
 import resetStyles from '~/styles/reset.css?url';
@@ -125,7 +127,25 @@ export function Layout({children}) {
 
 export default function App() {
   const data = useLoaderData();
+  const location = useLocation();
   const logoSrc = data?.header?.shop?.brand?.logo?.image?.url;
+  // Entorno de laboratorio: /nuevo usa su propio encabezado y pie.
+  const aislado =
+    location.pathname.startsWith('/nuevo2') ||
+    location.pathname.startsWith('/nuevo') ||
+    location.pathname.startsWith('/explorar');
+  if (aislado) {
+    return (
+      <Analytics.Provider
+        shop={data?.shop}
+        consent={data?.consent}
+        cookieDomain="ranch.com.co"
+      >
+        <Progreso />
+        <Outlet />
+      </Analytics.Provider>
+    );
+  }
   return (
     <Analytics.Provider
       shop={data?.shop}

@@ -1,0 +1,434 @@
+import {useLoaderData, Link, useNavigate} from 'react-router';
+import {addToCart, buyNow, getCartCount} from '~/lib/cart';
+import {useEffect, useMemo, useRef, useState} from 'react';
+import styles from '~/styles/home-nuevo.css?url';
+import Sellos from '~/components/Sellos';
+import Carroza from '~/components/Carroza';
+import MenuLateral from '~/components/MenuLateral';
+import {useHeaderScroll} from '~/lib/useHeaderScroll';
+import {Rail, Tarjeta} from '~/components/Tarjeta';
+import Pie from '~/components/Pie';
+
+export const links = () => [{rel: 'stylesheet', href: styles}];
+
+const PRODUCTO = `#graphql
+  query Producto($handle: String!) {
+    product(handle: $handle) {
+      id
+      title
+      handle
+      description
+      descriptionHtml
+      productType
+      vendor
+      tags
+      collections(first: 2) { nodes { handle title } }
+      priceRange { minVariantPrice { amount currencyCode } }
+      images(first: 12) { nodes { url altText } }
+      options { name values }
+      variants(first: 60) {
+        nodes {
+          id
+          title
+          availableForSale
+          quantityAvailable
+          selectedOptions { name value }
+          price { amount currencyCode }
+          compareAtPrice { amount currencyCode }
+        }
+      }
+      metafields(identifiers: [
+        {namespace: "reviews", key: "rating"},
+        {namespace: "reviews", key: "rating_count"}
+      ]) { key value }
+    }
+  }
+`;
+
+const RECOS = `#graphql
+  query Recos($id: ID!) {
+    productRecommendations(productId: $id) {
+      id
+      title
+      handle
+      priceRange { minVariantPrice { amount currencyCode } }
+      compareAtPriceRange { minVariantPrice { amount } }
+      images(first: 2) { nodes { url altText } }
+      metafields(identifiers: [
+        {namespace: "reviews", key: "rating"},
+        {namespace: "reviews", key: "rating_count"}
+      ]) { key value }
+    }
+  }
+`;
+
+const DE_COLECCION = `#graphql
+  query DeColeccion($handle: String!, $excluir: String!) {
+    collection(handle: $handle) {
+      products(first: 10, sortKey: BEST_SELLING) {
+        nodes {
+          id title handle
+          priceRange { minVariantPrice { amount currencyCode } }
+          images(first: 2) { nodes { url altText } }
+          metafields(identifiers: [
+            {namespace: "reviews", key: "rating"},
+            {namespace: "reviews", key: "rating_count"}
+          ]) { key value }
+        }
+      }
+    }
+  }
+`;
+
+export async function loader({params, context}) {
+  const handle = params.handle;
+  const fresco = import.meta.env.DEV ? {cache: context.storefront.CacheNone()} : undefined;
+  const data = await context.storefront.query(PRODUCTO, {...fresco, variables: {handle}});
+  const p = data.product;
+  if (!p) throw new Response('Producto no encontrado', {status: 404});
+
+  const optimizar = (url, ancho) => {
+    if (!url) return '';
+    const base = url.split('?')[0];
+    const v = url.includes('?v=') ? '?' + url.split('?')[1].split('&')[0] : '';
+    return `${base}${v}${v ? '&' : '?'}width=${ancho}`;
+  };
+
+  const mf = (p.metafields || []).filter(Boolean);
+  let valor = 0;
+  const r = mf.find((m) => m.key === 'rating');
+  if (r?.value) {
+    try {
+      valor = Number(JSON.parse(r.value).value) || 0;
+    } catch {
+      valor = Number(r.value) || 0;
+    }
+  }
+  const cuenta = Number(mf.find((m) => m.key === 'rating_count')?.value) || 0;
+
+  const fmt = new Intl.NumberFormat('es-CO', {
+    style: 'currency',
+    currency: 'COP',
+    maximumFractionDigits: 0,
+  });
+
+  const texto = (p.descriptionHtml || '')
+    .replace(/<\/(p|li|h[1-6])>/gi, '\n')
+    .replace(/<[^>]+>/g, ' ')
+    .replace(/&nbsp;/g, ' ')
+    .replace(/&amp;/g, '&')
+    .replace(/[ \t]+/g, ' ')
+    .replace(/ +([,.;:!?])/g, '$1')
+    .trim();
+
+  const aTarjeta = (x) => {
+    const m = (x.metafields || []).filter(Boolean);
+    let v = 0;
+    const r2 = m.find((k) => k.key === 'rating');
+    if (r2?.value) {
+      try {
+        v = Number(JSON.parse(r2.value).value) || 0;
+      } catch {
+        v = Number(r2.value) || 0;
+      }
+    }
+    return {
+      id: x.id,
+      titulo: x.title,
+      handle: x.handle,
+      precio: fmt.format(Number(x.priceRange.minVariantPrice.amount)),
+      antes: Number(x.compareAtPriceRange?.minVariantPrice?.amount) > 0 &&
+        Number(x.compareAtPriceRange.minVariantPrice.amount) !== Number(x.priceRange.minVariantPrice.amount)
+        ? fmt.format(Number(x.compareAtPriceRange.minVariantPrice.amount))
+        : null,
+      valor: v,
+      cuenta: Number(m.find((k) => k.key === 'rating_count')?.value) || 0,
+      imgs: x.images.nodes.map((n) => optimizar(n.url, 440)),
+    };
+  };
+
+  let recos = [];
+  try {
+    const rr = await context.storefront.query(RECOS, {...fresco, variables: {id: p.id}});
+    recos = (rr.productRecommendations || []).filter(Boolean).map(aTarjeta);
+  } catch {
+    recos = [];
+  }
+
+  // si Shopify no tiene recomendaciones, tira de la colección del producto
+  if (recos.length < 2 && p.collections?.nodes?.[0]?.handle) {
+    const dc = await context.storefront.query(DE_COLECCION, {
+      ...fresco,
+      variables: {handle: p.collections.nodes[0].handle, excluir: p.handle},
+    });
+    recos = (dc.collection?.products?.nodes || [])
+      .filter((x) => x.handle !== p.handle)
+      .slice(0, 8)
+      .map(aTarjeta);
+  }
+
+  return {
+    recos,
+    id: p.id,
+    titulo: p.title,
+    handle: p.handle,
+    tipo: p.productType,
+    precio: fmt.format(Number(p.priceRange.minVariantPrice.amount)),
+    precioNum: Number(p.priceRange.minVariantPrice.amount),
+    valor,
+    cuenta,
+    fotos: p.images.nodes.map((n) => optimizar(n.url, 900)),
+    opciones: p.options,
+    variantes: p.variants.nodes.map((v) => ({
+      id: v.id,
+      titulo: v.title,
+      disponible: v.availableForSale,
+      stock: v.quantityAvailable,
+      precio: fmt.format(Number(v.price.amount)),
+      precioNum: Number(v.price.amount),
+      antes: Number(v.compareAtPrice?.amount) > 0 && Number(v.compareAtPrice.amount) !== Number(v.price.amount)
+        ? fmt.format(Number(v.compareAtPrice.amount))
+        : null,
+      opciones: v.selectedOptions,
+    })),
+    descripcion: texto,
+    parrafos: texto.split('\n').map((t) => t.trim()).filter((t) => t.length > 2),
+  };
+}
+
+export const meta = ({data}) => [{title: `${data?.titulo ?? 'Producto'} · The Ranch`}];
+
+export default function ProductoNuevo() {
+  const {titulo, tipo, precio, valor, cuenta, fotos, opciones, variantes, handle, parrafos, recos} =
+    useLoaderData();
+
+  const [foto, setFoto] = useState(0);
+  const pista = useRef(null);
+  const ir = useNavigate();
+
+  useEffect(() => {
+    const leer = () => setEnCesta(getCartCount());
+    leer();
+    window.addEventListener('ranch-cart-updated', leer);
+    return () => window.removeEventListener('ranch-cart-updated', leer);
+  }, []);
+  const [elegidas, setElegidas] = useState(() => {
+    // arrancar en la primera combinacion que de verdad se puede comprar
+    const buena = variantes.find((v) => v.disponible) || variantes[0];
+    const inicial = {};
+    buena?.opciones.forEach((o) => (inicial[o.name] = o.value));
+    if (!buena) opciones.forEach((o) => (inicial[o.name] = o.values[0]));
+    return inicial;
+  });
+  const [anadiendo, setAnadiendo] = useState(false);
+  const [anadido, setAnadido] = useState(false);
+  const [enCesta, setEnCesta] = useState(0);
+  const barraOculta = useHeaderScroll({alto: 90});
+
+  const variante = useMemo(() => {
+    const exacta = variantes.find((v) =>
+      v.opciones.every((o) => elegidas[o.name] === o.value)
+    );
+    return exacta || variantes[0];
+  }, [variantes, elegidas]);
+
+  async function agregar() {
+    if (!variante?.disponible || anadiendo) return;
+    setAnadiendo(true);
+    try {
+      addToCart({
+        variantId: variante.id,
+        qty: 1,
+        title: titulo,
+        image: fotos[0],
+        price: variante.precioNum,
+        precioTexto: variante.precio,
+        opciones: variante.opciones?.map((o) => o.value).join(' · '),
+        handle,
+      });
+      window.dispatchEvent(
+        new CustomEvent('ranch-carroza', {
+          detail: {title: titulo, image: fotos[0]},
+        }),
+      );
+      setAnadido(true);
+      setTimeout(() => setAnadido(false), 4000);
+    } finally {
+      setAnadiendo(false);
+    }
+  }
+
+  return (
+    <div className="hp">
+      <div className={"hp-bar" + (barraOculta ? " is-oculto" : "")}>
+        <MenuLateral tono="tinta" />
+        <Link to="/nuevo2" className="hp-logo" aria-label="The Ranch, ir al inicio"><img src="/logo-tinta.png" alt="The Ranch" width="78" /></Link>
+        <span className="hp-bolsa"><Carroza /></span>
+      </div>
+
+      <section className="hp-galeria">
+        <div
+          className="hp-fotos"
+          ref={pista}
+          onScroll={() => {
+            const w = pista.current?.clientWidth || 1;
+            const i = Math.round(pista.current.scrollLeft / w);
+            setFoto(Math.min(fotos.length - 1, Math.max(0, i)));
+          }}
+        >
+          {fotos.map((src, i) => (
+            <div key={src} className="hp-foto">
+              <img src={src} alt={`${titulo} ${i + 1}`} loading={i === 0 ? 'eager' : 'lazy'} />
+            </div>
+          ))}
+        </div>
+
+        {fotos.length > 1 && (
+          <div className="hp-minis">
+            {fotos.map((src, i) => (
+              <button
+                key={src}
+                type="button"
+                className={'hp-mini' + (i === foto ? ' is-on' : '')}
+                onClick={() => {
+                  setFoto(i);
+                  pista.current?.scrollTo({left: i * (pista.current.clientWidth || 0), behavior: 'smooth'});
+                }}
+                aria-label={`Foto ${i + 1}`}
+              >
+                <img src={src} alt="" loading="lazy" />
+              </button>
+            ))}
+          </div>
+        )}
+
+        {variante?.stock > 0 && variante.stock <= 5 && (
+          <span className="hp-sello-stock">Últimas {variante.stock} unidades</span>
+        )}
+        {variante?.stock === 0 && <span className="hp-sello-stock is-agotado">Agotada</span>}
+
+        <span className="hp-contador">
+          {String(foto + 1).padStart(2, '0')} / {String(fotos.length).padStart(2, '0')}
+        </span>
+      </section>
+
+      <section className="hp-info">
+        {tipo && <p className="hp-tipo">{tipo}</p>}
+        <h1 className="hp-titulo">{titulo}</h1>
+
+        {valor >= 4.8 && cuenta >= 20 && (
+          <p className="hp-favorito">
+            <span aria-hidden="true">★</span> Favorita de {cuenta} clientes
+          </p>
+        )}
+
+        <div className="hp-linea">
+          <span className="hp-precio">{variante?.precio || precio}</span>
+          {variante?.antes && (
+            <>
+              <span className="hp-antes">{variante.antes}</span>
+              <span className="hp-dto">
+                {(() => {
+                  const antesNum = Number(variante.antes.replace(/[^\d]/g, ''));
+                  const pct = Math.round((1 - variante.precioNum / antesNum) * 100);
+                  return pct > 0 ? `−${pct}%` : `+${Math.abs(pct)}%`;
+                })()}
+              </span>
+            </>
+          )}
+          {valor > 0 && (
+            <span className="hp-rating">
+              <span aria-hidden="true">★</span> {valor.toFixed(1)}
+              {cuenta > 0 && <em> ({cuenta})</em>}
+            </span>
+          )}
+        </div>
+
+        {opciones.filter((o) => o.values.length > 1).map((o) => (
+          <div key={o.name} className="hp-opcion">
+            <p className="hp-opcion-nombre">{o.name}</p>
+            <div className="hp-chips">
+              {o.values.map((v) => {
+                const activa = elegidas[o.name] === v;
+                const hay = variantes.some(
+                  (va) =>
+                    va.disponible &&
+                    va.opciones.every((oo) =>
+                      oo.name === o.name ? oo.value === v : elegidas[oo.name] === oo.value
+                    )
+                );
+                return (
+                  <button
+                    key={v}
+                    type="button"
+                    className={
+                      'hp-chip' + (activa ? ' is-on' : '') + (hay ? '' : ' is-off')
+                    }
+                    onClick={() => setElegidas((e) => ({...e, [o.name]: v}))}
+                  >
+                    {v}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        ))}
+
+        <button
+          type="button"
+          className={'hp-comprar' + (anadido ? ' is-ok' : '')}
+          onClick={() => (anadido ? ir('/nuevo2/carrito') : agregar())}
+          disabled={!variante?.disponible || anadiendo}
+        >
+          {anadido
+            ? 'Ver carrito'
+            : variante?.disponible
+              ? anadiendo
+                ? 'Añadiendo…'
+                : 'Añadir al carrito'
+              : variantes.some((v) => v.disponible)
+                ? 'Agotada en esta talla'
+                : 'Agotada'}
+        </button>
+
+        <button
+          type="button"
+          className="hp-ahora"
+          onClick={() => buyNow(variante.id, 1, variante.precioNum)}
+          disabled={!variante?.disponible}
+        >
+          Comprar ahora
+        </button>
+
+        <p className="hp-ahora-nota">
+          Paga directo, sin pasar por el carrito
+        </p>
+
+      </section>
+
+      <section className="hp-relato">
+        {parrafos.slice(0, 4).map((t, i) => (
+          <p key={i}>{t}</p>
+        ))}
+      </section>
+
+      {recos.length > 1 && (
+        <section className="hp-recos">
+          <div className="hp-recos-head">
+            <h2>Los clientes también eligieron</h2>
+            <span>Desliza →</span>
+          </div>
+          <Rail className="hp-recos-rail">
+            {recos.map((p) => (
+              <Tarjeta key={p.id} p={p} ruta="/nuevo2/producto/" />
+            ))}
+          </Rail>
+        </section>
+      )}
+
+      <Sellos />
+      <Pie />
+
+    </div>
+  );
+}
