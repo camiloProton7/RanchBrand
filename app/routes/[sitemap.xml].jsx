@@ -1,18 +1,15 @@
 export async function loader({context}) {
   const {storefront} = context;
 
-  const collections = [
-    'gorras-truckers',
-    'chaquetas',
-    'camisetas',
-    'botas-1',
-    'accesorios',
-    'hot-ranch',
+  const collections = ['gorras', 'chaquetas', 'camisetas', 'botas-1'];
+  const urls = [
+    {loc: 'https://ranch.com.co/'},
+    {loc: 'https://ranch.com.co/nuevo2'},
+    {loc: 'https://ranch.com.co/nuevo2/combo-gorras'},
   ];
-  const urls = [{loc: 'https://ranch.com.co/'}];
 
   for (const handle of collections) {
-    urls.push({loc: `https://ranch.com.co/collections/${handle}`});
+    urls.push({loc: `https://ranch.com.co/nuevo2/coleccion/${handle}`});
     try {
       const data = await storefront.query(
         `#graphql
@@ -26,7 +23,7 @@ export async function loader({context}) {
         {variables: {handle}},
       );
       (data?.collection?.products?.nodes || []).forEach((p) => {
-        urls.push({loc: `https://ranch.com.co/products/${p.handle}`});
+        urls.push({loc: `https://ranch.com.co/nuevo2/producto/${p.handle}`});
       });
     } catch (error) {
       console.error(`Sitemap ${handle} falló`, error);
