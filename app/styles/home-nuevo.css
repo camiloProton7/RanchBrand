@@ -3403,7 +3403,7 @@
 }
 
 /* info */
-.hp-info { padding: 22px 18px 8px; }
+.hp-info { padding: 22px 18px 26px; }
 
 .hp-tipo {
   margin: 0 0 8px;
@@ -3444,7 +3444,7 @@
 .hp-rating span { color: #c8842c; }
 .hp-rating em { font-style: normal; color: rgba(20, 17, 15, 0.4); }
 
-.hp-opcion { margin-top: 18px; }
+.hp-opcion { margin-top: 14px; }
 
 .hp-opcion-nombre {
   margin: 0 0 8px;
@@ -3455,11 +3455,11 @@
   color: rgba(20, 17, 15, 0.45);
 }
 
-.hp-chips { display: flex; flex-wrap: wrap; gap: 7px; }
+.hp-chips { display: flex; flex-wrap: wrap; gap: 6px; }
 
 .hp-chip {
-  min-width: 42px;
-  padding: 9px 13px;
+  min-width: 40px;
+  padding: 8px 12px;
   border-radius: 999px;
   border: 1px solid rgba(20, 17, 15, 0.16);
   background: transparent;
@@ -3497,7 +3497,7 @@
 
 .hp-comprar {
   width: 100%;
-  margin-top: 22px;
+  margin-top: 14px;
   padding: 16px;
   border: 0;
   border-radius: 999px;
