@@ -209,7 +209,14 @@ export default function ColeccionNueva() {
       </div>
 
       <section className="hc-hero" ref={heroRef}>
-        {foto && <img src={foto} alt={titulo} className="hc-hero-img" />}
+        {foto && <img
+          src={foto}
+          alt={titulo}
+          className="hc-hero-img"
+          loading="eager"
+          fetchPriority="high"
+          decoding="async"
+        />}
         <span className="hc-hero-velo" aria-hidden="true" />
         <div className="hc-hero-copy">
           <p className="hc-hero-rotulo">Colección</p>

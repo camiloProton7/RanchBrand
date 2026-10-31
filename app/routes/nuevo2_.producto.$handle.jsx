@@ -147,24 +147,40 @@ export async function loader({params, context}) {
     };
   };
 
+  // Recomendados: una sola llamada. La coleccion del producto ya trae
+  // articulos del mismo tipo; pedir productRecommendations aparte era un
+  // viaje extra a Shopify que retrasaba toda la ficha.
   let recos = [];
-  try {
-    const rr = await context.storefront.query(RECOS, {...fresco, variables: {id: p.id}});
-    recos = (rr.productRecommendations || []).filter(Boolean).map(aTarjeta);
-  } catch {
-    recos = [];
+  const cols = (p.collections?.nodes || []).map((c) => c.handle).filter(Boolean);
+
+  // Primero la coleccion visible del producto (una sola llamada). Si esa
+  // coleccion esta archivada o vacia, se prueba la siguiente y, como ultimo
+  // recurso, productRecommendations.
+  for (const h of cols) {
+    if (recos.length >= 2) break;
+    try {
+      const dc = await context.storefront.query(DE_COLECCION, {
+        ...fresco,
+        variables: {handle: h, excluir: p.handle},
+      });
+      const lista = (dc.collection?.products?.nodes || [])
+        .filter((x) => x.handle !== p.handle)
+        .slice(0, 8)
+        .map(aTarjeta);
+      if (lista.length > recos.length) recos = lista;
+    } catch {
+      /* coleccion no visible: se intenta la siguiente */
+    }
   }
 
-  // si Shopify no tiene recomendaciones, tira de la colección del producto
-  if (recos.length < 2 && p.collections?.nodes?.[0]?.handle) {
-    const dc = await context.storefront.query(DE_COLECCION, {
-      ...fresco,
-      variables: {handle: p.collections.nodes[0].handle, excluir: p.handle},
-    });
-    recos = (dc.collection?.products?.nodes || [])
-      .filter((x) => x.handle !== p.handle)
-      .slice(0, 8)
-      .map(aTarjeta);
+  if (recos.length < 2) {
+    try {
+      const rr = await context.storefront.query(RECOS, {...fresco, variables: {id: p.id}});
+      const lista = (rr.productRecommendations || []).filter(Boolean).map(aTarjeta);
+      if (lista.length > recos.length) recos = lista;
+    } catch {
+      /* sin recomendaciones: la seccion no se muestra */
+    }
   }
 
   return {
@@ -177,7 +193,7 @@ export async function loader({params, context}) {
     precioNum: Number(p.priceRange.minVariantPrice.amount),
     valor,
     cuenta,
-    fotos: p.images.nodes.map((n) => optimizar(n.url, 900)),
+    fotos: p.images.nodes.map((n) => optimizar(n.url, 720)),
     opciones: p.options,
     variantes: p.variants.nodes.map((v) => ({
       id: v.id,
@@ -278,7 +294,13 @@ export default function ProductoNuevo() {
         >
           {fotos.map((src, i) => (
             <div key={src} className="hp-foto">
-              <img src={src} alt={`${titulo} ${i + 1}`} loading={i === 0 ? 'eager' : 'lazy'} />
+              <img
+                src={src}
+                alt={`${titulo} ${i + 1}`}
+                loading={i === 0 ? 'eager' : 'lazy'}
+                fetchPriority={i === 0 ? 'high' : 'auto'}
+                decoding="async"
+              />
             </div>
           ))}
         </div>
