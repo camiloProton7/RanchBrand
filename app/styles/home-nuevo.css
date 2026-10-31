@@ -4026,7 +4026,22 @@
   display: block;
 }
 
-.hc-barra-hueco { width: 34px; }
+.hc-barra-hueco {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  min-width: 56px;
+}
+
+.hc-barra-hueco .carroza svg {
+  width: 52px;
+  height: 24px;
+}
+
+.hc-barra-hueco .carroza-n {
+  top: -7px;
+  right: -8px;
+}
 
 .hc-cesta-cabeza {
   display: flex;

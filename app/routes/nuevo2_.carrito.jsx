@@ -2,6 +2,7 @@ import {useLoaderData, Link} from 'react-router';
 import {useEffect, useState} from 'react';
 import styles from '~/styles/home-nuevo.css?url';
 import Pie from '~/components/Pie';
+import Carroza from '~/components/Carroza';
 import {
   formatPrice,
   getCart,
@@ -151,7 +152,9 @@ export default function Cesta() {
         <Link to="/nuevo2" className="hc-logo" aria-label="The Ranch, ir al inicio">
           <img src="/logo-tinta.png" alt="The Ranch" />
         </Link>
-        <span className="hc-barra-hueco" />
+        <span className="hc-barra-hueco">
+          <Carroza />
+        </span>
       </header>
 
       <div className="hc-cesta-cabeza">
