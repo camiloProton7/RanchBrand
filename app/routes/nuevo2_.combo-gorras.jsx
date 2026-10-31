@@ -45,7 +45,9 @@ export async function loader({context}) {
       return {
         title: p.title,
         handle: p.handle,
-        img: p.featuredImage?.url || '',
+        img: p.featuredImage?.url
+          ? `${p.featuredImage.url}${p.featuredImage.url.includes('?') ? '&' : '?'}width=380`
+          : '',
         alt: p.featuredImage?.altText || p.title,
         vid: v.id.split('/').pop(),
         price: Number(v.price.amount),
@@ -186,7 +188,7 @@ export default function ComboNuevo() {
               aria-pressed={activa}
             >
               <span className="cbc-img">
-                {g.img && <img src={g.img} alt={g.alt} loading="lazy" />}
+                {g.img && <img src={g.img} alt={g.alt} loading="lazy" decoding="async" />}
                 {activa && <span className="cbc-orden">{orden}</span>}
                 {g.stock !== null && g.stock <= 6 && (
                   <span className="cbc-low">Últimas {g.stock}</span>

@@ -38,9 +38,9 @@ const COLECCION = `#graphql
 `;
 
 const PORTADAS = {
-  gorras: '/col/gorras.jpg',
-  chaquetas: '/col/chaquetas.jpg',
-  camisetas: '/col/camisas.jpg',
+  gorras: '/col/gorras.webp',
+  chaquetas: '/col/chaquetas.webp',
+  camisetas: '/col/camisas.webp',
 };
 
 const CITAS = [
@@ -125,7 +125,7 @@ export async function loader({params, context}) {
         : null,
       valor,
       cuenta,
-      imgs: p.images.nodes.map((x) => optimizar(x.url, 520)),
+      imgs: p.images.nodes.map((x) => optimizar(x.url, 420)),
       grande: p.images.nodes[0] ? optimizar(p.images.nodes[0].url, 1100) : null,
     };
   });

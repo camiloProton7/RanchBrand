@@ -3,7 +3,17 @@ import {useLocation} from 'react-router';
 
 // ID de medición de Google Analytics 4 (GA4). Formato: G-XXXXXXXXXX
 // Prioriza la variable de entorno PUBLIC_GA4_ID; si no está definida usa el ID de The Ranch.
-const GA4_ID = (import.meta.env?.PUBLIC_GA4_ID || "G-BRJH54Y39N").trim();
+const GA4_ID = (import.meta.env?.PUBLIC_GA4_ID || 'G-BRJH54Y39N').trim();
+
+/** Ejecuta el trabajo cuando el navegador está libre, sin frenar el primer render. */
+function cuandoLibre(fn) {
+  if (typeof window === 'undefined') return;
+  if ('requestIdleCallback' in window) {
+    window.requestIdleCallback(fn, {timeout: 2500});
+  } else {
+    window.setTimeout(fn, 1200);
+  }
+}
 
 export default function GoogleAnalytics() {
   const location = useLocation();
@@ -11,23 +21,25 @@ export default function GoogleAnalytics() {
   useEffect(() => {
     if (!GA4_ID || typeof window === 'undefined') return;
 
-    const scriptId = 'ga4-gtag';
-    if (!document.getElementById(scriptId)) {
-      const script = document.createElement('script');
-      script.id = scriptId;
-      script.async = true;
-      script.src = `https://www.googletagmanager.com/gtag/js?id=${GA4_ID}`;
-      document.head.appendChild(script);
-    }
+    cuandoLibre(() => {
+      const scriptId = 'ga4-gtag';
+      if (!document.getElementById(scriptId)) {
+        const script = document.createElement('script');
+        script.id = scriptId;
+        script.async = true;
+        script.src = `https://www.googletagmanager.com/gtag/js?id=${GA4_ID}`;
+        document.head.appendChild(script);
+      }
 
-    window.dataLayer = window.dataLayer || [];
-    window.gtag =
-      window.gtag ||
-      function gtag() {
-        window.dataLayer.push(arguments);
-      };
-    window.gtag('js', new Date());
-    window.gtag('config', GA4_ID, {send_page_view: false});
+      window.dataLayer = window.dataLayer || [];
+      window.gtag =
+        window.gtag ||
+        function gtag() {
+          window.dataLayer.push(arguments);
+        };
+      window.gtag('js', new Date());
+      window.gtag('config', GA4_ID, {send_page_view: false});
+    });
   }, []);
 
   // PageView en cada navegación.

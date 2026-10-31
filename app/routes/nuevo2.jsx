@@ -324,9 +324,9 @@ export async function loader({context}) {
       Number(p.compareAtPriceRange.minVariantPrice.amount) !== Number(p.priceRange.minVariantPrice.amount)
       ? fmt.format(Number(p.compareAtPriceRange.minVariantPrice.amount))
       : null,
-    imgs: p.images.nodes.map((n) => optimizar(n.url, 560)),
-    img1: optimizar(p.images.nodes[0]?.url, 520),
-    img2: optimizar(p.images.nodes[1]?.url || p.images.nodes[0]?.url, 520),
+    imgs: p.images.nodes.map((n) => optimizar(n.url, 420)),
+    img1: optimizar(p.images.nodes[0]?.url, 420),
+    img2: optimizar(p.images.nodes[1]?.url || p.images.nodes[0]?.url, 420),
     desc: (p.description || '').replace(/\s+/g, ' ').trim().slice(0, 165),
     ...estrellas(p.metafields),
   }));
@@ -340,9 +340,9 @@ export async function loader({context}) {
       Number(p.compareAtPriceRange.minVariantPrice.amount) !== Number(p.priceRange.minVariantPrice.amount)
       ? fmt.format(Number(p.compareAtPriceRange.minVariantPrice.amount))
       : null,
-    imgs: p.images.nodes.map((n) => optimizar(n.url, 560)),
-    img1: optimizar(p.images.nodes[0]?.url, 520),
-    img2: optimizar(p.images.nodes[1]?.url || p.images.nodes[0]?.url, 520),
+    imgs: p.images.nodes.map((n) => optimizar(n.url, 420)),
+    img1: optimizar(p.images.nodes[0]?.url, 420),
+    img2: optimizar(p.images.nodes[1]?.url || p.images.nodes[0]?.url, 420),
     desc: (p.description || '').replace(/\s+/g, ' ').trim().slice(0, 165),
     ...estrellas(p.metafields),
   }));
@@ -355,7 +355,7 @@ export async function loader({context}) {
       titulo: p.title,
       handle: p.handle,
       desc: (p.description || '').replace(/\s+/g, ' ').trim().slice(0, 165),
-      imgs: p.images.nodes.map((n) => optimizar(n.url, 560)),
+      imgs: p.images.nodes.map((n) => optimizar(n.url, 420)),
       variantId: v.id,
       precio: fmt.format(Number(v.price.amount)),
       precioNum: Number(v.price.amount),
@@ -430,9 +430,9 @@ export async function loader({context}) {
         col?.products?.nodes?.[0]?.images?.nodes?.[0]?.url ||
         null;
       const locales = {
-        gorras: '/col/gorras.jpg',
-        chaquetas: '/col/chaquetas.jpg',
-        camisas: '/col/camisas.jpg',
+        gorras: '/col/gorras.webp',
+        chaquetas: '/col/chaquetas.webp',
+        camisas: '/col/camisas.webp',
       };
       return {...c, img: locales[c.clave] || (foto ? optimizar(foto, 700) : null)};
     })
@@ -476,7 +476,7 @@ export async function loader({context}) {
       Number(p.compareAtPriceRange.minVariantPrice.amount) !== Number(p.priceRange.minVariantPrice.amount)
       ? fmt.format(Number(p.compareAtPriceRange.minVariantPrice.amount))
       : null,
-      imgs: p.images.nodes.map((n) => optimizar(n.url, 480)),
+      imgs: p.images.nodes.map((n) => optimizar(n.url, 420)),
       img1: optimizar(p.images.nodes[0]?.url, 440),
       img2: optimizar(p.images.nodes[1]?.url || p.images.nodes[0]?.url, 440),
       desc: (p.description || '').replace(/\s+/g, ' ').trim().slice(0, 165),
