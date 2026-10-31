@@ -4056,7 +4056,7 @@
 }
 
 .hc-barra-hueco .carroza svg {
-  width: 52px;
+  width: 27px;
   height: 24px;
 }
 
@@ -4497,8 +4497,8 @@
 }
 
 .carroza svg {
-  width: 56px;
-  height: 26px;
+  width: 27px;
+  height: 24px;
   display: block;
   overflow: visible;
 }
@@ -4513,8 +4513,14 @@
   transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.carroza.is-trote .carroza-caballo {
-  animation: caballo-trote 0.4s ease-in-out 3;
+.carroza.is-trote svg {
+  animation: carrito-brinco 0.45s ease-in-out 2;
+}
+
+@keyframes carrito-brinco {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  30% { transform: translateY(-2px) rotate(-6deg); }
+  65% { transform: translateY(0) rotate(4deg); }
 }
 
 .carroza.is-trote .carroza-carro {
@@ -4751,4 +4757,94 @@
 
 .hp-chip.is-off::after {
   pointer-events: none;
+}
+
+/* deja aire al final para que la barra fija no tape el pie */
+.hp { padding-bottom: 74px; }
+
+/* barra de compra fija de la ficha: aparece cuando el boton grande sale de vista */
+.hp-barra {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px calc(10px + env(safe-area-inset-bottom));
+  background: rgba(251, 248, 241, 0.97);
+  backdrop-filter: blur(8px);
+  border-top: 1px solid rgba(20, 17, 15, 0.1);
+  transform: translateY(110%);
+  transition: transform 0.24s ease;
+}
+
+.hp-barra.is-visible { transform: translateY(0); }
+
+.hp-barra-precio {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
+}
+
+.hp-barra-precio strong {
+  font-family: 'Instrument Serif', Georgia, serif;
+  font-size: 19px;
+  font-weight: 400;
+  line-height: 1.1;
+  color: var(--tinta);
+  white-space: nowrap;
+}
+
+.hp-barra-antes {
+  font-size: 9.5px;
+  color: rgba(20, 17, 15, 0.42);
+  white-space: nowrap;
+}
+
+.hp-barra-btn {
+  flex: 1;
+  padding: 15px 18px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--tinta);
+  color: var(--crema);
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  -webkit-tap-highlight-color: transparent;
+  transition: background 0.2s ease;
+}
+
+.hp-barra-btn.is-ok { background: #b34a2a; }
+
+.hp-barra-btn:disabled {
+  background: rgba(20, 17, 15, 0.25);
+  color: rgba(251, 248, 241, 0.85);
+}
+
+/* la carroza del carrito se alinea con el logo, no contra el borde */
+.hc-cesta .hc-barra {
+  display: grid;
+  grid-template-columns: 56px 1fr 56px;
+  align-items: center;
+  padding: 14px 16px 12px;
+}
+
+.hc-cesta .hc-barra .hc-volver {
+  justify-self: start;
+}
+
+.hc-cesta .hc-barra-hueco {
+  align-self: center;
+  height: 28px;
+  align-items: center;
+}
+
+.hc-cesta .hc-barra-hueco .carroza {
+  height: 24px;
 }

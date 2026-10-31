@@ -269,10 +269,24 @@ export default function ProductoNuevo() {
     mejor.opciones.forEach((o) => (inicial[o.name] = o.value));
     return inicial;
   });
+  const botonCompra = useRef(null);
+  const [barraAbajo, setBarraAbajo] = useState(false);
   const [anadiendo, setAnadiendo] = useState(false);
   const [anadido, setAnadido] = useState(false);
   const [enCesta, setEnCesta] = useState(0);
   const {oculto: barraOculta} = useHeaderScroll({alto: 90});
+
+  // la barra de compra solo aparece cuando el boton grande ya no se ve
+  useEffect(() => {
+    const el = botonCompra.current;
+    if (!el || typeof IntersectionObserver === 'undefined') return;
+    const observador = new IntersectionObserver(
+      ([entrada]) => setBarraAbajo(!entrada.isIntersecting),
+      {threshold: 0.6},
+    );
+    observador.observe(el);
+    return () => observador.disconnect();
+  }, []);
 
   const variante = useMemo(() => {
     const exacta = variantes.find((v) =>
@@ -435,6 +449,7 @@ export default function ProductoNuevo() {
         ))}
 
         <button
+          ref={botonCompra}
           type="button"
           className={'hp-comprar' + (anadido ? ' is-ok' : '')}
           onClick={() => (anadido ? ir('/nuevo2/carrito') : agregar())}
@@ -488,6 +503,28 @@ export default function ProductoNuevo() {
 
       <Sellos />
       <Pie />
+
+      {/* barra de compra fija: siempre alcanzable con el pulgar */}
+      <div className={'hp-barra' + (barraAbajo ? ' is-visible' : '')}>
+        <div className="hp-barra-precio">
+          <strong>{variante?.precio || precio}</strong>
+          {variante?.antes && <span className="hp-barra-antes">antes {variante.antes}</span>}
+        </div>
+        <button
+          type="button"
+          className={'hp-barra-btn' + (anadido ? ' is-ok' : '')}
+          onClick={() => (anadido ? ir('/nuevo2/carrito') : agregar())}
+          disabled={!variante?.disponible || anadiendo}
+        >
+          {anadido
+            ? 'Ver carrito'
+            : variante?.disponible
+              ? anadiendo
+                ? 'Añadiendo…'
+                : 'Añadir'
+              : 'Agotada'}
+        </button>
+      </div>
 
     </div>
   );
