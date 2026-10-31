@@ -404,7 +404,6 @@ export default function ProductoNuevo() {
             <p className="hp-opcion-nombre">{o.name}</p>
             <div className="hp-chips">
               {o.values.map((v) => {
-                const activa = elegidas[o.name] === v;
                 const hay = variantes.some(
                   (va) =>
                     va.disponible &&
@@ -412,39 +411,20 @@ export default function ProductoNuevo() {
                       oo.name === o.name ? oo.value === v : elegidas[oo.name] === oo.value
                     )
                 );
+                // una opcion sin unidades no se puede elegir: si se marca como
+                // activa a la vez que tachada, el cliente ve un boton que dice
+                // agotado con la talla ya seleccionada y no entiende nada.
+                const activa = hay && elegidas[o.name] === v;
                 return (
                   <button
                     key={v}
                     type="button"
+                    disabled={!hay}
+                    aria-disabled={!hay}
                     className={
                       'hp-chip' + (activa ? ' is-on' : '') + (hay ? '' : ' is-off')
                     }
-                    onClick={() =>
-                      setElegidas((e) => {
-                        const intento = {...e, [o.name]: v};
-                        const sirve = variantes.some(
-                          (va) =>
-                            va.disponible &&
-                            va.opciones.every((oo) => intento[oo.name] === oo.value),
-                        );
-                        if (sirve) return intento;
-
-                        // esa talla no existe en el color elegido: se busca la
-                        // variante que si la tiene y se ajusta el resto
-                        const alt = variantes.find(
-                          (va) =>
-                            va.disponible &&
-                            va.opciones.some(
-                              (oo) => oo.name === o.name && oo.value === v,
-                            ),
-                        );
-                        if (!alt) return intento;
-
-                        const ajuste = {...e};
-                        alt.opciones.forEach((oo) => (ajuste[oo.name] = oo.value));
-                        return ajuste;
-                      })
-                    }
+                    onClick={() => hay && setElegidas((e) => ({...e, [o.name]: v}))}
                   >
                     {v}
                   </button>

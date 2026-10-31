@@ -4742,3 +4742,13 @@
 .hp-dto { margin-right: 8px; }
 
 .hp-rating { white-space: nowrap; }
+
+/* opcion sin unidades: se ve tachada y no responde al toque */
+.hp-chip:disabled {
+  opacity: 1;
+  pointer-events: none;
+}
+
+.hp-chip.is-off::after {
+  pointer-events: none;
+}
