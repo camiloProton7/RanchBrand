@@ -229,17 +229,50 @@ export default function ProductoNuevo() {
     return () => window.removeEventListener('ranch-cart-updated', leer);
   }, []);
   const [elegidas, setElegidas] = useState(() => {
-    // arrancar en la primera combinacion que de verdad se puede comprar
-    const buena = variantes.find((v) => v.disponible) || variantes[0];
+    const disp = variantes.filter((v) => v.disponible);
+
+    // Sin stock: se abre en la primera combinacion y se avisa.
+    if (!disp.length) {
+      const inicial = {};
+      const base = variantes[0];
+      if (base) base.opciones.forEach((o) => (inicial[o.name] = o.value));
+      else opciones.forEach((o) => (inicial[o.name] = o.values[0]));
+      return inicial;
+    }
+
+    // Con stock: se abre en la combinacion que deja MAS opciones comprables,
+    // no en la primera. Si no, un color con una sola talla abre la ficha con
+    // casi todas las tallas tachadas y parece agotado.
+    // cuantas variantes comprables hay por cada valor de cada opcion
+    const conteo = {};
+    for (const x of disp) {
+      for (const o of x.opciones) {
+        conteo[o.name] = conteo[o.name] || {};
+        conteo[o.name][o.value] = (conteo[o.name][o.value] || 0) + 1;
+      }
+    }
+
+    let mejor = disp[0];
+    let tope = -1;
+    for (const v of disp) {
+      const n = v.opciones.reduce(
+        (suma, o) => suma + (conteo[o.name]?.[o.value] || 0),
+        0,
+      );
+      if (n > tope) {
+        tope = n;
+        mejor = v;
+      }
+    }
+
     const inicial = {};
-    buena?.opciones.forEach((o) => (inicial[o.name] = o.value));
-    if (!buena) opciones.forEach((o) => (inicial[o.name] = o.values[0]));
+    mejor.opciones.forEach((o) => (inicial[o.name] = o.value));
     return inicial;
   });
   const [anadiendo, setAnadiendo] = useState(false);
   const [anadido, setAnadido] = useState(false);
   const [enCesta, setEnCesta] = useState(0);
-  const barraOculta = useHeaderScroll({alto: 90});
+  const {oculto: barraOculta} = useHeaderScroll({alto: 90});
 
   const variante = useMemo(() => {
     const exacta = variantes.find((v) =>
@@ -386,7 +419,32 @@ export default function ProductoNuevo() {
                     className={
                       'hp-chip' + (activa ? ' is-on' : '') + (hay ? '' : ' is-off')
                     }
-                    onClick={() => setElegidas((e) => ({...e, [o.name]: v}))}
+                    onClick={() =>
+                      setElegidas((e) => {
+                        const intento = {...e, [o.name]: v};
+                        const sirve = variantes.some(
+                          (va) =>
+                            va.disponible &&
+                            va.opciones.every((oo) => intento[oo.name] === oo.value),
+                        );
+                        if (sirve) return intento;
+
+                        // esa talla no existe en el color elegido: se busca la
+                        // variante que si la tiene y se ajusta el resto
+                        const alt = variantes.find(
+                          (va) =>
+                            va.disponible &&
+                            va.opciones.some(
+                              (oo) => oo.name === o.name && oo.value === v,
+                            ),
+                        );
+                        if (!alt) return intento;
+
+                        const ajuste = {...e};
+                        alt.opciones.forEach((oo) => (ajuste[oo.name] = oo.value));
+                        return ajuste;
+                      })
+                    }
                   >
                     {v}
                   </button>

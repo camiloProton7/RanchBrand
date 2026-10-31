@@ -512,7 +512,7 @@ export default function HomeNuevo() {
   const wrap = useRef(null);
   const hero = useRef(null);
   const [enCesta, setEnCesta] = useState(0);
-  const barraOculta = useHeaderScroll({alto: 120});
+  const {oculto: barraOculta, pegado: barraPegada} = useHeaderScroll({alto: 120});
 
   useEffect(() => {
     const leer = () => setEnCesta(getCartCount());
@@ -529,7 +529,13 @@ export default function HomeNuevo() {
         <section className="hn-hero" ref={hero}>
           <HeroBurn src="/hero-jinete.webp" wrapRef={wrap} alt="Jinete con gorra The Ranch a caballo" />
 
-          <header className={"hn-bar" + (barraOculta ? " is-oculto" : "")}>
+          <header
+            className={
+              'hn-bar' +
+              (barraPegada ? ' is-pegada' : '') +
+              (barraOculta ? ' is-oculto' : '')
+            }
+          >
             <MenuLateral />
             <Link to="/nuevo2" className="hn-logo" aria-label="The Ranch">
               <img src="/logo-crema.png" alt="The Ranch" width="92" height="33" />

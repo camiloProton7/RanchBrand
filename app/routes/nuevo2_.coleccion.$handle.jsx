@@ -166,7 +166,7 @@ export default function ColeccionNueva() {
   const [orden, setOrden] = useState('destacados');
   const heroRef = useRef(null);
   const [solido, setSolido] = useState(false);
-  const barraOculta = useHeaderScroll({alto: 90});
+  const {oculto: barraOculta} = useHeaderScroll({alto: 90});
   const [prog, setProg] = useState(0);
 
   useEffect(() => {

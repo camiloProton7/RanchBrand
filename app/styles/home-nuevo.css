@@ -144,6 +144,28 @@
   padding: calc(10px + env(safe-area-inset-top)) 16px 10px;
   color: #fdfaf3;
   opacity: calc(1 - var(--q) * 1.6);
+  transition:
+    transform 0.28s ease,
+    opacity 0.2s ease,
+    background-color 0.2s ease;
+}
+
+/* pasado el hero la barra se pega arriba para poder volver al subir */
+.hn-bar.is-pegada {
+  position: fixed;
+  opacity: 1;
+  color: var(--tinta);
+  background: #f7f2e7;
+  border-bottom: 1px solid #e4dbc9;
+  padding-top: 10px;
+}
+
+.hn-bar.is-pegada .hn-logo img {
+  content: url('/logo-tinta.png');
+}
+
+.hn-bar.is-oculto {
+  transform: translateY(-110%);
 }
 
 .hn-menu {
