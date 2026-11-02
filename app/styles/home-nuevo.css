@@ -5520,3 +5520,33 @@
   text-transform: uppercase;
   cursor: pointer;
 }
+
+/* la rebaja del sugerido tiene que verse de un vistazo */
+.an-precio {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.an-num {
+  font-family: 'Instrument Serif', Georgia, serif;
+  font-size: 18px;
+  color: #b34a2a;
+}
+
+.an-dto {
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: #b34a2a;
+  color: #fbf8f1;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+}
+
+.an-antes {
+  margin-left: 0;
+  font-size: 10.5px;
+  color: rgba(20, 17, 15, 0.4);
+}

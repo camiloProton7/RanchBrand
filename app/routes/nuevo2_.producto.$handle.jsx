@@ -74,7 +74,7 @@ const POR_HANDLE = `#graphql
       handle
       priceRange { minVariantPrice { amount currencyCode } }
       compareAtPriceRange { minVariantPrice { amount } }
-      variants(first: 1) { nodes { id availableForSale } }
+      variants(first: 30) { nodes { id availableForSale quantityAvailable } }
       images(first: 2) { nodes { url altText } }
       metafields(identifiers: [
         {namespace: "reviews", key: "rating"},
@@ -102,6 +102,41 @@ const DE_COLECCION = `#graphql
     }
   }
 `;
+
+/**
+ * Primera variante con unidades reales del producto que se empuja.
+ *
+ * El Storefront publico no expone el inventario y la tienda vende sin stock,
+ * asi que hay que preguntarle al Admin para no ofrecer una talla vacia.
+ */
+async function varianteConStock(context, handle) {
+  const token = context.env.SHOPIFY_ADMIN_TOKEN;
+  const dominio = context.env.PUBLIC_STORE_DOMAIN;
+  if (!token || !dominio) return '';
+
+  const consulta = `#graphql
+    query StockSugerido($handle: String!) {
+      productByHandle(handle: $handle) {
+        variants(first: 40) {
+          nodes { id inventoryQuantity }
+        }
+      }
+    }
+  `;
+
+  try {
+    const r = await fetch(`https://${dominio}/admin/api/2025-01/graphql.json`, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json', 'X-Shopify-Access-Token': token},
+      body: JSON.stringify({query: consulta, variables: {handle}}),
+    });
+    const d = await r.json();
+    const vs = d?.data?.productByHandle?.variants?.nodes || [];
+    return vs.find((v) => (v.inventoryQuantity ?? 0) > 0)?.id || '';
+  } catch {
+    return '';
+  }
+}
 
 export async function loader({params, context}) {
   const handle = params.handle;
@@ -169,7 +204,11 @@ export async function loader({params, context}) {
       imagen: optimizar(x.images.nodes[0]?.url, 440),
       img1: optimizar(x.images.nodes[0]?.url, 520),
       precioNum: Number(x.priceRange.minVariantPrice.amount),
-      varianteId: x.variants?.nodes?.[0]?.id || '',
+      varianteId:
+        x.variants?.nodes?.find((v) => (v.quantityAvailable ?? 0) > 0)?.id ||
+        x.variants?.nodes?.find((v) => v.availableForSale)?.id ||
+        x.variants?.nodes?.[0]?.id ||
+        '',
       imgs: x.images.nodes.map((n) => optimizar(n.url, 440)),
     };
   };
@@ -223,6 +262,10 @@ export async function loader({params, context}) {
   // para tener siempre su variante y poder sumarla en un toque
   const sp = await pedidoSugerido;
   let sugerido = sp?.product ? aTarjeta(sp.product) : null;
+  if (sugerido) {
+    const conStock = await varianteConStock(context, sugerido.handle);
+    if (conStock) sugerido.varianteId = conStock;
+  }
   if (!sugerido) sugerido = recos[0] || null;
 
   return {

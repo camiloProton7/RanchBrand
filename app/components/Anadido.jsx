@@ -9,6 +9,18 @@ import {Link} from 'react-router';
  * el pulgar ya está. Se monta en el body para que ningún contenedor con
  * transform la recorte.
  */
+function numero(txt) {
+  if (!txt) return 0;
+  return Number(String(txt).replace(/[^\d]/g, '')) || 0;
+}
+
+function rebaja(precio, antes) {
+  const a = numero(antes);
+  const p = numero(precio);
+  if (!a || !p || a <= p) return 0;
+  return Math.round((1 - p / a) * 100);
+}
+
 export default function Anadido({
   abierto,
   cerrar,
@@ -90,7 +102,10 @@ export default function Anadido({
                   {sugerido.titulo}
                 </Link>
                 <p className="an-precio">
-                  {sugerido.precio}
+                  <span className="an-num">{sugerido.precio}</span>
+                  {rebaja(sugerido.precio, sugerido.antes) > 0 && (
+                    <span className="an-dto">−{rebaja(sugerido.precio, sugerido.antes)}%</span>
+                  )}
                   {sugerido.antes && <span className="an-antes">antes {sugerido.antes}</span>}
                 </p>
                 <button
