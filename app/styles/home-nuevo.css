@@ -5316,7 +5316,7 @@
   position: relative;
   width: 100%;
   max-width: 460px;
-  padding: 8px 20px calc(20px + env(safe-area-inset-bottom));
+  padding: 8px 18px calc(18px + env(safe-area-inset-bottom));
   background: #fbf8f1;
   border-radius: 20px 20px 0 0;
   box-shadow: 0 -12px 40px rgba(20, 17, 15, 0.2);
@@ -5329,51 +5329,15 @@
   display: block;
   width: 34px;
   height: 3px;
-  margin: 0 auto 14px;
+  margin: 0 auto 12px;
   border-radius: 2px;
   background: rgba(20, 17, 15, 0.16);
 }
 
-.an-cabeza {
-  display: flex;
-  align-items: center;
-  gap: 9px;
-  padding-bottom: 14px;
-  border-bottom: 1px solid rgba(20, 17, 15, 0.09);
-}
-
-.an-tilde {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 22px;
-  height: 22px;
-  border-radius: 50%;
-  background: #b34a2a;
-  color: #fbf8f1;
-  flex: 0 0 auto;
-}
-
-.an-cabeza-txt { display: flex; flex-direction: column; gap: 1px; min-width: 0; flex: 1; }
-
-.an-cabeza-txt b {
-  font-size: 8.5px;
-  font-weight: 700;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: #b34a2a;
-}
-
-.an-cabeza-txt em {
-  font-style: normal;
-  font-size: 12.5px;
-  color: var(--tinta);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
 .an-cerrar {
+  position: absolute;
+  top: 14px;
+  right: 14px;
   width: 28px;
   height: 28px;
   border: 0;
@@ -5384,29 +5348,102 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  z-index: 2;
+}
+
+/* 1. lo que el cliente acaba de añadir */
+.an-agregado {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-right: 34px;
+}
+
+.an-tilde {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #b34a2a;
+  color: #fbf8f1;
   flex: 0 0 auto;
 }
 
-.an-rotulo {
-  margin: 15px 0 10px;
+.an-agregado-img {
+  flex: 0 0 auto;
+  width: 52px;
+  height: 52px;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #fff;
+  border: 1px solid rgba(20, 17, 15, 0.08);
+}
+
+.an-agregado-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+.an-agregado-txt { display: flex; flex-direction: column; gap: 1px; min-width: 0; }
+
+.an-agregado-txt b {
   font-size: 8.5px;
-  font-weight: 600;
-  letter-spacing: 0.22em;
+  font-weight: 700;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: var(--tierra);
+  color: #b34a2a;
+}
+
+.an-agregado-txt strong {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--tinta);
+  line-height: 1.2;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.an-agregado-txt em {
+  font-style: normal;
+  font-size: 11px;
+  color: rgba(20, 17, 15, 0.5);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* 2. el extra, en su propio bloque y rotulado como oferta */
+.an-extra {
+  margin-top: 14px;
+  padding: 13px;
+  border-radius: 14px;
+  background: #f4eee1;
+  border: 1px solid rgba(20, 17, 15, 0.06);
+}
+
+.an-extra-tit {
+  margin: 0 0 10px;
+  font-size: 10px;
+  letter-spacing: 0.03em;
+  color: rgba(20, 17, 15, 0.62);
+}
+
+.an-extra-tit b {
+  color: #b34a2a;
+  font-weight: 700;
 }
 
 .an-fila {
   display: flex;
-  align-items: stretch;
-  gap: 12px;
+  align-items: center;
+  gap: 11px;
 }
 
 .an-foto {
   flex: 0 0 auto;
-  width: 92px;
-  height: 92px;
-  border-radius: 10px;
+  width: 62px;
+  height: 62px;
+  border-radius: 9px;
   overflow: hidden;
   background: #fff;
   border: 1px solid rgba(20, 17, 15, 0.07);
@@ -5417,35 +5454,52 @@
 .an-datos {
   display: flex;
   flex-direction: column;
+  gap: 2px;
   min-width: 0;
   flex: 1;
 }
 
 .an-nombre {
-  font-family: 'Instrument Serif', Georgia, serif;
-  font-size: 17px;
-  line-height: 1.18;
+  font-size: 13.5px;
+  font-weight: 600;
+  line-height: 1.2;
   color: var(--tinta);
   text-decoration: none;
 }
 
 .an-precio {
-  margin: 3px 0 auto;
-  font-size: 12.5px;
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 0;
+}
+
+.an-num {
+  font-family: 'Instrument Serif', Georgia, serif;
+  font-size: 17px;
+  color: #b34a2a;
+}
+
+.an-dto {
+  padding: 2px 5px;
+  border-radius: 4px;
+  background: #b34a2a;
+  color: #fbf8f1;
+  font-size: 8.5px;
   font-weight: 700;
-  color: var(--tinta);
+  letter-spacing: 0.05em;
 }
 
 .an-antes {
-  margin-left: 7px;
   font-size: 10px;
-  font-weight: 400;
-  color: rgba(20, 17, 15, 0.36);
+  color: rgba(20, 17, 15, 0.42);
 }
 
 .an-add {
-  margin-top: 8px;
-  padding: 11px 14px;
+  width: 100%;
+  margin-top: 11px;
+  padding: 12px 14px;
   border: 0;
   border-radius: 999px;
   background: var(--tinta);
@@ -5462,13 +5516,46 @@
 .an-add.is-ok { background: #b34a2a; }
 .an-add:disabled { opacity: 0.9; cursor: default; }
 
+/* cuando la hoja viene de "comprar ahora", pagar manda y el extra es opcion */
+.an-hoja.is-pago .an-add {
+  background: transparent;
+  color: var(--tinta);
+  border: 1px solid rgba(20, 17, 15, 0.28);
+}
+
+.an-hoja.is-pago .an-add.is-ok {
+  background: rgba(179, 74, 42, 0.1);
+  color: #b34a2a;
+  border-color: rgba(179, 74, 42, 0.35);
+}
+
+.an-pagar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  width: 100%;
+  margin-top: 13px;
+  padding: 14px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--tinta);
+  color: #fbf8f1;
+  font-family: inherit;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
 .an-ver {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 7px;
-  margin-top: 14px;
-  padding-top: 13px;
+  margin-top: 11px;
+  padding-top: 12px;
   border-top: 1px solid rgba(20, 17, 15, 0.09);
   font-size: 11.5px;
   font-weight: 600;

@@ -693,7 +693,12 @@ export default function ProductoNuevo() {
           setAvisoAbierto(false);
           setSugeridoAnadido(false);
         }}
-        articulo={{titulo, img: fotos[0]}}
+        articulo={{
+          titulo,
+          img: fotos[0],
+          precio: variante?.precio || precio,
+          opciones: variante?.opciones?.map((o) => o.value).join(' · '),
+        }}
         sugerido={
           sugerido
             ? {
