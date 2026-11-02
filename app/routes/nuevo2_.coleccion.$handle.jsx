@@ -1,5 +1,6 @@
 import {useLoaderData, Link} from 'react-router';
 import styles from '~/styles/home-nuevo.css?url';
+import {recordar} from '~/lib/cache';
 import {useEffect, useMemo, useRef, useState} from 'react';
 import {Grid, Tarjeta} from '~/components/Tarjeta';
 import Sellos from '~/components/Sellos';
@@ -71,7 +72,7 @@ const OTRAS = `#graphql
   }
 `;
 
-export async function loader({params, context}) {
+async function cargarColeccion({params, context}) {
   const handle = params.handle;
   const fresco = import.meta.env.DEV ? {cache: context.storefront.CacheNone()} : undefined;
   const [data, otrasData] = await Promise.all([
@@ -155,6 +156,15 @@ export async function loader({params, context}) {
     desde: desde ? fmt.format(desde) : null,
     productos,
   };
+}
+
+/**
+ * La coleccion se guarda dos minutos: entrar y volver a una categoria no
+ * debe repetir las dos consultas a Shopify cada vez.
+ */
+export async function loader({params, context}) {
+  const handle = params.handle || '';
+  return recordar(`coleccion:${handle}`, 2, () => cargarColeccion({params, context}));
 }
 
 export const meta = ({data}) => [

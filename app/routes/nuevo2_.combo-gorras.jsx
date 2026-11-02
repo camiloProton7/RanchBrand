@@ -1,6 +1,7 @@
 import {Form, Link, useActionData, useLoaderData, useNavigation} from 'react-router';
 import {useEffect, useState} from 'react';
 import styles from '~/styles/home-nuevo.css?url';
+import {recordar} from '~/lib/cache';
 
 export const links = () => [{rel: 'stylesheet', href: styles}];
 
@@ -34,7 +35,7 @@ function esGorra(p) {
   );
 }
 
-export async function loader({context}) {
+async function cargarCombo({context}) {
   const opt = import.meta.env.DEV ? {cache: context.storefront.CacheNone()} : {cache: context.storefront.CacheShort()};
   const data = await context.storefront.query(QUERY, opt);
   const base = (data?.products?.nodes || [])
@@ -82,6 +83,14 @@ export async function loader({context}) {
     .filter((g) => g.stock === null || g.stock > 0);
 
   return {gorras};
+}
+
+/**
+ * El combo pregunta el inventario al Admin en cada visita, y eso no se
+ * cachea solo: se quedaba en 280 ms aun repitiendo. Dos minutos de memoria.
+ */
+export async function loader({context}) {
+  return recordar('combo-gorras', 2, () => cargarCombo({context}));
 }
 
 export async function action({request}) {
