@@ -1,5 +1,5 @@
 import {createPortal} from 'react-dom';
-import {useEffect} from 'react';
+import {useEffect, useRef} from 'react';
 import {Link} from 'react-router';
 
 /**
@@ -10,6 +10,19 @@ import {Link} from 'react-router';
  * transform la recorte.
  */
 export default function Anadido({abierto, cerrar, articulo, sugerido, onAnadir, anadiendo, yaAnadido}) {
+  // el toque que abre la hoja no debe cerrarla al instante: en movil el mismo
+  // gesto llega al fondo recien montado
+  const abiertoEn = useRef(0);
+
+  useEffect(() => {
+    if (abierto) abiertoEn.current = Date.now();
+  }, [abierto]);
+
+  function tocarFondo() {
+    if (Date.now() - abiertoEn.current < 350) return;
+    cerrar();
+  }
+
   useEffect(() => {
     if (!abierto) return;
     const alTeclear = (e) => {
@@ -26,7 +39,7 @@ export default function Anadido({abierto, cerrar, articulo, sugerido, onAnadir, 
   if (!abierto || typeof document === 'undefined') return null;
 
   return createPortal(
-    <div className="an-fondo" onClick={cerrar} role="presentation">
+    <div className="an-fondo" onClick={tocarFondo} role="presentation">
       <div
         className="an-hoja"
         onClick={(e) => e.stopPropagation()}
