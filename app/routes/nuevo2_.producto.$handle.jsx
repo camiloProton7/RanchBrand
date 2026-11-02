@@ -286,6 +286,7 @@ export default function ProductoNuevo() {
   // se llame solo "Talla", asi que se mira el contenido y no el nombre
   const valoresTalla = opcionTalla?.values || [];
   const numericas = valoresTalla.filter((v) => /^\d+([.,]\d+)?$/.test(String(v).trim()));
+  const opcionHorma = opciones.find((o) => /horma/i.test(o.name));
   const tipoGuia = opcionTalla
     ? numericas.length > valoresTalla.length / 2 ||
       /calzado|zapato/i.test(opcionTalla.name)
@@ -560,6 +561,7 @@ export default function ProductoNuevo() {
           cerrar={() => setGuiaAbierta(false)}
           tipo={tipoGuia}
           tallas={opcionTalla?.values || []}
+          hormaProducto={elegidas[opcionHorma?.name] || ''}
           onElegir={(v) => setElegidas((e) => ({...e, [opcionTalla.name]: v}))}
         />
       )}

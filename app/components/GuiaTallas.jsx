@@ -18,6 +18,8 @@ const ROPA = {
     {talla: 'L', alto: 179, peso: 79},
     {talla: 'XL', alto: 183, peso: 89},
     {talla: '2XL', alto: 188, peso: 100},
+    {talla: '3XL', alto: 192, peso: 112},
+    {talla: '4XL', alto: 195, peso: 124},
   ],
   Mujer: [
     {talla: 'S', alto: 159, peso: 51},
@@ -25,15 +27,25 @@ const ROPA = {
     {talla: 'L', alto: 169, peso: 67},
     {talla: 'XL', alto: 174, peso: 76},
     {talla: '2XL', alto: 179, peso: 87},
+    {talla: '3XL', alto: 183, peso: 98},
+    {talla: '4XL', alto: 187, peso: 110},
   ],
 };
 
-// largo del pie en centimetros contra talla colombiana
+// largo del pie en centimetros contra talla colombiana (infantil y adulto)
 const CALZADO = [
-  {cm: 22.5, talla: 35},
-  {cm: 23, talla: 36},
-  {cm: 23.5, talla: 37},
-  {cm: 24, talla: 38},
+  {cm: 17, talla: 27},
+  {cm: 17.5, talla: 28},
+  {cm: 18, talla: 29},
+  {cm: 18.5, talla: 30},
+  {cm: 19, talla: 31},
+  {cm: 19.5, talla: 32},
+  {cm: 20, talla: 33},
+  {cm: 21, talla: 34},
+  {cm: 21.5, talla: 35},
+  {cm: 22.5, talla: 36},
+  {cm: 23, talla: 37},
+  {cm: 23.5, talla: 38},
   {cm: 24.5, talla: 39},
   {cm: 25, talla: 40},
   {cm: 25.5, talla: 41},
@@ -41,6 +53,20 @@ const CALZADO = [
   {cm: 26.5, talla: 43},
   {cm: 27, talla: 44},
 ];
+
+/** Rango de centimetros que cubren las tallas que existen de verdad. */
+function rangoCalzado(tallas) {
+  const nums = tallas.map((t) => Number(t)).filter((n) => !Number.isNaN(n));
+  if (!nums.length) return {min: 22, max: 27.5};
+  const min = Math.min(...nums);
+  const max = Math.max(...nums);
+  const abajo = CALZADO.find((f) => f.talla === min);
+  const arriba = CALZADO.find((f) => f.talla === max);
+  return {
+    min: abajo ? abajo.cm : 22,
+    max: arriba ? arriba.cm : 27.5,
+  };
+}
 
 function tallaRopa(horma, alto, peso) {
   const tabla = ROPA[horma] || ROPA.Hombre;
@@ -57,10 +83,19 @@ function tallaRopa(horma, alto, peso) {
   return mejor.talla;
 }
 
-function tallaCalzado(cm) {
-  let mejor = CALZADO[0];
+function tallaCalzado(cm, tallas = []) {
+  // solo se ofrecen tallas que el producto tiene; si no hay lista, la tabla completa
+  const posibles = tallas
+    .map((t) => Number(t))
+    .filter((n) => !Number.isNaN(n));
+  const filas = posibles.length
+    ? CALZADO.filter((f) => posibles.includes(f.talla))
+    : CALZADO;
+  if (!filas.length) return '';
+
+  let mejor = filas[0];
   let mejorDist = Infinity;
-  for (const fila of CALZADO) {
+  for (const fila of filas) {
     const d = Math.abs(cm - fila.cm);
     if (d < mejorDist) {
       mejorDist = d;
@@ -110,13 +145,31 @@ function PieMedido({cm}) {
   );
 }
 
-export default function GuiaTallas({abierto, cerrar, tipo, tallas = [], onElegir}) {
+export default function GuiaTallas({
+  abierto,
+  cerrar,
+  tipo,
+  tallas = [],
+  hormaProducto = '',
+  onElegir,
+}) {
   const esCalzado = tipo === 'calzado';
 
-  const [horma, setHorma] = useState('Hombre');
+  const rango = useMemo(() => rangoCalzado(tallas), [tallas]);
+
+  const [horma, setHorma] = useState(hormaProducto || 'Hombre');
   const [alto, setAlto] = useState(174);
   const [peso, setPeso] = useState(70);
-  const [pie, setPie] = useState(25.5);
+  const [pie, setPie] = useState(() => (rango.min + rango.max) / 2);
+
+  // si el producto ya define la horma, la guia la respeta
+  useEffect(() => {
+    if (hormaProducto) setHorma(hormaProducto);
+  }, [hormaProducto]);
+
+  useEffect(() => {
+    setPie((rango.min + rango.max) / 2);
+  }, [rango.min, rango.max]);
 
   useEffect(() => {
     if (!abierto) return;
@@ -132,8 +185,8 @@ export default function GuiaTallas({abierto, cerrar, tipo, tallas = [], onElegir
   }, [abierto, cerrar]);
 
   const sugerida = useMemo(
-    () => (esCalzado ? tallaCalzado(pie) : tallaRopa(horma, alto, peso)),
-    [esCalzado, horma, alto, peso, pie],
+    () => (esCalzado ? tallaCalzado(pie, tallas) : tallaRopa(horma, alto, peso)),
+    [esCalzado, horma, alto, peso, pie, tallas],
   );
 
   const existe = tallas.some((t) => String(t) === String(sugerida));
@@ -170,8 +223,8 @@ export default function GuiaTallas({abierto, cerrar, tipo, tallas = [], onElegir
             </div>
             <input
               type="range"
-              min="22"
-              max="27.5"
+              min={rango.min}
+              max={rango.max}
               step="0.5"
               value={pie}
               onChange={(e) => setPie(Number(e.target.value))}
@@ -179,12 +232,13 @@ export default function GuiaTallas({abierto, cerrar, tipo, tallas = [], onElegir
               aria-label="Largo del pie en centímetros"
             />
             <div className="gt-escala">
-              <span>22 cm</span>
-              <span>27,5 cm</span>
+              <span>{rango.min} cm</span>
+              <span>{String(rango.max).replace('.', ',')} cm</span>
             </div>
           </div>
         ) : (
           <>
+            {!hormaProducto && (
             <div className="gt-hormas" role="group" aria-label="Horma">
               {Object.keys(ROPA).map((h) => (
                 <button
@@ -197,6 +251,7 @@ export default function GuiaTallas({abierto, cerrar, tipo, tallas = [], onElegir
                 </button>
               ))}
             </div>
+            )}
 
             <div className="gt-campo">
               <div className="gt-campo-head">
@@ -265,8 +320,9 @@ export default function GuiaTallas({abierto, cerrar, tipo, tallas = [], onElegir
         </div>
 
         <p className="gt-nota">
-          Es una orientación. Si quedas entre dos tallas, elige la mayor para
-          chaquetas y la tuya habitual para calzado.
+          {esCalzado
+            ? 'Mide con el pie apoyado y al final del día, cuando está un poco más hinchado. Si quedas entre dos números, elige el mayor.'
+            : 'Es una orientación. Si quedas entre dos tallas, elige la mayor: la prenda va pensada para llevar una capa debajo.'}
         </p>
       </div>
     </div>
