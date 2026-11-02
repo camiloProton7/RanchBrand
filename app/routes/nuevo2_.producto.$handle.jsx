@@ -6,6 +6,7 @@ import Sellos from '~/components/Sellos';
 import Carroza from '~/components/Carroza';
 import Buscador from '~/components/Buscador';
 import GuiaTallas from '~/components/GuiaTallas';
+import ResenasProducto from '~/components/ResenasProducto';
 import Anadido from '~/components/Anadido';
 import {handleImpulsado} from '~/data/impulsados';
 import {recordar} from '~/lib/cache';
@@ -678,6 +679,8 @@ export default function ProductoNuevo() {
           </Rail>
         </section>
       )}
+
+      <ResenasProducto handle={handle} titulo={titulo} />
 
       <Sellos />
       <Pie />

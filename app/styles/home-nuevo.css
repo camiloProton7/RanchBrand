@@ -5646,3 +5646,152 @@
 .hck {
   overflow-x: clip;
 }
+
+/* --- reseñas en la ficha --- */
+.hp-res {
+  padding: 40px 0 8px;
+  background: #f5f0e6;
+}
+
+.hp-res-cabeza {
+  padding: 0 20px 20px;
+}
+
+.hp-res-kicker {
+  margin: 0 0 8px;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: var(--tierra);
+}
+
+.hp-res-titulo {
+  margin: 0 0 14px;
+  font-family: 'Instrument Serif', Georgia, serif;
+  font-size: 27px;
+  font-weight: 400;
+  line-height: 1.08;
+  letter-spacing: -0.01em;
+  color: var(--tinta);
+}
+
+.hp-res-media {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin: 0;
+  flex-wrap: wrap;
+}
+
+.hp-res-nota {
+  font-family: 'Instrument Serif', Georgia, serif;
+  font-size: 30px;
+  line-height: 1;
+  color: var(--tinta);
+}
+
+.hp-res-est {
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  color: var(--tierra);
+}
+
+.hp-res-cuenta {
+  font-size: 10.5px;
+  color: rgba(20, 17, 15, 0.5);
+}
+
+.hp-res-lista {
+  display: flex;
+  gap: 11px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding: 2px 20px 20px;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+  scroll-padding-inline: 20px;
+}
+
+.hp-res-lista::-webkit-scrollbar { display: none; }
+
+.hp-res-card {
+  flex: 0 0 82%;
+  max-width: 300px;
+  scroll-snap-align: start;
+  display: flex;
+  flex-direction: column;
+  padding: 16px 16px 14px;
+  border-radius: 14px;
+  background: #fbf8f1;
+  border: 1px solid rgba(20, 17, 15, 0.07);
+  box-shadow: 0 2px 12px rgba(20, 17, 15, 0.04);
+}
+
+.hp-res-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 9px;
+}
+
+.hp-res-estrellas {
+  font-size: 10.5px;
+  letter-spacing: 0.16em;
+  color: var(--tierra);
+}
+
+.hp-res-verif {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 8.5px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(20, 17, 15, 0.38);
+}
+
+.hp-res-texto {
+  margin: 0 0 14px;
+  font-family: 'Instrument Serif', Georgia, serif;
+  font-size: 14.5px;
+  line-height: 1.42;
+  color: rgba(20, 17, 15, 0.82);
+}
+
+.hp-res-firma {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin-top: auto;
+  padding-top: 11px;
+  border-top: 1px solid rgba(20, 17, 15, 0.07);
+}
+
+.hp-res-thumb {
+  flex: 0 0 auto;
+  width: 34px;
+  height: 34px;
+  border-radius: 7px;
+  overflow: hidden;
+  background: #efe8db;
+}
+
+.hp-res-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+.hp-res-datos { display: flex; flex-direction: column; gap: 1px; min-width: 0; }
+
+.hp-res-autor {
+  font-size: 10.5px;
+  font-weight: 600;
+  color: var(--tinta);
+}
+
+.hp-res-prod {
+  font-size: 9.5px;
+  color: rgba(20, 17, 15, 0.45);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
