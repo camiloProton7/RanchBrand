@@ -5637,3 +5637,12 @@
   font-size: 10.5px;
   color: rgba(20, 17, 15, 0.4);
 }
+
+/* los carruseles sangran con margen negativo: el documento no debe estirarse
+   (clip y no hidden para no romper la barra fija) */
+.hp,
+.hn-root,
+.hc,
+.hck {
+  overflow-x: clip;
+}
