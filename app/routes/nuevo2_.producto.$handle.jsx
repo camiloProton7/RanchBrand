@@ -373,11 +373,6 @@ export default function ProductoNuevo() {
         opciones: variante.opciones?.map((o) => o.value).join(' · '),
         handle,
       });
-      window.dispatchEvent(
-        new CustomEvent('ranch-carroza', {
-          detail: {title: titulo, image: fotos[0]},
-        }),
-      );
       setAnadido(true);
       setAvisoAbierto(true);
       setTimeout(() => setAnadido(false), 4000);
@@ -398,11 +393,6 @@ export default function ProductoNuevo() {
       handle: sugerido.handle,
     });
     setSugeridoAnadido(true);
-    window.dispatchEvent(
-      new CustomEvent('ranch-carroza', {
-        detail: {title: sugerido.titulo, image: sugerido.img1 || sugerido.img},
-      }),
-    );
   }
 
   return (
