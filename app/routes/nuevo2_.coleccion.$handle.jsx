@@ -6,6 +6,7 @@ import Sellos from '~/components/Sellos';
 import Pie from '~/components/Pie';
 import MenuLateral from '~/components/MenuLateral';
 import Carroza from '~/components/Carroza';
+import Buscador from '~/components/Buscador';
 import {useHeaderScroll} from '~/lib/useHeaderScroll';
 
 export const links = () => [{rel: 'stylesheet', href: styles}];
@@ -203,6 +204,7 @@ export default function ColeccionNueva() {
           />
         </Link>
         <span className="hc-bolsa">
+          <Buscador tono="oscuro" />
           <Carroza />
         </span>
         <span className="hc-prog" style={{transform: `scaleX(${prog})`}} aria-hidden="true" />

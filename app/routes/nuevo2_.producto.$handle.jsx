@@ -4,7 +4,10 @@ import {useEffect, useMemo, useRef, useState} from 'react';
 import styles from '~/styles/home-nuevo.css?url';
 import Sellos from '~/components/Sellos';
 import Carroza from '~/components/Carroza';
+import Buscador from '~/components/Buscador';
 import GuiaTallas from '~/components/GuiaTallas';
+import Anadido from '~/components/Anadido';
+import {handleImpulsado} from '~/data/impulsados';
 import MenuLateral from '~/components/MenuLateral';
 import {useHeaderScroll} from '~/lib/useHeaderScroll';
 import {Rail, Tarjeta} from '~/components/Tarjeta';
@@ -63,6 +66,24 @@ const RECOS = `#graphql
   }
 `;
 
+const POR_HANDLE = `#graphql
+  query PorHandle($handle: String!) {
+    product(handle: $handle) {
+      id
+      title
+      handle
+      priceRange { minVariantPrice { amount currencyCode } }
+      compareAtPriceRange { minVariantPrice { amount } }
+      variants(first: 1) { nodes { id availableForSale } }
+      images(first: 2) { nodes { url altText } }
+      metafields(identifiers: [
+        {namespace: "reviews", key: "rating"},
+        {namespace: "reviews", key: "rating_count"}
+      ]) { key value }
+    }
+  }
+`;
+
 const DE_COLECCION = `#graphql
   query DeColeccion($handle: String!, $excluir: String!) {
     collection(handle: $handle) {
@@ -70,6 +91,7 @@ const DE_COLECCION = `#graphql
         nodes {
           id title handle
           priceRange { minVariantPrice { amount currencyCode } }
+          variants(first: 1) { nodes { id availableForSale } }
           images(first: 2) { nodes { url altText } }
           metafields(identifiers: [
             {namespace: "reviews", key: "rating"},
@@ -144,6 +166,10 @@ export async function loader({params, context}) {
         : null,
       valor: v,
       cuenta: Number(m.find((k) => k.key === 'rating_count')?.value) || 0,
+      imagen: optimizar(x.images.nodes[0]?.url, 440),
+      img1: optimizar(x.images.nodes[0]?.url, 520),
+      precioNum: Number(x.priceRange.minVariantPrice.amount),
+      varianteId: x.variants?.nodes?.[0]?.id || '',
       imgs: x.images.nodes.map((n) => optimizar(n.url, 440)),
     };
   };
@@ -184,8 +210,26 @@ export async function loader({params, context}) {
     }
   }
 
+  // pieza que se empuja en el aviso de compra: se pide directo por su handle
+  // para tener siempre su variante y poder sumarla en un toque
+  let sugerido = null;
+  const meta = handleImpulsado(cols[0], p.handle);
+  if (meta) {
+    try {
+      const sp = await context.storefront.query(POR_HANDLE, {
+        ...fresco,
+        variables: {handle: meta},
+      });
+      if (sp?.product) sugerido = aTarjeta(sp.product);
+    } catch {
+      sugerido = null;
+    }
+  }
+  if (!sugerido) sugerido = recos[0] || null;
+
   return {
     recos,
+    sugerido,
     id: p.id,
     titulo: p.title,
     handle: p.handle,
@@ -216,7 +260,7 @@ export async function loader({params, context}) {
 export const meta = ({data}) => [{title: `${data?.titulo ?? 'Producto'} · The Ranch`}];
 
 export default function ProductoNuevo() {
-  const {titulo, tipo, precio, valor, cuenta, fotos, opciones, variantes, handle, parrafos, recos} =
+  const {titulo, tipo, precio, valor, cuenta, fotos, opciones, variantes, handle, parrafos, recos, sugerido} =
     useLoaderData();
 
   const [foto, setFoto] = useState(0);
@@ -276,6 +320,8 @@ export default function ProductoNuevo() {
   const [anadiendo, setAnadiendo] = useState(false);
   const [anadido, setAnadido] = useState(false);
   const [enCesta, setEnCesta] = useState(0);
+  const [avisoAbierto, setAvisoAbierto] = useState(false);
+  const [sugeridoAnadido, setSugeridoAnadido] = useState(false);
   const {oculto: barraOculta} = useHeaderScroll({alto: 90});
 
   // la guia cambia segun lo que se elige: numero de calzado o talla de prenda
@@ -333,10 +379,30 @@ export default function ProductoNuevo() {
         }),
       );
       setAnadido(true);
+      setAvisoAbierto(true);
       setTimeout(() => setAnadido(false), 4000);
     } finally {
       setAnadiendo(false);
     }
+  }
+
+  function agregarSugerido() {
+    if (!sugerido || sugeridoAnadido) return;
+    addToCart({
+      variantId: sugerido.varianteId,
+      qty: 1,
+      title: sugerido.titulo,
+      image: sugerido.img1 || sugerido.img,
+      price: sugerido.precioNum,
+      precioTexto: sugerido.precio,
+      handle: sugerido.handle,
+    });
+    setSugeridoAnadido(true);
+    window.dispatchEvent(
+      new CustomEvent('ranch-carroza', {
+        detail: {title: sugerido.titulo, image: sugerido.img1 || sugerido.img},
+      }),
+    );
   }
 
   return (
@@ -344,7 +410,10 @@ export default function ProductoNuevo() {
       <div className={"hp-bar" + (barraOculta ? " is-oculto" : "")}>
         <MenuLateral tono="tinta" />
         <Link to="/nuevo2" className="hp-logo" aria-label="The Ranch, ir al inicio"><img src="/logo-tinta.png" alt="The Ranch" width="78" /></Link>
-        <span className="hp-bolsa"><Carroza /></span>
+        <span className="hp-bolsa">
+          <Buscador tono="oscuro" />
+          <Carroza />
+        </span>
       </div>
 
       <section className="hp-galeria">
@@ -554,6 +623,30 @@ export default function ProductoNuevo() {
               : 'Agotada'}
         </button>
       </div>
+
+      <Anadido
+        abierto={avisoAbierto}
+        cerrar={() => {
+          setAvisoAbierto(false);
+          setSugeridoAnadido(false);
+        }}
+        articulo={{titulo, img: fotos[0]}}
+        sugerido={
+          sugerido
+            ? {
+                handle: sugerido.handle,
+                titulo: sugerido.titulo,
+                img: sugerido.img1 || sugerido.img,
+                precio: sugerido.precio,
+                antes: sugerido.antes,
+                varianteId: sugerido.varianteId,
+              }
+            : null
+        }
+        onAnadir={agregarSugerido}
+        anadiendo={false}
+        yaAnadido={sugeridoAnadido}
+      />
 
       {tipoGuia && (
         <GuiaTallas

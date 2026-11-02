@@ -4,6 +4,7 @@ import styles from '~/styles/home-nuevo.css?url';
 import {getCartCount} from '~/lib/cart';
 import HeroBurn from '~/components/HeroBurn';
 import Carroza from '~/components/Carroza';
+import Buscador from '~/components/Buscador';
 import MenuLateral from '~/components/MenuLateral';
 import {useHeaderScroll} from '~/lib/useHeaderScroll';
 import Lienzo from '~/components/Lienzo';
@@ -537,6 +538,7 @@ export default function HomeNuevo() {
           <img src={barraPegada ? '/logo-tinta.png' : '/logo-crema.png'} alt="The Ranch" width="92" height="33" />
         </Link>
         <span className="hn-bag">
+          <Buscador tono={barraPegada ? 'oscuro' : 'claro'} />
           <Carroza />
         </span>
       </header>
