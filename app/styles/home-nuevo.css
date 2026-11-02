@@ -4788,9 +4788,10 @@
 }
 
 .hp-barra-precio strong {
-  font-family: 'Instrument Serif', Georgia, serif;
-  font-size: 19px;
-  font-weight: 400;
+  font-family: inherit;
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
   line-height: 1.1;
   color: var(--tinta);
   white-space: nowrap;
