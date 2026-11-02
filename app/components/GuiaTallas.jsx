@@ -70,6 +70,46 @@ function tallaCalzado(cm) {
   return mejor.talla;
 }
 
+/** Dibujo del pie visto desde arriba con la cota del largo. */
+function PieMedido({cm}) {
+  // el pie crece con la medida: 22 cm se ve corto, 27,5 se ve largo
+  const f = 0.86 + ((cm - 22) / 5.5) * 0.28;
+  const largo = 150 * f;
+  const x0 = 26;
+  const x1 = x0 + largo;
+  const y = 46;
+
+  return (
+    <svg className="gt-pie" viewBox="0 0 210 108" role="img" aria-label={`Pie de ${cm} centímetros`}>
+      {/* pie de perfil: talon, empeine y dedos sobre la linea de suelo */}
+      <g transform={`translate(${x0} 0) scale(${f} 1)`} fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M8 78c-2-18 4-28 16-32 12-4 24-5 36-9 16-6 32-11 48-11 14 0 26 6 32 16 5 8 7 16 5 24-2 8-10 12-20 13H28" />
+        <path d="M8 78h152" strokeWidth="1.1" opacity="0.35" />
+        <path d="M148 34c6 2 10 7 11 13" opacity="0.4" />
+        <path d="M138 55c4 3 7 7 8 12" opacity="0.3" />
+      </g>
+
+      {/* cota: talon a punta */}
+      <g stroke="currentColor" strokeWidth="1.2" opacity="0.9">
+        <path d={`M${x0} ${y - 26}v-9`} />
+        <path d={`M${x1} ${y - 26}v-9`} />
+        <path d={`M${x0} ${y - 30}h${largo}`} strokeDasharray="3 3" />
+        <path d={`M${x0} ${y - 30}l5-3v6z`} fill="currentColor" stroke="none" />
+        <path d={`M${x1} ${y - 30}l-5-3v6z`} fill="currentColor" stroke="none" />
+      </g>
+
+      <text
+        x={(x0 + x1) / 2}
+        y={y - 36}
+        textAnchor="middle"
+        className="gt-pie-texto"
+      >
+        {cm.toFixed(1).replace('.', ',')} cm
+      </text>
+    </svg>
+  );
+}
+
 export default function GuiaTallas({abierto, cerrar, tipo, tallas = [], onElegir}) {
   const esCalzado = tipo === 'calzado';
 
@@ -123,6 +163,7 @@ export default function GuiaTallas({abierto, cerrar, tipo, tallas = [], onElegir
 
         {esCalzado ? (
           <div className="gt-campo">
+            <PieMedido cm={pie} />
             <div className="gt-campo-head">
               <span>Largo del pie</span>
               <strong>{pie.toFixed(1).replace('.', ',')} cm</strong>
