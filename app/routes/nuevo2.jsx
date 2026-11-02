@@ -525,25 +525,25 @@ export default function HomeNuevo() {
 
   return (
     <div className="hn-root">
+      <header
+        className={
+          'hn-bar' +
+          (barraPegada ? ' is-pegada' : '') +
+          (barraOculta ? ' is-oculto' : '')
+        }
+      >
+        <MenuLateral />
+        <Link to="/nuevo2" className="hn-logo" aria-label="The Ranch">
+          <img src={barraPegada ? '/logo-tinta.png' : '/logo-crema.png'} alt="The Ranch" width="92" height="33" />
+        </Link>
+        <span className="hn-bag">
+          <Carroza />
+        </span>
+      </header>
+
       <div className="hn-wrap" ref={wrap}>
         <section className="hn-hero" ref={hero}>
           <HeroBurn src="/hero-jinete.webp" wrapRef={wrap} alt="Jinete con gorra The Ranch a caballo" />
-
-          <header
-            className={
-              'hn-bar' +
-              (barraPegada ? ' is-pegada' : '') +
-              (barraOculta ? ' is-oculto' : '')
-            }
-          >
-            <MenuLateral />
-            <Link to="/nuevo2" className="hn-logo" aria-label="The Ranch">
-              <img src="/logo-crema.png" alt="The Ranch" width="92" height="33" />
-            </Link>
-            <span className="hn-bag">
-              <Carroza />
-            </span>
-          </header>
 
           <div className="hn-bottom">
             <h1 className="hn-title">

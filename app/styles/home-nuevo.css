@@ -133,17 +133,16 @@
 
 /* ---------- barra superior ---------- */
 .hn-bar {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   right: 0;
-  z-index: 6;
+  z-index: 60;
   display: grid;
   grid-template-columns: 44px 1fr 44px;
   align-items: center;
   padding: calc(10px + env(safe-area-inset-top)) 16px 10px;
   color: #fdfaf3;
-  opacity: calc(1 - var(--q) * 1.6);
   transition:
     transform 0.28s ease,
     opacity 0.2s ease,
@@ -153,6 +152,7 @@
 /* pasado el hero la barra se pega arriba para poder volver al subir */
 .hn-bar.is-pegada {
   position: fixed;
+  z-index: 60;
   opacity: 1;
   color: var(--tinta);
   background: #f7f2e7;
@@ -160,9 +160,7 @@
   padding-top: 10px;
 }
 
-.hn-bar.is-pegada .hn-logo img {
-  content: url('/logo-tinta.png');
-}
+
 
 .hn-bar.is-oculto {
   transform: translateY(-110%);
@@ -2725,7 +2723,7 @@
   top: 0;
   left: 0;
   right: 0;
-  z-index: 30;
+  z-index: 50;
   display: grid;
   grid-template-columns: 40px 1fr 40px;
   align-items: center;
@@ -3285,7 +3283,7 @@
 .hp-bar {
   position: sticky;
   top: 0;
-  z-index: 30;
+  z-index: 50;
   display: grid;
   grid-template-columns: 40px 1fr 40px;
   align-items: center;
