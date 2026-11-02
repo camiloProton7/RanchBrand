@@ -1,6 +1,6 @@
 import {useEffect, useRef, useState} from 'react';
 import {createPortal} from 'react-dom';
-import {Link, useNavigate} from 'react-router';
+import {Link} from 'react-router';
 
 const CATEGORIAS = [
   {titulo: 'Gorras', handle: 'gorras'},
@@ -28,7 +28,6 @@ export default function Buscador({tono = 'claro'}) {
   const [cargando, setCargando] = useState(false);
   const [recientes, setRecientes] = useState([]);
   const caja = useRef(null);
-  const ir = useNavigate();
 
   useEffect(() => {
     if (abierto) {
@@ -85,7 +84,6 @@ export default function Buscador({tono = 'claro'}) {
     guardar(p.titulo);
     setAbierto(false);
     setTexto('');
-    ir(`/nuevo2/producto/${p.handle}`);
   }
 
   const hayTexto = texto.trim().length >= 2;
@@ -178,7 +176,13 @@ export default function Buscador({tono = 'claro'}) {
               {hayTexto && !cargando && datos.productos.length > 0 && (
                 <div className="bs-resultados">
                   {datos.productos.map((p) => (
-                    <button key={p.id} type="button" className="bs-item" onClick={() => abrirProducto(p)}>
+                    <Link
+                      key={p.id}
+                      to={`/nuevo2/producto/${p.handle}`}
+                      prefetch="intent"
+                      className="bs-item"
+                      onClick={() => abrirProducto(p)}
+                    >
                       <span className="bs-item-img">
                         {p.img ? <img src={p.img} alt={p.titulo} loading="lazy" /> : <i />}
                       </span>
@@ -189,7 +193,7 @@ export default function Buscador({tono = 'claro'}) {
                           {p.antes && <s className="bs-antes">antes {p.antes}</s>}
                         </em>
                       </span>
-                    </button>
+                    </Link>
                   ))}
                 </div>
               )}

@@ -12,12 +12,22 @@ export const IMPULSADOS = {
   camisetas: ['camisa-outdoor-the-ranch', 'camisa-tipo-polo'],
   'botas-1': ['botas-gamuza-lariat', 'botas-chelsea'],
 
-  // si la colección no está en la lista
-  respaldo: ['gorra-1'],
 };
 
-/** Devuelve el handle a impulsar para la colección del producto actual. */
-export function handleImpulsado(coleccion, handleActual) {
-  const lista = IMPULSADOS[coleccion] || IMPULSADOS.respaldo;
-  return lista.find((h) => h && h !== handleActual) || '';
+/**
+ * Devuelve el handle a impulsar para el producto actual.
+ *
+ * Recorre sus colecciones en orden. Si ninguna tiene una pieza configurada
+ * devuelve vacío a propósito: así se toma la primera de la misma colección
+ * antes que meter una gorra en la ficha de unas botas.
+ */
+export function handleImpulsado(colecciones, handleActual) {
+  const lista = Array.isArray(colecciones) ? colecciones : [colecciones];
+  for (const c of lista) {
+    const config = IMPULSADOS[c];
+    if (!config) continue;
+    const h = config.find((x) => x && x !== handleActual);
+    if (h) return h;
+  }
+  return '';
 }

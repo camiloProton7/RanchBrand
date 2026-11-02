@@ -5261,6 +5261,8 @@
   background: none;
   text-align: left;
   cursor: pointer;
+  color: inherit;
+  text-decoration: none;
 }
 
 .bs-item-img {

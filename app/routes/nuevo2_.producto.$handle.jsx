@@ -180,6 +180,15 @@ export async function loader({params, context}) {
   let recos = [];
   const cols = (p.collections?.nodes || []).map((c) => c.handle).filter(Boolean);
 
+  // El producto que se empuja se pide a la vez que los recomendados: en
+  // serie sumaba un viaje mas a Shopify y la ficha se sentia lenta.
+  const meta = handleImpulsado(cols, p.handle);
+  const pedidoSugerido = meta
+    ? context.storefront
+        .query(POR_HANDLE, {...fresco, variables: {handle: meta}})
+        .catch(() => null)
+    : Promise.resolve(null);
+
   // Primero la coleccion visible del producto (una sola llamada). Si esa
   // coleccion esta archivada o vacia, se prueba la siguiente y, como ultimo
   // recurso, productRecommendations.
@@ -212,19 +221,8 @@ export async function loader({params, context}) {
 
   // pieza que se empuja en el aviso de compra: se pide directo por su handle
   // para tener siempre su variante y poder sumarla en un toque
-  let sugerido = null;
-  const meta = handleImpulsado(cols[0], p.handle);
-  if (meta) {
-    try {
-      const sp = await context.storefront.query(POR_HANDLE, {
-        ...fresco,
-        variables: {handle: meta},
-      });
-      if (sp?.product) sugerido = aTarjeta(sp.product);
-    } catch {
-      sugerido = null;
-    }
-  }
+  const sp = await pedidoSugerido;
+  let sugerido = sp?.product ? aTarjeta(sp.product) : null;
   if (!sugerido) sugerido = recos[0] || null;
 
   return {
