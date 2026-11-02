@@ -334,10 +334,10 @@ export async function loader({context}) {
     handle: p.handle,
     precio: fmt.format(Number(p.priceRange.minVariantPrice.amount)),
     antes: Number(p.compareAtPriceRange?.minVariantPrice?.amount) > 0 &&
-      Number(p.compareAtPriceRange.minVariantPrice.amount) !== Number(p.priceRange.minVariantPrice.amount)
+      Number(p.compareAtPriceRange.minVariantPrice.amount) > Number(p.priceRange.minVariantPrice.amount)
       ? fmt.format(Number(p.compareAtPriceRange.minVariantPrice.amount))
       : null,
-    imgs: p.images.nodes.map((n) => optimizar(n.url, 420)),
+    imgs: p.images.nodes.slice(0, 2).map((n) => optimizar(n.url, 420)),
     img1: optimizar(p.images.nodes[0]?.url, 420),
     img2: optimizar(p.images.nodes[1]?.url || p.images.nodes[0]?.url, 420),
     desc: (p.description || '').replace(/\s+/g, ' ').trim().slice(0, 165),
@@ -350,10 +350,10 @@ export async function loader({context}) {
     handle: p.handle,
     precio: fmt.format(Number(p.priceRange.minVariantPrice.amount)),
     antes: Number(p.compareAtPriceRange?.minVariantPrice?.amount) > 0 &&
-      Number(p.compareAtPriceRange.minVariantPrice.amount) !== Number(p.priceRange.minVariantPrice.amount)
+      Number(p.compareAtPriceRange.minVariantPrice.amount) > Number(p.priceRange.minVariantPrice.amount)
       ? fmt.format(Number(p.compareAtPriceRange.minVariantPrice.amount))
       : null,
-    imgs: p.images.nodes.map((n) => optimizar(n.url, 420)),
+    imgs: p.images.nodes.slice(0, 2).map((n) => optimizar(n.url, 420)),
     img1: optimizar(p.images.nodes[0]?.url, 420),
     img2: optimizar(p.images.nodes[1]?.url || p.images.nodes[0]?.url, 420),
     desc: (p.description || '').replace(/\s+/g, ' ').trim().slice(0, 165),
@@ -368,7 +368,7 @@ export async function loader({context}) {
       titulo: p.title,
       handle: p.handle,
       desc: (p.description || '').replace(/\s+/g, ' ').trim().slice(0, 165),
-      imgs: p.images.nodes.map((n) => optimizar(n.url, 420)),
+      imgs: p.images.nodes.slice(0, 2).map((n) => optimizar(n.url, 420)),
       variantId: v.id,
       precio: fmt.format(Number(v.price.amount)),
       precioNum: Number(v.price.amount),
@@ -407,7 +407,7 @@ export async function loader({context}) {
           const dos = frases.slice(0, 2).join(' ').replace(/\s+/g, ' ').trim();
           return dos.length > 40 ? dos : t.slice(0, 170);
         })(),
-        imgs: w.images.nodes.map((n) => optimizar(n.url, 900)),
+        imgs: w.images.nodes.slice(0, 2).map((n) => optimizar(n.url, 900)),
         recorte: '/windsor-recorte.webp',
         ...estrellas(w.metafields),
       }
@@ -421,10 +421,10 @@ export async function loader({context}) {
       handle: p.handle,
       precio: fmt.format(Number(p.priceRange.minVariantPrice.amount)),
     antes: Number(p.compareAtPriceRange?.minVariantPrice?.amount) > 0 &&
-      Number(p.compareAtPriceRange.minVariantPrice.amount) !== Number(p.priceRange.minVariantPrice.amount)
+      Number(p.compareAtPriceRange.minVariantPrice.amount) > Number(p.priceRange.minVariantPrice.amount)
       ? fmt.format(Number(p.compareAtPriceRange.minVariantPrice.amount))
       : null,
-      imgs: p.images.nodes.map((n) => optimizar(n.url, 440)),
+      imgs: p.images.nodes.slice(0, 2).map((n) => optimizar(n.url, 440)),
       desc: (p.description || '').replace(/\s+/g, ' ').trim().slice(0, 165),
       unidades: 0,
       ...estrellas(p.metafields),
@@ -467,7 +467,7 @@ export async function loader({context}) {
           const dos = frases.slice(0, 2).join(' ').replace(/\s+/g, ' ').trim();
           return dos.length > 40 ? dos : t.slice(0, 170);
         })(),
-        imgs: b.images.nodes.map((n) => optimizar(n.url, 900)),
+        imgs: b.images.nodes.slice(0, 2).map((n) => optimizar(n.url, 900)),
         ...estrellas(b.metafields),
       }
     : null;
@@ -486,10 +486,10 @@ export async function loader({context}) {
       handle: p.handle,
       precio: fmt.format(Number(p.priceRange.minVariantPrice.amount)),
     antes: Number(p.compareAtPriceRange?.minVariantPrice?.amount) > 0 &&
-      Number(p.compareAtPriceRange.minVariantPrice.amount) !== Number(p.priceRange.minVariantPrice.amount)
+      Number(p.compareAtPriceRange.minVariantPrice.amount) > Number(p.priceRange.minVariantPrice.amount)
       ? fmt.format(Number(p.compareAtPriceRange.minVariantPrice.amount))
       : null,
-      imgs: p.images.nodes.map((n) => optimizar(n.url, 420)),
+      imgs: p.images.nodes.slice(0, 2).map((n) => optimizar(n.url, 420)),
       img1: optimizar(p.images.nodes[0]?.url, 440),
       img2: optimizar(p.images.nodes[1]?.url || p.images.nodes[0]?.url, 440),
       desc: (p.description || '').replace(/\s+/g, ' ').trim().slice(0, 165),

@@ -197,7 +197,7 @@ async function cargarProducto({params, context}) {
       handle: x.handle,
       precio: fmt.format(Number(x.priceRange.minVariantPrice.amount)),
       antes: Number(x.compareAtPriceRange?.minVariantPrice?.amount) > 0 &&
-        Number(x.compareAtPriceRange.minVariantPrice.amount) !== Number(x.priceRange.minVariantPrice.amount)
+        Number(x.compareAtPriceRange.minVariantPrice.amount) > Number(x.priceRange.minVariantPrice.amount)
         ? fmt.format(Number(x.compareAtPriceRange.minVariantPrice.amount))
         : null,
       valor: v,
@@ -210,7 +210,7 @@ async function cargarProducto({params, context}) {
         x.variants?.nodes?.find((v) => v.availableForSale)?.id ||
         x.variants?.nodes?.[0]?.id ||
         '',
-      imgs: x.images.nodes.map((n) => optimizar(n.url, 440)),
+      imgs: x.images.nodes.slice(0, 2).map((n) => optimizar(n.url, 440)),
     };
   };
 
@@ -558,14 +558,14 @@ export default function ProductoNuevo() {
 
         <div className="hp-linea">
           <span className="hp-precio">{variante?.precio || precio}</span>
-          {variante?.antes && (
+          {variante?.antes &&
+            Number(variante.antes.replace(/[^\d]/g, '')) > variante.precioNum && (
             <>
               <span className="hp-antes">{variante.antes}</span>
               <span className="hp-dto">
                 {(() => {
                   const antesNum = Number(variante.antes.replace(/[^\d]/g, ''));
-                  const pct = Math.round((1 - variante.precioNum / antesNum) * 100);
-                  return pct > 0 ? `−${pct}%` : `+${Math.abs(pct)}%`;
+                  return `−${Math.round((1 - variante.precioNum / antesNum) * 100)}%`;
                 })()}
               </span>
             </>

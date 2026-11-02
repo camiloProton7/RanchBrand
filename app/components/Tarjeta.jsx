@@ -10,7 +10,8 @@ export function Grid({children, className = ''}) {
 }
 
 export function Tarjeta({p, prioridad = false, badge, ancha = false, ruta = '/nuevo2/producto/'}) {
-  const fotos = p.imgs?.length ? p.imgs : [p.img1].filter(Boolean);
+  // dos como maximo: la de reposo y la del hover
+  const fotos = (p.imgs?.length ? p.imgs : [p.img1].filter(Boolean)).slice(0, 2);
   const [idx, setIdx] = useState(0);
 
   return (

@@ -127,7 +127,9 @@ async function cargarColeccion({params, context}) {
         : null,
       valor,
       cuenta,
-      imgs: p.images.nodes.map((x) => optimizar(x.url, 420)),
+      // solo la principal y la del hover: la grilla traia las cuatro fotos de
+      // cada producto y bajaba 1,9 MB aunque solo se viera la primera
+      imgs: p.images.nodes.slice(0, 2).map((x) => optimizar(x.url, 420)),
       grande: p.images.nodes[0] ? optimizar(p.images.nodes[0].url, 1100) : null,
     };
   });

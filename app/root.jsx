@@ -47,8 +47,6 @@ export function links() {
       href: 'https://shop.app',
     },
     {rel: 'icon', type: 'image/png', href: '/favicon.png'},
-    {rel: 'stylesheet', href: siteHeaderStyles},
-    {rel: 'stylesheet', href: footerStyles},
   ];
 }
 
@@ -100,6 +98,13 @@ export async function loader(args) {
  */
 export function Layout({children}) {
   const nonce = useNonce();
+  // la pagina nueva trae su propia hoja: cargar encima tailwind, reset,
+  // app, header y pie del tema viejo eran 900 ms de CSS que no se usa
+  const {pathname} = useLocation();
+  const esNuevo =
+    pathname.startsWith('/nuevo2') ||
+    pathname.startsWith('/nuevo') ||
+    pathname.startsWith('/explorar');
 
   return (
     <html lang="en">
@@ -111,9 +116,15 @@ export function Layout({children}) {
         <link rel="dns-prefetch" href="https://cdn.shopify.com" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link rel="stylesheet" href={tailwindCss}></link>
-        <link rel="stylesheet" href={resetStyles}></link>
-        <link rel="stylesheet" href={appStyles}></link>
+        {!esNuevo && (
+          <>
+            <link rel="stylesheet" href={tailwindCss} />
+            <link rel="stylesheet" href={resetStyles} />
+            <link rel="stylesheet" href={appStyles} />
+            <link rel="stylesheet" href={siteHeaderStyles} />
+            <link rel="stylesheet" href={footerStyles} />
+          </>
+        )}
         <Meta />
         <Links />
       </head>
