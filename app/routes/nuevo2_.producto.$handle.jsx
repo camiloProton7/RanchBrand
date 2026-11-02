@@ -4,6 +4,7 @@ import {useEffect, useMemo, useRef, useState} from 'react';
 import styles from '~/styles/home-nuevo.css?url';
 import Sellos from '~/components/Sellos';
 import Carroza from '~/components/Carroza';
+import GuiaTallas from '~/components/GuiaTallas';
 import MenuLateral from '~/components/MenuLateral';
 import {useHeaderScroll} from '~/lib/useHeaderScroll';
 import {Rail, Tarjeta} from '~/components/Tarjeta';
@@ -269,12 +270,28 @@ export default function ProductoNuevo() {
     mejor.opciones.forEach((o) => (inicial[o.name] = o.value));
     return inicial;
   });
+  const [guiaAbierta, setGuiaAbierta] = useState(false);
   const botonCompra = useRef(null);
   const [barraAbajo, setBarraAbajo] = useState(false);
   const [anadiendo, setAnadiendo] = useState(false);
   const [anadido, setAnadido] = useState(false);
   const [enCesta, setEnCesta] = useState(0);
   const {oculto: barraOculta} = useHeaderScroll({alto: 90});
+
+  // la guia cambia segun lo que se elige: numero de calzado o talla de prenda
+  const opcionTalla = opciones.find(
+    (o) => o.values.length > 1 && /talla/i.test(o.name),
+  );
+  // las tallas de calzado llegan como numeros (37, 38...) aunque la opcion
+  // se llame solo "Talla", asi que se mira el contenido y no el nombre
+  const valoresTalla = opcionTalla?.values || [];
+  const numericas = valoresTalla.filter((v) => /^\d+([.,]\d+)?$/.test(String(v).trim()));
+  const tipoGuia = opcionTalla
+    ? numericas.length > valoresTalla.length / 2 ||
+      /calzado|zapato/i.test(opcionTalla.name)
+      ? 'calzado'
+      : 'ropa'
+    : null;
 
   // la barra de compra solo aparece cuando el boton grande ya no se ve
   useEffect(() => {
@@ -415,7 +432,18 @@ export default function ProductoNuevo() {
 
         {opciones.filter((o) => o.values.length > 1).map((o) => (
           <div key={o.name} className="hp-opcion">
-            <p className="hp-opcion-nombre">{o.name}</p>
+            <div className="hp-opcion-head">
+              <p className="hp-opcion-nombre">{o.name}</p>
+              {tipoGuia && o === opcionTalla && (
+                <button
+                  type="button"
+                  className="hp-guia-link"
+                  onClick={() => setGuiaAbierta(true)}
+                >
+                  Guía de tallas
+                </button>
+              )}
+            </div>
             <div className="hp-chips">
               {o.values.map((v) => {
                 const hay = variantes.some(
@@ -525,6 +553,16 @@ export default function ProductoNuevo() {
               : 'Agotada'}
         </button>
       </div>
+
+      {tipoGuia && (
+        <GuiaTallas
+          abierto={guiaAbierta}
+          cerrar={() => setGuiaAbierta(false)}
+          tipo={tipoGuia}
+          tallas={opcionTalla?.values || []}
+          onElegir={(v) => setElegidas((e) => ({...e, [opcionTalla.name]: v}))}
+        />
+      )}
 
     </div>
   );
