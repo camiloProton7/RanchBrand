@@ -284,7 +284,9 @@ async function cargarProducto({params, context}) {
     precioNum: Number(p.priceRange.minVariantPrice.amount),
     valor,
     cuenta,
-    fotos: p.images.nodes.map((n) => optimizar(n.url, 720)),
+    // la primera a 720 (es la que se ve al entrar); el resto a 440, que en
+    // un movil de 390 px se ve igual y pesa casi la mitad
+    fotos: p.images.nodes.map((n, i) => optimizar(n.url, i === 0 ? 720 : 440)),
     opciones: p.options,
     variantes: p.variants.nodes.map((v) => ({
       id: v.id,
