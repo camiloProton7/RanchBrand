@@ -2,6 +2,7 @@ import {useEffect, useRef, useState} from 'react';
 import {Link, useLoaderData} from 'react-router';
 import styles from '~/styles/home-nuevo.css?url';
 import {getCartCount} from '~/lib/cart';
+import {recordar} from '~/lib/cache';
 import HeroBurn from '~/components/HeroBurn';
 import Carroza from '~/components/Carroza';
 import Buscador from '~/components/Buscador';
@@ -234,9 +235,10 @@ export async function loader({context}) {
   const unidades = new Map();
   const titulos = new Map();
 
-  // el ranking de pedidos va en paralelo con el catálogo:
-  // antes se esperaba a que terminara y el home tardaba 1,1 s
-  const ranking = (async () => {
+  // el ranking de pedidos va en paralelo con el catálogo.
+  // Es una función y no una promesa suelta: si el catálogo viene del caché
+  // no tiene sentido ir a pedir los pedidos otra vez.
+  const calcularRanking = async () => {
   if (dominio && token) {
     let cursor = null;
     try {
@@ -269,43 +271,53 @@ export async function loader({context}) {
     }
   }
 
-  })().catch(() => {});
+  };
 
+  // El catalogo del home se guarda 3 minutos: son siete consultas que no
+  // cambian entre un toque y otro, y sin esto cada vuelta al inicio las
+  // volvia a pedir todas.
   const [gorrasData, chaquetasData, comboData, windsorData, camisasData, catsData, botasData] =
-    await Promise.all([
-      context.storefront.query(GORRAS, fresco),
-      context.storefront.query(CHAQUETAS, fresco),
-      context.storefront.query(COMBO, fresco),
-      context.storefront.query(WINDSOR, fresco),
-      context.storefront.query(CAMISAS, fresco),
-      context.storefront.query(CATEGORIAS, fresco),
-      context.storefront.query(BOTAS, fresco),
-      ranking,
-    ]);
+    await recordar('home-catalogo', 3, async () =>
+      Promise.all([
+        context.storefront.query(GORRAS, fresco),
+        context.storefront.query(CHAQUETAS, fresco),
+        context.storefront.query(COMBO, fresco),
+        context.storefront.query(WINDSOR, fresco),
+        context.storefront.query(CAMISAS, fresco),
+        context.storefront.query(CATEGORIAS, fresco),
+        context.storefront.query(BOTAS, fresco),
+        calcularRanking(),
+      ]),
+    );
 
-  let ids = [...unidades.entries()].sort((a, b) => b[1] - a[1]).slice(0, 8).map(([id]) => id);
+  // Los mas vendidos se recalculan cada 10 minutos. Antes cada visita al
+  // home encadenaba tres viajes a Shopify solo para esto.
+  const productos = await recordar('home-mas-vendidos', 10, async () => {
+    const ids = [...unidades.entries()].sort((a, b) => b[1] - a[1]).slice(0, 8).map(([id]) => id);
 
-  let productos = [];
-  if (ids.length) {
-    const d = await context.storefront.query(TOP_PRODUCTOS, {variables: {ids}});
-    const porId = new Map((d.nodes || []).filter(Boolean).map((p) => [p.id, p]));
-    productos = ids.map((id) => porId.get(id)).filter(Boolean);
-  }
-
-  // si el mes viene flojo, completa con los más vendidos del catálogo
-  if (productos.length < 8) {
-    const d = await context.storefront.query(`#graphql
-      query Relleno { products(first: 12, sortKey: BEST_SELLING) {
-        nodes { id title handle priceRange { minVariantPrice { amount currencyCode } }
-      compareAtPriceRange { minVariantPrice { amount } } images(first: 4) { nodes { url altText } } }
-      } }`);
-    const vistos = new Set(productos.map((p) => p.id));
-    for (const p of d.products.nodes) {
-      if (productos.length >= 8) break;
-      if (vistos.has(p.id) || /combo|pack/i.test(p.title)) continue;
-      productos.push(p);
+    let lista = [];
+    if (ids.length) {
+      const d = await context.storefront.query(TOP_PRODUCTOS, {variables: {ids}});
+      const porId = new Map((d.nodes || []).filter(Boolean).map((p) => [p.id, p]));
+      lista = ids.map((id) => porId.get(id)).filter(Boolean);
     }
-  }
+
+    // si el mes viene flojo, completa con los mas vendidos del catalogo
+    if (lista.length < 8) {
+      const d = await context.storefront.query(`#graphql
+        query Relleno { products(first: 12, sortKey: BEST_SELLING) {
+          nodes { id title handle priceRange { minVariantPrice { amount currencyCode } }
+        compareAtPriceRange { minVariantPrice { amount } } images(first: 4) { nodes { url altText } } }
+        } }`);
+      const vistos = new Set(lista.map((p) => p.id));
+      for (const p of d.products.nodes) {
+        if (lista.length >= 8) break;
+        if (vistos.has(p.id) || /combo|pack/i.test(p.title)) continue;
+        lista.push(p);
+      }
+    }
+    return lista;
+  });
 
   const fmt = new Intl.NumberFormat('es-CO', {style: 'currency', currency: 'COP', maximumFractionDigits: 0});
 

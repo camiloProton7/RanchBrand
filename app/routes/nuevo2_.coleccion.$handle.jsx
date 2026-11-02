@@ -196,7 +196,7 @@ export default function ColeccionNueva() {
     <div className="hc">
       <div className={'hc-bar' + (solido ? ' is-solido' : '') + (barraOculta ? ' is-oculto' : '')}>
         <MenuLateral tono={solido ? 'tinta' : 'crema'} />
-        <Link to="/nuevo2" className="hc-logo" aria-label="The Ranch, ir al inicio">
+        <Link to="/nuevo2" prefetch="intent" className="hc-logo" aria-label="The Ranch, ir al inicio">
           <img
             src={solido ? '/logo-tinta.png' : '/logo-crema.png'}
             alt="The Ranch"
