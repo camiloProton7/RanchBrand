@@ -8,6 +8,7 @@ import Buscador from '~/components/Buscador';
 import GuiaTallas from '~/components/GuiaTallas';
 import Anadido from '~/components/Anadido';
 import {handleImpulsado} from '~/data/impulsados';
+import {recordar} from '~/lib/cache';
 import MenuLateral from '~/components/MenuLateral';
 import {useHeaderScroll} from '~/lib/useHeaderScroll';
 import {Rail, Tarjeta} from '~/components/Tarjeta';
@@ -138,7 +139,7 @@ async function varianteConStock(context, handle) {
   }
 }
 
-export async function loader({params, context}) {
+async function cargarProducto({params, context}) {
   const handle = params.handle;
   const fresco = import.meta.env.DEV ? {cache: context.storefront.CacheNone()} : undefined;
   const data = await context.storefront.query(PRODUCTO, {...fresco, variables: {handle}});
@@ -228,6 +229,10 @@ export async function loader({params, context}) {
         .catch(() => null)
     : Promise.resolve(null);
 
+  // el inventario del sugerido se pregunta a la vez: en serie sumaba otro
+  // viaje despues de tener el producto
+  const pedidoStock = meta ? varianteConStock(context, meta) : Promise.resolve('');
+
   // Primero la coleccion visible del producto (una sola llamada). Si esa
   // coleccion esta archivada o vacia, se prueba la siguiente y, como ultimo
   // recurso, productRecommendations.
@@ -263,7 +268,7 @@ export async function loader({params, context}) {
   const sp = await pedidoSugerido;
   let sugerido = sp?.product ? aTarjeta(sp.product) : null;
   if (sugerido) {
-    const conStock = await varianteConStock(context, sugerido.handle);
+    const conStock = await pedidoStock;
     if (conStock) sugerido.varianteId = conStock;
   }
   if (!sugerido) sugerido = recos[0] || null;
@@ -296,6 +301,16 @@ export async function loader({params, context}) {
     descripcion: texto,
     parrafos: texto.split('\n').map((t) => t.trim()).filter((t) => t.length > 2),
   };
+}
+
+/**
+ * La ficha se guarda un minuto. Cargar un producto desde el home volvia
+ * a pedir catalogo, recomendados y el sugerido en cada toque, y la
+ * pantalla se quedaba medio segundo en blanco.
+ */
+export async function loader({params, context}) {
+  const handle = params.handle || '';
+  return recordar(`producto:${handle}`, 1, () => cargarProducto({params, context}));
 }
 
 export const meta = ({data}) => [{title: `${data?.titulo ?? 'Producto'} · The Ranch`}];
