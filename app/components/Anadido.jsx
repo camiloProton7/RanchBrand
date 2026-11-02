@@ -9,7 +9,17 @@ import {Link} from 'react-router';
  * el pulgar ya está. Se monta en el body para que ningún contenedor con
  * transform la recorte.
  */
-export default function Anadido({abierto, cerrar, articulo, sugerido, onAnadir, anadiendo, yaAnadido}) {
+export default function Anadido({
+  abierto,
+  cerrar,
+  articulo,
+  sugerido,
+  onAnadir,
+  onPagar,
+  modo = 'carrito',
+  anadiendo,
+  yaAnadido,
+}) {
   // el toque que abre la hoja no debe cerrarla al instante: en movil el mismo
   // gesto llega al fondo recien montado
   const abiertoEn = useRef(0);
@@ -41,7 +51,7 @@ export default function Anadido({abierto, cerrar, articulo, sugerido, onAnadir, 
   return createPortal(
     <div className="an-fondo" onClick={tocarFondo} role="presentation">
       <div
-        className="an-hoja"
+        className={'an-hoja' + (modo === 'pago' ? ' is-pago' : '')}
         onClick={(e) => e.stopPropagation()}
         role="dialog"
         aria-modal="true"
@@ -56,7 +66,7 @@ export default function Anadido({abierto, cerrar, articulo, sugerido, onAnadir, 
             </svg>
           </span>
           <span className="an-cabeza-txt">
-            <b>En el carrito</b>
+            <b>{modo === 'pago' ? 'Vas a pagar' : 'En el carrito'}</b>
             {articulo?.titulo && <em>{articulo.titulo}</em>}
           </span>
           <button type="button" className="an-cerrar" onClick={cerrar} aria-label="Cerrar">
@@ -97,12 +107,21 @@ export default function Anadido({abierto, cerrar, articulo, sugerido, onAnadir, 
           </>
         )}
 
-        <Link to="/nuevo2/carrito" className="an-ver" onClick={cerrar}>
-          Ver carrito
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
-            <path d="M5 12h14M13 6l6 6-6 6" />
-          </svg>
-        </Link>
+        {modo === 'pago' ? (
+          <button type="button" className="an-pagar" onClick={onPagar}>
+            Ir a pagar
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round">
+              <path d="M5 12h14M13 6l6 6-6 6" />
+            </svg>
+          </button>
+        ) : (
+          <Link to="/nuevo2/carrito" className="an-ver" onClick={cerrar}>
+            Ver carrito
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+              <path d="M5 12h14M13 6l6 6-6 6" />
+            </svg>
+          </Link>
+        )}
       </div>
     </div>,
     document.body,

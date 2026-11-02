@@ -319,6 +319,7 @@ export default function ProductoNuevo() {
   const [anadido, setAnadido] = useState(false);
   const [enCesta, setEnCesta] = useState(0);
   const [avisoAbierto, setAvisoAbierto] = useState(false);
+  const [modoAviso, setModoAviso] = useState('carrito');
   const [sugeridoAnadido, setSugeridoAnadido] = useState(false);
   const {oculto: barraOculta} = useHeaderScroll({alto: 90});
 
@@ -372,10 +373,41 @@ export default function ProductoNuevo() {
         handle,
       });
       setAnadido(true);
+      setModoAviso('carrito');
       setAvisoAbierto(true);
       setTimeout(() => setAnadido(false), 4000);
     } finally {
       setAnadiendo(false);
+    }
+  }
+
+  /**
+   * "Comprar ahora" tambien pasa por la hoja: confirma la pieza y deja el
+   * sugerido a un toque, pero la salida principal es el pago.
+   */
+  function comprarAhora() {
+    if (!variante?.disponible) return;
+    setModoAviso('pago');
+    setSugeridoAnadido(false);
+    setAvisoAbierto(true);
+  }
+
+  /** Va a la pasarela con la pieza elegida y, si la sumó, el sugerido. */
+  function irAPagar() {
+    const ids = [variante.id.replace(/\D/g, '') + ':1'];
+    if (sugeridoAnadido && sugerido?.varianteId) {
+      ids.push(sugerido.varianteId.replace(/\D/g, '') + ':1');
+    }
+    const total = sugeridoAnadido && sugerido ? variante.precioNum + sugerido.precioNum : variante.precioNum;
+    trackCompra(total);
+    window.location.href = `https://1caf84-4.myshopify.com/cart/${ids.join(',')}`;
+  }
+
+  function trackCompra(valor) {
+    try {
+      if (window.fbq) window.fbq('track', 'InitiateCheckout', {value: Math.round(valor), currency: 'COP'});
+    } catch {
+      /* sin pixel: no pasa nada */
     }
   }
 
@@ -555,7 +587,7 @@ export default function ProductoNuevo() {
         <button
           type="button"
           className="hp-ahora"
-          onClick={() => buyNow(variante.id, 1, variante.precioNum)}
+          onClick={comprarAhora}
           disabled={!variante?.disponible}
         >
           Comprar ahora
@@ -632,6 +664,8 @@ export default function ProductoNuevo() {
             : null
         }
         onAnadir={agregarSugerido}
+        onPagar={irAPagar}
+        modo={modoAviso}
         anadiendo={false}
         yaAnadido={sugeridoAnadido}
       />

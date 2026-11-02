@@ -5486,3 +5486,37 @@
   --beige: #f5f0e6;
   --gris: #6f665c;
 }
+
+/* boton principal cuando la hoja abre desde "comprar ahora" */
+/* cuando la hoja viene de "comprar ahora", pagar manda y el sugerido es opcion */
+.an-hoja.is-pago .an-add {
+  background: transparent;
+  color: var(--tinta);
+  border: 1px solid rgba(20, 17, 15, 0.28);
+}
+
+.an-hoja.is-pago .an-add.is-ok {
+  background: rgba(179, 74, 42, 0.08);
+  color: #b34a2a;
+  border-color: rgba(179, 74, 42, 0.35);
+}
+
+.an-pagar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  width: 100%;
+  margin-top: 14px;
+  padding: 13px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--tinta);
+  color: #fbf8f1;
+  font-family: inherit;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
