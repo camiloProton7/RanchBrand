@@ -5499,18 +5499,19 @@
 .an-add {
   width: 100%;
   margin-top: 11px;
-  padding: 12px 14px;
+  padding: 14px 14px;
   border: 0;
   border-radius: 999px;
-  background: var(--tinta);
-  color: #fbf8f1;
+  background: #b34a2a;
+  color: #fffaf3;
   font-family: inherit;
-  font-size: 9.5px;
+  font-size: 10px;
   font-weight: 700;
   letter-spacing: 0.13em;
   text-transform: uppercase;
   cursor: pointer;
   transition: background 0.2s ease;
+  box-shadow: 0 4px 14px rgba(179, 74, 42, 0.28);
 }
 
 .an-add.is-ok { background: #b34a2a; }
@@ -5518,9 +5519,10 @@
 
 /* cuando la hoja viene de "comprar ahora", pagar manda y el extra es opcion */
 .an-hoja.is-pago .an-add {
-  background: transparent;
-  color: var(--tinta);
-  border: 1px solid rgba(20, 17, 15, 0.28);
+  background: rgba(179, 74, 42, 0.1);
+  color: #b34a2a;
+  border: 1px solid rgba(179, 74, 42, 0.4);
+  box-shadow: none;
 }
 
 .an-hoja.is-pago .an-add.is-ok {
@@ -5577,9 +5579,10 @@
 /* boton principal cuando la hoja abre desde "comprar ahora" */
 /* cuando la hoja viene de "comprar ahora", pagar manda y el sugerido es opcion */
 .an-hoja.is-pago .an-add {
-  background: transparent;
-  color: var(--tinta);
-  border: 1px solid rgba(20, 17, 15, 0.28);
+  background: rgba(179, 74, 42, 0.1);
+  color: #b34a2a;
+  border: 1px solid rgba(179, 74, 42, 0.4);
+  box-shadow: none;
 }
 
 .an-hoja.is-pago .an-add.is-ok {
