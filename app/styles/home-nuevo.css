@@ -4,6 +4,9 @@
    ============================================================ */
 
 .hn-root {
+  font-family: ui-sans-serif, -apple-system, "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   --beige: #f5f0e6;
   --crema: #fbf8f1;
   --tierra: #b34a2a;
@@ -3273,6 +3276,11 @@
   --tinta: #14110f;
   --tierra: #b34a2a;
   --gris: #6f665c;
+  /* la hoja del tema viejo traia la fuente base; al no cargarla aqui, todo
+     caia en Times. Se declara explicita para no depender de nadie. */
+  font-family: ui-sans-serif, -apple-system, "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   background: var(--crema);
   color: var(--tinta);
   min-height: 100vh;
@@ -3414,10 +3422,11 @@
 
 .hp-titulo {
   margin: 0;
-  font-size: 25px;
-  line-height: 1.1;
-  font-weight: 750;
-  letter-spacing: -0.03em;
+  font-family: 'Instrument Serif', Georgia, serif;
+  font-size: 30px;
+  line-height: 1.08;
+  font-weight: 400;
+  letter-spacing: -0.01em;
 }
 
 .hp-linea {
