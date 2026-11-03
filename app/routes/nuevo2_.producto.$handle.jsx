@@ -540,7 +540,7 @@ export default function ProductoNuevo() {
   }
 
   return (
-    <div className="hp">
+    <main className="hp">
       <div className={"hp-bar" + (barraOculta ? " is-oculto" : "")}>
         <MenuLateral tono="tinta" />
         <Link to="/nuevo2" prefetch="intent" className="hp-logo" aria-label="The Ranch, ir al inicio"><img src="/logo-tinta.png" alt="The Ranch" width="78" /></Link>
@@ -802,6 +802,6 @@ export default function ProductoNuevo() {
         />
       )}
 
-    </div>
+    </main>
   );
 }

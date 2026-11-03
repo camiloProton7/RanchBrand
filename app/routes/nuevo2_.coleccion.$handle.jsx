@@ -240,7 +240,7 @@ export default function ColeccionNueva() {
   const frase = FRASES[handle] ?? ['Hecho para el campo.', 'Y para la ciudad.'];
 
   return (
-    <div className="hc">
+    <main className="hc">
       <div className={'hc-bar' + (solido ? ' is-solido' : '') + (barraOculta ? ' is-oculto' : '')}>
         <MenuLateral tono={solido ? 'tinta' : 'crema'} />
         <Link to="/nuevo2" prefetch="intent" className="hc-logo" aria-label="The Ranch, ir al inicio">
@@ -340,6 +340,6 @@ export default function ColeccionNueva() {
 
       <Sellos />
       <Pie />
-    </div>
+    </main>
   );
 }

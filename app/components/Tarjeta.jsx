@@ -19,7 +19,6 @@ export function Tarjeta({p, prioridad = false, badge, ancha = false, ruta = '/nu
       to={`${ruta}${p.handle}`}
       prefetch="intent"
       className={'hn-card' + (ancha ? ' is-ancha' : '')}
-      aria-label={p.titulo}
     >
       <span className="hn-card-media">
         {fotos.map((src, i) => (
