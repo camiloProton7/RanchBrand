@@ -444,7 +444,7 @@ export async function loader({context}) {
         null;
       const locales = {
         gorras: '/col/gorras.webp',
-        chaquetas: '/col/chaquetas.webp',
+        chaquetas: '/col/chaquetas-portada.webp',
         camisas: '/col/camisas.webp',
       };
       return {...c, img: locales[c.clave] || (foto ? optimizar(foto, 700) : null)};
@@ -512,7 +512,7 @@ export const meta = () => [
   {property: 'og:title', content: 'The Ranch — Chaquetas, botas y gorras para durar'},
   {property: 'og:description', content: DESCRIPCION_HOME},
   {property: 'og:url', content: 'https://ranch.com.co/'},
-  {property: 'og:image', content: 'https://ranch.com.co/col/chaquetas.webp'},
+  {property: 'og:image', content: 'https://ranch.com.co/col/chaquetas-portada.webp'},
   {name: 'twitter:card', content: 'summary_large_image'},
 ];
 

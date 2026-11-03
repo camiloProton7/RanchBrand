@@ -41,7 +41,7 @@ const COLECCION = `#graphql
 
 const PORTADAS = {
   gorras: '/col/gorras.webp',
-  chaquetas: '/col/chaquetas.webp',
+  chaquetas: '/col/chaquetas-portada.webp',
   camisetas: '/col/camisas.webp',
 };
 
