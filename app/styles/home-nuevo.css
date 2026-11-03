@@ -337,7 +337,7 @@
 }
 
 .hn-h2 {
-  font-family: Georgia, serif;
+  font-family: ui-sans-serif, -apple-system, "SF Pro Display", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-weight: 400;
   font-size: 30px;
   margin: 0;
@@ -1755,7 +1755,7 @@
 }
 
 .hn-pieza-num {
-  font-family: Georgia, 'Times New Roman', serif;
+  font-family: ui-sans-serif, -apple-system, "SF Pro Display", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 12px;
   color: #c8794d;
   letter-spacing: 0.04em;
@@ -1786,7 +1786,7 @@
 
 .hn-pieza-nombre {
   margin: 0;
-  font-family: Georgia, 'Times New Roman', serif;
+  font-family: ui-sans-serif, -apple-system, "SF Pro Display", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-weight: 400;
   font-size: 29px;
   line-height: 1.08;
@@ -2844,7 +2844,7 @@
 
 .hc-intro-frase {
   margin: 0;
-  font-family: Georgia, 'Times New Roman', serif;
+  font-family: ui-sans-serif, -apple-system, "SF Pro Display", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 27px;
   line-height: 1.12;
   letter-spacing: -0.02em;
@@ -2955,7 +2955,7 @@
   position: absolute;
   right: 16px;
   top: -34px;
-  font-family: Georgia, serif;
+  font-family: ui-sans-serif, -apple-system, "SF Pro Display", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 78px;
   line-height: 1;
   color: rgba(239, 233, 220, 0.07);
@@ -2978,7 +2978,7 @@
 
 .hc-pieza-titulo {
   margin: 0;
-  font-family: Georgia, 'Times New Roman', serif;
+  font-family: ui-sans-serif, -apple-system, "SF Pro Display", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 27px;
   line-height: 1.06;
   font-weight: 400;
@@ -3186,7 +3186,7 @@
 
 .hc-otras-head h2 {
   margin: 0;
-  font-family: Georgia, 'Times New Roman', serif;
+  font-family: ui-sans-serif, -apple-system, "SF Pro Display", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 23px;
   font-weight: 400;
   letter-spacing: -0.02em;
@@ -3696,7 +3696,7 @@
 .hc-cesta-titulo {
   margin: 0;
   padding: 6px 20px 16px;
-  font-family: 'Instrument Serif', Georgia, serif;
+  font-family: ui-sans-serif, -apple-system, "SF Pro Display", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 34px;
   font-weight: 400;
   letter-spacing: -0.02em;
@@ -3967,7 +3967,7 @@
 
 .hc-vacia-cuerpo h1 {
   margin: 20px 0 8px;
-  font-family: 'Instrument Serif', Georgia, serif;
+  font-family: ui-sans-serif, -apple-system, "SF Pro Display", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 27px;
   font-weight: 400;
   color: #14110f;
@@ -4319,7 +4319,7 @@
 
 .cbc-intro h1 {
   margin: 0 0 10px;
-  font-family: 'Instrument Serif', Georgia, serif;
+  font-family: ui-sans-serif, -apple-system, "SF Pro Display", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 36px;
   line-height: 1.02;
   font-weight: 400;
@@ -4937,7 +4937,7 @@
 
 .gt-titulo {
   margin: 0 0 6px;
-  font-family: 'Instrument Serif', Georgia, serif;
+  font-family: ui-sans-serif, -apple-system, "SF Pro Display", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 28px;
   font-weight: 400;
   letter-spacing: -0.02em;
@@ -5058,7 +5058,7 @@
 
 .gt-resultado-talla {
   margin: 0;
-  font-family: 'Instrument Serif', Georgia, serif;
+  font-family: ui-sans-serif, -apple-system, "SF Pro Display", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 34px;
   line-height: 1;
   color: var(--tinta);
@@ -5228,7 +5228,7 @@
   justify-content: space-between;
   padding: 15px 2px;
   border-bottom: 1px solid rgba(20, 17, 15, 0.08);
-  font-family: 'Instrument Serif', Georgia, serif;
+  font-family: ui-sans-serif, -apple-system, "SF Pro Display", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 19px;
   color: var(--tinta);
   text-decoration: none;
@@ -5250,7 +5250,7 @@
 
 .bs-vacio p {
   margin: 0 0 6px;
-  font-family: 'Instrument Serif', Georgia, serif;
+  font-family: ui-sans-serif, -apple-system, "SF Pro Display", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 19px;
   color: var(--tinta);
 }
@@ -5485,7 +5485,7 @@
 }
 
 .an-num {
-  font-family: 'Instrument Serif', Georgia, serif;
+  font-family: ui-sans-serif, -apple-system, "SF Pro Display", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 17px;
   color: #b34a2a;
 }
@@ -5629,7 +5629,7 @@
 }
 
 .an-num {
-  font-family: 'Instrument Serif', Georgia, serif;
+  font-family: ui-sans-serif, -apple-system, "SF Pro Display", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 18px;
   color: #b34a2a;
 }
@@ -5680,7 +5680,7 @@
 
 .hp-res-titulo {
   margin: 0 0 14px;
-  font-family: 'Instrument Serif', Georgia, serif;
+  font-family: ui-sans-serif, -apple-system, "SF Pro Display", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 27px;
   font-weight: 400;
   line-height: 1.08;
@@ -5697,7 +5697,7 @@
 }
 
 .hp-res-nota {
-  font-family: 'Instrument Serif', Georgia, serif;
+  font-family: ui-sans-serif, -apple-system, "SF Pro Display", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 30px;
   line-height: 1;
   color: var(--tinta);
@@ -5766,7 +5766,7 @@
 
 .hp-res-texto {
   margin: 0 0 14px;
-  font-family: 'Instrument Serif', Georgia, serif;
+  font-family: ui-sans-serif, -apple-system, "SF Pro Display", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 14.5px;
   line-height: 1.42;
   color: rgba(20, 17, 15, 0.82);
@@ -5906,4 +5906,65 @@
 .an-hoja .an-datos,
 .an-hoja .an-fila {
   min-width: 0;
+}
+
+/* --- sin serif: los titulos toman peso editorial en sans --- */
+.hn-h2,
+.hn-cats-title,
+.hn-top-title,
+.hn-promo-title,
+.hn-map-title,
+.hn-world-title,
+.hn-pieza-nombre,
+.hn-camisas .hn-gorras-title,
+.hc-intro-frase,
+.hc-pieza-titulo,
+.hc-otras-head h2,
+.hc-cesta-titulo,
+.hc-vacia-cuerpo h1,
+.cbc-intro h1,
+.gt-titulo,
+.hp-res-titulo,
+.hp-recos-head h2 {
+  font-weight: 800;
+  letter-spacing: -0.032em;
+}
+
+.hn-drawer a {
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.gt-resultado-talla,
+.hp-res-nota,
+.hc-pieza-num {
+  font-weight: 800;
+  letter-spacing: -0.03em;
+}
+
+.hp-res-titulo { font-size: 26px; }
+.hp-recos-head h2 { letter-spacing: -0.03em; }
+
+/* la coleccion tambien declara su fuente: sus tarjetas caian en Times */
+.hc {
+  font-family: ui-sans-serif, -apple-system, "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.hc .hn-card,
+.hc .hn-card-body,
+.hc .hn-card-name,
+.hc .hn-card-price {
+  font-family: inherit;
+}
+
+.hc .hn-card-name {
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.hc .hn-card-price {
+  font-weight: 800;
+  letter-spacing: -0.02em;
 }
