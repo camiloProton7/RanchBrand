@@ -177,10 +177,35 @@ export async function loader({params, context}) {
   return recordar(`coleccion:${handle}`, 2, () => cargarColeccion({params, context}));
 }
 
-export const meta = ({data}) => [
-  {title: `${data?.titulo ?? 'Colección'} · The Ranch`},
-  {name: 'description', content: data?.descripcion?.slice(0, 150) ?? ''},
-];
+const FRASE_COL = {
+  gorras: 'Gorras de faena, visera curva y tela que aguanta sol y polvo. Elige la tuya y recíbela en casa.',
+  chaquetas: 'Chaquetas enceradas, acolchadas y de gamuza para el frío de la sabana. Prendas que duran años.',
+  camisetas: 'Camisas de dril y algodón pesado, con el corte de trabajo de siempre. Para el que madruga.',
+  'botas-1': 'Botas de cuero, suela firme y horma cómoda. Para el barro, la piedra y el camino largo.',
+};
+
+export const meta = ({data}) => {
+  const t = data?.titulo ?? 'Colección';
+  const h = data?.handle ?? '';
+  const d =
+    (data?.descripcion && data.descripcion.slice(0, 155)) ||
+    FRASE_COL[h] ||
+    `${t} de The Ranch. Prendas hechas para durar, con envío a toda Colombia.`;
+  const img = data?.foto || `https://ranch.com.co/col/${h === 'botas-1' ? 'chaquetas' : h}.webp`;
+  return [
+    {title: `${t} · The Ranch`},
+    {name: 'description', content: d},
+    {tagName: 'link', rel: 'canonical', href: `https://ranch.com.co/collections/${h}`},
+    {property: 'og:type', content: 'website'},
+    {property: 'og:site_name', content: 'The Ranch'},
+    {property: 'og:locale', content: 'es_CO'},
+    {property: 'og:title', content: `${t} · The Ranch`},
+    {property: 'og:description', content: d},
+    {property: 'og:url', content: `https://ranch.com.co/collections/${h}`},
+    {property: 'og:image', content: img},
+    {name: 'twitter:card', content: 'summary_large_image'},
+  ];
+};
 
 export default function ColeccionNueva() {
   const {titulo, descripcion, foto, productos, handle, desde, otras} = useLoaderData();

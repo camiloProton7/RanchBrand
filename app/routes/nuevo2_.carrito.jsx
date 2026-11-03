@@ -11,6 +11,11 @@ import {
   updateQty,
 } from '~/lib/cart';
 
+export const meta = () => [
+  {title: 'Tu carrito · The Ranch'},
+  {name: 'robots', content: 'noindex, follow'},
+];
+
 export const links = () => [{rel: 'stylesheet', href: styles}];
 
 const DESTACADOS = `#graphql

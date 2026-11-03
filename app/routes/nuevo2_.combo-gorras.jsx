@@ -121,7 +121,22 @@ function money(n) {
   }).format(n);
 }
 
-export const meta = () => [{title: 'El pack de cinco · The Ranch'}];
+const DESC_COMBO =
+  'Cinco gorras de The Ranch por un solo precio. Elige las que quieras y recibe el pack en casa con envío a toda Colombia.';
+
+export const meta = () => [
+  {title: 'El pack de cinco gorras · The Ranch'},
+  {name: 'description', content: DESC_COMBO},
+  {tagName: 'link', rel: 'canonical', href: 'https://ranch.com.co/combo-gorras'},
+  {property: 'og:type', content: 'website'},
+  {property: 'og:site_name', content: 'The Ranch'},
+  {property: 'og:locale', content: 'es_CO'},
+  {property: 'og:title', content: 'El pack de cinco gorras · The Ranch'},
+  {property: 'og:description', content: DESC_COMBO},
+  {property: 'og:url', content: 'https://ranch.com.co/combo-gorras'},
+  {property: 'og:image', content: 'https://ranch.com.co/promo-gorras.webp'},
+  {name: 'twitter:card', content: 'summary_large_image'},
+];
 
 export default function ComboNuevo() {
   const {gorras} = useLoaderData();

@@ -316,10 +316,33 @@ export async function loader({params, context}) {
   return recordar(`producto:${handle}`, 1, () => cargarProducto({params, context}));
 }
 
-export const meta = ({data}) => [{title: `${data?.titulo ?? 'Producto'} · The Ranch`}];
+export const meta = ({data}) => {
+  const t = data?.titulo ?? 'Producto';
+  const h = data?.handle ?? '';
+  const relato = (data?.parrafos || []).join(' ').replace(/\s+/g, ' ').trim();
+  const d = relato
+    ? relato.slice(0, 152).replace(/[\s,;:.]+$/, '') + '.'
+    : `${t} de The Ranch. Prenda hecha para durar, con envío a toda Colombia.`;
+  const img = data?.fotos?.[0]?.split('&width=')[0] || '';
+  return [
+    {title: `${t} · The Ranch`},
+    {name: 'description', content: d},
+    {tagName: 'link', rel: 'canonical', href: `https://ranch.com.co/products/${h}`},
+    {property: 'og:type', content: 'product'},
+    {property: 'og:site_name', content: 'The Ranch'},
+    {property: 'og:locale', content: 'es_CO'},
+    {property: 'og:title', content: t},
+    {property: 'og:description', content: d},
+    {property: 'og:url', content: `https://ranch.com.co/products/${h}`},
+    {property: 'product:price:amount', content: data?.precioNum ? String(data.precioNum) : ''},
+    {property: 'product:price:currency', content: 'COP'},
+    ...(img ? [{property: 'og:image', content: img}] : []),
+    {name: 'twitter:card', content: 'summary_large_image'},
+  ];
+};
 
 export default function ProductoNuevo() {
-  const {titulo, tipo, precio, valor, cuenta, fotos, opciones, variantes, handle, parrafos, recos, sugerido} =
+  const {titulo, tipo, precio, precioNum, valor, cuenta, fotos, opciones, variantes, handle, parrafos, recos, sugerido} =
     useLoaderData();
 
   const [foto, setFoto] = useState(0);
@@ -463,6 +486,36 @@ export default function ProductoNuevo() {
     trackCompra(total);
     window.location.href = `https://1caf84-4.myshopify.com/cart/${ids.join(',')}`;
   }
+
+  // Meta: el producto visto, para remarketing y catalogo.
+  // El pixel entra diferido, asi que se espera a que exista.
+  useEffect(() => {
+    const enviar = () => {
+      try {
+        if (!window.fbq) return false;
+        window.fbq('track', 'ViewContent', {
+          content_ids: [handle],
+          content_name: titulo,
+          content_type: 'product',
+          value: Math.round(precioNum || 0),
+          currency: 'COP',
+        });
+        return true;
+      } catch {
+        return false;
+      }
+    };
+
+    if (enviar()) return;
+    const reloj = window.setInterval(() => {
+      if (enviar()) window.clearInterval(reloj);
+    }, 250);
+    const corte = window.setTimeout(() => window.clearInterval(reloj), 8000);
+    return () => {
+      window.clearInterval(reloj);
+      window.clearTimeout(corte);
+    };
+  }, [handle]);
 
   function trackCompra(valor) {
     try {

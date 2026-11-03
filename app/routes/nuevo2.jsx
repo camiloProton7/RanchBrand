@@ -499,9 +499,21 @@ export async function loader({context}) {
   };
 }
 
+const DESCRIPCION_HOME =
+  'Chaquetas enceradas, botas de cuero y gorras de faena. Prendas para el frío, el barro y el camino, con envío a toda Colombia.';
+
 export const meta = () => [
-  {title: 'The Ranch — No nacimos para que fuera fácil'},
-  {name: 'robots', content: 'noindex, nofollow'},
+  {title: 'The Ranch — Chaquetas, botas y gorras para durar'},
+  {name: 'description', content: DESCRIPCION_HOME},
+  {tagName: 'link', rel: 'canonical', href: 'https://ranch.com.co/'},
+  {property: 'og:type', content: 'website'},
+  {property: 'og:site_name', content: 'The Ranch'},
+  {property: 'og:locale', content: 'es_CO'},
+  {property: 'og:title', content: 'The Ranch — Chaquetas, botas y gorras para durar'},
+  {property: 'og:description', content: DESCRIPCION_HOME},
+  {property: 'og:url', content: 'https://ranch.com.co/'},
+  {property: 'og:image', content: 'https://ranch.com.co/col/chaquetas.webp'},
+  {name: 'twitter:card', content: 'summary_large_image'},
 ];
 
 function Estrellas({valor, cuenta}) {
