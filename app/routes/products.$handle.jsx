@@ -116,7 +116,7 @@ async function varianteConStock(context, handle) {
   const dominio = context.env.PUBLIC_STORE_DOMAIN;
   if (!token || !dominio) return '';
 
-  const consulta = `#graphql
+  const consulta = `
     query StockSugerido($handle: String!) {
       productByHandle(handle: $handle) {
         variants(first: 40) {

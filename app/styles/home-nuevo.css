@@ -5968,3 +5968,91 @@
   font-weight: 800;
   letter-spacing: -0.02em;
 }
+
+/* --- pagina no encontrada --- */
+.nf-root {
+  --crema: #f5f0e6;
+  --tinta: #14100c;
+  --tierra: #b34a2a;
+  background: var(--crema);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+.nf-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 16px 18px;
+  background: var(--crema);
+  border-bottom: 1px solid rgba(20, 16, 12, 0.08);
+}
+.nf-bar .hn-logo img { width: 88px; height: auto; display: block; }
+.nf-bar .hn-bag { display: flex; align-items: center; gap: 14px; }
+
+.nf-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 56px 24px 64px;
+  max-width: 520px;
+  margin: 0 auto;
+  width: 100%;
+}
+.nf-eyebrow {
+  font: 800 11px/1 -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  letter-spacing: 0.22em;
+  color: var(--tierra);
+  margin: 0 0 18px;
+}
+.nf-titulo {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 40px;
+  line-height: 1.02;
+  letter-spacing: -0.045em;
+  font-weight: 800;
+  color: var(--tinta);
+  margin: 0 0 18px;
+}
+.nf-texto {
+  font: 400 15px/1.55 -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  color: #6b6157;
+  margin: 0 0 30px;
+  max-width: 340px;
+}
+.nf-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  align-self: flex-start;
+  background: var(--tinta);
+  color: var(--crema);
+  text-decoration: none;
+  font: 800 11px/1 -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 17px 26px;
+  border-radius: 999px;
+}
+.nf-cats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 30px;
+}
+.nf-cat {
+  font: 700 11px/1 -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--tinta);
+  text-decoration: none;
+  border: 1px solid rgba(20, 16, 12, 0.22);
+  border-radius: 999px;
+  padding: 11px 16px;
+}
+@media (max-width: 360px) {
+  .nf-titulo { font-size: 34px; }
+}

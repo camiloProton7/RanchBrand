@@ -28,7 +28,7 @@ const CATS = [
 ];
 
 
-const ADMIN_PEDIDOS = `#graphql
+const ADMIN_PEDIDOS = `
   query PedidosMes($cursor: String, $desde: String!) {
     orders(first: 250, after: $cursor, query: $desde, sortKey: CREATED_AT, reverse: true) {
       pageInfo { hasNextPage endCursor }
