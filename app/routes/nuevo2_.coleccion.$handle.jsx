@@ -191,7 +191,9 @@ export const meta = ({data}) => {
     (data?.descripcion && data.descripcion.slice(0, 155)) ||
     FRASE_COL[h] ||
     `${t} de The Ranch. Prendas hechas para durar, con envío a toda Colombia.`;
-  const img = data?.foto || `https://ranch.com.co/col/${h === 'botas-1' ? 'chaquetas' : h}.webp`;
+  const crudo = data?.foto || `/col/${h === 'botas-1' ? 'chaquetas' : h}.webp`;
+  // Facebook y WhatsApp exigen la imagen absoluta
+  const img = crudo.startsWith('http') ? crudo : `https://ranch.com.co${crudo}`;
   return [
     {title: `${t} · The Ranch`},
     {name: 'description', content: d},
