@@ -147,7 +147,7 @@ export default function Buscador({tono = 'claro'}) {
                       {CATEGORIAS.map((c) => (
                         <Link
                           key={c.handle}
-                          to={`/nuevo2/coleccion/${c.handle}`}
+                          to={`/collections/${c.handle}`}
                           className="bs-cat"
                           onClick={() => setAbierto(false)}
                         >
@@ -178,7 +178,7 @@ export default function Buscador({tono = 'claro'}) {
                   {datos.productos.map((p) => (
                     <Link
                       key={p.id}
-                      to={`/nuevo2/producto/${p.handle}`}
+                      to={`/products/${p.handle}`}
                       prefetch="intent"
                       className="bs-item"
                       onClick={() => abrirProducto(p)}

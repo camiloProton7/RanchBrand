@@ -15,7 +15,7 @@ export default function Categorias({cats}) {
     <section className="hn-mosaico" aria-label="Compra por categoría">
       <div className="hn-mos-grid">
         <Link
-          to={`/nuevo2/coleccion/${vertical.handle}`}
+          to={`/collections/${vertical.handle}`}
           className="hn-mos hn-mos-vert"
           style={{'--i': 0}}
         >
@@ -34,7 +34,7 @@ export default function Categorias({cats}) {
         {otras.map((c, i) => (
           <Link
             key={c.handle}
-            to={`/nuevo2/coleccion/${c.handle}`}
+            to={`/collections/${c.handle}`}
             className="hn-mos hn-mos-horiz"
             style={{'--i': i + 1}}
           >

@@ -9,7 +9,7 @@ export function Grid({children, className = ''}) {
   return <div className={'hn-par ' + className}>{children}</div>;
 }
 
-export function Tarjeta({p, prioridad = false, badge, ancha = false, ruta = '/nuevo2/producto/'}) {
+export function Tarjeta({p, prioridad = false, badge, ancha = false, ruta = '/products/'}) {
   // dos como maximo: la de reposo y la del hover
   const fotos = (p.imgs?.length ? p.imgs : [p.img1].filter(Boolean)).slice(0, 2);
   const [idx, setIdx] = useState(0);

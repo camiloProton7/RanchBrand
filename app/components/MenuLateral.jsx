@@ -2,12 +2,12 @@ import {useState} from 'react';
 import {Link} from 'react-router';
 
 const ENTRADAS = [
-  ['Inicio', '/nuevo2'],
-  ['Gorras', '/nuevo2/coleccion/gorras'],
-  ['Chaquetas y sacos', '/nuevo2/coleccion/chaquetas'],
-  ['Camisas y camisetas', '/nuevo2/coleccion/camisetas'],
-  ['Botas y accesorios', '/nuevo2/coleccion/botas-1'],
-  ['El combo de gorras', '/nuevo2/combo-gorras'],
+  ['Inicio', '/'],
+  ['Gorras', '/collections/gorras'],
+  ['Chaquetas y sacos', '/collections/chaquetas'],
+  ['Camisas y camisetas', '/collections/camisetas'],
+  ['Botas y accesorios', '/collections/botas-1'],
+  ['El combo de gorras', '/combo-gorras'],
 ];
 
 export default function MenuLateral({tono = 'crema'}) {
@@ -37,7 +37,7 @@ export default function MenuLateral({tono = 'crema'}) {
           <div className="hn-panel">
             <div className="hn-panel-top">
               <Link
-                to="/nuevo2"
+                to="/"
                 className="hn-panel-logo"
                 onClick={() => setAbierto(false)}
                 aria-label="The Ranch"

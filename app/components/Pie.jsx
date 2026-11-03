@@ -1,10 +1,10 @@
 import {Link} from 'react-router';
 
 const TIENDA = [
-  {t: 'Gorras', to: '/nuevo2/coleccion/gorras'},
-  {t: 'Chaquetas y sacos', to: '/nuevo2/coleccion/chaquetas'},
-  {t: 'Camisas y camisetas', to: '/nuevo2/coleccion/camisetas'},
-  {t: 'Botas y accesorios', to: '/nuevo2/coleccion/botas-1'},
+  {t: 'Gorras', to: '/collections/gorras'},
+  {t: 'Chaquetas y sacos', to: '/collections/chaquetas'},
+  {t: 'Camisas y camisetas', to: '/collections/camisetas'},
+  {t: 'Botas y accesorios', to: '/collections/botas-1'},
 ];
 
 const AYUDA = [

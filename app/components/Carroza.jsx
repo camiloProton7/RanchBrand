@@ -47,7 +47,7 @@ export default function Carroza({className = ''}) {
 
   return (
     <Link
-      to="/nuevo2/carrito"
+      to="/carrito"
       className={'carroza' + (trote ? ' is-trote' : '') + (className ? ' ' + className : '')}
       aria-label={n > 0 ? `Carrito, ${n} ${n === 1 ? 'pieza' : 'piezas'}` : 'Carrito'}
     >

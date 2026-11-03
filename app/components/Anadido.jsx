@@ -114,12 +114,12 @@ export default function Anadido({
             </p>
 
             <div className="an-fila">
-              <Link to={`/nuevo2/producto/${sugerido.handle}`} className="an-foto" onClick={cerrar}>
+              <Link to={`/products/${sugerido.handle}`} className="an-foto" onClick={cerrar}>
                 {sugerido.img ? <img src={sugerido.img} alt={sugerido.titulo} /> : <i />}
               </Link>
 
               <div className="an-datos">
-                <Link to={`/nuevo2/producto/${sugerido.handle}`} className="an-nombre" onClick={cerrar}>
+                <Link to={`/products/${sugerido.handle}`} className="an-nombre" onClick={cerrar}>
                   {sugerido.titulo}
                 </Link>
                 <p className="an-precio">
@@ -156,7 +156,7 @@ export default function Anadido({
             </svg>
           </button>
         ) : (
-          <Link to="/nuevo2/carrito" className="an-ver" onClick={cerrar}>
+          <Link to="/carrito" className="an-ver" onClick={cerrar}>
             Ver carrito
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
               <path d="M5 12h14M13 6l6 6-6 6" />

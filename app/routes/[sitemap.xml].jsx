@@ -5,7 +5,7 @@ const BASE = 'https://ranch.com.co';
  *
  * Usa las URLs limpias (/, /collections/, /products/), que son las que declara
  * el canonical de cada pagina. Al publicar el diseno nuevo, esas rutas deben
- * servir las paginas nuevas y /nuevo2 debe redirigir con 301 aqui.
+ * servir las paginas nuevas y / debe redirigir con 301 aqui.
  */
 export async function loader({context}) {
   const {storefront} = context;

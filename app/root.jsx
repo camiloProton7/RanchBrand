@@ -101,8 +101,14 @@ export function Layout({children}) {
   // la pagina nueva trae su propia hoja: cargar encima tailwind, reset,
   // app, header y pie del tema viejo eran 900 ms de CSS que no se usa
   const {pathname} = useLocation();
+  // Rutas que sirve el diseno nuevo. El resto (blog, cuenta, buscador,
+  // politicas) sigue con las hojas del tema viejo.
   const esNuevo =
-    pathname.startsWith('/nuevo2') ||
+    pathname === '/' ||
+    pathname === '/carrito' ||
+    pathname === '/combo-gorras' ||
+    pathname.startsWith('/collections/') ||
+    pathname.startsWith('/products/') ||
     pathname.startsWith('/nuevo') ||
     pathname.startsWith('/explorar');
 
@@ -147,7 +153,7 @@ export default function App() {
   const logoSrc = data?.header?.shop?.brand?.logo?.image?.url;
   // Entorno de laboratorio: /nuevo usa su propio encabezado y pie.
   const aislado =
-    location.pathname.startsWith('/nuevo2') ||
+    location.pathname.startsWith('/') ||
     location.pathname.startsWith('/nuevo') ||
     location.pathname.startsWith('/explorar');
   if (aislado) {

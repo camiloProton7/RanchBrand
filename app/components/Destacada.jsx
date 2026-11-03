@@ -16,7 +16,7 @@ export default function Destacada({p, numero = '01', tono = 'verde', encuadre = 
           <span className="hn-pieza-kicker">Pieza del mes</span>
         </div>
 
-        <Link to={`/nuevo2/producto/${p.handle}`} className="hn-pieza-foto">
+        <Link to={`/products/${p.handle}`} className="hn-pieza-foto">
           {foto && <img src={foto} alt={p.titulo} loading="lazy" decoding="async" />}
         </Link>
 
@@ -29,7 +29,7 @@ export default function Destacada({p, numero = '01', tono = 'verde', encuadre = 
             <span className="hn-pieza-precio">{p.precio}</span>
           </div>
 
-          <Link to={`/nuevo2/producto/${p.handle}`} className="hn-pieza-btn">
+          <Link to={`/products/${p.handle}`} className="hn-pieza-btn">
             <span>Ver producto</span>
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <path d="M5 12h13M12 5l7 7-7 7" />

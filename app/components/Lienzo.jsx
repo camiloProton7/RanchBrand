@@ -11,7 +11,7 @@ export default function Lienzo({
   eyebrow = 'The Ranch',
   titulo = TITULO,
   cta = 'Ver la colección',
-  to = '/nuevo2/coleccion/chaquetas',
+  to = '/collections/chaquetas',
 }) {
   const ref = useRef(null);
   const [visible, setVisible] = useState(false);
