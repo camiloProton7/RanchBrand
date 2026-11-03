@@ -44,10 +44,23 @@ export default function FacebookPixel() {
       window.fbq('set', 'autoConfig', false, PIXEL_ID);
       };
 
-      if ('requestIdleCallback' in window) {
-        window.requestIdleCallback(arrancar, {timeout: 2500});
+      // El pixel pesa ~275 KB: si entra mientras carga la foto del producto,
+      // le roba ancho de banda y sube el LCP. Se espera a que la pagina
+      // termine de cargar y luego a un hueco libre.
+      const diferir = () => {
+        if ('requestIdleCallback' in window) {
+          window.requestIdleCallback(arrancar, {timeout: 6000});
+        } else {
+          window.setTimeout(arrancar, 2500);
+        }
+      };
+
+      if (document.readyState === 'complete') {
+        diferir();
       } else {
-        window.setTimeout(arrancar, 1200);
+        window.addEventListener('load', diferir, {once: true});
+        // red de seguridad: si 'load' nunca llega, entra a los 8 s
+        window.setTimeout(diferir, 8000);
       }
     }
   }, []);
@@ -79,7 +92,7 @@ export default function FacebookPixel() {
     const reloj = window.setInterval(() => {
       if (enviar()) window.clearInterval(reloj);
     }, 250);
-    const corte = window.setTimeout(() => window.clearInterval(reloj), 6000);
+    const corte = window.setTimeout(() => window.clearInterval(reloj), 12000);
 
     return () => {
       window.clearInterval(reloj);
