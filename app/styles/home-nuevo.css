@@ -5807,3 +5807,69 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+/* --- la hoja de compra vive en el body: declara su propia tipografia --- */
+.an-hoja,
+.an-fondo,
+.bs-panel,
+.bs-fondo,
+.gt-hoja,
+.gt-fondo {
+  font-family: ui-sans-serif, -apple-system, "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.an-hoja .an-nombre {
+  font-size: 15.5px;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.015em;
+}
+
+.an-hoja .an-var {
+  font-size: 11.5px;
+  letter-spacing: -0.005em;
+}
+
+.an-hoja .an-agregado-txt > span:first-child,
+.an-hoja .an-datos > span:first-child {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+}
+
+.an-hoja .an-extra-tit {
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.an-hoja .an-precio {
+  font-family: inherit;
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+}
+
+.an-hoja .an-dto {
+  font-size: 9.5px;
+  font-weight: 800;
+  letter-spacing: 0.01em;
+}
+
+.an-hoja .an-antes {
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.an-hoja .an-add,
+.an-hoja .an-pagar,
+.an-hoja .an-ver {
+  font-family: inherit;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+}
+
+.an-hoja .an-add { font-size: 10.5px; }
+.an-hoja .an-pagar { font-size: 11px; }
