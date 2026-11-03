@@ -13,13 +13,13 @@ import {useHeaderScroll} from '~/lib/useHeaderScroll';
 export const links = () => [{rel: 'stylesheet', href: styles}];
 
 const COLECCION = `#graphql
-  query Coleccion($handle: String!) {
+  query Coleccion($handle: String!, $orden: ProductCollectionSortKeys!, $alreves: Boolean!) {
     collection(handle: $handle) {
       title
       handle
       description
       image { url altText }
-      products(first: 60, sortKey: BEST_SELLING) {
+      products(first: 60, sortKey: $orden, reverse: $alreves) {
         nodes {
           id
           title
@@ -76,7 +76,15 @@ async function cargarColeccion({params, context}) {
   const handle = params.handle;
   const fresco = import.meta.env.DEV ? {cache: context.storefront.CacheNone()} : undefined;
   const [data, otrasData] = await Promise.all([
-    context.storefront.query(COLECCION, {...fresco, variables: {handle}}),
+    context.storefront.query(COLECCION, {
+      ...fresco,
+      // en chaquetas mandan las recien llegadas; en el resto, lo que mas rota
+      variables: {
+        handle,
+        orden: handle === 'chaquetas' ? 'CREATED' : 'BEST_SELLING',
+        alreves: handle === 'chaquetas',
+      },
+    }),
     context.storefront.query(OTRAS, fresco),
   ]);
   const c = data.collection;
