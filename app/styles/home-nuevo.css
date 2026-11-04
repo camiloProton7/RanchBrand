@@ -2658,29 +2658,43 @@
 }
 
 .hn-panel-sub {
-  display: flex;
-  gap: 8px;
-  padding: 0 2px 13px 34px;
-  margin-top: -4px;
+  display: grid;
+  margin: 2px 0 8px 21px;
+  padding-left: 15px;
+  border-left: 1px solid rgba(28, 23, 18, 0.14);
 }
 
 .hn-panel-nav .hn-panel-sub a {
-  display: inline-flex;
-  padding: 7px 14px;
-  border: 1px solid rgba(28, 23, 18, 0.16);
-  border-radius: 999px;
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.03em;
-  text-transform: uppercase;
-  color: #4a443c;
-  opacity: 1;
-  transform: none;
-  animation: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 8px 2px;
+  border-bottom: none;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: -0.005em;
+  color: #55503f;
+  opacity: 0;
+  transform: translateY(6px);
+  animation: item-entra 0.45s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation-delay: calc(var(--n) * 60ms + 160ms);
+}
+
+.hn-panel-sub-txt {
+  flex: 1;
+}
+
+.hn-panel-sub-flecha {
+  display: flex;
+  color: rgba(28, 23, 18, 0.26);
 }
 
 .hn-panel-nav .hn-panel-sub a:active {
-  border-color: #b34a2a;
+  color: #b34a2a;
+}
+
+.hn-panel-nav .hn-panel-sub a:active .hn-panel-sub-flecha {
   color: #b34a2a;
 }
 

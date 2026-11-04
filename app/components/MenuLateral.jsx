@@ -80,7 +80,12 @@ export default function MenuLateral({tono = 'crema'}) {
                     <div className="hn-panel-sub">
                       {hijos.map(([st, sto]) => (
                         <Link key={sto} to={sto} onClick={() => setAbierto(false)}>
-                          {st}
+                          <span className="hn-panel-sub-txt">{st}</span>
+                          <span className="hn-panel-sub-flecha" aria-hidden="true">
+                            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+                              <path d="M5 12h13M12 5l7 7-7 7" />
+                            </svg>
+                          </span>
                         </Link>
                       ))}
                     </div>
