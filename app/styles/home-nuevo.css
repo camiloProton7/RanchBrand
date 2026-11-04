@@ -6090,3 +6090,169 @@
 @media (max-width: 360px) {
   .nf-titulo { font-size: 34px; }
 }
+
+/* --- black friday --- */
+.bf-root {
+  --crema: #f5f0e6;
+  --tinta: #14100c;
+  --tierra: #b34a2a;
+  background: var(--crema);
+}
+.bf-bar {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  z-index: 60;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 18px;
+  color: var(--crema);
+}
+.bf-bar .hn-logo img { width: 88px; height: auto; display: block; }
+.bf-bar .hn-bag { display: flex; align-items: center; gap: 14px; }
+
+.bf-hero {
+  position: relative;
+  min-height: 92svh;
+  display: flex;
+  align-items: flex-end;
+  overflow: hidden;
+  background: #14100c;
+}
+.bf-hero-foto {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  object-position: 50% 35%;
+}
+.bf-hero-velo {
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(20,16,12,.55) 0%, rgba(20,16,12,.15) 34%, rgba(20,16,12,.88) 88%);
+}
+.bf-hero-texto {
+  position: relative;
+  z-index: 2;
+  padding: 0 22px 40px;
+  width: 100%;
+  color: var(--crema);
+}
+.bf-sello {
+  display: inline-block;
+  font: 800 9.5px/1 -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--crema);
+  border: 1px solid rgba(245,240,230,.45);
+  border-radius: 999px;
+  padding: 9px 14px;
+  margin: 0 0 16px;
+}
+.bf-titulo {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: clamp(46px, 13vw, 62px);
+  line-height: 0.92;
+  letter-spacing: -0.05em;
+  font-weight: 800;
+  margin: 0 0 14px;
+}
+.bf-bajada {
+  font: 400 15px/1.45 -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  color: rgba(245,240,230,.82);
+  margin: 0 0 22px;
+  max-width: 30ch;
+}
+.bf-reloj {
+  display: flex;
+  gap: 8px;
+  margin: 0 0 26px;
+}
+.bf-reloj-caja {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  min-width: 62px;
+  padding: 10px 8px 8px;
+  border-radius: 12px;
+  background: rgba(245,240,230,.10);
+  border: 1px solid rgba(245,240,230,.18);
+  backdrop-filter: blur(6px);
+}
+.bf-reloj-caja b {
+  font: 800 22px/1 -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums;
+}
+.bf-reloj-caja i {
+  font: 700 8px/1 -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-style: normal;
+  color: rgba(245,240,230,.62);
+}
+.bf-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: var(--tierra);
+  color: #fff;
+  text-decoration: none;
+  font: 800 11px/1 -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 17px 26px;
+  border-radius: 999px;
+}
+
+.bf-piezas { padding: 46px 18px 54px; }
+.bf-head { margin: 0 0 24px; }
+.bf-eyebrow {
+  font: 800 9.5px/1 -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--tierra);
+  margin: 0 0 10px;
+}
+.bf-h2 {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 27px;
+  line-height: 1.06;
+  letter-spacing: -0.038em;
+  font-weight: 800;
+  color: var(--tinta);
+  margin: 0 0 10px;
+}
+.bf-nota {
+  font: 400 13.5px/1.5 -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  color: #6b6157;
+  margin: 0;
+  max-width: 34ch;
+}
+
+.bf-condiciones {
+  display: grid;
+  gap: 1px;
+  background: rgba(20,16,12,.10);
+  border-top: 1px solid rgba(20,16,12,.10);
+}
+.bf-cond {
+  background: var(--crema);
+  padding: 22px 20px;
+}
+.bf-cond-rot {
+  font: 800 9px/1 -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--tierra);
+  margin: 0 0 8px;
+}
+.bf-cond-txt {
+  font: 400 13px/1.45 -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  color: #4a443d;
+  margin: 0;
+}
+@media (max-height: 700px) {
+  .bf-hero { min-height: 100svh; }
+  .bf-titulo { font-size: 40px; }
+}

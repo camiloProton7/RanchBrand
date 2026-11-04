@@ -703,6 +703,52 @@ export type RecommendedQuery = {
   >;
 };
 
+export type PiezasQueryVariables = StorefrontAPI.Exact<{[key: string]: never}>;
+
+export type PiezasQuery = {
+  gorras?: StorefrontAPI.Maybe<{
+    products: {
+      nodes: Array<
+        Pick<
+          StorefrontAPI.Product,
+          'id' | 'title' | 'handle' | 'availableForSale'
+        > & {
+          priceRange: {minVariantPrice: Pick<StorefrontAPI.MoneyV2, 'amount'>};
+          compareAtPriceRange: {
+            minVariantPrice: Pick<StorefrontAPI.MoneyV2, 'amount'>;
+          };
+          images: {nodes: Array<Pick<StorefrontAPI.Image, 'url'>>};
+        }
+      >;
+    };
+  }>;
+  chaquetas?: StorefrontAPI.Maybe<{
+    products: {
+      nodes: Array<
+        Pick<
+          StorefrontAPI.Product,
+          'id' | 'title' | 'handle' | 'availableForSale'
+        > & {
+          priceRange: {minVariantPrice: Pick<StorefrontAPI.MoneyV2, 'amount'>};
+          compareAtPriceRange: {
+            minVariantPrice: Pick<StorefrontAPI.MoneyV2, 'amount'>;
+          };
+          images: {nodes: Array<Pick<StorefrontAPI.Image, 'url'>>};
+        }
+      >;
+    };
+  }>;
+};
+
+export type PiezaFragment = Pick<
+  StorefrontAPI.Product,
+  'id' | 'title' | 'handle' | 'availableForSale'
+> & {
+  priceRange: {minVariantPrice: Pick<StorefrontAPI.MoneyV2, 'amount'>};
+  compareAtPriceRange: {minVariantPrice: Pick<StorefrontAPI.MoneyV2, 'amount'>};
+  images: {nodes: Array<Pick<StorefrontAPI.Image, 'url'>>};
+};
+
 export type DestacadosCestaQueryVariables = StorefrontAPI.Exact<{
   [key: string]: never;
 }>;
@@ -1085,6 +1131,10 @@ interface GeneratedQueryTypes {
   '#graphql\n      query Recommended {\n        r0: product(handle: "gorra-redwood") {\n          id title handle availableForSale\n          featuredImage { url }\n          priceRange { minVariantPrice { amount currencyCode } }\n          variants(first: 1) { nodes { id } }\n        }\n        r1: product(handle: "gorra-andina") {\n          id title handle availableForSale\n          featuredImage { url }\n          priceRange { minVariantPrice { amount currencyCode } }\n          variants(first: 1) { nodes { id } }\n        }\n        r2: product(handle: "chaqueta-ganadera-gamuza") {\n          id title handle availableForSale\n          featuredImage { url }\n          priceRange { minVariantPrice { amount currencyCode } }\n          variants(first: 1) { nodes { id } }\n        }\n        r3: product(handle: "saco-bordado-rebano") {\n          id title handle availableForSale\n          featuredImage { url }\n          priceRange { minVariantPrice { amount currencyCode } }\n          variants(first: 1) { nodes { id } }\n        }\n        r4: product(handle: "gorra-goat") {\n          id title handle availableForSale\n          featuredImage { url }\n          priceRange { minVariantPrice { amount currencyCode } }\n          variants(first: 1) { nodes { id } }\n        }\n        r5: product(handle: "termo-digital-the-ranch") {\n          id title handle availableForSale\n          featuredImage { url }\n          priceRange { minVariantPrice { amount currencyCode } }\n          variants(first: 1) { nodes { id } }\n        }\n      }': {
     return: RecommendedQuery;
     variables: RecommendedQueryVariables;
+  };
+  '#graphql\n  query Piezas {\n    gorras: collection(handle: "gorras") {\n      products(first: 8, sortKey: BEST_SELLING) {\n        nodes { ...Pieza }\n      }\n    }\n    chaquetas: collection(handle: "chaquetas") {\n      products(first: 6, sortKey: BEST_SELLING) {\n        nodes { ...Pieza }\n      }\n    }\n  }\n  fragment Pieza on Product {\n    id\n    title\n    handle\n    availableForSale\n    priceRange { minVariantPrice { amount } }\n    compareAtPriceRange { minVariantPrice { amount } }\n    images(first: 2) { nodes { url } }\n  }\n': {
+    return: PiezasQuery;
+    variables: PiezasQueryVariables;
   };
   '#graphql\n  query DestacadosCesta {\n    collection(handle: "gorras") {\n      products(first: 6, sortKey: BEST_SELLING) {\n        nodes {\n          id\n          title\n          handle\n          priceRange { minVariantPrice { amount } }\n          images(first: 1) { nodes { url } }\n        }\n      }\n    }\n  }\n': {
     return: DestacadosCestaQuery;
