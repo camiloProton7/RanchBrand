@@ -89,11 +89,11 @@ async function cargarColeccion({params, context, genero = ''}) {
   const [data, otrasData] = await Promise.all([
     context.storefront.query(COLECCION, {
       ...fresco,
-      // en chaquetas mandan las recien llegadas; en el resto, lo que mas rota
+      // manda el orden manual que Camilo arma en Shopify
       variables: {
         handle,
-        orden: handle === 'chaquetas' ? 'CREATED' : 'BEST_SELLING',
-        alreves: handle === 'chaquetas',
+        orden: 'MANUAL',
+        alreves: false,
       },
     }),
     context.storefront.query(OTRAS, fresco),
@@ -172,7 +172,9 @@ async function cargarColeccion({params, context, genero = ''}) {
     const hombres = new Set();
     const mujeres = new Set();
     try {
-      const g = await context.storefront.query(DE_GENERO, fresco);
+      const g = await context.storefront.query(DE_GENERO, {
+        cache: context.storefront.CacheShort(),
+      });
       for (const p of g?.hombre?.products?.nodes || []) hombres.add(p.handle);
       for (const p of g?.mujer?.products?.nodes || []) mujeres.add(p.handle);
     } catch {
