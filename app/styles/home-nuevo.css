@@ -646,9 +646,11 @@
   -webkit-backdrop-filter: blur(6px);
 }
 
+/* Apaga la foto del agotado SIN tocar la opacidad: esa la maneja la clase .on
+   para que la segunda foto siga oculta. Si se pone opacity aquí, asoma como
+   fantasma detrás de la primera. */
 .hn-card:has(.hn-card-agotado) .hn-card-media img {
-  filter: grayscale(0.35);
-  opacity: 0.82;
+  filter: grayscale(0.35) brightness(0.95);
 }
 
 .hn-card:has(.hn-card-agotado) .hn-card-name {
