@@ -7,8 +7,6 @@ import Carroza from '~/components/Carroza';
 import Buscador from '~/components/Buscador';
 import GuiaTallas from '~/components/GuiaTallas';
 import ResenasProducto from '~/components/ResenasProducto';
-import Anadido from '~/components/Anadido';
-import {handleImpulsado} from '~/data/impulsados';
 import {recordar} from '~/lib/cache';
 import MenuLateral from '~/components/MenuLateral';
 import {useHeaderScroll} from '~/lib/useHeaderScroll';
@@ -68,23 +66,6 @@ const RECOS = `#graphql
   }
 `;
 
-const POR_HANDLE = `#graphql
-  query PorHandle($handle: String!) {
-    product(handle: $handle) {
-      id
-      title
-      handle
-      priceRange { minVariantPrice { amount currencyCode } }
-      compareAtPriceRange { minVariantPrice { amount } }
-      variants(first: 30) { nodes { id availableForSale quantityAvailable } }
-      images(first: 2) { nodes { url altText } }
-      metafields(identifiers: [
-        {namespace: "reviews", key: "rating"},
-        {namespace: "reviews", key: "rating_count"}
-      ]) { key value }
-    }
-  }
-`;
 
 const DE_COLECCION = `#graphql
   query DeColeccion($handle: String!, $excluir: String!) {
@@ -105,40 +86,6 @@ const DE_COLECCION = `#graphql
   }
 `;
 
-/**
- * Primera variante con unidades reales del producto que se empuja.
- *
- * El Storefront publico no expone el inventario y la tienda vende sin stock,
- * asi que hay que preguntarle al Admin para no ofrecer una talla vacia.
- */
-async function varianteConStock(context, handle) {
-  const token = context.env.SHOPIFY_ADMIN_TOKEN;
-  const dominio = context.env.PUBLIC_STORE_DOMAIN;
-  if (!token || !dominio) return '';
-
-  const consulta = `
-    query StockSugerido($handle: String!) {
-      productByHandle(handle: $handle) {
-        variants(first: 40) {
-          nodes { id inventoryQuantity }
-        }
-      }
-    }
-  `;
-
-  try {
-    const r = await fetch(`https://${dominio}/admin/api/2025-01/graphql.json`, {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json', 'X-Shopify-Access-Token': token},
-      body: JSON.stringify({query: consulta, variables: {handle}}),
-    });
-    const d = await r.json();
-    const vs = d?.data?.productByHandle?.variants?.nodes || [];
-    return vs.find((v) => (v.inventoryQuantity ?? 0) > 0)?.id || '';
-  } catch {
-    return '';
-  }
-}
 
 async function cargarProducto({params, context}) {
   const handle = params.handle;
@@ -222,17 +169,6 @@ async function cargarProducto({params, context}) {
   const cols = (p.collections?.nodes || []).map((c) => c.handle).filter(Boolean);
 
   // El producto que se empuja se pide a la vez que los recomendados: en
-  // serie sumaba un viaje mas a Shopify y la ficha se sentia lenta.
-  const meta = handleImpulsado(cols, p.handle);
-  const pedidoSugerido = meta
-    ? context.storefront
-        .query(POR_HANDLE, {...fresco, variables: {handle: meta}})
-        .catch(() => null)
-    : Promise.resolve(null);
-
-  // el inventario del sugerido se pregunta a la vez: en serie sumaba otro
-  // viaje despues de tener el producto
-  const pedidoStock = meta ? varianteConStock(context, meta) : Promise.resolve('');
 
   // Primero la coleccion visible del producto (una sola llamada). Si esa
   // coleccion esta archivada o vacia, se prueba la siguiente y, como ultimo
@@ -264,19 +200,9 @@ async function cargarProducto({params, context}) {
     }
   }
 
-  // pieza que se empuja en el aviso de compra: se pide directo por su handle
-  // para tener siempre su variante y poder sumarla en un toque
-  const sp = await pedidoSugerido;
-  let sugerido = sp?.product ? aTarjeta(sp.product) : null;
-  if (sugerido) {
-    const conStock = await pedidoStock;
-    if (conStock) sugerido.varianteId = conStock;
-  }
-  if (!sugerido) sugerido = recos[0] || null;
 
   return {
     recos,
-    sugerido,
     id: p.id,
     titulo: p.title,
     handle: p.handle,
@@ -342,7 +268,7 @@ export const meta = ({data}) => {
 };
 
 export default function ProductoNuevo() {
-  const {titulo, tipo, precio, precioNum, valor, cuenta, fotos, opciones, variantes, handle, parrafos, recos, sugerido} =
+  const {titulo, tipo, precio, precioNum, valor, cuenta, fotos, opciones, variantes, handle, parrafos, recos} =
     useLoaderData();
 
   const [foto, setFoto] = useState(0);
@@ -402,9 +328,6 @@ export default function ProductoNuevo() {
   const [anadiendo, setAnadiendo] = useState(false);
   const [anadido, setAnadido] = useState(false);
   const [enCesta, setEnCesta] = useState(0);
-  const [avisoAbierto, setAvisoAbierto] = useState(false);
-  const [modoAviso, setModoAviso] = useState('carrito');
-  const [sugeridoAnadido, setSugeridoAnadido] = useState(false);
   const {oculto: barraOculta} = useHeaderScroll({alto: 90});
 
   // la guia cambia segun lo que se elige: numero de calzado o talla de prenda
@@ -457,8 +380,6 @@ export default function ProductoNuevo() {
         handle,
       });
       setAnadido(true);
-      setModoAviso('carrito');
-      setAvisoAbierto(true);
       setTimeout(() => setAnadido(false), 4000);
     } finally {
       setAnadiendo(false);
@@ -466,25 +387,15 @@ export default function ProductoNuevo() {
   }
 
   /**
-   * "Comprar ahora" tambien pasa por la hoja: confirma la pieza y deja el
-   * sugerido a un toque, pero la salida principal es el pago.
+   * "Comprar ahora" va derecho a la pasarela: sin hoja intermedia.
    */
   function comprarAhora() {
     if (!variante?.disponible) return;
-    setModoAviso('pago');
-    setSugeridoAnadido(false);
-    setAvisoAbierto(true);
-  }
-
-  /** Va a la pasarela con la pieza elegida y, si la sumó, el sugerido. */
-  function irAPagar() {
-    const ids = [variante.id.replace(/\D/g, '') + ':1'];
-    if (sugeridoAnadido && sugerido?.varianteId) {
-      ids.push(sugerido.varianteId.replace(/\D/g, '') + ':1');
-    }
-    const total = sugeridoAnadido && sugerido ? variante.precioNum + sugerido.precioNum : variante.precioNum;
-    trackCompra(total);
-    window.location.href = `https://1caf84-4.myshopify.com/cart/${ids.join(',')}`;
+    trackCompra(variante.precioNum);
+    window.location.href = `https://1caf84-4.myshopify.com/cart/${variante.id.replace(
+      /\D/g,
+      '',
+    )}:1`;
   }
 
   // Meta: el producto visto, para remarketing y catalogo.
@@ -523,20 +434,6 @@ export default function ProductoNuevo() {
     } catch {
       /* sin pixel: no pasa nada */
     }
-  }
-
-  function agregarSugerido() {
-    if (!sugerido || sugeridoAnadido) return;
-    addToCart({
-      variantId: sugerido.varianteId,
-      qty: 1,
-      title: sugerido.titulo,
-      image: sugerido.img1 || sugerido.img,
-      price: sugerido.precioNum,
-      precioTexto: sugerido.precio,
-      handle: sugerido.handle,
-    });
-    setSugeridoAnadido(true);
   }
 
   return (
@@ -759,37 +656,6 @@ export default function ProductoNuevo() {
               : 'Agotada'}
         </button>
       </div>
-
-      <Anadido
-        abierto={avisoAbierto}
-        cerrar={() => {
-          setAvisoAbierto(false);
-          setSugeridoAnadido(false);
-        }}
-        articulo={{
-          titulo,
-          img: fotos[0],
-          precio: variante?.precio || precio,
-          opciones: variante?.opciones?.map((o) => o.value).join(' · '),
-        }}
-        sugerido={
-          sugerido
-            ? {
-                handle: sugerido.handle,
-                titulo: sugerido.titulo,
-                img: sugerido.img1 || sugerido.img,
-                precio: sugerido.precio,
-                antes: sugerido.antes,
-                varianteId: sugerido.varianteId,
-              }
-            : null
-        }
-        onAnadir={agregarSugerido}
-        onPagar={irAPagar}
-        modo={modoAviso}
-        anadiendo={false}
-        yaAnadido={sugeridoAnadido}
-      />
 
       {tipoGuia && (
         <GuiaTallas

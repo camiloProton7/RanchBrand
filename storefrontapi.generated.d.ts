@@ -963,35 +963,6 @@ export type RecosQuery = {
   >;
 };
 
-export type PorHandleQueryVariables = StorefrontAPI.Exact<{
-  handle: StorefrontAPI.Scalars['String']['input'];
-}>;
-
-export type PorHandleQuery = {
-  product?: StorefrontAPI.Maybe<
-    Pick<StorefrontAPI.Product, 'id' | 'title' | 'handle'> & {
-      priceRange: {
-        minVariantPrice: Pick<StorefrontAPI.MoneyV2, 'amount' | 'currencyCode'>;
-      };
-      compareAtPriceRange: {
-        minVariantPrice: Pick<StorefrontAPI.MoneyV2, 'amount'>;
-      };
-      variants: {
-        nodes: Array<
-          Pick<
-            StorefrontAPI.ProductVariant,
-            'id' | 'availableForSale' | 'quantityAvailable'
-          >
-        >;
-      };
-      images: {nodes: Array<Pick<StorefrontAPI.Image, 'url' | 'altText'>>};
-      metafields: Array<
-        StorefrontAPI.Maybe<Pick<StorefrontAPI.Metafield, 'key' | 'value'>>
-      >;
-    }
-  >;
-};
-
 export type DeColeccionQueryVariables = StorefrontAPI.Exact<{
   handle: StorefrontAPI.Scalars['String']['input'];
   excluir: StorefrontAPI.Scalars['String']['input'];
@@ -1167,10 +1138,6 @@ interface GeneratedQueryTypes {
   '#graphql\n  query Recos($id: ID!) {\n    productRecommendations(productId: $id) {\n      id\n      title\n      handle\n      priceRange { minVariantPrice { amount currencyCode } }\n      compareAtPriceRange { minVariantPrice { amount } }\n      images(first: 2) { nodes { url altText } }\n      metafields(identifiers: [\n        {namespace: "reviews", key: "rating"},\n        {namespace: "reviews", key: "rating_count"}\n      ]) { key value }\n    }\n  }\n': {
     return: RecosQuery;
     variables: RecosQueryVariables;
-  };
-  '#graphql\n  query PorHandle($handle: String!) {\n    product(handle: $handle) {\n      id\n      title\n      handle\n      priceRange { minVariantPrice { amount currencyCode } }\n      compareAtPriceRange { minVariantPrice { amount } }\n      variants(first: 30) { nodes { id availableForSale quantityAvailable } }\n      images(first: 2) { nodes { url altText } }\n      metafields(identifiers: [\n        {namespace: "reviews", key: "rating"},\n        {namespace: "reviews", key: "rating_count"}\n      ]) { key value }\n    }\n  }\n': {
-    return: PorHandleQuery;
-    variables: PorHandleQueryVariables;
   };
   '#graphql\n  query DeColeccion($handle: String!, $excluir: String!) {\n    collection(handle: $handle) {\n      products(first: 10, sortKey: BEST_SELLING) {\n        nodes {\n          id title handle\n          priceRange { minVariantPrice { amount currencyCode } }\n          variants(first: 1) { nodes { id availableForSale } }\n          images(first: 2) { nodes { url altText } }\n          metafields(identifiers: [\n            {namespace: "reviews", key: "rating"},\n            {namespace: "reviews", key: "rating_count"}\n          ]) { key value }\n        }\n      }\n    }\n  }\n': {
     return: DeColeccionQuery;
