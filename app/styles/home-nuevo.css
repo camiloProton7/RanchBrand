@@ -635,15 +635,14 @@
   bottom: 9px;
   padding: 5px 10px;
   border-radius: 999px;
-  background: rgba(20, 17, 15, 0.86);
-  color: #fdfaf3;
+  background: #bf2e1f;
+  color: #fff8f2;
+  box-shadow: 0 2px 8px rgba(120, 20, 10, 0.28);
   font-size: 9px;
   font-weight: 700;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   line-height: 1;
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
 }
 
 /* Apaga la foto del agotado SIN tocar la opacidad: esa la maneja la clase .on
