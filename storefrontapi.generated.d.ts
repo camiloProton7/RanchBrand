@@ -827,6 +827,14 @@ export type OtrasQuery = {
   };
 };
 
+export type DeMujerQueryVariables = StorefrontAPI.Exact<{[key: string]: never}>;
+
+export type DeMujerQuery = {
+  collection?: StorefrontAPI.Maybe<{
+    products: {nodes: Array<Pick<StorefrontAPI.Product, 'handle'>>};
+  }>;
+};
+
 export type GorrasComboQueryVariables = StorefrontAPI.Exact<{
   [key: string]: never;
 }>;
@@ -848,6 +856,22 @@ export type GorrasComboQuery = {
       }
     >;
   };
+};
+
+export type PersonalizadoMayorQueryVariables = StorefrontAPI.Exact<{
+  handle: StorefrontAPI.Scalars['String']['input'];
+}>;
+
+export type PersonalizadoMayorQuery = {
+  product?: StorefrontAPI.Maybe<
+    Pick<StorefrontAPI.Product, 'title' | 'handle'> & {
+      featuredImage?: StorefrontAPI.Maybe<
+        Pick<StorefrontAPI.Image, 'url' | 'altText'>
+      >;
+      priceRange: {minVariantPrice: Pick<StorefrontAPI.MoneyV2, 'amount'>};
+      variants: {nodes: Array<Pick<StorefrontAPI.ProductVariant, 'id'>>};
+    }
+  >;
 };
 
 export type PersonalizableProductQueryVariables = StorefrontAPI.Exact<{
@@ -1119,9 +1143,17 @@ interface GeneratedQueryTypes {
     return: OtrasQuery;
     variables: OtrasQueryVariables;
   };
+  '#graphql\n  query DeMujer {\n    collection(handle: "chaquetas-mujer") {\n      products(first: 100) { nodes { handle } }\n    }\n  }\n': {
+    return: DeMujerQuery;
+    variables: DeMujerQueryVariables;
+  };
   '#graphql\n  query GorrasCombo {\n    products(first: 100, sortKey: BEST_SELLING) {\n      nodes {\n        title\n        handle\n        productType\n        featuredImage { url altText }\n        variants(first: 5) {\n          nodes { id price { amount currencyCode } availableForSale }\n        }\n      }\n    }\n  }\n': {
     return: GorrasComboQuery;
     variables: GorrasComboQueryVariables;
+  };
+  '#graphql\n  query PersonalizadoMayor($handle: String!) {\n    product(handle: $handle) {\n      title\n      handle\n      featuredImage { url altText }\n      priceRange { minVariantPrice { amount } }\n      variants(first: 1) { nodes { id } }\n    }\n  }\n': {
+    return: PersonalizadoMayorQuery;
+    variables: PersonalizadoMayorQueryVariables;
   };
   '#graphql\n  query PersonalizableProduct($handle: String!) {\n    product(handle: $handle) {\n      id\n      title\n      handle\n      featuredImage {\n        url\n        altText\n      }\n      priceRange {\n        minVariantPrice { amount currencyCode }\n      }\n      variants(first: 1) {\n        nodes { id }\n      }\n    }\n  }\n': {
     return: PersonalizableProductQuery;

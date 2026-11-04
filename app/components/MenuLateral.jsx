@@ -4,7 +4,14 @@ import {Link} from 'react-router';
 const ENTRADAS = [
   ['Inicio', '/'],
   ['Gorras', '/collections/gorras'],
-  ['Chaquetas y sacos', '/collections/chaquetas'],
+  [
+    'Chaquetas y sacos',
+    '/collections/chaquetas',
+    [
+      ['Hombre', '/collections/chaquetas?genero=hombre'],
+      ['Mujer', '/collections/chaquetas?genero=mujer'],
+    ],
+  ],
   ['Camisas y camisetas', '/collections/camisetas'],
   ['Botas y accesorios', '/collections/botas-1'],
   ['El combo de gorras', '/combo-gorras'],
@@ -57,16 +64,28 @@ export default function MenuLateral({tono = 'crema'}) {
             </div>
 
             <nav className="hn-panel-nav">
-              {ENTRADAS.map(([t, to], i) => (
-                <Link key={to} to={to} onClick={() => setAbierto(false)} style={{'--n': i}}>
-                  <span className="hn-panel-num">{String(i + 1).padStart(2, '0')}</span>
-                  <span className="hn-panel-txt">{t}</span>
-                  <span className="hn-panel-flecha" aria-hidden="true">
-                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-                      <path d="M5 12h13M12 5l7 7-7 7" />
-                    </svg>
-                  </span>
-                </Link>
+              {ENTRADAS.map(([t, to, hijos], i) => (
+                <div key={to} className="hn-panel-grupo" style={{'--n': i}}>
+                  <Link to={to} onClick={() => setAbierto(false)}>
+                    <span className="hn-panel-num">{String(i + 1).padStart(2, '0')}</span>
+                    <span className="hn-panel-txt">{t}</span>
+                    <span className="hn-panel-flecha" aria-hidden="true">
+                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+                        <path d="M5 12h13M12 5l7 7-7 7" />
+                      </svg>
+                    </span>
+                  </Link>
+
+                  {hijos ? (
+                    <div className="hn-panel-sub">
+                      {hijos.map(([st, sto]) => (
+                        <Link key={sto} to={sto} onClick={() => setAbierto(false)}>
+                          {st}
+                        </Link>
+                      ))}
+                    </div>
+                  ) : null}
+                </div>
               ))}
 
               <p className="hn-panel-rotulo">Ayuda</p>

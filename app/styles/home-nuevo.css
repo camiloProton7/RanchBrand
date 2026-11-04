@@ -2652,6 +2652,38 @@
   color: #b34a2a;
 }
 
+/* submenu de chaquetas: hombre / mujer */
+.hn-panel-grupo {
+  display: grid;
+}
+
+.hn-panel-sub {
+  display: flex;
+  gap: 8px;
+  padding: 0 2px 13px 34px;
+  margin-top: -4px;
+}
+
+.hn-panel-nav .hn-panel-sub a {
+  display: inline-flex;
+  padding: 7px 14px;
+  border: 1px solid rgba(28, 23, 18, 0.16);
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: #4a443c;
+  opacity: 1;
+  transform: none;
+  animation: none;
+}
+
+.hn-panel-nav .hn-panel-sub a:active {
+  border-color: #b34a2a;
+  color: #b34a2a;
+}
+
 .hn-panel-pie {
   padding-top: 18px;
   display: flex;
@@ -2891,6 +2923,34 @@
   line-height: 1.6;
   color: var(--gris);
   max-width: 36ch;
+}
+
+/* hombre / mujer dentro de chaquetas */
+.hc-genero {
+  display: flex;
+  gap: 7px;
+  margin: 14px 0 10px;
+}
+
+.hc-genero-btn {
+  display: inline-flex;
+  align-items: center;
+  height: 32px;
+  padding: 0 15px;
+  border-radius: 999px;
+  border: 1px solid rgba(28, 23, 18, 0.16);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: #4a443c;
+  transition: background 0.16s ease, color 0.16s ease, border-color 0.16s ease;
+}
+
+.hc-genero-btn.is-on {
+  background: #1c1712;
+  border-color: #1c1712;
+  color: #f6f1e6;
 }
 
 .hc-orden {

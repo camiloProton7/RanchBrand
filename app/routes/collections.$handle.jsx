@@ -71,7 +71,15 @@ const OTRAS = `#graphql
   }
 `;
 
-async function cargarColeccion({params, context}) {
+const DE_MUJER = `#graphql
+  query DeMujer {
+    collection(handle: "chaquetas-mujer") {
+      products(first: 100) { nodes { handle } }
+    }
+  }
+`;
+
+async function cargarColeccion({params, context, genero = ''}) {
   const handle = params.handle;
   const fresco = import.meta.env.DEV ? {cache: context.storefront.CacheNone()} : undefined;
   const [data, otrasData] = await Promise.all([
@@ -154,8 +162,26 @@ async function cargarColeccion({params, context}) {
       foto: optimizar(x.image?.url || x.products.nodes[0].featuredImage.url, 640),
     }));
 
+  // submenu hombre / mujer: se apoya en la coleccion Mujer, sin duplicar productos
+  let lista = productos;
+  if (handle === 'chaquetas' && (genero === 'hombre' || genero === 'mujer')) {
+    const femeninas = new Set();
+    try {
+      const g = await context.storefront.query(DE_MUJER, fresco);
+      for (const p of g?.collection?.products?.nodes || []) femeninas.add(p.handle);
+    } catch {
+      /* sin la lista, se muestran todas */
+    }
+    if (femeninas.size) {
+      lista = productos.filter((p) =>
+        genero === 'mujer' ? femeninas.has(p.handle) : !femeninas.has(p.handle),
+      );
+    }
+  }
+
   return {
     otras,
+    genero,
     titulo: c.title,
     handle: c.handle,
     descripcion: (c.description || '').replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim(),
@@ -163,7 +189,7 @@ async function cargarColeccion({params, context}) {
       PORTADAS[handle] ??
       (c.image ? optimizar(c.image.url, 1200) : productos[0]?.grande ?? null),
     desde: desde ? fmt.format(desde) : null,
-    productos,
+    productos: lista,
   };
 }
 
@@ -171,9 +197,12 @@ async function cargarColeccion({params, context}) {
  * La coleccion se guarda dos minutos: entrar y volver a una categoria no
  * debe repetir las dos consultas a Shopify cada vez.
  */
-export async function loader({params, context}) {
+export async function loader({params, context, request}) {
   const handle = params.handle || '';
-  return recordar(`coleccion:${handle}`, 2, () => cargarColeccion({params, context}));
+  const genero = new URL(request.url).searchParams.get('genero') || '';
+  return recordar(`coleccion:${handle}:${genero}`, 2, () =>
+    cargarColeccion({params, context, genero}),
+  );
 }
 
 const FRASE_COL = {
@@ -209,7 +238,7 @@ export const meta = ({data}) => {
 };
 
 export default function ColeccionNueva() {
-  const {titulo, descripcion, foto, productos, handle, desde, otras} = useLoaderData();
+  const {titulo, descripcion, foto, productos, handle, desde, otras, genero} = useLoaderData();
   const [orden, setOrden] = useState('destacados');
   const heroRef = useRef(null);
   // La barra va siempre sólida y visible: sobre la foto quedaba transparente y
@@ -282,6 +311,25 @@ export default function ColeccionNueva() {
           <em>{frase[1]}</em>
         </p>
         {descripcion && <p className="hc-intro-desc">{descripcion.slice(0, 132)}</p>}
+        {handle === 'chaquetas' && (
+          <div className="hc-genero" role="group" aria-label="Hombre o mujer">
+            {[
+              ['', 'Todo'],
+              ['hombre', 'Hombre'],
+              ['mujer', 'Mujer'],
+            ].map(([k, t]) => (
+              <Link
+                key={t}
+                to={'/collections/chaquetas' + (k ? `?genero=${k}` : '')}
+                prefetch="intent"
+                className={'hc-genero-btn' + (genero === k ? ' is-on' : '')}
+              >
+                {t}
+              </Link>
+            ))}
+          </div>
+        )}
+
         <div className="hc-orden" role="group" aria-label="Ordenar">
           {[
             ['destacados', 'Destacados'],
