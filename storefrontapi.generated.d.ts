@@ -408,7 +408,7 @@ export type ChaquetasQuery = {
       nodes: Array<
         Pick<
           StorefrontAPI.Product,
-          'id' | 'title' | 'handle' | 'description'
+          'id' | 'title' | 'handle' | 'description' | 'availableForSale'
         > & {
           priceRange: {
             minVariantPrice: Pick<
@@ -437,7 +437,7 @@ export type CamisasQuery = {
       nodes: Array<
         Pick<
           StorefrontAPI.Product,
-          'id' | 'title' | 'handle' | 'description'
+          'id' | 'title' | 'handle' | 'description' | 'availableForSale'
         > & {
           priceRange: {
             minVariantPrice: Pick<
@@ -523,7 +523,7 @@ export type GorrasQuery = {
       nodes: Array<
         Pick<
           StorefrontAPI.Product,
-          'id' | 'title' | 'handle' | 'description'
+          'id' | 'title' | 'handle' | 'availableForSale' | 'description'
         > & {
           priceRange: {
             minVariantPrice: Pick<
@@ -1100,11 +1100,11 @@ interface GeneratedQueryTypes {
     return: ComboQuery;
     variables: ComboQueryVariables;
   };
-  '#graphql\n  query Chaquetas {\n    collection(handle: "chaquetas") {\n      products(first: 8, sortKey: BEST_SELLING) {\n        nodes {\n          id title handle description\n          priceRange { minVariantPrice { amount currencyCode } }\n      compareAtPriceRange { minVariantPrice { amount } }\n          images(first: 4) { nodes { url } }\n          metafields(identifiers: [{namespace: "reviews", key: "rating"}, {namespace: "reviews", key: "rating_count"}]) {\n            key\n            value\n          }\n        }\n      }\n    }\n  }\n': {
+  '#graphql\n  query Chaquetas {\n    collection(handle: "chaquetas") {\n      products(first: 8, sortKey: BEST_SELLING) {\n        nodes {\n          id title handle description availableForSale\n          priceRange { minVariantPrice { amount currencyCode } }\n      compareAtPriceRange { minVariantPrice { amount } }\n          images(first: 4) { nodes { url } }\n          metafields(identifiers: [{namespace: "reviews", key: "rating"}, {namespace: "reviews", key: "rating_count"}]) {\n            key\n            value\n          }\n        }\n      }\n    }\n  }\n': {
     return: ChaquetasQuery;
     variables: ChaquetasQueryVariables;
   };
-  '#graphql\n  query Camisas {\n    collection(handle: "camisetas") {\n      products(first: 16, sortKey: BEST_SELLING) {\n        nodes {\n          id title handle description\n          priceRange { minVariantPrice { amount currencyCode } }\n      compareAtPriceRange { minVariantPrice { amount } }\n          images(first: 4) { nodes { url } }\n          metafields(identifiers: [{namespace: "reviews", key: "rating"}, {namespace: "reviews", key: "rating_count"}]) {\n            key\n            value\n          }\n        }\n      }\n    }\n  }\n': {
+  '#graphql\n  query Camisas {\n    collection(handle: "camisetas") {\n      products(first: 16, sortKey: BEST_SELLING) {\n        nodes {\n          id title handle description availableForSale\n          priceRange { minVariantPrice { amount currencyCode } }\n      compareAtPriceRange { minVariantPrice { amount } }\n          images(first: 4) { nodes { url } }\n          metafields(identifiers: [{namespace: "reviews", key: "rating"}, {namespace: "reviews", key: "rating_count"}]) {\n            key\n            value\n          }\n        }\n      }\n    }\n  }\n': {
     return: CamisasQuery;
     variables: CamisasQueryVariables;
   };
@@ -1112,7 +1112,7 @@ interface GeneratedQueryTypes {
     return: CategoriasQuery;
     variables: CategoriasQueryVariables;
   };
-  '#graphql\n  query Gorras {\n    collection(handle: "gorras") {\n      products(first: 6, sortKey: BEST_SELLING) {\n        nodes {\n          id title handle\n          description\n          priceRange { minVariantPrice { amount currencyCode } }\n      compareAtPriceRange { minVariantPrice { amount } }\n          images(first: 4) { nodes { url } }\n          metafields(identifiers: [{namespace: "reviews", key: "rating"}, {namespace: "reviews", key: "rating_count"}]) {\n            key\n            value\n          }\n        }\n      }\n    }\n  }\n': {
+  '#graphql\n  query Gorras {\n    collection(handle: "gorras") {\n      products(first: 6, sortKey: BEST_SELLING) {\n        nodes {\n          id title handle availableForSale\n          description\n          priceRange { minVariantPrice { amount currencyCode } }\n      compareAtPriceRange { minVariantPrice { amount } }\n          images(first: 4) { nodes { url } }\n          metafields(identifiers: [{namespace: "reviews", key: "rating"}, {namespace: "reviews", key: "rating_count"}]) {\n            key\n            value\n          }\n        }\n      }\n    }\n  }\n': {
     return: GorrasQuery;
     variables: GorrasQueryVariables;
   };

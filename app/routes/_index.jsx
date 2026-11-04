@@ -107,7 +107,7 @@ const CHAQUETAS = `#graphql
     collection(handle: "chaquetas") {
       products(first: 8, sortKey: BEST_SELLING) {
         nodes {
-          id title handle description
+          id title handle description availableForSale
           priceRange { minVariantPrice { amount currencyCode } }
       compareAtPriceRange { minVariantPrice { amount } }
           images(first: 4) { nodes { url } }
@@ -126,7 +126,7 @@ const CAMISAS = `#graphql
     collection(handle: "camisetas") {
       products(first: 16, sortKey: BEST_SELLING) {
         nodes {
-          id title handle description
+          id title handle description availableForSale
           priceRange { minVariantPrice { amount currencyCode } }
       compareAtPriceRange { minVariantPrice { amount } }
           images(first: 4) { nodes { url } }
@@ -175,7 +175,7 @@ const GORRAS = `#graphql
     collection(handle: "gorras") {
       products(first: 6, sortKey: BEST_SELLING) {
         nodes {
-          id title handle
+          id title handle availableForSale
           description
           priceRange { minVariantPrice { amount currencyCode } }
       compareAtPriceRange { minVariantPrice { amount } }
@@ -330,6 +330,7 @@ export async function loader({context}) {
 
   const gorras = (gorrasData.collection?.products.nodes || []).map((p) => ({
     id: p.id,
+    disponible: p.availableForSale,
     titulo: p.title,
     handle: p.handle,
     precio: fmt.format(Number(p.priceRange.minVariantPrice.amount)),
@@ -346,6 +347,7 @@ export async function loader({context}) {
 
   const chaquetas = (chaquetasData.collection?.products.nodes || []).map((p) => ({
     id: p.id,
+    disponible: p.availableForSale,
     titulo: p.title,
     handle: p.handle,
     precio: fmt.format(Number(p.priceRange.minVariantPrice.amount)),
@@ -417,6 +419,7 @@ export async function loader({context}) {
     .filter((p) => !p.handle.startsWith('combo-'))
     .map((p) => ({
       id: p.id,
+      disponible: p.availableForSale,
       titulo: p.title,
       handle: p.handle,
       precio: fmt.format(Number(p.priceRange.minVariantPrice.amount)),

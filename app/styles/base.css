@@ -1,0 +1,79 @@
+/*
+ * Base mínima para TODAS las rutas.
+ *
+ * Las páginas del diseño nuevo no cargan reset.css ni tailwind, y sin esto el
+ * navegador aplica sus valores por defecto: el body queda con 8px de margen
+ * (el "marco blanco" que se ve en el celular) y los enlaces salen azules y
+ * subrayados.
+ *
+ * Se carga antes de los estilos viejos para que ellos puedan sobrescribirla.
+ */
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  overflow-x: clip;
+  /* el fondo lo pone cada página; esto evita el blanco entre secciones */
+  background-color: #f5f0e6;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+img,
+svg,
+video,
+canvas {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+}
+
+ul,
+ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+figure,
+blockquote,
+dl,
+dd {
+  margin: 0;
+}
+
+/* las fotos y bloques no deben empujar la página a lo ancho */
+img,
+iframe,
+table {
+  max-width: 100%;
+}

@@ -8,7 +8,6 @@ import Pie from '~/components/Pie';
 import MenuLateral from '~/components/MenuLateral';
 import Carroza from '~/components/Carroza';
 import Buscador from '~/components/Buscador';
-import {useHeaderScroll} from '~/lib/useHeaderScroll';
 
 export const links = () => [{rel: 'stylesheet', href: styles}];
 
@@ -213,14 +212,13 @@ export default function ColeccionNueva() {
   const {titulo, descripcion, foto, productos, handle, desde, otras} = useLoaderData();
   const [orden, setOrden] = useState('destacados');
   const heroRef = useRef(null);
-  const [solido, setSolido] = useState(false);
-  const {oculto: barraOculta} = useHeaderScroll({alto: 90});
+  // La barra va siempre sólida y visible: sobre la foto quedaba transparente y
+  // se perdía al subir. En colección el usuario necesita el menú a mano.
+  const solido = true;
   const [prog, setProg] = useState(0);
 
   useEffect(() => {
     const alScroll = () => {
-      const alto = heroRef.current?.offsetHeight ?? 520;
-      setSolido(window.scrollY > alto - 96);
       const total = document.documentElement.scrollHeight - window.innerHeight;
       setProg(total > 0 ? Math.min(1, window.scrollY / total) : 0);
     };
@@ -241,7 +239,7 @@ export default function ColeccionNueva() {
 
   return (
     <main className="hc">
-      <div className={'hc-bar' + (solido ? ' is-solido' : '') + (barraOculta ? ' is-oculto' : '')}>
+      <div className={'hc-bar' + (solido ? ' is-solido' : '')}>
         <MenuLateral tono={solido ? 'tinta' : 'crema'} />
         <Link to="/" prefetch="intent" className="hc-logo" aria-label="The Ranch, ir al inicio">
           <img

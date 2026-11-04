@@ -47,6 +47,8 @@ export function Tarjeta({p, prioridad = false, badge, ancha = false, ruta = '/pr
 
         {badge && <span className="hn-card-badge">{badge}</span>}
 
+        {p.disponible === false && <span className="hn-card-agotado">Agotado</span>}
+
         {p.valor > 0 && (
           <span className="hn-card-rating">
             <span className="hn-card-star" aria-hidden="true">★</span>

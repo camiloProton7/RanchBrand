@@ -17,6 +17,7 @@ import {
 } from 'react-router';
 import {HEADER_QUERY} from '~/lib/fragments';
 import resetStyles from '~/styles/reset.css?url';
+import baseStyles from '~/styles/base.css?url';
 import appStyles from '~/styles/app.css?url';
 import tailwindCss from './styles/tailwind.css?url';
 import siteHeaderStyles from '~/styles/site-header.css?url';
@@ -124,6 +125,8 @@ export function Layout({children}) {
         <link rel="dns-prefetch" href="https://cdn.shopify.com" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        {/* base mínima siempre: sin esto el body queda con 8px de margen */}
+        <link rel="stylesheet" href={baseStyles} />
         {!esNuevo && (
           <>
             <link rel="stylesheet" href={tailwindCss} />
