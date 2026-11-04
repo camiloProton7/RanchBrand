@@ -71,9 +71,13 @@ const OTRAS = `#graphql
   }
 `;
 
-const DE_MUJER = `#graphql
-  query DeMujer {
-    collection(handle: "chaquetas-mujer") {
+// las dos colecciones que Camilo llena a mano desde Shopify
+const DE_GENERO = `#graphql
+  query DeGenero {
+    hombre: collection(handle: "chaquetas-hombre") {
+      products(first: 100) { nodes { handle } }
+    }
+    mujer: collection(handle: "chaquetas-mujer") {
       products(first: 100) { nodes { handle } }
     }
   }
@@ -162,20 +166,29 @@ async function cargarColeccion({params, context, genero = ''}) {
       foto: optimizar(x.image?.url || x.products.nodes[0].featuredImage.url, 640),
     }));
 
-  // submenu hombre / mujer: se apoya en la coleccion Mujer, sin duplicar productos
+  // submenu hombre / mujer: manda lo que haya en cada coleccion curada
   let lista = productos;
   if (handle === 'chaquetas' && (genero === 'hombre' || genero === 'mujer')) {
-    const femeninas = new Set();
+    const hombres = new Set();
+    const mujeres = new Set();
     try {
-      const g = await context.storefront.query(DE_MUJER, fresco);
-      for (const p of g?.collection?.products?.nodes || []) femeninas.add(p.handle);
+      const g = await context.storefront.query(DE_GENERO, fresco);
+      for (const p of g?.hombre?.products?.nodes || []) hombres.add(p.handle);
+      for (const p of g?.mujer?.products?.nodes || []) mujeres.add(p.handle);
     } catch {
-      /* sin la lista, se muestran todas */
+      /* sin las listas, se muestran todas */
     }
-    if (femeninas.size) {
-      lista = productos.filter((p) =>
-        genero === 'mujer' ? femeninas.has(p.handle) : !femeninas.has(p.handle),
-      );
+
+    if (genero === 'mujer' && mujeres.size) {
+      lista = productos.filter((p) => mujeres.has(p.handle));
+    }
+    if (genero === 'hombre') {
+      if (hombres.size) {
+        lista = productos.filter((p) => hombres.has(p.handle));
+      } else if (mujeres.size) {
+        // mientras la coleccion de hombre este vacia: todas menos las de mujer
+        lista = productos.filter((p) => !mujeres.has(p.handle));
+      }
     }
   }
 

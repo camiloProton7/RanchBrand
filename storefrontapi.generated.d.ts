@@ -827,10 +827,15 @@ export type OtrasQuery = {
   };
 };
 
-export type DeMujerQueryVariables = StorefrontAPI.Exact<{[key: string]: never}>;
+export type DeGeneroQueryVariables = StorefrontAPI.Exact<{
+  [key: string]: never;
+}>;
 
-export type DeMujerQuery = {
-  collection?: StorefrontAPI.Maybe<{
+export type DeGeneroQuery = {
+  hombre?: StorefrontAPI.Maybe<{
+    products: {nodes: Array<Pick<StorefrontAPI.Product, 'handle'>>};
+  }>;
+  mujer?: StorefrontAPI.Maybe<{
     products: {nodes: Array<Pick<StorefrontAPI.Product, 'handle'>>};
   }>;
 };
@@ -1143,9 +1148,9 @@ interface GeneratedQueryTypes {
     return: OtrasQuery;
     variables: OtrasQueryVariables;
   };
-  '#graphql\n  query DeMujer {\n    collection(handle: "chaquetas-mujer") {\n      products(first: 100) { nodes { handle } }\n    }\n  }\n': {
-    return: DeMujerQuery;
-    variables: DeMujerQueryVariables;
+  '#graphql\n  query DeGenero {\n    hombre: collection(handle: "chaquetas-hombre") {\n      products(first: 100) { nodes { handle } }\n    }\n    mujer: collection(handle: "chaquetas-mujer") {\n      products(first: 100) { nodes { handle } }\n    }\n  }\n': {
+    return: DeGeneroQuery;
+    variables: DeGeneroQueryVariables;
   };
   '#graphql\n  query GorrasCombo {\n    products(first: 100, sortKey: BEST_SELLING) {\n      nodes {\n        title\n        handle\n        productType\n        featuredImage { url altText }\n        variants(first: 5) {\n          nodes { id price { amount currencyCode } availableForSale }\n        }\n      }\n    }\n  }\n': {
     return: GorrasComboQuery;
