@@ -300,9 +300,15 @@ export default function Personalizado() {
   return (
     <main className="pm">
       <header className="pm-head">
-        <p className="pm-eyebrow">The Ranch · Bordado a la medida</p>
-        <h1>Tu marca, bordada hilo por hilo</h1>
-        <p className="pm-sub">Yellowstone, Armor, Laredo y la Camisa Outdoor con tu diseño bordado. Combinas colores y tallas, subes el logo y te llamamos para cuadrarlo.</p>
+        <p className="pm-eyebrow">The Ranch · Bordado para marcas</p>
+        <h1>
+          Tu marca, <em>bordada</em> hilo por hilo
+        </h1>
+        <p className="pm-sub">
+          Yellowstone, Armor, Laredo y Camisa Outdoor. Eliges colores y tallas, subes el logo y te
+          llamamos antes de bordar.
+        </p>
+        <p className="pm-hook">20% off en la prenda desde 8 unidades</p>
       </header>
 
       <ol className="pm-pasos">

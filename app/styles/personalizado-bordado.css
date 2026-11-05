@@ -28,11 +28,26 @@
 }
 
 .pm h1 {
-  margin: 6px 0 6px;
-  font-size: 27px;
-  line-height: 1.1;
-  letter-spacing: -0.03em;
+  margin: 7px 0 8px;
+  font-size: clamp(29px, 8.4vw, 36px);
+  line-height: 1.02;
+  letter-spacing: -0.035em;
   font-weight: 800;
+}
+
+.pm h1 em { font-style: normal; color: var(--terra); }
+
+.pm-hook {
+  display: inline-block;
+  margin: 12px 0 0;
+  background: var(--terra);
+  color: #fff;
+  font-size: 11.5px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 7px 12px;
+  border-radius: 999px;
 }
 
 .pm-sub { margin: 0; font-size: 13.5px; color: var(--muted); max-width: 30ch; }
