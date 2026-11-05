@@ -863,20 +863,33 @@ export type GorrasComboQuery = {
   };
 };
 
-export type PersonalizadoMayorQueryVariables = StorefrontAPI.Exact<{
+export type ChaquetasBordadoQueryVariables = StorefrontAPI.Exact<{
   handle: StorefrontAPI.Scalars['String']['input'];
 }>;
 
-export type PersonalizadoMayorQuery = {
-  product?: StorefrontAPI.Maybe<
-    Pick<StorefrontAPI.Product, 'title' | 'handle'> & {
-      featuredImage?: StorefrontAPI.Maybe<
-        Pick<StorefrontAPI.Image, 'url' | 'altText'>
+export type ChaquetasBordadoQuery = {
+  collection?: StorefrontAPI.Maybe<{
+    products: {
+      nodes: Array<
+        Pick<StorefrontAPI.Product, 'title' | 'handle'> & {
+          featuredImage?: StorefrontAPI.Maybe<
+            Pick<StorefrontAPI.Image, 'url' | 'altText'>
+          >;
+          options: Array<Pick<StorefrontAPI.ProductOption, 'name' | 'values'>>;
+          variants: {
+            nodes: Array<
+              Pick<StorefrontAPI.ProductVariant, 'availableForSale'> & {
+                price: Pick<StorefrontAPI.MoneyV2, 'amount'>;
+                selectedOptions: Array<
+                  Pick<StorefrontAPI.SelectedOption, 'name' | 'value'>
+                >;
+              }
+            >;
+          };
+        }
       >;
-      priceRange: {minVariantPrice: Pick<StorefrontAPI.MoneyV2, 'amount'>};
-      variants: {nodes: Array<Pick<StorefrontAPI.ProductVariant, 'id'>>};
-    }
-  >;
+    };
+  }>;
 };
 
 export type PersonalizableProductQueryVariables = StorefrontAPI.Exact<{
@@ -1156,9 +1169,9 @@ interface GeneratedQueryTypes {
     return: GorrasComboQuery;
     variables: GorrasComboQueryVariables;
   };
-  '#graphql\n  query PersonalizadoMayor($handle: String!) {\n    product(handle: $handle) {\n      title\n      handle\n      featuredImage { url altText }\n      priceRange { minVariantPrice { amount } }\n      variants(first: 1) { nodes { id } }\n    }\n  }\n': {
-    return: PersonalizadoMayorQuery;
-    variables: PersonalizadoMayorQueryVariables;
+  '#graphql\n  query ChaquetasBordado($handle: String!) {\n    collection(handle: $handle) {\n      products(first: 60, sortKey: PRICE, reverse: true) {\n        nodes {\n          title\n          handle\n          featuredImage {url altText}\n          options {name values}\n          variants(first: 120) {\n            nodes {\n              availableForSale\n              price {amount}\n              selectedOptions {name value}\n            }\n          }\n        }\n      }\n    }\n  }\n': {
+    return: ChaquetasBordadoQuery;
+    variables: ChaquetasBordadoQueryVariables;
   };
   '#graphql\n  query PersonalizableProduct($handle: String!) {\n    product(handle: $handle) {\n      id\n      title\n      handle\n      featuredImage {\n        url\n        altText\n      }\n      priceRange {\n        minVariantPrice { amount currencyCode }\n      }\n      variants(first: 1) {\n        nodes { id }\n      }\n    }\n  }\n': {
     return: PersonalizableProductQuery;

@@ -1,40 +1,49 @@
 import {useLoaderData} from 'react-router';
-import {useEffect, useMemo, useRef, useState} from 'react';
-import estilos from '~/styles/personalizado-mayor.css?url';
+import {useMemo, useState} from 'react';
+import estilos from '~/styles/personalizado-bordado.css?url';
 
 /**
- * Página de personalización para pedidos al por mayor.
+ * Pedido de bordado al por mayor.
  *
- * Vive en borrador: solo abre con el token de la URL y no está enlazada desde
- * ninguna parte del sitio. Cuando Camilo la valide se quita el candado.
+ * Borrador: solo abre con el token de la URL y no está enlazada en el sitio.
+ * El cliente elige chaqueta, color y tallas, sube su diseño y ve el precio
+ * en vivo (bordado $5.000 por prenda, 20% en la prenda desde 8 unidades).
  */
+
 const TOKEN_BORRADOR = 'ranch-mayor-2026';
 export const MINIMO = 8;
-
-const PRODUCTOS = [
-  'licorera-metalica',
-  'chaqueta-ganadera-gamuza',
-  'chaqueta-laredo-impermeable',
-];
-
-const CONSULTA = `#graphql
-  query PersonalizadoMayor($handle: String!) {
-    product(handle: $handle) {
-      title
-      handle
-      featuredImage { url altText }
-      priceRange { minVariantPrice { amount } }
-      variants(first: 1) { nodes { id } }
-    }
-  }
-`;
+export const BORDADO_UNITARIO = 5000;
+export const DESCUENTO_DESDE = 8;
+export const DESCUENTO = 0.2;
 
 export const links = () => [{rel: 'stylesheet', href: estilos}];
 
 export const meta = () => [
-  {title: 'Personalización al por mayor — The Ranch'},
+  {title: 'Bordado al por mayor — The Ranch'},
   {name: 'robots', content: 'noindex, nofollow'},
 ];
+
+const CONSULTA = `#graphql
+  query ChaquetasBordado($handle: String!) {
+    collection(handle: $handle) {
+      products(first: 60, sortKey: PRICE, reverse: true) {
+        nodes {
+          title
+          handle
+          featuredImage {url altText}
+          options {name values}
+          variants(first: 120) {
+            nodes {
+              availableForSale
+              price {amount}
+              selectedOptions {name value}
+            }
+          }
+        }
+      }
+    }
+  }
+`;
 
 export async function loader({request, context}) {
   const url = new URL(request.url);
@@ -42,328 +51,197 @@ export async function loader({request, context}) {
     throw new Response('No encontrado', {status: 404});
   }
 
-  const productos = [];
-  for (const handle of PRODUCTOS) {
-    try {
-      const data = await context.storefront.query(CONSULTA, {variables: {handle}});
-      if (data?.product) productos.push(data.product);
-    } catch {
-      /* si uno falla, la página sigue con los otros */
+  const data = await context.storefront.query(CONSULTA, {
+    variables: {handle: 'chaquetas'},
+    cache: context.storefront.CacheShort(),
+  });
+
+  const productos = (data?.collection?.products?.nodes || []).map((p) => {
+    const opciones = p.options || [];
+    const optColor = opciones.find((o) => /color/i.test(o.name));
+    const optTalla = opciones.find((o) => /talla|size/i.test(o.name));
+    const colores = optColor ? optColor.values : ['Único'];
+    const tallas = optTalla ? optTalla.values : ['Única'];
+
+    const disp = {};
+    let precio = 0;
+    for (const v of p.variants?.nodes || []) {
+      const c = v.selectedOptions.find((s) => /color/i.test(s.name))?.value || 'Único';
+      const t = v.selectedOptions.find((s) => /talla|size/i.test(s.name))?.value || 'Única';
+      disp[`${c}|${t}`] = v.availableForSale;
+      if (!precio) precio = Number(v.price?.amount || 0);
     }
-  }
+
+    return {
+      titulo: p.title,
+      handle: p.handle,
+      imagen: p.featuredImage?.url || '',
+      precio: Math.round(precio),
+      colores,
+      tallas,
+      disp,
+    };
+  });
+
   return {productos};
 }
 
-const TECNICAS = [
-  {
-    id: 'bordado',
-    nombre: 'Bordado',
-    lema: 'Hilo sobre la tela',
-    detalle:
-      'El logo se cose con hilo poliéster de alta densidad. Aguanta lavado, no se decolora y tiene relieve real: se ve y se siente.',
-    ideal: 'Chaquetas de gamuza, dril, sacos y gorras.',
-    min: 'Desde 8 unidades',
-    colores: [
-      {id: 'terracota', hex: '#b34a2a', nombre: 'Terracota'},
-      {id: 'crema', hex: '#efe3cb', nombre: 'Crema'},
-      {id: 'negro', hex: '#1b1815', nombre: 'Negro'},
-      {id: 'blanco', hex: '#f7f4ee', nombre: 'Blanco'},
-      {id: 'verde', hex: '#3f5138', nombre: 'Verde campo'},
-    ],
-  },
-  {
-    id: 'laser',
-    nombre: 'Grabado láser',
-    lema: 'Marca quemada en el material',
-    detalle:
-      'El láser retira la capa superficial y deja la marca ahumada del propio material. No se borra ni se despega: es permanente.',
-    ideal: 'Cuero, metal, gamuza y piezas rígidas como la licorera.',
-    min: 'Desde 8 unidades',
-    colores: [{id: 'grafito', hex: '#3b2b1f', nombre: 'Ahumado'}],
-  },
+const cop = (n) => '$' + Math.round(n).toLocaleString('es-CO');
+
+const COLORES_HILO = [
+  {nombre: 'Negro', hex: '#1b1815'},
+  {nombre: 'Blanco', hex: '#f7f4ee'},
+  {nombre: 'Crema', hex: '#efe3cb'},
+  {nombre: 'Terracota', hex: '#b34a2a'},
+  {nombre: 'Oro viejo', hex: '#b08d4f'},
+  {nombre: 'Verde oliva', hex: '#5c6242'},
+  {nombre: 'Azul navy', hex: '#1f2c44'},
+  {nombre: 'Vinotinto', hex: '#5a1f24'},
+  {nombre: 'Gris', hex: '#8d8880'},
+  {nombre: 'Plata', hex: '#c9c9c9'},
 ];
 
-const clamp = (v, min, max) => Math.min(max, Math.max(min, v));
-const pesos = (n) =>
-  `$${Number(n).toLocaleString('es-CO', {maximumFractionDigits: 0})}`;
-
-/* ---------- tratamiento de la imagen del diseño ---------- */
-
-async function cargarImagen(src) {
-  const img = new Image();
-  img.crossOrigin = 'anonymous';
-  img.src = src;
-  await img.decode();
-  return img;
-}
-
-/** Quita los píxeles casi blancos para que un logo sobre fondo blanco funcione. */
-function quitarBlanco(img) {
-  const c = document.createElement('canvas');
-  c.width = img.width;
-  c.height = img.height;
-  const ctx = c.getContext('2d');
-  ctx.drawImage(img, 0, 0);
-  const d = ctx.getImageData(0, 0, c.width, c.height);
-  const px = d.data;
-  for (let i = 0; i < px.length; i += 4) {
-    if (px[i] > 238 && px[i + 1] > 238 && px[i + 2] > 238) px[i + 3] = 0;
-  }
-  ctx.putImageData(d, 0, 0);
-  return c.toDataURL('image/png');
-}
-
-/** Tiñe el diseño con el color del hilo o del ahumado, respetando la transparencia. */
-async function tintar(src, hex) {
-  const img = await cargarImagen(src);
-  const c = document.createElement('canvas');
-  c.width = img.width;
-  c.height = img.height;
-  const ctx = c.getContext('2d');
-  ctx.drawImage(img, 0, 0);
-  ctx.globalCompositeOperation = 'source-in';
-  ctx.fillStyle = hex;
-  ctx.fillRect(0, 0, c.width, c.height);
-  return c.toDataURL('image/png');
-}
-
-/** Junta la foto del producto con el diseño en su sitio: el render que ve el cliente. */
-async function componer(fotoUrl, disenoUrl, estado) {
-  const base = await cargarImagen(fotoUrl);
-  // lienzo cuadrado, la foto entra completa igual que en la vista previa
-  const lado = Math.max(base.width, base.height);
-  const c = document.createElement('canvas');
-  c.width = lado;
-  c.height = lado;
-  const ctx = c.getContext('2d');
-  ctx.fillStyle = '#ffffff';
-  ctx.fillRect(0, 0, lado, lado);
-  const k = Math.min(lado / base.width, lado / base.height);
-  const bw = base.width * k;
-  const bh = base.height * k;
-  ctx.drawImage(base, (lado - bw) / 2, (lado - bh) / 2, bw, bh);
-
-  if (!disenoUrl) return c.toDataURL('image/png');
-  const d = await cargarImagen(disenoUrl);
-
-  const cx = (estado.x / 100) * c.width;
-  const cy = (estado.y / 100) * c.height;
-  const escala = (estado.escala * c.width) / 320;
-  const ancho = d.width * escala;
-  const alto = d.height * escala;
-
-  ctx.save();
-  ctx.translate(cx, cy);
-  ctx.rotate((estado.rotacion * Math.PI) / 180);
-  ctx.globalAlpha = estado.tecnica === 'laser' ? 0.9 : 0.96;
-  if (estado.tecnica === 'bordado') {
-    ctx.shadowColor = 'rgba(0,0,0,0.28)';
-    ctx.shadowBlur = Math.max(1, c.width * 0.0016);
-    ctx.shadowOffsetY = Math.max(1, c.width * 0.0016);
-  }
-  ctx.drawImage(d, -ancho / 2, -alto / 2, ancho, alto);
-  ctx.restore();
-
-  return c.toDataURL('image/png');
-}
-
-export default function PersonalizadoMayor() {
+export default function Personalizado() {
   const {productos} = useLoaderData();
 
-  const [tecnica, setTecnica] = useState(TECNICAS[0]);
-  const [producto, setProducto] = useState(productos[0] || null);
-  const [color, setColor] = useState(TECNICAS[0].colores[0].hex);
-
-  const [original, setOriginal] = useState(null);
-  const [limpio, setLimpio] = useState(true);
-  const [tintado, setTintado] = useState(null);
-  const [nombreArchivo, setNombreArchivo] = useState('');
-  const [aviso, setAviso] = useState('');
-
-  const [pos, setPos] = useState({x: 50, y: 50});
-  const [escala, setEscala] = useState(1);
-  const [rotacion, setRotacion] = useState(0);
-  const [arrastrando, setArrastrando] = useState(false);
-
-  const [cantidad, setCantidad] = useState(MINIMO);
-  const [datos, setDatos] = useState({nombre: '', empresa: '', telefono: '', ciudad: '', notas: ''});
+  const [paso, setPaso] = useState(1);
+  const [iProd, setIProd] = useState(-1);
+  const [color, setColor] = useState('');
+  const [tallas, setTallas] = useState({});
+  const [colorHilo, setColorHilo] = useState({nombre: 'Negro', hex: '#1b1815'});
+  const [notas, setNotas] = useState('');
+  const [diseno, setDiseno] = useState(null);
+  const [nombre, setNombre] = useState('');
+  const [empresa, setEmpresa] = useState('');
+  const [telefono, setTelefono] = useState('');
+  const [ciudad, setCiudad] = useState('');
+  const [correo, setCorreo] = useState('');
   const [enviando, setEnviando] = useState(false);
-  const [listo, setListo] = useState(null);
   const [error, setError] = useState('');
+  const [listo, setListo] = useState(null);
 
-  const escenario = useRef(null);
-  const punteros = useRef({});
-  const distanciaPinch = useRef(0);
-  const escalaPinch = useRef(1);
+  const producto = productos[iProd] || null;
 
-  const foto = producto?.featuredImage?.url || '';
-
-  /* el diseño se vuelve a teñir cuando cambia el color */
-  useEffect(() => {
-    let vivo = true;
-    (async () => {
-      if (!original) {
-        setTintado(null);
-        return;
-      }
-      try {
-        const t = await tintar(original, color);
-        if (vivo) setTintado(t);
-      } catch {
-        if (vivo) setTintado(original);
-      }
-    })();
-    return () => {
-      vivo = false;
-    };
-  }, [original, color]);
-
-  /* al cambiar de técnica, el color vuelve al primero de esa técnica */
-  useEffect(() => {
-    setColor(tecnica.colores[0].hex);
-  }, [tecnica]);
-
-  const subir = async (e) => {
-    const file = e.target.files?.[0];
-    setAviso('');
-    if (!file) return;
-    if (!file.type.startsWith('image/')) {
-      setAviso('Sube una imagen: PNG, JPG o SVG.');
-      e.target.value = '';
-      return;
-    }
-    const reader = new FileReader();
-    reader.onload = async () => {
-      let data = String(reader.result);
-      if (limpio) {
-        try {
-          const img = await cargarImagen(data);
-          data = quitarBlanco(img);
-        } catch {
-          /* si falla, se usa tal cual */
-        }
-      }
-      setOriginal(data);
-      setNombreArchivo(file.name);
-      setPos({x: 50, y: 50});
-      setEscala(1);
-      setRotacion(0);
-    };
-    reader.readAsDataURL(file);
-  };
-
-  const mover = (clientX, clientY) => {
-    const rect = escenario.current?.getBoundingClientRect();
-    if (!rect?.width) return;
-    setPos({
-      x: clamp(((clientX - rect.left) / rect.width) * 100, 4, 96),
-      y: clamp(((clientY - rect.top) / rect.height) * 100, 4, 96),
-    });
-  };
-
-  const distancia = () => {
-    const p = Object.values(punteros.current);
-    if (p.length < 2) return 0;
-    return Math.hypot(p[0].x - p[1].x, p[0].y - p[1].y);
-  };
-
-  const abajo = (e) => {
-    punteros.current[e.pointerId] = {x: e.clientX, y: e.clientY};
-    e.currentTarget.setPointerCapture?.(e.pointerId);
-    const n = Object.keys(punteros.current).length;
-    if (n === 1) {
-      setArrastrando(true);
-      mover(e.clientX, e.clientY);
-    } else if (n === 2) {
-      setArrastrando(false);
-      distanciaPinch.current = distancia();
-      escalaPinch.current = escala;
-    }
-  };
-
-  const moverDedo = (e) => {
-    if (!punteros.current[e.pointerId]) return;
-    punteros.current[e.pointerId] = {x: e.clientX, y: e.clientY};
-    const n = Object.keys(punteros.current).length;
-    if (n === 1 && arrastrando) mover(e.clientX, e.clientY);
-    else if (n === 2 && distanciaPinch.current > 0) {
-      setEscala(clamp(escalaPinch.current * (distancia() / distanciaPinch.current), 0.25, 3));
-    }
-  };
-
-  const arriba = (e) => {
-    delete punteros.current[e.pointerId];
-    if (Object.keys(punteros.current).length < 2) distanciaPinch.current = 0;
-    if (Object.keys(punteros.current).length === 0) setArrastrando(false);
-  };
-
-  const puedeEnviar = useMemo(
-    () =>
-      Boolean(
-        producto &&
-          datos.nombre.trim() &&
-          datos.telefono.trim().length >= 7 &&
-          cantidad >= MINIMO &&
-          !enviando,
-      ),
-    [producto, datos, cantidad, enviando],
+  const unidades = useMemo(
+    () => Object.values(tallas).reduce((a, b) => a + (Number(b) || 0), 0),
+    [tallas],
   );
 
-  const enviar = async () => {
-    if (!puedeEnviar) return;
-    setEnviando(true);
+  const cuentas = useMemo(() => {
+    if (!producto) return {bruto: 0, descuento: 0, bordado: 0, total: 0, aplica: false};
+    const bruto = producto.precio * unidades;
+    const aplica = unidades >= DESCUENTO_DESDE;
+    const descuento = aplica ? Math.round(bruto * DESCUENTO) : 0;
+    const bordado = BORDADO_UNITARIO * unidades;
+    return {bruto, descuento, bordado, total: bruto - descuento + bordado, aplica};
+  }, [producto, unidades]);
+
+  function elegirProducto(i) {
+    setIProd(i);
+    setColor(productos[i].colores[0]);
+    setTallas({});
+    setPaso(2);
     setError('');
+    window.scrollTo({top: 0, behavior: 'smooth'});
+  }
+
+  function cambiar(talla, delta) {
+    setTallas((prev) => {
+      const n = Math.max(0, Math.min(500, (Number(prev[talla]) || 0) + delta));
+      const copia = {...prev};
+      if (n === 0) delete copia[talla];
+      else copia[talla] = n;
+      return copia;
+    });
+  }
+
+  function disponible(talla) {
+    if (!producto) return true;
+    return producto.disp[`${color}|${talla}`] !== false;
+  }
+
+  async function subirArchivo(ev) {
+    const f = ev.target.files?.[0];
+    setError('');
+    if (!f) return;
+    if (f.size > 12 * 1024 * 1024) {
+      setError('El archivo pasa de 12 MB. Mándanos una versión más liviana.');
+      return;
+    }
+    if (!/image\/(png|jpeg|webp|svg\+xml)|application\/pdf/.test(f.type)) {
+      setError('Formato no válido. Puede ser PNG, JPG, SVG o PDF.');
+      return;
+    }
+    const dataUrl = await new Promise((res, rej) => {
+      const r = new FileReader();
+      r.onload = () => res(String(r.result));
+      r.onerror = rej;
+      r.readAsDataURL(f);
+    });
+    setDiseno({nombre: f.name, mime: f.type, dataUrl, peso: f.size});
+  }
+
+  async function enviar() {
+    setError('');
+    if (!producto) return setError('Falta elegir la chaqueta.');
+    if (unidades < MINIMO) return setError(`El mínimo es de ${MINIMO} unidades.`);
+    if (!diseno) return setError('Falta subir el diseño que quieres bordar.');
+    if (!nombre.trim() || !telefono.trim()) return setError('Falta tu nombre y el teléfono.');
+
+    setEnviando(true);
     try {
-      const render = await componer(foto, tintado, {
-        x: pos.x,
-        y: pos.y,
-        escala,
-        rotacion,
-        tecnica: tecnica.id,
-      });
+      const fd = new FormData();
+      fd.set('tecnica', 'Bordado');
+      fd.set('producto', producto.titulo);
+      fd.set('handle', producto.handle);
+      fd.set('cantidad', String(unidades));
+      fd.set('nombre', nombre.trim());
+      fd.set('empresa', empresa.trim());
+      fd.set('telefono', telefono.trim());
+      fd.set('ciudad', ciudad.trim());
+      fd.set('correo', correo.trim());
+      fd.set('color', color);
+      fd.set('notas', notas.trim());
+      fd.set('tallas', Object.entries(tallas).map(([t, q]) => `${t}: ${q}`).join(' · '));
+      fd.set('color_hilo', `${colorHilo.nombre} (${colorHilo.hex})`);
+      fd.set('precio_unitario', String(producto.precio));
+      fd.set('subtotal_prenda', String(cuentas.bruto));
+      fd.set('descuento', String(cuentas.descuento));
+      fd.set('bordado_unitario', String(BORDADO_UNITARIO));
+      fd.set('total', String(cuentas.total));
+      fd.set('diseno_nombre', diseno.nombre);
+      if (diseno.dataUrl) fd.set('diseno', diseno.dataUrl);
 
-      const form = new FormData();
-      form.append('tecnica', tecnica.nombre);
-      form.append('producto', producto.title);
-      form.append('handle', producto.handle);
-      form.append('cantidad', String(cantidad));
-      form.append('color', tecnica.colores.find((c) => c.hex === color)?.nombre || '');
-      form.append('nombre', datos.nombre);
-      form.append('empresa', datos.empresa);
-      form.append('telefono', datos.telefono);
-      form.append('ciudad', datos.ciudad);
-      form.append('notas', datos.notas);
-      form.append('render', render);
-      if (tintado) form.append('diseno', tintado);
-
-      const res = await fetch('/api/personalizado-mayor', {method: 'POST', body: form});
-      const json = await res.json();
-      if (json?.ok) {
-        setListo(json.ticket);
-      } else {
-        setError(json?.error || 'No se pudo enviar. Intenta de nuevo.');
-      }
-    } catch {
-      setError('No se pudo enviar. Revisa tu conexión e intenta de nuevo.');
+      const res = await fetch('/api/personalizado-mayor', {method: 'POST', body: fd});
+      const data = await res.json();
+      if (!data.ok) throw new Error(data.error || 'No se pudo enviar.');
+      setListo(data.ticket);
+      window.scrollTo({top: 0, behavior: 'smooth'});
+    } catch (e) {
+      setError(e.message);
     } finally {
       setEnviando(false);
     }
-  };
+  }
 
   if (listo) {
     return (
       <main className="pm">
-        <div className="pm-gracias">
-          <span className="pm-gracias-sello">Solicitud recibida</span>
-          <h1>Ya la tenemos</h1>
-          <p>
-            Guardamos tu diseño y el render de {producto?.title} con {cantidad} unidades. Te
-            escribimos a {datos.telefono} con la cotización.
-          </p>
-          <p className="pm-gracias-rad">Radicado {listo}</p>
-          <a className="pm-gracias-volver" href="/">
-            Volver a la tienda
-          </a>
+        <div className="pm-hecho">
+          <div className="pm-check" aria-hidden="true">✓</div>
+          <h1>Recibimos tu pedido</h1>
+          <p className="pm-radicado">Radicado <strong>{listo}</strong></p>
+          <div className="pm-aviso">
+            <p>
+              Ahora revisamos tu diseño y <strong>te llamamos</strong> para confirmar las
+              características: tamaño, ubicación, color del hilo y el tipo de letra.
+            </p>
+            <p>
+              Antes de producir hacemos <strong>una prueba del bordado</strong> sobre la prenda y
+              te la mostramos. Solo cuando la apruebes arrancamos el pedido.
+            </p>
+          </div>
+          <a className="pm-btn" href="/">Volver a la tienda</a>
         </div>
       </main>
     );
@@ -371,300 +249,224 @@ export default function PersonalizadoMayor() {
 
   return (
     <main className="pm">
-      <div className="pm-top">
-        <a href="/" className="pm-logo" aria-label="The Ranch">
-          <img src="/logo-tinta.png" alt="The Ranch" width="74" />
-        </a>
-        <span className="pm-draft">Borrador · no publicado</span>
-      </div>
-
-      {/* ---------- portada ---------- */}
-      <header className="pm-hero">
-        <p className="pm-eyebrow">Para empresas, equipos y eventos</p>
-        <h1>
-          Tu marca puesta
-          <br />
-          en la prenda.
-        </h1>
-        <p className="pm-hero-sub">
-          Bordado o grabado láser sobre nuestras chaquetas y licoreras. Sube tu diseño, ubícalo y
-          mira cómo queda antes de pedir.
+      <header className="pm-head">
+        <p className="pm-eyebrow">The Ranch · Bordado</p>
+        <h1>Bordado al por mayor</h1>
+        <p className="pm-sub">
+          Elige las chaquetas, sube tu diseño y te llamamos para cuadrar el bordado.
         </p>
-        <span className="pm-hero-min">Mínimo 8 unidades · cotización a medida</span>
       </header>
 
-      {/* ---------- 1. técnica ---------- */}
-      <section className="pm-paso">
-        <div className="pm-paso-head">
-          <span className="pm-num">1</span>
-          <h2>Elige la técnica</h2>
-        </div>
-
-        <div className="pm-tecnicas">
-          {TECNICAS.map((t) => (
-            <button
-              key={t.id}
-              type="button"
-              className={'pm-tecnica' + (tecnica.id === t.id ? ' is-on' : '')}
-              onClick={() => setTecnica(t)}
-            >
-              <span className="pm-tecnica-top">
-                <strong>{t.nombre}</strong>
-                <em>{t.lema}</em>
-              </span>
-              <span className="pm-tecnica-det">{t.detalle}</span>
-              <span className="pm-tecnica-ideal">{t.ideal}</span>
-            </button>
-          ))}
-        </div>
-      </section>
-
-      {/* ---------- 2. producto ---------- */}
-      <section className="pm-paso">
-        <div className="pm-paso-head">
-          <span className="pm-num">2</span>
-          <h2>Elige la pieza</h2>
-        </div>
-
-        <div className="pm-productos">
-          {productos.map((p) => (
-            <button
-              key={p.handle}
-              type="button"
-              className={'pm-prod' + (producto?.handle === p.handle ? ' is-on' : '')}
-              onClick={() => setProducto(p)}
-            >
-              <span className="pm-prod-foto">
-                {p.featuredImage?.url ? (
-                  <img src={p.featuredImage.url} alt={p.title} loading="lazy" />
-                ) : null}
-              </span>
-              <span className="pm-prod-info">
-                <strong>{p.title}</strong>
-                <em>desde {pesos(p.priceRange.minVariantPrice.amount)}</em>
-              </span>
-            </button>
-          ))}
-        </div>
-      </section>
-
-      {/* ---------- 3. estudio ---------- */}
-      <section className="pm-paso">
-        <div className="pm-paso-head">
-          <span className="pm-num">3</span>
-          <h2>Sube tu diseño y ubícalo</h2>
-        </div>
-
-        <div className="pm-estudio">
-          <div
-            className={'pm-lienzo' + (arrastrando ? ' is-drag' : '')}
-            ref={escenario}
-            onPointerDown={abajo}
-            onPointerMove={moverDedo}
-            onPointerUp={arriba}
-            onPointerCancel={arriba}
+      <ol className="pm-pasos">
+        {['Chaqueta', 'Color y tallas', 'Diseño'].map((t, i) => (
+          <li
+            key={t}
+            className={paso === i + 1 ? 'activo' : paso > i + 1 ? 'hecho' : ''}
+            onClick={() => {
+              if (i + 1 < paso || (i + 1 === 2 && producto)) {
+                setPaso(i + 1);
+                window.scrollTo({top: 0, behavior: 'smooth'});
+              }
+            }}
           >
-            {foto ? (
-              <img className="pm-lienzo-foto" src={foto} alt={producto?.title} draggable={false} />
-            ) : null}
+            <span>{i + 1}</span>
+            {t}
+          </li>
+        ))}
+      </ol>
 
-            {tintado ? (
-              <img
-                className={'pm-diseno is-' + tecnica.id}
-                src={tintado}
-                alt="Tu diseño"
-                draggable={false}
-                style={{
-                  left: `${pos.x}%`,
-                  top: `${pos.y}%`,
-                  transform: `translate(-50%, -50%) rotate(${rotacion}deg) scale(${escala})`,
-                }}
-              />
-            ) : (
-              <span className="pm-lienzo-vacio">
-                Sube tu logo y arrástralo
-                <br />
-                a donde lo quieras
-              </span>
-            )}
-
-            <span className="pm-lienzo-tag">{tecnica.nombre} · vista previa</span>
+      {paso === 1 && (
+        <section className="pm-sec">
+          <h2>¿Qué chaqueta vas a bordar?</h2>
+          <div className="pm-grid">
+            {productos.map((p, i) => (
+              <button
+                key={p.handle}
+                type="button"
+                className={'pm-card' + (i === iProd ? ' sel' : '')}
+                onClick={() => elegirProducto(i)}
+              >
+                {p.imagen ? <img src={p.imagen} alt={p.titulo} loading="lazy" /> : null}
+                <span className="pm-card-nombre">{p.titulo}</span>
+                <span className="pm-card-precio">desde {cop(p.precio)}</span>
+              </button>
+            ))}
           </div>
-          <p className="pm-ref">
-            La foto es de referencia. Antes de producir te enviamos el montaje final para aprobar.
-          </p>
+        </section>
+      )}
 
-          <div className="pm-controles">
-            <label className="pm-subir">
-              <input type="file" accept="image/*" onChange={subir} />
-              <span>{nombreArchivo ? 'Cambiar diseño' : 'Subir diseño'}</span>
-            </label>
+      {paso === 2 && producto && (
+        <section className="pm-sec">
+          <button type="button" className="pm-volver" onClick={() => setPaso(1)}>
+            ← Cambiar chaqueta
+          </button>
+          <h2>{producto.titulo}</h2>
 
-            {nombreArchivo ? (
-              <p className="pm-archivo">
-                {nombreArchivo}
-                <button
-                  type="button"
-                  onClick={() => {
-                    setOriginal(null);
-                    setNombreArchivo('');
-                  }}
-                >
-                  quitar
-                </button>
-              </p>
-            ) : (
-              <p className="pm-ayuda">PNG con fondo transparente es lo que mejor queda.</p>
-            )}
-
-            <label className="pm-check">
-              <input
-                type="checkbox"
-                checked={limpio}
-                onChange={(e) => setLimpio(e.target.checked)}
-              />
-              <span>Quitar el fondo blanco del logo</span>
-            </label>
-
-            {aviso ? <p className="pm-aviso">{aviso}</p> : null}
-
-            <div className="pm-fila">
-              <span className="pm-etq">
-                {tecnica.id === 'bordado' ? 'Color del hilo' : 'Tono del grabado'}
-              </span>
-              <div className="pm-colores">
-                {tecnica.colores.map((c) => (
+          {producto.colores.length > 1 && (
+            <>
+              <h3>Color</h3>
+              <div className="pm-chips">
+                {producto.colores.map((c) => (
                   <button
-                    key={c.id}
+                    key={c}
                     type="button"
-                    className={'pm-color' + (color === c.hex ? ' is-on' : '')}
-                    style={{background: c.hex}}
-                    onClick={() => setColor(c.hex)}
-                    aria-label={c.nombre}
-                    title={c.nombre}
-                  />
+                    className={'pm-chip' + (color === c ? ' sel' : '')}
+                    onClick={() => {
+                      setColor(c);
+                      setTallas({});
+                    }}
+                  >
+                    {c}
+                  </button>
                 ))}
               </div>
-            </div>
+            </>
+          )}
 
-            <div className="pm-fila">
-              <span className="pm-etq">Tamaño</span>
-              <input
-                className="pm-range"
-                type="range"
-                min="0.25"
-                max="3"
-                step="0.05"
-                value={escala}
-                onChange={(e) => setEscala(parseFloat(e.target.value))}
-              />
-            </div>
-
-            <div className="pm-fila">
-              <span className="pm-etq">Giro</span>
-              <input
-                className="pm-range"
-                type="range"
-                min="-45"
-                max="45"
-                step="1"
-                value={rotacion}
-                onChange={(e) => setRotacion(parseInt(e.target.value, 10))}
-              />
-            </div>
-
-            <p className="pm-tip">Arrastra el diseño en la foto · pellizca para agrandarlo</p>
+          <h3>Tallas</h3>
+          <div className="pm-tallas">
+            {producto.tallas.map((t) => {
+              const hab = disponible(t);
+              return (
+                <div key={t} className={'pm-talla' + (hab ? '' : ' agotada')}>
+                  <span className="pm-talla-nombre">{t}</span>
+                  <div className="pm-stepper">
+                    <button type="button" onClick={() => cambiar(t, -1)} disabled={!hab || !tallas[t]}>
+                      −
+                    </button>
+                    <span>{tallas[t] || 0}</span>
+                    <button type="button" onClick={() => cambiar(t, 1)} disabled={!hab}>
+                      +
+                    </button>
+                  </div>
+                  {!hab && <span className="pm-agotada">agotada</span>}
+                </div>
+              );
+            })}
           </div>
-        </div>
-      </section>
 
-      {/* ---------- 4. pedido ---------- */}
-      <section className="pm-paso">
-        <div className="pm-paso-head">
-          <span className="pm-num">4</span>
-          <h2>Cuántas y a quién</h2>
-        </div>
+          <div className="pm-resumen-mini">
+            <div><span>Unidades</span><strong>{unidades}</strong></div>
+            <div><span>Prenda</span><strong>{cop(cuentas.bruto)}</strong></div>
+            <div><span>Bordado</span><strong>{cop(cuentas.bordado)}</strong></div>
+            <div><span>Total</span><strong>{cop(cuentas.total)}</strong></div>
+          </div>
 
-        <div className="pm-pedido">
-          <div className="pm-cantidad">
-            <span className="pm-etq">Unidades</span>
-            <div className="pm-cant-fila">
-              <button type="button" onClick={() => setCantidad((c) => Math.max(MINIMO, c - 1))}>
-                −
+          <button
+            type="button"
+            className="pm-btn"
+            disabled={unidades < MINIMO}
+            onClick={() => {
+              setPaso(3);
+              window.scrollTo({top: 0, behavior: 'smooth'});
+            }}
+          >
+            {unidades < MINIMO ? `Faltan ${MINIMO - unidades} unidades` : 'Pasar al diseño'}
+          </button>
+        </section>
+      )}
+
+      {paso === 3 && producto && (
+        <section className="pm-sec">
+          <button type="button" className="pm-volver" onClick={() => setPaso(2)}>
+            ← Cambiar tallas
+          </button>
+          <h2>Tu bordado</h2>
+
+          <h3>Color del hilo</h3>
+          <div className="pm-hilos">
+            {COLORES_HILO.map((c) => (
+              <button
+                key={c.hex}
+                type="button"
+                className={'pm-hilo' + (colorHilo.hex === c.hex ? ' sel' : '')}
+                onClick={() => setColorHilo(c)}
+                title={c.nombre}
+              >
+                <i style={{background: c.hex}} />
+                <span>{c.nombre}</span>
               </button>
-              <input
-                type="number"
-                min={MINIMO}
-                value={cantidad}
-                onChange={(e) => setCantidad(parseInt(e.target.value || '0', 10))}
-                inputMode="numeric"
-              />
-              <button type="button" onClick={() => setCantidad((c) => c + 1)}>
-                +
-              </button>
+            ))}
+          </div>
+          <p className="pm-nota">
+            Cualquier color es posible. Si el tuyo no está en la lista, lo anotas abajo y lo
+            cuadramos en la llamada.
+          </p>
+
+          <h3>Diseño</h3>
+          <label className="pm-archivo">
+            <input
+              type="file"
+              accept="image/png,image/jpeg,image/webp,image/svg+xml,application/pdf"
+              onChange={subirArchivo}
+            />
+            <span>{diseno ? `✓ ${diseno.nombre}` : 'Subir diseño (PNG, JPG, SVG o PDF)'}</span>
+          </label>
+          <p className="pm-nota">
+            Lo ideal es PNG con fondo transparente o vector. Si solo tienes la foto del logo,
+            súbela igual y lo dibujamos.
+          </p>
+
+          {diseno && /^image\//.test(diseno.mime) && (
+            <div className="pm-preview">
+              <img src={diseno.dataUrl} alt="Tu diseño" />
             </div>
-            <p className="pm-ayuda">
-              {cantidad < MINIMO
-                ? `El mínimo es ${MINIMO}. Bájalo y no se puede cotizar.`
-                : 'Entre más unidades, mejor queda el precio por unidad.'}
+          )}
+
+          <h3>Ubicación y detalles</h3>
+          <textarea
+            className="pm-input"
+            rows={3}
+            placeholder="Ej: en el pecho izquierdo, 8 cm de ancho, con el nombre de cada persona debajo"
+            value={notas}
+            onChange={(e) => setNotas(e.target.value)}
+          />
+
+          <h3>Tus datos</h3>
+          <div className="pm-campos">
+            <input className="pm-input" placeholder="Nombre y apellido *" value={nombre} onChange={(e) => setNombre(e.target.value)} />
+            <input className="pm-input" placeholder="Empresa o equipo" value={empresa} onChange={(e) => setEmpresa(e.target.value)} />
+            <input className="pm-input" placeholder="Teléfono / WhatsApp *" inputMode="tel" value={telefono} onChange={(e) => setTelefono(e.target.value)} />
+            <input className="pm-input" placeholder="Correo" inputMode="email" value={correo} onChange={(e) => setCorreo(e.target.value)} />
+            <input className="pm-input" placeholder="Ciudad" value={ciudad} onChange={(e) => setCiudad(e.target.value)} />
+          </div>
+
+          <div className="pm-cuenta">
+            <div><span>{producto.titulo} × {unidades} u</span><b>{cop(cuentas.bruto)}</b></div>
+            <div><span>Bordado {cop(BORDADO_UNITARIO)} × {unidades}</span><b>{cop(cuentas.bordado)}</b></div>
+            {cuentas.descuento > 0 && (
+              <div className="pm-desc"><span>Descuento por volumen −20%</span><b>−{cop(cuentas.descuento)}</b></div>
+            )}
+            <div className="pm-total"><span>Total</span><b>{cop(cuentas.total)}</b></div>
+          </div>
+
+          {!cuentas.aplica && (
+            <p className="pm-nota">
+              Desde {DESCUENTO_DESDE} unidades la prenda baja 20%. Vas en {unidades}.
+            </p>
+          )}
+
+          <div className="pm-aviso">
+            <p>
+              Al enviar el pedido revisamos tu diseño y <strong>te llamamos</strong> para confirmar
+              tamaño, ubicación y color del hilo.
+            </p>
+            <p>
+              Antes de producir hacemos <strong>una prueba del bordado</strong> y te mostramos cómo
+              queda. Solo arrancamos cuando la apruebes.
             </p>
           </div>
 
-          <div className="pm-form">
-            <label>
-              <span className="pm-etq">Tu nombre</span>
-              <input
-                value={datos.nombre}
-                onChange={(e) => setDatos({...datos, nombre: e.target.value})}
-                placeholder="Nombre y apellido"
-              />
-            </label>
-            <label>
-              <span className="pm-etq">WhatsApp</span>
-              <input
-                value={datos.telefono}
-                onChange={(e) => setDatos({...datos, telefono: e.target.value})}
-                placeholder="300 000 0000"
-                inputMode="tel"
-              />
-            </label>
-            <label>
-              <span className="pm-etq">Empresa o equipo</span>
-              <input
-                value={datos.empresa}
-                onChange={(e) => setDatos({...datos, empresa: e.target.value})}
-                placeholder="Opcional"
-              />
-            </label>
-            <label>
-              <span className="pm-etq">Ciudad</span>
-              <input
-                value={datos.ciudad}
-                onChange={(e) => setDatos({...datos, ciudad: e.target.value})}
-                placeholder="Chía, Bogotá…"
-              />
-            </label>
-            <label className="pm-ancho">
-              <span className="pm-etq">Algo que debamos saber</span>
-              <textarea
-                value={datos.notas}
-                onChange={(e) => setDatos({...datos, notas: e.target.value})}
-                rows={3}
-                placeholder="Fecha del evento, tallas, si el logo va en la espalda…"
-              />
-            </label>
-          </div>
+          {error && <p className="pm-error">{error}</p>}
 
-          {error ? <p className="pm-error">{error}</p> : null}
-
-          <button type="button" className="pm-cta" disabled={!puedeEnviar} onClick={enviar}>
-            {enviando ? 'Enviando…' : 'Pedir cotización'}
+          <button type="button" className="pm-btn" onClick={enviar} disabled={enviando}>
+            {enviando ? 'Enviando…' : 'Enviar pedido de bordado'}
           </button>
-          <p className="pm-nota">
-            No se cobra nada acá. Te escribimos con el precio por unidad y el tiempo de entrega.
+          <p className="pm-nota pm-centro">
+            No se cobra nada ahora. Te llamamos para confirmar antes de facturar.
           </p>
-        </div>
-      </section>
+        </section>
+      )}
     </main>
   );
 }

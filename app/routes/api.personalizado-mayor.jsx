@@ -1,10 +1,9 @@
 /**
- * Solicitud de personalización al por mayor (bordado o grabado láser).
+ * Solicitud de bordado al por mayor.
  * POST /api/personalizado-mayor
  *
- * No cobra nada: guarda la solicitud con el render del diseño para que el
- * equipo la cotice. Mínimo 8 unidades, por eso va aparte del personalizador
- * unitario de la ficha.
+ * No cobra nada: guarda el pedido con el diseño para que el equipo lo revise,
+ * llame al cliente y haga la prueba de bordado antes de producir.
  */
 
 const SUPABASE_URL = 'https://rattwfjkxgqvxmxlybcz.supabase.co';
@@ -25,6 +24,14 @@ function dataUrlParts(dataUrl) {
   return {mime, bytes};
 }
 
+function extension(mime) {
+  if (/pdf/.test(mime)) return 'pdf';
+  if (/svg/.test(mime)) return 'svg';
+  if (/jpeg|jpg/.test(mime)) return 'jpg';
+  if (/webp/.test(mime)) return 'webp';
+  return 'png';
+}
+
 async function subir(key, path, dataUrl) {
   const parts = dataUrlParts(dataUrl);
   if (!parts) return null;
@@ -42,23 +49,37 @@ async function subir(key, path, dataUrl) {
   return `${SUPABASE_URL}/storage/v1/object/public/${BUCKET}/${path}`;
 }
 
+const num = (v) => {
+  const n = Number(String(v || '0'));
+  return Number.isFinite(n) ? Math.round(n) : 0;
+};
+
 export async function action({request, context}) {
   try {
     const f = await request.formData();
-    const tecnica = String(f.get('tecnica') || '').trim();
+    const tecnica = String(f.get('tecnica') || 'Bordado').trim();
     const producto = String(f.get('producto') || '').trim();
     const handle = String(f.get('handle') || '').trim();
     const cantidad = parseInt(String(f.get('cantidad') || '0'), 10);
     const nombre = String(f.get('nombre') || '').trim();
     const empresa = String(f.get('empresa') || '').trim();
     const telefono = String(f.get('telefono') || '').trim();
+    const correo = String(f.get('correo') || '').trim();
     const ciudad = String(f.get('ciudad') || '').trim();
     const notas = String(f.get('notas') || '').trim();
     const color = String(f.get('color') || '').trim();
-    const render = String(f.get('render') || '');
+    const tallas = String(f.get('tallas') || '').trim();
+    const colorHilo = String(f.get('color_hilo') || '').trim();
+    const disenoNombre = String(f.get('diseno_nombre') || '').trim();
     const diseno = String(f.get('diseno') || '');
 
-    if (!tecnica || !producto || !nombre || !telefono) {
+    const precioUnitario = num(f.get('precio_unitario'));
+    const subtotalPrenda = num(f.get('subtotal_prenda'));
+    const descuento = num(f.get('descuento'));
+    const bordadoUnitario = num(f.get('bordado_unitario')) || 5000;
+    const total = num(f.get('total'));
+
+    if (!producto || !nombre || !telefono) {
       return Response.json({ok: false, error: 'Faltan datos de contacto.'}, {status: 400});
     }
     if (!Number.isFinite(cantidad) || cantidad < MINIMO) {
@@ -75,25 +96,37 @@ export async function action({request, context}) {
     }
 
     const ts = Date.now();
-    const slug = `mayor-${handle || 'prenda'}-${ts}`;
+    const slug = `bordado-${handle || 'prenda'}-${ts}`;
 
-    let renderUrl = null;
     let disenoUrl = null;
     try {
-      if (render) renderUrl = await subir(SERVICE_KEY, `${slug}-render.png`, render);
-      if (diseno) disenoUrl = await subir(SERVICE_KEY, `${slug}-diseno.png`, diseno);
+      if (diseno) {
+        const parts = dataUrlParts(diseno);
+        const ext = parts ? extension(parts.mime) : 'png';
+        disenoUrl = await subir(SERVICE_KEY, `${slug}-diseno.${ext}`, diseno);
+      }
     } catch (e) {
       console.error('upload storage', e);
       return Response.json({ok: false, error: 'No se pudo subir el diseño.'}, {status: 500});
     }
 
+    const resumen = [
+      `${cantidad} u de ${producto}`,
+      color ? `color ${color}` : null,
+      tallas ? `tallas ${tallas}` : null,
+      colorHilo ? `hilo ${colorHilo}` : null,
+    ]
+      .filter(Boolean)
+      .join(' · ');
+
     const payload = {
       ticket_number: `MAY-${ts.toString(36).toUpperCase()}`,
       from_number: telefono,
       customer_phone: telefono,
+      customer_email: correo || null,
       product_name: `${producto} · ${cantidad} u · ${tecnica}`,
       issue_type: 'personalizacion',
-      issue_description: `Pedido al por mayor: ${cantidad} unidades de ${producto} con ${tecnica}.`,
+      issue_description: `Pedido de bordado: ${resumen}. Total cotizado $${total.toLocaleString('es-CO')}. Revisar diseño, llamar al cliente y hacer prueba de bordado antes de producir.`,
       status: 'open',
       priority: 'high',
       context_data: {
@@ -105,12 +138,24 @@ export async function action({request, context}) {
         cantidad,
         nombre,
         empresa,
+        correo,
         ciudad,
+        telefono,
         notas,
         color,
-        render_url: renderUrl,
+        tallas,
+        color_hilo: colorHilo,
+        diseno_nombre: disenoNombre,
         diseno_url: disenoUrl,
-        origen: 'pagina-personalizado',
+        precios: {
+          unitario: precioUnitario,
+          subtotal_prenda: subtotalPrenda,
+          descuento_volumen: descuento,
+          bordado_unitario: bordadoUnitario,
+          total,
+        },
+        pendiente: ['revisar diseño', 'llamar al cliente', 'prueba de bordado'],
+        origen: 'pagina-personalizado-bordado',
       },
     };
 
@@ -127,10 +172,10 @@ export async function action({request, context}) {
 
     if (!res.ok) {
       console.error('supabase tickets', res.status, await res.text());
-      return Response.json({ok: false, error: 'No se pudo registrar la solicitud.'}, {status: 500});
+      return Response.json({ok: false, error: 'No se pudo registrar el pedido.'}, {status: 500});
     }
 
-    return Response.json({ok: true, ticket: payload.ticket_number, renderUrl, disenoUrl});
+    return Response.json({ok: true, ticket: payload.ticket_number, disenoUrl});
   } catch (err) {
     console.error('api.personalizado-mayor', err);
     return Response.json({ok: false, error: 'Ocurrió un error.'}, {status: 500});
