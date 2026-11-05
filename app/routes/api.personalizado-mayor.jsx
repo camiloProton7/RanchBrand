@@ -2,13 +2,16 @@
  * Solicitud de bordado al por mayor.
  * POST /api/personalizado-mayor
  *
- * No cobra nada: guarda el pedido con el diseño para que el equipo lo revise,
- * llame al cliente y haga la prueba de bordado antes de producir.
+ * No pasa por checkout ni cobra nada: guarda el pedido con el diseño,
+ * crea el ticket y manda el correo con todos los datos al equipo.
  */
 
 const SUPABASE_URL = 'https://rattwfjkxgqvxmxlybcz.supabase.co';
 const BUCKET = 'personalizaciones';
 const MINIMO = 8;
+const BREVO_API_URL = 'https://api.brevo.com/v3/smtp/email';
+const FROM_EMAIL = 'proton.lab4@gmail.com';
+const TO_EMAIL = 'proton.lab4@gmail.com';
 
 function dataUrlParts(dataUrl) {
   const [meta, data] = String(dataUrl || '').split(',');
@@ -21,7 +24,7 @@ function dataUrlParts(dataUrl) {
   } catch {
     return null;
   }
-  return {mime, bytes};
+  return {mime, bytes, base64: data};
 }
 
 function extension(mime) {
@@ -54,6 +57,19 @@ const num = (v) => {
   return Number.isFinite(n) ? Math.round(n) : 0;
 };
 
+const cop = (n) => '$' + Number(n || 0).toLocaleString('es-CO');
+
+const esc = (s) =>
+  String(s || '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+
+function fila(etiqueta, valor) {
+  if (!valor) return '';
+  return `<tr><td style="padding:5px 14px 5px 0;color:#7a7064;font-size:13px">${etiqueta}</td><td style="padding:5px 0;font-size:13px;font-weight:600">${esc(valor)}</td></tr>`;
+}
+
 export async function action({request, context}) {
   try {
     const f = await request.formData();
@@ -82,6 +98,12 @@ export async function action({request, context}) {
     if (!producto || !nombre || !telefono) {
       return Response.json({ok: false, error: 'Faltan datos de contacto.'}, {status: 400});
     }
+    if (telefono.replace(/\D/g, '').length < 10) {
+      return Response.json(
+        {ok: false, error: 'Necesitamos un teléfono completo para llamarte.'},
+        {status: 400},
+      );
+    }
     if (!Number.isFinite(cantidad) || cantidad < MINIMO) {
       return Response.json(
         {ok: false, error: `El mínimo es de ${MINIMO} unidades.`},
@@ -97,13 +119,15 @@ export async function action({request, context}) {
 
     const ts = Date.now();
     const slug = `bordado-${handle || 'prenda'}-${ts}`;
+    const ticket = `MAY-${ts.toString(36).toUpperCase()}`;
 
     let disenoUrl = null;
+    let disenoExt = 'png';
     try {
       if (diseno) {
         const parts = dataUrlParts(diseno);
-        const ext = parts ? extension(parts.mime) : 'png';
-        disenoUrl = await subir(SERVICE_KEY, `${slug}-diseno.${ext}`, diseno);
+        disenoExt = parts ? extension(parts.mime) : 'png';
+        disenoUrl = await subir(SERVICE_KEY, `${slug}-diseno.${disenoExt}`, diseno);
       }
     } catch (e) {
       console.error('upload storage', e);
@@ -112,7 +136,6 @@ export async function action({request, context}) {
 
     const resumen = [
       `${cantidad} u de ${producto}`,
-      color ? `color ${color}` : null,
       tallas ? `tallas ${tallas}` : null,
       colorHilo ? `hilo ${colorHilo}` : null,
     ]
@@ -120,13 +143,13 @@ export async function action({request, context}) {
       .join(' · ');
 
     const payload = {
-      ticket_number: `MAY-${ts.toString(36).toUpperCase()}`,
+      ticket_number: ticket,
       from_number: telefono,
       customer_phone: telefono,
       customer_email: correo || null,
       product_name: `${producto} · ${cantidad} u · ${tecnica}`,
       issue_type: 'personalizacion',
-      issue_description: `Pedido de bordado: ${resumen}. Total cotizado $${total.toLocaleString('es-CO')}. Revisar diseño, llamar al cliente y hacer prueba de bordado antes de producir.`,
+      issue_description: `Pedido de bordado: ${resumen}. Total cotizado ${cop(total)}. Revisar diseño, llamar al cliente y hacer prueba de bordado antes de producir.`,
       status: 'open',
       priority: 'high',
       context_data: {
@@ -175,7 +198,88 @@ export async function action({request, context}) {
       return Response.json({ok: false, error: 'No se pudo registrar el pedido.'}, {status: 500});
     }
 
-    return Response.json({ok: true, ticket: payload.ticket_number, disenoUrl});
+    /* ---------- correo al equipo ---------- */
+    const API_KEY = context?.env?.BREVO_API_KEY || process.env.BREVO_API_KEY;
+    let correoOk = false;
+
+    if (API_KEY) {
+      const html = `
+        <div style="font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;color:#1a1714;max-width:560px">
+          <p style="margin:0 0 6px;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#b34a2a;font-weight:700">
+            The Ranch · Bordado al por mayor
+          </p>
+          <h2 style="margin:0 0 4px;font-size:21px">Nuevo pedido ${esc(ticket)}</h2>
+          <p style="margin:0 0 18px;font-size:14px;color:#7a7064">
+            ${esc(cantidad)} unidades de ${esc(producto)}
+          </p>
+
+          <table style="border-collapse:collapse;margin-bottom:16px">
+            ${fila('Cliente', nombre)}
+            ${fila('Teléfono', telefono)}
+            ${fila('Correo', correo)}
+            ${fila('Ciudad', ciudad)}
+            ${fila('Empresa', empresa)}
+          </table>
+
+          <h3 style="margin:0 0 8px;font-size:14px">Prendas</h3>
+          <table style="border-collapse:collapse;margin-bottom:16px">
+            ${fila('Prenda', producto)}
+            ${fila('Colores y tallas', tallas)}
+            ${fila('Color del hilo', colorHilo)}
+            ${fila('Unidades', String(cantidad))}
+          </table>
+
+          <h3 style="margin:0 0 8px;font-size:14px">Cuenta</h3>
+          <table style="border-collapse:collapse;margin-bottom:16px">
+            ${fila('Prenda', cop(subtotalPrenda))}
+            ${fila('Descuento por volumen', descuento ? '−' + cop(descuento) : '—')}
+            ${fila(`Bordado (${cop(bordadoUnitario)} × ${cantidad})`, cop(bordadoUnitario * cantidad))}
+            <tr><td style="padding:9px 14px 0 0;font-size:14px;font-weight:700;border-top:1px solid #e6ddcd">Total</td>
+                <td style="padding:9px 0 0;font-size:17px;font-weight:800;border-top:1px solid #e6ddcd">${cop(total)}</td></tr>
+          </table>
+
+          ${notas ? `<p style="margin:0 0 16px"><strong>Indicaciones:</strong><br>${esc(notas).replace(/\n/g, '<br>')}</p>` : ''}
+
+          ${disenoUrl ? `<p style="margin:0 0 18px"><a href="${disenoUrl}" style="color:#b34a2a;font-weight:700">Ver el diseño${disenoNombre ? ` (${esc(disenoNombre)})` : ''}</a></p>` : ''}
+
+          <div style="background:#f5f0e6;border-left:3px solid #b34a2a;padding:12px 14px;border-radius:0 10px 10px 0;font-size:13px">
+            <strong>Antes de producir:</strong> revisar el diseño, llamar al cliente para confirmar
+            características y hacer una prueba del bordado.
+          </div>
+        </div>`;
+
+      const mail = {
+        sender: {name: 'The Ranch · Bordado', email: FROM_EMAIL},
+        to: [{email: TO_EMAIL, name: 'The Ranch'}],
+        subject: `Bordado ${ticket} · ${producto} · ${cantidad} u · ${nombre}`,
+        htmlContent: html,
+      };
+      if (correo) mail.replyTo = {email: correo, name: nombre};
+
+      const partes = diseno ? dataUrlParts(diseno) : null;
+      if (partes && partes.bytes.length < 6 * 1024 * 1024) {
+        mail.attachment = [{
+          content: partes.base64,
+          name: disenoNombre || `diseno-${ticket}.${disenoExt}`,
+        }];
+      }
+
+      try {
+        const r = await fetch(BREVO_API_URL, {
+          method: 'POST',
+          headers: {'api-key': API_KEY, 'Content-Type': 'application/json'},
+          body: JSON.stringify(mail),
+        });
+        correoOk = r.ok;
+        if (!r.ok) console.error('Brevo falló', r.status, await r.text());
+      } catch (e) {
+        console.error('Brevo error', e);
+      }
+    } else {
+      console.error('BREVO_API_KEY no configurado');
+    }
+
+    return Response.json({ok: true, ticket, disenoUrl, correo: correoOk});
   } catch (err) {
     console.error('api.personalizado-mayor', err);
     return Response.json({ok: false, error: 'Ocurrió un error.'}, {status: 500});

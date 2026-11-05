@@ -227,6 +227,7 @@ export default function Personalizado() {
     if (unidades < MINIMO) return setError(`El mínimo es de ${MINIMO} unidades.`);
     if (!diseno) return setError('Falta subir el diseño que quieres bordar.');
     if (!nombre.trim() || !telefono.trim()) return setError('Falta tu nombre y el teléfono.');
+    if (telefono.replace(/\D/g, '').length < 10) return setError('Necesitamos el número completo para poder llamarte.');
 
     setEnviando(true);
     try {
@@ -274,8 +275,8 @@ export default function Personalizado() {
       <main className="pm">
         <div className="pm-hecho">
           <div className="pm-check" aria-hidden="true">✓</div>
-          <h1>Recibimos tu pedido</h1>
-          <p className="pm-radicado">Radicado <strong>{listo}</strong></p>
+          <h1>Tu pedido quedó registrado</h1>
+          <p className="pm-radicado">Radicado <strong>{listo}</strong> · nos llegó por correo con tu diseño</p>
           <div className="pm-aviso">
             <p>
               Ahora revisamos tu diseño y <strong>te llamamos</strong> para confirmar las
@@ -286,6 +287,7 @@ export default function Personalizado() {
               la mostramos. Solo cuando la apruebes arrancamos el pedido.
             </p>
           </div>
+          <p className="pm-nota pm-centro">No se cobró nada. Esto no pasa por la pasarela de pagos.</p>
           <a className="pm-btn" href="/">Volver a la tienda</a>
         </div>
       </main>
@@ -298,9 +300,9 @@ export default function Personalizado() {
   return (
     <main className="pm">
       <header className="pm-head">
-        <p className="pm-eyebrow">The Ranch · Bordado</p>
-        <h1>Bordado al por mayor</h1>
-        <p className="pm-sub">Elige las prendas, combina colores y tallas, y sube tu diseño.</p>
+        <p className="pm-eyebrow">The Ranch · Bordado a la medida</p>
+        <h1>Tu marca, bordada hilo por hilo</h1>
+        <p className="pm-sub">Yellowstone, Armor, Laredo y la Camisa Outdoor con tu diseño bordado. Combinas colores y tallas, subes el logo y te llamamos para cuadrarlo.</p>
       </header>
 
       <ol className="pm-pasos">
@@ -528,7 +530,7 @@ export default function Personalizado() {
           <div className="pm-campos">
             <input className="pm-input" placeholder="Nombre y apellido *" value={nombre} onChange={(e) => setNombre(e.target.value)} />
             <input className="pm-input" placeholder="Empresa o equipo" value={empresa} onChange={(e) => setEmpresa(e.target.value)} />
-            <input className="pm-input" placeholder="Teléfono / WhatsApp *" inputMode="tel" value={telefono} onChange={(e) => setTelefono(e.target.value)} />
+            <input className="pm-input" placeholder="WhatsApp * (te llamamos a este número)" inputMode="tel" value={telefono} onChange={(e) => setTelefono(e.target.value)} />
             <input className="pm-input" placeholder="Correo" inputMode="email" value={correo} onChange={(e) => setCorreo(e.target.value)} />
             <input className="pm-input" placeholder="Ciudad" value={ciudad} onChange={(e) => setCiudad(e.target.value)} />
           </div>
@@ -558,7 +560,7 @@ export default function Personalizado() {
           <button type="button" className="pm-btn" onClick={enviar} disabled={enviando}>
             {enviando ? 'Enviando…' : 'Enviar pedido de bordado'}
           </button>
-          <p className="pm-nota pm-centro">No se cobra nada ahora. Te llamamos antes de facturar.</p>
+          <p className="pm-nota pm-centro">No es una compra: nos llega a nosotros, te llamamos y facturamos cuando apruebes la prueba.</p>
         </section>
       )}
     </main>
