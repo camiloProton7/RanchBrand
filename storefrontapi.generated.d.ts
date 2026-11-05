@@ -863,33 +863,111 @@ export type GorrasComboQuery = {
   };
 };
 
-export type ChaquetasBordadoQueryVariables = StorefrontAPI.Exact<{
-  handle: StorefrontAPI.Scalars['String']['input'];
+export type PrendaBordadoFragment = Pick<
+  StorefrontAPI.Product,
+  'title' | 'handle'
+> & {
+  featuredImage?: StorefrontAPI.Maybe<
+    Pick<StorefrontAPI.Image, 'url' | 'altText'>
+  >;
+  options: Array<Pick<StorefrontAPI.ProductOption, 'name' | 'values'>>;
+  variants: {
+    nodes: Array<
+      Pick<StorefrontAPI.ProductVariant, 'availableForSale'> & {
+        price: Pick<StorefrontAPI.MoneyV2, 'amount'>;
+        image?: StorefrontAPI.Maybe<Pick<StorefrontAPI.Image, 'url'>>;
+        selectedOptions: Array<
+          Pick<StorefrontAPI.SelectedOption, 'name' | 'value'>
+        >;
+      }
+    >;
+  };
+};
+
+export type PrendasBordadoQueryVariables = StorefrontAPI.Exact<{
+  h1: StorefrontAPI.Scalars['String']['input'];
+  h2: StorefrontAPI.Scalars['String']['input'];
+  h3: StorefrontAPI.Scalars['String']['input'];
+  h4: StorefrontAPI.Scalars['String']['input'];
 }>;
 
-export type ChaquetasBordadoQuery = {
-  collection?: StorefrontAPI.Maybe<{
-    products: {
-      nodes: Array<
-        Pick<StorefrontAPI.Product, 'title' | 'handle'> & {
-          featuredImage?: StorefrontAPI.Maybe<
-            Pick<StorefrontAPI.Image, 'url' | 'altText'>
-          >;
-          options: Array<Pick<StorefrontAPI.ProductOption, 'name' | 'values'>>;
-          variants: {
-            nodes: Array<
-              Pick<StorefrontAPI.ProductVariant, 'availableForSale'> & {
-                price: Pick<StorefrontAPI.MoneyV2, 'amount'>;
-                selectedOptions: Array<
-                  Pick<StorefrontAPI.SelectedOption, 'name' | 'value'>
-                >;
-              }
-            >;
-          };
-        }
+export type PrendasBordadoQuery = {
+  p1?: StorefrontAPI.Maybe<
+    Pick<StorefrontAPI.Product, 'title' | 'handle'> & {
+      featuredImage?: StorefrontAPI.Maybe<
+        Pick<StorefrontAPI.Image, 'url' | 'altText'>
       >;
-    };
-  }>;
+      options: Array<Pick<StorefrontAPI.ProductOption, 'name' | 'values'>>;
+      variants: {
+        nodes: Array<
+          Pick<StorefrontAPI.ProductVariant, 'availableForSale'> & {
+            price: Pick<StorefrontAPI.MoneyV2, 'amount'>;
+            image?: StorefrontAPI.Maybe<Pick<StorefrontAPI.Image, 'url'>>;
+            selectedOptions: Array<
+              Pick<StorefrontAPI.SelectedOption, 'name' | 'value'>
+            >;
+          }
+        >;
+      };
+    }
+  >;
+  p2?: StorefrontAPI.Maybe<
+    Pick<StorefrontAPI.Product, 'title' | 'handle'> & {
+      featuredImage?: StorefrontAPI.Maybe<
+        Pick<StorefrontAPI.Image, 'url' | 'altText'>
+      >;
+      options: Array<Pick<StorefrontAPI.ProductOption, 'name' | 'values'>>;
+      variants: {
+        nodes: Array<
+          Pick<StorefrontAPI.ProductVariant, 'availableForSale'> & {
+            price: Pick<StorefrontAPI.MoneyV2, 'amount'>;
+            image?: StorefrontAPI.Maybe<Pick<StorefrontAPI.Image, 'url'>>;
+            selectedOptions: Array<
+              Pick<StorefrontAPI.SelectedOption, 'name' | 'value'>
+            >;
+          }
+        >;
+      };
+    }
+  >;
+  p3?: StorefrontAPI.Maybe<
+    Pick<StorefrontAPI.Product, 'title' | 'handle'> & {
+      featuredImage?: StorefrontAPI.Maybe<
+        Pick<StorefrontAPI.Image, 'url' | 'altText'>
+      >;
+      options: Array<Pick<StorefrontAPI.ProductOption, 'name' | 'values'>>;
+      variants: {
+        nodes: Array<
+          Pick<StorefrontAPI.ProductVariant, 'availableForSale'> & {
+            price: Pick<StorefrontAPI.MoneyV2, 'amount'>;
+            image?: StorefrontAPI.Maybe<Pick<StorefrontAPI.Image, 'url'>>;
+            selectedOptions: Array<
+              Pick<StorefrontAPI.SelectedOption, 'name' | 'value'>
+            >;
+          }
+        >;
+      };
+    }
+  >;
+  p4?: StorefrontAPI.Maybe<
+    Pick<StorefrontAPI.Product, 'title' | 'handle'> & {
+      featuredImage?: StorefrontAPI.Maybe<
+        Pick<StorefrontAPI.Image, 'url' | 'altText'>
+      >;
+      options: Array<Pick<StorefrontAPI.ProductOption, 'name' | 'values'>>;
+      variants: {
+        nodes: Array<
+          Pick<StorefrontAPI.ProductVariant, 'availableForSale'> & {
+            price: Pick<StorefrontAPI.MoneyV2, 'amount'>;
+            image?: StorefrontAPI.Maybe<Pick<StorefrontAPI.Image, 'url'>>;
+            selectedOptions: Array<
+              Pick<StorefrontAPI.SelectedOption, 'name' | 'value'>
+            >;
+          }
+        >;
+      };
+    }
+  >;
 };
 
 export type PersonalizableProductQueryVariables = StorefrontAPI.Exact<{
@@ -1169,9 +1247,9 @@ interface GeneratedQueryTypes {
     return: GorrasComboQuery;
     variables: GorrasComboQueryVariables;
   };
-  '#graphql\n  query ChaquetasBordado($handle: String!) {\n    collection(handle: $handle) {\n      products(first: 60, sortKey: PRICE, reverse: true) {\n        nodes {\n          title\n          handle\n          featuredImage {url altText}\n          options {name values}\n          variants(first: 120) {\n            nodes {\n              availableForSale\n              price {amount}\n              selectedOptions {name value}\n            }\n          }\n        }\n      }\n    }\n  }\n': {
-    return: ChaquetasBordadoQuery;
-    variables: ChaquetasBordadoQueryVariables;
+  '#graphql\n  query PrendasBordado($h1: String!, $h2: String!, $h3: String!, $h4: String!) {\n    p1: product(handle: $h1) { ...PrendaBordado }\n    p2: product(handle: $h2) { ...PrendaBordado }\n    p3: product(handle: $h3) { ...PrendaBordado }\n    p4: product(handle: $h4) { ...PrendaBordado }\n  }\n  #graphql\n  fragment PrendaBordado on Product {\n    title\n    handle\n    featuredImage {url altText}\n    options {name values}\n    variants(first: 120) {\n      nodes {\n        availableForSale\n        price {amount}\n        image {url}\n        selectedOptions {name value}\n      }\n    }\n  }\n\n': {
+    return: PrendasBordadoQuery;
+    variables: PrendasBordadoQueryVariables;
   };
   '#graphql\n  query PersonalizableProduct($handle: String!) {\n    product(handle: $handle) {\n      id\n      title\n      handle\n      featuredImage {\n        url\n        altText\n      }\n      priceRange {\n        minVariantPrice { amount currencyCode }\n      }\n      variants(first: 1) {\n        nodes { id }\n      }\n    }\n  }\n': {
     return: PersonalizableProductQuery;

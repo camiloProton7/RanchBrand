@@ -302,7 +302,8 @@ export default function Personalizado() {
       <header className="pm-head">
         <p className="pm-eyebrow">The Ranch · Bordado para marcas</p>
         <h1>
-          Tu marca, <em>bordada</em> hilo por hilo
+          Tu marca,{' '}
+          <em>bordada</em> hilo por hilo
         </h1>
         <p className="pm-sub">
           Yellowstone, Armor, Laredo y Camisa Outdoor. Eliges colores y tallas, subes el logo y te
