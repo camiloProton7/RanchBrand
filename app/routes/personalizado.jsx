@@ -3,11 +3,11 @@ import {useMemo, useState} from 'react';
 import estilos from '~/styles/personalizado-bordado.css?url';
 
 /**
- * Pedido de bordado al por mayor.
+ * Bordado al por mayor — cuatro prendas, varias combinaciones de color y talla.
  *
  * Borrador: solo abre con el token de la URL y no está enlazada en el sitio.
- * El cliente elige chaqueta, color y tallas, sube su diseño y ve el precio
- * en vivo (bordado $5.000 por prenda, 20% en la prenda desde 8 unidades).
+ * Reglas: bordado $5.000 por prenda; desde 8 unidades, 20% de descuento que
+ * aplica solo a la prenda (el bordado no se descuenta).
  */
 
 const TOKEN_BORRADOR = 'ranch-mayor-2026';
@@ -16,6 +16,13 @@ export const BORDADO_UNITARIO = 5000;
 export const DESCUENTO_DESDE = 8;
 export const DESCUENTO = 0.2;
 
+const HANDLES = [
+  'chaqueta-impermeable-yellowstone',
+  'chaqueta-impermeable-armor',
+  'chaqueta-laredo-impermeable',
+  'camisa-outdoor-the-ranch',
+];
+
 export const links = () => [{rel: 'stylesheet', href: estilos}];
 
 export const meta = () => [
@@ -23,26 +30,31 @@ export const meta = () => [
   {name: 'robots', content: 'noindex, nofollow'},
 ];
 
-const CONSULTA = `#graphql
-  query ChaquetasBordado($handle: String!) {
-    collection(handle: $handle) {
-      products(first: 60, sortKey: PRICE, reverse: true) {
-        nodes {
-          title
-          handle
-          featuredImage {url altText}
-          options {name values}
-          variants(first: 120) {
-            nodes {
-              availableForSale
-              price {amount}
-              selectedOptions {name value}
-            }
-          }
-        }
+const CAMPOS = `#graphql
+  fragment PrendaBordado on Product {
+    title
+    handle
+    featuredImage {url altText}
+    options {name values}
+    variants(first: 120) {
+      nodes {
+        availableForSale
+        price {amount}
+        image {url}
+        selectedOptions {name value}
       }
     }
   }
+`;
+
+const CONSULTA = `#graphql
+  query PrendasBordado($h1: String!, $h2: String!, $h3: String!, $h4: String!) {
+    p1: product(handle: $h1) { ...PrendaBordado }
+    p2: product(handle: $h2) { ...PrendaBordado }
+    p3: product(handle: $h3) { ...PrendaBordado }
+    p4: product(handle: $h4) { ...PrendaBordado }
+  }
+  ${CAMPOS}
 `;
 
 export async function loader({request, context}) {
@@ -52,36 +64,50 @@ export async function loader({request, context}) {
   }
 
   const data = await context.storefront.query(CONSULTA, {
-    variables: {handle: 'chaquetas'},
+    variables: {h1: HANDLES[0], h2: HANDLES[1], h3: HANDLES[2], h4: HANDLES[3]},
     cache: context.storefront.CacheShort(),
   });
 
-  const productos = (data?.collection?.products?.nodes || []).map((p) => {
-    const opciones = p.options || [];
-    const optColor = opciones.find((o) => /color/i.test(o.name));
-    const optTalla = opciones.find((o) => /talla|size/i.test(o.name));
-    const colores = optColor ? optColor.values : ['Único'];
-    const tallas = optTalla ? optTalla.values : ['Única'];
+  const productos = ['p1', 'p2', 'p3', 'p4']
+    .map((k) => data?.[k])
+    .filter(Boolean)
+    .map((p) => {
+      const optColor = (p.options || []).find((o) => /color/i.test(o.name));
+      const optTalla = (p.options || []).find((o) => /talla|size/i.test(o.name));
+      const colores = optColor ? optColor.values : ['Único'];
+      const tallas = optTalla ? optTalla.values : ['Única'];
 
-    const disp = {};
-    let precio = 0;
-    for (const v of p.variants?.nodes || []) {
-      const c = v.selectedOptions.find((s) => /color/i.test(s.name))?.value || 'Único';
-      const t = v.selectedOptions.find((s) => /talla|size/i.test(s.name))?.value || 'Única';
-      disp[`${c}|${t}`] = v.availableForSale;
-      if (!precio) precio = Number(v.price?.amount || 0);
-    }
+      const variantes = {};
+      for (const v of p.variants?.nodes || []) {
+        const c = v.selectedOptions.find((s) => /color/i.test(s.name))?.value || 'Único';
+        const t = v.selectedOptions.find((s) => /talla|size/i.test(s.name))?.value || 'Única';
+        variantes[`${c}|${t}`] = {
+          precio: Math.round(Number(v.price?.amount || 0)),
+          hay: v.availableForSale,
+          img: v.image?.url || '',
+        };
+      }
 
-    return {
-      titulo: p.title,
-      handle: p.handle,
-      imagen: p.featuredImage?.url || '',
-      precio: Math.round(precio),
-      colores,
-      tallas,
-      disp,
-    };
-  });
+      const imagenPorColor = {};
+      for (const c of colores) {
+        const conImagen = Object.entries(variantes).find(([k, v]) => k.startsWith(c + '|') && v.img);
+        imagenPorColor[c] = conImagen ? conImagen[1].img : p.featuredImage?.url || '';
+      }
+
+      const urls = new Set(Object.values(imagenPorColor).filter(Boolean));
+      const precios = Object.values(variantes).map((v) => v.precio).filter(Boolean);
+      return {
+        fotosPorColor: urls.size > 1,
+        titulo: p.title,
+        handle: p.handle,
+        imagen: p.featuredImage?.url || '',
+        imagenPorColor,
+        precio: precios.length ? Math.min(...precios) : 0,
+        colores,
+        tallas,
+        variantes,
+      };
+    });
 
   return {productos};
 }
@@ -106,8 +132,8 @@ export default function Personalizado() {
 
   const [paso, setPaso] = useState(1);
   const [iProd, setIProd] = useState(-1);
-  const [color, setColor] = useState('');
-  const [tallas, setTallas] = useState({});
+  const [colorActivo, setColorActivo] = useState('');
+  const [lineas, setLineas] = useState({}); // "color|talla" -> cantidad
   const [colorHilo, setColorHilo] = useState({nombre: 'Negro', hex: '#1b1815'});
   const [notas, setNotas] = useState('');
   const [diseno, setDiseno] = useState(null);
@@ -123,54 +149,68 @@ export default function Personalizado() {
   const producto = productos[iProd] || null;
 
   const unidades = useMemo(
-    () => Object.values(tallas).reduce((a, b) => a + (Number(b) || 0), 0),
-    [tallas],
+    () => Object.values(lineas).reduce((a, b) => a + (Number(b) || 0), 0),
+    [lineas],
   );
 
   const cuentas = useMemo(() => {
-    if (!producto) return {bruto: 0, descuento: 0, bordado: 0, total: 0, aplica: false};
-    const bruto = producto.precio * unidades;
+    if (!producto) return {bruto: 0, descuento: 0, bordado: 0, total: 0, aplica: false, ahorroPct: 0};
+    let bruto = 0;
+    for (const [clave, cant] of Object.entries(lineas)) {
+      const v = producto.variantes[clave];
+      bruto += (v?.precio || producto.precio) * (Number(cant) || 0);
+    }
     const aplica = unidades >= DESCUENTO_DESDE;
     const descuento = aplica ? Math.round(bruto * DESCUENTO) : 0;
     const bordado = BORDADO_UNITARIO * unidades;
-    return {bruto, descuento, bordado, total: bruto - descuento + bordado, aplica};
-  }, [producto, unidades]);
+    return {bruto, descuento, bordado, total: bruto - descuento + bordado, aplica, ahorroPct: 20};
+  }, [producto, lineas, unidades]);
+
+  const desglose = useMemo(() => {
+    if (!producto) return [];
+    const filas = [];
+    for (const c of producto.colores) {
+      const tallasColor = producto.tallas
+        .map((t) => ({talla: t, cant: lineas[`${c}|${t}`] || 0}))
+        .filter((x) => x.cant > 0);
+      if (tallasColor.length) filas.push({color: c, tallas: tallasColor});
+    }
+    return filas;
+  }, [producto, lineas]);
 
   function elegirProducto(i) {
     setIProd(i);
-    setColor(productos[i].colores[0]);
-    setTallas({});
+    setColorActivo(productos[i].colores[0]);
+    setLineas({});
     setPaso(2);
     setError('');
     window.scrollTo({top: 0, behavior: 'smooth'});
   }
 
-  function cambiar(talla, delta) {
-    setTallas((prev) => {
-      const n = Math.max(0, Math.min(500, (Number(prev[talla]) || 0) + delta));
+  function cambiar(color, talla, delta) {
+    const clave = `${color}|${talla}`;
+    setLineas((prev) => {
+      const n = Math.max(0, Math.min(500, (Number(prev[clave]) || 0) + delta));
       const copia = {...prev};
-      if (n === 0) delete copia[talla];
-      else copia[talla] = n;
+      if (n === 0) delete copia[clave];
+      else copia[clave] = n;
       return copia;
     });
   }
 
-  function disponible(talla) {
-    if (!producto) return true;
-    return producto.disp[`${color}|${talla}`] !== false;
+  function varianteDe(color, talla) {
+    return producto?.variantes[`${color}|${talla}`];
   }
+
+  const imagenActiva = producto?.imagenPorColor?.[colorActivo] || producto?.imagen || '';
 
   async function subirArchivo(ev) {
     const f = ev.target.files?.[0];
     setError('');
     if (!f) return;
-    if (f.size > 12 * 1024 * 1024) {
-      setError('El archivo pasa de 12 MB. Mándanos una versión más liviana.');
-      return;
-    }
+    if (f.size > 12 * 1024 * 1024) return setError('El archivo pasa de 12 MB. Mándanos una versión más liviana.');
     if (!/image\/(png|jpeg|webp|svg\+xml)|application\/pdf/.test(f.type)) {
-      setError('Formato no válido. Puede ser PNG, JPG, SVG o PDF.');
-      return;
+      return setError('Formato no válido. Puede ser PNG, JPG, SVG o PDF.');
     }
     const dataUrl = await new Promise((res, rej) => {
       const r = new FileReader();
@@ -178,18 +218,22 @@ export default function Personalizado() {
       r.onerror = rej;
       r.readAsDataURL(f);
     });
-    setDiseno({nombre: f.name, mime: f.type, dataUrl, peso: f.size});
+    setDiseno({nombre: f.name, mime: f.type, dataUrl});
   }
 
   async function enviar() {
     setError('');
-    if (!producto) return setError('Falta elegir la chaqueta.');
+    if (!producto) return setError('Falta elegir la prenda.');
     if (unidades < MINIMO) return setError(`El mínimo es de ${MINIMO} unidades.`);
     if (!diseno) return setError('Falta subir el diseño que quieres bordar.');
     if (!nombre.trim() || !telefono.trim()) return setError('Falta tu nombre y el teléfono.');
 
     setEnviando(true);
     try {
+      const resumenLineas = desglose
+        .map((f) => `${f.color}: ${f.tallas.map((t) => `${t.talla} ${t.cant}`).join(', ')}`)
+        .join(' | ');
+
       const fd = new FormData();
       fd.set('tecnica', 'Bordado');
       fd.set('producto', producto.titulo);
@@ -200,9 +244,10 @@ export default function Personalizado() {
       fd.set('telefono', telefono.trim());
       fd.set('ciudad', ciudad.trim());
       fd.set('correo', correo.trim());
-      fd.set('color', color);
+      fd.set('color', desglose.map((f) => f.color).join(' + '));
       fd.set('notas', notas.trim());
-      fd.set('tallas', Object.entries(tallas).map(([t, q]) => `${t}: ${q}`).join(' · '));
+      fd.set('tallas', resumenLineas);
+      fd.set('lineas', resumenLineas);
       fd.set('color_hilo', `${colorHilo.nombre} (${colorHilo.hex})`);
       fd.set('precio_unitario', String(producto.precio));
       fd.set('subtotal_prenda', String(cuentas.bruto));
@@ -234,11 +279,11 @@ export default function Personalizado() {
           <div className="pm-aviso">
             <p>
               Ahora revisamos tu diseño y <strong>te llamamos</strong> para confirmar las
-              características: tamaño, ubicación, color del hilo y el tipo de letra.
+              características: tamaño, ubicación, color del hilo y tipo de letra.
             </p>
             <p>
-              Antes de producir hacemos <strong>una prueba del bordado</strong> sobre la prenda y
-              te la mostramos. Solo cuando la apruebes arrancamos el pedido.
+              Antes de producir hacemos <strong>una prueba del bordado</strong> sobre la prenda y te
+              la mostramos. Solo cuando la apruebes arrancamos el pedido.
             </p>
           </div>
           <a className="pm-btn" href="/">Volver a la tienda</a>
@@ -247,18 +292,19 @@ export default function Personalizado() {
     );
   }
 
+  const faltan = Math.max(0, DESCUENTO_DESDE - unidades);
+  const progreso = Math.min(100, Math.round((unidades / DESCUENTO_DESDE) * 100));
+
   return (
     <main className="pm">
       <header className="pm-head">
         <p className="pm-eyebrow">The Ranch · Bordado</p>
         <h1>Bordado al por mayor</h1>
-        <p className="pm-sub">
-          Elige las chaquetas, sube tu diseño y te llamamos para cuadrar el bordado.
-        </p>
+        <p className="pm-sub">Elige las prendas, combina colores y tallas, y sube tu diseño.</p>
       </header>
 
       <ol className="pm-pasos">
-        {['Chaqueta', 'Color y tallas', 'Diseño'].map((t, i) => (
+        {['Prenda', 'Colores y tallas', 'Diseño'].map((t, i) => (
           <li
             key={t}
             className={paso === i + 1 ? 'activo' : paso > i + 1 ? 'hecho' : ''}
@@ -277,8 +323,8 @@ export default function Personalizado() {
 
       {paso === 1 && (
         <section className="pm-sec">
-          <h2>¿Qué chaqueta vas a bordar?</h2>
-          <div className="pm-grid">
+          <h2>¿Qué vas a bordar?</h2>
+          <div className="pm-grid pm-grid-2">
             {productos.map((p, i) => (
               <button
                 key={p.handle}
@@ -286,6 +332,7 @@ export default function Personalizado() {
                 className={'pm-card' + (i === iProd ? ' sel' : '')}
                 onClick={() => elegirProducto(i)}
               >
+                <span className="pm-cinta">20% off desde 8 u</span>
                 {p.imagen ? <img src={p.imagen} alt={p.titulo} loading="lazy" /> : null}
                 <span className="pm-card-nombre">{p.titulo}</span>
                 <span className="pm-card-precio">desde {cop(p.precio)}</span>
@@ -298,46 +345,76 @@ export default function Personalizado() {
       {paso === 2 && producto && (
         <section className="pm-sec">
           <button type="button" className="pm-volver" onClick={() => setPaso(1)}>
-            ← Cambiar chaqueta
+            ← Cambiar prenda
           </button>
           <h2>{producto.titulo}</h2>
 
+          <div className="pm-foto">
+            {imagenActiva ? (
+              <img
+                src={imagenActiva}
+                alt={producto.fotosPorColor ? `${producto.titulo} ${colorActivo}` : producto.titulo}
+              />
+            ) : null}
+            {producto.fotosPorColor && <span className="pm-foto-tag">{colorActivo}</span>}
+          </div>
+
           {producto.colores.length > 1 && (
             <>
-              <h3>Color</h3>
-              <div className="pm-chips">
-                {producto.colores.map((c) => (
-                  <button
-                    key={c}
-                    type="button"
-                    className={'pm-chip' + (color === c ? ' sel' : '')}
-                    onClick={() => {
-                      setColor(c);
-                      setTallas({});
-                    }}
-                  >
-                    {c}
-                  </button>
-                ))}
+              <h3>Color · puedes combinar varios</h3>
+              <div className={producto.fotosPorColor ? 'pm-colores' : 'pm-chips'}>
+                {producto.colores.map((c) => {
+                  const img = producto.imagenPorColor[c];
+                  const unidadesColor = producto.tallas.reduce(
+                    (a, t) => a + (lineas[`${c}|${t}`] || 0),
+                    0,
+                  );
+                  if (!producto.fotosPorColor) {
+                    return (
+                      <button
+                        key={c}
+                        type="button"
+                        className={'pm-chip' + (colorActivo === c ? ' sel' : '')}
+                        onClick={() => setColorActivo(c)}
+                      >
+                        {c}
+                        {unidadesColor > 0 ? ` · ${unidadesColor}` : ''}
+                      </button>
+                    );
+                  }
+                  return (
+                    <button
+                      key={c}
+                      type="button"
+                      className={'pm-color' + (colorActivo === c ? ' sel' : '')}
+                      onClick={() => setColorActivo(c)}
+                    >
+                      {img ? <img src={img} alt={c} loading="lazy" /> : <i />}
+                      <span>{c}</span>
+                      {unidadesColor > 0 && <b>{unidadesColor}</b>}
+                    </button>
+                  );
+                })}
               </div>
             </>
           )}
 
-          <h3>Tallas</h3>
+          <h3>Tallas en {colorActivo}</h3>
           <div className="pm-tallas">
             {producto.tallas.map((t) => {
-              const hab = disponible(t);
+              const v = varianteDe(colorActivo, t);
+              const hab = v ? v.hay : false;
+              const cant = lineas[`${colorActivo}|${t}`] || 0;
               return (
                 <div key={t} className={'pm-talla' + (hab ? '' : ' agotada')}>
-                  <span className="pm-talla-nombre">{t}</span>
+                  <div className="pm-talla-info">
+                    <span className="pm-talla-nombre">{t}</span>
+                    <span className="pm-talla-precio">{cop(v?.precio || producto.precio)}</span>
+                  </div>
                   <div className="pm-stepper">
-                    <button type="button" onClick={() => cambiar(t, -1)} disabled={!hab || !tallas[t]}>
-                      −
-                    </button>
-                    <span>{tallas[t] || 0}</span>
-                    <button type="button" onClick={() => cambiar(t, 1)} disabled={!hab}>
-                      +
-                    </button>
+                    <button type="button" onClick={() => cambiar(colorActivo, t, -1)} disabled={!hab || !cant}>−</button>
+                    <span>{cant}</span>
+                    <button type="button" onClick={() => cambiar(colorActivo, t, 1)} disabled={!hab}>+</button>
                   </div>
                   {!hab && <span className="pm-agotada">agotada</span>}
                 </div>
@@ -345,31 +422,60 @@ export default function Personalizado() {
             })}
           </div>
 
+          {desglose.length > 0 && (
+            <div className="pm-lineas">
+              <h3>Tu combinación</h3>
+              {desglose.map((f) => (
+                <div key={f.color} className="pm-linea">
+                  <b>{f.color}</b>
+                  <span>{f.tallas.map((t) => `${t.talla} ×${t.cant}`).join(' · ')}</span>
+                </div>
+              ))}
+            </div>
+          )}
+
+          <div className={'pm-progreso' + (unidades >= DESCUENTO_DESDE ? ' lleno' : '')}>
+            <div className="pm-barra"><i style={{width: progreso + '%'}} /></div>
+            <p>
+              {unidades >= DESCUENTO_DESDE
+                ? '¡20% de descuento aplicado en la prenda!'
+                : `Te faltan ${faltan} ${faltan === 1 ? 'unidad' : 'unidades'} para el 20% de descuento`}
+            </p>
+          </div>
+
           <div className="pm-resumen-mini">
             <div><span>Unidades</span><strong>{unidades}</strong></div>
             <div><span>Prenda</span><strong>{cop(cuentas.bruto)}</strong></div>
+            <div className={cuentas.descuento ? 'pm-mini-desc' : ''}>
+              <span>Descuento</span><strong>{cuentas.descuento ? '−' + cop(cuentas.descuento) : '—'}</strong>
+            </div>
             <div><span>Bordado</span><strong>{cop(cuentas.bordado)}</strong></div>
-            <div><span>Total</span><strong>{cop(cuentas.total)}</strong></div>
           </div>
 
-          <button
-            type="button"
-            className="pm-btn"
-            disabled={unidades < MINIMO}
-            onClick={() => {
-              setPaso(3);
-              window.scrollTo({top: 0, behavior: 'smooth'});
-            }}
-          >
-            {unidades < MINIMO ? `Faltan ${MINIMO - unidades} unidades` : 'Pasar al diseño'}
-          </button>
+          <div className="pm-totalbar">
+            <div>
+              <span>Total</span>
+              <b>{cop(cuentas.total)}</b>
+            </div>
+            <button
+              type="button"
+              className="pm-btn"
+              disabled={unidades < MINIMO}
+              onClick={() => {
+                setPaso(3);
+                window.scrollTo({top: 0, behavior: 'smooth'});
+              }}
+            >
+              {unidades < MINIMO ? `Faltan ${MINIMO - unidades}` : 'Seguir'}
+            </button>
+          </div>
         </section>
       )}
 
       {paso === 3 && producto && (
         <section className="pm-sec">
           <button type="button" className="pm-volver" onClick={() => setPaso(2)}>
-            ← Cambiar tallas
+            ← Cambiar colores y tallas
           </button>
           <h2>Tu bordado</h2>
 
@@ -395,16 +501,12 @@ export default function Personalizado() {
 
           <h3>Diseño</h3>
           <label className="pm-archivo">
-            <input
-              type="file"
-              accept="image/png,image/jpeg,image/webp,image/svg+xml,application/pdf"
-              onChange={subirArchivo}
-            />
+            <input type="file" accept="image/png,image/jpeg,image/webp,image/svg+xml,application/pdf" onChange={subirArchivo} />
             <span>{diseno ? `✓ ${diseno.nombre}` : 'Subir diseño (PNG, JPG, SVG o PDF)'}</span>
           </label>
           <p className="pm-nota">
-            Lo ideal es PNG con fondo transparente o vector. Si solo tienes la foto del logo,
-            súbela igual y lo dibujamos.
+            Ideal PNG con fondo transparente o vector. Si solo tienes la foto del logo, súbela
+            igual y lo dibujamos.
           </p>
 
           {diseno && /^image\//.test(diseno.mime) && (
@@ -432,19 +534,13 @@ export default function Personalizado() {
           </div>
 
           <div className="pm-cuenta">
-            <div><span>{producto.titulo} × {unidades} u</span><b>{cop(cuentas.bruto)}</b></div>
+            <div><span>{producto.titulo} · {unidades} u</span><b>{cop(cuentas.bruto)}</b></div>
             <div><span>Bordado {cop(BORDADO_UNITARIO)} × {unidades}</span><b>{cop(cuentas.bordado)}</b></div>
             {cuentas.descuento > 0 && (
               <div className="pm-desc"><span>Descuento por volumen −20%</span><b>−{cop(cuentas.descuento)}</b></div>
             )}
             <div className="pm-total"><span>Total</span><b>{cop(cuentas.total)}</b></div>
           </div>
-
-          {!cuentas.aplica && (
-            <p className="pm-nota">
-              Desde {DESCUENTO_DESDE} unidades la prenda baja 20%. Vas en {unidades}.
-            </p>
-          )}
 
           <div className="pm-aviso">
             <p>
@@ -462,9 +558,7 @@ export default function Personalizado() {
           <button type="button" className="pm-btn" onClick={enviar} disabled={enviando}>
             {enviando ? 'Enviando…' : 'Enviar pedido de bordado'}
           </button>
-          <p className="pm-nota pm-centro">
-            No se cobra nada ahora. Te llamamos para confirmar antes de facturar.
-          </p>
+          <p className="pm-nota pm-centro">No se cobra nada ahora. Te llamamos antes de facturar.</p>
         </section>
       )}
     </main>
