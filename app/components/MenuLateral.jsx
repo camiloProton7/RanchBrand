@@ -14,6 +14,7 @@ const ENTRADAS = [
   ],
   ['Camisas y camisetas', '/collections/camisetas'],
   ['Botas y accesorios', '/collections/botas-1'],
+  ['Personalización', '/personalizado'],
   ['El combo de gorras', '/combo-gorras'],
 ];
 
@@ -95,8 +96,8 @@ export default function MenuLateral({tono = 'crema'}) {
 
               <p className="hn-panel-rotulo">Ayuda</p>
 
-              <Link to="/policies/refund-policy" onClick={() => setAbierto(false)} style={{'--n': 6}}>
-                <span className="hn-panel-num">07</span>
+              <Link to="/policies/refund-policy" onClick={() => setAbierto(false)} style={{'--n': 7}}>
+                <span className="hn-panel-num">08</span>
                 <span className="hn-panel-txt">Garantía</span>
                 <span className="hn-panel-flecha" aria-hidden="true">
                   <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
@@ -110,9 +111,9 @@ export default function MenuLateral({tono = 'crema'}) {
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => setAbierto(false)}
-                style={{'--n': 7}}
+                style={{'--n': 8}}
               >
-                <span className="hn-panel-num">08</span>
+                <span className="hn-panel-num">09</span>
                 <span className="hn-panel-txt">Seguimiento de casos</span>
                 <span className="hn-panel-flecha" aria-hidden="true">
                   <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">

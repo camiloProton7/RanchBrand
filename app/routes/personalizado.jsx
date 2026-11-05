@@ -5,12 +5,11 @@ import estilos from '~/styles/personalizado-bordado.css?url';
 /**
  * Bordado al por mayor — cuatro prendas, varias combinaciones de color y talla.
  *
- * Borrador: solo abre con el token de la URL y no está enlazada en el sitio.
+ * Pública: enlazada desde el menú como «Personalización».
  * Reglas: bordado $5.000 por prenda; desde 8 unidades, 20% de descuento que
  * aplica solo a la prenda (el bordado no se descuenta).
  */
 
-const TOKEN_BORRADOR = 'ranch-mayor-2026';
 export const MINIMO = 8;
 export const BORDADO_UNITARIO = 5000;
 export const DESCUENTO_DESDE = 8;
@@ -27,7 +26,7 @@ export const links = () => [{rel: 'stylesheet', href: estilos}];
 
 export const meta = () => [
   {title: 'Bordado al por mayor — The Ranch'},
-  {name: 'robots', content: 'noindex, nofollow'},
+  {name: 'description', content: 'Bordamos tu marca en chaquetas y camisas. Escoges colores y tallas, subes el diseño y te llamamos. 20% off en la prenda desde 8 unidades.'},
 ];
 
 const CAMPOS = `#graphql
@@ -58,11 +57,6 @@ const CONSULTA = `#graphql
 `;
 
 export async function loader({request, context}) {
-  const url = new URL(request.url);
-  if (url.searchParams.get('preview') !== TOKEN_BORRADOR) {
-    throw new Response('No encontrado', {status: 404});
-  }
-
   const data = await context.storefront.query(CONSULTA, {
     variables: {h1: HANDLES[0], h2: HANDLES[1], h3: HANDLES[2], h4: HANDLES[3]},
     cache: context.storefront.CacheShort(),
