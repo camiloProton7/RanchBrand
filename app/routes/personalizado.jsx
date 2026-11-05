@@ -1,6 +1,11 @@
-import {useLoaderData} from 'react-router';
+import {Link, useLoaderData} from 'react-router';
 import {useMemo, useState} from 'react';
 import estilos from '~/styles/personalizado-bordado.css?url';
+import homeStyles from '~/styles/home-nuevo.css?url';
+import MenuLateral from '~/components/MenuLateral';
+import Carroza from '~/components/Carroza';
+import Buscador from '~/components/Buscador';
+import Pie from '~/components/Pie';
 
 /**
  * Bordado al por mayor — cuatro prendas, varias combinaciones de color y talla.
@@ -22,7 +27,10 @@ const HANDLES = [
   'camisa-outdoor-the-ranch',
 ];
 
-export const links = () => [{rel: 'stylesheet', href: estilos}];
+export const links = () => [
+  {rel: 'stylesheet', href: homeStyles},
+  {rel: 'stylesheet', href: estilos},
+];
 
 export const meta = () => [
   {title: 'Bordado al por mayor — The Ranch'},
@@ -292,7 +300,19 @@ export default function Personalizado() {
   const progreso = Math.min(100, Math.round((unidades / DESCUENTO_DESDE) * 100));
 
   return (
-    <main className="pm">
+    <>
+      <div className="hc-bar is-solido">
+        <MenuLateral tono="tinta" />
+        <Link to="/" prefetch="intent" className="hc-logo" aria-label="The Ranch, ir al inicio">
+          <img src="/logo-tinta.png" alt="The Ranch" width="78" />
+        </Link>
+        <span className="hc-bolsa">
+          <Buscador tono="oscuro" />
+          <Carroza />
+        </span>
+      </div>
+
+      <main className="pm">
       <header className="pm-head">
         <p className="pm-eyebrow">The Ranch · Bordado para marcas</p>
         <h1>
@@ -564,6 +584,9 @@ export default function Personalizado() {
           <p className="pm-nota pm-centro">No es una compra: nos llega a nosotros, te llamamos y facturamos cuando apruebes la prueba.</p>
         </section>
       )}
-    </main>
+      </main>
+
+      <Pie />
+    </>
   );
 }
