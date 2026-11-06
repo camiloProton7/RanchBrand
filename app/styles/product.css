@@ -439,10 +439,13 @@
   /* el borde sostiene los colores claros: un círculo blanco sin borde no se ve */
   border: 2px solid rgba(26, 26, 24, 0.28);
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.12);
-  height: 30px;
+  /* 30 px era un punto de 4 mm: se falla al tocar y el cliente cree que el
+     color no se puede elegir. 40 px entra cómodo en el pulgar y todavía deja
+     seis muestras en una fila de móvil. */
+  height: 40px;
   min-width: 0;
   padding: 0;
-  width: 30px;
+  width: 40px;
 }
 
 .trp-option-colors button.is-active {
