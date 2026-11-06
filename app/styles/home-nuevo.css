@@ -3565,18 +3565,31 @@
   color: rgba(20, 17, 15, 0.45);
 }
 
-.hp-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.hp-chips { display: flex; flex-wrap: wrap; gap: 8px; }
 
+/* Chips de opción (color, talla).
+   31 px de alto y letra de 11.5 px quedaban por debajo del mínimo táctil de
+   44 px que pide cualquier guía de móvil: en el combo de camisa + chaqueta el
+   cliente tocaba "Verde Militar / L" y no pasaba nada porque el dedo caía en
+   la rendija entre botones. 44 px de alto, 13 px de letra y 8 px de separación
+   dejan tocar sin apuntar y siguen cabiendo cuatro o cinco por fila. */
 .hp-chip {
-  min-width: 40px;
-  padding: 8px 12px;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 10px 14px;
   border-radius: 999px;
   border: 1px solid rgba(20, 17, 15, 0.16);
   background: transparent;
   font-family: inherit;
-  font-size: 11.5px;
+  font-size: 13px;
   font-weight: 600;
   color: rgba(20, 17, 15, 0.7);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
 }
 
 .hp-chip.is-on {
