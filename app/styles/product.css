@@ -413,11 +413,13 @@
   color: #1a1a18;
   cursor: pointer;
   display: inline-flex;
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 600;
-  height: 40px;
+  /* 44 px es el mínimo táctil: con 40 px el pulgar cae en la rendija entre
+     botones y el cliente cree que la talla no se puede elegir. */
+  height: 44px;
   justify-content: center;
-  min-width: 40px;
+  min-width: 44px;
   padding: 0 10px;
   transition: border-color 0.2s ease, background 0.2s ease;
 }
