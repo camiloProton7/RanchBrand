@@ -288,6 +288,33 @@ export type FooterQuery = {
   >;
 };
 
+export type SugeridosQueryVariables = StorefrontAPI.Exact<{
+  [key: string]: never;
+}>;
+
+export type SugeridosQuery = {
+  collection?: StorefrontAPI.Maybe<
+    Pick<StorefrontAPI.Collection, 'title' | 'handle'> & {
+      products: {
+        nodes: Array<
+          Pick<
+            StorefrontAPI.Product,
+            'id' | 'title' | 'handle' | 'availableForSale'
+          > & {
+            priceRange: {
+              minVariantPrice: Pick<
+                StorefrontAPI.MoneyV2,
+                'amount' | 'currencyCode'
+              >;
+            };
+            images: {nodes: Array<Pick<StorefrontAPI.Image, 'url'>>};
+          }
+        >;
+      };
+    }
+  >;
+};
+
 export type CollectionProductsQueryVariables = StorefrontAPI.Exact<{
   handle: StorefrontAPI.Scalars['String']['input'];
 }>;
@@ -298,63 +325,303 @@ export type CollectionProductsQuery = {
   }>;
 };
 
-export type ProductoQueryVariables = StorefrontAPI.Exact<{
-  handle: StorefrontAPI.Scalars['String']['input'];
-}>;
+export type WindsorQueryVariables = StorefrontAPI.Exact<{[key: string]: never}>;
 
-export type ProductoQuery = {
+export type WindsorQuery = {
   product?: StorefrontAPI.Maybe<
-    Pick<StorefrontAPI.Product, 'id' | 'title' | 'handle'> & {
-      featuredImage?: StorefrontAPI.Maybe<
-        Pick<StorefrontAPI.Image, 'url' | 'altText'>
-      >;
-      images: {nodes: Array<Pick<StorefrontAPI.Image, 'url' | 'altText'>>};
+    Pick<StorefrontAPI.Product, 'title' | 'handle' | 'description'> & {
       priceRange: {
         minVariantPrice: Pick<StorefrontAPI.MoneyV2, 'amount' | 'currencyCode'>;
       };
       compareAtPriceRange: {
+        minVariantPrice: Pick<StorefrontAPI.MoneyV2, 'amount'>;
+      };
+      images: {nodes: Array<Pick<StorefrontAPI.Image, 'url'>>};
+      metafields: Array<
+        StorefrontAPI.Maybe<Pick<StorefrontAPI.Metafield, 'key' | 'value'>>
+      >;
+    }
+  >;
+};
+
+export type BotasQueryVariables = StorefrontAPI.Exact<{[key: string]: never}>;
+
+export type BotasQuery = {
+  product?: StorefrontAPI.Maybe<
+    Pick<StorefrontAPI.Product, 'title' | 'handle' | 'description'> & {
+      priceRange: {
         minVariantPrice: Pick<StorefrontAPI.MoneyV2, 'amount' | 'currencyCode'>;
+      };
+      compareAtPriceRange: {
+        minVariantPrice: Pick<StorefrontAPI.MoneyV2, 'amount'>;
+      };
+      images: {nodes: Array<Pick<StorefrontAPI.Image, 'url'>>};
+      metafields: Array<
+        StorefrontAPI.Maybe<Pick<StorefrontAPI.Metafield, 'key' | 'value'>>
+      >;
+    }
+  >;
+};
+
+export type ComboQueryVariables = StorefrontAPI.Exact<{[key: string]: never}>;
+
+export type ComboQuery = {
+  camisa?: StorefrontAPI.Maybe<
+    Pick<StorefrontAPI.Product, 'title' | 'handle' | 'description'> & {
+      images: {nodes: Array<Pick<StorefrontAPI.Image, 'url'>>};
+      variants: {
+        nodes: Array<
+          Pick<StorefrontAPI.ProductVariant, 'id' | 'availableForSale'> & {
+            price: Pick<StorefrontAPI.MoneyV2, 'amount' | 'currencyCode'>;
+          }
+        >;
+      };
+      metafields: Array<
+        StorefrontAPI.Maybe<Pick<StorefrontAPI.Metafield, 'key' | 'value'>>
+      >;
+    }
+  >;
+  gorra?: StorefrontAPI.Maybe<
+    Pick<StorefrontAPI.Product, 'title' | 'handle' | 'description'> & {
+      images: {nodes: Array<Pick<StorefrontAPI.Image, 'url'>>};
+      variants: {
+        nodes: Array<
+          Pick<StorefrontAPI.ProductVariant, 'id' | 'availableForSale'> & {
+            price: Pick<StorefrontAPI.MoneyV2, 'amount' | 'currencyCode'>;
+          }
+        >;
+      };
+      metafields: Array<
+        StorefrontAPI.Maybe<Pick<StorefrontAPI.Metafield, 'key' | 'value'>>
+      >;
+    }
+  >;
+};
+
+export type ChaquetasQueryVariables = StorefrontAPI.Exact<{
+  [key: string]: never;
+}>;
+
+export type ChaquetasQuery = {
+  collection?: StorefrontAPI.Maybe<{
+    products: {
+      nodes: Array<
+        Pick<
+          StorefrontAPI.Product,
+          'id' | 'title' | 'handle' | 'description' | 'availableForSale'
+        > & {
+          priceRange: {
+            minVariantPrice: Pick<
+              StorefrontAPI.MoneyV2,
+              'amount' | 'currencyCode'
+            >;
+          };
+          compareAtPriceRange: {
+            minVariantPrice: Pick<StorefrontAPI.MoneyV2, 'amount'>;
+          };
+          images: {nodes: Array<Pick<StorefrontAPI.Image, 'url'>>};
+          metafields: Array<
+            StorefrontAPI.Maybe<Pick<StorefrontAPI.Metafield, 'key' | 'value'>>
+          >;
+        }
+      >;
+    };
+  }>;
+};
+
+export type CamisasQueryVariables = StorefrontAPI.Exact<{[key: string]: never}>;
+
+export type CamisasQuery = {
+  collection?: StorefrontAPI.Maybe<{
+    products: {
+      nodes: Array<
+        Pick<
+          StorefrontAPI.Product,
+          'id' | 'title' | 'handle' | 'description' | 'availableForSale'
+        > & {
+          priceRange: {
+            minVariantPrice: Pick<
+              StorefrontAPI.MoneyV2,
+              'amount' | 'currencyCode'
+            >;
+          };
+          compareAtPriceRange: {
+            minVariantPrice: Pick<StorefrontAPI.MoneyV2, 'amount'>;
+          };
+          images: {nodes: Array<Pick<StorefrontAPI.Image, 'url'>>};
+          metafields: Array<
+            StorefrontAPI.Maybe<Pick<StorefrontAPI.Metafield, 'key' | 'value'>>
+          >;
+        }
+      >;
+    };
+  }>;
+};
+
+export type CategoriasQueryVariables = StorefrontAPI.Exact<{
+  [key: string]: never;
+}>;
+
+export type CategoriasQuery = {
+  gorras?: StorefrontAPI.Maybe<
+    Pick<StorefrontAPI.Collection, 'title'> & {
+      image?: StorefrontAPI.Maybe<Pick<StorefrontAPI.Image, 'url'>>;
+      products: {
+        nodes: Array<{
+          images: {nodes: Array<Pick<StorefrontAPI.Image, 'url'>>};
+        }>;
+      };
+    }
+  >;
+  camisas?: StorefrontAPI.Maybe<
+    Pick<StorefrontAPI.Collection, 'title'> & {
+      image?: StorefrontAPI.Maybe<Pick<StorefrontAPI.Image, 'url'>>;
+      products: {
+        nodes: Array<{
+          images: {nodes: Array<Pick<StorefrontAPI.Image, 'url'>>};
+        }>;
+      };
+    }
+  >;
+  botas?: StorefrontAPI.Maybe<
+    Pick<StorefrontAPI.Collection, 'title'> & {
+      image?: StorefrontAPI.Maybe<Pick<StorefrontAPI.Image, 'url'>>;
+      products: {
+        nodes: Array<{
+          images: {nodes: Array<Pick<StorefrontAPI.Image, 'url'>>};
+        }>;
+      };
+    }
+  >;
+  chaquetas?: StorefrontAPI.Maybe<
+    Pick<StorefrontAPI.Collection, 'title'> & {
+      image?: StorefrontAPI.Maybe<Pick<StorefrontAPI.Image, 'url'>>;
+      products: {
+        nodes: Array<{
+          images: {nodes: Array<Pick<StorefrontAPI.Image, 'url'>>};
+        }>;
+      };
+    }
+  >;
+  sacos?: StorefrontAPI.Maybe<
+    Pick<StorefrontAPI.Collection, 'title'> & {
+      image?: StorefrontAPI.Maybe<Pick<StorefrontAPI.Image, 'url'>>;
+      products: {
+        nodes: Array<{
+          images: {nodes: Array<Pick<StorefrontAPI.Image, 'url'>>};
+        }>;
       };
     }
   >;
 };
 
-export type CollectionQueryVariables = StorefrontAPI.Exact<{
-  handle: StorefrontAPI.Scalars['String']['input'];
+export type GorrasQueryVariables = StorefrontAPI.Exact<{[key: string]: never}>;
+
+export type GorrasQuery = {
+  collection?: StorefrontAPI.Maybe<{
+    products: {
+      nodes: Array<
+        Pick<
+          StorefrontAPI.Product,
+          'id' | 'title' | 'handle' | 'availableForSale' | 'description'
+        > & {
+          priceRange: {
+            minVariantPrice: Pick<
+              StorefrontAPI.MoneyV2,
+              'amount' | 'currencyCode'
+            >;
+          };
+          compareAtPriceRange: {
+            minVariantPrice: Pick<StorefrontAPI.MoneyV2, 'amount'>;
+          };
+          images: {nodes: Array<Pick<StorefrontAPI.Image, 'url'>>};
+          metafields: Array<
+            StorefrontAPI.Maybe<Pick<StorefrontAPI.Metafield, 'key' | 'value'>>
+          >;
+        }
+      >;
+    };
+  }>;
+};
+
+export type TopProductosQueryVariables = StorefrontAPI.Exact<{
+  ids:
+    | Array<StorefrontAPI.Scalars['ID']['input']>
+    | StorefrontAPI.Scalars['ID']['input'];
 }>;
 
-export type CollectionQuery = {
-  collection?: StorefrontAPI.Maybe<
-    Pick<StorefrontAPI.Collection, 'title' | 'handle'> & {
-      products: {
-        nodes: Array<
-          Pick<
-            StorefrontAPI.Product,
-            'id' | 'title' | 'handle' | 'description'
-          > & {
-            featuredImage?: StorefrontAPI.Maybe<
-              Pick<StorefrontAPI.Image, 'url' | 'altText' | 'width' | 'height'>
-            >;
-            images: {
-              nodes: Array<Pick<StorefrontAPI.Image, 'url' | 'altText'>>;
-            };
-            priceRange: {
-              minVariantPrice: Pick<
-                StorefrontAPI.MoneyV2,
-                'amount' | 'currencyCode'
-              >;
-            };
-            compareAtPriceRange: {
-              minVariantPrice: Pick<
-                StorefrontAPI.MoneyV2,
-                'amount' | 'currencyCode'
-              >;
-            };
-          }
+export type TopProductosQuery = {
+  nodes: Array<
+    StorefrontAPI.Maybe<
+      Pick<StorefrontAPI.Product, 'id' | 'title' | 'handle' | 'description'> & {
+        priceRange: {
+          minVariantPrice: Pick<
+            StorefrontAPI.MoneyV2,
+            'amount' | 'currencyCode'
+          >;
+        };
+        compareAtPriceRange: {
+          minVariantPrice: Pick<StorefrontAPI.MoneyV2, 'amount'>;
+        };
+        images: {nodes: Array<Pick<StorefrontAPI.Image, 'url' | 'altText'>>};
+        metafields: Array<
+          StorefrontAPI.Maybe<Pick<StorefrontAPI.Metafield, 'key' | 'value'>>
         >;
-      };
-    }
+      }
+    >
   >;
+};
+
+export type RellenoQueryVariables = StorefrontAPI.Exact<{[key: string]: never}>;
+
+export type RellenoQuery = {
+  products: {
+    nodes: Array<
+      Pick<StorefrontAPI.Product, 'id' | 'title' | 'handle'> & {
+        priceRange: {
+          minVariantPrice: Pick<
+            StorefrontAPI.MoneyV2,
+            'amount' | 'currencyCode'
+          >;
+        };
+        compareAtPriceRange: {
+          minVariantPrice: Pick<StorefrontAPI.MoneyV2, 'amount'>;
+        };
+        images: {nodes: Array<Pick<StorefrontAPI.Image, 'url' | 'altText'>>};
+      }
+    >;
+  };
+};
+
+export type BuscarQueryVariables = StorefrontAPI.Exact<{
+  q: StorefrontAPI.Scalars['String']['input'];
+}>;
+
+export type BuscarQuery = {
+  predictiveSearch?: StorefrontAPI.Maybe<{
+    products: Array<
+      Pick<
+        StorefrontAPI.Product,
+        'id' | 'title' | 'handle' | 'vendor' | 'productType'
+      > & {
+        featuredImage?: StorefrontAPI.Maybe<
+          Pick<StorefrontAPI.Image, 'url' | 'altText'>
+        >;
+        priceRange: {
+          minVariantPrice: Pick<
+            StorefrontAPI.MoneyV2,
+            'amount' | 'currencyCode'
+          >;
+        };
+        compareAtPriceRange: {
+          minVariantPrice: Pick<StorefrontAPI.MoneyV2, 'amount'>;
+        };
+      }
+    >;
+    collections: Array<
+      Pick<StorefrontAPI.Collection, 'id' | 'title' | 'handle'>
+    >;
+  }>;
 };
 
 export type RecommendedQueryVariables = StorefrontAPI.Exact<{
@@ -436,26 +703,85 @@ export type RecommendedQuery = {
   >;
 };
 
-export type CollectionByHandleQueryVariables = StorefrontAPI.Exact<{
-  handle: StorefrontAPI.Scalars['String']['input'];
+export type PiezasQueryVariables = StorefrontAPI.Exact<{[key: string]: never}>;
+
+export type PiezasQuery = {
+  gorras?: StorefrontAPI.Maybe<{
+    products: {
+      nodes: Array<
+        Pick<
+          StorefrontAPI.Product,
+          'id' | 'title' | 'handle' | 'availableForSale'
+        > & {
+          priceRange: {minVariantPrice: Pick<StorefrontAPI.MoneyV2, 'amount'>};
+          compareAtPriceRange: {
+            minVariantPrice: Pick<StorefrontAPI.MoneyV2, 'amount'>;
+          };
+          images: {nodes: Array<Pick<StorefrontAPI.Image, 'url'>>};
+        }
+      >;
+    };
+  }>;
+  chaquetas?: StorefrontAPI.Maybe<{
+    products: {
+      nodes: Array<
+        Pick<
+          StorefrontAPI.Product,
+          'id' | 'title' | 'handle' | 'availableForSale'
+        > & {
+          priceRange: {minVariantPrice: Pick<StorefrontAPI.MoneyV2, 'amount'>};
+          compareAtPriceRange: {
+            minVariantPrice: Pick<StorefrontAPI.MoneyV2, 'amount'>;
+          };
+          images: {nodes: Array<Pick<StorefrontAPI.Image, 'url'>>};
+        }
+      >;
+    };
+  }>;
+};
+
+export type PiezaFragment = Pick<
+  StorefrontAPI.Product,
+  'id' | 'title' | 'handle' | 'availableForSale'
+> & {
+  priceRange: {minVariantPrice: Pick<StorefrontAPI.MoneyV2, 'amount'>};
+  compareAtPriceRange: {minVariantPrice: Pick<StorefrontAPI.MoneyV2, 'amount'>};
+  images: {nodes: Array<Pick<StorefrontAPI.Image, 'url'>>};
+};
+
+export type DestacadosCestaQueryVariables = StorefrontAPI.Exact<{
+  [key: string]: never;
 }>;
 
-export type CollectionByHandleQuery = {
+export type DestacadosCestaQuery = {
+  collection?: StorefrontAPI.Maybe<{
+    products: {
+      nodes: Array<
+        Pick<StorefrontAPI.Product, 'id' | 'title' | 'handle'> & {
+          priceRange: {minVariantPrice: Pick<StorefrontAPI.MoneyV2, 'amount'>};
+          images: {nodes: Array<Pick<StorefrontAPI.Image, 'url'>>};
+        }
+      >;
+    };
+  }>;
+};
+
+export type ColeccionQueryVariables = StorefrontAPI.Exact<{
+  handle: StorefrontAPI.Scalars['String']['input'];
+  orden: StorefrontAPI.ProductCollectionSortKeys;
+  alreves: StorefrontAPI.Scalars['Boolean']['input'];
+}>;
+
+export type ColeccionQuery = {
   collection?: StorefrontAPI.Maybe<
-    Pick<
-      StorefrontAPI.Collection,
-      'id' | 'handle' | 'title' | 'description'
-    > & {
+    Pick<StorefrontAPI.Collection, 'title' | 'handle' | 'description'> & {
       image?: StorefrontAPI.Maybe<Pick<StorefrontAPI.Image, 'url' | 'altText'>>;
       products: {
         nodes: Array<
-          Pick<StorefrontAPI.Product, 'id' | 'title' | 'handle'> & {
-            featuredImage?: StorefrontAPI.Maybe<
-              Pick<StorefrontAPI.Image, 'url' | 'altText'>
-            >;
-            images: {
-              nodes: Array<Pick<StorefrontAPI.Image, 'url' | 'altText'>>;
-            };
+          Pick<
+            StorefrontAPI.Product,
+            'id' | 'title' | 'handle' | 'availableForSale' | 'productType'
+          > & {
             priceRange: {
               minVariantPrice: Pick<
                 StorefrontAPI.MoneyV2,
@@ -463,24 +789,180 @@ export type CollectionByHandleQuery = {
               >;
             };
             compareAtPriceRange: {
-              minVariantPrice: Pick<
-                StorefrontAPI.MoneyV2,
-                'amount' | 'currencyCode'
-              >;
+              minVariantPrice: Pick<StorefrontAPI.MoneyV2, 'amount'>;
             };
-            variants: {
-              nodes: Array<
-                Pick<
-                  StorefrontAPI.ProductVariant,
-                  'id' | 'availableForSale'
-                > & {
-                  selectedOptions: Array<
-                    Pick<StorefrontAPI.SelectedOption, 'name' | 'value'>
-                  >;
-                  price: Pick<StorefrontAPI.MoneyV2, 'amount' | 'currencyCode'>;
-                }
-              >;
+            images: {
+              nodes: Array<Pick<StorefrontAPI.Image, 'url' | 'altText'>>;
             };
+            metafields: Array<
+              StorefrontAPI.Maybe<
+                Pick<StorefrontAPI.Metafield, 'key' | 'value'>
+              >
+            >;
+          }
+        >;
+      };
+    }
+  >;
+};
+
+export type OtrasQueryVariables = StorefrontAPI.Exact<{[key: string]: never}>;
+
+export type OtrasQuery = {
+  collections: {
+    nodes: Array<
+      Pick<StorefrontAPI.Collection, 'handle' | 'title'> & {
+        image?: StorefrontAPI.Maybe<Pick<StorefrontAPI.Image, 'url'>>;
+        products: {
+          nodes: Array<
+            Pick<StorefrontAPI.Product, 'id'> & {
+              featuredImage?: StorefrontAPI.Maybe<
+                Pick<StorefrontAPI.Image, 'url'>
+              >;
+            }
+          >;
+        };
+      }
+    >;
+  };
+};
+
+export type DeGeneroQueryVariables = StorefrontAPI.Exact<{
+  [key: string]: never;
+}>;
+
+export type DeGeneroQuery = {
+  hombre?: StorefrontAPI.Maybe<{
+    products: {nodes: Array<Pick<StorefrontAPI.Product, 'handle'>>};
+  }>;
+  mujer?: StorefrontAPI.Maybe<{
+    products: {nodes: Array<Pick<StorefrontAPI.Product, 'handle'>>};
+  }>;
+};
+
+export type GorrasComboQueryVariables = StorefrontAPI.Exact<{
+  [key: string]: never;
+}>;
+
+export type GorrasComboQuery = {
+  products: {
+    nodes: Array<
+      Pick<StorefrontAPI.Product, 'title' | 'handle' | 'productType'> & {
+        featuredImage?: StorefrontAPI.Maybe<
+          Pick<StorefrontAPI.Image, 'url' | 'altText'>
+        >;
+        variants: {
+          nodes: Array<
+            Pick<StorefrontAPI.ProductVariant, 'id' | 'availableForSale'> & {
+              price: Pick<StorefrontAPI.MoneyV2, 'amount' | 'currencyCode'>;
+            }
+          >;
+        };
+      }
+    >;
+  };
+};
+
+export type PrendaBordadoFragment = Pick<
+  StorefrontAPI.Product,
+  'title' | 'handle'
+> & {
+  featuredImage?: StorefrontAPI.Maybe<
+    Pick<StorefrontAPI.Image, 'url' | 'altText'>
+  >;
+  options: Array<Pick<StorefrontAPI.ProductOption, 'name' | 'values'>>;
+  variants: {
+    nodes: Array<
+      Pick<StorefrontAPI.ProductVariant, 'availableForSale'> & {
+        price: Pick<StorefrontAPI.MoneyV2, 'amount'>;
+        image?: StorefrontAPI.Maybe<Pick<StorefrontAPI.Image, 'url'>>;
+        selectedOptions: Array<
+          Pick<StorefrontAPI.SelectedOption, 'name' | 'value'>
+        >;
+      }
+    >;
+  };
+};
+
+export type PrendasBordadoQueryVariables = StorefrontAPI.Exact<{
+  h1: StorefrontAPI.Scalars['String']['input'];
+  h2: StorefrontAPI.Scalars['String']['input'];
+  h3: StorefrontAPI.Scalars['String']['input'];
+  h4: StorefrontAPI.Scalars['String']['input'];
+}>;
+
+export type PrendasBordadoQuery = {
+  p1?: StorefrontAPI.Maybe<
+    Pick<StorefrontAPI.Product, 'title' | 'handle'> & {
+      featuredImage?: StorefrontAPI.Maybe<
+        Pick<StorefrontAPI.Image, 'url' | 'altText'>
+      >;
+      options: Array<Pick<StorefrontAPI.ProductOption, 'name' | 'values'>>;
+      variants: {
+        nodes: Array<
+          Pick<StorefrontAPI.ProductVariant, 'availableForSale'> & {
+            price: Pick<StorefrontAPI.MoneyV2, 'amount'>;
+            image?: StorefrontAPI.Maybe<Pick<StorefrontAPI.Image, 'url'>>;
+            selectedOptions: Array<
+              Pick<StorefrontAPI.SelectedOption, 'name' | 'value'>
+            >;
+          }
+        >;
+      };
+    }
+  >;
+  p2?: StorefrontAPI.Maybe<
+    Pick<StorefrontAPI.Product, 'title' | 'handle'> & {
+      featuredImage?: StorefrontAPI.Maybe<
+        Pick<StorefrontAPI.Image, 'url' | 'altText'>
+      >;
+      options: Array<Pick<StorefrontAPI.ProductOption, 'name' | 'values'>>;
+      variants: {
+        nodes: Array<
+          Pick<StorefrontAPI.ProductVariant, 'availableForSale'> & {
+            price: Pick<StorefrontAPI.MoneyV2, 'amount'>;
+            image?: StorefrontAPI.Maybe<Pick<StorefrontAPI.Image, 'url'>>;
+            selectedOptions: Array<
+              Pick<StorefrontAPI.SelectedOption, 'name' | 'value'>
+            >;
+          }
+        >;
+      };
+    }
+  >;
+  p3?: StorefrontAPI.Maybe<
+    Pick<StorefrontAPI.Product, 'title' | 'handle'> & {
+      featuredImage?: StorefrontAPI.Maybe<
+        Pick<StorefrontAPI.Image, 'url' | 'altText'>
+      >;
+      options: Array<Pick<StorefrontAPI.ProductOption, 'name' | 'values'>>;
+      variants: {
+        nodes: Array<
+          Pick<StorefrontAPI.ProductVariant, 'availableForSale'> & {
+            price: Pick<StorefrontAPI.MoneyV2, 'amount'>;
+            image?: StorefrontAPI.Maybe<Pick<StorefrontAPI.Image, 'url'>>;
+            selectedOptions: Array<
+              Pick<StorefrontAPI.SelectedOption, 'name' | 'value'>
+            >;
+          }
+        >;
+      };
+    }
+  >;
+  p4?: StorefrontAPI.Maybe<
+    Pick<StorefrontAPI.Product, 'title' | 'handle'> & {
+      featuredImage?: StorefrontAPI.Maybe<
+        Pick<StorefrontAPI.Image, 'url' | 'altText'>
+      >;
+      options: Array<Pick<StorefrontAPI.ProductOption, 'name' | 'values'>>;
+      variants: {
+        nodes: Array<
+          Pick<StorefrontAPI.ProductVariant, 'availableForSale'> & {
+            price: Pick<StorefrontAPI.MoneyV2, 'amount'>;
+            image?: StorefrontAPI.Maybe<Pick<StorefrontAPI.Image, 'url'>>;
+            selectedOptions: Array<
+              Pick<StorefrontAPI.SelectedOption, 'name' | 'value'>
+            >;
           }
         >;
       };
@@ -527,172 +1009,109 @@ export type ShopPoliciesQuery = {
   };
 };
 
-export type ProductQueryVariables = StorefrontAPI.Exact<{
+export type ProductoQueryVariables = StorefrontAPI.Exact<{
   handle: StorefrontAPI.Scalars['String']['input'];
 }>;
 
-export type ProductQuery = {
+export type ProductoQuery = {
   product?: StorefrontAPI.Maybe<
     Pick<
       StorefrontAPI.Product,
       | 'id'
       | 'title'
       | 'handle'
-      | 'vendor'
       | 'description'
+      | 'descriptionHtml'
       | 'productType'
+      | 'vendor'
       | 'tags'
     > & {
-      collections: {nodes: Array<Pick<StorefrontAPI.Collection, 'handle'>>};
-      metafield?: StorefrontAPI.Maybe<Pick<StorefrontAPI.Metafield, 'value'>>;
-      featuredImage?: StorefrontAPI.Maybe<
-        Pick<StorefrontAPI.Image, 'url' | 'altText' | 'width' | 'height'>
-      >;
-      images: {
-        nodes: Array<
-          Pick<StorefrontAPI.Image, 'url' | 'altText' | 'width' | 'height'>
-        >;
+      collections: {
+        nodes: Array<Pick<StorefrontAPI.Collection, 'handle' | 'title'>>;
       };
       priceRange: {
         minVariantPrice: Pick<StorefrontAPI.MoneyV2, 'amount' | 'currencyCode'>;
       };
-      compareAtPriceRange: {
-        minVariantPrice: Pick<StorefrontAPI.MoneyV2, 'amount'>;
-      };
-      options: Array<
-        Pick<StorefrontAPI.ProductOption, 'name'> & {
-          optionValues: Array<Pick<StorefrontAPI.ProductOptionValue, 'name'>>;
-        }
-      >;
+      images: {nodes: Array<Pick<StorefrontAPI.Image, 'url' | 'altText'>>};
+      options: Array<Pick<StorefrontAPI.ProductOption, 'name' | 'values'>>;
       variants: {
         nodes: Array<
           Pick<
             StorefrontAPI.ProductVariant,
-            'id' | 'availableForSale' | 'quantityAvailable'
+            'id' | 'title' | 'availableForSale' | 'quantityAvailable'
           > & {
             selectedOptions: Array<
               Pick<StorefrontAPI.SelectedOption, 'name' | 'value'>
             >;
             price: Pick<StorefrontAPI.MoneyV2, 'amount' | 'currencyCode'>;
-            image?: StorefrontAPI.Maybe<
-              Pick<StorefrontAPI.Image, 'url' | 'altText'>
+            compareAtPrice?: StorefrontAPI.Maybe<
+              Pick<StorefrontAPI.MoneyV2, 'amount' | 'currencyCode'>
             >;
           }
         >;
       };
+      metafields: Array<
+        StorefrontAPI.Maybe<Pick<StorefrontAPI.Metafield, 'key' | 'value'>>
+      >;
     }
   >;
 };
 
-export type RelatedProductsQueryVariables = StorefrontAPI.Exact<{
-  handle: StorefrontAPI.Scalars['String']['input'];
+export type RecosQueryVariables = StorefrontAPI.Exact<{
+  id: StorefrontAPI.Scalars['ID']['input'];
 }>;
 
-export type RelatedProductsQuery = {
+export type RecosQuery = {
+  productRecommendations?: StorefrontAPI.Maybe<
+    Array<
+      Pick<StorefrontAPI.Product, 'id' | 'title' | 'handle'> & {
+        priceRange: {
+          minVariantPrice: Pick<
+            StorefrontAPI.MoneyV2,
+            'amount' | 'currencyCode'
+          >;
+        };
+        compareAtPriceRange: {
+          minVariantPrice: Pick<StorefrontAPI.MoneyV2, 'amount'>;
+        };
+        images: {nodes: Array<Pick<StorefrontAPI.Image, 'url' | 'altText'>>};
+        metafields: Array<
+          StorefrontAPI.Maybe<Pick<StorefrontAPI.Metafield, 'key' | 'value'>>
+        >;
+      }
+    >
+  >;
+};
+
+export type DeColeccionQueryVariables = StorefrontAPI.Exact<{
+  handle: StorefrontAPI.Scalars['String']['input'];
+  excluir: StorefrontAPI.Scalars['String']['input'];
+}>;
+
+export type DeColeccionQuery = {
   collection?: StorefrontAPI.Maybe<{
     products: {
       nodes: Array<
         Pick<StorefrontAPI.Product, 'id' | 'title' | 'handle'> & {
-          featuredImage?: StorefrontAPI.Maybe<
-            Pick<StorefrontAPI.Image, 'url' | 'altText'>
-          >;
           priceRange: {
             minVariantPrice: Pick<
               StorefrontAPI.MoneyV2,
               'amount' | 'currencyCode'
             >;
           };
-          compareAtPriceRange: {
-            minVariantPrice: Pick<StorefrontAPI.MoneyV2, 'amount'>;
-          };
           variants: {
             nodes: Array<
-              Pick<StorefrontAPI.ProductVariant, 'id'> & {
-                selectedOptions: Array<
-                  Pick<StorefrontAPI.SelectedOption, 'name' | 'value'>
-                >;
-                price: Pick<StorefrontAPI.MoneyV2, 'amount' | 'currencyCode'>;
-              }
+              Pick<StorefrontAPI.ProductVariant, 'id' | 'availableForSale'>
             >;
           };
-        }
-      >;
-    };
-  }>;
-};
-
-export type ComboBotasQueryVariables = StorefrontAPI.Exact<{
-  handle: StorefrontAPI.Scalars['String']['input'];
-}>;
-
-export type ComboBotasQuery = {
-  product?: StorefrontAPI.Maybe<
-    Pick<StorefrontAPI.Product, 'id' | 'title' | 'handle'> & {
-      featuredImage?: StorefrontAPI.Maybe<
-        Pick<StorefrontAPI.Image, 'url' | 'altText'>
-      >;
-      priceRange: {
-        minVariantPrice: Pick<StorefrontAPI.MoneyV2, 'amount' | 'currencyCode'>;
-      };
-      compareAtPriceRange: {
-        minVariantPrice: Pick<StorefrontAPI.MoneyV2, 'amount'>;
-      };
-      variants: {nodes: Array<Pick<StorefrontAPI.ProductVariant, 'id'>>};
-    }
-  >;
-};
-
-export type ComboProductsQueryVariables = StorefrontAPI.Exact<{
-  handle: StorefrontAPI.Scalars['String']['input'];
-}>;
-
-export type ComboProductsQuery = {
-  collection?: StorefrontAPI.Maybe<{
-    products: {
-      nodes: Array<
-        Pick<StorefrontAPI.Product, 'id' | 'title' | 'handle'> & {
-          featuredImage?: StorefrontAPI.Maybe<
-            Pick<StorefrontAPI.Image, 'url' | 'altText'>
+          images: {nodes: Array<Pick<StorefrontAPI.Image, 'url' | 'altText'>>};
+          metafields: Array<
+            StorefrontAPI.Maybe<Pick<StorefrontAPI.Metafield, 'key' | 'value'>>
           >;
-          variants: {nodes: Array<Pick<StorefrontAPI.ProductVariant, 'id'>>};
         }
       >;
     };
   }>;
-};
-
-export type CamisaComboQueryVariables = StorefrontAPI.Exact<{
-  handle: StorefrontAPI.Scalars['String']['input'];
-}>;
-
-export type CamisaComboQuery = {
-  product?: StorefrontAPI.Maybe<
-    Pick<StorefrontAPI.Product, 'id' | 'title' | 'handle'> & {
-      featuredImage?: StorefrontAPI.Maybe<
-        Pick<StorefrontAPI.Image, 'url' | 'altText'>
-      >;
-      images: {
-        nodes: Array<
-          Pick<StorefrontAPI.Image, 'url' | 'altText' | 'width' | 'height'>
-        >;
-      };
-      variants: {
-        nodes: Array<
-          Pick<
-            StorefrontAPI.ProductVariant,
-            'id' | 'title' | 'availableForSale'
-          > & {
-            selectedOptions: Array<
-              Pick<StorefrontAPI.SelectedOption, 'name' | 'value'>
-            >;
-            image?: StorefrontAPI.Maybe<
-              Pick<StorefrontAPI.Image, 'url' | 'altText'>
-            >;
-          }
-        >;
-      };
-    }
-  >;
 };
 
 export type SearchProductsQueryVariables = StorefrontAPI.Exact<{
@@ -752,25 +1171,85 @@ interface GeneratedQueryTypes {
     return: FooterQuery;
     variables: FooterQueryVariables;
   };
+  '#graphql\n  query Sugeridos {\n    collection(handle: "gorras") {\n      title\n      handle\n      products(first: 4, sortKey: BEST_SELLING) {\n        nodes {\n          id\n          title\n          handle\n          availableForSale\n          priceRange { minVariantPrice { amount currencyCode } }\n          images(first: 2) { nodes { url } }\n        }\n      }\n    }\n  }\n': {
+    return: SugeridosQuery;
+    variables: SugeridosQueryVariables;
+  };
   '#graphql\n        query CollectionProducts($handle: String!) {\n          collection(handle: $handle) {\n            products(first: 100) {\n              nodes { handle }\n            }\n          }\n        }': {
     return: CollectionProductsQuery;
     variables: CollectionProductsQueryVariables;
   };
-  '#graphql\n  query Producto($handle: String!) {\n    product(handle: $handle) {\n      id\n      title\n      handle\n      featuredImage { url altText }\n      images(first: 10) { nodes { url altText } }\n      priceRange { minVariantPrice { amount currencyCode } }\n      compareAtPriceRange { minVariantPrice { amount currencyCode } }\n    }\n  }\n': {
-    return: ProductoQuery;
-    variables: ProductoQueryVariables;
+  '#graphql\n  query Windsor {\n    product(handle: "chaqueta-encerada-windsor-verde") {\n      title\n      handle\n      description\n      priceRange { minVariantPrice { amount currencyCode } }\n      compareAtPriceRange { minVariantPrice { amount } }\n      images(first: 3) { nodes { url } }\n      metafields(identifiers: [{namespace: "reviews", key: "rating"}, {namespace: "reviews", key: "rating_count"}]) {\n        key\n        value\n      }\n    }\n  }\n': {
+    return: WindsorQuery;
+    variables: WindsorQueryVariables;
   };
-  '#graphql\n  query Collection($handle: String!) {\n    collection(handle: $handle) {\n      title\n      handle\n      products(first: 15) {\n        nodes {\n          id\n          title\n          handle\n          description\n          featuredImage {\n            url\n            altText\n            width\n            height\n          }\n          images(first: 5) {\n            nodes {\n              url\n              altText\n            }\n          }\n          priceRange {\n            minVariantPrice {\n              amount\n              currencyCode\n            }\n          }\n          compareAtPriceRange {\n            minVariantPrice {\n              amount\n              currencyCode\n            }\n          }\n        }\n      }\n    }\n  }\n': {
-    return: CollectionQuery;
-    variables: CollectionQueryVariables;
+  '#graphql\n  query Botas {\n    product(handle: "botas-gamuza-lariat") {\n      title\n      handle\n      description\n      priceRange { minVariantPrice { amount currencyCode } }\n      compareAtPriceRange { minVariantPrice { amount } }\n      images(first: 3) { nodes { url } }\n      metafields(identifiers: [{namespace: "reviews", key: "rating"}, {namespace: "reviews", key: "count"}]) {\n        key\n        value\n      }\n    }\n  }\n': {
+    return: BotasQuery;
+    variables: BotasQueryVariables;
+  };
+  '#graphql\n  query Combo {\n    camisa: product(handle: "camisa-outdoor-proteccion-solar-upf-50") {\n      title\n      handle\n      description\n      images(first: 4) { nodes { url } }\n      variants(first: 40) { nodes { id price { amount currencyCode } availableForSale } }\n      metafields(identifiers: [{namespace: "reviews", key: "rating"}, {namespace: "reviews", key: "rating_count"}]) {\n        key\n        value\n      }\n    }\n    gorra: product(handle: "gorra-1") {\n      title\n      handle\n      description\n      images(first: 4) { nodes { url } }\n      variants(first: 40) { nodes { id price { amount currencyCode } availableForSale } }\n      metafields(identifiers: [{namespace: "reviews", key: "rating"}, {namespace: "reviews", key: "rating_count"}]) {\n        key\n        value\n      }\n    }\n  }\n': {
+    return: ComboQuery;
+    variables: ComboQueryVariables;
+  };
+  '#graphql\n  query Chaquetas {\n    collection(handle: "chaquetas") {\n      products(first: 8, sortKey: BEST_SELLING) {\n        nodes {\n          id title handle description availableForSale\n          priceRange { minVariantPrice { amount currencyCode } }\n      compareAtPriceRange { minVariantPrice { amount } }\n          images(first: 4) { nodes { url } }\n          metafields(identifiers: [{namespace: "reviews", key: "rating"}, {namespace: "reviews", key: "rating_count"}]) {\n            key\n            value\n          }\n        }\n      }\n    }\n  }\n': {
+    return: ChaquetasQuery;
+    variables: ChaquetasQueryVariables;
+  };
+  '#graphql\n  query Camisas {\n    collection(handle: "camisetas") {\n      products(first: 16, sortKey: BEST_SELLING) {\n        nodes {\n          id title handle description availableForSale\n          priceRange { minVariantPrice { amount currencyCode } }\n      compareAtPriceRange { minVariantPrice { amount } }\n          images(first: 4) { nodes { url } }\n          metafields(identifiers: [{namespace: "reviews", key: "rating"}, {namespace: "reviews", key: "rating_count"}]) {\n            key\n            value\n          }\n        }\n      }\n    }\n  }\n': {
+    return: CamisasQuery;
+    variables: CamisasQueryVariables;
+  };
+  '#graphql\n  query Categorias {\n    gorras: collection(handle: "gorras") {\n      title\n      image { url }\n      products(first: 1) { nodes { images(first: 1) { nodes { url } } } }\n    }\n    camisas: collection(handle: "camisetas") {\n      title\n      image { url }\n      products(first: 1) { nodes { images(first: 1) { nodes { url } } } }\n    }\n    botas: collection(handle: "botas-1") {\n      title\n      image { url }\n      products(first: 1) { nodes { images(first: 1) { nodes { url } } } }\n    }\n    chaquetas: collection(handle: "chaquetas") {\n      title\n      image { url }\n      products(first: 1) { nodes { images(first: 1) { nodes { url } } } }\n    }\n    sacos: collection(handle: "bordados") {\n      title\n      image { url }\n      products(first: 1) { nodes { images(first: 1) { nodes { url } } } }\n    }\n  }\n': {
+    return: CategoriasQuery;
+    variables: CategoriasQueryVariables;
+  };
+  '#graphql\n  query Gorras {\n    collection(handle: "gorras") {\n      products(first: 6, sortKey: BEST_SELLING) {\n        nodes {\n          id title handle availableForSale\n          description\n          priceRange { minVariantPrice { amount currencyCode } }\n      compareAtPriceRange { minVariantPrice { amount } }\n          images(first: 4) { nodes { url } }\n          metafields(identifiers: [{namespace: "reviews", key: "rating"}, {namespace: "reviews", key: "rating_count"}]) {\n            key\n            value\n          }\n        }\n      }\n    }\n  }\n': {
+    return: GorrasQuery;
+    variables: GorrasQueryVariables;
+  };
+  '#graphql\n  query TopProductos($ids: [ID!]!) {\n    nodes(ids: $ids) {\n      ... on Product {\n        id\n        title\n        handle\n        description\n        priceRange { minVariantPrice { amount currencyCode } }\n      compareAtPriceRange { minVariantPrice { amount } }\n        images(first: 4) { nodes { url altText } }\n        metafields(identifiers: [{namespace: "reviews", key: "rating"}, {namespace: "reviews", key: "rating_count"}]) {\n          key\n          value\n        }\n      }\n    }\n  }\n': {
+    return: TopProductosQuery;
+    variables: TopProductosQueryVariables;
+  };
+  '#graphql\n        query Relleno { products(first: 12, sortKey: BEST_SELLING) {\n          nodes { id title handle priceRange { minVariantPrice { amount currencyCode } }\n        compareAtPriceRange { minVariantPrice { amount } } images(first: 4) { nodes { url altText } } }\n        } }': {
+    return: RellenoQuery;
+    variables: RellenoQueryVariables;
+  };
+  '#graphql\n  query Buscar($q: String!) {\n    predictiveSearch(\n      query: $q\n      limit: 8\n      types: [PRODUCT, COLLECTION]\n      unavailableProducts: LAST\n    ) {\n      products {\n        id\n        title\n        handle\n        vendor\n        productType\n        featuredImage {\n          url\n          altText\n        }\n        priceRange {\n          minVariantPrice {\n            amount\n            currencyCode\n          }\n        }\n        compareAtPriceRange {\n          minVariantPrice {\n            amount\n          }\n        }\n      }\n      collections {\n        id\n        title\n        handle\n      }\n    }\n  }\n': {
+    return: BuscarQuery;
+    variables: BuscarQueryVariables;
   };
   '#graphql\n      query Recommended {\n        r0: product(handle: "gorra-redwood") {\n          id title handle availableForSale\n          featuredImage { url }\n          priceRange { minVariantPrice { amount currencyCode } }\n          variants(first: 1) { nodes { id } }\n        }\n        r1: product(handle: "gorra-andina") {\n          id title handle availableForSale\n          featuredImage { url }\n          priceRange { minVariantPrice { amount currencyCode } }\n          variants(first: 1) { nodes { id } }\n        }\n        r2: product(handle: "chaqueta-ganadera-gamuza") {\n          id title handle availableForSale\n          featuredImage { url }\n          priceRange { minVariantPrice { amount currencyCode } }\n          variants(first: 1) { nodes { id } }\n        }\n        r3: product(handle: "saco-bordado-rebano") {\n          id title handle availableForSale\n          featuredImage { url }\n          priceRange { minVariantPrice { amount currencyCode } }\n          variants(first: 1) { nodes { id } }\n        }\n        r4: product(handle: "gorra-goat") {\n          id title handle availableForSale\n          featuredImage { url }\n          priceRange { minVariantPrice { amount currencyCode } }\n          variants(first: 1) { nodes { id } }\n        }\n        r5: product(handle: "termo-digital-the-ranch") {\n          id title handle availableForSale\n          featuredImage { url }\n          priceRange { minVariantPrice { amount currencyCode } }\n          variants(first: 1) { nodes { id } }\n        }\n      }': {
     return: RecommendedQuery;
     variables: RecommendedQueryVariables;
   };
-  '#graphql\n  query CollectionByHandle($handle: String!) {\n    collection(handle: $handle) {\n      id\n      handle\n      title\n      description\n      image {\n        url\n        altText\n      }\n      products(first: 48) {\n        nodes {\n          id\n          title\n          handle\n          featuredImage {\n            url\n            altText\n          }\n          images(first: 2) {\n            nodes {\n              url\n              altText\n            }\n          }\n          priceRange {\n            minVariantPrice { amount currencyCode }\n          }\n          compareAtPriceRange {\n            minVariantPrice { amount currencyCode }\n          }\n          variants(first: 10) {\n            nodes {\n              id\n              availableForSale\n              selectedOptions { name value }\n              price { amount currencyCode }\n            }\n          }\n        }\n      }\n    }\n  }\n': {
-    return: CollectionByHandleQuery;
-    variables: CollectionByHandleQueryVariables;
+  '#graphql\n  query Piezas {\n    gorras: collection(handle: "gorras") {\n      products(first: 8, sortKey: BEST_SELLING) {\n        nodes { ...Pieza }\n      }\n    }\n    chaquetas: collection(handle: "chaquetas") {\n      products(first: 6, sortKey: BEST_SELLING) {\n        nodes { ...Pieza }\n      }\n    }\n  }\n  fragment Pieza on Product {\n    id\n    title\n    handle\n    availableForSale\n    priceRange { minVariantPrice { amount } }\n    compareAtPriceRange { minVariantPrice { amount } }\n    images(first: 2) { nodes { url } }\n  }\n': {
+    return: PiezasQuery;
+    variables: PiezasQueryVariables;
+  };
+  '#graphql\n  query DestacadosCesta {\n    collection(handle: "gorras") {\n      products(first: 6, sortKey: BEST_SELLING) {\n        nodes {\n          id\n          title\n          handle\n          priceRange { minVariantPrice { amount } }\n          images(first: 1) { nodes { url } }\n        }\n      }\n    }\n  }\n': {
+    return: DestacadosCestaQuery;
+    variables: DestacadosCestaQueryVariables;
+  };
+  '#graphql\n  query Coleccion($handle: String!, $orden: ProductCollectionSortKeys!, $alreves: Boolean!) {\n    collection(handle: $handle) {\n      title\n      handle\n      description\n      image { url altText }\n      products(first: 60, sortKey: $orden, reverse: $alreves) {\n        nodes {\n          id\n          title\n          handle\n          availableForSale\n          productType\n          priceRange { minVariantPrice { amount currencyCode } }\n      compareAtPriceRange { minVariantPrice { amount } }\n          images(first: 4) { nodes { url altText } }\n          metafields(identifiers: [\n            {namespace: "reviews", key: "rating"},\n            {namespace: "reviews", key: "rating_count"}\n          ]) { key value }\n        }\n      }\n    }\n  }\n': {
+    return: ColeccionQuery;
+    variables: ColeccionQueryVariables;
+  };
+  '#graphql\n  query Otras {\n    collections(first: 24) {\n      nodes {\n        handle\n        title\n        image { url }\n        products(first: 1) { nodes { id featuredImage { url } } }\n      }\n    }\n  }\n': {
+    return: OtrasQuery;
+    variables: OtrasQueryVariables;
+  };
+  '#graphql\n  query DeGenero {\n    hombre: collection(handle: "chaquetas-hombre") {\n      products(first: 100) { nodes { handle } }\n    }\n    mujer: collection(handle: "chaquetas-mujer") {\n      products(first: 100) { nodes { handle } }\n    }\n  }\n': {
+    return: DeGeneroQuery;
+    variables: DeGeneroQueryVariables;
+  };
+  '#graphql\n  query GorrasCombo {\n    products(first: 100, sortKey: BEST_SELLING) {\n      nodes {\n        title\n        handle\n        productType\n        featuredImage { url altText }\n        variants(first: 5) {\n          nodes { id price { amount currencyCode } availableForSale }\n        }\n      }\n    }\n  }\n': {
+    return: GorrasComboQuery;
+    variables: GorrasComboQueryVariables;
+  };
+  '#graphql\n  query PrendasBordado($h1: String!, $h2: String!, $h3: String!, $h4: String!) {\n    p1: product(handle: $h1) { ...PrendaBordado }\n    p2: product(handle: $h2) { ...PrendaBordado }\n    p3: product(handle: $h3) { ...PrendaBordado }\n    p4: product(handle: $h4) { ...PrendaBordado }\n  }\n  #graphql\n  fragment PrendaBordado on Product {\n    title\n    handle\n    featuredImage {url altText}\n    options {name values}\n    variants(first: 120) {\n      nodes {\n        availableForSale\n        price {amount}\n        image {url}\n        selectedOptions {name value}\n      }\n    }\n  }\n\n': {
+    return: PrendasBordadoQuery;
+    variables: PrendasBordadoQueryVariables;
   };
   '#graphql\n  query PersonalizableProduct($handle: String!) {\n    product(handle: $handle) {\n      id\n      title\n      handle\n      featuredImage {\n        url\n        altText\n      }\n      priceRange {\n        minVariantPrice { amount currencyCode }\n      }\n      variants(first: 1) {\n        nodes { id }\n      }\n    }\n  }\n': {
     return: PersonalizableProductQuery;
@@ -780,25 +1259,17 @@ interface GeneratedQueryTypes {
     return: ShopPoliciesQuery;
     variables: ShopPoliciesQueryVariables;
   };
-  '#graphql\n  query Product($handle: String!) {\n    product(handle: $handle) {\n      id\n      title\n      handle\n      vendor\n      description\n      productType\n      tags\n      collections(first: 8) { nodes { handle } }\n      metafield(namespace: "custom", key: "tabla_medidas") { value }\n      featuredImage {\n        url\n        altText\n        width\n        height\n      }\n      images(first: 50) {\n        nodes {\n          url\n          altText\n          width\n          height\n        }\n      }\n      priceRange { minVariantPrice { amount currencyCode } }\n      compareAtPriceRange { minVariantPrice { amount } }\n      options { name optionValues { name } }\n      variants(first: 250) {\n        nodes {\n          id\n          availableForSale\n          quantityAvailable\n          selectedOptions { name value }\n          price { amount currencyCode }\n          image { url altText }\n        }\n      }\n    }\n  }\n': {
-    return: ProductQuery;
-    variables: ProductQueryVariables;
+  '#graphql\n  query Producto($handle: String!) {\n    product(handle: $handle) {\n      id\n      title\n      handle\n      description\n      descriptionHtml\n      productType\n      vendor\n      tags\n      collections(first: 2) { nodes { handle title } }\n      priceRange { minVariantPrice { amount currencyCode } }\n      images(first: 12) { nodes { url altText } }\n      options { name values }\n      variants(first: 60) {\n        nodes {\n          id\n          title\n          availableForSale\n          quantityAvailable\n          selectedOptions { name value }\n          price { amount currencyCode }\n          compareAtPrice { amount currencyCode }\n        }\n      }\n      metafields(identifiers: [\n        {namespace: "reviews", key: "rating"},\n        {namespace: "reviews", key: "rating_count"}\n      ]) { key value }\n    }\n  }\n': {
+    return: ProductoQuery;
+    variables: ProductoQueryVariables;
   };
-  '#graphql\n  query RelatedProducts($handle: String!) {\n    collection(handle: $handle) {\n      products(first: 12) {\n        nodes {\n          id\n          title\n          handle\n          featuredImage {\n            url\n            altText\n          }\n          priceRange {\n            minVariantPrice { amount currencyCode }\n          }\n          compareAtPriceRange {\n            minVariantPrice { amount }\n          }\n          variants(first: 10) {\n            nodes {\n              id\n              selectedOptions { name value }\n              price { amount currencyCode }\n            }\n          }\n        }\n      }\n    }\n  }\n': {
-    return: RelatedProductsQuery;
-    variables: RelatedProductsQueryVariables;
+  '#graphql\n  query Recos($id: ID!) {\n    productRecommendations(productId: $id) {\n      id\n      title\n      handle\n      priceRange { minVariantPrice { amount currencyCode } }\n      compareAtPriceRange { minVariantPrice { amount } }\n      images(first: 2) { nodes { url altText } }\n      metafields(identifiers: [\n        {namespace: "reviews", key: "rating"},\n        {namespace: "reviews", key: "rating_count"}\n      ]) { key value }\n    }\n  }\n': {
+    return: RecosQuery;
+    variables: RecosQueryVariables;
   };
-  '#graphql\n  query ComboBotas($handle: String!) {\n    product(handle: $handle) {\n      id\n      title\n      handle\n      featuredImage {\n        url\n        altText\n      }\n      priceRange { minVariantPrice { amount currencyCode } }\n      compareAtPriceRange { minVariantPrice { amount } }\n      variants(first: 1) {\n        nodes {\n          id\n        }\n      }\n    }\n  }\n': {
-    return: ComboBotasQuery;
-    variables: ComboBotasQueryVariables;
-  };
-  '#graphql\n  query ComboProducts($handle: String!) {\n    collection(handle: $handle) {\n      products(first: 50) {\n        nodes {\n          id\n          title\n          handle\n          featuredImage {\n            url\n            altText\n          }\n          variants(first: 1) {\n            nodes {\n              id\n            }\n          }\n        }\n      }\n    }\n  }\n': {
-    return: ComboProductsQuery;
-    variables: ComboProductsQueryVariables;
-  };
-  '#graphql\n  query CamisaCombo($handle: String!) {\n    product(handle: $handle) {\n      id\n      title\n      handle\n      featuredImage {\n        url\n        altText\n      }\n      images(first: 50) {\n        nodes {\n          url\n          altText\n          width\n          height\n        }\n      }\n      variants(first: 50) {\n        nodes {\n          id\n          title\n          availableForSale\n          selectedOptions { name value }\n          image {\n            url\n            altText\n          }\n        }\n      }\n    }\n  }\n': {
-    return: CamisaComboQuery;
-    variables: CamisaComboQueryVariables;
+  '#graphql\n  query DeColeccion($handle: String!, $excluir: String!) {\n    collection(handle: $handle) {\n      products(first: 10, sortKey: BEST_SELLING) {\n        nodes {\n          id title handle\n          priceRange { minVariantPrice { amount currencyCode } }\n          variants(first: 1) { nodes { id availableForSale } }\n          images(first: 2) { nodes { url altText } }\n          metafields(identifiers: [\n            {namespace: "reviews", key: "rating"},\n            {namespace: "reviews", key: "rating_count"}\n          ]) { key value }\n        }\n      }\n    }\n  }\n': {
+    return: DeColeccionQuery;
+    variables: DeColeccionQueryVariables;
   };
   '#graphql\n  query SearchProducts($query: String!, $first: Int!) {\n    search(\n      first: $first\n      query: $query\n      types: PRODUCT\n      sortKey: RELEVANCE\n      unavailableProducts: LAST\n    ) {\n      totalCount\n      nodes {\n        ... on Product {\n          id\n          title\n          handle\n          availableForSale\n          tags\n          productType\n          featuredImage { url }\n          priceRange { minVariantPrice { amount currencyCode } }\n          compareAtPriceRange { minVariantPrice { amount } }\n        }\n      }\n    }\n  }\n': {
     return: SearchProductsQuery;

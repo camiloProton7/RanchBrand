@@ -2,6 +2,7 @@ import FacebookPixel from './components/FacebookPixel';
 import GoogleAnalytics from './components/GoogleAnalytics';
 import SiteHeader from './components/SiteHeader';
 import Footer from './components/Footer';
+import Progreso from '~/components/Progreso';
 import {Analytics, getShopAnalytics, useNonce} from '@shopify/hydrogen';
 import {
   Outlet,
@@ -12,9 +13,11 @@ import {
   Scripts,
   ScrollRestoration,
   useLoaderData,
+  useLocation,
 } from 'react-router';
 import {HEADER_QUERY} from '~/lib/fragments';
 import resetStyles from '~/styles/reset.css?url';
+import baseStyles from '~/styles/base.css?url';
 import appStyles from '~/styles/app.css?url';
 import tailwindCss from './styles/tailwind.css?url';
 import siteHeaderStyles from '~/styles/site-header.css?url';
@@ -44,9 +47,9 @@ export function links() {
       rel: 'preconnect',
       href: 'https://shop.app',
     },
-    {rel: 'icon', type: 'image/png', href: '/favicon.png'},
-    {rel: 'stylesheet', href: siteHeaderStyles},
-    {rel: 'stylesheet', href: footerStyles},
+    {rel: 'icon', type: 'image/png', sizes: '512x512', href: '/favicon.png'},
+    {rel: 'icon', type: 'image/png', sizes: '32x32', href: '/favicon-32.png'},
+    {rel: 'apple-touch-icon', sizes: '180x180', href: '/apple-touch-icon.png'},
   ];
 }
 
@@ -98,15 +101,41 @@ export async function loader(args) {
  */
 export function Layout({children}) {
   const nonce = useNonce();
+  // la pagina nueva trae su propia hoja: cargar encima tailwind, reset,
+  // app, header y pie del tema viejo eran 900 ms de CSS que no se usa
+  const {pathname} = useLocation();
+  // Rutas que sirve el diseno nuevo. El resto (blog, cuenta, buscador,
+  // politicas) sigue con las hojas del tema viejo.
+  const esNuevo =
+    pathname === '/' ||
+    pathname === '/carrito' ||
+    pathname === '/combo-gorras' ||
+    pathname.startsWith('/collections/') ||
+    pathname.startsWith('/products/') ||
+    pathname.startsWith('/nuevo') ||
+    pathname.startsWith('/explorar');
 
   return (
-    <html lang="en">
+    <html lang="es-CO">
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width,initial-scale=1" />
-        <link rel="stylesheet" href={tailwindCss}></link>
-        <link rel="stylesheet" href={resetStyles}></link>
-        <link rel="stylesheet" href={appStyles}></link>
+        {/* abrir conexiones antes de pedir las fotos: ahorra el saludo TLS */}
+        <link rel="preconnect" href="https://cdn.shopify.com" crossOrigin="anonymous" />
+        <link rel="dns-prefetch" href="https://cdn.shopify.com" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        {/* base mínima siempre: sin esto el body queda con 8px de margen */}
+        <link rel="stylesheet" href={baseStyles} />
+        {!esNuevo && (
+          <>
+            <link rel="stylesheet" href={tailwindCss} />
+            <link rel="stylesheet" href={resetStyles} />
+            <link rel="stylesheet" href={appStyles} />
+            <link rel="stylesheet" href={siteHeaderStyles} />
+            <link rel="stylesheet" href={footerStyles} />
+          </>
+        )}
         <Meta />
         <Links />
       </head>
@@ -125,7 +154,25 @@ export function Layout({children}) {
 
 export default function App() {
   const data = useLoaderData();
+  const location = useLocation();
   const logoSrc = data?.header?.shop?.brand?.logo?.image?.url;
+  // Entorno de laboratorio: /nuevo usa su propio encabezado y pie.
+  const aislado =
+    location.pathname.startsWith('/') ||
+    location.pathname.startsWith('/nuevo') ||
+    location.pathname.startsWith('/explorar');
+  if (aislado) {
+    return (
+      <Analytics.Provider
+        shop={data?.shop}
+        consent={data?.consent}
+        cookieDomain="ranch.com.co"
+      >
+        <Progreso />
+        <Outlet />
+      </Analytics.Provider>
+    );
+  }
   return (
     <Analytics.Provider
       shop={data?.shop}

@@ -1,19 +1,13 @@
 import {Form, Link, useActionData, useLoaderData, useNavigation} from 'react-router';
 import {useEffect, useState} from 'react';
-import styles from '~/styles/combo-pack.css?url';
+import styles from '~/styles/home-nuevo.css?url';
+import {recordar} from '~/lib/cache';
 
-export const links = () => [
-  {rel: 'stylesheet', href: styles},
-  {
-    rel: 'stylesheet',
-    href: 'https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400&family=Inter:wght@300;400;500&display=swap',
-  },
-];
+export const links = () => [{rel: 'stylesheet', href: styles}];
 
 const PACK = 500000;
 const CUANTAS = 5;
 const ENDPOINT = 'https://the-ranch-premium.vercel.app/api/pack';
-const STOCK_ENDPOINT = 'https://the-ranch-premium.vercel.app/api/stock';
 
 const QUERY = `#graphql
   query GorrasCombo {
@@ -41,8 +35,9 @@ function esGorra(p) {
   );
 }
 
-export async function loader({context}) {
-  const data = await context.storefront.query(QUERY, {cache: context.storefront.CacheShort()});
+async function cargarCombo({context}) {
+  const opt = import.meta.env.DEV ? {cache: context.storefront.CacheNone()} : {cache: context.storefront.CacheShort()};
+  const data = await context.storefront.query(QUERY, opt);
   const base = (data?.products?.nodes || [])
     .filter(esGorra)
     .map((p) => {
@@ -51,34 +46,18 @@ export async function loader({context}) {
       return {
         title: p.title,
         handle: p.handle,
-        img: p.featuredImage?.url || '',
+        img: p.featuredImage?.url
+          ? `${p.featuredImage.url}${p.featuredImage.url.includes('?') ? '&' : '?'}width=380`
+          : '',
         alt: p.featuredImage?.altText || p.title,
         vid: v.id.split('/').pop(),
         price: Number(v.price.amount),
-        currency: v.price.currencyCode,
       };
     })
     .filter(Boolean);
 
-  // Stock real por variante (el storefront puede decir "disponible" con la política de venta sin stock).
   const token = context?.env?.SHOPIFY_ADMIN_TOKEN;
   let stock = {};
-
-  if (!token && base.length) {
-    // En producción no hay token de administración: el stock real lo entrega el endpoint del pack.
-    try {
-      const r = await fetch(STOCK_ENDPOINT, {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({vids: base.map((g) => g.vid)}),
-      });
-      const j = await r.json();
-      stock = j?.stock || {};
-    } catch (e) {
-      stock = {};
-    }
-  }
-
   if (token && base.length) {
     try {
       const ids = base.map((g) => `gid://shopify/ProductVariant/${g.vid}`);
@@ -94,7 +73,7 @@ export async function loader({context}) {
       for (const n of j?.data?.nodes || []) {
         if (n?.id) stock[n.id.split('/').pop()] = n.inventoryQuantity ?? 0;
       }
-    } catch (e) {
+    } catch {
       stock = {};
     }
   }
@@ -104,6 +83,14 @@ export async function loader({context}) {
     .filter((g) => g.stock === null || g.stock > 0);
 
   return {gorras};
+}
+
+/**
+ * El combo pregunta el inventario al Admin en cada visita, y eso no se
+ * cachea solo: se quedaba en 280 ms aun repitiendo. Dos minutos de memoria.
+ */
+export async function loader({context}) {
+  return recordar('combo-gorras', 2, () => cargarCombo({context}));
 }
 
 export async function action({request}) {
@@ -121,16 +108,37 @@ export async function action({request}) {
     const j = await r.json();
     if (!r.ok || !j.checkoutUrl) return {error: j.error || 'No pudimos armar el pack.'};
     return {checkoutUrl: j.checkoutUrl, suma: j.suma};
-  } catch (e) {
+  } catch {
     return {error: 'El servidor del pack no respondió.'};
   }
 }
 
 function money(n) {
-  return new Intl.NumberFormat('es-CO', {style: 'currency', currency: 'COP', maximumFractionDigits: 0}).format(n);
+  return new Intl.NumberFormat('es-CO', {
+    style: 'currency',
+    currency: 'COP',
+    maximumFractionDigits: 0,
+  }).format(n);
 }
 
-export default function ComboGorras() {
+const DESC_COMBO =
+  'Cinco gorras de The Ranch por un solo precio. Elige las que quieras y recibe el pack en casa con envío a toda Colombia.';
+
+export const meta = () => [
+  {title: 'El pack de cinco gorras · The Ranch'},
+  {name: 'description', content: DESC_COMBO},
+  {tagName: 'link', rel: 'canonical', href: 'https://ranch.com.co/combo-gorras'},
+  {property: 'og:type', content: 'website'},
+  {property: 'og:site_name', content: 'The Ranch'},
+  {property: 'og:locale', content: 'es_CO'},
+  {property: 'og:title', content: 'El pack de cinco gorras · The Ranch'},
+  {property: 'og:description', content: DESC_COMBO},
+  {property: 'og:url', content: 'https://ranch.com.co/combo-gorras'},
+  {property: 'og:image', content: 'https://ranch.com.co/promo-gorras.webp'},
+  {name: 'twitter:card', content: 'summary_large_image'},
+];
+
+export default function ComboNuevo() {
   const {gorras} = useLoaderData();
   const data = useActionData();
   const nav = useNavigation();
@@ -151,23 +159,47 @@ export default function ComboGorras() {
   const suma = gorras.filter((g) => sel.includes(g.vid)).reduce((a, g) => a + g.price, 0);
   const listo = sel.length === CUANTAS;
   const ahorro = Math.max(0, suma - PACK);
+  const faltan = CUANTAS - sel.length;
 
   return (
-    <div className="cb">
-      <header className="cb-head">
-        <Link to="/" className="cb-back">← The Ranch</Link>
-        <span className="cb-count">{sel.length} de {CUANTAS}</span>
+    <main className="hc cbc">
+      <header className="hc-barra">
+        <Link to="/" aria-label="Volver" className="hc-volver">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6">
+            <path d="M15 5l-7 7 7 7" />
+          </svg>
+        </Link>
+        <Link to="/" className="hc-logo" aria-label="The Ranch, ir al inicio">
+          <img src="/logo-tinta.png" alt="The Ranch" />
+        </Link>
+        <span className="hc-barra-hueco" />
       </header>
 
-      <div className="cb-intro">
-        <h1>Arma tu pack de cinco</h1>
+      <section className="cbc-intro">
+        <span className="cbc-sobre">El pack</span>
+        <h1>
+          Cinco gorras.
+          <br />
+          <em>Un solo precio.</em>
+        </h1>
         <p>
-          Elige las cinco gorras que quieras. Salen a {money(PACK)} las cinco,
-          sin importar la mezcla.
+          Elige las cinco que quieras. Salen a {money(PACK)} las cinco, sin
+          importar la mezcla. Cada una vale {money(Math.round(PACK / CUANTAS))}.
         </p>
+      </section>
+
+      <div className="cbc-progreso">
+        <div className="cbc-puntos">
+          {Array.from({length: CUANTAS}).map((_, i) => (
+            <i key={i} className={i < sel.length ? 'on' : ''} />
+          ))}
+        </div>
+        <span>
+          {sel.length} de {CUANTAS}
+        </span>
       </div>
 
-      <div className="cb-grid">
+      <div className="cbc-grid">
         {gorras.map((g) => {
           const activa = sel.includes(g.vid);
           const orden = sel.indexOf(g.vid) + 1;
@@ -175,38 +207,54 @@ export default function ComboGorras() {
             <button
               key={g.vid}
               type="button"
-              className={`cb-item ${activa ? 'is-on' : ''}`}
+              className={'cbc-item' + (activa ? ' is-on' : '')}
               onClick={() => toggle(g)}
               aria-pressed={activa}
             >
-              <span className="cb-img">
-                {g.img && <img src={g.img} alt={g.alt} loading="lazy" />}
-                {activa && <span className="cb-badge">{orden}</span>}
+              <span className="cbc-img">
+                {g.img && <img src={g.img} alt={g.alt} loading="lazy" decoding="async" />}
+                {activa && <span className="cbc-orden">{orden}</span>}
                 {g.stock !== null && g.stock <= 6 && (
-                  <span className="cb-low">Últimas {g.stock}</span>
+                  <span className="cbc-low">Últimas {g.stock}</span>
                 )}
               </span>
-              <span className="cb-name">{g.title.replace(/^Gorra\s+/i, '')}</span>
-              <span className="cb-price">{money(g.price)}</span>
+              <span className="cbc-name">{g.title.replace(/^Gorra\s+/i, '')}</span>
+              <span className="cbc-price">{money(g.price)}</span>
             </button>
           );
         })}
       </div>
 
-      <div className="cb-bar">
-        <div className="cb-bar-info">
-          <span className="cb-bar-pack">{money(PACK)} <small>las cinco</small></span>
-          {listo && ahorro > 0 && <span className="cb-bar-save">ahorras {money(ahorro)}</span>}
+      {data?.error && <p className="cbc-error">{data.error}</p>}
+
+      <div className="hc-barra-pago cbc-barra">
+        <div>
+          <span>{listo ? 'Las cinco' : faltan === 1 ? 'Falta 1' : `Faltan ${faltan}`}</span>
+          <strong>{money(PACK)}</strong>
         </div>
-        <Form method="post">
-          {sel.map((v) => <input key={v} type="hidden" name="vid" value={v} />)}
-          <button type="submit" disabled={!listo || nav.state === 'submitting'}>
-            {nav.state === 'submitting' ? 'Armando…' : listo ? 'Llevar el pack' : `Faltan ${CUANTAS - sel.length}`}
+        <Form method="post" className="cbc-form">
+          {sel.map((v) => (
+            <input key={v} type="hidden" name="vid" value={v} />
+          ))}
+          <button
+            type="submit"
+            className="hc-pagar"
+            disabled={!listo || nav.state === 'submitting'}
+          >
+            {nav.state === 'submitting'
+              ? 'Armando…'
+              : listo
+                ? 'Llevar el pack'
+                : `Elige ${faltan}`}
           </button>
         </Form>
       </div>
 
-      {data?.error && <p className="cb-error">{data.error}</p>}
-    </div>
+      {listo && ahorro > 0 && (
+        <div className="cbc-ahorro">
+          Ahorras {money(ahorro)} frente a comprarlas sueltas
+        </div>
+      )}
+    </main>
   );
 }

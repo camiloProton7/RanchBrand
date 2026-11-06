@@ -60,6 +60,17 @@ export function addToCart(item) {
   return cart;
 }
 
+export function updateQty(variantId, qty) {
+  const cart = getCart();
+  const it = cart.find((i) => i.variantId === variantId);
+  if (!it) return cart;
+  it.qty = Math.max(0, Number(qty) || 0);
+  const limpio = cart.filter((i) => i.qty > 0);
+  window.localStorage.setItem(CART_KEY, JSON.stringify(limpio));
+  window.dispatchEvent(new Event('ranch-cart-updated'));
+  return limpio;
+}
+
 export function removeFromCart(variantId) {
   const cart = getCart().filter((i) => i.variantId !== variantId);
   window.localStorage.setItem(CART_KEY, JSON.stringify(cart));

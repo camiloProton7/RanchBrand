@@ -1,0 +1,592 @@
+import {Link, useLoaderData} from 'react-router';
+import {useMemo, useState} from 'react';
+import estilos from '~/styles/personalizado-bordado.css?url';
+import homeStyles from '~/styles/home-nuevo.css?url';
+import MenuLateral from '~/components/MenuLateral';
+import Carroza from '~/components/Carroza';
+import Buscador from '~/components/Buscador';
+import Pie from '~/components/Pie';
+
+/**
+ * Bordado al por mayor — cuatro prendas, varias combinaciones de color y talla.
+ *
+ * Pública: enlazada desde el menú como «Personalización».
+ * Reglas: bordado $5.000 por prenda; desde 8 unidades, 20% de descuento que
+ * aplica solo a la prenda (el bordado no se descuenta).
+ */
+
+export const MINIMO = 8;
+export const BORDADO_UNITARIO = 5000;
+export const DESCUENTO_DESDE = 8;
+export const DESCUENTO = 0.2;
+
+const HANDLES = [
+  'chaqueta-impermeable-yellowstone',
+  'chaqueta-impermeable-armor',
+  'chaqueta-laredo-impermeable',
+  'camisa-outdoor-the-ranch',
+];
+
+export const links = () => [
+  {rel: 'stylesheet', href: homeStyles},
+  {rel: 'stylesheet', href: estilos},
+];
+
+export const meta = () => [
+  {title: 'Bordado al por mayor — The Ranch'},
+  {name: 'description', content: 'Bordamos tu marca en chaquetas y camisas. Escoges colores y tallas, subes el diseño y te llamamos. 20% off en la prenda desde 8 unidades.'},
+];
+
+const CAMPOS = `#graphql
+  fragment PrendaBordado on Product {
+    title
+    handle
+    featuredImage {url altText}
+    options {name values}
+    variants(first: 120) {
+      nodes {
+        availableForSale
+        price {amount}
+        image {url}
+        selectedOptions {name value}
+      }
+    }
+  }
+`;
+
+const CONSULTA = `#graphql
+  query PrendasBordado($h1: String!, $h2: String!, $h3: String!, $h4: String!) {
+    p1: product(handle: $h1) { ...PrendaBordado }
+    p2: product(handle: $h2) { ...PrendaBordado }
+    p3: product(handle: $h3) { ...PrendaBordado }
+    p4: product(handle: $h4) { ...PrendaBordado }
+  }
+  ${CAMPOS}
+`;
+
+export async function loader({request, context}) {
+  const data = await context.storefront.query(CONSULTA, {
+    variables: {h1: HANDLES[0], h2: HANDLES[1], h3: HANDLES[2], h4: HANDLES[3]},
+    cache: context.storefront.CacheShort(),
+  });
+
+  const productos = ['p1', 'p2', 'p3', 'p4']
+    .map((k) => data?.[k])
+    .filter(Boolean)
+    .map((p) => {
+      const optColor = (p.options || []).find((o) => /color/i.test(o.name));
+      const optTalla = (p.options || []).find((o) => /talla|size/i.test(o.name));
+      const colores = optColor ? optColor.values : ['Único'];
+      const tallas = optTalla ? optTalla.values : ['Única'];
+
+      const variantes = {};
+      for (const v of p.variants?.nodes || []) {
+        const c = v.selectedOptions.find((s) => /color/i.test(s.name))?.value || 'Único';
+        const t = v.selectedOptions.find((s) => /talla|size/i.test(s.name))?.value || 'Única';
+        variantes[`${c}|${t}`] = {
+          precio: Math.round(Number(v.price?.amount || 0)),
+          hay: v.availableForSale,
+          img: v.image?.url || '',
+        };
+      }
+
+      const imagenPorColor = {};
+      for (const c of colores) {
+        const conImagen = Object.entries(variantes).find(([k, v]) => k.startsWith(c + '|') && v.img);
+        imagenPorColor[c] = conImagen ? conImagen[1].img : p.featuredImage?.url || '';
+      }
+
+      const urls = new Set(Object.values(imagenPorColor).filter(Boolean));
+      const precios = Object.values(variantes).map((v) => v.precio).filter(Boolean);
+      return {
+        fotosPorColor: urls.size > 1,
+        titulo: p.title,
+        handle: p.handle,
+        imagen: p.featuredImage?.url || '',
+        imagenPorColor,
+        precio: precios.length ? Math.min(...precios) : 0,
+        colores,
+        tallas,
+        variantes,
+      };
+    });
+
+  return {productos};
+}
+
+const cop = (n) => '$' + Math.round(n).toLocaleString('es-CO');
+
+const COLORES_HILO = [
+  {nombre: 'Negro', hex: '#1b1815'},
+  {nombre: 'Blanco', hex: '#f7f4ee'},
+  {nombre: 'Crema', hex: '#efe3cb'},
+  {nombre: 'Terracota', hex: '#b34a2a'},
+  {nombre: 'Oro viejo', hex: '#b08d4f'},
+  {nombre: 'Verde oliva', hex: '#5c6242'},
+  {nombre: 'Azul navy', hex: '#1f2c44'},
+  {nombre: 'Vinotinto', hex: '#5a1f24'},
+  {nombre: 'Gris', hex: '#8d8880'},
+  {nombre: 'Plata', hex: '#c9c9c9'},
+];
+
+export default function Personalizado() {
+  const {productos} = useLoaderData();
+
+  const [paso, setPaso] = useState(1);
+  const [iProd, setIProd] = useState(-1);
+  const [colorActivo, setColorActivo] = useState('');
+  const [lineas, setLineas] = useState({}); // "color|talla" -> cantidad
+  const [colorHilo, setColorHilo] = useState({nombre: 'Negro', hex: '#1b1815'});
+  const [notas, setNotas] = useState('');
+  const [diseno, setDiseno] = useState(null);
+  const [nombre, setNombre] = useState('');
+  const [empresa, setEmpresa] = useState('');
+  const [telefono, setTelefono] = useState('');
+  const [ciudad, setCiudad] = useState('');
+  const [correo, setCorreo] = useState('');
+  const [enviando, setEnviando] = useState(false);
+  const [error, setError] = useState('');
+  const [listo, setListo] = useState(null);
+
+  const producto = productos[iProd] || null;
+
+  const unidades = useMemo(
+    () => Object.values(lineas).reduce((a, b) => a + (Number(b) || 0), 0),
+    [lineas],
+  );
+
+  const cuentas = useMemo(() => {
+    if (!producto) return {bruto: 0, descuento: 0, bordado: 0, total: 0, aplica: false, ahorroPct: 0};
+    let bruto = 0;
+    for (const [clave, cant] of Object.entries(lineas)) {
+      const v = producto.variantes[clave];
+      bruto += (v?.precio || producto.precio) * (Number(cant) || 0);
+    }
+    const aplica = unidades >= DESCUENTO_DESDE;
+    const descuento = aplica ? Math.round(bruto * DESCUENTO) : 0;
+    const bordado = BORDADO_UNITARIO * unidades;
+    return {bruto, descuento, bordado, total: bruto - descuento + bordado, aplica, ahorroPct: 20};
+  }, [producto, lineas, unidades]);
+
+  const desglose = useMemo(() => {
+    if (!producto) return [];
+    const filas = [];
+    for (const c of producto.colores) {
+      const tallasColor = producto.tallas
+        .map((t) => ({talla: t, cant: lineas[`${c}|${t}`] || 0}))
+        .filter((x) => x.cant > 0);
+      if (tallasColor.length) filas.push({color: c, tallas: tallasColor});
+    }
+    return filas;
+  }, [producto, lineas]);
+
+  function elegirProducto(i) {
+    setIProd(i);
+    setColorActivo(productos[i].colores[0]);
+    setLineas({});
+    setPaso(2);
+    setError('');
+    window.scrollTo({top: 0, behavior: 'smooth'});
+  }
+
+  function cambiar(color, talla, delta) {
+    const clave = `${color}|${talla}`;
+    setLineas((prev) => {
+      const n = Math.max(0, Math.min(500, (Number(prev[clave]) || 0) + delta));
+      const copia = {...prev};
+      if (n === 0) delete copia[clave];
+      else copia[clave] = n;
+      return copia;
+    });
+  }
+
+  function varianteDe(color, talla) {
+    return producto?.variantes[`${color}|${talla}`];
+  }
+
+  const imagenActiva = producto?.imagenPorColor?.[colorActivo] || producto?.imagen || '';
+
+  async function subirArchivo(ev) {
+    const f = ev.target.files?.[0];
+    setError('');
+    if (!f) return;
+    if (f.size > 12 * 1024 * 1024) return setError('El archivo pasa de 12 MB. Mándanos una versión más liviana.');
+    if (!/image\/(png|jpeg|webp|svg\+xml)|application\/pdf/.test(f.type)) {
+      return setError('Formato no válido. Puede ser PNG, JPG, SVG o PDF.');
+    }
+    const dataUrl = await new Promise((res, rej) => {
+      const r = new FileReader();
+      r.onload = () => res(String(r.result));
+      r.onerror = rej;
+      r.readAsDataURL(f);
+    });
+    setDiseno({nombre: f.name, mime: f.type, dataUrl});
+  }
+
+  async function enviar() {
+    setError('');
+    if (!producto) return setError('Falta elegir la prenda.');
+    if (unidades < MINIMO) return setError(`El mínimo es de ${MINIMO} unidades.`);
+    if (!diseno) return setError('Falta subir el diseño que quieres bordar.');
+    if (!nombre.trim() || !telefono.trim()) return setError('Falta tu nombre y el teléfono.');
+    if (telefono.replace(/\D/g, '').length < 10) return setError('Necesitamos el número completo para poder llamarte.');
+
+    setEnviando(true);
+    try {
+      const resumenLineas = desglose
+        .map((f) => `${f.color}: ${f.tallas.map((t) => `${t.talla} ${t.cant}`).join(', ')}`)
+        .join(' | ');
+
+      const fd = new FormData();
+      fd.set('tecnica', 'Bordado');
+      fd.set('producto', producto.titulo);
+      fd.set('handle', producto.handle);
+      fd.set('cantidad', String(unidades));
+      fd.set('nombre', nombre.trim());
+      fd.set('empresa', empresa.trim());
+      fd.set('telefono', telefono.trim());
+      fd.set('ciudad', ciudad.trim());
+      fd.set('correo', correo.trim());
+      fd.set('color', desglose.map((f) => f.color).join(' + '));
+      fd.set('notas', notas.trim());
+      fd.set('tallas', resumenLineas);
+      fd.set('lineas', resumenLineas);
+      fd.set('color_hilo', `${colorHilo.nombre} (${colorHilo.hex})`);
+      fd.set('precio_unitario', String(producto.precio));
+      fd.set('subtotal_prenda', String(cuentas.bruto));
+      fd.set('descuento', String(cuentas.descuento));
+      fd.set('bordado_unitario', String(BORDADO_UNITARIO));
+      fd.set('total', String(cuentas.total));
+      fd.set('diseno_nombre', diseno.nombre);
+      if (diseno.dataUrl) fd.set('diseno', diseno.dataUrl);
+
+      const res = await fetch('/api/personalizado-mayor', {method: 'POST', body: fd});
+      const data = await res.json();
+      if (!data.ok) throw new Error(data.error || 'No se pudo enviar.');
+      setListo(data.ticket);
+      window.scrollTo({top: 0, behavior: 'smooth'});
+    } catch (e) {
+      setError(e.message);
+    } finally {
+      setEnviando(false);
+    }
+  }
+
+  if (listo) {
+    return (
+      <main className="pm">
+        <div className="pm-hecho">
+          <div className="pm-check" aria-hidden="true">✓</div>
+          <h1>Tu pedido quedó registrado</h1>
+          <p className="pm-radicado">Radicado <strong>{listo}</strong> · nos llegó por correo con tu diseño</p>
+          <div className="pm-aviso">
+            <p>
+              Ahora revisamos tu diseño y <strong>te llamamos</strong> para confirmar las
+              características: tamaño, ubicación, color del hilo y tipo de letra.
+            </p>
+            <p>
+              Antes de producir hacemos <strong>una prueba del bordado</strong> sobre la prenda y te
+              la mostramos. Solo cuando la apruebes arrancamos el pedido.
+            </p>
+          </div>
+          <p className="pm-nota pm-centro">No se cobró nada. Esto no pasa por la pasarela de pagos.</p>
+          <a className="pm-btn" href="/">Volver a la tienda</a>
+        </div>
+      </main>
+    );
+  }
+
+  const faltan = Math.max(0, DESCUENTO_DESDE - unidades);
+  const progreso = Math.min(100, Math.round((unidades / DESCUENTO_DESDE) * 100));
+
+  return (
+    <>
+      <div className="hc-bar is-solido">
+        <MenuLateral tono="tinta" />
+        <Link to="/" prefetch="intent" className="hc-logo" aria-label="The Ranch, ir al inicio">
+          <img src="/logo-tinta.png" alt="The Ranch" width="78" />
+        </Link>
+        <span className="hc-bolsa">
+          <Buscador tono="oscuro" />
+          <Carroza />
+        </span>
+      </div>
+
+      <main className="pm">
+      <header className="pm-head">
+        <p className="pm-eyebrow">The Ranch · Bordado para marcas</p>
+        <h1>
+          Tu marca,{' '}
+          <em>bordada</em> hilo por hilo
+        </h1>
+        <p className="pm-sub">
+          Yellowstone, Armor, Laredo y Camisa Outdoor. Eliges colores y tallas, subes el logo y te
+          llamamos antes de bordar.
+        </p>
+        <p className="pm-hook">20% off en la prenda desde 8 unidades</p>
+      </header>
+
+      <ol className="pm-pasos">
+        {['Prenda', 'Colores y tallas', 'Diseño'].map((t, i) => (
+          <li
+            key={t}
+            className={paso === i + 1 ? 'activo' : paso > i + 1 ? 'hecho' : ''}
+            onClick={() => {
+              if (i + 1 < paso || (i + 1 === 2 && producto)) {
+                setPaso(i + 1);
+                window.scrollTo({top: 0, behavior: 'smooth'});
+              }
+            }}
+          >
+            <span>{i + 1}</span>
+            {t}
+          </li>
+        ))}
+      </ol>
+
+      {paso === 1 && (
+        <section className="pm-sec">
+          <h2>¿Qué vas a bordar?</h2>
+          <div className="pm-grid pm-grid-2">
+            {productos.map((p, i) => (
+              <button
+                key={p.handle}
+                type="button"
+                className={'pm-card' + (i === iProd ? ' sel' : '')}
+                onClick={() => elegirProducto(i)}
+              >
+                <span className="pm-cinta">20% off desde 8 u</span>
+                {p.imagen ? <img src={p.imagen} alt={p.titulo} loading="lazy" /> : null}
+                <span className="pm-card-nombre">{p.titulo}</span>
+                <span className="pm-card-precio">desde {cop(p.precio)}</span>
+              </button>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {paso === 2 && producto && (
+        <section className="pm-sec">
+          <button type="button" className="pm-volver" onClick={() => setPaso(1)}>
+            ← Cambiar prenda
+          </button>
+          <h2>{producto.titulo}</h2>
+
+          <div className="pm-foto">
+            {imagenActiva ? (
+              <img
+                src={imagenActiva}
+                alt={producto.fotosPorColor ? `${producto.titulo} ${colorActivo}` : producto.titulo}
+              />
+            ) : null}
+            {producto.fotosPorColor && <span className="pm-foto-tag">{colorActivo}</span>}
+          </div>
+
+          {producto.colores.length > 1 && (
+            <>
+              <h3>Color · puedes combinar varios</h3>
+              <div className={producto.fotosPorColor ? 'pm-colores' : 'pm-chips'}>
+                {producto.colores.map((c) => {
+                  const img = producto.imagenPorColor[c];
+                  const unidadesColor = producto.tallas.reduce(
+                    (a, t) => a + (lineas[`${c}|${t}`] || 0),
+                    0,
+                  );
+                  if (!producto.fotosPorColor) {
+                    return (
+                      <button
+                        key={c}
+                        type="button"
+                        className={'pm-chip' + (colorActivo === c ? ' sel' : '')}
+                        onClick={() => setColorActivo(c)}
+                      >
+                        {c}
+                        {unidadesColor > 0 ? ` · ${unidadesColor}` : ''}
+                      </button>
+                    );
+                  }
+                  return (
+                    <button
+                      key={c}
+                      type="button"
+                      className={'pm-color' + (colorActivo === c ? ' sel' : '')}
+                      onClick={() => setColorActivo(c)}
+                    >
+                      {img ? <img src={img} alt={c} loading="lazy" /> : <i />}
+                      <span>{c}</span>
+                      {unidadesColor > 0 && <b>{unidadesColor}</b>}
+                    </button>
+                  );
+                })}
+              </div>
+            </>
+          )}
+
+          <h3>Tallas en {colorActivo}</h3>
+          <div className="pm-tallas">
+            {producto.tallas.map((t) => {
+              const v = varianteDe(colorActivo, t);
+              const hab = v ? v.hay : false;
+              const cant = lineas[`${colorActivo}|${t}`] || 0;
+              return (
+                <div key={t} className={'pm-talla' + (hab ? '' : ' agotada')}>
+                  <div className="pm-talla-info">
+                    <span className="pm-talla-nombre">{t}</span>
+                    <span className="pm-talla-precio">{cop(v?.precio || producto.precio)}</span>
+                  </div>
+                  <div className="pm-stepper">
+                    <button type="button" onClick={() => cambiar(colorActivo, t, -1)} disabled={!hab || !cant}>−</button>
+                    <span>{cant}</span>
+                    <button type="button" onClick={() => cambiar(colorActivo, t, 1)} disabled={!hab}>+</button>
+                  </div>
+                  {!hab && <span className="pm-agotada">agotada</span>}
+                </div>
+              );
+            })}
+          </div>
+
+          {desglose.length > 0 && (
+            <div className="pm-lineas">
+              <h3>Tu combinación</h3>
+              {desglose.map((f) => (
+                <div key={f.color} className="pm-linea">
+                  <b>{f.color}</b>
+                  <span>{f.tallas.map((t) => `${t.talla} ×${t.cant}`).join(' · ')}</span>
+                </div>
+              ))}
+            </div>
+          )}
+
+          <div className={'pm-progreso' + (unidades >= DESCUENTO_DESDE ? ' lleno' : '')}>
+            <div className="pm-barra"><i style={{width: progreso + '%'}} /></div>
+            <p>
+              {unidades >= DESCUENTO_DESDE
+                ? '¡20% de descuento aplicado en la prenda!'
+                : `Te faltan ${faltan} ${faltan === 1 ? 'unidad' : 'unidades'} para el 20% de descuento`}
+            </p>
+          </div>
+
+          <div className="pm-resumen-mini">
+            <div><span>Unidades</span><strong>{unidades}</strong></div>
+            <div><span>Prenda</span><strong>{cop(cuentas.bruto)}</strong></div>
+            <div className={cuentas.descuento ? 'pm-mini-desc' : ''}>
+              <span>Descuento</span><strong>{cuentas.descuento ? '−' + cop(cuentas.descuento) : '—'}</strong>
+            </div>
+            <div><span>Bordado</span><strong>{cop(cuentas.bordado)}</strong></div>
+          </div>
+
+          <div className="pm-totalbar">
+            <div>
+              <span>Total</span>
+              <b>{cop(cuentas.total)}</b>
+            </div>
+            <button
+              type="button"
+              className="pm-btn"
+              disabled={unidades < MINIMO}
+              onClick={() => {
+                setPaso(3);
+                window.scrollTo({top: 0, behavior: 'smooth'});
+              }}
+            >
+              {unidades < MINIMO ? `Faltan ${MINIMO - unidades}` : 'Seguir'}
+            </button>
+          </div>
+        </section>
+      )}
+
+      {paso === 3 && producto && (
+        <section className="pm-sec">
+          <button type="button" className="pm-volver" onClick={() => setPaso(2)}>
+            ← Cambiar colores y tallas
+          </button>
+          <h2>Tu bordado</h2>
+
+          <h3>Color del hilo</h3>
+          <div className="pm-hilos">
+            {COLORES_HILO.map((c) => (
+              <button
+                key={c.hex}
+                type="button"
+                className={'pm-hilo' + (colorHilo.hex === c.hex ? ' sel' : '')}
+                onClick={() => setColorHilo(c)}
+                title={c.nombre}
+              >
+                <i style={{background: c.hex}} />
+                <span>{c.nombre}</span>
+              </button>
+            ))}
+          </div>
+          <p className="pm-nota">
+            Cualquier color es posible. Si el tuyo no está en la lista, lo anotas abajo y lo
+            cuadramos en la llamada.
+          </p>
+
+          <h3>Diseño</h3>
+          <label className="pm-archivo">
+            <input type="file" accept="image/png,image/jpeg,image/webp,image/svg+xml,application/pdf" onChange={subirArchivo} />
+            <span>{diseno ? `✓ ${diseno.nombre}` : 'Subir diseño (PNG, JPG, SVG o PDF)'}</span>
+          </label>
+          <p className="pm-nota">
+            Ideal PNG con fondo transparente o vector. Si solo tienes la foto del logo, súbela
+            igual y lo dibujamos.
+          </p>
+
+          {diseno && /^image\//.test(diseno.mime) && (
+            <div className="pm-preview">
+              <img src={diseno.dataUrl} alt="Tu diseño" />
+            </div>
+          )}
+
+          <h3>Ubicación y detalles</h3>
+          <textarea
+            className="pm-input"
+            rows={3}
+            placeholder="Ej: en el pecho izquierdo, 8 cm de ancho, con el nombre de cada persona debajo"
+            value={notas}
+            onChange={(e) => setNotas(e.target.value)}
+          />
+
+          <h3>Tus datos</h3>
+          <div className="pm-campos">
+            <input className="pm-input" placeholder="Nombre y apellido *" value={nombre} onChange={(e) => setNombre(e.target.value)} />
+            <input className="pm-input" placeholder="Empresa o equipo" value={empresa} onChange={(e) => setEmpresa(e.target.value)} />
+            <input className="pm-input" placeholder="WhatsApp * (te llamamos a este número)" inputMode="tel" value={telefono} onChange={(e) => setTelefono(e.target.value)} />
+            <input className="pm-input" placeholder="Correo" inputMode="email" value={correo} onChange={(e) => setCorreo(e.target.value)} />
+            <input className="pm-input" placeholder="Ciudad" value={ciudad} onChange={(e) => setCiudad(e.target.value)} />
+          </div>
+
+          <div className="pm-cuenta">
+            <div><span>{producto.titulo} · {unidades} u</span><b>{cop(cuentas.bruto)}</b></div>
+            <div><span>Bordado {cop(BORDADO_UNITARIO)} × {unidades}</span><b>{cop(cuentas.bordado)}</b></div>
+            {cuentas.descuento > 0 && (
+              <div className="pm-desc"><span>Descuento por volumen −20%</span><b>−{cop(cuentas.descuento)}</b></div>
+            )}
+            <div className="pm-total"><span>Total</span><b>{cop(cuentas.total)}</b></div>
+          </div>
+
+          <div className="pm-aviso">
+            <p>
+              Al enviar el pedido revisamos tu diseño y <strong>te llamamos</strong> para confirmar
+              tamaño, ubicación y color del hilo.
+            </p>
+            <p>
+              Antes de producir hacemos <strong>una prueba del bordado</strong> y te mostramos cómo
+              queda. Solo arrancamos cuando la apruebes.
+            </p>
+          </div>
+
+          {error && <p className="pm-error">{error}</p>}
+
+          <button type="button" className="pm-btn" onClick={enviar} disabled={enviando}>
+            {enviando ? 'Enviando…' : 'Enviar pedido de bordado'}
+          </button>
+          <p className="pm-nota pm-centro">No es una compra: nos llega a nosotros, te llamamos y facturamos cuando apruebes la prueba.</p>
+        </section>
+      )}
+      </main>
+
+      <Pie />
+    </>
+  );
+}

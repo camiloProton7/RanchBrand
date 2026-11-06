@@ -1,1865 +1,673 @@
-import Stars from '~/components/Stars';
-import ProductStory from '~/components/ProductStory';
-import {ratingFor} from '~/lib/rating';
+import {useLoaderData, Link, useNavigate} from 'react-router';
+import {addToCart, buyNow, getCartCount} from '~/lib/cart';
 import {useEffect, useMemo, useRef, useState} from 'react';
-import {Link, useLoaderData, useRouteLoaderData, useSearchParams} from 'react-router';
-import {addToCart, buyNow} from '~/lib/cart';
-import {optimizeImage, imageSrcSet} from '~/lib/image';
-import {Analytics} from '@shopify/hydrogen';
-import {
-  TrustBadges,
-  SizeGuide,
-  SizeTable,
-  parseTablaMedidas,
-  isApparel,
-  ProductAccordion,
-  RecommendedProduct,
-  PaymentTrust,
-} from '~/components/ProductExtras';
-import {SocialProof} from '~/components/SocialProof';
-import Personalizador from '~/components/Personalizador';
-import productStyles from '~/styles/product.css?url';
-import camisaStoryStyles from '~/styles/camisa-story.css?url';
-import persoStyles from '~/styles/perso.css?url';
-import {GORRAS_COMBO} from '~/lib/gorras-combo';
+import styles from '~/styles/home-nuevo.css?url';
+import Sellos from '~/components/Sellos';
+import Carroza from '~/components/Carroza';
+import Buscador from '~/components/Buscador';
+import GuiaTallas from '~/components/GuiaTallas';
+import ResenasProducto from '~/components/ResenasProducto';
+import {recordar} from '~/lib/cache';
+import MenuLateral from '~/components/MenuLateral';
+import {useHeaderScroll} from '~/lib/useHeaderScroll';
+import {Rail, Tarjeta} from '~/components/Tarjeta';
+import Pie from '~/components/Pie';
 
-export const meta = ({data}) => {
-  const product = data?.product;
-  const title = product?.title ? `${product.title} — The Ranch` : 'Producto — The Ranch';
-  const description = product?.description?.slice(0, 160) || 'The Ranch — Colombia';
-  const url = product?.handle
-    ? `https://ranch.com.co/products/${product.handle}`
-    : 'https://ranch.com.co';
-  const image = product?.featuredImage?.url || product?.images?.nodes?.[0]?.url;
-  const items = [
-    {title},
-    {name: 'description', content: description},
-    {property: 'og:title', content: title},
-    {property: 'og:description', content: description},
-    {property: 'og:type', content: 'product'},
-    {property: 'og:url', content: url},
-    {name: 'twitter:card', content: 'summary_large_image'},
-    {tagName: 'link', rel: 'canonical', href: url},
-  ];
-  if (image) {
-    items.push({property: 'og:image', content: image});
-  }
-  if (product) {
-    const price = product.priceRange?.minVariantPrice?.amount;
-    const currency = product.priceRange?.minVariantPrice?.currencyCode || 'COP';
-    items.push({
-      'script:ld+json': {
-        '@context': 'https://schema.org',
-        '@type': 'Product',
-        name: product.title,
-        description: product.description,
-        image: product.images?.nodes?.map((i) => i.url) || [],
-        sku: product.handle,
-        brand: {'@type': 'Brand', name: 'The Ranch'},
-        offers: {
-          '@type': 'Offer',
-          priceCurrency: currency,
-          price: price,
-          availability: 'https://schema.org/InStock',
-          url: `https://ranch.com.co/products/${product.handle}`,
-        },
-      },
-    });
-  }
-  return items;
-};
+export const links = () => [{rel: 'stylesheet', href: styles}];
 
-export const links = () => [
-  {rel: 'stylesheet', href: productStyles},
-  {rel: 'stylesheet', href: camisaStoryStyles},
-  {rel: 'stylesheet', href: persoStyles},
-  {
-    rel: 'stylesheet',
-    href: 'https://fonts.googleapis.com/css2?family=Rye&family=Playfair+Display:wght@700&family=Great+Vibes&family=Oswald:wght@600&display=swap',
-  },
-];
-
-// Full-page cache de Oxygen para páginas de producto (estáticas).
-export const headers = () => ({
-  'Oxygen-Cache-Control':
-    'public, max-age=300, s-maxage=300, stale-while-revalidate=3600',
-  Vary: 'Accept-Encoding, Accept-Language',
-});
-
-const PRODUCT_QUERY = `#graphql
-  query Product($handle: String!) {
+const PRODUCTO = `#graphql
+  query Producto($handle: String!) {
     product(handle: $handle) {
       id
       title
       handle
-      vendor
       description
+      descriptionHtml
       productType
+      vendor
       tags
-      collections(first: 8) { nodes { handle } }
-      metafield(namespace: "custom", key: "tabla_medidas") { value }
-      featuredImage {
-        url
-        altText
-        width
-        height
-      }
-      images(first: 50) {
-        nodes {
-          url
-          altText
-          width
-          height
-        }
-      }
+      collections(first: 2) { nodes { handle title } }
       priceRange { minVariantPrice { amount currencyCode } }
-      compareAtPriceRange { minVariantPrice { amount } }
-      options { name optionValues { name } }
+      images(first: 12) { nodes { url altText } }
+      options { name values }
       variants(first: 250) {
         nodes {
           id
+          title
           availableForSale
           quantityAvailable
           selectedOptions { name value }
           price { amount currencyCode }
-          image { url altText }
+          compareAtPrice { amount currencyCode }
         }
       }
+      metafields(identifiers: [
+        {namespace: "reviews", key: "rating"},
+        {namespace: "reviews", key: "rating_count"}
+      ]) { key value }
     }
   }
 `;
 
-const RELATED_QUERY = `#graphql
-  query RelatedProducts($handle: String!) {
-    collection(handle: $handle) {
-      products(first: 12) {
-        nodes {
-          id
-          title
-          handle
-          featuredImage {
-            url
-            altText
-          }
-          priceRange {
-            minVariantPrice { amount currencyCode }
-          }
-          compareAtPriceRange {
-            minVariantPrice { amount }
-          }
-          variants(first: 10) {
-            nodes {
-              id
-              selectedOptions { name value }
-              price { amount currencyCode }
-            }
-          }
-        }
-      }
-    }
-  }
-`;
-
-// Consulta ligera para el combo Botas + Gorra: SIN quantityAvailable (el token del
-// Storefront no tiene el permiso de inventario y ese campo tumba la consulta entera
-// cuando el producto trae cientos de variantes) y sin campos que la tarjeta no use.
-const COMBO_BOTAS_QUERY = `#graphql
-  query ComboBotas($handle: String!) {
-    product(handle: $handle) {
+const RECOS = `#graphql
+  query Recos($id: ID!) {
+    productRecommendations(productId: $id) {
       id
       title
       handle
-      featuredImage {
-        url
-        altText
-      }
       priceRange { minVariantPrice { amount currencyCode } }
       compareAtPriceRange { minVariantPrice { amount } }
-      variants(first: 1) {
-        nodes {
-          id
-        }
-      }
+      images(first: 2) { nodes { url altText } }
+      metafields(identifiers: [
+        {namespace: "reviews", key: "rating"},
+        {namespace: "reviews", key: "rating_count"}
+      ]) { key value }
     }
   }
 `;
 
-const COMBO_QUERY = `#graphql
-  query ComboProducts($handle: String!) {
+
+const DE_COLECCION = `#graphql
+  query DeColeccion($handle: String!, $excluir: String!) {
     collection(handle: $handle) {
-      products(first: 50) {
+      products(first: 10, sortKey: BEST_SELLING) {
         nodes {
-          id
-          title
-          handle
-          featuredImage {
-            url
-            altText
-          }
-          variants(first: 1) {
-            nodes {
-              id
-            }
-          }
+          id title handle
+          priceRange { minVariantPrice { amount currencyCode } }
+          variants(first: 1) { nodes { id availableForSale } }
+          images(first: 2) { nodes { url altText } }
+          metafields(identifiers: [
+            {namespace: "reviews", key: "rating"},
+            {namespace: "reviews", key: "rating_count"}
+          ]) { key value }
         }
       }
     }
   }
 `;
 
-const CAMISA_COMBO_QUERY = `#graphql
-  query CamisaCombo($handle: String!) {
-    product(handle: $handle) {
-      id
-      title
-      handle
-      featuredImage {
-        url
-        altText
-      }
-      images(first: 50) {
-        nodes {
-          url
-          altText
-          width
-          height
-        }
-      }
-      variants(first: 50) {
-        nodes {
-          id
-          title
-          availableForSale
-          selectedOptions { name value }
-          image {
-            url
-            altText
-          }
-        }
-      }
+
+async function cargarProducto({params, context}) {
+  const handle = params.handle;
+  const fresco = import.meta.env.DEV ? {cache: context.storefront.CacheNone()} : undefined;
+  const data = await context.storefront.query(PRODUCTO, {...fresco, variables: {handle}});
+  const p = data.product;
+  if (!p) throw new Response('Producto no encontrado', {status: 404});
+
+  const optimizar = (url, ancho) => {
+    if (!url) return '';
+    const base = url.split('?')[0];
+    const v = url.includes('?v=') ? '?' + url.split('?')[1].split('&')[0] : '';
+    return `${base}${v}${v ? '&' : '?'}width=${ancho}`;
+  };
+
+  const mf = (p.metafields || []).filter(Boolean);
+  let valor = 0;
+  const r = mf.find((m) => m.key === 'rating');
+  if (r?.value) {
+    try {
+      valor = Number(JSON.parse(r.value).value) || 0;
+    } catch {
+      valor = Number(r.value) || 0;
     }
   }
-`;
+  const cuenta = Number(mf.find((m) => m.key === 'rating_count')?.value) || 0;
 
-const TRUSTOO_SHOP_ID = '67813867760';
+  const fmt = new Intl.NumberFormat('es-CO', {
+    style: 'currency',
+    currency: 'COP',
+    maximumFractionDigits: 0,
+  });
 
-function mapReview(raw) {
-  const resource = (raw.resources || []).find((x) =>
-    (x.src || x.thumb_src || '').trim(),
-  );
-  const photo =
-    (resource && (resource.src || resource.thumb_src)) ||
-    raw.product_image_src ||
-    raw.corresponding_product?.product_image ||
-    null;
+  const texto = (p.descriptionHtml || '')
+    .replace(/<\/(p|li|h[1-6])>/gi, '\n')
+    .replace(/<[^>]+>/g, ' ')
+    .replace(/&nbsp;/g, ' ')
+    .replace(/&amp;/g, '&')
+    .replace(/[ \t]+/g, ' ')
+    .replace(/ +([,.;:!?])/g, '$1')
+    .trim();
+
+  const aTarjeta = (x) => {
+    const m = (x.metafields || []).filter(Boolean);
+    let v = 0;
+    const r2 = m.find((k) => k.key === 'rating');
+    if (r2?.value) {
+      try {
+        v = Number(JSON.parse(r2.value).value) || 0;
+      } catch {
+        v = Number(r2.value) || 0;
+      }
+    }
+    return {
+      id: x.id,
+      titulo: x.title,
+      handle: x.handle,
+      precio: fmt.format(Number(x.priceRange.minVariantPrice.amount)),
+      antes: Number(x.compareAtPriceRange?.minVariantPrice?.amount) > 0 &&
+        Number(x.compareAtPriceRange.minVariantPrice.amount) > Number(x.priceRange.minVariantPrice.amount)
+        ? fmt.format(Number(x.compareAtPriceRange.minVariantPrice.amount))
+        : null,
+      valor: v,
+      cuenta: Number(m.find((k) => k.key === 'rating_count')?.value) || 0,
+      imagen: optimizar(x.images.nodes[0]?.url, 440),
+      img1: optimizar(x.images.nodes[0]?.url, 520),
+      precioNum: Number(x.priceRange.minVariantPrice.amount),
+      varianteId:
+        x.variants?.nodes?.find((v) => (v.quantityAvailable ?? 0) > 0)?.id ||
+        x.variants?.nodes?.find((v) => v.availableForSale)?.id ||
+        x.variants?.nodes?.[0]?.id ||
+        '',
+      imgs: x.images.nodes.slice(0, 2).map((n) => optimizar(n.url, 440)),
+    };
+  };
+
+  // Recomendados: una sola llamada. La coleccion del producto ya trae
+  // articulos del mismo tipo; pedir productRecommendations aparte era un
+  // viaje extra a Shopify que retrasaba toda la ficha.
+  let recos = [];
+  const cols = (p.collections?.nodes || []).map((c) => c.handle).filter(Boolean);
+
+  // El producto que se empuja se pide a la vez que los recomendados: en
+
+  // Primero la coleccion visible del producto (una sola llamada). Si esa
+  // coleccion esta archivada o vacia, se prueba la siguiente y, como ultimo
+  // recurso, productRecommendations.
+  for (const h of cols) {
+    if (recos.length >= 2) break;
+    try {
+      const dc = await context.storefront.query(DE_COLECCION, {
+        ...fresco,
+        variables: {handle: h, excluir: p.handle},
+      });
+      const lista = (dc.collection?.products?.nodes || [])
+        .filter((x) => x.handle !== p.handle)
+        .slice(0, 8)
+        .map(aTarjeta);
+      if (lista.length > recos.length) recos = lista;
+    } catch {
+      /* coleccion no visible: se intenta la siguiente */
+    }
+  }
+
+  if (recos.length < 2) {
+    try {
+      const rr = await context.storefront.query(RECOS, {...fresco, variables: {id: p.id}});
+      const lista = (rr.productRecommendations || []).filter(Boolean).map(aTarjeta);
+      if (lista.length > recos.length) recos = lista;
+    } catch {
+      /* sin recomendaciones: la seccion no se muestra */
+    }
+  }
+
+
   return {
-    name: (raw.author || '').trim(),
-    product: raw.corresponding_product?.product_name || '',
-    stars: raw.star || 5,
-    text: (raw.content || '').trim(),
-    photo,
-    verified: !!raw.verified_badge,
+    recos,
+    id: p.id,
+    titulo: p.title,
+    handle: p.handle,
+    tipo: p.productType,
+    precio: fmt.format(Number(p.priceRange.minVariantPrice.amount)),
+    precioNum: Number(p.priceRange.minVariantPrice.amount),
+    valor,
+    cuenta,
+    // la primera a 720 (es la que se ve al entrar); el resto a 440, que en
+    // un movil de 390 px se ve igual y pesa casi la mitad
+    fotos: p.images.nodes.map((n, i) => optimizar(n.url, i === 0 ? 720 : 440)),
+    opciones: p.options,
+    variantes: p.variants.nodes.map((v) => ({
+      id: v.id,
+      titulo: v.title,
+      disponible: v.availableForSale,
+      stock: v.quantityAvailable,
+      precio: fmt.format(Number(v.price.amount)),
+      precioNum: Number(v.price.amount),
+      antes: Number(v.compareAtPrice?.amount) > 0 && Number(v.compareAtPrice.amount) !== Number(v.price.amount)
+        ? fmt.format(Number(v.compareAtPrice.amount))
+        : null,
+      opciones: v.selectedOptions,
+    })),
+    descripcion: texto,
+    parrafos: texto.split('\n').map((t) => t.trim()).filter((t) => t.length > 2),
   };
 }
 
-async function fetchTrustooReviews() {
-  try {
-    const url = `https://api.trustoo.io/api/v1/reviews/get_product_reviews?shop_id=${TRUSTOO_SHOP_ID}&limit=50&page=1&sort_by=comprehensive-descending&scene=3&is_show_all=1`;
-    const res = await fetch(url, {headers: {accept: 'application/json'}});
-    const json = await res.json();
-    if (json.code !== 0) return [];
-    return (json.data?.list || [])
-      .map(mapReview)
-      .filter((r) => r.text && r.text.trim().length > 8);
-  } catch (error) {
-    console.error('Trustoo fetch failed', error);
-    return [];
-  }
-}
-
+/**
+ * La ficha se guarda un minuto. Cargar un producto desde el home volvia
+ * a pedir catalogo, recomendados y el sugerido en cada toque, y la
+ * pantalla se quedaba medio segundo en blanco.
+ */
 export async function loader({params, context}) {
-  const {handle} = params;
-  const {storefront} = context;
-  try {
-    const isCombo = handle === 'combo-5x-500';
-    const isComboCamisa = handle === 'combo-camisa-gorra';
-    const isCamisa = handle === 'camisa-outdoor-the-ranch';
-    const [productData, relatedData, sugeridoData, comboBotasData, allReviews] = await Promise.all([
-      storefront.query(PRODUCT_QUERY, {
-        variables: {handle},
-        cache: storefront.CacheShort(),
-      }),
-      storefront.query(RELATED_QUERY, {
-        variables: {handle: 'hot-ranch'},
-        cache: storefront.CacheLong(),
-      }),
-      // Producto sugerido del bloque de venta cruzada: las botas, en lugar de la licorera
-      // (Camilo: en las fichas de gorras y chaquetas va la bota, no la licorera).
-      storefront.query(PRODUCT_QUERY, {
-        variables: {handle: 'botas-gamuza-lariat'},
-        cache: storefront.CacheLong(),
-      }),
-      // El combo Botas + Gorra. En las fichas de GORRAS reemplaza a las botas sueltas
-      // (mismo precio y además gorra); en el resto se sigue ofreciendo solo la bota.
-      storefront.query(COMBO_BOTAS_QUERY, {
-        variables: {handle: 'botas-gorra'},
-        cache: storefront.CacheLong(),
-      }),
-      fetchTrustooReviews(),
-    ]);
-
-    const product = productData.product || null;
-    const sugerido = sugeridoData.product || null;
-    // El combo Botas + Gorra (se usa en las fichas de gorras, ver más abajo).
-    const comboBotas = comboBotasData.product || null;
-    const title = (product?.title || '').toLowerCase();
-    const matching = allReviews.filter((r) => {
-      if (!title) return true;
-      const p = (r.product || '').toLowerCase();
-      return p && (p.includes(title) || title.includes(p));
-    });
-    const rest = allReviews.filter((r) => !matching.includes(r));
-    const reviews = [...matching, ...rest].slice(0, 8);
-
-    const relatedPool = (relatedData.collection?.products?.nodes || []).filter(
-      (p) => p.handle !== handle,
-    );
-    const related = relatedPool.slice(0, 4);
-    const similar = relatedPool.slice(0, 6);
-
-    let comboGorras = [];
-    if (isCombo || isComboCamisa) {
-      const comboData = await storefront.query(COMBO_QUERY, {
-        variables: {handle: 'gorras-combo'},
-        cache: storefront.CacheLong(),
-      });
-      comboGorras = (comboData.collection?.products?.nodes || []).filter(
-        (p) => p.handle !== handle,
-      );
-    }
-
-    let camisaCombo = null;
-    if (isComboCamisa) {
-      const camisaData = await storefront.query(CAMISA_COMBO_QUERY, {
-        variables: {handle: 'camisa-outdoor-the-ranch'},
-        cache: storefront.CacheLong(),
-      });
-      camisaCombo = camisaData.product || null;
-    }
-
-    // Combos que se ofrecen en la ficha de la camisa. Se piden por handle explícito
-    // (no se depende de que la consulta devuelva el handle) y el orden define el de la ficha.
-    const combosCamisa = [];
-    if (isCamisa) {
-      const definiciones = [
-        {handle: 'combo-camisa-gorra', etiqueta: 'con la gorra'},
-        {handle: 'combo-camisa-outdoor-chaqueta-laredo', etiqueta: 'con la chaqueta'},
-      ];
-      const respuestas = await Promise.all(
-        definiciones.map((def) =>
-          storefront.query(PRODUCT_QUERY, {
-            variables: {handle: def.handle},
-            cache: storefront.CacheLong(),
-          }),
-        ),
-      );
-      respuestas.forEach((data, i) => {
-        if (data?.product) {
-          combosCamisa.push({
-            ...data.product,
-            handleCombo: definiciones[i].handle,
-            etiqueta: definiciones[i].etiqueta,
-          });
-        }
-      });
-    }
-
-    return {
-      product,
-      sugerido,
-      comboBotas,
-      reviews,
-      related,
-      similar,
-      comboGorras,
-      isCombo,
-      isComboCamisa,
-      camisaCombo,
-      isCamisa,
-      combosCamisa,
-    };
-  } catch (error) {
-    console.error(`Producto ${handle} falló`, error);
-    return {
-      product: null,
-      sugerido: null,
-      reviews: [],
-      related: [],
-      similar: [],
-      comboGorras: [],
-      isCombo: false,
-      isComboCamisa: false,
-      camisaCombo: null,
-      isCamisa: false,
-      combosCamisa: [],
-    };
-  }
+  const handle = params.handle || '';
+  return recordar(`producto:${handle}`, 1, () => cargarProducto({params, context}));
 }
 
-const SHOPIFY_DOMAIN = '1caf84-4.myshopify.com';
-
-// Producto "Personalización grabado láser" ($15.000) para el cobro extra
-const PERSONALIZACION_VARIANT_ID = '50406577111280';
-// Handles de productos que permiten personalización (grabado láser)
-const PERSONALIZABLES = ['chaqueta-ganadera-gamuza'];
-
-function toNumericId(gid) {
-  return gid?.match(/\/(\d+)$/)?.[1] || gid;
-}
-
-function getCheckoutUrl(variantId, qty = 1) {
-  if (!variantId) return '#';
-  const id = toNumericId(variantId);
-  return `https://${SHOPIFY_DOMAIN}/cart/${id}:${qty}?checkout=true`;
-}
-
-function getCartUrl(variantId, qty = 1) {
-  if (!variantId) return '#';
-  const id = toNumericId(variantId);
-  return `https://${SHOPIFY_DOMAIN}/cart/${id}:${qty}`;
-}
-
-function getBundleCartUrl(variantIds, discountCode) {
-  if (!variantIds || !variantIds.length) return '#';
-  const items = variantIds.map((id) => `${toNumericId(id)}:1`).join(',');
-  const cartPath = `/cart/${items}`;
-  if (discountCode) {
-    return `https://${SHOPIFY_DOMAIN}/discount/${discountCode}?redirect=${cartPath}`;
-  }
-  return `https://${SHOPIFY_DOMAIN}${cartPath}`;
-}
-
-// URL del carrito para el combo: agrega la variante del combo (precio fijo) y
-// guarda las gorras elegidas como NOTA del pedido (visible en el checkout y en
-// el Admin de Shopify). Sin "checkout=true" (Shopify lo rechaza con 400).
-function getComboCartUrl(comboVariantId, selectedHandles, gorras) {
-  const id = toNumericId(comboVariantId);
-  const titles = selectedHandles.map((h) => {
-    const g = gorras.find((x) => x.handle === h);
-    return g?.title || h;
-  });
-  const note = encodeURIComponent(`Gorras elegidas (5): ${titles.join(', ')}`);
-  return `https://${SHOPIFY_DOMAIN}/cart/${id}:1?note=${note}`;
-}
-
-// URL del carrito para el combo Camisa + Gorra: agrega la variante del combo
-// (precio fijo $290.000) y guarda la selección como NOTA del pedido.
-function getComboCamisaCartUrl(comboVariantId, camisaColor, camisaTalla, gorraHandle, gorras) {
-  const id = toNumericId(comboVariantId);
-  const g = gorras.find((x) => x.handle === gorraHandle);
-  const gorraTitle = g?.title || gorraHandle;
-  const note = encodeURIComponent(
-    `Combo Camisa + Gorra — Camisa: ${camisaColor} / ${camisaTalla} | Gorra: ${gorraTitle}`,
-  );
-  return `https://${SHOPIFY_DOMAIN}/cart/${id}:1?note=${note}`;
-}
-
-function formatPrice(amount, currency = 'COP') {
-  if (!amount) return '';
-  return new Intl.NumberFormat('es-CO', {
-    style: 'currency',
-    currency,
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 0,
-  }).format(Number(amount));
-}
-
-// Beneficios clave del producto (bullets visibles bajo el título)
-function getBenefits(productType, title, ficha) {
-  const b = [];
-  if (ficha) {
-    // La fecha de entrega y la palabra de la prenda van como etiquetas sobre la foto:
-    // aquí solo queda el beneficio real, sin repetir el dato.
-    b.push('🚚 Envío a todo Colombia');
-    return b;
-  }
-  const t = `${productType || ''} ${title || ''}`.toLowerCase();
-  if (t.includes('chaqueta') || t.includes('saco') || t.includes('chaleco') || t.includes('abrigo') || t.includes('ruana')) {
-    b.push('☔ Impermeable', '🔥 Termo-regulación', '☀️ Protección UV');
-  } else if (t.includes('gorra')) {
-    b.push('✨ Bordado premium', '☀️ Protección UV', '🧢 Ajuste cómodo');
-  } else if (t.includes('camisa') || t.includes('camiseta') || t.includes('polo')) {
-    b.push('✨ Tela premium', '🌬️ Transpirable', '🧵 Costuras reforzadas');
-  } else if (t.includes('bota')) {
-    b.push('👢 Cuero premium', '🛡️ Suela antideslizante', '💪 Alta duración');
-  } else {
-    b.push('✨ Calidad premium', '✅ Garantía de devolución', '🛡️ Compra protegida');
-  }
-  b.push('🚚 Envío a toda Colombia');
-  return b.slice(0, 4);
-}
-
-const norm = (s) => (s || '').trim().toLowerCase();
-// "Marrón" y "marron" son el mismo color: se comparan sin tildes.
-const sinTildes = (s) => norm(s).normalize('NFD').replace(/[\u0300-\u036f]/g, '');
-// Las URLs de Shopify cambian por versión y por tamaño (?v=..., ?width=...): dos
-// referencias a la MISMA foto se reconocen comparando solo la ruta.
-const rutaImagen = (u) => (u || '').split('?')[0];
-
-// Mapeo de nombres de color a hex para los círculos del selector de la ficha.
-// Hecho con los nombres que existen DE VERDAD en el catálogo (revisados en Shopify):
-// Negro, Blanco, Cafe, Verde Militar, Desert, Miel, Beige, Berenjena, Azul Navy,
-// Ocre, Vinotinto, Camuflaje, Arena, Verde Oliva, Azul, Verde.
-// Antes: "Blanco" devolvía #e8e2d4 (un beige) y todo color no previsto caía en
-// #c9bfa8 (beige), así que el círculo mentía sobre el color de la prenda.
-const COLOR_HEX = {
-  // neutros
-  negro: '#1a1a18',
-  black: '#1a1a18',
-  blanco: '#ffffff',
-  white: '#ffffff',
-  gris: '#8a8a8a',
-  gray: '#8a8a8a',
-  // tierras y beiges
-  crema: '#f2e9d6',
-  beige: '#e0d5bc',
-  arena: '#d6c7a5',
-  sand: '#d6c7a5',
-  desert: '#cfc0a0',
-  camel: '#b58a5a',
-  miel: '#c8912e',
-  honey: '#c8912e',
-  ocre: '#bf8a2c',
-  ochre: '#bf8a2c',
-  cafe: '#6b4a2b',
-  marron: '#6b4a2b',
-  brown: '#6b4a2b',
-  cuero: '#8a5a2b',
-  leather: '#8a5a2b',
-  // verdes
-  verde: '#3f6b3a',
-  'verde oliva': '#5a6b3c',
-  olive: '#5a6b3c',
-  'verde militar': '#4f5d3a',
-  camuflaje: '#4a5240',
-  camo: '#4a5240',
-  // azules y vinos
-  azul: '#2f4a6b',
-  blue: '#2f4a6b',
-  'azul navy': '#1f2f4a',
-  'azul marino': '#1f2f4a',
-  navy: '#1f2f4a',
-  berenjena: '#4a2b3d',
-  vinotinto: '#6e1f2a',
-  vino: '#6e1f2a',
-  morado: '#6b4a8a',
-  purple: '#6b4a8a',
-  // cálidos
-  rojo: '#b3261e',
-  red: '#b3261e',
-  naranja: '#d97a2b',
-  orange: '#d97a2b',
-  amarillo: '#d9c23a',
-  yellow: '#d9c23a',
-  rosa: '#d98a99',
-  pink: '#d98a99',
+export const meta = ({data}) => {
+  const t = data?.titulo ?? 'Producto';
+  const h = data?.handle ?? '';
+  const relato = (data?.parrafos || []).join(' ').replace(/\s+/g, ' ').trim();
+  const d = relato
+    ? relato.slice(0, 152).replace(/[\s,;:.]+$/, '') + '.'
+    : `${t} de The Ranch. Prenda hecha para durar, con envío a toda Colombia.`;
+  const img = data?.fotos?.[0]?.split('&width=')[0] || '';
+  return [
+    {title: `${t} · The Ranch`},
+    {name: 'description', content: d},
+    {tagName: 'link', rel: 'canonical', href: `https://ranch.com.co/products/${h}`},
+    {property: 'og:type', content: 'product'},
+    {property: 'og:site_name', content: 'The Ranch'},
+    {property: 'og:locale', content: 'es_CO'},
+    {property: 'og:title', content: t},
+    {property: 'og:description', content: d},
+    {property: 'og:url', content: `https://ranch.com.co/products/${h}`},
+    {property: 'product:price:amount', content: data?.precioNum ? String(data.precioNum) : ''},
+    {property: 'product:price:currency', content: 'COP'},
+    ...(img ? [{property: 'og:image', content: img}] : []),
+    {name: 'twitter:card', content: 'summary_large_image'},
+  ];
 };
 
-const CLAVES_COLOR = Object.keys(COLOR_HEX).sort((a, b) => b.length - a.length);
-
-function colorToHex(name) {
-  const key = sinTildes(name);
-  if (COLOR_HEX[key]) return COLOR_HEX[key];
-  // El valor puede traer extras ("Camuflaje verde", "Azul navy oscuro"): se busca
-  // la clave más específica dentro del nombre, de la más larga a la más corta.
-  for (const k of CLAVES_COLOR) {
-    if (key.includes(k)) return COLOR_HEX[k];
-  }
-  return '#c4c4c4';   // gris neutro: si no se reconoce, no se inventa un beige
-}
-
-// Abrevia tallas: "Pequeño (S)" -> "S", "Doble extragrande (XXL)" -> "2XL"
-function formatSize(value) {
-  const m = (value || '').match(/\(([^)]+)\)/);
-  if (!m) return value;
-  let abbr = m[1].trim().toUpperCase();
-  abbr = abbr.replace(/^X{2,}/, (x) => `${x.length}XL`);
-  return abbr;
-}
-
-const ATTRS = ['Edición limitada', 'Ajuste regulable'];
-
-const MESES_CORTOS = {
-  enero: 'ENE', febrero: 'FEB', marzo: 'MAR', abril: 'ABR', mayo: 'MAY', junio: 'JUN',
-  julio: 'JUL', agosto: 'AGO', septiembre: 'SEP', octubre: 'OCT', noviembre: 'NOV', diciembre: 'DIC',
-};
-
-// "10 de diciembre" → "10 DIC": la etiqueta sobre la foto necesita ser corta.
-function fechaCorta(texto) {
-  const m = String(texto || '').match(/(\d{1,2})\s+de\s+([a-záéíóúñ]+)/i);
-  if (!m) return String(texto || '').toUpperCase();
-  const mes = MESES_CORTOS[m[2].toLowerCase()] || m[2].slice(0, 3).toUpperCase();
-  return `${m[1]} ${mes}`;
-}
-
-export default function ProductPage() {
-  const {product, sugerido, comboBotas, reviews, related, similar, comboGorras, isCombo, isComboCamisa, camisaCombo, isCamisa, combosCamisa} =
+export default function ProductoNuevo() {
+  const {titulo, tipo, precio, precioNum, valor, cuenta, fotos, opciones, variantes, handle, parrafos, recos} =
     useLoaderData();
-  const tablaTallas = parseTablaMedidas(product?.metafield?.value);
-  // Colores del producto sugerido (hoy las botas): la tarjeta deja elegir el color y lleva
-  // a SU FICHA EN OXYGEN con ese color ya puesto (?variant=). Nada de mandar al cliente al
-  // dominio de Shopify: el 10% lo aplica solo el descuento automático de la colección Botas.
-  const coloresSugerido = [];
-  (sugerido?.variants?.nodes || []).forEach((v) => {
-    const nombre = v.selectedOptions?.find((o) => String(o.name).toLowerCase() === 'color')?.value;
-    if (!nombre || coloresSugerido.some((c) => c.nombre === nombre)) return;
-    const vid = String(v.id).split('/').pop();
-    coloresSugerido.push({
-      nombre,
-      variantId: vid,
-      image: v.image?.url || null,
-      href: `/products/${sugerido.handle}?variant=${vid}`,
-    });
-  });
-  // El orden de las muestras es el que está definido en la opción Color del producto en
-  // Shopify (Miel, Cafe, Negro); las variantes que devuelve la API no lo respetan y la
-  // tarjeta abría en Cafe aunque el producto se vende como tono miel.
-  const ordenColores =
-    (sugerido?.options || [])
-      .find((o) => String(o.name).toLowerCase() === 'color')
-      ?.optionValues?.map((v) => v.name) || [];
-  coloresSugerido.sort(
-    (a, b) =>
-      (ordenColores.indexOf(a.nombre) + 1 || 99) - (ordenColores.indexOf(b.nombre) + 1 || 99),
-  );
-  // Bloque de venta cruzada: no se muestra si el producto lleva la etiqueta "sin-licorera"
-  // (el nombre del tag es histórico; hoy controla el sugerido de botas) ni en el combo Laredo.
-  const sinLicorera =
-    (product?.tags || []).some((t) => String(t).toLowerCase().trim() === 'sin-licorera') ||
-    product?.handle === 'combo-camisa-outdoor-chaqueta-laredo';
-  // Fichas de GORRAS: el bloque de venta cruzada ofrece el combo Botas + Gorra en vez de
-  // las botas sueltas (mismo precio, pero con la gorra incluida).
-  const esGorraCombo = Boolean(
-    product &&
-      comboBotas &&
-      (product.collections?.nodes || []).some((c) => /gorra/i.test(c.handle || '')),
-  );
-  const sugeridoMostrado = esGorraCombo ? comboBotas : sugerido;
-  const rootData = useRouteLoaderData('root');
-  const logoSrc = rootData?.header?.shop?.brand?.logo?.image?.url;
 
-  const [activeImage, setActiveImage] = useState(0);
-  // Rating de vitrina: estable por producto (4.3 a 5.0), como pidió Camilo.
-  const rating = ratingFor(product.handle);
-  // Si el cliente llega con un ?variant= (por ejemplo desde el bloque que sugiere las botas),
-  // la ficha abre con ESE color y esa talla puestos, no con los primeros de la lista.
-  const [searchParams] = useSearchParams();
-  const varianteUrl = useMemo(() => {
-    const pedido = searchParams.get('variant');
-    if (!pedido) return null;
-    return (
-      (product?.variants?.nodes || []).find(
-        (v) => String(v.id).split('/').pop() === String(pedido),
-      ) || null
-    );
-  }, [searchParams, product]);
-  const [color, setColor] = useState(() => {
-    const c = (varianteUrl?.selectedOptions || []).find((o) => norm(o.name) === 'color')?.value;
-    return c || null;
+  const [foto, setFoto] = useState(0);
+  const pista = useRef(null);
+  const ir = useNavigate();
+
+  useEffect(() => {
+    const leer = () => setEnCesta(getCartCount());
+    leer();
+    window.addEventListener('ranch-cart-updated', leer);
+    return () => window.removeEventListener('ranch-cart-updated', leer);
+  }, []);
+  const [elegidas, setElegidas] = useState(() => {
+    const disp = variantes.filter((v) => v.disponible);
+
+    // Sin stock: se abre en la primera combinacion y se avisa.
+    if (!disp.length) {
+      const inicial = {};
+      const base = variantes[0];
+      if (base) base.opciones.forEach((o) => (inicial[o.name] = o.value));
+      else opciones.forEach((o) => (inicial[o.name] = o.values[0]));
+      return inicial;
+    }
+
+    // Con stock: se abre en la combinacion que deja MAS opciones comprables,
+    // no en la primera. Si no, un color con una sola talla abre la ficha con
+    // casi todas las tallas tachadas y parece agotado.
+    // cuantas variantes comprables hay por cada valor de cada opcion
+    const conteo = {};
+    for (const x of disp) {
+      for (const o of x.opciones) {
+        conteo[o.name] = conteo[o.name] || {};
+        conteo[o.name][o.value] = (conteo[o.name][o.value] || 0) + 1;
+      }
+    }
+
+    let mejor = disp[0];
+    let tope = -1;
+    for (const v of disp) {
+      const n = v.opciones.reduce(
+        (suma, o) => suma + (conteo[o.name]?.[o.value] || 0),
+        0,
+      );
+      if (n > tope) {
+        tope = n;
+        mejor = v;
+      }
+    }
+
+    const inicial = {};
+    mejor.opciones.forEach((o) => (inicial[o.name] = o.value));
+    return inicial;
   });
-  const [fav, setFav] = useState(false);
-  const [qty, setQty] = useState(1);
+  const [guiaAbierta, setGuiaAbierta] = useState(false);
+  const botonCompra = useRef(null);
+  const [barraAbajo, setBarraAbajo] = useState(false);
+  const [anadiendo, setAnadiendo] = useState(false);
+  const [anadido, setAnadido] = useState(false);
+  const [enCesta, setEnCesta] = useState(0);
+  const {oculto: barraOculta} = useHeaderScroll({alto: 90});
+
+  // la guia cambia segun lo que se elige: numero de calzado o talla de prenda
+  const opcionTalla = opciones.find(
+    (o) => o.values.length > 1 && /talla/i.test(o.name),
+  );
+  // las tallas de calzado llegan como numeros (37, 38...) aunque la opcion
+  // se llame solo "Talla", asi que se mira el contenido y no el nombre
+  const valoresTalla = opcionTalla?.values || [];
+  const numericas = valoresTalla.filter((v) => /^\d+([.,]\d+)?$/.test(String(v).trim()));
+  const opcionHorma = opciones.find((o) => /horma/i.test(o.name));
+  const tipoGuia = opcionTalla
+    ? numericas.length > valoresTalla.length / 2 ||
+      /calzado|zapato/i.test(opcionTalla.name)
+      ? 'calzado'
+      : 'ropa'
+    : null;
+
+  // la barra de compra solo aparece cuando el boton grande ya no se ve
+  useEffect(() => {
+    const el = botonCompra.current;
+    if (!el || typeof IntersectionObserver === 'undefined') return;
+    const observador = new IntersectionObserver(
+      ([entrada]) => setBarraAbajo(!entrada.isIntersecting),
+      {threshold: 0.6},
+    );
+    observador.observe(el);
+    return () => observador.disconnect();
+  }, []);
+
+  const variante = useMemo(() => {
+    const exacta = variantes.find((v) =>
+      v.opciones.every((o) => elegidas[o.name] === o.value)
+    );
+    return exacta || variantes[0];
+  }, [variantes, elegidas]);
+
+  async function agregar() {
+    if (!variante?.disponible || anadiendo) return;
+    setAnadiendo(true);
+    try {
+      addToCart({
+        variantId: variante.id,
+        qty: 1,
+        title: titulo,
+        image: fotos[0],
+        price: variante.precioNum,
+        precioTexto: variante.precio,
+        opciones: variante.opciones?.map((o) => o.value).join(' · '),
+        handle,
+      });
+      setAnadido(true);
+      setTimeout(() => setAnadido(false), 4000);
+    } finally {
+      setAnadiendo(false);
+    }
+  }
 
   /**
-   * Bloque de compra (precio, unidades, agregar al carrito, comprar ahora).
-   * Va pegado bajo el título —no al final de la ficha— porque en móvil el botón flotante
-   * que Meta inyecta en el navegador de Facebook se montaba encima de la barra vieja
-   * (que estaba fija abajo) y tapaba el CTA. En CSS queda sticky bajo el header.
-   * Se usa en las dos fichas: la normal y la de combos.
+   * "Comprar ahora" va derecho a la pasarela: sin hoja intermedia.
    */
-  const renderBuyBar = () => (
-      <div className="trp-buybar">
-          <div className="trp-buybar-price">
-            <span className="trp-buybar-price-now">{formatPrice(totalPrice)}</span>
-            {hasDiscount ? (
-              <s className="trp-buybar-price-compare">{formatPrice(totalCompare)}</s>
-            ) : null}
-          </div>
-          <button
-            className={`trp-add-cart ${added ? 'is-added' : ''}`}
-            type="button"
-            onClick={handleAddToCart}
-            disabled={isComboCamisa ? !comboCamisaReady : isOut || (isCombo && !comboReady)}
-          >
-            {isComboCamisa
-              ? comboCamisaReady
-                ? added
-                  ? '✓ Añadido'
-                  : 'Agregar al carrito'
-                : 'Elige camisa y gorra'
-              : isCombo && !comboReady
-                ? 'Elige 5 gorras'
-                : added
-                  ? '✓ Añadido'
-                  : 'Agregar al carrito'}
-          </button>
-          <div className="trp-qty" aria-label="Cantidad">
-            <button
-              type="button"
-              onClick={() => setQty((q) => Math.max(1, q - 1))}
-              aria-label="Menos"
-            >
-              −
-            </button>
-            <span>{qty}</span>
-            <button
-              type="button"
-              onClick={() => setQty((q) => Math.min(maxQty, q + 1))}
-              disabled={qty >= maxQty}
-              aria-label="Más"
-            >
-              +
-            </button>
-          </div>
-          {/* "Comprar ahora" va DEBAJO de "Agregar al carrito": el camino normal es
-              agregar al carrito, y el salto directo a pagar queda como acción secundaria
-              (el grid 2x2 sigue el orden del DOM, así que el orden aquí es el visual). */}
-          <button
-            className="trp-add"
-            type="button"
-            onClick={handleBuyNow}
-            disabled={isComboCamisa ? !comboCamisaReady : isOut || (isCombo && !comboReady)}
-          >
-            {isComboCamisa
-              ? comboCamisaReady
-                ? 'Comprar ahora'
-                : 'Elige camisa y gorra'
-              : isCombo && !comboReady
-                ? 'Elige 5 gorras'
-                : 'Comprar ahora'}
-          </button>
-      </div>
-  );
-  const [added, setAdded] = useState(false);
-  const [showFullDesc, setShowFullDesc] = useState(false);
-  const [options, setOptions] = useState(() => {
-    const ini = {};
-    (varianteUrl?.selectedOptions || []).forEach((o) => {
-      ini[norm(o.name)] = o.value;
-    });
-    return ini;
-  });
-  const [selectedGorras, setSelectedGorras] = useState([]);
-  const [camisaColor, setCamisaColor] = useState(null);
-  const [camisaTalla, setCamisaTalla] = useState(null);
-  const [gorraCombo, setGorraCombo] = useState(null);
-  const [personalizacion, setPersonalizacion] = useState(null);
-  const trackRef = useRef(null);
-  // Mientras la ficha mueve la galería sola (al elegir color), el onScroll del track
-  // no debe mandar: sus eventos llegan a mitad de la animación y pisaban la foto
-  // elegida (se elegía Verde Militar y quedaba la Foto 2, la de Beige).
-  const scrollPropio = useRef(false);
-
-  const variants = product?.variants?.nodes || [];
-
-  const allImages = useMemo(() => {
-    // En el combo Camisa + Gorra, la camisa es el producto principal (galería).
-    const source = isComboCamisa && camisaCombo ? camisaCombo : product;
-    const imgs = (source?.images?.nodes || []).map((i) => ({
-      url: optimizeImage(i.url, 800),
-      raw: i.url,
-      alt: i.altText || source?.title || '',
-      w: i.width,
-      h: i.height,
-    }));
-    if (!imgs.length && source?.featuredImage?.url) {
-      imgs.push({
-        url: optimizeImage(source.featuredImage.url, 800),
-        raw: source.featuredImage.url,
-        alt: source?.featuredImage?.altText || '',
-        w: source.featuredImage.width,
-        h: source.featuredImage.height,
-      });
-    }
-    return imgs;
-  }, [product, camisaCombo, isComboCamisa]);
-
-  // Marco del visor: si la primera foto es vertical (ej. 2:3), el visor toma su proporción
-  // en vez del 4:5 fijo, que recortaba arriba y abajo. Las fotos 1:1 y 4:5 (las de la casa)
-  // siguen exactamente como estaban.
-  const ratioFotoVertical = useMemo(() => {
-    const p = allImages?.[0];
-    if (!p?.w || !p?.h) return null;
-    // OJO: CSS aspect-ratio es ancho/alto -> para una foto 2:3 va 0.667, no 1.5.
-    const r = p.w / p.h;
-    return r <= 0.72 ? Math.max(r, 0.555) : null;
-  }, [allImages]);
-
-  // Colores disponibles (de variantes con opción "Color")
-  const colors = useMemo(() => {
-    const set = [];
-    variants.forEach((v) => {
-      const opt = (v.selectedOptions || []).find((o) => norm(o.name) === 'color');
-      if (opt?.value && !set.includes(opt.value)) set.push(opt.value);
-    });
-    return set;
-  }, [variants]);
-
-  // Opciones de talla/otras (excluye Color y Title)
-  const optionNames = useMemo(() => {
-    const names = [];
-    variants.forEach((v) => {
-      (v.selectedOptions || []).forEach((o) => {
-        const n = norm(o.name);
-        if (n !== 'title' && n !== 'color' && !names.includes(o.name)) {
-          names.push(o.name);
-        }
-      });
-    });
-    return names;
-  }, [variants]);
-
-  // Combo camisa + chaqueta Laredo: Shopify solo admite 3 opciones por producto, así
-  // que en los datos la chaqueta va junta ("Negro / M") pero en la ficha se muestra
-  // como dos filas separadas: color chaqueta y talla chaqueta.
-  const OPT_CHAQUETA = 'Chaqueta (color y talla)';
-  const esComboLaredo = product?.handle === 'combo-camisa-outdoor-chaqueta-laredo';
-
-  const partesChaqueta = useMemo(() => {
-    const colores = [];
-    const tallas = [];
-    variants.forEach((v) => {
-      const val = (v.selectedOptions || []).find((o) => o.name === OPT_CHAQUETA)?.value;
-      if (!val) return;
-      const [c, t] = val.split(' / ');
-      if (c && !colores.includes(c)) colores.push(c);
-      if (t && !tallas.includes(t)) tallas.push(t);
-    });
-    return {colores, tallas};
-  }, [variants]);
-
-  const valorChaqueta = options[norm(OPT_CHAQUETA)] || '';
-  const chaquetaColor = (valorChaqueta.split(' / ')[0] || partesChaqueta.colores[0] || '').trim();
-  const chaquetaTalla = (valorChaqueta.split(' / ')[1] || partesChaqueta.tallas[0] || '').trim();
-
-  const selectedVariant = useMemo(() => {
-    return (
-      variants.find((v) =>
-        (v.selectedOptions || []).every((o) => {
-          const n = norm(o.name);
-          const val = n === 'color' ? color : options[n];
-          return !val || norm(o.value) === norm(val);
-        }),
-      ) || variants[0]
-    );
-  }, [variants, options, color]);
-
-  // Tope de unidades: el stock real de la talla/color elegidos. Antes se podía pedir 10 de una
-  // prenda que solo tiene 2 (carrito imposible); ahora el stepper no pasa del disponible.
-  const maxQty = useMemo(() => {
-    // 1) lo que devuelva Shopify (en esta tienda suele venir nulo)
-    const disp = selectedVariant?.quantityAvailable;
-    if (typeof disp === 'number' && disp > 0) return Math.min(10, disp);
-    // 2) las unidades por talla que lleva la propia ficha (metafield de la tabla de medidas)
-    const valores = (selectedVariant?.selectedOptions || []).map((o) => norm(o.value));
-    const fila = (tablaTallas?.filas || []).find((f) => valores.includes(norm(f.talla)));
-    const mapa = tablaTallas?.unidades || {};
-    const clave = Object.keys(mapa).find((k) => valores.includes(norm(k)));
-    const u = fila?.unidades ?? (clave ? mapa[clave] : undefined);
-    if (typeof u === 'number' && u > 0) return Math.min(10, u);
-    return 10;
-  }, [selectedVariant, tablaTallas]);
-
-  useEffect(() => {
-    setQty((q) => Math.min(q, maxQty));
-  }, [maxQty]);
-
-  // Inicializa color y talla con los primeros valores disponibles.
-  useEffect(() => {
-    if (colors.length && !color) setColor(colors[0]);
-  }, [colors, color]);
-
-  useEffect(() => {
-    if (!variants.length) return;
-    optionNames.forEach((name) => {
-      const key = norm(name);
-      if (!options[key]) {
-        const first = variants[0]?.selectedOptions?.find((o) => o.name === name)?.value;
-        if (first) setOptions((prev) => ({...prev, [key]: first}));
-      }
-    });
-  }, [optionNames, variants, options]);
-
-  // Cambia la foto principal cuando cambia el color (o la talla): se usa la imagen
-  // que cada variante tiene enlazada en Shopify.
-  //
-  // Antes comparaba la URL CRUDA de la variante contra las de la galería, que están
-  // optimizadas (?width=800): nunca coincidía, así que la foto no cambiaba. Y el
-  // plan B usaba la posición del color (colors.findIndex) como índice de foto, o sea
-  // saltaba a una imagen cualquiera del producto.
-  //
-  // Se compara por RUTA (sin ?v= ni ?width=), que es estable. Si la variante elegida
-  // no tiene foto propia se busca otra variante del mismo color; y si ese color no
-  // tiene ninguna foto enlazada, se deja la foto actual en vez de saltar a otra.
-  //
-  // Corre también al abrir la ficha: si el selector ya trae marcado el primer color
-  // (la ficha lo pone sola), la foto que se muestra es la de ESE color. Antes abría
-  // con la primera de la galería y quedaba descuadrado: el selector marcaba Desert y
-  // la foto era de otro color, y al tocar Desert (ya marcado) no pasaba nada.
-  useEffect(() => {
-    if (!color) return;
-
-    const buscar = (url) => {
-      const r = rutaImagen(url);
-      return r ? allImages.findIndex((i) => rutaImagen(i.raw) === r) : -1;
-    };
-
-    let idx = buscar(selectedVariant?.image?.url);
-    if (idx < 0) {
-      const hermanas = variants.filter((v) =>
-        (v.selectedOptions || []).some(
-          (o) => norm(o.name) === 'color' && norm(o.value) === norm(color),
-        ),
-      );
-      for (const v of hermanas) {
-        idx = buscar(v.image?.url);
-        if (idx >= 0) break;
-      }
-    }
-
-    if (idx >= 0 && idx < allImages.length) {
-      setActiveImage(idx);
-      const track = trackRef.current;
-      const slide = track?.children?.[idx];
-      if (slide) {
-        scrollPropio.current = true;
-        clearTimeout(scrollPropio.t);
-        scrollPropio.t = setTimeout(() => {
-          scrollPropio.current = false;
-        }, 800);
-        slide.scrollIntoView({behavior: 'smooth', inline: 'center', block: 'nearest'});
-      }
-    }
-  }, [selectedVariant, allImages, color, variants]);
-
-  // Pixel de Meta: ViewContent cuando el producto carga.
-  useEffect(() => {
-    if (product?.id && typeof window !== 'undefined' && window.fbq) {
-      window.fbq(
-        'track',
-        'ViewContent',
-        {
-          content_ids: [product.id],
-          content_name: product.title,
-          content_type: 'product',
-          value: Number(product.priceRange?.minVariantPrice?.amount) || 0,
-          currency: 'COP',
-        },
-        {
-          eventID:
-            'tr_vc_' + product.id + '_' + Math.random().toString(36).slice(2, 10),
-        },
-      );
-    }
-  }, [product]);
-
-  if (!product) {
-    return (
-      <div className="trp-empty">
-        <h1>Producto no encontrado</h1>
-        <a href="/">← Volver al inicio</a>
-      </div>
-    );
+  function comprarAhora() {
+    if (!variante?.disponible) return;
+    trackCompra(variante.precioNum);
+    window.location.href = `https://1caf84-4.myshopify.com/cart/${variante.id.replace(
+      /\D/g,
+      '',
+    )}:1`;
   }
 
-  const price = selectedVariant?.price?.amount || product.priceRange?.minVariantPrice?.amount;
-  const compare = product.compareAtPriceRange?.minVariantPrice?.amount;
-  const hasDiscount = compare && Number(compare) > Number(price);
-  const isOut = selectedVariant?.availableForSale === false;
-  const totalPrice = (Number(price) || 0) * qty;
-  const totalCompare = (Number(compare) || 0) * qty;
-  const discountPct = hasDiscount ? Math.round((1 - Number(price) / Number(compare)) * 100) : 0;
-
-  const handleScroll = (e) => {
-    // Si el movimiento lo hizo la ficha al elegir color, no se toca la foto: los
-    // eventos del desplazamiento suave llegan a mitad de la animación y dejaban la
-    // foto del color anterior (elegías Verde Militar y quedaba la de Beige).
-    if (scrollPropio.current) return;
-    const el = e.currentTarget;
-    const idx = Math.round(el.scrollLeft / el.clientWidth);
-    if (idx >= 0 && idx < allImages.length) setActiveImage(idx);
-  };
-
-  const scrollToImage = (i) => {
-    if (trackRef.current) {
-      trackRef.current.scrollTo({
-        left: i * trackRef.current.clientWidth,
-        behavior: 'smooth',
-      });
-      setActiveImage(i);
-    }
-  };
-
-  const comboReady = isCombo && selectedGorras.length === 5;
-
-  const toggleGorra = (handle) => {
-    setSelectedGorras((prev) => {
-      if (prev.includes(handle)) return prev.filter((h) => h !== handle);
-      if (prev.length >= 5) return prev;
-      return [...prev, handle];
-    });
-  };
-
-  const camisaVariants = camisaCombo?.variants?.nodes || [];
-  const camisaColores = Array.from(
-    new Set(
-      camisaVariants
-        .map((v) => v.selectedOptions?.find((o) => o.name === 'Color')?.value)
-        .filter(Boolean),
-    ),
-  );
-  const camisaTallas = Array.from(
-    new Set(
-      camisaVariants
-        .map((v) => v.selectedOptions?.find((o) => o.name === 'Talla')?.value)
-        .filter(Boolean),
-    ),
-  );
-  const comboCamisaReady = isComboCamisa && camisaColor && camisaTalla && gorraCombo;
-
-  // Al elegir color de camisa, cambia la foto de la galería a la de ese color.
-  const handleCamisaColor = (c) => {
-    setCamisaColor(c);
-    const variant = camisaVariants.find(
-      (v) => v.selectedOptions?.find((o) => o.name === 'Color')?.value === c,
-    );
-    const imgUrl = variant?.image?.url;
-    if (imgUrl) {
-      const idx = allImages.findIndex((i) => i.url === imgUrl);
-      if (idx >= 0) scrollToImage(idx);
-    }
-  };
-
-  const handlePersonalizado = async () => {
-    if (!selectedVariant?.id || !personalizacion?.enabled) return false;
-    try {
-      const render = await personalizacion.render();
-      const form = new FormData();
-      form.append('product', product.title);
-      form.append('handle', product.handle);
-      form.append('variantId', selectedVariant.id);
-      form.append('text', personalizacion.text);
-      form.append('font', personalizacion.font);
-      form.append('scale', String(personalizacion.scale));
-      form.append('pos', JSON.stringify(personalizacion.pos));
-      form.append('render', render);
-      if (personalizacion.logo) form.append('logo', personalizacion.logo);
-
-      const res = await fetch('/api/personalizar', {method: 'POST', body: form});
-      const data = await res.json();
-      if (data?.ok) {
-        const chaquetaId = toNumericId(selectedVariant.id);
-        window.location.href = `https://${SHOPIFY_DOMAIN}/cart/${chaquetaId}:1,${PERSONALIZACION_VARIANT_ID}:1`;
+  // Meta: el producto visto, para remarketing y catalogo.
+  // El pixel entra diferido, asi que se espera a que exista.
+  useEffect(() => {
+    const enviar = () => {
+      try {
+        if (!window.fbq) return false;
+        window.fbq('track', 'ViewContent', {
+          content_ids: [handle],
+          content_name: titulo,
+          content_type: 'product',
+          value: Math.round(precioNum || 0),
+          currency: 'COP',
+        });
         return true;
+      } catch {
+        return false;
       }
-      alert('No se pudo guardar la personalización. Intenta de nuevo.');
-      return false;
-    } catch (e) {
-      console.error(e);
-      alert('Ocurrió un error. Intenta de nuevo.');
-      return false;
-    }
-  };
+    };
 
-  const handleBuyNow = async () => {
-    if (isComboCamisa) {
-      if (!comboCamisaReady) return;
-      window.location.href = getComboCamisaCartUrl(
-        selectedVariant.id,
-        camisaColor,
-        camisaTalla,
-        gorraCombo,
-        comboGorras,
-      );
-      return;
-    }
-    if (isCombo) {
-      if (!comboReady) return;
-      window.location.href = getComboCartUrl(selectedVariant.id, selectedGorras, comboGorras);
-      return;
-    }
-    if (!selectedVariant?.id) return;
-    if (personalizacion?.enabled) {
-      await handlePersonalizado();
-      return;
-    }
-    buyNow(selectedVariant.id, qty, selectedVariant.price?.amount);
-  };
+    if (enviar()) return;
+    const reloj = window.setInterval(() => {
+      if (enviar()) window.clearInterval(reloj);
+    }, 250);
+    const corte = window.setTimeout(() => window.clearInterval(reloj), 8000);
+    return () => {
+      window.clearInterval(reloj);
+      window.clearTimeout(corte);
+    };
+  }, [handle]);
 
-  const handleAddToCart = async () => {
-    if (isComboCamisa) {
-      if (!comboCamisaReady) return;
-      window.location.href = getComboCamisaCartUrl(
-        selectedVariant.id,
-        camisaColor,
-        camisaTalla,
-        gorraCombo,
-        comboGorras,
-      );
-      return;
+  function trackCompra(valor) {
+    try {
+      if (window.fbq) window.fbq('track', 'InitiateCheckout', {value: Math.round(valor), currency: 'COP'});
+    } catch {
+      /* sin pixel: no pasa nada */
     }
-    if (isCombo) {
-      if (!comboReady) return;
-      window.location.href = getComboCartUrl(selectedVariant.id, selectedGorras, comboGorras);
-      return;
-    }
-    if (!selectedVariant?.id) return;
-    if (personalizacion?.enabled) {
-      await handlePersonalizado();
-      return;
-    }
-    const variantOptions = (selectedVariant.selectedOptions || [])
-      .filter((o) => o.name !== 'Title')
-      .map((o) => o.value)
-      .join(' / ');
-    addToCart({
-      variantId: selectedVariant.id,
-      qty,
-      title: product.title,
-      image: selectedVariant.image?.url || product.featuredImage?.url,
-      price: selectedVariant.price?.amount,
-      compareAtPrice: compare,
-      handle: product.handle,
-      options: variantOptions || undefined,
-    });
-    setAdded(true);
-    setTimeout(() => setAdded(false), 2000);
-  };
+  }
 
   return (
-    <div className="trp">
-      <Analytics.ProductView
-        data={{
-          products: [
-            {
-              id: product?.id,
-              title: product?.title,
-              price: product?.priceRange?.minVariantPrice?.amount,
-              vendor: product?.vendor,
-              variantId: selectedVariant?.id,
-              variantTitle: (selectedVariant?.selectedOptions || [])
-                .map((o) => o.value)
-                .join(' / '),
-              quantity: 1,
-            },
-          ],
-        }}
-      />
-      <div className="trp-media">
-        <div className="trp-gallery">
-        {/* ===== Visor visual ===== */}
-        <div className="trp-viewer" style={ratioFotoVertical ? {aspectRatio: String(ratioFotoVertical)} : undefined}>
+    <main className="hp">
+      <div className={"hp-bar" + (barraOculta ? " is-oculto" : "")}>
+        <MenuLateral tono="tinta" />
+        <Link to="/" prefetch="intent" className="hp-logo" aria-label="The Ranch, ir al inicio"><img src="/logo-tinta.png" alt="The Ranch" width="78" /></Link>
+        <span className="hp-bolsa">
+          <Buscador tono="oscuro" />
+          <Carroza />
+        </span>
+      </div>
+
+      <section className="hp-galeria">
         <div
-          ref={trackRef}
-          className="trp-viewer-track"
-          onScroll={handleScroll}
-          aria-label="Galería de fotos"
+          className="hp-fotos"
+          ref={pista}
+          onScroll={() => {
+            const w = pista.current?.clientWidth || 1;
+            const i = Math.round(pista.current.scrollLeft / w);
+            setFoto(Math.min(fotos.length - 1, Math.max(0, i)));
+          }}
         >
-          {allImages.map((img, i) => (
-            <div key={i} className="trp-viewer-slide">
+          {fotos.map((src, i) => (
+            <div key={src} className="hp-foto">
               <img
-                src={img.url}
-                srcSet={imageSrcSet(img.raw, [480, 720, 900, 1200])}
-                sizes="(min-width: 1024px) 640px, 100vw"
-                alt={img.alt}
-                draggable={false}
+                src={src}
+                alt={`${titulo} ${i + 1}`}
+                loading={i === 0 ? 'eager' : 'lazy'}
+                fetchPriority={i === 0 ? 'high' : 'auto'}
+                decoding="async"
               />
             </div>
           ))}
         </div>
 
-        <Link className="trp-back" to="/" aria-label="Volver">
-          ←
-        </Link>
-
-        <div className="trp-gallery-indicator" aria-hidden="true">
-          {String(activeImage + 1).padStart(2, '0')}
-          <span> / </span>
-          {String(allImages.length).padStart(2, '0')}
-        </div>
-
-        {colors.length > 1 && (
-          <div className="trp-color-selector" role="radiogroup" aria-label="Color">
-            {colors.map((c) => (
+        {fotos.length > 1 && (
+          <div className="hp-minis">
+            {fotos.map((src, i) => (
               <button
-                key={c}
+                key={src}
                 type="button"
-                className={norm(color) === norm(c) ? 'is-active' : ''}
-                style={{background: colorToHex(c)}}
-                onClick={() => setColor(c)}
-                aria-label={`Color ${c}`}
-              />
+                className={'hp-mini' + (i === foto ? ' is-on' : '')}
+                onClick={() => {
+                  setFoto(i);
+                  pista.current?.scrollTo({left: i * (pista.current.clientWidth || 0), behavior: 'smooth'});
+                }}
+                aria-label={`Foto ${i + 1}`}
+              >
+                <img src={src} alt="" loading="lazy" />
+              </button>
             ))}
           </div>
         )}
 
-        {/* Etiquetas sobre la foto: en prendas con ficha propia van la FECHA DE ENTREGA
-            y UNA palabra que la resume; en los productos de marca, los atributos de siempre. */}
-        <div className="trp-attrs" aria-hidden="true">
-          {(tablaTallas?.preventa || tablaTallas?.palabra
-            ? [
-                tablaTallas?.preventa ? `Preventa · ${fechaCorta(tablaTallas.preventa)}` : null,
-                tablaTallas?.palabra || null,
-              ]
-            : ATTRS
-          )
-            .filter(Boolean)
-            .map((a) => (
-              <span key={a} className={tablaTallas?.palabra === a ? 'is-word' : undefined}>
-                {a}
-              </span>
-            ))}
-        </div>
+        {variante?.stock > 0 && variante.stock <= 5 && (
+          <span className="hp-sello-stock">Últimas {variante.stock} unidades</span>
+        )}
+        {variante?.stock === 0 && <span className="hp-sello-stock is-agotado">Agotada</span>}
 
-        <div className="trp-lasso" aria-hidden="true" />
-      </div>
+        <span className="hp-contador">
+          {String(foto + 1).padStart(2, '0')} / {String(fotos.length).padStart(2, '0')}
+        </span>
+      </section>
 
-      {/* ===== Miniaturas ===== */}
-      {allImages.length > 1 && (
-        <div className="trp-thumbs">
-          {allImages.map((img, i) => (
-            <button
-              key={i}
-              type="button"
-              className={i === activeImage ? 'is-active' : ''}
-              onClick={() => scrollToImage(i)}
-              aria-label={`Foto ${i + 1}`}
-            >
-              <img
-                src={optimizeImage(img.raw, 96)}
-                srcSet={imageSrcSet(img.raw, [64, 96, 160])}
-                sizes="80px"
-                alt=""
-              />
-            </button>
-          ))}
-        </div>
-      )}
-      </div>
+      <section className="hp-info">
+        {tipo && <p className="hp-tipo">{tipo}</p>}
+        <h1 className="hp-titulo">{titulo}</h1>
 
-        <div className="trp-trust-escritorio">
-          <TrustBadges />
-        </div>
-
-        {isApparel(product.productType, product.title) ? (
-          <div className="trp-size-escritorio">
-            <SizeGuide />
-          </div>
-        ) : null}
-
-        {tablaTallas ? (
-          <div className="trp-size-escritorio">
-            <SizeTable datos={tablaTallas} />
-          </div>
-        ) : null}
-      </div>
-
-      <div className="trp-side">
-        {/* ===== Tarjeta flotante de rating ===== */}
-      <div className="trp-rating-pill">
-        <span className="trp-rating-pill-star">★</span>
-        <span className="trp-rating-pill-num">{rating.num}</span>
-        <span className="trp-rating-pill-sep">·</span>
-        <span className="trp-rating-pill-label">{rating.reviews} reseñas</span>
-        <span className="trp-rating-pill-arrow">→</span>
-      </div>
-
-      {isCombo && comboGorras.length > 0 ? (
-        <section className="trp-combo-picker" aria-label="Elige tus 5 gorras">
-          <h2 className="trp-combo-title">Elige tus 5 gorras</h2>
-          <p className={`trp-combo-count ${comboReady ? 'is-ready' : ''}`}>
-            {selectedGorras.length}/5 seleccionadas
+        {valor >= 4.8 && cuenta >= 20 && (
+          <p className="hp-favorito">
+            <span aria-hidden="true">★</span> Favorita de {cuenta} clientes
           </p>
-          <div className="trp-combo-grid">
-            {comboGorras.map((g) => {
-              const isSel = selectedGorras.includes(g.handle);
-              return (
+        )}
+
+        <div className="hp-linea">
+          <span className="hp-precio">{variante?.precio || precio}</span>
+          {variante?.antes &&
+            Number(variante.antes.replace(/[^\d]/g, '')) > variante.precioNum && (
+            <>
+              <span className="hp-antes">{variante.antes}</span>
+              <span className="hp-dto">
+                {(() => {
+                  const antesNum = Number(variante.antes.replace(/[^\d]/g, ''));
+                  return `−${Math.round((1 - variante.precioNum / antesNum) * 100)}%`;
+                })()}
+              </span>
+            </>
+          )}
+          {valor > 0 && (
+            <span className="hp-rating">
+              <span aria-hidden="true">★</span> {valor.toFixed(1)}
+              {cuenta > 0 && <em> ({cuenta})</em>}
+            </span>
+          )}
+        </div>
+
+        {opciones.filter((o) => o.values.length > 1).map((o) => (
+          <div key={o.name} className="hp-opcion">
+            <div className="hp-opcion-head">
+              <p className="hp-opcion-nombre">{o.name}</p>
+              {tipoGuia && o === opcionTalla && (
                 <button
-                  key={g.handle}
                   type="button"
-                  className={`trp-combo-card ${isSel ? 'is-selected' : ''}`}
-                  onClick={() => toggleGorra(g.handle)}
-                  disabled={!isSel && selectedGorras.length >= 5}
-                  aria-pressed={isSel}
+                  className="hp-guia-link"
+                  onClick={() => setGuiaAbierta(true)}
                 >
-                  {g.featuredImage?.url ? (
-                    <img
-                      src={optimizeImage(g.featuredImage.url, 200)}
-                      srcSet={imageSrcSet(g.featuredImage.url, [160, 200, 300])}
-                      sizes="140px"
-                      alt={g.title}
-                      loading="lazy"
-                    />
-                  ) : null}
-                  <span className="trp-combo-name">{g.title}</span>
-                  <span className="trp-combo-check" aria-hidden="true">
-                    {isSel ? '✓' : ''}
-                  </span>
+                  Guía de tallas
                 </button>
-              );
-            })}
-          </div>
-        </section>
-      ) : null}
-
-      {isComboCamisa && comboGorras.length > 0 ? (
-        <section className="trp-combo-picker" aria-label="Arma tu combo de camisa y gorra">
-          <h1 className="trp-combo-title">{product.title}</h1>
-          <p className="trp-combo-sub">Elige tu camisa (color y talla) y tu gorra favorita</p>
-          {renderBuyBar()}
-
-          <div className="trp-option">
-            <span className="trp-option-label">Color de la camisa</span>
-            <div className="trp-option-values trp-option-colors">
-              {camisaColores.map((c) => (
-                <button
-                  key={c}
-                  type="button"
-                  className={norm(camisaColor) === norm(c) ? 'is-active' : ''}
-                  style={{background: colorToHex(c)}}
-                  onClick={() => handleCamisaColor(c)}
-                  aria-label={`Color ${c}`}
-                  title={c}
-                />
-              ))}
+              )}
             </div>
-          </div>
-
-          <div className="trp-option">
-            <span className="trp-option-label">Talla de la camisa</span>
-            <div className="trp-option-values">
-              {camisaTallas.map((t) => (
-                <button
-                  key={t}
-                  type="button"
-                  className={norm(camisaTalla) === norm(t) ? 'is-active' : ''}
-                  onClick={() => setCamisaTalla(t)}
-                >
-                  {t}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          <p className="trp-combo-count">Elige tu gorra</p>
-          <div className="trp-combo-grid">
-            {comboGorras.map((g) => {
-              const isSel = gorraCombo === g.handle;
-              return (
-                <button
-                  key={g.handle}
-                  type="button"
-                  className={`trp-combo-card ${isSel ? 'is-selected' : ''}`}
-                  onClick={() => setGorraCombo(g.handle)}
-                  aria-pressed={isSel}
-                >
-                  {g.featuredImage?.url ? (
-                    <img
-                      src={optimizeImage(g.featuredImage.url, 200)}
-                      srcSet={imageSrcSet(g.featuredImage.url, [160, 200, 300])}
-                      sizes="140px"
-                      alt={g.title}
-                      loading="lazy"
-                    />
-                  ) : null}
-                  <span className="trp-combo-name">{g.title}</span>
-                  <span className="trp-combo-check" aria-hidden="true">
-                    {isSel ? '✓' : ''}
-                  </span>
-                </button>
-              );
-            })}
-          </div>
-        </section>
-      ) : null}
-
-      {/* ===== Info ===== */}
-      <div className="trp-info">
-        {!isComboCamisa ? (
-          <>
-            <p className="trp-variant">Colección Western — The Ranch</p>
-            <h1 className="trp-title">{product.title}</h1>
-
-            {/* Precio + descuento arriba */}
-            <div className="trp-price-top">
-              <span className="trp-price-top-now">{formatPrice(price)}</span>
-              {hasDiscount ? <s className="trp-price-top-compare">{formatPrice(compare)}</s> : null}
-              {discountPct > 0 ? <span className="trp-price-top-off">-{discountPct}%</span> : null}
-            </div>
-
-            {/* Prueba social */}
-            <button
-              type="button"
-              className="trp-stars"
-              onClick={() => document.getElementById('trp-reviews')?.scrollIntoView({behavior: 'smooth'})}
-            >
-              <Stars value={rating.num} /> <span className="trp-stars-num">{rating.num}</span>
-              <span className="trp-stars-link">Ver reseñas</span>
-            </button>
-
-            {/* ===== Selectores de talla/color (debajo del título) ===== */}
-            {colors.length > 1 && (
-              <div className="trp-option">
-                <span className="trp-option-label">Color</span>
-                <div className="trp-option-values trp-option-colors">
-                  {colors.map((c) => (
-                    <button
-                      key={c}
-                      type="button"
-                      className={norm(color) === norm(c) ? 'is-active' : ''}
-                      style={{background: colorToHex(c)}}
-                      onClick={() => setColor(c)}
-                      aria-label={`Color ${c}`}
-                      title={c}
-                    />
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {esComboLaredo ? (
-              <>
-                <div className="trp-option">
-                  <span className="trp-option-label">Color chaqueta</span>
-                  <div className="trp-option-values trp-option-colors">
-                    {partesChaqueta.colores.map((c) => (
-                      <button
-                        key={c}
-                        type="button"
-                        className={norm(chaquetaColor) === norm(c) ? 'is-active' : ''}
-                        style={{background: colorToHex(c)}}
-                        onClick={() =>
-                          setOptions((prev) => ({
-                            ...prev,
-                            [norm(OPT_CHAQUETA)]: `${c} / ${chaquetaTalla}`,
-                          }))
-                        }
-                        aria-label={`Color chaqueta ${c}`}
-                        title={c}
-                      />
-                    ))}
-                  </div>
-                </div>
-                <div className="trp-option">
-                  <span className="trp-option-label">Talla chaqueta</span>
-                  <div className="trp-option-values">
-                    {partesChaqueta.tallas.map((t) => (
-                      <button
-                        key={t}
-                        type="button"
-                        className={norm(chaquetaTalla) === norm(t) ? 'is-active' : ''}
-                        onClick={() =>
-                          setOptions((prev) => ({
-                            ...prev,
-                            [norm(OPT_CHAQUETA)]: `${chaquetaColor} / ${t}`,
-                          }))
-                        }
-                      >
-                        {formatSize(t)}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              </>
-            ) : null}
-
-            {optionNames
-              .filter((name) => name !== OPT_CHAQUETA)
-              .map((name) => {
-                const values = Array.from(
-                  new Set(
-                    variants
-                      .map((v) => v.selectedOptions?.find((o) => o.name === name)?.value)
-                      .filter(Boolean),
-                  ),
+            <div className="hp-chips">
+              {o.values.map((v) => {
+                const hay = variantes.some(
+                  (va) =>
+                    va.disponible &&
+                    va.opciones.every((oo) =>
+                      oo.name === o.name ? oo.value === v : elegidas[oo.name] === oo.value
+                    )
                 );
-                const esFilaDeColor = norm(name) === 'color camisa';
-                // Solo el combo Botas + Gorra tiene valores de gorra en el mapa: así esto
-                // no cambia ninguna otra ficha, sin depender de dónde venga el handle.
-                const esFilaDeGorras =
-                  norm(name) === 'gorra' && values.some((v) => GORRAS_COMBO[v]?.img);
-                const gorraElegida = esFilaDeGorras ? GORRAS_COMBO[options[norm(name)] || ''] : null;
+                // una opcion sin unidades no se puede elegir: si se marca como
+                // activa a la vez que tachada, el cliente ve un boton que dice
+                // agotado con la talla ya seleccionada y no entiende nada.
+                const activa = hay && elegidas[o.name] === v;
                 return (
-                  <div key={name} className="trp-option">
-                    <span className="trp-option-label">{name}</span>
-                    <div className={`trp-option-values${esFilaDeColor ? ' trp-option-colors' : ''}${esFilaDeGorras ? ' trp-option-gorras' : ''}`}>
-                      {values.map((value) => {
-                        const foto = esFilaDeGorras ? GORRAS_COMBO[value]?.img : null;
-                        const activo = norm(options[norm(name)]) === norm(value);
-                        if (foto) {
-                          return (
-                            <button
-                              key={value}
-                              type="button"
-                              className={`trp-gorra-btn${activo ? ' is-active' : ''}`}
-                              onClick={() => setOptions((prev) => ({...prev, [norm(name)]: value}))}
-                              aria-label={value}
-                              title={value}
-                            >
-                              <img
-                                src={optimizeImage(foto, 160)}
-                                alt={value}
-                                loading="lazy"
-                                width="56"
-                                height="56"
-                              />
-                              <span>{value.replace(/^Gorra\s+/i, '')}</span>
-                            </button>
-                          );
-                        }
-                        return (
-                          <button
-                            key={value}
-                            type="button"
-                            className={activo ? 'is-active' : ''}
-                            style={esFilaDeColor ? {background: colorToHex(value)} : undefined}
-                            onClick={() => setOptions((prev) => ({...prev, [norm(name)]: value}))}
-                            aria-label={esFilaDeColor ? `Color camisa ${value}` : undefined}
-                            title={esFilaDeColor ? value : undefined}
-                          >
-                            {esFilaDeColor ? null : formatSize(value)}
-                          </button>
-                        );
-                      })}
-                    </div>
-                    {gorraElegida ? (
-                      <p className="trp-gorra-ahorro">
-                        Esta gorra sola vale <s>{'$' + gorraElegida.antes.toLocaleString('es-CO')}</s> — en el
-                        combo te <strong>ahorras {'$' + gorraElegida.ahorro.toLocaleString('es-CO')}</strong>
-                      </p>
-                    ) : null}
-                  </div>
+                  <button
+                    key={v}
+                    type="button"
+                    disabled={!hay}
+                    aria-disabled={!hay}
+                    className={
+                      'hp-chip' + (activa ? ' is-on' : '') + (hay ? '' : ' is-off')
+                    }
+                    onClick={() => hay && setElegidas((e) => ({...e, [o.name]: v}))}
+                  >
+                    {v}
+                  </button>
                 );
               })}
-
-            {/* Preventa: la fecha de entrega se ve antes de decidir la compra. */}
-            {product.handle === 'camisa-outdoor-proteccion-solar-upf-50' ? (
-              <div className="trp-entrega">
-                <span>Preventa</span>
-                <strong>
-                  <s>{formatPrice(compare)}</s>
-                  {formatPrice(price)}
-                </strong>
-                <em>Entrega del 10 al 15 de noviembre</em>
-              </div>
-            ) : null}
-
-            {/* Windsor: la fecha de entrega va destacada bajo el precio, no escondida en la descripción. */}
-            {product.handle === 'chaqueta-windsor' ? (
-              <div className="trp-entrega trp-entrega--fuerte">
-                <span aria-hidden="true" className="trp-entrega-icono">
-                  🚚
-                </span>
-                <span className="trp-entrega-kicker">Entrega</span>
-                <strong>Jueves 12 de noviembre</strong>
-                <em>Tu chaqueta llega ese día · Envío a todo Colombia</em>
-              </div>
-            ) : null}
-
-            {/* Compra fija bajo el título: precio, unidades y botones a la vista de una */}
-            {renderBuyBar()}
-
-            {/* La descripción va aquí en móvil: en el acordeón quedaba al final de la ficha
-                y nadie la leía. En escritorio sigue dentro del acordeón. */}
-            {product.handle === 'camisa-outdoor-proteccion-solar-upf-50' ? (
-              <ProductStory />
-            ) : product.description && tablaTallas ? (
-              <p className="trp-desc-ficha">{product.description}</p>
-            ) : null}
-
-            {/* Beneficios clave */}
-            <ul className="trp-benefits">
-              {getBenefits(product.productType, product.title, tablaTallas).map((b) => (
-                <li key={b}>{b}</li>
-              ))}
-            </ul>
-          </>
-        ) : null}
-
-        {/* Pago seguro / envío / cambios: en móvil van DESPUÉS del título y el precio,
-            para que el cliente primero sepa qué prenda está viendo. En escritorio
-            siguen bajo la galería, como estaban. */}
-        <div className="trp-trust-movil">
-          <TrustBadges />
-        </div>
-
-        <span className="trp-tag">{isOut ? 'Agotado' : 'Edición limitada'}</span>
-
-        {/* ===== Upsell: los combos de la camisa (gorra y chaqueta); las botas para el resto ===== */}
-        {/* (el combo camisa + chaqueta Laredo no lleva sugerido, por pedido de Camilo) */}
-        {isCamisa && combosCamisa.length ? (
-          <section className="trp-reco" aria-label="Llévalo en combo">
-            {combosCamisa.map((combo) => (
-              <Link
-                className="trp-reco-card"
-                key={combo.handleCombo}
-                to={`/products/${combo.handleCombo}`}
-              >
-                {combo.featuredImage?.url ? (
-                  <img
-                    className="trp-reco-img"
-                    src={optimizeImage(combo.featuredImage.url, 400)}
-                    srcSet={imageSrcSet(combo.featuredImage.url, [300, 400, 600])}
-                    sizes="(min-width: 900px) 380px, 45vw"
-                    alt=""
-                    loading="lazy"
-                  />
-                ) : product.featuredImage?.url ? (
-                  <img
-                    className="trp-reco-img"
-                    src={optimizeImage(product.featuredImage.url, 400)}
-                    srcSet={imageSrcSet(product.featuredImage.url, [300, 400, 600])}
-                    sizes="(min-width: 900px) 380px, 45vw"
-                    alt=""
-                    loading="lazy"
-                  />
-                ) : null}
-                <div className="trp-reco-info">
-                  <span className="trp-reco-tag">🔥 Combo {combo.etiqueta}</span>
-                  <h3 className="trp-reco-title">{combo.title}</h3>
-                  <div className="trp-reco-price">
-                    {combo.compareAtPriceRange?.minVariantPrice?.amount ? (
-                      <s className="trp-reco-price-orig">
-                        {formatPrice(combo.compareAtPriceRange.minVariantPrice.amount)}
-                      </s>
-                    ) : null}
-                    <strong className="trp-reco-price-final">
-                      {formatPrice(combo.priceRange?.minVariantPrice?.amount)}
-                    </strong>
-                    <span className="trp-reco-badge">Combo</span>
-                  </div>
-                </div>
-                <span className="trp-reco-cta">Ver combo</span>
-              </Link>
-            ))}
-          </section>
-        ) : sugeridoMostrado && !sinLicorera ? (
-          <RecommendedProduct
-            product={{
-              handle: sugeridoMostrado.handle,
-              title: sugeridoMostrado.title,
-              price: sugeridoMostrado.priceRange?.minVariantPrice?.amount,
-              image: sugeridoMostrado.featuredImage?.url,
-              variantId: sugeridoMostrado.variants?.nodes?.[0]?.id,
-              // Ni las botas ni el combo entran al carrito desde aquí: el CTA lleva a su
-              // ficha en Oxygen para elegir color y talla (y la gorra, en el combo).
-              cartUrl: `/products/${sugeridoMostrado.handle}`,
-            }}
-            formatPrice={formatPrice}
-            antes={
-              esGorraCombo
-                ? sugeridoMostrado.compareAtPriceRange?.minVariantPrice?.amount
-                : null
-            }
-            ctaText={esGorraCombo ? 'Ver combo' : 'Elegir talla'}
-            colores={esGorraCombo ? [] : coloresSugerido}
-            onAdd={esGorraCombo ? undefined : (vidBota) => {
-              // El cliente está viendo una gorra (o chaqueta): al mandarlo a elegir la talla
-              // de las botas, su prenda se suma ya al carrito. Si no, se iba solo con las botas.
-              if (selectedVariant?.id && selectedVariant?.availableForSale !== false) {
-                const variantOptions = (selectedVariant.selectedOptions || [])
-                  .filter((o) => o.name !== 'Title')
-                  .map((o) => o.value)
-                  .join(' / ');
-                addToCart({
-                  variantId: selectedVariant.id,
-                  qty,
-                  title: product.title,
-                  image: selectedVariant.image?.url || product.featuredImage?.url,
-                  price: selectedVariant.price?.amount,
-                  compareAtPrice: compare,
-                  handle: product.handle,
-                  options: variantOptions || undefined,
-                });
-              }
-              window.location.href = vidBota
-                ? `/products/${sugerido.handle}?variant=${vidBota}`
-                : `/products/${sugerido.handle}`;
-            }}
-          />
-        ) : null}
-
-        <ProductAccordion
-          productType={product.productType}
-          title={product.title}
-          description={product.description}
-          ficha={tablaTallas}
-          notaEnvio={
-            product.handle === 'camisa-outdoor-proteccion-solar-upf-50'
-              ? 'Artículo en preventa: se despacha para entrega entre el 10 y el 15 de noviembre. Envío a todo Colombia. Cambios dentro de los 30 días y garantía por defectos de fabricación.'
-              : undefined
-          }
-        />
-
-        <div className={`trp-stock ${isOut ? 'is-out' : ''}`}>
-          {isOut ? 'Agotado' : '⚡ Últimas unidades disponibles'}
-        </div>
-
-        <SocialProof
-          title={product.title}
-          image={selectedVariant?.image?.url || product.featuredImage?.url}
-        />
-      </div>
-
-      <div className="trp-info-bottom">
-        <div className="trp-shipping-badge">
-          <span aria-hidden="true">🔒</span> Pago 100% seguro y cifrado
-          <span className="trp-shipping-sep" aria-hidden="true">·</span>
-          <span aria-hidden="true">🛡️</span> Garantía de devolución 7 días
-        </div>
-
-        <div className="trp-guarantee-badge">
-          <span aria-hidden="true">✅</span> Compra protegida de principio a fin
-          <span className="trp-guarantee-cards">VISA · MASTERCARD · PSE</span>
-        </div>
-      </div>
-
-      {PERSONALIZABLES.includes(product.handle) ? (
-        <Personalizador product={product} onChange={setPersonalizacion} />
-      ) : null}
-
-      {/* ===== Barra de compra (grid 2x2) ===== */}
-      {/* En movil el calculador va despues de elegir, para que no tape los selectores */}
-      {isApparel(product.productType, product.title) ? (
-        <div className="trp-size-movil">
-          <SizeGuide />
-        </div>
-      ) : null}
-
-      {tablaTallas ? (
-        <div className="trp-size-movil">
-          <SizeTable datos={tablaTallas} />
-        </div>
-      ) : null}
-
-      </div>
-
-      {/* ===== Medios de pago (confianza) ===== */}
-      <PaymentTrust />
-
-      {/* ===== Políticas (garantía, envíos, pagos, atención) ===== */}
-      <PolicyCards />
-
-      {/* ===== Reseñas (carrusel) ===== */}
-      {reviews.length > 0 && (
-        <section className="trp-reviews" id="trp-reviews">
-          <h2 className="trp-reviews-title">Lo que dicen en el campo</h2>
-          <div className="trp-reviews-track">
-            <div className="trp-reviews-row">
-              {[...reviews, ...reviews].map((r, i) => (
-                <article key={i} className="trp-review-card">
-                  <div className="trp-review-head">
-                    {r.photo ? (
-                      <img className="trp-review-photo" src={r.photo} alt="" loading="lazy" />
-                    ) : (
-                      <span className="trp-review-avatar">{r.name?.charAt(0) || 'R'}</span>
-                    )}
-                    <div className="trp-review-who">
-                      <span className="trp-review-name">{r.name}</span>
-                      <span className="trp-review-stars" aria-label={`${r.stars} de 5 estrellas`}>
-                        {'★'.repeat(r.stars)}
-                        {'☆'.repeat(5 - r.stars)}
-                      </span>
-                    </div>
-                  </div>
-                  <p className="trp-review-text">“{r.text}”</p>
-                  {r.verified ? (
-                    <span className="trp-review-verified">✓ Compra verificada</span>
-                  ) : null}
-                </article>
-              ))}
             </div>
           </div>
-        </section>
-      )}
+        ))}
 
-      {/* ===== Productos similares ===== */}
-      {similar.length > 0 && (
-        <section className="trp-similar">
-          <h2 className="trp-similar-title">También te puede gustar</h2>
-          <div className="trp-similar-grid">
-            {similar.map((p) => (
-              <Link key={p.id} className="trp-similar-card" to={`/products/${p.handle}`}>
-                <div className="trp-similar-media">
-                  {p.featuredImage?.url ? (
-                    <img
-                      src={optimizeImage(p.featuredImage.url, 300)}
-                      srcSet={imageSrcSet(p.featuredImage.url, [200, 300, 400])}
-                      sizes="(min-width: 1000px) 200px, 33vw"
-                      alt={p.featuredImage.altText || p.title}
-                      loading="lazy"
-                    />
-                  ) : null}
-                  <span className="trp-similar-rating">
-                    <i>★</i> {ratingFor(p.handle).num}
-                  </span>
-                </div>
-                <h3 className="trp-similar-name">{p.title}</h3>
-                <div className="trp-similar-foot">
-                  <span className="trp-similar-price">
-                    {formatPrice(p.priceRange?.minVariantPrice?.amount)}
-                  </span>
-                  {p.compareAtPriceRange?.minVariantPrice?.amount &&
-                  Number(p.compareAtPriceRange.minVariantPrice.amount) >
-                    Number(p.priceRange?.minVariantPrice?.amount) ? (
-                    <s className="trp-similar-compare">
-                      {formatPrice(p.compareAtPriceRange.minVariantPrice.amount)}
-                    </s>
-                  ) : null}
-                </div>
-              </Link>
-            ))}
+        <button
+          ref={botonCompra}
+          type="button"
+          className={'hp-comprar' + (anadido ? ' is-ok' : '')}
+          onClick={() => (anadido ? ir('/carrito') : agregar())}
+          disabled={!variante?.disponible || anadiendo}
+        >
+          {anadido
+            ? 'Ver carrito'
+            : variante?.disponible
+              ? anadiendo
+                ? 'Añadiendo…'
+                : 'Añadir al carrito'
+              : variantes.some((v) => v.disponible)
+                ? 'Agotada en esta talla'
+                : 'Agotada'}
+        </button>
+
+        <button
+          type="button"
+          className="hp-ahora"
+          onClick={comprarAhora}
+          disabled={!variante?.disponible}
+        >
+          Comprar ahora
+        </button>
+
+        <p className="hp-ahora-nota">
+          Paga directo, sin pasar por el carrito
+        </p>
+
+      </section>
+
+      <section className="hp-relato">
+        {parrafos.slice(0, 4).map((t, i) => (
+          <p key={i}>{t}</p>
+        ))}
+      </section>
+
+      {recos.length > 1 && (
+        <section className="hp-recos">
+          <div className="hp-recos-head">
+            <h2>Los clientes también eligieron</h2>
+            <span>Desliza →</span>
           </div>
+          <Rail className="hp-recos-rail">
+            {recos.map((p) => (
+              <Tarjeta key={p.id} p={p} ruta="/products/" />
+            ))}
+          </Rail>
         </section>
       )}
-    </div>
-  );
-}
 
-function PolicyCards() {
-  const items = [
-    {
-      title: 'Garantía de calidad',
-      desc: 'Cada pieza pasa control de calidad. Si algo no te convence, te respondemos.',
-      icon: '🛡️',
-    },
-    {
-      title: 'Envíos garantizados',
-      desc: 'Despachamos a toda Colombia con seguimiento hasta tu puerta.',
-      icon: '🚚',
-    },
-    {
-      title: 'Pagos seguros',
-      desc: 'Bold, Addi y pasarelas cifradas. Tu dinero siempre protegido.',
-      icon: '🔒',
-    },
-    {
-      title: 'Atención al cliente',
-      desc: 'Te acompañamos antes, durante y después de tu compra.',
-      icon: '💬',
-    },
-  ];
-  return (
-    <section className="trp-policies">
-      {items.map((item) => (
-        <article key={item.title} className="trp-policy-card">
-          <span className="trp-policy-icon" aria-hidden="true">
-            {item.icon}
-          </span>
-          <h3 className="trp-policy-title">{item.title}</h3>
-          <p className="trp-policy-desc">{item.desc}</p>
-        </article>
-      ))}
-    </section>
+      <ResenasProducto handle={handle} titulo={titulo} />
+
+      <Sellos />
+      <Pie />
+
+      {/* barra de compra fija: siempre alcanzable con el pulgar */}
+      <div className={'hp-barra' + (barraAbajo ? ' is-visible' : '')}>
+        <div className="hp-barra-precio">
+          <strong>{variante?.precio || precio}</strong>
+          {variante?.antes && <span className="hp-barra-antes">antes {variante.antes}</span>}
+        </div>
+        <button
+          type="button"
+          className={'hp-barra-btn' + (anadido ? ' is-ok' : '')}
+          onClick={() => (anadido ? ir('/carrito') : agregar())}
+          disabled={!variante?.disponible || anadiendo}
+        >
+          {anadido
+            ? 'Ver carrito'
+            : variante?.disponible
+              ? anadiendo
+                ? 'Añadiendo…'
+                : 'Añadir'
+              : 'Agotada'}
+        </button>
+      </div>
+
+      {tipoGuia && (
+        <GuiaTallas
+          abierto={guiaAbierta}
+          cerrar={() => setGuiaAbierta(false)}
+          tipo={tipoGuia}
+          tallas={opcionTalla?.values || []}
+          hormaProducto={elegidas[opcionHorma?.name] || ''}
+          onElegir={(v) => setElegidas((e) => ({...e, [opcionTalla.name]: v}))}
+        />
+      )}
+
+    </main>
   );
 }

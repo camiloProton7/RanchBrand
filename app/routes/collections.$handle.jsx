@@ -1,464 +1,413 @@
+import {useLoaderData, Link} from 'react-router';
+import styles from '~/styles/home-nuevo.css?url';
+import {recordar} from '~/lib/cache';
 import {useEffect, useMemo, useRef, useState} from 'react';
-import {Link, useLoaderData} from 'react-router';
-import {Analytics} from '@shopify/hydrogen';
-import {optimizeImage, imageSrcSet} from '~/lib/image';
-import {ratingFor} from '~/lib/rating';
-import percheroStyles from '~/styles/perchero-home.css?url';
-import {OG_COLECCIONES, OG_POR_DEFECTO} from '~/lib/og-colecciones';
-import collectionStyles from '~/styles/collection.css?url';
+import {Grid, Tarjeta} from '~/components/Tarjeta';
+import ColeccionEditorial from '~/components/ColeccionEditorial';
+import Sellos from '~/components/Sellos';
+import Pie from '~/components/Pie';
+import MenuLateral from '~/components/MenuLateral';
+import Carroza from '~/components/Carroza';
+import Buscador from '~/components/Buscador';
 
-export const links = () => [{rel: 'stylesheet', href: collectionStyles}, {rel: 'stylesheet', href: percheroStyles}];
+export const links = () => [{rel: 'stylesheet', href: styles}];
 
-// Full-page cache de Oxygen: sirve el HTML desde el edge (páginas estáticas).
-export const headers = () => ({
-  'Oxygen-Cache-Control':
-    'public, max-age=3600, s-maxage=3600, stale-while-revalidate=82800',
-  Vary: 'Accept-Encoding, Accept-Language',
-});
-
-export const meta = ({data}) => {
-  const collection = data?.collection;
-  const title = collection?.title ? `${collection.title} — The Ranch` : 'Colección — The Ranch';
-  const url = collection?.handle
-    ? `https://ranch.com.co/collections/${collection.handle}`
-    : 'https://ranch.com.co';
-  const description =
-    collection?.description ||
-    `${collection?.title || 'Colección'} de The Ranch. Calidad premium, envío a todo Colombia.`;
-  // Imagen al compartir: la portada propia de la colección (con sus prendas, generada por
-  // the-ranch/generar_og_colecciones.mjs). Si no hay, la foto de la primera prenda, y si
-  // tampoco, la portada de la tienda: nunca se comparte sin imagen.
-  const primera = collection?.products?.nodes?.find((p) => p.featuredImage?.url)?.featuredImage?.url;
-  const recortada = primera ? `${primera.split('?')[0]}?width=1200&height=630&crop=center` : null;
-  const imagen = OG_COLECCIONES[collection?.handle]
-    ? `https://ranch.com.co${OG_COLECCIONES[collection.handle]}`
-    : recortada || `https://ranch.com.co${OG_POR_DEFECTO}`;
-
-  return [
-    {title},
-    {name: 'description', content: description},
-    {property: 'og:title', content: title},
-    {property: 'og:description', content: description},
-    {property: 'og:type', content: 'website'},
-    {property: 'og:url', content: url},
-    {property: 'og:site_name', content: 'The Ranch'},
-    {property: 'og:image', content: imagen},
-    {property: 'og:image:secure_url', content: imagen},
-    {property: 'og:image:width', content: '1200'},
-    {property: 'og:image:height', content: '630'},
-    {property: 'og:image:alt', content: title},
-    {property: 'og:locale', content: 'es_CO'},
-    {name: 'twitter:card', content: 'summary_large_image'},
-    {name: 'twitter:title', content: title},
-    {name: 'twitter:description', content: description},
-    {name: 'twitter:image', content: imagen},
-    {tagName: 'link', rel: 'canonical', href: url},
-  ];
-};
-
-const COLLECTION_QUERY = `#graphql
-  query CollectionByHandle($handle: String!) {
+const COLECCION = `#graphql
+  query Coleccion($handle: String!, $orden: ProductCollectionSortKeys!, $alreves: Boolean!) {
     collection(handle: $handle) {
-      id
-      handle
       title
+      handle
       description
-      image {
-        url
-        altText
-      }
-      products(first: 48) {
+      image { url altText }
+      products(first: 60, sortKey: $orden, reverse: $alreves) {
         nodes {
           id
           title
           handle
-          featuredImage {
-            url
-            altText
-          }
-          images(first: 2) {
-            nodes {
-              url
-              altText
-            }
-          }
-          priceRange {
-            minVariantPrice { amount currencyCode }
-          }
-          compareAtPriceRange {
-            minVariantPrice { amount currencyCode }
-          }
-          variants(first: 10) {
-            nodes {
-              id
-              availableForSale
-              selectedOptions { name value }
-              price { amount currencyCode }
-            }
-          }
+          availableForSale
+          productType
+          priceRange { minVariantPrice { amount currencyCode } }
+      compareAtPriceRange { minVariantPrice { amount } }
+          images(first: 4) { nodes { url altText } }
+          metafields(identifiers: [
+            {namespace: "reviews", key: "rating"},
+            {namespace: "reviews", key: "rating_count"}
+          ]) { key value }
         }
       }
     }
   }
 `;
 
-const SHOPIFY_DOMAIN = '1caf84-4.myshopify.com';
-
-// Tallas de la tarjeta: nombre + si está disponible, para verlo sin entrar al producto.
-// Colecciones que arrancan con su PERCHERO (el rack de prendas colgadas) arriba del
-// listado: es la misma página del perchero servida en modo embed, dentro de un iframe.
-const PERCHEROS = {
-  bordados: {
-    src: '/perchero/sacos.html?embed=1',
-    titulo: 'Sacos bordados',
-  },
+const PORTADAS = {
+  gorras: '/col/gorras.webp',
+  chaquetas: '/col/chaquetas-portada.webp',
+  camisetas: '/col/camisas.webp',
 };
 
-function tallasDe(product) {
-  const out = [];
-  for (const v of product?.variants?.nodes || []) {
-    const opt = (v.selectedOptions || []).find((o) => /talla|tama|size/i.test(o.name));
-    const nombre = (opt ? opt.value : (v.title || '').split(' / ').pop() || '').trim();
-    if (!nombre || out.some((x) => x.nombre === nombre)) continue;
-    out.push({nombre, disponible: Boolean(v.availableForSale)});
-  }
-  return out;
-}
-
-function toNumericId(gid) {
-  return gid?.match(/\/(\d+)$/)?.[1] || gid;
-}
-
-function formatPrice(amount, currency = 'COP') {
-  if (!amount) return '';
-  return new Intl.NumberFormat('es-CO', {
-    style: 'currency',
-    currency,
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 0,
-  }).format(Number(amount));
-}
-
-const MARQUEE_ITEMS = [
-  'ENVÍO A TODO COLOMBIA',
-  'PROTECCIÓN UV',
-  'HECHO EN COLOMBIA',
-  'CAMBIOS FÁCILES',
-  'PAGO SEGURO',
+const CITAS = [
+  'No nacimos para que fuera fácil.',
+  'Hecho para durar, no para pasar.',
+  'Para el frío que se viene.',
+  'El que madruga, estrena.',
 ];
 
-export async function loader({params, context}) {
-  const {storefront} = context;
-  try {
-    const data = await storefront.query(COLLECTION_QUERY, {
-      variables: {handle: params.handle},
-    });
-    return {collection: data?.collection || null};
-  } catch (error) {
-    console.error('Colección falló', error);
-    return {collection: null};
-  }
-}
+const FRASES = {
+  gorras: ['Veinticinco gorras.', 'Ninguna sobra.'],
+  chaquetas: ['Para el frío que se viene.', 'Cuero, lana y agua.'],
+  camisetas: ['Camisas de faena.', 'Para el que madruga.'],
+  'botas-1': ['Botas que aguantan.', 'Barro, piedra, camino.'],
+};
 
-export default function CollectionPage() {
-  const {collection} = useLoaderData();
-  const [activeColor, setActiveColor] = useState(null);
-  const [sort, setSort] = useState('featured');
-  const [quickView, setQuickView] = useState(null);
-
-  if (!collection) {
-    return (
-      <div className="tr-col-empty">
-        <h1>Colección no encontrada</h1>
-        <Link to="/">← Volver al inicio</Link>
-      </div>
-    );
-  }
-
-  const products = collection.products?.nodes || [];
-  const heroImage = collection.image?.url || products[0]?.featuredImage?.url;
-
-  const colors = useMemo(() => {
-    const set = new Set();
-    products.forEach((p) => {
-      (p.variants?.nodes || []).forEach((v) => {
-        (v.selectedOptions || []).forEach((o) => {
-          if (o.name?.toLowerCase() === 'color' && o.value) set.add(o.value);
-        });
-      });
-    });
-    return Array.from(set);
-  }, [products]);
-
-  const filtered = useMemo(() => {
-    let list = [...products];
-    if (activeColor) {
-      list = list.filter((p) =>
-        (p.variants?.nodes || []).some((v) =>
-          (v.selectedOptions || []).some(
-            (o) => o.name?.toLowerCase() === 'color' && o.value === activeColor,
-          ),
-        ),
-      );
+const OTRAS = `#graphql
+  query Otras {
+    collections(first: 24) {
+      nodes {
+        handle
+        title
+        image { url }
+        products(first: 1) { nodes { id featuredImage { url } } }
+      }
     }
-    const price = (p) => Number(p.priceRange?.minVariantPrice?.amount) || 0;
-    if (sort === 'price-asc') list.sort((a, b) => price(a) - price(b));
-    else if (sort === 'price-desc') list.sort((a, b) => price(b) - price(a));
-    else if (sort === 'name') list.sort((a, b) => a.title.localeCompare(b.title));
-    return list;
-  }, [products, activeColor, sort]);
+  }
+`;
 
-  const addToCart = (variantId) => {
-    if (!variantId) return;
-    window.location.href = `https://${SHOPIFY_DOMAIN}/cart/${toNumericId(variantId)}:1`;
+// las dos colecciones que Camilo llena a mano desde Shopify
+const DE_GENERO = `#graphql
+  query DeGenero {
+    hombre: collection(handle: "chaquetas-hombre") {
+      products(first: 100) { nodes { handle } }
+    }
+    mujer: collection(handle: "chaquetas-mujer") {
+      products(first: 100) { nodes { handle } }
+    }
+  }
+`;
+
+async function cargarColeccion({params, context, genero = ''}) {
+  const handle = params.handle;
+  const fresco = import.meta.env.DEV ? {cache: context.storefront.CacheNone()} : undefined;
+  const [data, otrasData] = await Promise.all([
+    context.storefront.query(COLECCION, {
+      ...fresco,
+      // manda el orden manual que Camilo arma en Shopify
+      variables: {
+        handle,
+        orden: 'MANUAL',
+        alreves: false,
+      },
+    }),
+    context.storefront.query(OTRAS, fresco),
+  ]);
+  const c = data.collection;
+  if (!c) throw new Response('Colección no encontrada', {status: 404});
+
+  const optimizar = (url, ancho) => {
+    if (!url) return '';
+    const base = url.split('?')[0];
+    const v = url.includes('?v=') ? '?' + url.split('?')[1].split('&')[0] : '';
+    return `${base}${v}${v ? '&' : '?'}width=${ancho}`;
   };
 
-  return (
-    <div className="tr-col">
-      <Analytics.CollectionView
-        data={{collection: {id: collection.id, handle: collection.handle}}}
-      />
-      <header className="tr-col-hero">
-        <div className="tr-col-hero-inner">
-          <span className="tr-col-eyebrow">Colección</span>
-          <h1 className="tr-col-title">{collection.title}</h1>
-          {collection.description ? (
-            <p className="tr-col-desc">{collection.description}</p>
-          ) : null}
-          <span className="tr-col-count">
-            {products.length} {products.length === 1 ? 'producto' : 'productos'}
-          </span>
-        </div>
-        {heroImage ? (
-          <div className="tr-col-hero-media" aria-hidden="true">
-            <img src={optimizeImage(heroImage, 1200)} alt="" />
-          </div>
-        ) : null}
-      </header>
+  const estrellas = (nodos) => {
+    const lista = (nodos || []).filter(Boolean);
+    const r = lista.find((m) => m.key === 'rating');
+    const c2 = lista.find((m) => m.key === 'rating_count');
+    let valor = 0;
+    if (r?.value) {
+      try {
+        valor = Number(JSON.parse(r.value).value) || 0;
+      } catch {
+        valor = Number(r.value) || 0;
+      }
+    }
+    return {valor, cuenta: Number(c2?.value) || 0};
+  };
 
-      {/* ===== Marquee ===== */}
-      <div className="tr-col-marquee" aria-hidden="true">
-        <div className="tr-col-marquee-track">
-          {[...MARQUEE_ITEMS, ...MARQUEE_ITEMS, ...MARQUEE_ITEMS].map((item, i) => (
-            <span key={i} className="tr-col-marquee-item">
-              {item}
-              <i>·</i>
-            </span>
-          ))}
-        </div>
-      </div>
+  const fmt = new Intl.NumberFormat('es-CO', {
+    style: 'currency',
+    currency: 'COP',
+    maximumFractionDigits: 0,
+  });
 
-      {PERCHEROS[collection.handle] ? (
-        <section className="tr-perchero" id="sacos-bordados" aria-label={PERCHEROS[collection.handle].titulo}>
-          {/* Sin encabezado propio: el de la colección ya nombra la sección y el gesto lo
-              enseña el panel del perchero ("desliza para explorar"). */}
-          <div className="tr-perchero-marco">
-            <iframe
-              src={PERCHEROS[collection.handle].src}
-              title={`Perchero de ${PERCHEROS[collection.handle].titulo} The Ranch`}
-              loading="lazy"
-            />
-          </div>
-        </section>
-      ) : null}
+  const productos = c.products.nodes.map((p) => {
+    const {valor, cuenta} = estrellas(p.metafields);
+    const n = Number(p.priceRange.minVariantPrice.amount);
+    return {
+      id: p.id,
+      titulo: p.title,
+      handle: p.handle,
+      tipo: p.productType,
+      disponible: p.availableForSale,
+      precioNum: n,
+      precio: fmt.format(n),
+      antes: Number(p.compareAtPriceRange?.minVariantPrice?.amount) > 0 &&
+        Number(p.compareAtPriceRange.minVariantPrice.amount) !== n
+        ? fmt.format(Number(p.compareAtPriceRange.minVariantPrice.amount))
+        : null,
+      valor,
+      cuenta,
+      // solo la principal y la del hover: la grilla traia las cuatro fotos de
+      // cada producto y bajaba 1,9 MB aunque solo se viera la primera
+      imgs: p.images.nodes.slice(0, 2).map((x) => optimizar(x.url, 420)),
+      grande: p.images.nodes[0] ? optimizar(p.images.nodes[0].url, 1100) : null,
+    };
+  });
 
-      {/* ===== Filtros ===== */}
-      <div className="tr-col-filters">
-        <div className="tr-col-chips">
-          <button
-            type="button"
-            className={!activeColor ? 'is-active' : ''}
-            onClick={() => setActiveColor(null)}
-          >
-            Todos
-          </button>
-          {colors.map((c) => (
-            <button
-              key={c}
-              type="button"
-              className={activeColor === c ? 'is-active' : ''}
-              onClick={() => setActiveColor(c)}
-            >
-              {c}
-            </button>
-          ))}
-        </div>
-        <select
-          className="tr-col-sort"
-          value={sort}
-          onChange={(e) => setSort(e.target.value)}
-          aria-label="Ordenar"
-        >
-          <option value="featured">Destacados</option>
-          <option value="price-asc">Precio: menor a mayor</option>
-          <option value="price-desc">Precio: mayor a menor</option>
-          <option value="name">Nombre A–Z</option>
-        </select>
-      </div>
+  const desde = productos.length ? Math.min(...productos.map((p) => p.precioNum)) : 0;
 
-      {/* ===== Grid ===== */}
-      <div className="tr-col-grid">
-        {filtered.map((p, i) => (
-          <CollectionCard
-            key={p.id}
-            product={p}
-            index={i}
-            onQuickView={setQuickView}
-          />
-        ))}
-      </div>
+  const PRINCIPALES = ['chaquetas', 'camisetas', 'botas-1', 'gorras'];
+  const porHandle = new Map((otrasData.collections?.nodes ?? []).map((x) => [x.handle, x]));
+  const otras = PRINCIPALES.filter((h) => h !== handle)
+    .map((h) => porHandle.get(h))
+    .filter((x) => x && (x.image?.url || x.products?.nodes?.[0]?.featuredImage?.url))
+    .map((x) => ({
+      handle: x.handle,
+      titulo: x.title,
+      foto: optimizar(x.image?.url || x.products.nodes[0].featuredImage.url, 640),
+    }));
 
-      {/* ===== Quick view modal ===== */}
-      {quickView ? (
-        <div className="tr-col-qv-overlay" onClick={() => setQuickView(null)}>
-          <div className="tr-col-qv" onClick={(e) => e.stopPropagation()}>
-            <button
-              className="tr-col-qv-close"
-              type="button"
-              aria-label="Cerrar"
-              onClick={() => setQuickView(null)}
-            >
-              ×
-            </button>
-            {quickView.featuredImage?.url ? (
-              <img
-                className="tr-col-qv-img"
-                src={optimizeImage(quickView.featuredImage.url, 600)}
-                alt={quickView.featuredImage.altText || quickView.title}
-              />
-            ) : null}
-            <div className="tr-col-qv-info">
-              <h3 className="tr-col-qv-title">{quickView.title}</h3>
-              <span className="tr-col-qv-price">
-                {formatPrice(quickView.priceRange?.minVariantPrice?.amount)}
-              </span>
-              <div className="tr-col-qv-variants">
-                {(quickView.variants?.nodes || []).map((v) => (
-                  <button
-                    key={v.id}
-                    type="button"
-                    onClick={() => {
-                      addToCart(v.id);
-                      setQuickView(null);
-                    }}
-                  >
-                    {(v.selectedOptions || []).map((o) => o.value).join(' / ') || 'Único'}
-                  </button>
-                ))}
-              </div>
-              <Link
-                className="tr-col-qv-link"
-                to={`/products/${quickView.handle}`}
-                onClick={() => setQuickView(null)}
-              >
-                Ver producto completo →
-              </Link>
-            </div>
-          </div>
-        </div>
-      ) : null}
-    </div>
+  // submenu hombre / mujer: manda lo que haya en cada coleccion curada
+  let lista = productos;
+  if (handle === 'chaquetas' && (genero === 'hombre' || genero === 'mujer')) {
+    const hombres = new Set();
+    const mujeres = new Set();
+    try {
+      const g = await context.storefront.query(DE_GENERO, {
+        cache: context.storefront.CacheShort(),
+      });
+      for (const p of g?.hombre?.products?.nodes || []) hombres.add(p.handle);
+      for (const p of g?.mujer?.products?.nodes || []) mujeres.add(p.handle);
+    } catch {
+      /* sin las listas, se muestran todas */
+    }
+
+    if (genero === 'mujer' && mujeres.size) {
+      lista = productos.filter((p) => mujeres.has(p.handle));
+    }
+    if (genero === 'hombre') {
+      if (hombres.size) {
+        lista = productos.filter((p) => hombres.has(p.handle));
+      } else if (mujeres.size) {
+        // mientras la coleccion de hombre este vacia: todas menos las de mujer
+        lista = productos.filter((p) => !mujeres.has(p.handle));
+      }
+    }
+  }
+
+  return {
+    otras,
+    genero,
+    titulo: c.title,
+    handle: c.handle,
+    descripcion: (c.description || '').replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim(),
+    foto:
+      PORTADAS[handle] ??
+      (c.image ? optimizar(c.image.url, 1200) : productos[0]?.grande ?? null),
+    desde: desde ? fmt.format(desde) : null,
+    productos: lista,
+  };
+}
+
+/**
+ * La coleccion se guarda dos minutos: entrar y volver a una categoria no
+ * debe repetir las dos consultas a Shopify cada vez.
+ */
+export async function loader({params, context, request}) {
+  const handle = params.handle || '';
+  const genero = new URL(request.url).searchParams.get('genero') || '';
+  return recordar(`coleccion:${handle}:${genero}`, 2, () =>
+    cargarColeccion({params, context, genero}),
   );
 }
 
-function CollectionCard({product, index, onQuickView}) {
-  const primary = product.featuredImage;
-  const second = product.images?.nodes?.[1];
-  const price = product.priceRange?.minVariantPrice?.amount;
-  const tallas = tallasDe(product);
-  const todoAgotado = tallas.length > 0 && tallas.every((t) => !t.disponible);
-  const compare = product.compareAtPriceRange?.minVariantPrice?.amount;
-  const hasDiscount = compare && Number(compare) > Number(price);
+const FRASE_COL = {
+  gorras: 'Gorras de faena, visera curva y tela que aguanta sol y polvo. Elige la tuya y recíbela en casa.',
+  chaquetas: 'Chaquetas enceradas, acolchadas y de gamuza para el frío de la sabana. Prendas que duran años.',
+  camisetas: 'Camisas de dril y algodón pesado, con el corte de trabajo de siempre. Para el que madruga.',
+  'botas-1': 'Botas de cuero, suela firme y horma cómoda. Para el barro, la piedra y el camino largo.',
+};
+
+export const meta = ({data}) => {
+  const t = data?.titulo ?? 'Colección';
+  const h = data?.handle ?? '';
+  const d =
+    (data?.descripcion && data.descripcion.slice(0, 155)) ||
+    FRASE_COL[h] ||
+    `${t} de The Ranch. Prendas hechas para durar, con envío a toda Colombia.`;
+  const crudo = data?.foto || `/col/${h === 'botas-1' ? 'chaquetas' : h}.webp`;
+  // Facebook y WhatsApp exigen la imagen absoluta
+  const img = crudo.startsWith('http') ? crudo : `https://ranch.com.co${crudo}`;
+  return [
+    {title: `${t} · The Ranch`},
+    {name: 'description', content: d},
+    {tagName: 'link', rel: 'canonical', href: `https://ranch.com.co/collections/${h}`},
+    {property: 'og:type', content: 'website'},
+    {property: 'og:site_name', content: 'The Ranch'},
+    {property: 'og:locale', content: 'es_CO'},
+    {property: 'og:title', content: `${t} · The Ranch`},
+    {property: 'og:description', content: d},
+    {property: 'og:url', content: `https://ranch.com.co/collections/${h}`},
+    {property: 'og:image', content: img},
+    {name: 'twitter:card', content: 'summary_large_image'},
+  ];
+};
+
+export default function ColeccionNueva() {
+  const {titulo, descripcion, foto, productos, handle, desde, otras, genero} = useLoaderData();
+  const [orden, setOrden] = useState('destacados');
+  const heroRef = useRef(null);
+  // La barra va siempre sólida y visible: sobre la foto quedaba transparente y
+  // se perdía al subir. En colección el usuario necesita el menú a mano.
+  const solido = true;
+  const [prog, setProg] = useState(0);
+
+  useEffect(() => {
+    const alScroll = () => {
+      const total = document.documentElement.scrollHeight - window.innerHeight;
+      setProg(total > 0 ? Math.min(1, window.scrollY / total) : 0);
+    };
+    alScroll();
+    window.addEventListener('scroll', alScroll, {passive: true});
+    return () => window.removeEventListener('scroll', alScroll);
+  }, []);
+
+  const lista = useMemo(() => {
+    const l = [...productos];
+    if (orden === 'precio-asc') l.sort((a, b) => a.precioNum - b.precioNum);
+    if (orden === 'precio-desc') l.sort((a, b) => b.precioNum - a.precioNum);
+    if (orden === 'az') l.sort((a, b) => a.titulo.localeCompare(b.titulo, 'es'));
+    return l;
+  }, [productos, orden]);
+
+  const frase = FRASES[handle] ?? ['Hecho para el campo.', 'Y para la ciudad.'];
+
+  // chaquetas de hombre: recorrido editorial, una prenda por pantalla
+  const esEditorial = handle === 'chaquetas-hombre' || (handle === 'chaquetas' && genero === 'hombre');
+  if (esEditorial) {
+    return <ColeccionEditorial productos={productos} titulo={titulo} desde={desde} />;
+  }
 
   return (
-    <article className="tr-col-card">
-      <Link
-        className="tr-col-card-link"
-        to={`/products/${product.handle}`}
-        prefetch="intent"
-      >
-          <div
-            className="tr-col-card-media"
-            onPointerMove={(e) => {
-              // Scrub: deslizar el dedo revela la 2ª imagen (solo touch)
-              if (e.pointerType !== 'touch') return;
-              const el = e.currentTarget;
-              const rect = el.getBoundingClientRect();
-              const p = Math.max(
-                0,
-                Math.min(1, (e.clientX - rect.left) / rect.width),
-              );
-              const img1 = el.querySelector('.tr-col-card-img-1');
-              const img2 = el.querySelector('.tr-col-card-img-2');
-              if (img1) img1.style.opacity = String(1 - p);
-              if (img2) img2.style.opacity = String(p);
-            }}
-            onPointerLeave={(e) => {
-              const img1 = e.currentTarget.querySelector('.tr-col-card-img-1');
-              const img2 = e.currentTarget.querySelector('.tr-col-card-img-2');
-              if (img1) img1.style.opacity = '1';
-              if (img2) img2.style.opacity = '0';
-            }}
-          >
-            {primary?.url ? (
-              <img
-                className="tr-col-card-img tr-col-card-img-1"
-                src={optimizeImage(primary.url, 480)}
-                srcSet={imageSrcSet(primary.url, [240, 360, 480, 720])}
-                sizes="(min-width: 1000px) 330px, (min-width: 640px) 33vw, 50vw"
-                alt={primary.altText || product.title}
-                loading="lazy"
-              />
-            ) : null}
-            {second?.url ? (
-              <img
-                className="tr-col-card-img tr-col-card-img-2"
-                src={optimizeImage(second.url, 480)}
-                srcSet={imageSrcSet(second.url, [240, 360, 480, 720])}
-                sizes="(min-width: 1000px) 330px, (min-width: 640px) 33vw, 50vw"
-                alt=""
-                loading="lazy"
-                decoding="async"
-                onLoad={(e) => {
-                  // Activa el crossfade solo cuando la 2ª imagen ya cargó
-                  e.currentTarget
-                    .closest('.tr-col-card-media')
-                    ?.classList.add('tr-gorra-ready');
-                }}
-              />
-            ) : null}
-            <span className="tr-col-rating-badge">
-              <i>★</i> {ratingFor(product.handle).num}
-            </span>
-            {hasDiscount ? <span className="tr-col-offer">Oferta</span> : null}
+    <main className="hc">
+      <div className={'hc-bar' + (solido ? ' is-solido' : '')}>
+        <MenuLateral tono={solido ? 'tinta' : 'crema'} />
+        <Link to="/" prefetch="intent" className="hc-logo" aria-label="The Ranch, ir al inicio">
+          <img
+            src={solido ? '/logo-tinta.png' : '/logo-crema.png'}
+            alt="The Ranch"
+            width="78"
+          />
+        </Link>
+        <span className="hc-bolsa">
+          <Buscador tono="oscuro" />
+          <Carroza />
+        </span>
+        <span className="hc-prog" style={{transform: `scaleX(${prog})`}} aria-hidden="true" />
+      </div>
+
+      <section className="hc-hero" ref={heroRef}>
+        {foto && <img
+          src={foto}
+          alt={titulo}
+          className="hc-hero-img"
+          loading="eager"
+          fetchPriority="high"
+          decoding="async"
+        />}
+        <span className="hc-hero-velo" aria-hidden="true" />
+        <div className="hc-hero-copy">
+          <p className="hc-hero-rotulo">Colección</p>
+          <h1 className="hc-hero-titulo">{titulo}</h1>
+          <p className="hc-hero-pie">
+            {productos.length} {productos.length === 1 ? 'pieza' : 'piezas'}
+            {desde && <span> · desde {desde}</span>}
+          </p>
+        </div>
+      </section>
+
+      <section className="hc-intro">
+        <p className="hc-intro-frase">
+          {frase[0]}
+          <br />
+          <em>{frase[1]}</em>
+        </p>
+        {descripcion && <p className="hc-intro-desc">{descripcion.slice(0, 132)}</p>}
+        {handle === 'chaquetas' && (
+          <div className="hc-genero" role="group" aria-label="Hombre o mujer">
+            {[
+              ['', 'Todo'],
+              ['hombre', 'Hombre'],
+              ['mujer', 'Mujer'],
+            ].map(([k, t]) => (
+              <Link
+                key={t}
+                to={'/collections/chaquetas' + (k ? `?genero=${k}` : '')}
+                prefetch="intent"
+                className={'hc-genero-btn' + (genero === k ? ' is-on' : '')}
+              >
+                {t}
+              </Link>
+            ))}
           </div>
-          <div className="tr-col-card-info">
-            <h3 className="tr-col-card-name">{product.title}</h3>
-            {tallas.length > 1 ? (
-              <div className="tr-col-sizes" role="list" aria-label="Tallas disponibles">
-                {tallas.map((t) => (
-                  <span
-                    key={t.nombre}
-                    role="listitem"
-                    className={`tr-col-size ${t.disponible ? 'is-on' : 'is-off'}`}
-                    title={t.disponible ? `Talla ${t.nombre} disponible` : `Talla ${t.nombre} agotada`}
-                  >
-                    {t.nombre}
-                  </span>
-                ))}
-                {todoAgotado ? <span className="tr-col-soldout">Agotado</span> : null}
-              </div>
-            ) : null}
-            <div className="tr-col-card-meta">
-              <span className="tr-col-card-price">
-                {formatPrice(price)}
-                {hasDiscount ? (
-                  <s className="tr-col-card-compare">{formatPrice(compare)}</s>
-                ) : null}
-              </span>
-            </div>
+        )}
+
+        <div className="hc-orden" role="group" aria-label="Ordenar">
+          {[
+            ['destacados', 'Destacados'],
+            ['precio-asc', 'Precio ↑'],
+            ['precio-desc', 'Precio ↓'],
+            ['az', 'A-Z'],
+          ].map(([k, t], i) => (
+            <button
+              key={k}
+              type="button"
+              className={'hc-orden-btn' + (orden === k ? ' is-on' : '')}
+              onClick={() => setOrden(k)}
+            >
+              {i > 0 && <span className="hc-orden-sep" aria-hidden="true">·</span>}
+              {t}
+            </button>
+          ))}
+        </div>
+      </section>
+
+      <Grid className="hc-grid">
+        {lista.map((p, i) => (
+          <Tarjeta
+            key={p.id}
+            p={p}
+            prioridad={i < 2}
+            badge={p.tipo || undefined}
+            ruta="/products/"
+          />
+        ))}
+      </Grid>
+
+      {lista.length === 0 && <p className="hc-vacio">Esta colección está vacía.</p>}
+
+      {otras.length > 0 && (
+        <section className="hc-otras">
+          <div className="hc-otras-head">
+            <h2>Sigue el camino</h2>
+            <span>Desliza →</span>
           </div>
-      </Link>
-    </article>
+          <div className="hc-otras-rail">
+            {otras.map((o) => (
+              <Link key={o.handle} to={`/collections/${o.handle}`} className="hc-otra">
+                <span className="hc-otra-media">
+                  <img src={o.foto} alt={o.titulo} loading="lazy" />
+                  <span className="hc-otra-velo" aria-hidden="true" />
+                  <span className="hc-otra-nombre">{o.titulo}</span>
+                </span>
+              </Link>
+            ))}
+          </div>
+        </section>
+      )}
+
+      <Sellos />
+      <Pie />
+    </main>
   );
 }
