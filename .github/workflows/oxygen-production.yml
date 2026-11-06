@@ -30,6 +30,9 @@ jobs:
         run: npm ci
 
       - name: Build and deploy to Production
-        run: npx shopify hydrogen deploy --env production --force --metadata-description "${{ inputs.descripcion }}"
+        # Sin --env: en CI el entorno lo decide la rama desde la que se lanza el
+        # workflow, y pasar --env production hace que el CLI aborte con
+        # "Can't specify an environment handle in CI".
+        run: npx shopify hydrogen deploy --force --metadata-description "${{ inputs.descripcion }}"
         env:
           SHOPIFY_HYDROGEN_DEPLOYMENT_TOKEN: ${{ secrets.OXYGEN_DEPLOYMENT_TOKEN_1000068751 }}
