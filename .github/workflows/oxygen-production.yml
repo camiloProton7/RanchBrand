@@ -1,0 +1,35 @@
+name: Deploy a producción (manual)
+
+on:
+  workflow_dispatch:
+    inputs:
+      descripcion:
+        description: "Qué cambia en este deploy"
+        required: false
+        default: "deploy manual a producción"
+
+permissions:
+  contents: read
+  deployments: write
+
+jobs:
+  deploy:
+    name: Oxygen producción
+    timeout-minutes: 30
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "lts/*"
+          check-latest: true
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build and deploy to Production
+        run: npx shopify hydrogen deploy --env production --force --metadata-description "${{ inputs.descripcion }}"
+        env:
+          SHOPIFY_HYDROGEN_DEPLOYMENT_TOKEN: ${{ secrets.OXYGEN_DEPLOYMENT_TOKEN_1000068751 }}
