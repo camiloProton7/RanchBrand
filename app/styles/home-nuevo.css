@@ -6391,9 +6391,8 @@
 .ed-portada > img {
   width: 100%;
   height: 100%;
-  object-fit: contain;
-  object-position: 50% 42%;
-  background: #0b0908;
+  object-fit: cover;
+  object-position: 50% 30%;
 }
 .ed-portada::after {
   content: '';
@@ -6490,9 +6489,7 @@
 .ed-panel img {
   width: 100%;
   height: 100%;
-  object-fit: contain;
-  object-position: 50% 45%;
-  background: #0b0908;
+  object-fit: cover;
   display: block;
 }
 .ed-panel::after {

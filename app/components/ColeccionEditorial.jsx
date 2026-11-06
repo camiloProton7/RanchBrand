@@ -1,3 +1,4 @@
+import {useEffect, useState} from 'react';
 import {Link} from 'react-router';
 import MenuLateral from '~/components/MenuLateral';
 import Carroza from '~/components/Carroza';
@@ -19,6 +20,14 @@ const ACABADO = {
 const dos = (n) => String(n).padStart(2, '0');
 
 export default function ColeccionEditorial({productos = [], titulo = '', desde = null}) {
+  // la barra va transparente sobre la portada y se vuelve sólida al bajar
+  const [solido, setSolido] = useState(false);
+  useEffect(() => {
+    const alScroll = () => setSolido(window.scrollY > window.innerHeight * 0.86);
+    alScroll();
+    window.addEventListener('scroll', alScroll, {passive: true});
+    return () => window.removeEventListener('scroll', alScroll);
+  }, []);
   // la portada es la Windsor: la pieza que abre la colección, no el primer ítem
   const portada = productos.find((p) => p.handle === 'chaqueta-windsor') || productos[0];
   const total = productos.length;
@@ -58,13 +67,13 @@ export default function ColeccionEditorial({productos = [], titulo = '', desde =
 
   return (
     <main className="ed">
-      <div className="hc-bar is-solido">
-        <MenuLateral tono="tinta" />
+      <div className={'hc-bar' + (solido ? ' is-solido' : '')}>
+        <MenuLateral tono={solido ? 'tinta' : 'crema'} />
         <Link to="/" prefetch="intent" className="hc-logo" aria-label="The Ranch, ir al inicio">
-          <img src="/logo-tinta.png" alt="The Ranch" width="78" />
+          <img src={solido ? '/logo-tinta.png' : '/logo-crema.png'} alt="The Ranch" width="78" />
         </Link>
         <span className="hc-bolsa">
-          <Buscador tono="oscuro" />
+          <Buscador tono={solido ? 'oscuro' : 'claro'} />
           <Carroza />
         </span>
       </div>
