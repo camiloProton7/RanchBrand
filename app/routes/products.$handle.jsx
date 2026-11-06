@@ -30,7 +30,7 @@ const PRODUCTO = `#graphql
       priceRange { minVariantPrice { amount currencyCode } }
       images(first: 12) { nodes { url altText } }
       options { name values }
-      variants(first: 60) {
+      variants(first: 250) {
         nodes {
           id
           title
