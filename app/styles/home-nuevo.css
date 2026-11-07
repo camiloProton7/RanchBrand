@@ -6457,9 +6457,9 @@
   margin: 0 0 10px;
   padding: 5px 10px;
   border-radius: 999px;
-  background: rgba(243, 236, 223, 0.14);
-  border: 1px solid rgba(243, 236, 223, 0.28);
-  color: #f3ecdf;
+  background: rgba(36, 28, 18, 0.06);
+  border: 1px solid rgba(36, 28, 18, 0.2);
+  color: #241c12;
   font-size: 9.5px;
   letter-spacing: 0.16em;
   text-transform: uppercase;
@@ -6530,7 +6530,7 @@
   display: block;
   font-size: 11px;
   letter-spacing: 0.16em;
-  color: rgba(243, 236, 223, 0.55);
+  color: rgba(36, 28, 18, 0.5);
   font-weight: 700;
 }
 .ed-panel h2 {
@@ -6539,7 +6539,9 @@
   line-height: 1;
   letter-spacing: -0.035em;
   font-weight: 800;
-  color: #f3ecdf;
+  /* El texto va sobre la franja clara del panel, no sobre la foto: blanco
+     sobre crema era invisible. */
+  color: #241c12;
 }
 .ed-precio {
   margin-top: 9px;
@@ -6554,13 +6556,13 @@
 .ed-precio i {
   font-style: normal;
   font-size: 11px;
-  color: rgba(243, 236, 223, 0.55);
+  color: rgba(36, 28, 18, 0.55);
 }
 .ed-flecha {
   flex: 0 0 auto;
   width: 44px;
   height: 44px;
-  border: 1px solid rgba(243, 236, 223, 0.35);
+  border: 1px solid rgba(36, 28, 18, 0.22);
   border-radius: 50%;
   display: grid;
   place-items: center;
