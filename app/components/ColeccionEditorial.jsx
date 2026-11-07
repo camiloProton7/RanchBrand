@@ -40,12 +40,18 @@ export default function ColeccionEditorial({productos = [], titulo = '', desde =
       className="ed-panel"
       aria-label={`${p.titulo}, ${p.precio}`}
     >
+      {/* Cada panel mide una pantalla completa: con loading="lazy" el navegador
+          no las alcanzaba a pedir y quedaban en blanco al bajar (naturalWidth 0).
+          Son 13 fotos, así que se piden todas de una. */}
       {p.grande && (
         <img
           src={p.grande}
           alt={p.titulo}
-          loading={i < 2 ? 'eager' : 'lazy'}
+          loading="eager"
+          fetchPriority={i < 2 ? 'high' : 'auto'}
           decoding="async"
+          width="800"
+          height="800"
         />
       )}
       <div className="ed-panel-txt">
