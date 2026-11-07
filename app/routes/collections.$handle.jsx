@@ -195,10 +195,22 @@ async function cargarColeccion({params, context, genero = ''}) {
     }
   }
 
+  // Título con el género pegado de forma legible: "Chaquetasde hombre" salía
+  // sin espacio porque se concatenaba crudo sobre el title de Shopify.
+  const tituloBase = (c.title || '').trim();
+  const tituloGenero =
+    genero === 'hombre' || genero === 'mujer'
+      ? `${
+          /chaqueta/i.test(tituloBase)
+            ? tituloBase.replace(/chaquetas?/i, (m) => (m.endsWith('s') ? 'Chaquetas' : 'Chaqueta'))
+            : tituloBase
+        } de ${genero}`
+      : tituloBase;
+
   return {
     otras,
     genero,
-    titulo: c.title,
+    titulo: tituloGenero,
     handle: c.handle,
     descripcion: (c.description || '').replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim(),
     foto:

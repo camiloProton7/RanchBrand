@@ -9,8 +9,21 @@ export function Grid({children, className = ''}) {
   return <div className={'hn-par ' + className}>{children}</div>;
 }
 
+/**
+ * Tarjeta de producto para el grid de colección.
+ *
+ * Las fotos llegan en 1:1 con fondo claro, así que la tarjeta no recorta:
+ * muestra la imagen completa dentro de un marco cuadrado del mismo tono que
+ * el fondo. `object-fit: contain` deja la prenda entera visible —con `cover`
+ * se cortaban mangas y cuellos— y el marco claro hace que las fotos de
+ * fondo claro se fundan con la tarjeta en vez de quedar como un parche.
+ *
+ * El hover se maneja en el <Link>, no en cada <img>: antes el onMouseEnter
+ * vivía en la imagen, que estaba en opacity 0 y por tanto no recibía eventos,
+ * así que la foto alternativa nunca aparecía.
+ */
 export function Tarjeta({p, prioridad = false, badge, ancha = false, ruta = '/products/'}) {
-  // dos como maximo: la de reposo y la del hover
+  // dos como máximo: la de reposo y la del hover
   const fotos = (p.imgs?.length ? p.imgs : [p.img1].filter(Boolean)).slice(0, 2);
   const [idx, setIdx] = useState(0);
 
@@ -19,6 +32,10 @@ export function Tarjeta({p, prioridad = false, badge, ancha = false, ruta = '/pr
       to={`${ruta}${p.handle}`}
       prefetch="intent"
       className={'hn-card' + (ancha ? ' is-ancha' : '')}
+      onMouseEnter={() => fotos.length > 1 && setIdx(1)}
+      onMouseLeave={() => setIdx(0)}
+      onFocus={() => fotos.length > 1 && setIdx(1)}
+      onBlur={() => setIdx(0)}
     >
       <span className="hn-card-media">
         {fotos.map((src, i) => (
@@ -30,12 +47,10 @@ export function Tarjeta({p, prioridad = false, badge, ancha = false, ruta = '/pr
             loading={prioridad && i === 0 ? 'eager' : 'lazy'}
             fetchPriority={prioridad && i === 0 ? 'high' : 'auto'}
             decoding="async"
-            onMouseEnter={() => fotos.length > 1 && setIdx(1)}
-            onMouseLeave={() => setIdx(0)}
+            width="800"
+            height="800"
           />
         ))}
-
-        <span className="hn-card-velo" aria-hidden="true" />
 
         {fotos.length > 1 && (
           <span className="hn-card-dots" aria-hidden="true">
