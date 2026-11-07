@@ -6483,37 +6483,48 @@
   height: 92svh;
   min-height: 520px;
   overflow: hidden;
-  color: #f3ecdf;
+  /* Fondo claro igual al de las fotos de producto: la imagen 1:1 se funde con
+     el panel en vez de quedar como un rectángulo sobre negro. */
+  background: #f6f3ec;
+  color: #241c12;
   text-decoration: none;
 }
+/* Las fotos de producto llegan en 1:1 con fondo claro. Con cover se recortaba
+   la prenda (mangas fuera de cuadro) y el velo oscuro ensuciaba el fondo
+   blanco. Ahora la imagen entra entera, centrada, sobre un fondo del mismo
+   tono, y el texto va aparte. */
 .ed-panel img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
+  object-position: center;
   display: block;
+  padding: 18px 18px 0;
 }
 .ed-panel::after {
   content: '';
   position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    180deg,
-    rgba(10, 8, 6, 0.35) 0%,
-    rgba(10, 8, 6, 0) 26%,
-    rgba(10, 8, 6, 0.15) 52%,
-    rgba(10, 8, 6, 0.88) 100%
-  );
+  inset: auto 0 0 0;
+  height: 42%;
+  pointer-events: none;
+  background: linear-gradient(180deg, rgba(20, 16, 11, 0) 0%, rgba(20, 16, 11, 0.72) 100%);
 }
 .ed-panel-txt {
   position: absolute;
   z-index: 2;
-  left: 20px;
-  right: 20px;
-  bottom: 28px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 0 20px 28px;
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
   gap: 16px;
+  /* El texto caía sobre la foto y con fondo claro se perdía. Ahora se apoya
+     en una franja blanca con desenfoque: legible sin oscurecer la prenda. */
+  padding-top: 18px;
+  background: linear-gradient(180deg, rgba(246, 243, 236, 0) 0%, rgba(246, 243, 236, 0.94) 34%, #f6f3ec 62%);
+  color: #241c12;
 }
 .ed-num {
   display: block;
