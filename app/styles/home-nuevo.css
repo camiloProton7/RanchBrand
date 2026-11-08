@@ -6373,301 +6373,266 @@
   .bf-titulo { font-size: 40px; }
 }
 
+
 /* ============================================================
-   COLECCIÓN EDITORIAL · chaquetas de hombre
-   Una prenda por pantalla, sin tarjetas ni sellos. Solo .ed
+   COLECCIÓN · chaquetas de hombre
+   Portada de una pantalla + catálogo en grilla. Fotos 1:1 sobre
+   fondo claro: entran enteras, sin recorte y sin velo oscuro.
    ============================================================ */
-.ed {
-  background: #0f0d0b;
-  color: #f3ecdf;
-}
 
-.ed-portada {
-  position: relative;
-  height: 100svh;
-  min-height: 600px;
-  overflow: hidden;
-}
-.ed-portada > img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: 50% 30%;
-}
-.ed-portada::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    180deg,
-    rgba(12, 10, 8, 0.5) 0%,
-    rgba(12, 10, 8, 0.06) 30%,
-    rgba(12, 10, 8, 0.55) 62%,
-    rgba(12, 10, 8, 0.96) 100%
-  );
-}
-.ed-portada-txt {
-  position: absolute;
-  z-index: 2;
-  left: 20px;
-  right: 20px;
-  bottom: 36px;
-}
-.ed-kicker {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin: 0;
-  font-size: 10px;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: #d9b9a3;
-  font-weight: 700;
-}
-.ed-kicker::after {
-  content: '';
-  flex: 1;
-  height: 1px;
-  background: rgba(243, 236, 223, 0.28);
-}
-.ed h1,
-.ed h2 {
-  font-family: ui-sans-serif, -apple-system, 'SF Pro Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-}
-.ed-portada h1 {
-  margin: 14px 0 10px;
-  font-size: clamp(46px, 15vw, 64px);
-  line-height: 0.88;
-  letter-spacing: -0.05em;
-  font-weight: 800;
-}
-.ed-pie {
-  margin: 0;
-  font-size: 13px;
-  line-height: 1.5;
-  color: rgba(243, 236, 223, 0.72);
-  max-width: 26ch;
-}
-
-/* etiqueta de acabado: encerada / no encerrada */
-.ed-acabado {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  margin: 0 0 10px;
-  padding: 5px 10px;
-  border-radius: 999px;
-  background: rgba(36, 28, 18, 0.06);
-  border: 1px solid rgba(36, 28, 18, 0.2);
-  color: #241c12;
-  font-size: 9.5px;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  font-weight: 800;
-}
-.ed-acabado::before {
-  content: '';
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  background: #e9a184;
-}
-.ed-acabado-portada {
-  margin-bottom: 14px;
-}
-
-/* una pieza por pantalla */
-.ed-panel {
-  position: relative;
-  display: block;
-  height: 92svh;
-  min-height: 520px;
-  overflow: hidden;
-  /* Fondo claro igual al de las fotos de producto: la imagen 1:1 se funde con
-     el panel en vez de quedar como un rectángulo sobre negro. */
+.cx {
   background: #f6f3ec;
   color: #241c12;
-  text-decoration: none;
+  font-family: ui-sans-serif, -apple-system, 'SF Pro Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
-/* Las fotos de producto llegan en 1:1 con fondo claro. Con cover se recortaba
-   la prenda (mangas fuera de cuadro) y el velo oscuro ensuciaba el fondo
-   blanco. Ahora la imagen entra entera, centrada, sobre un fondo del mismo
-   tono, y el texto va aparte. */
-.ed-panel img {
+
+/* ---------- Portada ---------- */
+.cx-portada {
+  position: relative;
+  height: 78svh;
+  min-height: 480px;
+  max-height: 720px;
+  overflow: hidden;
+  background: #efe9df;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+.cx-portada-foto {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center 18%;
+  padding: 64px 16px 120px;
+}
+.cx-portada-txt {
+  position: relative;
+  z-index: 2;
+  padding: 0 20px 22px;
+}
+.cx-kicker {
+  margin: 0 0 10px;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  font-weight: 800;
+  color: #6d5f4c;
+}
+.cx-portada-txt h1 {
+  margin: 0;
+  font-size: clamp(38px, 12vw, 62px);
+  line-height: 0.92;
+  letter-spacing: -0.045em;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+.cx-pie {
+  margin: 12px 0 0;
+  max-width: 30ch;
+  font-size: 13px;
+  line-height: 1.45;
+  color: #6d5f4c;
+}
+.cx-portada-destacada {
+  position: absolute;
+  z-index: 3;
+  left: 20px;
+  right: 20px;
+  bottom: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 13px 16px;
+  border-radius: 14px;
+  background: #241c12;
+  color: #f6f3ec;
+  text-decoration: none;
+  font-size: 12.5px;
+  font-weight: 700;
+}
+.cx-portada-precio {
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+/* ---------- Catálogo ---------- */
+.cx-catalogo {
+  padding: 26px 16px 10px;
+}
+.cx-catalogo-top {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 0 4px 14px;
+  border-bottom: 1px solid rgba(36, 28, 18, 0.12);
+  margin-bottom: 16px;
+}
+.cx-catalogo-top h2 {
+  margin: 0;
+  font-size: 20px;
+  letter-spacing: -0.03em;
+  font-weight: 800;
+}
+.cx-catalogo-top p {
+  margin: 0;
+  font-size: 11.5px;
+  color: #6d5f4c;
+  white-space: nowrap;
+}
+
+.cx-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px 10px;
+}
+
+.cx-card {
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  color: inherit;
+  -webkit-tap-highlight-color: transparent;
+}
+.cx-card-foto {
+  position: relative;
+  display: block;
+  aspect-ratio: 1 / 1;
+  border-radius: 14px;
+  overflow: hidden;
+  background: #efe9df;
+}
+.cx-card-foto img {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   object-fit: contain;
   object-position: center;
-  display: block;
-  padding: 18px 18px 0;
+  transition: transform 0.4s ease;
 }
-.ed-panel::after {
-  content: '';
-  position: absolute;
-  inset: auto 0 0 0;
-  height: 42%;
-  pointer-events: none;
-  background: linear-gradient(180deg, rgba(20, 16, 11, 0) 0%, rgba(20, 16, 11, 0.72) 100%);
+.cx-card:active .cx-card-foto img {
+  transform: scale(0.985);
 }
-.ed-panel-txt {
+.cx-card-rebaja {
   position: absolute;
+  top: 8px;
+  left: 8px;
   z-index: 2;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  padding: 0 20px 28px;
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 16px;
-  /* El texto caía sobre la foto y con fondo claro se perdía. Ahora se apoya
-     en una franja blanca con desenfoque: legible sin oscurecer la prenda. */
-  padding-top: 18px;
-  background: linear-gradient(180deg, rgba(246, 243, 236, 0) 0%, rgba(246, 243, 236, 0.94) 34%, #f6f3ec 62%);
-  color: #241c12;
-}
-.ed-num {
-  display: block;
-  font-size: 11px;
-  letter-spacing: 0.16em;
-  color: rgba(36, 28, 18, 0.5);
-  font-weight: 700;
-}
-.ed-panel h2 {
-  margin: 8px 0 0;
-  font-size: clamp(25px, 7.6vw, 32px);
-  line-height: 1;
-  letter-spacing: -0.035em;
+  padding: 4px 8px;
+  border-radius: 999px;
+  background: #b4452a;
+  color: #fff;
+  font-size: 8.5px;
   font-weight: 800;
-  /* El texto va sobre la franja clara del panel, no sobre la foto: blanco
-     sobre crema era invisible. */
-  color: #241c12;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
 }
-.ed-precio {
-  margin-top: 9px;
+.cx-card-txt {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: 9px 2px 4px;
+}
+.cx-card-meta {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 800;
+  color: #8a7b66;
+}
+.cx-card-meta em {
+  font-style: normal;
+}
+.cx-card-meta i {
+  font-style: normal;
+  color: #b4452a;
+}
+.cx-card-nombre {
+  font-size: 12.5px;
+  line-height: 1.25;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.cx-card-precio {
   display: flex;
   align-items: baseline;
-  gap: 9px;
-}
-.ed-precio b {
-  font-size: 15px;
+  gap: 6px;
+  font-size: 13px;
   font-weight: 800;
 }
-.ed-precio i {
-  font-style: normal;
-  font-size: 11px;
-  color: rgba(36, 28, 18, 0.55);
-}
-.ed-flecha {
-  flex: 0 0 auto;
-  width: 44px;
-  height: 44px;
-  border: 1px solid rgba(36, 28, 18, 0.22);
-  border-radius: 50%;
-  display: grid;
-  place-items: center;
-  font-size: 15px;
-}
-
-.ed-interludio {
-  padding: 64px 20px;
-  text-align: center;
-}
-.ed-interludio p {
-  font-family: ui-sans-serif, -apple-system, 'SF Pro Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  margin: 0 auto;
-  max-width: 22ch;
-  font-size: 19px;
-  line-height: 1.35;
-  letter-spacing: -0.02em;
+.cx-card-precio s {
+  font-size: 10.5px;
   font-weight: 600;
-  color: #f3ecdf;
+  color: #9c8e7a;
 }
 
-.ed-indice {
-  padding: 52px 20px 30px;
-  background: #15120f;
+/* ---------- Cierre ---------- */
+.cx-cierre {
+  padding: 30px 20px 56px;
 }
-.ed-indice h3 {
-  margin: 0 0 18px;
-  font-size: 11px;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: #c8a68e;
-  font-weight: 700;
-}
-.ed-indice ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-.ed-indice li {
-  border-top: 1px solid rgba(243, 236, 223, 0.14);
-}
-.ed-indice a {
+.cx-cierre > a {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 16px;
-  padding: 15px 0;
-  font-size: 14px;
-  color: #f3ecdf;
-  text-decoration: none;
-}
-.ed-indice a span:last-child {
-  color: rgba(243, 236, 223, 0.55);
-  font-size: 12.5px;
-  white-space: nowrap;
-}
-.ed-indice em {
-  font-style: normal;
-  opacity: 0.5;
-  font-size: 11px;
-}
-
-.ed-cierre {
-  padding: 0 20px 56px;
-  background: #15120f;
-}
-.ed-cierre > a {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: #f3ecdf;
-  color: #1a1714;
-  padding: 17px 18px;
-  border-radius: 2px;
+  padding: 16px 18px;
+  border-radius: 14px;
+  background: #241c12;
+  color: #f6f3ec;
   font-weight: 800;
-  font-size: 14px;
+  font-size: 13.5px;
   text-decoration: none;
 }
-.ed-cierre small {
+.cx-cierre small {
   display: block;
   margin-top: 16px;
   font-size: 11px;
-  color: rgba(243, 236, 223, 0.4);
+  color: #8a7b66;
   letter-spacing: 0.04em;
 }
 
-@media (min-width: 900px) {
-  .ed-portada {
-    height: 640px;
+/* ---------- Escritorio ---------- */
+@media (min-width: 700px) {
+  .cx-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
   }
-  .ed-panel {
-    height: 660px;
-  }
-  .ed-portada-txt,
-  .ed-panel-txt {
-    left: 50%;
-    transform: translateX(-50%);
-    max-width: 1100px;
-    width: 100%;
-    padding: 0 24px;
-  }
-  .ed-indice,
-  .ed-cierre,
-  .ed-interludio {
+  .cx-catalogo,
+  .cx-cierre {
     max-width: 1100px;
     margin: 0 auto;
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+  .cx-portada-txt,
+  .cx-portada-destacada {
+    max-width: 1100px;
+    left: 50%;
+    right: auto;
+    width: 100%;
+    padding-left: 24px;
+    padding-right: 24px;
+    transform: translateX(-50%);
+  }
+  .cx-portada-destacada {
+    padding: 15px 20px;
+  }
+  .cx-card-nombre {
+    font-size: 14px;
+  }
+}
+@media (min-width: 1100px) {
+  .cx-grid {
+    grid-template-columns: repeat(4, 1fr);
   }
 }

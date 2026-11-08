@@ -6,9 +6,17 @@ import Buscador from '~/components/Buscador';
 import Pie from '~/components/Pie';
 
 /**
- * Colección de chaquetas de hombre con tratamiento editorial: la prenda ocupa
- * la pantalla, el texto no compite y no hay tarjetas ni sellos de descuento.
- * Solo se usa en esta colección; el resto sigue con la grilla de siempre.
+ * Colección de chaquetas de hombre.
+ *
+ * La versión anterior dedicaba una pantalla completa a cada prenda: para ver
+ * las 13 había que dar catorce scrolls, y como las fotos son 1:1 con fondo
+ * claro, cada panel era una foto flotando en mucho vacío. No se comparaba
+ * nada y no se sentía premium.
+ *
+ * Ahora la portada presenta la colección y debajo va un catálogo en grilla que
+ * deja ver varias prendas de un vistazo y comparar precios sin scrollear. Las
+ * fotos 1:1 entran enteras sobre el mismo tono claro del fondo, así la grilla
+ * se lee como catálogo y no como recortes pegados.
  */
 
 // acabado real de cada Windsor (la ficha de Shopify lo dice en la descripción)
@@ -19,60 +27,63 @@ const ACABADO = {
 
 const dos = (n) => String(n).padStart(2, '0');
 
+// La prenda que abre la portada, no el primer ítem de la lista
+const ABRE = 'chaqueta-encerada-windsor-verde';
+
 export default function ColeccionEditorial({productos = [], titulo = '', desde = null}) {
   // la barra va transparente sobre la portada y se vuelve sólida al bajar
   const [solido, setSolido] = useState(false);
   useEffect(() => {
-    const alScroll = () => setSolido(window.scrollY > window.innerHeight * 0.86);
+    const alScroll = () => setSolido(window.scrollY > window.innerHeight * 0.62);
     alScroll();
     window.addEventListener('scroll', alScroll, {passive: true});
     return () => window.removeEventListener('scroll', alScroll);
   }, []);
-  // la portada es la Windsor: la pieza que abre la colección, no el primer ítem
-  const portada = productos.find((p) => p.handle === 'chaqueta-windsor') || productos[0];
+
+  const portada = productos.find((p) => p.handle === ABRE) || productos[0];
+  const resto = productos.filter((p) => p.handle !== portada?.handle);
   const total = productos.length;
 
-  const panel = (p, i) => (
+  const pieza = (p, i) => (
     <Link
       key={p.id}
       to={`/products/${p.handle}`}
       prefetch="intent"
-      className="ed-panel"
+      className="cx-card"
       aria-label={`${p.titulo}, ${p.precio}`}
     >
-      {/* Cada panel mide una pantalla completa: con loading="lazy" el navegador
-          no las alcanzaba a pedir y quedaban en blanco al bajar (naturalWidth 0).
-          Son 13 fotos, así que se piden todas de una. */}
-      {p.grande && (
-        <img
-          src={p.grande}
-          alt={p.titulo}
-          loading="eager"
-          fetchPriority={i < 2 ? 'high' : 'auto'}
-          decoding="async"
-          width="800"
-          height="800"
-        />
-      )}
-      <div className="ed-panel-txt">
-        <div>
-          {ACABADO[p.handle] && <span className="ed-acabado">{ACABADO[p.handle]}</span>}
-          <span className="ed-num">{dos(i + 1)}</span>
-          <h2>{p.titulo}</h2>
-          <div className="ed-precio">
-            <b>{p.precio}</b>
-            {p.antes && <i>antes {p.antes}</i>}
-          </div>
-        </div>
-        <span className="ed-flecha" aria-hidden="true">
-          →
+      <span className="cx-card-foto">
+        {p.grande && (
+          <img
+            src={p.grande}
+            alt={p.titulo}
+            /* 13 prendas: se piden todas de entrada. Con lazy las de abajo
+               quedaban en blanco al llegar (naturalWidth 0). */
+            loading="eager"
+            fetchPriority={i < 2 ? 'high' : 'auto'}
+            decoding="async"
+            width="800"
+            height="800"
+          />
+        )}
+        {p.antes && <span className="cx-card-rebaja">Rebaja</span>}
+      </span>
+      <span className="cx-card-txt">
+        <span className="cx-card-meta">
+          <em>{dos(i + 1)}</em>
+          {ACABADO[p.handle] && <i>{ACABADO[p.handle]}</i>}
         </span>
-      </div>
+        <span className="cx-card-nombre">{p.titulo}</span>
+        <span className="cx-card-precio">
+          <b>{p.precio}</b>
+          {p.antes && <s>{p.antes}</s>}
+        </span>
+      </span>
     </Link>
   );
 
   return (
-    <main className="ed">
+    <main className="cx">
       <div className={'hc-bar' + (solido ? ' is-solido' : '')}>
         <MenuLateral tono={solido ? 'tinta' : 'crema'} />
         <Link to="/" prefetch="intent" className="hc-logo" aria-label="The Ranch, ir al inicio">
@@ -84,54 +95,44 @@ export default function ColeccionEditorial({productos = [], titulo = '', desde =
         </span>
       </div>
 
-      <header className="ed-portada">
+      {/* ===== Portada: una sola pantalla, con la prenda que abre la colección */}
+      <header className="cx-portada">
         {portada?.grande && (
-          <img src={portada.grande} alt={portada.titulo} fetchPriority="high" decoding="async" />
+          <img
+            className="cx-portada-foto"
+            src={portada.grande}
+            alt={portada.titulo}
+            fetchPriority="high"
+            decoding="async"
+          />
         )}
-        <div className="ed-portada-txt">
-          {portada && ACABADO[portada.handle] && (
-            <span className="ed-acabado ed-acabado-portada">
-              {ACABADO[portada.handle]} · {portada.titulo.replace('Chaqueta ', '')}
-            </span>
-          )}
-          <p className="ed-kicker">Colección · {total} piezas</p>
+        <div className="cx-portada-txt">
+          <p className="cx-kicker">Colección · {total} piezas</p>
           <h1>
             Chaquetas
             <br />
             de hombre
           </h1>
-          <p className="ed-pie">
-            Cuero, lana y agua. {total} piezas para el frío que se viene.
-          </p>
+          <p className="cx-pie">Cuero, lana y agua. {total} piezas para el frío que se viene.</p>
         </div>
+        {portada && (
+          <Link className="cx-portada-destacada" to={`/products/${portada.handle}`} prefetch="intent">
+            <span className="cx-portada-nombre">{portada.titulo}</span>
+            <span className="cx-portada-precio">{portada.precio}</span>
+          </Link>
+        )}
       </header>
 
-      {productos.slice(0, 7).map(panel)}
-
-      <section className="ed-interludio">
-        <p>No nacimos para que fuera fácil.</p>
+      {/* ===== Catálogo: grilla para comparar de un vistazo */}
+      <section className="cx-catalogo">
+        <div className="cx-catalogo-top">
+          <h2>Las {total}</h2>
+          <p>{desde ? `Desde ${desde}` : 'Todas las piezas'}</p>
+        </div>
+        <div className="cx-grid">{resto.map(pieza)}</div>
       </section>
 
-      {productos.slice(7).map((p, i) => panel(p, i + 7))}
-
-      <section className="ed-indice">
-        <h3>Las {total}</h3>
-        <ul>
-          {productos.map((p) => (
-            <li key={p.id}>
-              <Link to={`/products/${p.handle}`} prefetch="intent">
-                <span>
-                  {p.titulo}
-                  {ACABADO[p.handle] && <em> · {ACABADO[p.handle].toLowerCase()}</em>}
-                </span>
-                <span>{p.precio}</span>
-              </Link>
-            </li>
-          ))}
-        </ul>
-      </section>
-
-      <div className="ed-cierre">
+      <div className="cx-cierre">
         <Link to="/collections/chaquetas" prefetch="intent">
           Ver todas las chaquetas <span aria-hidden="true">→</span>
         </Link>
