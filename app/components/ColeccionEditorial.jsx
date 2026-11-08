@@ -85,9 +85,11 @@ export default function ColeccionEditorial({productos = [], titulo = '', desde =
   return (
     <main className="cx">
       <div className={'hc-bar' + (solido ? ' is-solido' : '')}>
-        <MenuLateral tono={solido ? 'tinta' : 'crema'} />
+        {/* La portada ahora es clara, así que el logo va en tinta desde el
+            principio: en crema se perdía sobre el fondo claro. */}
+        <MenuLateral tono="tinta" />
         <Link to="/" prefetch="intent" className="hc-logo" aria-label="The Ranch, ir al inicio">
-          <img src={solido ? '/logo-tinta.png' : '/logo-crema.png'} alt="The Ranch" width="78" />
+          <img src="/logo-tinta.png" alt="The Ranch" width="78" />
         </Link>
         <span className="hc-bolsa">
           <Buscador tono={solido ? 'oscuro' : 'claro'} />
