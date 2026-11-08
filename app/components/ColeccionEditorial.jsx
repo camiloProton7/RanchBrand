@@ -4,28 +4,16 @@ import MenuLateral from '~/components/MenuLateral';
 import Carroza from '~/components/Carroza';
 import Buscador from '~/components/Buscador';
 import Pie from '~/components/Pie';
+import {Grid, Tarjeta} from '~/components/Tarjeta';
 
 /**
  * Colección de chaquetas de hombre.
  *
- * La versión anterior dedicaba una pantalla completa a cada prenda: para ver
- * las 13 había que dar catorce scrolls, y como las fotos son 1:1 con fondo
- * claro, cada panel era una foto flotando en mucho vacío. No se comparaba
- * nada y no se sentía premium.
- *
- * Ahora la portada presenta la colección y debajo va un catálogo en grilla que
- * deja ver varias prendas de un vistazo y comparar precios sin scrollear. Las
- * fotos 1:1 entran enteras sobre el mismo tono claro del fondo, así la grilla
- * se lee como catálogo y no como recortes pegados.
+ * Usa las mismas tarjetas del home (<Tarjeta>) dentro del mismo <Grid> que las
+ * demás colecciones, para que la tienda se lea pareja de punta a punta. La
+ * versión anterior tenía un tratamiento editorial propio —una prenda por
+ * pantalla— que obligaba a catorce scrolls y no dejaba comparar nada.
  */
-
-// acabado real de cada Windsor (la ficha de Shopify lo dice en la descripción)
-const ACABADO = {
-  'chaqueta-windsor': 'No encerrada',
-  'chaqueta-encerada-windsor-verde': 'Encerada',
-};
-
-const dos = (n) => String(n).padStart(2, '0');
 
 // La prenda que abre la portada, no el primer ítem de la lista
 const ABRE = 'chaqueta-encerada-windsor-verde';
@@ -41,52 +29,13 @@ export default function ColeccionEditorial({productos = [], titulo = '', desde =
   }, []);
 
   const portada = productos.find((p) => p.handle === ABRE) || productos[0];
-  const resto = productos.filter((p) => p.handle !== portada?.handle);
   const total = productos.length;
-
-  const pieza = (p, i) => (
-    <Link
-      key={p.id}
-      to={`/products/${p.handle}`}
-      prefetch="intent"
-      className="cx-card"
-      aria-label={`${p.titulo}, ${p.precio}`}
-    >
-      <span className="cx-card-foto">
-        {p.grande && (
-          <img
-            src={p.grande}
-            alt={p.titulo}
-            /* 13 prendas: se piden todas de entrada. Con lazy las de abajo
-               quedaban en blanco al llegar (naturalWidth 0). */
-            loading="eager"
-            fetchPriority={i < 2 ? 'high' : 'auto'}
-            decoding="async"
-            width="800"
-            height="800"
-          />
-        )}
-        {p.antes && <span className="cx-card-rebaja">Rebaja</span>}
-      </span>
-      <span className="cx-card-txt">
-        <span className="cx-card-meta">
-          <em>{dos(i + 1)}</em>
-          {ACABADO[p.handle] && <i>{ACABADO[p.handle]}</i>}
-        </span>
-        <span className="cx-card-nombre">{p.titulo}</span>
-        <span className="cx-card-precio">
-          <b>{p.precio}</b>
-          {p.antes && <s>{p.antes}</s>}
-        </span>
-      </span>
-    </Link>
-  );
 
   return (
     <main className="cx">
       <div className={'hc-bar' + (solido ? ' is-solido' : '')}>
-        {/* La portada ahora es clara, así que el logo va en tinta desde el
-            principio: en crema se perdía sobre el fondo claro. */}
+        {/* La portada es clara: el logo va en tinta desde el principio,
+            en crema se perdía sobre el fondo. */}
         <MenuLateral tono="tinta" />
         <Link to="/" prefetch="intent" className="hc-logo" aria-label="The Ranch, ir al inicio">
           <img src="/logo-tinta.png" alt="The Ranch" width="78" />
@@ -125,13 +74,20 @@ export default function ColeccionEditorial({productos = [], titulo = '', desde =
         )}
       </header>
 
-      {/* ===== Catálogo: grilla para comparar de un vistazo */}
+      {/* ===== Catálogo: las mismas tarjetas del home */}
       <section className="cx-catalogo">
         <div className="cx-catalogo-top">
           <h2>Las {total}</h2>
           <p>{desde ? `Desde ${desde}` : 'Todas las piezas'}</p>
         </div>
-        <div className="cx-grid">{resto.map(pieza)}</div>
+        {/* El home pinta las prendas con <Rail> en una cinta horizontal; acá se
+            repiten con <Grid>, el mismo componente que ya usan las otras
+            colecciones, para no inventar una tercera forma de mostrar producto. */}
+        <Grid>
+          {productos.map((p, i) => (
+            <Tarjeta key={p.id} p={p} prioridad={i < 2} ruta="/products/" />
+          ))}
+        </Grid>
       </section>
 
       <div className="cx-cierre">

@@ -6484,99 +6484,6 @@
   white-space: nowrap;
 }
 
-.cx-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 10px 10px;
-}
-
-.cx-card {
-  display: flex;
-  flex-direction: column;
-  text-decoration: none;
-  color: inherit;
-  -webkit-tap-highlight-color: transparent;
-}
-.cx-card-foto {
-  position: relative;
-  display: block;
-  aspect-ratio: 1 / 1;
-  border-radius: 14px;
-  overflow: hidden;
-  background: #efe9df;
-}
-.cx-card-foto img {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  object-position: center;
-  transition: transform 0.4s ease;
-}
-.cx-card:active .cx-card-foto img {
-  transform: scale(0.985);
-}
-.cx-card-rebaja {
-  position: absolute;
-  top: 8px;
-  left: 8px;
-  z-index: 2;
-  padding: 4px 8px;
-  border-radius: 999px;
-  background: #b4452a;
-  color: #fff;
-  font-size: 8.5px;
-  font-weight: 800;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-}
-.cx-card-txt {
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
-  padding: 9px 2px 4px;
-}
-.cx-card-meta {
-  display: flex;
-  align-items: center;
-  gap: 7px;
-  font-size: 9px;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  font-weight: 800;
-  color: #8a7b66;
-}
-.cx-card-meta em {
-  font-style: normal;
-}
-.cx-card-meta i {
-  font-style: normal;
-  color: #b4452a;
-}
-.cx-card-nombre {
-  font-size: 12.5px;
-  line-height: 1.25;
-  font-weight: 700;
-  letter-spacing: -0.01em;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-.cx-card-precio {
-  display: flex;
-  align-items: baseline;
-  gap: 6px;
-  font-size: 13px;
-  font-weight: 800;
-}
-.cx-card-precio s {
-  font-size: 10.5px;
-  font-weight: 600;
-  color: #9c8e7a;
-}
-
 /* ---------- Cierre ---------- */
 .cx-cierre {
   padding: 30px 20px 56px;
@@ -6603,10 +6510,6 @@
 
 /* ---------- Escritorio ---------- */
 @media (min-width: 700px) {
-  .cx-grid {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 18px;
-  }
   .cx-catalogo,
   .cx-cierre {
     max-width: 1100px;
@@ -6626,13 +6529,5 @@
   }
   .cx-portada-destacada {
     padding: 15px 20px;
-  }
-  .cx-card-nombre {
-    font-size: 14px;
-  }
-}
-@media (min-width: 1100px) {
-  .cx-grid {
-    grid-template-columns: repeat(4, 1fr);
   }
 }
