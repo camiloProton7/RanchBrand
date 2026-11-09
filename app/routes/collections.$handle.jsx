@@ -3,7 +3,6 @@ import styles from '~/styles/home-nuevo.css?url';
 import {recordar} from '~/lib/cache';
 import {useEffect, useMemo, useRef, useState} from 'react';
 import {Grid, Tarjeta} from '~/components/Tarjeta';
-import ColeccionEditorial from '~/components/ColeccionEditorial';
 import Sellos from '~/components/Sellos';
 import Pie from '~/components/Pie';
 import MenuLateral from '~/components/MenuLateral';
@@ -310,12 +309,6 @@ export default function ColeccionNueva() {
   }, [productos, orden]);
 
   const frase = FRASES[handle] ?? ['Hecho para el campo.', 'Y para la ciudad.'];
-
-  // chaquetas de hombre: recorrido editorial, una prenda por pantalla
-  const esEditorial = handle === 'chaquetas-hombre' || (handle === 'chaquetas' && genero === 'hombre');
-  if (esEditorial) {
-    return <ColeccionEditorial productos={productos} titulo={titulo} desde={desde} />;
-  }
 
   return (
     <main className="hc">
