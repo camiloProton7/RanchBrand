@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useRef, useState} from 'react';
 import {Link} from 'react-router';
 
 export function Rail({children, className = ''}) {
@@ -27,24 +27,32 @@ export function Tarjeta({p, prioridad = false, badge, ancha = false, ruta = '/pr
   const fotos = (p.imgs?.length ? p.imgs : [p.img1].filter(Boolean)).slice(0, 2);
   const [idx, setIdx] = useState(0);
   const [volteada, setVolteada] = useState(false);
+  // en celular no hay hover: el tap dispara un mouseenter falso que cambiaba
+  // la foto y dejaba navegar en el mismo gesto
+  const enCelular = () =>
+    typeof window !== 'undefined' && window.matchMedia('(hover: none)').matches;
 
   /**
-   * En celular no existe el hover: el primer toque muestra la segunda foto y
-   * el segundo abre el producto. El botón "Comprar" navega de una, porque
-   * quien lo toca ya decidió.
+   * Primer toque: muestra la segunda foto y no navega.
+   * Segundo toque: abre el producto. "Comprar" navega de una.
    */
-  const alTocar = (e) => {
-    if (fotos.length < 2) return;
-    const enBoton = e.target?.closest?.('.hn-card-btn, .hn-card-foot');
-    if (enBoton) return;
-    const sinHover =
-      typeof window !== 'undefined' && window.matchMedia('(hover: none)').matches;
-    if (!sinHover) return;
+  // el dedo baja antes que el click: ahí se cambia la foto y se recuerda si la
+  // tarjeta ya estaba volteada, para que el click sepa si debe navegar o no
+  const antesDelToque = useRef(false);
+  const alBajarDedo = () => {
+    if (fotos.length < 2 || !enCelular()) return;
+    antesDelToque.current = volteada;
     if (!volteada) {
-      e.preventDefault();
       setVolteada(true);
       setIdx(1);
     }
+  };
+
+  const alTocar = (e) => {
+    if (fotos.length < 2) return;
+    if (e.target?.closest?.('.hn-card-btn, .hn-card-foot')) return;
+    if (!enCelular()) return;
+    if (!antesDelToque.current) e.preventDefault();
   };
 
   return (
@@ -52,8 +60,11 @@ export function Tarjeta({p, prioridad = false, badge, ancha = false, ruta = '/pr
       to={`${ruta}${p.handle}`}
       prefetch="intent"
       className={'hn-card' + (ancha ? ' is-ancha' : '') + (volteada ? ' is-volteada' : '')}
+      onTouchStart={alBajarDedo}
       onClick={alTocar}
-      onMouseEnter={() => fotos.length > 1 && setIdx(1)}
+      onMouseEnter={() => {
+        if (!enCelular() && fotos.length > 1) setIdx(1);
+      }}
       onMouseLeave={() => {
         setIdx(0);
         setVolteada(false);
