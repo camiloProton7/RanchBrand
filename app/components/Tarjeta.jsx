@@ -1,4 +1,4 @@
-import {useRef, useState} from 'react';
+import {useEffect, useState} from 'react';
 import {Link} from 'react-router';
 
 export function Rail({children, className = ''}) {
@@ -36,31 +36,34 @@ export function Tarjeta({p, prioridad = false, badge, ancha = false, ruta = '/pr
    * Primer toque: muestra la segunda foto y no navega.
    * Segundo toque: abre el producto. "Comprar" navega de una.
    */
-  // el dedo baja antes que el click: ahí se cambia la foto y se recuerda si la
-  // tarjeta ya estaba volteada, para que el click sepa si debe navegar o no
-  const antesDelToque = useRef(false);
-  const alBajarDedo = () => {
-    if (fotos.length < 2 || !enCelular()) return;
-    antesDelToque.current = volteada;
+  const alTocar = (e) => {
+    if (fotos.length < 2) return;
+    if (e.target?.closest?.('.hn-card-btn, .hn-card-foot')) return;
+    if (!enCelular()) return;
     if (!volteada) {
+      e.preventDefault();
       setVolteada(true);
       setIdx(1);
     }
   };
 
-  const alTocar = (e) => {
-    if (fotos.length < 2) return;
-    if (e.target?.closest?.('.hn-card-btn, .hn-card-foot')) return;
+  // al deslizar no se cambia la foto: si el dedo pasa por encima de una
+  // tarjeta no debe quedar mostrando la segunda imagen a medio fundir
+  useEffect(() => {
     if (!enCelular()) return;
-    if (!antesDelToque.current) e.preventDefault();
-  };
+    const alDeslizar = () => {
+      setIdx(0);
+      setVolteada(false);
+    };
+    window.addEventListener('scroll', alDeslizar, {passive: true});
+    return () => window.removeEventListener('scroll', alDeslizar);
+  }, []);
 
   return (
     <Link
       to={`${ruta}${p.handle}`}
       prefetch="intent"
       className={'hn-card' + (ancha ? ' is-ancha' : '') + (volteada ? ' is-volteada' : '')}
-      onTouchStart={alBajarDedo}
       onClick={alTocar}
       onMouseEnter={() => {
         if (!enCelular() && fotos.length > 1) setIdx(1);
