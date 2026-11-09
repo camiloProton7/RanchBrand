@@ -38,7 +38,7 @@ export function Tarjeta({p, prioridad = false, badge, ancha = false, ruta = '/pr
    */
   const alTocar = (e) => {
     if (fotos.length < 2) return;
-    if (e.target?.closest?.('.hn-card-btn, .hn-card-foot')) return;
+    if (e.target?.closest?.('.hn-card-btn')) return;
     if (!enCelular()) return;
     if (!volteada) {
       e.preventDefault();
@@ -70,7 +70,7 @@ export function Tarjeta({p, prioridad = false, badge, ancha = false, ruta = '/pr
             key={src + i}
             src={src}
             alt={i === 0 ? p.titulo : ''}
-            className={i === idx ? 'on' : ''}
+            className={i === 0 ? 'base' : idx === 1 ? 'on' : ''}
             loading={prioridad && i === 0 ? 'eager' : 'lazy'}
             fetchPriority={prioridad && i === 0 ? 'high' : 'auto'}
             decoding="async"

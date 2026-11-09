@@ -602,12 +602,19 @@
      mangas y cuellos en las fotos 1:1. */
   object-fit: contain;
   object-position: center;
-  transition: opacity 0.35s ease;
-  opacity: 0;
+  /* La primera foto nunca se apaga: si se desvanece, el marco claro de la
+     tarjeta asoma y se ve un destello blanco mientras entra la segunda. */
+  opacity: 1;
+  transition: opacity 0.28s ease;
   z-index: 1;
 }
 
-.hn-card-media img.on {
+.hn-card-media img + img {
+  opacity: 0;
+  z-index: 2;
+}
+
+.hn-card-media img + img.on {
   opacity: 1;
 }
 
