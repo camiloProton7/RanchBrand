@@ -150,15 +150,15 @@ async function cargarProducto({params, context}) {
         : null,
       valor: v,
       cuenta: Number(m.find((k) => k.key === 'rating_count')?.value) || 0,
-      imagen: optimizar(x.images.nodes[0]?.url, 440),
-      img1: optimizar(x.images.nodes[0]?.url, 520),
+      imagen: optimizar(x.images.nodes[0]?.url, 800),
+      img1: optimizar(x.images.nodes[0]?.url, 800),
       precioNum: Number(x.priceRange.minVariantPrice.amount),
       varianteId:
         x.variants?.nodes?.find((v) => (v.quantityAvailable ?? 0) > 0)?.id ||
         x.variants?.nodes?.find((v) => v.availableForSale)?.id ||
         x.variants?.nodes?.[0]?.id ||
         '',
-      imgs: x.images.nodes.slice(0, 2).map((n) => optimizar(n.url, 440)),
+      imgs: x.images.nodes.slice(0, 2).map((n) => optimizar(n.url, 800)),
     };
   };
 
@@ -213,7 +213,7 @@ async function cargarProducto({params, context}) {
     cuenta,
     // la primera a 720 (es la que se ve al entrar); el resto a 440, que en
     // un movil de 390 px se ve igual y pesa casi la mitad
-    fotos: p.images.nodes.map((n, i) => optimizar(n.url, i === 0 ? 720 : 440)),
+    fotos: p.images.nodes.map((n, i) => optimizar(n.url, i === 0 ? 1600 : 1000)),
     opciones: p.options,
     variantes: p.variants.nodes.map((v) => ({
       id: v.id,
