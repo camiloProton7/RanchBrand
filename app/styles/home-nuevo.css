@@ -6385,161 +6385,288 @@
   .bf-titulo { font-size: 40px; }
 }
 
-
 /* ============================================================
-   COLECCIÓN · chaquetas de hombre
-   Portada de una pantalla + catálogo en grilla. Fotos 1:1 sobre
-   fondo claro: entran enteras, sin recorte y sin velo oscuro.
+   COLECCIÓN EDITORIAL · chaquetas de hombre
+   Una prenda por pantalla, sin tarjetas ni sellos. Solo .ed
    ============================================================ */
-
-.cx {
-  background: #f6f3ec;
-  color: #241c12;
-  font-family: ui-sans-serif, -apple-system, 'SF Pro Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+.ed {
+  background: #0f0d0b;
+  color: #f3ecdf;
 }
 
-/* ---------- Portada ---------- */
-.cx-portada {
+.ed-portada {
   position: relative;
-  height: 78svh;
-  min-height: 480px;
-  max-height: 720px;
+  height: 100svh;
+  min-height: 600px;
   overflow: hidden;
-  background: #efe9df;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
 }
-.cx-portada-foto {
-  position: absolute;
-  inset: 0;
+.ed-portada > img {
   width: 100%;
   height: 100%;
-  object-fit: contain;
-  object-position: center 18%;
-  padding: 64px 16px 120px;
+  object-fit: cover;
+  object-position: 50% 30%;
 }
-.cx-portada-txt {
-  position: relative;
-  z-index: 2;
-  padding: 0 20px 22px;
-}
-.cx-kicker {
-  margin: 0 0 10px;
-  font-size: 10px;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  font-weight: 800;
-  color: #6d5f4c;
-}
-.cx-portada-txt h1 {
-  margin: 0;
-  font-size: clamp(38px, 12vw, 62px);
-  line-height: 0.92;
-  letter-spacing: -0.045em;
-  font-weight: 800;
-  text-transform: uppercase;
-}
-.cx-pie {
-  margin: 12px 0 0;
-  max-width: 30ch;
-  font-size: 13px;
-  line-height: 1.45;
-  color: #6d5f4c;
-}
-.cx-portada-destacada {
+.ed-portada::after {
+  content: '';
   position: absolute;
-  z-index: 3;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(12, 10, 8, 0.5) 0%,
+    rgba(12, 10, 8, 0.06) 30%,
+    rgba(12, 10, 8, 0.55) 62%,
+    rgba(12, 10, 8, 0.96) 100%
+  );
+}
+.ed-portada-txt {
+  position: absolute;
+  z-index: 2;
   left: 20px;
   right: 20px;
-  bottom: 16px;
+  bottom: 36px;
+}
+.ed-kicker {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  padding: 13px 16px;
-  border-radius: 14px;
-  background: #241c12;
-  color: #f6f3ec;
-  text-decoration: none;
-  font-size: 12.5px;
+  gap: 10px;
+  margin: 0;
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #d9b9a3;
   font-weight: 700;
 }
-.cx-portada-precio {
+.ed-kicker::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: rgba(243, 236, 223, 0.28);
+}
+.ed h1,
+.ed h2 {
+  font-family: ui-sans-serif, -apple-system, 'SF Pro Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+.ed-portada h1 {
+  margin: 14px 0 10px;
+  font-size: clamp(46px, 15vw, 64px);
+  line-height: 0.88;
+  letter-spacing: -0.05em;
   font-weight: 800;
-  white-space: nowrap;
+}
+.ed-pie {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.5;
+  color: rgba(243, 236, 223, 0.72);
+  max-width: 26ch;
 }
 
-/* ---------- Catálogo ---------- */
-.cx-catalogo {
-  padding: 26px 16px 10px;
+/* etiqueta de acabado: encerada / no encerrada */
+.ed-acabado {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0 0 10px;
+  padding: 5px 10px;
+  border-radius: 999px;
+  background: rgba(243, 236, 223, 0.14);
+  border: 1px solid rgba(243, 236, 223, 0.28);
+  color: #f3ecdf;
+  font-size: 9.5px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-weight: 800;
 }
-.cx-catalogo-top {
+.ed-acabado::before {
+  content: '';
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #e9a184;
+}
+.ed-acabado-portada {
+  margin-bottom: 14px;
+}
+
+/* una pieza por pantalla */
+.ed-panel {
+  position: relative;
+  display: block;
+  height: 92svh;
+  min-height: 520px;
+  overflow: hidden;
+  color: #f3ecdf;
+  text-decoration: none;
+}
+.ed-panel img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.ed-panel::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(10, 8, 6, 0.35) 0%,
+    rgba(10, 8, 6, 0) 26%,
+    rgba(10, 8, 6, 0.15) 52%,
+    rgba(10, 8, 6, 0.88) 100%
+  );
+}
+.ed-panel-txt {
+  position: absolute;
+  z-index: 2;
+  left: 20px;
+  right: 20px;
+  bottom: 28px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+}
+.ed-num {
+  display: block;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  color: rgba(243, 236, 223, 0.55);
+  font-weight: 700;
+}
+.ed-panel h2 {
+  margin: 8px 0 0;
+  font-size: clamp(25px, 7.6vw, 32px);
+  line-height: 1;
+  letter-spacing: -0.035em;
+  font-weight: 800;
+  color: #f3ecdf;
+}
+.ed-precio {
+  margin-top: 9px;
   display: flex;
   align-items: baseline;
-  justify-content: space-between;
-  gap: 12px;
-  padding: 0 4px 14px;
-  border-bottom: 1px solid rgba(36, 28, 18, 0.12);
-  margin-bottom: 16px;
+  gap: 9px;
 }
-.cx-catalogo-top h2 {
-  margin: 0;
-  font-size: 20px;
-  letter-spacing: -0.03em;
+.ed-precio b {
+  font-size: 15px;
   font-weight: 800;
 }
-.cx-catalogo-top p {
-  margin: 0;
-  font-size: 11.5px;
-  color: #6d5f4c;
-  white-space: nowrap;
+.ed-precio i {
+  font-style: normal;
+  font-size: 11px;
+  color: rgba(243, 236, 223, 0.55);
+}
+.ed-flecha {
+  flex: 0 0 auto;
+  width: 44px;
+  height: 44px;
+  border: 1px solid rgba(243, 236, 223, 0.35);
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-size: 15px;
 }
 
-/* ---------- Cierre ---------- */
-.cx-cierre {
-  padding: 30px 20px 56px;
+.ed-interludio {
+  padding: 64px 20px;
+  text-align: center;
 }
-.cx-cierre > a {
+.ed-interludio p {
+  font-family: ui-sans-serif, -apple-system, 'SF Pro Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  margin: 0 auto;
+  max-width: 22ch;
+  font-size: 19px;
+  line-height: 1.35;
+  letter-spacing: -0.02em;
+  font-weight: 600;
+  color: #f3ecdf;
+}
+
+.ed-indice {
+  padding: 52px 20px 30px;
+  background: #15120f;
+}
+.ed-indice h3 {
+  margin: 0 0 18px;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #c8a68e;
+  font-weight: 700;
+}
+.ed-indice ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.ed-indice li {
+  border-top: 1px solid rgba(243, 236, 223, 0.14);
+}
+.ed-indice a {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 16px 18px;
-  border-radius: 14px;
-  background: #241c12;
-  color: #f6f3ec;
-  font-weight: 800;
-  font-size: 13.5px;
+  gap: 16px;
+  padding: 15px 0;
+  font-size: 14px;
+  color: #f3ecdf;
   text-decoration: none;
 }
-.cx-cierre small {
+.ed-indice a span:last-child {
+  color: rgba(243, 236, 223, 0.55);
+  font-size: 12.5px;
+  white-space: nowrap;
+}
+.ed-indice em {
+  font-style: normal;
+  opacity: 0.5;
+  font-size: 11px;
+}
+
+.ed-cierre {
+  padding: 0 20px 56px;
+  background: #15120f;
+}
+.ed-cierre > a {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #f3ecdf;
+  color: #1a1714;
+  padding: 17px 18px;
+  border-radius: 2px;
+  font-weight: 800;
+  font-size: 14px;
+  text-decoration: none;
+}
+.ed-cierre small {
   display: block;
   margin-top: 16px;
   font-size: 11px;
-  color: #8a7b66;
+  color: rgba(243, 236, 223, 0.4);
   letter-spacing: 0.04em;
 }
 
-/* ---------- Escritorio ---------- */
-@media (min-width: 700px) {
-  .cx-catalogo,
-  .cx-cierre {
+@media (min-width: 900px) {
+  .ed-portada {
+    height: 640px;
+  }
+  .ed-panel {
+    height: 660px;
+  }
+  .ed-portada-txt,
+  .ed-panel-txt {
+    left: 50%;
+    transform: translateX(-50%);
+    max-width: 1100px;
+    width: 100%;
+    padding: 0 24px;
+  }
+  .ed-indice,
+  .ed-cierre,
+  .ed-interludio {
     max-width: 1100px;
     margin: 0 auto;
-    padding-left: 24px;
-    padding-right: 24px;
-  }
-  .cx-portada-txt,
-  .cx-portada-destacada {
-    max-width: 1100px;
-    left: 50%;
-    right: auto;
-    width: 100%;
-    padding-left: 24px;
-    padding-right: 24px;
-    transform: translateX(-50%);
-  }
-  .cx-portada-destacada {
-    padding: 15px 20px;
   }
 }
