@@ -26,14 +26,38 @@ export function Tarjeta({p, prioridad = false, badge, ancha = false, ruta = '/pr
   // dos como máximo: la de reposo y la del hover
   const fotos = (p.imgs?.length ? p.imgs : [p.img1].filter(Boolean)).slice(0, 2);
   const [idx, setIdx] = useState(0);
+  const [volteada, setVolteada] = useState(false);
+
+  /**
+   * En celular no existe el hover: el primer toque muestra la segunda foto y
+   * el segundo abre el producto. El botón "Comprar" navega de una, porque
+   * quien lo toca ya decidió.
+   */
+  const alTocar = (e) => {
+    if (fotos.length < 2) return;
+    const enBoton = e.target?.closest?.('.hn-card-btn, .hn-card-foot');
+    if (enBoton) return;
+    const sinHover =
+      typeof window !== 'undefined' && window.matchMedia('(hover: none)').matches;
+    if (!sinHover) return;
+    if (!volteada) {
+      e.preventDefault();
+      setVolteada(true);
+      setIdx(1);
+    }
+  };
 
   return (
     <Link
       to={`${ruta}${p.handle}`}
       prefetch="intent"
-      className={'hn-card' + (ancha ? ' is-ancha' : '')}
+      className={'hn-card' + (ancha ? ' is-ancha' : '') + (volteada ? ' is-volteada' : '')}
+      onClick={alTocar}
       onMouseEnter={() => fotos.length > 1 && setIdx(1)}
-      onMouseLeave={() => setIdx(0)}
+      onMouseLeave={() => {
+        setIdx(0);
+        setVolteada(false);
+      }}
       onFocus={() => fotos.length > 1 && setIdx(1)}
       onBlur={() => setIdx(0)}
     >
