@@ -28,8 +28,8 @@ export default function ColeccionEditorial({productos = [], titulo = '', desde =
     window.addEventListener('scroll', alScroll, {passive: true});
     return () => window.removeEventListener('scroll', alScroll);
   }, []);
-  // la portada es la Windsor: la pieza que abre la colección, no el primer ítem
-  const portada = productos.find((p) => p.handle === 'chaqueta-windsor') || productos[0];
+  // la portada es la primera pieza del orden manual de Shopify
+  const portada = productos[0];
   const total = productos.length;
 
   const panel = (p, i) => (
