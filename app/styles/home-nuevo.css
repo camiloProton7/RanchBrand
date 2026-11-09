@@ -588,7 +588,9 @@
   aspect-ratio: 1 / 1;
   border-radius: 17px;
   overflow: hidden;
-  background: #efe7d8;
+  /* Fondo del marco igual al de las fotos de producto: así la imagen 1:1
+     se funde con la tarjeta y no se ve como un recuadro pegado encima. */
+  background: #f6f3ec;
 }
 
 .hn-card-media img {
@@ -596,14 +598,13 @@
   inset: 0;
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  /* contain, no cover: la prenda se ve entera. Con cover se recortaban
+     mangas y cuellos en las fotos 1:1. */
+  object-fit: contain;
+  object-position: center;
   transition: opacity 0.35s ease;
-}
-
-.hn-card-media img {
   opacity: 0;
   z-index: 1;
-  object-position: center 26%;
 }
 
 .hn-card-media img.on {
@@ -1379,8 +1380,11 @@
   pointer-events: none;
 }
 
+/* El velo oscuro servía para que el texto blanco se leyera sobre fotos a
+   sangre. Con las fotos 1:1 de fondo claro el texto vive debajo de la imagen
+   en una tarjeta blanca, así que el velo solo ensuciaba: queda desactivado. */
 .hn-card.is-on .hn-card-velo {
-  opacity: 1;
+  opacity: 0;
 }
 
 .hn-card-dots {
@@ -1726,8 +1730,16 @@
   width: 100%;
 }
 
+/* Las fotos llegan 1:1, así que el marco es cuadrado y la imagen entra sin
+   recorte. El padding interno deja aire alrededor de la prenda para que no
+   toque el borde del marco: con fondo claro el contacto directo se ve como
+   un error de encuadre. */
 .hn-par .hn-card-media {
   aspect-ratio: 1 / 1;
+}
+
+.hn-par .hn-card-media img {
+  padding: 6px;
 }
 
 .hn-par .hn-card-name {

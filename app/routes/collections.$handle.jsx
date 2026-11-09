@@ -86,20 +86,34 @@ const DE_GENERO = `#graphql
 
 async function cargarColeccion({params, context, genero = ''}) {
   const handle = params.handle;
+  // Hombre/Mujer se leen de SU colección curada, no de la grande filtrada:
+  // así manda el orden manual que Camilo deja en Shopify para cada una.
+  const curada =
+    handle === 'chaquetas' && (genero === 'hombre' || genero === 'mujer')
+      ? `chaquetas-${genero}`
+      : null;
   const fresco = import.meta.env.DEV ? {cache: context.storefront.CacheNone()} : undefined;
   const [data, otrasData] = await Promise.all([
     context.storefront.query(COLECCION, {
       ...fresco,
       // manda el orden manual que Camilo arma en Shopify
       variables: {
-        handle,
+        handle: curada || handle,
         orden: 'MANUAL',
         alreves: false,
       },
     }),
     context.storefront.query(OTRAS, fresco),
   ]);
-  const c = data.collection;
+  let c = data.collection;
+  // si la colección curada no existe todavía, se cae a la grande
+  if (!c && curada) {
+    const alt = await context.storefront.query(COLECCION, {
+      ...fresco,
+      variables: {handle, orden: 'MANUAL', alreves: false},
+    });
+    c = alt.collection;
+  }
   if (!c) throw new Response('Colección no encontrada', {status: 404});
 
   const optimizar = (url, ancho) => {
@@ -195,10 +209,22 @@ async function cargarColeccion({params, context, genero = ''}) {
     }
   }
 
+  // Título con el género pegado de forma legible: "Chaquetasde hombre" salía
+  // sin espacio porque se concatenaba crudo sobre el title de Shopify.
+  const tituloBase = (c.title || '').trim();
+  const tituloGenero =
+    genero === 'hombre' || genero === 'mujer'
+      ? `${
+          /chaqueta/i.test(tituloBase)
+            ? tituloBase.replace(/chaquetas?/i, (m) => (m.endsWith('s') ? 'Chaquetas' : 'Chaqueta'))
+            : tituloBase
+        } de ${genero}`
+      : tituloBase;
+
   return {
     otras,
     genero,
-    titulo: c.title,
+    titulo: tituloGenero,
     handle: c.handle,
     descripcion: (c.description || '').replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim(),
     foto:
