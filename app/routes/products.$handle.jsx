@@ -211,9 +211,10 @@ async function cargarProducto({params, context}) {
     precioNum: Number(p.priceRange.minVariantPrice.amount),
     valor,
     cuenta,
-    // la primera a 720 (es la que se ve al entrar); el resto a 440, que en
-    // un movil de 390 px se ve igual y pesa casi la mitad
-    fotos: p.images.nodes.map((n, i) => optimizar(n.url, i === 0 ? 720 : 440)),
+    // La primera a 1400: se muestra a ancho completo y a 720 salía estirada y
+    // borrosa (una foto de 720 px pintada en 1248). El resto a 440, que en la
+    // miniaturas se ve igual y pesa casi la mitad.
+    fotos: p.images.nodes.map((n, i) => optimizar(n.url, i === 0 ? 1400 : 440)),
     opciones: p.options,
     variantes: p.variants.nodes.map((v) => ({
       id: v.id,
