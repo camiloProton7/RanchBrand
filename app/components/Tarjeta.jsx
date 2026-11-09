@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react';
+import {useState} from 'react';
 import {Link} from 'react-router';
 
 export function Rail({children, className = ''}) {
@@ -47,17 +47,6 @@ export function Tarjeta({p, prioridad = false, badge, ancha = false, ruta = '/pr
     }
   };
 
-  // al deslizar no se cambia la foto: si el dedo pasa por encima de una
-  // tarjeta no debe quedar mostrando la segunda imagen a medio fundir
-  useEffect(() => {
-    if (!enCelular()) return;
-    const alDeslizar = () => {
-      setIdx(0);
-      setVolteada(false);
-    };
-    window.addEventListener('scroll', alDeslizar, {passive: true});
-    return () => window.removeEventListener('scroll', alDeslizar);
-  }, []);
 
   return (
     <Link
