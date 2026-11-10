@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useRef, useState} from 'react';
 import {Link} from 'react-router';
 
 export function Rail({children, className = ''}) {
@@ -27,6 +27,7 @@ export function Tarjeta({p, prioridad = false, badge, ancha = false, ruta = '/pr
   const fotos = (p.imgs?.length ? p.imgs : [p.img1].filter(Boolean)).slice(0, 2);
   const [idx, setIdx] = useState(0);
   const [volteada, setVolteada] = useState(false);
+  const toque = useRef(null);
   // en celular no hay hover: el tap dispara un mouseenter falso que cambiaba
   // la foto y dejaba navegar en el mismo gesto
   const enCelular = () =>
@@ -54,6 +55,26 @@ export function Tarjeta({p, prioridad = false, badge, ancha = false, ruta = '/pr
       prefetch="intent"
       className={'hn-card' + (ancha ? ' is-ancha' : '') + (volteada ? ' is-volteada' : '')}
       onClick={alTocar}
+      onPointerDown={(e) => {
+        // en el celular el dedo que se apoya sobre la tarjeta ya muestra la segunda foto;
+        // si el gesto es un deslizamiento vertical (scroll) se vuelve a la primera
+        if (e.pointerType !== 'touch' || fotos.length < 2) return;
+        toque.current = {x: e.clientX, y: e.clientY};
+        if (!volteada) setIdx(1);
+      }}
+      onPointerMove={(e) => {
+        const t = toque.current;
+        if (!t || e.pointerType !== 'touch') return;
+        const dx = Math.abs(e.clientX - t.x);
+        const dy = Math.abs(e.clientY - t.y);
+        if (dy > 14 && dy > dx) {
+          toque.current = null;
+          setIdx(volteada ? 1 : 0);
+        }
+      }}
+      onPointerUp={() => {
+        toque.current = null;
+      }}
       onMouseEnter={() => {
         if (!enCelular() && fotos.length > 1) setIdx(1);
       }}
