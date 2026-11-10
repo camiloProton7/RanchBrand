@@ -210,6 +210,39 @@ const TOP_PRODUCTOS = `#graphql
   }
 `;
 
+// Los cuatro que Camilo quiere fijos en "Lo más vendido" del home.
+// Se piden por handle para que precio, foto y stock sigan viniendo de Shopify.
+const CURADOS = [
+  'camisa-outdoor-proteccion-solar-upf-50',
+  'gorra-1',
+  'botas-gamuza-lariat',
+  'chaqueta-windsor',
+];
+
+const CAMPOS_TARJETA = `
+  id
+  title
+  handle
+  description
+  priceRange { minVariantPrice { amount currencyCode } }
+  compareAtPriceRange { minVariantPrice { amount } }
+  images(first: 4) { nodes { url altText } }
+  metafields(identifiers: [{namespace: "reviews", key: "rating"}, {namespace: "reviews", key: "rating_count"}]) {
+    key
+    value
+  }
+`;
+
+function consultaCurados(handles) {
+  const vars = handles.map((_, i) => `$h${i + 1}: String!`).join(', ');
+  const campos = handles.map((_, i) => `p${i + 1}: product(handle: $h${i + 1}) {${CAMPOS_TARJETA}}`).join('\n');
+  return `#graphql
+  query Curados(${vars}) {
+    ${campos}
+  }
+`;
+}
+
 function estrellas(nodos) {
   const lista = (nodos || []).filter(Boolean);
   const rating = lista.find((m) => m.key === 'rating');
@@ -318,6 +351,15 @@ export async function loader({context}) {
     }
     return lista;
   });
+
+  const curadosData = await recordar('home-curados', 10, () =>
+    context.storefront.query(consultaCurados(CURADOS), {
+      variables: Object.fromEntries(CURADOS.map((h, i) => [`h${i + 1}`, h])),
+    }),
+  );
+  const listaCurada = CURADOS.map((_, i) => curadosData[`p${i + 1}`]).filter(Boolean);
+  // si alguno de los cuatro no responde, el home no se queda sin sección
+  const fuenteVendidos = listaCurada.length ? listaCurada : productos;
 
   const fmt = new Intl.NumberFormat('es-CO', {style: 'currency', currency: 'COP', maximumFractionDigits: 0});
 
@@ -483,7 +525,7 @@ export async function loader({context}) {
     combo,
     gorras,
     chaquetas,
-    vendidos: productos.map((p) => ({
+    vendidos: fuenteVendidos.map((p) => ({
       id: p.id,
       titulo: p.title,
       handle: p.handle,
