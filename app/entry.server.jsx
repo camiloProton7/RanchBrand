@@ -51,7 +51,7 @@ export default async function handleRequest(
     `style-src 'self' 'unsafe-inline' https://cdn.shopify.com https://fonts.googleapis.com`,
     `font-src 'self' https://fonts.gstatic.com`,
     `img-src 'self' data: https:`, // Permite imágenes de cualquier sitio HTTPS (necesario para Pixel)
-    `connect-src 'self' https://monorail-edge.shopifysvc.com https://connect.facebook.net https://www.facebook.com https://www.google-analytics.com https://analytics.google.com https://analytics.tiktok.com https://*.tiktok.com`,
+    `connect-src 'self' https://monorail-edge.shopifysvc.com https://connect.facebook.net https://www.facebook.com https://www.google-analytics.com https://*.google-analytics.com https://analytics.google.com https://www.google.com https://www.googletagmanager.com https://analytics.tiktok.com https://*.tiktok.com`,
     `frame-src 'self' https://www.facebook.com`
   ].join('; ');
 

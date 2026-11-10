@@ -2,6 +2,7 @@ import {useEffect, useState} from 'react';
 import {Link} from 'react-router';
 import {getCart, getCartUrl, formatPrice, addToCart, removeFromCart} from '~/lib/cart';
 import {optimizeImage} from '~/lib/image';
+import {ttqIdentify} from '~/components/TikTokPixel';
 
 export default function CartDrawer({open, onClose}) {
   const [items, setItems] = useState([]);
@@ -55,6 +56,7 @@ export default function CartDrawer({open, onClose}) {
   const saveCart = async (value) => {
     setPhone(value);
     const digits = value.replace(/\D/g, '');
+    if (digits.length >= 10) ttqIdentify({phone: digits});
     if (digits.length < 10 || items.length === 0 || saved) return;
     try {
       const form = new FormData();

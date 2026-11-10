@@ -10,6 +10,7 @@ import {
   removeFromCart,
   updateQty,
 } from '~/lib/cart';
+import {ttqIdentify} from '~/components/TikTokPixel';
 
 export const meta = () => [
   {title: 'Tu carrito · The Ranch'},
@@ -62,6 +63,8 @@ export default function Cesta() {
   const {sugeridos} = useLoaderData();
   const [lineas, setLineas] = useState([]);
   const [listo, setListo] = useState(false);
+  const [tel, setTel] = useState('');
+  const [guardado, setGuardado] = useState(false);
 
   useEffect(() => {
     const leer = () => setLineas(getCart());
@@ -80,6 +83,26 @@ export default function Cesta() {
     0,
   );
   const unidades = lineas.reduce((s, i) => s + Number(i.qty || 0), 0);
+
+  const guardarTel = async (valor) => {
+    setTel(valor);
+    const digitos = valor.replace(/\D/g, '');
+    if (digitos.length < 10) return;
+    ttqIdentify({phone: digitos});
+    if (guardado || lineas.length === 0) return;
+    try {
+      const form = new FormData();
+      form.append('phone', digitos);
+      form.append('items', JSON.stringify(lineas.map((l) => ({
+        title: l.title, price: l.price, qty: l.qty, handle: l.handle,
+        image: l.image, variantId: l.variantId,
+      }))));
+      await fetch('/api/cart', {method: 'POST', body: form});
+      setGuardado(true);
+    } catch {
+      /* no crítico: el checkout igual pide el teléfono */
+    }
+  };
 
   const cambiar = (id, qty) => setLineas(updateQty(id, qty));
   const quitar = (id) => setLineas(removeFromCart(id));
@@ -233,6 +256,25 @@ export default function Cesta() {
         <div className="hc-resumen-total">
           <span>Total</span>
           <strong>{formatPrice(total)}</strong>
+        </div>
+
+        <div style={{marginTop: '14px', paddingTop: '14px', borderTop: '1px solid rgba(0,0,0,.08)'}}>
+          <label
+            htmlFor="hc-wa"
+            style={{display: 'block', fontSize: '12px', letterSpacing: '.04em', textTransform: 'uppercase', color: '#7a7064', marginBottom: '6px'}}
+          >
+            {guardado ? '✓ Te escribimos por si algo pasa' : 'Tu WhatsApp (opcional)'}
+          </label>
+          <input
+            id="hc-wa"
+            type="tel"
+            inputMode="tel"
+            autoComplete="tel"
+            placeholder="300 123 4567"
+            value={tel}
+            onChange={(e) => guardarTel(e.target.value)}
+            style={{width: '100%', padding: '12px 14px', border: '1px solid rgba(0,0,0,.14)', borderRadius: '10px', fontSize: '15px', background: '#fff'}}
+          />
         </div>
       </section>
 
