@@ -433,6 +433,8 @@
 
 /* ---------- bloque de categorías ---------- */
 .hn-cats {
+  /* el encabezado pegajoso no debe tapar el título al saltar desde el hero */
+  scroll-margin-top: 74px;
   position: relative;
   z-index: 10;
   margin-top: -240px;
