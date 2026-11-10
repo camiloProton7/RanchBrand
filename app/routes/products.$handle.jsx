@@ -69,7 +69,7 @@ const RECOS = `#graphql
 
 
 const DE_COLECCION = `#graphql
-  query DeColeccion($handle: String!, $excluir: String!) {
+  query DeColeccion($handle: String!) {
     collection(handle: $handle) {
       products(first: 10, sortKey: BEST_SELLING) {
         nodes {
@@ -179,7 +179,7 @@ async function cargarProducto({params, context}) {
     try {
       const dc = await context.storefront.query(DE_COLECCION, {
         ...fresco,
-        variables: {handle: h, excluir: p.handle},
+        variables: {handle: h},
       });
       const lista = (dc.collection?.products?.nodes || [])
         .filter((x) => x.handle !== p.handle)
