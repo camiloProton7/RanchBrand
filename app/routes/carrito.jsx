@@ -258,10 +258,10 @@ export default function Cesta() {
           <strong>{formatPrice(total)}</strong>
         </div>
 
-        <div style={{marginTop: '14px', paddingTop: '14px', borderTop: '1px solid rgba(0,0,0,.08)'}}>
+        <div style={{display: 'flex', flexDirection: 'column', alignItems: 'stretch', gap: '8px', marginTop: '14px', paddingTop: '14px', borderTop: '1px solid rgba(0,0,0,.08)'}}>
           <label
             htmlFor="hc-wa"
-            style={{display: 'block', fontSize: '12px', letterSpacing: '.04em', textTransform: 'uppercase', color: '#7a7064', marginBottom: '6px'}}
+            style={{display: 'block', width: '100%', fontSize: '11px', letterSpacing: '.06em', textTransform: 'uppercase', color: '#8a8073'}}
           >
             {guardado ? '✓ Te escribimos por si algo pasa' : 'Tu WhatsApp (opcional)'}
           </label>
@@ -273,7 +273,7 @@ export default function Cesta() {
             placeholder="300 123 4567"
             value={tel}
             onChange={(e) => guardarTel(e.target.value)}
-            style={{width: '100%', padding: '12px 14px', border: '1px solid rgba(0,0,0,.14)', borderRadius: '10px', fontSize: '15px', background: '#fff'}}
+            style={{display: 'block', width: '100%', boxSizing: 'border-box', padding: '12px 14px', border: '1px solid rgba(0,0,0,.16)', borderRadius: '10px', fontSize: '15px', background: '#fff', color: '#1b1b1b', outline: 'none'}}
           />
         </div>
       </section>
