@@ -7,7 +7,7 @@
  * POST /api/meta-capi
  */
 
-const PIXEL_ID = '377899811794334';
+const PIXEL_ID = '377899794811334';
 
 async function sha256(text) {
   if (!text) return '';
