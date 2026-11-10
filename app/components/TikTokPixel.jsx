@@ -20,31 +20,6 @@ export function ttqTrack(evento, datos = {}) {
   }
 }
 
-/**
- * Manda el teléfono (y correo, si lo hay) hasheados para Advanced Matching.
- * TikTok los cruza con su base y sube el porcentaje de eventos atribuidos.
- */
-export async function ttqIdentify({email, phone} = {}) {
-  try {
-    if (typeof window === 'undefined' || !window.ttq) return;
-    const limpio = String(phone || '').replace(/\D/g, '');
-    if (limpio.length < 10) return;
-    const e164 = limpio.length === 10 ? `57${limpio}` : limpio;
-    if (window.__ttqIdent === e164) return; // no repetir en cada tecla
-    const hex = async (txt) => {
-      const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(txt.trim().toLowerCase()));
-      return Array.from(new Uint8Array(buf)).map((b) => b.toString(16).padStart(2, '0')).join('');
-    };
-    const datos = {phone_number: [await hex(`+${e164}`)]};
-    if (email) datos.email = [await hex(email)];
-    window.__ttqIdent = e164;
-    if (typeof window.ttq.identify === 'function') window.ttq.identify(datos);
-    else if (Array.isArray(window.ttq)) window.ttq.push(['identify', datos]);
-  } catch {
-    /* sin pixel: no pasa nada */
-  }
-}
-
 export default function TikTokPixel() {
   const location = useLocation();
 
