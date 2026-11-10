@@ -1,4 +1,5 @@
 import FacebookPixel from './components/FacebookPixel';
+import TikTokPixel from './components/TikTokPixel';
 import GoogleAnalytics from './components/GoogleAnalytics';
 import SiteHeader from './components/SiteHeader';
 import Footer from './components/Footer';
@@ -142,6 +143,7 @@ export function Layout({children}) {
       <body>
         {/* El Pixel se inserta al inicio del cuerpo */}
         <FacebookPixel />
+        <TikTokPixel />
         <GoogleAnalytics />
 
         {children}

@@ -1,5 +1,6 @@
 import {useLoaderData, Link, useNavigate} from 'react-router';
 import {addToCart, buyNow, getCartCount} from '~/lib/cart';
+import {ttqTrack} from '~/components/TikTokPixel';
 import {useEffect, useMemo, useRef, useState} from 'react';
 import styles from '~/styles/home-nuevo.css?url';
 import Sellos from '~/components/Sellos';
@@ -379,6 +380,14 @@ export default function ProductoNuevo() {
         opciones: variante.opciones?.map((o) => o.value).join(' · '),
         handle,
       });
+      ttqTrack('AddToCart', {
+        content_id: handle,
+        content_type: 'product',
+        content_name: titulo,
+        quantity: 1,
+        value: Math.round(variante.precioNum || 0),
+        currency: 'COP',
+      });
       setAnadido(true);
       setTimeout(() => setAnadido(false), 4000);
     } finally {
@@ -411,6 +420,13 @@ export default function ProductoNuevo() {
           value: Math.round(precioNum || 0),
           currency: 'COP',
         });
+        ttqTrack('ViewContent', {
+          content_id: handle,
+          content_type: 'product',
+          content_name: titulo,
+          value: Math.round(precioNum || 0),
+          currency: 'COP',
+        });
         return true;
       } catch {
         return false;
@@ -431,6 +447,7 @@ export default function ProductoNuevo() {
   function trackCompra(valor) {
     try {
       if (window.fbq) window.fbq('track', 'InitiateCheckout', {value: Math.round(valor), currency: 'COP'});
+      ttqTrack('InitiateCheckout', {value: Math.round(valor), currency: 'COP'});
     } catch {
       /* sin pixel: no pasa nada */
     }
