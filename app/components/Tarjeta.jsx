@@ -26,7 +26,6 @@ export function Tarjeta({p, prioridad = false, badge, ancha = false, ruta = '/pr
   // dos como máximo: la de reposo y la del hover
   const fotos = (p.imgs?.length ? p.imgs : [p.img1].filter(Boolean)).slice(0, 2);
   const [idx, setIdx] = useState(0);
-  const [volteada, setVolteada] = useState(false);
   const toque = useRef(null);
   // en celular no hay hover: el tap dispara un mouseenter falso que cambiaba
   // la foto y dejaba navegar en el mismo gesto
@@ -34,18 +33,12 @@ export function Tarjeta({p, prioridad = false, badge, ancha = false, ruta = '/pr
     typeof window !== 'undefined' && window.matchMedia('(hover: none)').matches;
 
   /**
-   * Primer toque: muestra la segunda foto y no navega.
-   * Segundo toque: abre el producto. "Comprar" navega de una.
+   * En el celular la segunda foto es una vista previa: aparece mientras el dedo
+   * está apoyado y se va al soltarlo. Tocar la tarjeta abre el producto.
    */
   const alTocar = (e) => {
     if (fotos.length < 2) return;
     if (e.target?.closest?.('.hn-card-btn')) return;
-    if (!enCelular()) return;
-    if (!volteada) {
-      e.preventDefault();
-      setVolteada(true);
-      setIdx(1);
-    }
   };
 
 
@@ -53,14 +46,14 @@ export function Tarjeta({p, prioridad = false, badge, ancha = false, ruta = '/pr
     <Link
       to={`${ruta}${p.handle}`}
       prefetch="intent"
-      className={'hn-card' + (ancha ? ' is-ancha' : '') + (volteada ? ' is-volteada' : '')}
+      className={'hn-card' + (ancha ? ' is-ancha' : '')}
       onClick={alTocar}
       onPointerDown={(e) => {
         // en el celular el dedo que se apoya sobre la tarjeta ya muestra la segunda foto;
         // si el gesto es un deslizamiento vertical (scroll) se vuelve a la primera
         if (e.pointerType !== 'touch' || fotos.length < 2) return;
         toque.current = {x: e.clientX, y: e.clientY};
-        if (!volteada) setIdx(1);
+        setIdx(1);
       }}
       onPointerMove={(e) => {
         const t = toque.current;
@@ -69,18 +62,25 @@ export function Tarjeta({p, prioridad = false, badge, ancha = false, ruta = '/pr
         const dy = Math.abs(e.clientY - t.y);
         if (dy > 14 && dy > dx) {
           toque.current = null;
-          setIdx(volteada ? 1 : 0);
+          setIdx(0);
         }
       }}
       onPointerUp={() => {
         toque.current = null;
+        if (enCelular()) setIdx(0);
+      }}
+      onPointerCancel={() => {
+        toque.current = null;
+        if (enCelular()) setIdx(0);
+      }}
+      onPointerLeave={() => {
+        if (enCelular()) setIdx(0);
       }}
       onMouseEnter={() => {
         if (!enCelular() && fotos.length > 1) setIdx(1);
       }}
       onMouseLeave={() => {
         setIdx(0);
-        setVolteada(false);
       }}
       onFocus={() => fotos.length > 1 && setIdx(1)}
       onBlur={() => setIdx(0)}
