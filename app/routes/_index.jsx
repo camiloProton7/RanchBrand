@@ -19,12 +19,18 @@ import {Rail, Tarjeta} from '~/components/Tarjeta';
 
 export const links = () => [{rel: 'stylesheet', href: styles}];
 
+// Portadas de las colecciones del home, todas 1:1.
+// La foto de cada colección es la prenda que la representa: Windsor para
+// hombre, Campo Over Size para mujer, Outdoor UPF 50 para camisas, Tacoma
+// para botas.
 const CATS = [
-  {nombre: 'Gorras', handle: 'gorras', img: '/cats/gorras.webp'},
-  {nombre: 'Chaquetas', handle: 'chaquetas', img: '/cats/chaquetas.webp'},
-  {nombre: 'Camisas', handle: 'camisetas', img: '/cats/camisas.webp'},
-  {nombre: 'Camisetas', handle: 'camisetas', img: '/cats/camisetas.webp'},
-  {nombre: 'Botas', handle: 'botas-1', img: '/cats/botas.webp'},
+  {nombre: 'Chaquetas Hombre', handle: 'chaquetas-hombre', img: '/cats/chaquetas-hombre.webp'},
+  {nombre: 'Chaquetas Mujer', handle: 'chaquetas-mujer', img: '/cats/chaquetas-mujer.webp'},
+  {nombre: 'Camisas', handle: 'camisetas', img: '/cats/camisas-upf.webp'},
+  {nombre: 'Botas', handle: 'botas-1', img: '/cats/botas-tacoma.webp'},
+  {nombre: 'Gorras', handle: 'gorras', img: '/cats/gorras-1x1.webp'},
+  {nombre: 'Sacos bordados', handle: 'bordados', img: '/cats/sacos.webp'},
+  {nombre: 'Accesorios', handle: 'accesorios', img: '/cats/accesorios.webp'},
 ];
 
 
