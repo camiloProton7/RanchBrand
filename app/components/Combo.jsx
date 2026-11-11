@@ -70,26 +70,40 @@ export default function Combo({combo}) {
             </header>
 
             <div className="hn-sheet-cuerpo">
-              {items.map((it) => (
-                <div key={it.handle} className="hn-sheet-bloque">
-                  <p className="hn-sheet-prenda">{it.titulo}</p>
-                  <div className="hn-sheet-chips">
-                    {(it.variantes || []).map((v) => (
-                      <button
-                        key={v.id}
-                        type="button"
-                        disabled={!v.disponible}
-                        className={
-                          'hn-chip' + (sel[it.handle] === v.id ? ' is-on' : '') + (v.disponible ? '' : ' is-off')
-                        }
-                        onClick={() => setSel((s) => ({...s, [it.handle]: v.id}))}
-                      >
-                        {v.titulo}
-                      </button>
-                    ))}
+              {items.map((it) => {
+                const vs = it.variantes || [];
+                const elegida = vs.find((v) => v.id === sel[it.handle]) || vs[0];
+                return (
+                  <div key={it.handle} className="hn-sheet-bloque">
+                    <div className="hn-sheet-fila">
+                      <span className="hn-sheet-foto">
+                        {elegida?.img ? <img src={elegida.img} alt={it.titulo} loading="lazy" /> : null}
+                      </span>
+                      <div className="hn-sheet-texto">
+                        <p className="hn-sheet-prenda">{it.titulo}</p>
+                        <p className="hn-sheet-elegida">
+                          {elegida ? elegida.titulo : 'Elige una opción'}
+                        </p>
+                      </div>
+                    </div>
+                    <div className="hn-sheet-chips">
+                      {vs.map((v) => (
+                        <button
+                          key={v.id}
+                          type="button"
+                          disabled={!v.disponible}
+                          className={
+                            'hn-chip' + (sel[it.handle] === v.id ? ' is-on' : '') + (v.disponible ? '' : ' is-off')
+                          }
+                          onClick={() => setSel((s) => ({...s, [it.handle]: v.id}))}
+                        >
+                          {v.titulo}
+                        </button>
+                      ))}
+                    </div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
 
             <footer className="hn-sheet-pie">
