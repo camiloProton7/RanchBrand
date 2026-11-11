@@ -1,3 +1,4 @@
+import {useEffect} from 'react';
 import FacebookPixel from './components/FacebookPixel';
 import TikTokPixel from './components/TikTokPixel';
 import GoogleAnalytics from './components/GoogleAnalytics';
@@ -158,6 +159,13 @@ export default function App() {
   const data = useLoaderData();
   const location = useLocation();
   const logoSrc = data?.header?.shop?.brand?.logo?.image?.url;
+  // iOS solo aplica :active si la página tiene algún listener de touchstart.
+  // Sin estado ni re-render: es un listener vacío, pasivo, una sola vez.
+  useEffect(() => {
+    const vacio = () => {};
+    document.addEventListener('touchstart', vacio, {passive: true});
+    return () => document.removeEventListener('touchstart', vacio);
+  }, []);
   // Entorno de laboratorio: /nuevo usa su propio encabezado y pie.
   const aislado =
     location.pathname.startsWith('/') ||
