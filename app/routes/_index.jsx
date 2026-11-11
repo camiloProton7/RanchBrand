@@ -88,7 +88,7 @@ const COMBO = `#graphql
       handle
       description
       images(first: 4) { nodes { url } }
-      variants(first: 40) { nodes { id price { amount currencyCode } availableForSale } }
+      variants(first: 40) { nodes { id title price { amount currencyCode } availableForSale } }
       metafields(identifiers: [{namespace: "reviews", key: "rating"}, {namespace: "reviews", key: "rating_count"}]) {
         key
         value
@@ -99,7 +99,7 @@ const COMBO = `#graphql
       handle
       description
       images(first: 4) { nodes { url } }
-      variants(first: 40) { nodes { id price { amount currencyCode } availableForSale } }
+      variants(first: 40) { nodes { id title price { amount currencyCode } availableForSale } }
       metafields(identifiers: [{namespace: "reviews", key: "rating"}, {namespace: "reviews", key: "rating_count"}]) {
         key
         value
@@ -420,6 +420,11 @@ export async function loader({context}) {
       desc: (p.description || '').replace(/\s+/g, ' ').trim().slice(0, 165),
       imgs: p.images.nodes.slice(0, 2).map((n) => optimizar(n.url, 420)),
       variantId: v.id,
+      variantes: p.variants.nodes.map((x) => ({
+        id: x.id,
+        titulo: x.title,
+        disponible: x.availableForSale,
+      })),
       precio: fmt.format(Number(v.price.amount)),
       precioNum: Number(v.price.amount),
       ...estrellas(p.metafields),
