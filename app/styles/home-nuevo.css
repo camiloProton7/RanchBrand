@@ -6925,3 +6925,81 @@
   font-weight: 600;
   color: #b34a2a;
 }
+
+/* ── Sugeridos de otra colección al final de cada colección ─────────────
+   Mismas tarjetas del catálogo, en dos columnas a 390 px. Va sobre el
+   beige de la página con una línea fina arriba para separarlo del grid. */
+.hc-sug {
+  margin-top: 40px;
+  padding: 30px 0 10px;
+  border-top: 1px solid rgba(20, 17, 15, 0.08);
+  /* la barra del header es fija: al saltar a la sección no debe taparla */
+  scroll-margin-top: 86px;
+}
+
+.hc-sug-head {
+  padding: 0 16px 16px;
+}
+
+.hc-sug-rotulo {
+  margin: 0 0 7px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #b34a2a;
+}
+
+.hc-sug h2 {
+  margin: 0;
+  font-family: ui-sans-serif, -apple-system, "SF Pro Display", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  line-height: 1.1;
+  color: #14110f;
+  text-wrap: balance;
+}
+
+.hc-sug-pie {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 8px 0 0;
+  font-size: 12.5px;
+  color: rgba(20, 17, 15, 0.55);
+}
+
+.hc-sug-ver {
+  flex: none;
+  color: #14110f;
+  font-weight: 700;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(20, 17, 15, 0.35);
+  padding-bottom: 1px;
+  white-space: nowrap;
+}
+
+.hc-sug-grid {
+  padding-bottom: 6px;
+}
+
+@media (min-width: 720px) {
+  .hc-sug-head {
+    padding: 0 32px 18px;
+  }
+  .hc-sug h2 {
+    font-size: 26px;
+  }
+  .hc-sug-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    padding: 0 32px 8px;
+  }
+}
+
+@media (min-width: 1100px) {
+  .hc-sug-grid {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+}

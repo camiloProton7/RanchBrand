@@ -71,6 +71,32 @@ const OTRAS = `#graphql
   }
 `;
 
+// Productos de otra colección para el carril de sugeridos del final.
+const SUGERIDOS = `#graphql
+  query Sugeridos($handle: String!) {
+    collection(handle: $handle) {
+      title
+      handle
+      products(first: 8, sortKey: MANUAL) {
+        nodes {
+          id
+          title
+          handle
+          availableForSale
+          productType
+          priceRange { minVariantPrice { amount currencyCode } }
+          compareAtPriceRange { minVariantPrice { amount } }
+          images(first: 2) { nodes { url altText } }
+          metafields(identifiers: [
+            {namespace: "reviews", key: "rating"},
+            {namespace: "reviews", key: "rating_count"}
+          ]) { key value }
+        }
+      }
+    }
+  }
+`;
+
 // las dos colecciones que Camilo llena a mano desde Shopify
 const DE_GENERO = `#graphql
   query DeGenero {
@@ -143,7 +169,7 @@ async function cargarColeccion({params, context, genero = ''}) {
     maximumFractionDigits: 0,
   });
 
-  const productos = c.products.nodes.map((p) => {
+  const armar = (p) => {
     const {valor, cuenta} = estrellas(p.metafields);
     const n = Number(p.priceRange.minVariantPrice.amount);
     return {
@@ -165,7 +191,40 @@ async function cargarColeccion({params, context, genero = ''}) {
       imgs: p.images.nodes.slice(0, 2).map((x) => optimizar(x.url, 900)),
       grande: p.images.nodes[0] ? optimizar(p.images.nodes[0].url, 1600) : null,
     };
-  });
+  };
+
+  const productos = c.products.nodes.map(armar);
+
+  // ── Sugeridos de OTRA colección ──────────────────────────────────────
+  // Al final de cada colección se muestran prendas complementarias. Se piden
+  // aparte para que el orden manual de esa colección mande y para no mezclar
+  // el producto que el cliente ya está viendo.
+  const CRUCE = {
+    camisetas: 'chaquetas',
+    chaquetas: 'camisetas',
+    gorras: 'camisetas',
+    'botas-1': 'gorras',
+  };
+  const cruzada = CRUCE[handle] && CRUCE[handle] !== handle ? CRUCE[handle] : null;
+  let sugeridos = [];
+  let sugeridosTitulo = '';
+  if (cruzada) {
+    try {
+      const s = await context.storefront.query(SUGERIDOS, {
+        ...fresco,
+        variables: {handle: cruzada},
+      });
+      const sc = s.collection;
+      sugeridos = (sc?.products?.nodes || [])
+        .filter((p) => p.handle !== handle && p.images?.nodes?.length)
+        .slice(0, 6)
+        .map(armar);
+      sugeridosTitulo = sc?.title || '';
+    } catch {
+      /* sin sugeridos la página sigue igual */
+    }
+  }
+
 
   const desde = productos.length ? Math.min(...productos.map((p) => p.precioNum)) : 0;
 
@@ -228,6 +287,9 @@ async function cargarColeccion({params, context, genero = ''}) {
     genero,
     titulo: tituloGenero,
     handle: c.handle,
+    sugeridos,
+    sugeridosTitulo,
+    sugeridosHandle: cruzada,
     descripcion: (c.description || '').replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim(),
     foto:
       PORTADAS[handle] ??
@@ -282,7 +344,8 @@ export const meta = ({data}) => {
 };
 
 export default function ColeccionNueva() {
-  const {titulo, descripcion, foto, productos, handle, desde, otras, genero} = useLoaderData();
+  const {titulo, descripcion, foto, productos, handle, desde, otras, genero, sugeridos, sugeridosTitulo, sugeridosHandle} =
+    useLoaderData();
   const [orden, setOrden] = useState('destacados');
   const heroRef = useRef(null);
   // La barra va siempre sólida y visible: sobre la foto quedaba transparente y
@@ -407,6 +470,34 @@ export default function ColeccionNueva() {
       </Grid>
 
       {lista.length === 0 && <p className="hc-vacio">Esta colección está vacía.</p>}
+
+      {sugeridos.length > 0 && (
+        <section className="hc-sug" aria-labelledby="hc-sug-titulo">
+          <div className="hc-sug-head">
+            <p className="hc-sug-rotulo">De otra colección</p>
+            <h2 id="hc-sug-titulo">Del otro lado del camino</h2>
+            <p className="hc-sug-pie">
+              {sugeridosTitulo}
+              {sugeridosHandle && (
+                <Link to={`/collections/${sugeridosHandle}`} prefetch="intent" className="hc-sug-ver">
+                  Ver todo →
+                </Link>
+              )}
+            </p>
+          </div>
+          <Grid className="hc-grid hc-sug-grid">
+            {sugeridos.map((p) => (
+              <Tarjeta
+                key={p.id}
+                p={p}
+                prioridad={false}
+                badge={p.tipo || undefined}
+                ruta="/products/"
+              />
+            ))}
+          </Grid>
+        </section>
+      )}
 
       {otras.length > 0 && (
         <section className="hc-otras">
