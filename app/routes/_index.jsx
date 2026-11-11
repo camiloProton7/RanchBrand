@@ -94,16 +94,33 @@ const COMBO = `#graphql
         value
       }
     }
-    gorra: product(handle: "gorra-1") {
+    g1: product(handle: "gorra-camuflada-heritage") {
       title
       handle
       description
-      images(first: 4) { nodes { url } }
-      variants(first: 40) { nodes { id title price { amount currencyCode } availableForSale image { url } } }
-      metafields(identifiers: [{namespace: "reviews", key: "rating"}, {namespace: "reviews", key: "rating_count"}]) {
-        key
-        value
-      }
+      images(first: 2) { nodes { url } }
+      variants(first: 10) { nodes { id title price { amount currencyCode } availableForSale image { url } } }
+    }
+    g2: product(handle: "gorra-bull") {
+      title
+      handle
+      description
+      images(first: 2) { nodes { url } }
+      variants(first: 10) { nodes { id title price { amount currencyCode } availableForSale image { url } } }
+    }
+    g3: product(handle: "gorra-camp-trucker") {
+      title
+      handle
+      description
+      images(first: 2) { nodes { url } }
+      variants(first: 10) { nodes { id title price { amount currencyCode } availableForSale image { url } } }
+    }
+    g4: product(handle: "gorra-andina") {
+      title
+      handle
+      description
+      images(first: 2) { nodes { url } }
+      variants(first: 10) { nodes { id title price { amount currencyCode } availableForSale image { url } } }
     }
   }
 `;
@@ -432,16 +449,13 @@ export async function loader({context}) {
     };
   };
 
-  const itemsCombo = [aItem(comboData.camisa), aItem(comboData.gorra)].filter(Boolean);
-  const suma = itemsCombo.reduce((t, i) => t + i.precioNum, 0);
+  // Combo: la camisa + cuatro gorras de baja rotación (impulsa las que menos salen)
+  const gorrasCombo = [comboData.g1, comboData.g2, comboData.g3, comboData.g4]
+    .map(aItem)
+    .filter((g) => g && g.variantes.some((v) => v.disponible));
   const combo = {
-    items: itemsCombo,
-    suma,
-    sumaTxt: fmt.format(suma),
-    final: Math.round(suma * 0.85),
-    finalTxt: fmt.format(Math.round(suma * 0.85)),
-    ahorro: Math.round(suma * 0.15),
-    ahorroTxt: fmt.format(Math.round(suma * 0.15)),
+    camisa: aItem(comboData.camisa),
+    gorras: gorrasCombo,
   };
 
   const w = windsorData.product;
