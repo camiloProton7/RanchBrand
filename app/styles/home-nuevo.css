@@ -628,21 +628,7 @@
   z-index: 2;
 }
 
-/* Vista previa de la segunda foto, sin JavaScript: en escritorio con el cursor
-   encima y en celular mientras el dedo está apoyado. Al soltar vuelve sola. */
-@media (hover: hover) {
-  .hn-card:hover .hn-card-media img + img {
-    opacity: 1;
-  }
-}
-
-.hn-card:active .hn-card-media img + img {
-  opacity: 1;
-}
-
-.hn-card:active .hn-card-media img.base {
-  opacity: 1;
-}
+/* Sin segunda foto: la tarjeta es un enlace simple. */
 
 .hn-card-badge {
   position: absolute;

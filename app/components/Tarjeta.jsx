@@ -23,8 +23,8 @@ export function Grid({children, className = ''}) {
  * que Safari se comiera el clic y hubiera que tocar varias veces para abrir.
  */
 export function Tarjeta({p, prioridad = false, badge, ancha = false, ruta = '/products/'}) {
-  // dos como máximo: la de reposo y la de la vista previa
-  const fotos = (p.imgs?.length ? p.imgs : [p.img1].filter(Boolean)).slice(0, 2);
+  // una sola foto: la tarjeta abre al primer toque, sin vista previa
+  const foto = p.imgs?.[0] || p.img1;
 
   return (
     <Link
@@ -33,19 +33,18 @@ export function Tarjeta({p, prioridad = false, badge, ancha = false, ruta = '/pr
       className={'hn-card' + (ancha ? ' is-ancha' : '')}
     >
       <span className="hn-card-media">
-        {fotos.map((src, i) => (
+        {foto ? (
           <img
-            key={src + i}
-            src={src}
-            alt={i === 0 ? p.titulo : ''}
-            className={i === 0 ? 'base' : 'alt'}
-            loading={prioridad && i === 0 ? 'eager' : 'lazy'}
-            fetchPriority={prioridad && i === 0 ? 'high' : 'auto'}
+            src={foto}
+            alt={p.titulo}
+            className="base"
+            loading={prioridad ? 'eager' : 'lazy'}
+            fetchPriority={prioridad ? 'high' : 'auto'}
             decoding="async"
             width="800"
             height="800"
           />
-        ))}
+        ) : null}
 
         {badge && <span className="hn-card-badge">{badge}</span>}
 
