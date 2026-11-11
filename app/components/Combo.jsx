@@ -5,7 +5,8 @@ const DOMINIO = '1caf84-4.myshopify.com';
 export default function Combo({combo}) {
   if (!combo?.items?.length) return null;
 
-  const ids = combo.items.map((i) => i.variantId.split('/').pop()).join(',');
+  // el permalink de Shopify exige VARIANTE:CANTIDAD; sin el :1 responde 404
+  const ids = combo.items.map((i) => `${i.variantId.split('/').pop()}:1`).join(',');
 
   return (
     <section className="hn-combo" aria-label="Combina tu próximo recorrido">
