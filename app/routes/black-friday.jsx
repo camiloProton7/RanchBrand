@@ -328,6 +328,31 @@ export default function BlackFriday() {
           </div>
         </section>
 
+        <section className="bf-pack">
+          <div className="bf-pack-top">
+            <p className="bf-eyebrow">El combo de la casa</p>
+            <p className="bf-pack-precio">
+              <b>5 gorras</b>
+              <span>$ 500.000</span>
+            </p>
+          </div>
+          <h2 className="bf-pack-titulo">
+            Cinco gorras,
+            <br />
+            un solo precio.
+          </h2>
+          <p className="bf-pack-txt">
+            Eliges las cinco que quieras y salen a $ 500.000, sin importar la mezcla. Cada una
+            queda a $ 100.000.
+          </p>
+          <Link to="/combo-gorras" prefetch="intent" className="bf-pack-cta">
+            Armar mi pack
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M5 12h14M13 6l6 6-6 6" />
+            </svg>
+          </Link>
+        </section>
+
         {ultimas.length > 0 && (
           <section className="bf-ultimas">
             <header className="bf-head">
@@ -372,23 +397,6 @@ export default function BlackFriday() {
             </section>
           ))}
         </div>
-
-        <section className="bf-combo">
-          <div>
-            <p className="bf-eyebrow">Cinco por un solo precio</p>
-            <h2 className="bf-h2">
-              El pack de
-              <br />
-              cinco gorras.
-            </h2>
-            <p className="bf-combo-txt">
-              Elige las cinco que quieras y salen a $ 500.000, sin importar la mezcla.
-            </p>
-          </div>
-          <Link to="/combo-gorras" prefetch="intent" className="bf-cta">
-            Armar mi pack
-          </Link>
-        </section>
 
         <section className="bf-cierre">
           <p className="bf-eyebrow">El 30 se apaga</p>

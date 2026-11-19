@@ -6552,25 +6552,83 @@
   max-width: 34ch;
 }
 
-/* el pack de cinco gorras, cierre comercial antes del cierre de campaña */
-.bf-combo {
-  margin: 26px 18px 0;
-  padding: 26px 20px;
-  border-radius: 16px;
-  background: #efe6d5;
+.bf-pack {
+  position: relative;
+  background: var(--tierra);
+  color: #fff;
+  padding: 34px 20px 30px;
+  overflow: hidden;
+}
+.bf-pack::after {
+  content: '5';
+  position: absolute;
+  right: -14px;
+  top: -34px;
+  font-size: 190px;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.06em;
+  color: rgba(255, 255, 255, 0.09);
+  pointer-events: none;
+}
+.bf-pack-top {
+  position: relative;
+  z-index: 2;
   display: flex;
-  flex-direction: column;
-  gap: 16px;
-  border: 1px solid rgba(20, 16, 12, 0.08);
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
 }
-.bf-combo-txt {
-  margin: 10px 0 0;
-  font-size: 13.5px;
-  line-height: 1.45;
-  color: #4a443d;
+.bf-pack .bf-eyebrow { color: rgba(255, 255, 255, 0.82); margin: 0; }
+.bf-pack-precio { margin: 0; display: flex; flex-direction: column; align-items: flex-end; gap: 2px; }
+.bf-pack-precio b {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.75);
+}
+.bf-pack-precio span {
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+}
+.bf-pack-titulo {
+  position: relative;
+  z-index: 2;
+  margin: 16px 0 10px;
+  font-size: 34px;
+  line-height: 0.98;
+  letter-spacing: -0.045em;
+  font-weight: 800;
+  color: #fff;
+}
+.bf-pack-txt {
+  position: relative;
+  z-index: 2;
+  margin: 0 0 20px;
   max-width: 30ch;
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.85);
 }
-.bf-combo .bf-cta { align-self: flex-start; }
+.bf-pack-cta {
+  position: relative;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 50px;
+  padding: 0 22px;
+  border-radius: 10px;
+  background: var(--crema);
+  color: var(--tinta);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-decoration: none;
+}
 
 .bf-cierre {
   background: var(--tinta);
@@ -6597,17 +6655,7 @@
   .bf-card-nombre { font-size: 15px; }
   .bf-h2 { font-size: 34px; }
 }
-@media (min-width: 1000px) {
-  .bf-hero { padding: 140px 48px 0; }
-  .bf-hero-in { max-width: 620px; }
-  .bf-titulo { font-size: 84px; }
-  .bf-piezas { padding: 56px 48px 72px; }
-  .bf-ultimas { padding: 48px 0; }
-  .bf-ultimas .bf-head { padding: 0 48px; }
-  .bf-rail { padding: 0 48px 4px; }
-  .bf-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
-  .bf-mini { flex-basis: 190px; }
-  .bf-bloque { padding: 34px 18px 6px; scroll-margin-top: 74px; }
+.bf-bloque { padding: 34px 18px 6px; scroll-margin-top: 74px; }
 .bf-bloque-head { margin-bottom: 14px; }
 .bf-bloque-head .bf-h2 { font-size: 24px; }
 .bf-nota {
@@ -6618,29 +6666,21 @@
   max-width: 34ch;
 }
 
-/* el pack de cinco gorras, cierre comercial antes del cierre de campaña */
-.bf-combo {
-  margin: 26px 18px 0;
-  padding: 26px 20px;
-  border-radius: 16px;
-  background: #efe6d5;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  border: 1px solid rgba(20, 16, 12, 0.08);
+@media (min-width: 1000px) {
+  .bf-hero { padding: 140px 48px 0; }
+  .bf-hero-in { max-width: 620px; }
+  .bf-titulo { font-size: 84px; }
+  .bf-piezas { padding: 56px 48px 72px; }
+  .bf-ultimas { padding: 48px 0; }
+  .bf-ultimas .bf-head { padding: 0 48px; }
+  .bf-rail { padding: 0 48px 4px; }
+  .bf-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .bf-mini { flex-basis: 190px; }
+  .bf-bloque { padding: 52px 48px 6px; }
+  .bf-pack { padding: 52px 48px; }
+  .bf-pack-titulo { font-size: 44px; }
+  .bf-cierre { padding: 64px 48px 72px; }
 }
-.bf-combo-txt {
-  margin: 10px 0 0;
-  font-size: 13.5px;
-  line-height: 1.45;
-  color: #4a443d;
-  max-width: 30ch;
-}
-.bf-combo .bf-cta { align-self: flex-start; }
-
-.bf-cierre { padding: 64px 48px 72px; }
-}
-
 
 /* ============================================================
    COLECCIÓN EDITORIAL · chaquetas de hombre
