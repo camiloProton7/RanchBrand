@@ -56,37 +56,99 @@ async function desdeAdmin(context) {
   }
 }
 
+// La selección la armó Camilo: qué entra a la campaña y en qué orden.
+const SECCIONES = [
+  {
+    titulo: 'Botas de niño',
+    nota: 'Las tres que quedan, tallas 27 a 32.',
+    handles: ['botas-kids-ovejo', 'botas-rojas-kids', 'botas-western-kids', 'botas-corazones-ranch'],
+  },
+  {
+    titulo: 'Botas de mujer',
+    nota: 'Negra, verde militar y berenjena.',
+    handles: ['botas-ranch'],
+  },
+  {
+    titulo: 'Botines de mujer',
+    nota: 'Chelsea en dos acabados y las urbanas.',
+    handles: ['botas-chelsea', 'botas-chelsea-cobreblack', 'botas-urbanas'],
+  },
+  {
+    titulo: 'Chaquetas',
+    nota: 'La Mojave para el agua y el viento.',
+    handles: ['chaqueta-impermeable-mojave', 'chaqueta-impermeable-sahara'],
+  },
+  {
+    titulo: 'Camisas y polos',
+    nota: 'Manga corta, polo y las outdoor.',
+    handles: [
+      'camisa-outdoor-proteccion-solar-upf-50',
+      'camisa-outdoor-the-ranch',
+      'camisa-manga-corta',
+      'camisa-tipo-polo',
+    ],
+  },
+  {
+    titulo: 'Billeteras y licoreras',
+    nota: 'Para el que ya tiene de todo.',
+    handles: ['billetera-anti-clonacion-copia', 'licorera-metalica'],
+  },
+  {
+    titulo: 'Gorras',
+    nota: 'Las dos que menos salen, con descuento.',
+    handles: ['gorra-camuflada-heritage', 'gorra-bull'],
+  },
+];
+
+function ficha(p) {
+  const validas = [];
+  for (const v of p.variants?.nodes || []) {
+    const precio = Number(v.price);
+    const antes = v.compareAtPrice ? Number(v.compareAtPrice) : 0;
+    const unidades = v.inventoryQuantity || 0;
+    if (unidades > 0) validas.push({precio, antes, unidades});
+  }
+  if (!validas.length) return null;
+  const precio = Math.min(...validas.map((x) => x.precio));
+  const conDescuento = validas.filter((x) => x.antes > x.precio);
+  // el «antes» sólo se pinta si hay descuento real en esa variante
+  const antes = conDescuento.length ? Math.max(...conDescuento.map((x) => x.antes)) : 0;
+  const pct = antes > precio ? Math.round((1 - precio / antes) * 100) : 0;
+  const t = p.title.toLowerCase();
+  const tipo =
+    p.productType ||
+    (t.includes('bota') ? 'Bota' : t.includes('chaqueta') ? 'Chaqueta' : t.includes('camisa')
+      ? 'Camisa' : t.includes('gorra') ? 'Gorra' : t.includes('billetera') ? 'Billetera'
+      : t.includes('licorera') ? 'Licorera' : 'The Ranch');
+  return {
+    titulo: p.title,
+    handle: p.handle,
+    tipo,
+    foto: p.featuredImage.url,
+    alt: p.featuredImage.altText || p.title,
+    precio,
+    antes: pct >= 3 ? antes : 0,
+    pct: pct >= 3 ? pct : 0,
+    unidades: validas.reduce((s, x) => s + x.unidades, 0),
+  };
+}
+
 function armar(productos) {
-  const ofertas = [];
+  const porHandle = new Map();
   for (const p of productos || []) {
     if (p.status !== 'ACTIVE' || !p.featuredImage) continue;
-    const validas = [];
-    for (const v of p.variants?.nodes || []) {
-      const precio = Number(v.price);
-      const antes = v.compareAtPrice ? Number(v.compareAtPrice) : 0;
-      const unidades = v.inventoryQuantity || 0;
-      if (antes > precio && unidades > 0) validas.push({precio, antes, unidades});
-    }
-    if (!validas.length) continue;
-    const precio = Math.min(...validas.map((x) => x.precio));
-    const antes = Math.max(...validas.map((x) => x.antes));
-    const unidades = validas.reduce((s, x) => s + x.unidades, 0);
-    const pct = Math.round((1 - precio / antes) * 100);
-    if (pct < 5) continue;
-    const sinDato = validas.some((x) => x.sinDato);
-    ofertas.push({
-      titulo: p.title,
-      handle: p.handle,
-      tipo: p.productType || 'The Ranch',
-      foto: p.featuredImage.url,
-      alt: p.featuredImage.altText || p.title,
-      precio,
-      antes,
-      pct,
-      unidades: sinDato ? null : unidades,
-    });
+    const f = ficha(p);
+    if (f) porHandle.set(p.handle, f);
   }
-  return ofertas.sort((a, b) => b.pct - a.pct);
+  const secciones = SECCIONES.map((sec) => ({
+    ...sec,
+    piezas: sec.handles.map((h) => porHandle.get(h)).filter(Boolean),
+  })).filter((s) => s.piezas.length);
+
+  const conDescuento = [...porHandle.values()].filter((o) => o.pct > 0);
+  conDescuento.sort((a, b) => b.pct - a.pct);
+
+  return {secciones, rebajadas: conDescuento};
 }
 
 export async function loader({context}) {
@@ -118,20 +180,22 @@ export async function loader({context}) {
         nodes: (p.variants?.nodes || []).map((v) => ({
           price: v.price?.amount,
           compareAtPrice: v.compareAtPrice?.amount || null,
-          // sin el token de administración no hay unidades reales:
-          // se marca el vacío para no inventar un "quedan X".
           inventoryQuantity: v.availableForSale ? 1 : 0,
-          sinDato: true,
         })),
       },
     }));
-    return armar(planos).map((o) => ({...o, unidades: null}));
+    const datos = armar(planos);
+    const sinUnidades = (lista) => lista.map((o) => ({...o, unidades: null}));
+    return {
+      secciones: datos.secciones.map((s) => ({...s, piezas: sinUnidades(s.piezas)})),
+      rebajadas: sinUnidades(datos.rebajadas),
+    };
   };
 
   // en desarrollo sin caché: un cambio de precio o de stock se ve al recargar
-  const ofertas = import.meta.env.DEV ? await producir() : await recordar('black-friday', 2, producir);
+  const datos = import.meta.env.DEV ? await producir() : await recordar('black-friday', 2, producir);
 
-  return {ofertas, cierre: CIERRE};
+  return {secciones: datos.secciones, rebajadas: datos.rebajadas, cierre: CIERRE};
 }
 
 const dinero = (n) => '$ ' + Math.round(n).toLocaleString('es-CO');
@@ -181,7 +245,7 @@ function Tarjeta({o}) {
           width="440"
           height="440"
         />
-        <span className="bf-off">−{o.pct}%</span>
+        {o.pct > 0 && <span className="bf-off">−{o.pct}%</span>}
         {o.unidades !== null && o.unidades <= 5 && (
           <span className="bf-poco">
             {o.unidades === 1 ? 'Última unidad' : `Solo quedan ${o.unidades}`}
@@ -189,11 +253,11 @@ function Tarjeta({o}) {
         )}
       </span>
       <span className="bf-card-info">
-        <span className="bf-card-tipo">{o.tipo === 'The Ranch' ? 'En oferta' : o.tipo}</span>
+        <span className="bf-card-tipo">{o.tipo || 'The Ranch'}</span>
         <span className="bf-card-nombre">{o.titulo}</span>
         <span className="bf-card-precios">
           <b>{dinero(o.precio)}</b>
-          <em>antes {dinero(o.antes)}</em>
+          {o.antes > 0 && <em>antes {dinero(o.antes)}</em>}
         </span>
       </span>
     </Link>
@@ -201,10 +265,11 @@ function Tarjeta({o}) {
 }
 
 export default function BlackFriday() {
-  const {ofertas, cierre} = useLoaderData();
-  const ultimas = ofertas.filter((o) => o.unidades !== null && o.unidades <= 5);
-  const mejor = ofertas[0]?.pct ?? 0;
-  const ahorro = ofertas.reduce((s, o) => s + (o.antes - o.precio), 0);
+  const {secciones, rebajadas, cierre} = useLoaderData();
+  const todas = secciones.flatMap((s) => s.piezas);
+  const ultimas = todas.filter((o) => o.unidades !== null && o.unidades <= 5);
+  const mejor = rebajadas[0]?.pct ?? 0;
+  const conDescuento = todas.filter((o) => o.pct > 0).length;
 
   return (
     <div className="bf">
@@ -229,21 +294,21 @@ export default function BlackFriday() {
             <h1 className="bf-titulo">
               Hasta
               <br />
-              <em>{mejor}%</em>
+              <em>{mejor || 53}%</em>
               <small>de descuento</small>
             </h1>
             <p className="bf-bajada">
-              {ofertas.length} piezas escogidas, con el descuento puesto en la etiqueta. Son las
-              últimas tallas que quedan y no vuelven.
+              {todas.length} piezas escogidas para la campaña. Las tallas que quedan son las que
+              hay: cuando se acaba una, se acaba.
             </p>
             <Cuenta cierre={cierre} />
-            <a href="#ofertas" className="bf-cta">
-              Ver las ofertas
+            <a href="#seleccion" className="bf-cta">
+              Ver la selección
             </a>
           </div>
           <div className="bf-hero-pie">
-            <span>{ofertas.length} piezas</span>
-            <span>Del 27 al 30 de noviembre</span>
+            <span>{todas.length} piezas</span>
+            <span>{conDescuento} con descuento</span>
             <span>Precios COP</span>
           </div>
         </section>
@@ -292,21 +357,37 @@ export default function BlackFriday() {
           </section>
         )}
 
-        <section className="bf-piezas" id="ofertas">
-          <header className="bf-head">
-            <p className="bf-eyebrow">Todo lo que está en descuento</p>
-            <h2 className="bf-h2">
-              {ofertas.length} piezas.
-              <br />
-              Ninguna a precio lleno.
-            </h2>
-          </header>
+        <div id="seleccion">
+          {secciones.map((sec) => (
+            <section className="bf-bloque" key={sec.titulo}>
+              <header className="bf-head bf-bloque-head">
+                <h2 className="bf-h2">{sec.titulo}</h2>
+                <p className="bf-nota">{sec.nota}</p>
+              </header>
+              <div className="bf-grid">
+                {sec.piezas.map((o) => (
+                  <Tarjeta o={o} key={o.handle} />
+                ))}
+              </div>
+            </section>
+          ))}
+        </div>
 
-          <div className="bf-grid">
-            {ofertas.map((o) => (
-              <Tarjeta o={o} key={o.handle} />
-            ))}
+        <section className="bf-combo">
+          <div>
+            <p className="bf-eyebrow">Cinco por un solo precio</p>
+            <h2 className="bf-h2">
+              El pack de
+              <br />
+              cinco gorras.
+            </h2>
+            <p className="bf-combo-txt">
+              Elige las cinco que quieras y salen a $ 500.000, sin importar la mezcla.
+            </p>
           </div>
+          <Link to="/combo-gorras" prefetch="intent" className="bf-cta">
+            Armar mi pack
+          </Link>
         </section>
 
         <section className="bf-cierre">
@@ -319,7 +400,7 @@ export default function BlackFriday() {
           <p className="bf-cierre-txt">
             No hay segunda vuelta ni lista de espera. Lo que quede, se queda sin descuento.
           </p>
-          <a href="#ofertas" className="bf-cta bf-cta-claro">
+          <a href="#seleccion" className="bf-cta bf-cta-claro">
             Escoger mi talla
           </a>
         </section>
