@@ -288,11 +288,11 @@ export type FooterQuery = {
   >;
 };
 
-export type SugeridosQueryVariables = StorefrontAPI.Exact<{
+export type Sugeridos404QueryVariables = StorefrontAPI.Exact<{
   [key: string]: never;
 }>;
 
-export type SugeridosQuery = {
+export type Sugeridos404Query = {
   collection?: StorefrontAPI.Maybe<
     Pick<StorefrontAPI.Collection, 'title' | 'handle'> & {
       products: {
@@ -323,274 +323,6 @@ export type CollectionProductsQuery = {
   collection?: StorefrontAPI.Maybe<{
     products: {nodes: Array<Pick<StorefrontAPI.Product, 'handle'>>};
   }>;
-};
-
-export type WindsorQueryVariables = StorefrontAPI.Exact<{[key: string]: never}>;
-
-export type WindsorQuery = {
-  product?: StorefrontAPI.Maybe<
-    Pick<StorefrontAPI.Product, 'title' | 'handle' | 'description'> & {
-      priceRange: {
-        minVariantPrice: Pick<StorefrontAPI.MoneyV2, 'amount' | 'currencyCode'>;
-      };
-      compareAtPriceRange: {
-        minVariantPrice: Pick<StorefrontAPI.MoneyV2, 'amount'>;
-      };
-      images: {nodes: Array<Pick<StorefrontAPI.Image, 'url'>>};
-      metafields: Array<
-        StorefrontAPI.Maybe<Pick<StorefrontAPI.Metafield, 'key' | 'value'>>
-      >;
-    }
-  >;
-};
-
-export type BotasQueryVariables = StorefrontAPI.Exact<{[key: string]: never}>;
-
-export type BotasQuery = {
-  product?: StorefrontAPI.Maybe<
-    Pick<StorefrontAPI.Product, 'title' | 'handle' | 'description'> & {
-      priceRange: {
-        minVariantPrice: Pick<StorefrontAPI.MoneyV2, 'amount' | 'currencyCode'>;
-      };
-      compareAtPriceRange: {
-        minVariantPrice: Pick<StorefrontAPI.MoneyV2, 'amount'>;
-      };
-      images: {nodes: Array<Pick<StorefrontAPI.Image, 'url'>>};
-      metafields: Array<
-        StorefrontAPI.Maybe<Pick<StorefrontAPI.Metafield, 'key' | 'value'>>
-      >;
-    }
-  >;
-};
-
-export type ComboQueryVariables = StorefrontAPI.Exact<{[key: string]: never}>;
-
-export type ComboQuery = {
-  camisa?: StorefrontAPI.Maybe<
-    Pick<StorefrontAPI.Product, 'title' | 'handle' | 'description'> & {
-      images: {nodes: Array<Pick<StorefrontAPI.Image, 'url'>>};
-      variants: {
-        nodes: Array<
-          Pick<StorefrontAPI.ProductVariant, 'id' | 'availableForSale'> & {
-            price: Pick<StorefrontAPI.MoneyV2, 'amount' | 'currencyCode'>;
-          }
-        >;
-      };
-      metafields: Array<
-        StorefrontAPI.Maybe<Pick<StorefrontAPI.Metafield, 'key' | 'value'>>
-      >;
-    }
-  >;
-  gorra?: StorefrontAPI.Maybe<
-    Pick<StorefrontAPI.Product, 'title' | 'handle' | 'description'> & {
-      images: {nodes: Array<Pick<StorefrontAPI.Image, 'url'>>};
-      variants: {
-        nodes: Array<
-          Pick<StorefrontAPI.ProductVariant, 'id' | 'availableForSale'> & {
-            price: Pick<StorefrontAPI.MoneyV2, 'amount' | 'currencyCode'>;
-          }
-        >;
-      };
-      metafields: Array<
-        StorefrontAPI.Maybe<Pick<StorefrontAPI.Metafield, 'key' | 'value'>>
-      >;
-    }
-  >;
-};
-
-export type ChaquetasQueryVariables = StorefrontAPI.Exact<{
-  [key: string]: never;
-}>;
-
-export type ChaquetasQuery = {
-  collection?: StorefrontAPI.Maybe<{
-    products: {
-      nodes: Array<
-        Pick<
-          StorefrontAPI.Product,
-          'id' | 'title' | 'handle' | 'description' | 'availableForSale'
-        > & {
-          priceRange: {
-            minVariantPrice: Pick<
-              StorefrontAPI.MoneyV2,
-              'amount' | 'currencyCode'
-            >;
-          };
-          compareAtPriceRange: {
-            minVariantPrice: Pick<StorefrontAPI.MoneyV2, 'amount'>;
-          };
-          images: {nodes: Array<Pick<StorefrontAPI.Image, 'url'>>};
-          metafields: Array<
-            StorefrontAPI.Maybe<Pick<StorefrontAPI.Metafield, 'key' | 'value'>>
-          >;
-        }
-      >;
-    };
-  }>;
-};
-
-export type CamisasQueryVariables = StorefrontAPI.Exact<{[key: string]: never}>;
-
-export type CamisasQuery = {
-  collection?: StorefrontAPI.Maybe<{
-    products: {
-      nodes: Array<
-        Pick<
-          StorefrontAPI.Product,
-          'id' | 'title' | 'handle' | 'description' | 'availableForSale'
-        > & {
-          priceRange: {
-            minVariantPrice: Pick<
-              StorefrontAPI.MoneyV2,
-              'amount' | 'currencyCode'
-            >;
-          };
-          compareAtPriceRange: {
-            minVariantPrice: Pick<StorefrontAPI.MoneyV2, 'amount'>;
-          };
-          images: {nodes: Array<Pick<StorefrontAPI.Image, 'url'>>};
-          metafields: Array<
-            StorefrontAPI.Maybe<Pick<StorefrontAPI.Metafield, 'key' | 'value'>>
-          >;
-        }
-      >;
-    };
-  }>;
-};
-
-export type CategoriasQueryVariables = StorefrontAPI.Exact<{
-  [key: string]: never;
-}>;
-
-export type CategoriasQuery = {
-  gorras?: StorefrontAPI.Maybe<
-    Pick<StorefrontAPI.Collection, 'title'> & {
-      image?: StorefrontAPI.Maybe<Pick<StorefrontAPI.Image, 'url'>>;
-      products: {
-        nodes: Array<{
-          images: {nodes: Array<Pick<StorefrontAPI.Image, 'url'>>};
-        }>;
-      };
-    }
-  >;
-  camisas?: StorefrontAPI.Maybe<
-    Pick<StorefrontAPI.Collection, 'title'> & {
-      image?: StorefrontAPI.Maybe<Pick<StorefrontAPI.Image, 'url'>>;
-      products: {
-        nodes: Array<{
-          images: {nodes: Array<Pick<StorefrontAPI.Image, 'url'>>};
-        }>;
-      };
-    }
-  >;
-  botas?: StorefrontAPI.Maybe<
-    Pick<StorefrontAPI.Collection, 'title'> & {
-      image?: StorefrontAPI.Maybe<Pick<StorefrontAPI.Image, 'url'>>;
-      products: {
-        nodes: Array<{
-          images: {nodes: Array<Pick<StorefrontAPI.Image, 'url'>>};
-        }>;
-      };
-    }
-  >;
-  chaquetas?: StorefrontAPI.Maybe<
-    Pick<StorefrontAPI.Collection, 'title'> & {
-      image?: StorefrontAPI.Maybe<Pick<StorefrontAPI.Image, 'url'>>;
-      products: {
-        nodes: Array<{
-          images: {nodes: Array<Pick<StorefrontAPI.Image, 'url'>>};
-        }>;
-      };
-    }
-  >;
-  sacos?: StorefrontAPI.Maybe<
-    Pick<StorefrontAPI.Collection, 'title'> & {
-      image?: StorefrontAPI.Maybe<Pick<StorefrontAPI.Image, 'url'>>;
-      products: {
-        nodes: Array<{
-          images: {nodes: Array<Pick<StorefrontAPI.Image, 'url'>>};
-        }>;
-      };
-    }
-  >;
-};
-
-export type GorrasQueryVariables = StorefrontAPI.Exact<{[key: string]: never}>;
-
-export type GorrasQuery = {
-  collection?: StorefrontAPI.Maybe<{
-    products: {
-      nodes: Array<
-        Pick<
-          StorefrontAPI.Product,
-          'id' | 'title' | 'handle' | 'availableForSale' | 'description'
-        > & {
-          priceRange: {
-            minVariantPrice: Pick<
-              StorefrontAPI.MoneyV2,
-              'amount' | 'currencyCode'
-            >;
-          };
-          compareAtPriceRange: {
-            minVariantPrice: Pick<StorefrontAPI.MoneyV2, 'amount'>;
-          };
-          images: {nodes: Array<Pick<StorefrontAPI.Image, 'url'>>};
-          metafields: Array<
-            StorefrontAPI.Maybe<Pick<StorefrontAPI.Metafield, 'key' | 'value'>>
-          >;
-        }
-      >;
-    };
-  }>;
-};
-
-export type TopProductosQueryVariables = StorefrontAPI.Exact<{
-  ids:
-    | Array<StorefrontAPI.Scalars['ID']['input']>
-    | StorefrontAPI.Scalars['ID']['input'];
-}>;
-
-export type TopProductosQuery = {
-  nodes: Array<
-    StorefrontAPI.Maybe<
-      Pick<StorefrontAPI.Product, 'id' | 'title' | 'handle' | 'description'> & {
-        priceRange: {
-          minVariantPrice: Pick<
-            StorefrontAPI.MoneyV2,
-            'amount' | 'currencyCode'
-          >;
-        };
-        compareAtPriceRange: {
-          minVariantPrice: Pick<StorefrontAPI.MoneyV2, 'amount'>;
-        };
-        images: {nodes: Array<Pick<StorefrontAPI.Image, 'url' | 'altText'>>};
-        metafields: Array<
-          StorefrontAPI.Maybe<Pick<StorefrontAPI.Metafield, 'key' | 'value'>>
-        >;
-      }
-    >
-  >;
-};
-
-export type RellenoQueryVariables = StorefrontAPI.Exact<{[key: string]: never}>;
-
-export type RellenoQuery = {
-  products: {
-    nodes: Array<
-      Pick<StorefrontAPI.Product, 'id' | 'title' | 'handle'> & {
-        priceRange: {
-          minVariantPrice: Pick<
-            StorefrontAPI.MoneyV2,
-            'amount' | 'currencyCode'
-          >;
-        };
-        compareAtPriceRange: {
-          minVariantPrice: Pick<StorefrontAPI.MoneyV2, 'amount'>;
-        };
-        images: {nodes: Array<Pick<StorefrontAPI.Image, 'url' | 'altText'>>};
-      }
-    >;
-  };
 };
 
 export type BuscarQueryVariables = StorefrontAPI.Exact<{
@@ -825,6 +557,43 @@ export type OtrasQuery = {
       }
     >;
   };
+};
+
+export type SugeridosQueryVariables = StorefrontAPI.Exact<{
+  handle: StorefrontAPI.Scalars['String']['input'];
+}>;
+
+export type SugeridosQuery = {
+  collection?: StorefrontAPI.Maybe<
+    Pick<StorefrontAPI.Collection, 'title' | 'handle'> & {
+      products: {
+        nodes: Array<
+          Pick<
+            StorefrontAPI.Product,
+            'id' | 'title' | 'handle' | 'availableForSale' | 'productType'
+          > & {
+            priceRange: {
+              minVariantPrice: Pick<
+                StorefrontAPI.MoneyV2,
+                'amount' | 'currencyCode'
+              >;
+            };
+            compareAtPriceRange: {
+              minVariantPrice: Pick<StorefrontAPI.MoneyV2, 'amount'>;
+            };
+            images: {
+              nodes: Array<Pick<StorefrontAPI.Image, 'url' | 'altText'>>;
+            };
+            metafields: Array<
+              StorefrontAPI.Maybe<
+                Pick<StorefrontAPI.Metafield, 'key' | 'value'>
+              >
+            >;
+          }
+        >;
+      };
+    }
+  >;
 };
 
 export type DeGeneroQueryVariables = StorefrontAPI.Exact<{
@@ -1085,7 +854,6 @@ export type RecosQuery = {
 
 export type DeColeccionQueryVariables = StorefrontAPI.Exact<{
   handle: StorefrontAPI.Scalars['String']['input'];
-  excluir: StorefrontAPI.Scalars['String']['input'];
 }>;
 
 export type DeColeccionQuery = {
@@ -1171,49 +939,13 @@ interface GeneratedQueryTypes {
     return: FooterQuery;
     variables: FooterQueryVariables;
   };
-  '#graphql\n  query Sugeridos {\n    collection(handle: "gorras") {\n      title\n      handle\n      products(first: 4, sortKey: BEST_SELLING) {\n        nodes {\n          id\n          title\n          handle\n          availableForSale\n          priceRange { minVariantPrice { amount currencyCode } }\n          images(first: 2) { nodes { url } }\n        }\n      }\n    }\n  }\n': {
-    return: SugeridosQuery;
-    variables: SugeridosQueryVariables;
+  '#graphql\n  query Sugeridos404 {\n    collection(handle: "gorras") {\n      title\n      handle\n      products(first: 4, sortKey: BEST_SELLING) {\n        nodes {\n          id\n          title\n          handle\n          availableForSale\n          priceRange { minVariantPrice { amount currencyCode } }\n          images(first: 2) { nodes { url } }\n        }\n      }\n    }\n  }\n': {
+    return: Sugeridos404Query;
+    variables: Sugeridos404QueryVariables;
   };
   '#graphql\n        query CollectionProducts($handle: String!) {\n          collection(handle: $handle) {\n            products(first: 100) {\n              nodes { handle }\n            }\n          }\n        }': {
     return: CollectionProductsQuery;
     variables: CollectionProductsQueryVariables;
-  };
-  '#graphql\n  query Windsor {\n    product(handle: "chaqueta-encerada-windsor-verde") {\n      title\n      handle\n      description\n      priceRange { minVariantPrice { amount currencyCode } }\n      compareAtPriceRange { minVariantPrice { amount } }\n      images(first: 3) { nodes { url } }\n      metafields(identifiers: [{namespace: "reviews", key: "rating"}, {namespace: "reviews", key: "rating_count"}]) {\n        key\n        value\n      }\n    }\n  }\n': {
-    return: WindsorQuery;
-    variables: WindsorQueryVariables;
-  };
-  '#graphql\n  query Botas {\n    product(handle: "botas-gamuza-lariat") {\n      title\n      handle\n      description\n      priceRange { minVariantPrice { amount currencyCode } }\n      compareAtPriceRange { minVariantPrice { amount } }\n      images(first: 3) { nodes { url } }\n      metafields(identifiers: [{namespace: "reviews", key: "rating"}, {namespace: "reviews", key: "count"}]) {\n        key\n        value\n      }\n    }\n  }\n': {
-    return: BotasQuery;
-    variables: BotasQueryVariables;
-  };
-  '#graphql\n  query Combo {\n    camisa: product(handle: "camisa-outdoor-proteccion-solar-upf-50") {\n      title\n      handle\n      description\n      images(first: 4) { nodes { url } }\n      variants(first: 40) { nodes { id price { amount currencyCode } availableForSale } }\n      metafields(identifiers: [{namespace: "reviews", key: "rating"}, {namespace: "reviews", key: "rating_count"}]) {\n        key\n        value\n      }\n    }\n    gorra: product(handle: "gorra-1") {\n      title\n      handle\n      description\n      images(first: 4) { nodes { url } }\n      variants(first: 40) { nodes { id price { amount currencyCode } availableForSale } }\n      metafields(identifiers: [{namespace: "reviews", key: "rating"}, {namespace: "reviews", key: "rating_count"}]) {\n        key\n        value\n      }\n    }\n  }\n': {
-    return: ComboQuery;
-    variables: ComboQueryVariables;
-  };
-  '#graphql\n  query Chaquetas {\n    collection(handle: "chaquetas") {\n      products(first: 8, sortKey: BEST_SELLING) {\n        nodes {\n          id title handle description availableForSale\n          priceRange { minVariantPrice { amount currencyCode } }\n      compareAtPriceRange { minVariantPrice { amount } }\n          images(first: 4) { nodes { url } }\n          metafields(identifiers: [{namespace: "reviews", key: "rating"}, {namespace: "reviews", key: "rating_count"}]) {\n            key\n            value\n          }\n        }\n      }\n    }\n  }\n': {
-    return: ChaquetasQuery;
-    variables: ChaquetasQueryVariables;
-  };
-  '#graphql\n  query Camisas {\n    collection(handle: "camisetas") {\n      products(first: 16, sortKey: BEST_SELLING) {\n        nodes {\n          id title handle description availableForSale\n          priceRange { minVariantPrice { amount currencyCode } }\n      compareAtPriceRange { minVariantPrice { amount } }\n          images(first: 4) { nodes { url } }\n          metafields(identifiers: [{namespace: "reviews", key: "rating"}, {namespace: "reviews", key: "rating_count"}]) {\n            key\n            value\n          }\n        }\n      }\n    }\n  }\n': {
-    return: CamisasQuery;
-    variables: CamisasQueryVariables;
-  };
-  '#graphql\n  query Categorias {\n    gorras: collection(handle: "gorras") {\n      title\n      image { url }\n      products(first: 1) { nodes { images(first: 1) { nodes { url } } } }\n    }\n    camisas: collection(handle: "camisetas") {\n      title\n      image { url }\n      products(first: 1) { nodes { images(first: 1) { nodes { url } } } }\n    }\n    botas: collection(handle: "botas-1") {\n      title\n      image { url }\n      products(first: 1) { nodes { images(first: 1) { nodes { url } } } }\n    }\n    chaquetas: collection(handle: "chaquetas") {\n      title\n      image { url }\n      products(first: 1) { nodes { images(first: 1) { nodes { url } } } }\n    }\n    sacos: collection(handle: "bordados") {\n      title\n      image { url }\n      products(first: 1) { nodes { images(first: 1) { nodes { url } } } }\n    }\n  }\n': {
-    return: CategoriasQuery;
-    variables: CategoriasQueryVariables;
-  };
-  '#graphql\n  query Gorras {\n    collection(handle: "gorras") {\n      products(first: 6, sortKey: BEST_SELLING) {\n        nodes {\n          id title handle availableForSale\n          description\n          priceRange { minVariantPrice { amount currencyCode } }\n      compareAtPriceRange { minVariantPrice { amount } }\n          images(first: 4) { nodes { url } }\n          metafields(identifiers: [{namespace: "reviews", key: "rating"}, {namespace: "reviews", key: "rating_count"}]) {\n            key\n            value\n          }\n        }\n      }\n    }\n  }\n': {
-    return: GorrasQuery;
-    variables: GorrasQueryVariables;
-  };
-  '#graphql\n  query TopProductos($ids: [ID!]!) {\n    nodes(ids: $ids) {\n      ... on Product {\n        id\n        title\n        handle\n        description\n        priceRange { minVariantPrice { amount currencyCode } }\n      compareAtPriceRange { minVariantPrice { amount } }\n        images(first: 4) { nodes { url altText } }\n        metafields(identifiers: [{namespace: "reviews", key: "rating"}, {namespace: "reviews", key: "rating_count"}]) {\n          key\n          value\n        }\n      }\n    }\n  }\n': {
-    return: TopProductosQuery;
-    variables: TopProductosQueryVariables;
-  };
-  '#graphql\n        query Relleno { products(first: 12, sortKey: BEST_SELLING) {\n          nodes { id title handle priceRange { minVariantPrice { amount currencyCode } }\n        compareAtPriceRange { minVariantPrice { amount } } images(first: 4) { nodes { url altText } } }\n        } }': {
-    return: RellenoQuery;
-    variables: RellenoQueryVariables;
   };
   '#graphql\n  query Buscar($q: String!) {\n    predictiveSearch(\n      query: $q\n      limit: 8\n      types: [PRODUCT, COLLECTION]\n      unavailableProducts: LAST\n    ) {\n      products {\n        id\n        title\n        handle\n        vendor\n        productType\n        featuredImage {\n          url\n          altText\n        }\n        priceRange {\n          minVariantPrice {\n            amount\n            currencyCode\n          }\n        }\n        compareAtPriceRange {\n          minVariantPrice {\n            amount\n          }\n        }\n      }\n      collections {\n        id\n        title\n        handle\n      }\n    }\n  }\n': {
     return: BuscarQuery;
@@ -1239,6 +971,10 @@ interface GeneratedQueryTypes {
     return: OtrasQuery;
     variables: OtrasQueryVariables;
   };
+  '#graphql\n  query Sugeridos($handle: String!) {\n    collection(handle: $handle) {\n      title\n      handle\n      products(first: 8, sortKey: MANUAL) {\n        nodes {\n          id\n          title\n          handle\n          availableForSale\n          productType\n          priceRange { minVariantPrice { amount currencyCode } }\n          compareAtPriceRange { minVariantPrice { amount } }\n          images(first: 2) { nodes { url altText } }\n          metafields(identifiers: [\n            {namespace: "reviews", key: "rating"},\n            {namespace: "reviews", key: "rating_count"}\n          ]) { key value }\n        }\n      }\n    }\n  }\n': {
+    return: SugeridosQuery;
+    variables: SugeridosQueryVariables;
+  };
   '#graphql\n  query DeGenero {\n    hombre: collection(handle: "chaquetas-hombre") {\n      products(first: 100) { nodes { handle } }\n    }\n    mujer: collection(handle: "chaquetas-mujer") {\n      products(first: 100) { nodes { handle } }\n    }\n  }\n': {
     return: DeGeneroQuery;
     variables: DeGeneroQueryVariables;
@@ -1259,7 +995,7 @@ interface GeneratedQueryTypes {
     return: ShopPoliciesQuery;
     variables: ShopPoliciesQueryVariables;
   };
-  '#graphql\n  query Producto($handle: String!) {\n    product(handle: $handle) {\n      id\n      title\n      handle\n      description\n      descriptionHtml\n      productType\n      vendor\n      tags\n      collections(first: 2) { nodes { handle title } }\n      priceRange { minVariantPrice { amount currencyCode } }\n      images(first: 12) { nodes { url altText } }\n      options { name values }\n      variants(first: 60) {\n        nodes {\n          id\n          title\n          availableForSale\n          quantityAvailable\n          selectedOptions { name value }\n          price { amount currencyCode }\n          compareAtPrice { amount currencyCode }\n        }\n      }\n      metafields(identifiers: [\n        {namespace: "reviews", key: "rating"},\n        {namespace: "reviews", key: "rating_count"}\n      ]) { key value }\n    }\n  }\n': {
+  '#graphql\n  query Producto($handle: String!) {\n    product(handle: $handle) {\n      id\n      title\n      handle\n      description\n      descriptionHtml\n      productType\n      vendor\n      tags\n      collections(first: 2) { nodes { handle title } }\n      priceRange { minVariantPrice { amount currencyCode } }\n      images(first: 12) { nodes { url altText } }\n      options { name values }\n      variants(first: 250) {\n        nodes {\n          id\n          title\n          availableForSale\n          quantityAvailable\n          selectedOptions { name value }\n          price { amount currencyCode }\n          compareAtPrice { amount currencyCode }\n        }\n      }\n      metafields(identifiers: [\n        {namespace: "reviews", key: "rating"},\n        {namespace: "reviews", key: "rating_count"}\n      ]) { key value }\n    }\n  }\n': {
     return: ProductoQuery;
     variables: ProductoQueryVariables;
   };
@@ -1267,7 +1003,7 @@ interface GeneratedQueryTypes {
     return: RecosQuery;
     variables: RecosQueryVariables;
   };
-  '#graphql\n  query DeColeccion($handle: String!, $excluir: String!) {\n    collection(handle: $handle) {\n      products(first: 10, sortKey: BEST_SELLING) {\n        nodes {\n          id title handle\n          priceRange { minVariantPrice { amount currencyCode } }\n          variants(first: 1) { nodes { id availableForSale } }\n          images(first: 2) { nodes { url altText } }\n          metafields(identifiers: [\n            {namespace: "reviews", key: "rating"},\n            {namespace: "reviews", key: "rating_count"}\n          ]) { key value }\n        }\n      }\n    }\n  }\n': {
+  '#graphql\n  query DeColeccion($handle: String!) {\n    collection(handle: $handle) {\n      products(first: 10, sortKey: BEST_SELLING) {\n        nodes {\n          id title handle\n          priceRange { minVariantPrice { amount currencyCode } }\n          variants(first: 1) { nodes { id availableForSale } }\n          images(first: 2) { nodes { url altText } }\n          metafields(identifiers: [\n            {namespace: "reviews", key: "rating"},\n            {namespace: "reviews", key: "rating_count"}\n          ]) { key value }\n        }\n      }\n    }\n  }\n': {
     return: DeColeccionQuery;
     variables: DeColeccionQueryVariables;
   };

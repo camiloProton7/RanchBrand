@@ -4447,11 +4447,17 @@
 .cbc {
   background: #fbf8f1;
   min-height: 100vh;
-  padding-bottom: calc(120px + env(safe-area-inset-bottom));
+  padding-bottom: 0;
+}
+
+/* el pack vive con la barra de precio abajo: el pie se estira para que la
+   barra flote sobre oscuro y no quede una franja clara al final */
+.cbc .hn-pie {
+  padding-bottom: calc(104px + env(safe-area-inset-bottom));
 }
 
 .cbc-intro {
-  padding: 18px 20px 6px;
+  padding: calc(74px + env(safe-area-inset-top)) 20px 6px;
 }
 
 .cbc-sobre {

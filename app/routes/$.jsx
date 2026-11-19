@@ -14,7 +14,7 @@ export const meta = () => [
 ];
 
 const SUGERIDOS = `#graphql
-  query Sugeridos {
+  query Sugeridos404 {
     collection(handle: "gorras") {
       title
       handle

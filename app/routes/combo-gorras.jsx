@@ -2,6 +2,10 @@ import {Form, Link, useActionData, useLoaderData, useNavigation} from 'react-rou
 import {useEffect, useState} from 'react';
 import styles from '~/styles/home-nuevo.css?url';
 import {recordar} from '~/lib/cache';
+import MenuLateral from '~/components/MenuLateral';
+import Buscador from '~/components/Buscador';
+import Carroza from '~/components/Carroza';
+import Pie from '~/components/Pie';
 
 export const links = () => [{rel: 'stylesheet', href: styles}];
 
@@ -163,16 +167,15 @@ export default function ComboNuevo() {
 
   return (
     <main className="hc cbc">
-      <header className="hc-barra">
-        <Link to="/" aria-label="Volver" className="hc-volver">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6">
-            <path d="M15 5l-7 7 7 7" />
-          </svg>
+      <header className="hc-bar is-solido">
+        <MenuLateral tono="tinta" />
+        <Link to="/" prefetch="intent" className="hc-logo" aria-label="The Ranch, ir al inicio">
+          <img src="/logo-tinta.png" alt="The Ranch" width="78" />
         </Link>
-        <Link to="/" className="hc-logo" aria-label="The Ranch, ir al inicio">
-          <img src="/logo-tinta.png" alt="The Ranch" />
-        </Link>
-        <span className="hc-barra-hueco" />
+        <span className="hc-bolsa">
+          <Buscador tono="oscuro" />
+          <Carroza />
+        </span>
       </header>
 
       <section className="cbc-intro">
@@ -255,6 +258,8 @@ export default function ComboNuevo() {
           Ahorras {money(ahorro)} frente a comprarlas sueltas
         </div>
       )}
+
+      <Pie />
     </main>
   );
 }
