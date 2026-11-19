@@ -435,50 +435,30 @@ export type RecommendedQuery = {
   >;
 };
 
-export type PiezasQueryVariables = StorefrontAPI.Exact<{[key: string]: never}>;
+export type OfertasPublicasQueryVariables = StorefrontAPI.Exact<{
+  [key: string]: never;
+}>;
 
-export type PiezasQuery = {
-  gorras?: StorefrontAPI.Maybe<{
-    products: {
-      nodes: Array<
-        Pick<
-          StorefrontAPI.Product,
-          'id' | 'title' | 'handle' | 'availableForSale'
-        > & {
-          priceRange: {minVariantPrice: Pick<StorefrontAPI.MoneyV2, 'amount'>};
-          compareAtPriceRange: {
-            minVariantPrice: Pick<StorefrontAPI.MoneyV2, 'amount'>;
-          };
-          images: {nodes: Array<Pick<StorefrontAPI.Image, 'url'>>};
-        }
-      >;
-    };
-  }>;
-  chaquetas?: StorefrontAPI.Maybe<{
-    products: {
-      nodes: Array<
-        Pick<
-          StorefrontAPI.Product,
-          'id' | 'title' | 'handle' | 'availableForSale'
-        > & {
-          priceRange: {minVariantPrice: Pick<StorefrontAPI.MoneyV2, 'amount'>};
-          compareAtPriceRange: {
-            minVariantPrice: Pick<StorefrontAPI.MoneyV2, 'amount'>;
-          };
-          images: {nodes: Array<Pick<StorefrontAPI.Image, 'url'>>};
-        }
-      >;
-    };
-  }>;
-};
-
-export type PiezaFragment = Pick<
-  StorefrontAPI.Product,
-  'id' | 'title' | 'handle' | 'availableForSale'
-> & {
-  priceRange: {minVariantPrice: Pick<StorefrontAPI.MoneyV2, 'amount'>};
-  compareAtPriceRange: {minVariantPrice: Pick<StorefrontAPI.MoneyV2, 'amount'>};
-  images: {nodes: Array<Pick<StorefrontAPI.Image, 'url'>>};
+export type OfertasPublicasQuery = {
+  products: {
+    nodes: Array<
+      Pick<StorefrontAPI.Product, 'title' | 'handle' | 'productType'> & {
+        featuredImage?: StorefrontAPI.Maybe<
+          Pick<StorefrontAPI.Image, 'url' | 'altText'>
+        >;
+        variants: {
+          nodes: Array<
+            Pick<StorefrontAPI.ProductVariant, 'availableForSale'> & {
+              price: Pick<StorefrontAPI.MoneyV2, 'amount'>;
+              compareAtPrice?: StorefrontAPI.Maybe<
+                Pick<StorefrontAPI.MoneyV2, 'amount'>
+              >;
+            }
+          >;
+        };
+      }
+    >;
+  };
 };
 
 export type DestacadosCestaQueryVariables = StorefrontAPI.Exact<{
@@ -955,9 +935,9 @@ interface GeneratedQueryTypes {
     return: RecommendedQuery;
     variables: RecommendedQueryVariables;
   };
-  '#graphql\n  query Piezas {\n    gorras: collection(handle: "gorras") {\n      products(first: 8, sortKey: BEST_SELLING) {\n        nodes { ...Pieza }\n      }\n    }\n    chaquetas: collection(handle: "chaquetas") {\n      products(first: 6, sortKey: BEST_SELLING) {\n        nodes { ...Pieza }\n      }\n    }\n  }\n  fragment Pieza on Product {\n    id\n    title\n    handle\n    availableForSale\n    priceRange { minVariantPrice { amount } }\n    compareAtPriceRange { minVariantPrice { amount } }\n    images(first: 2) { nodes { url } }\n  }\n': {
-    return: PiezasQuery;
-    variables: PiezasQueryVariables;
+  '#graphql\n        query OfertasPublicas {\n          products(first: 250) {\n            nodes {\n              title\n              handle\n              productType\n              featuredImage { url altText }\n              variants(first: 40) { nodes { price { amount } compareAtPrice { amount } availableForSale } }\n            }\n          }\n        }': {
+    return: OfertasPublicasQuery;
+    variables: OfertasPublicasQueryVariables;
   };
   '#graphql\n  query DestacadosCesta {\n    collection(handle: "gorras") {\n      products(first: 6, sortKey: BEST_SELLING) {\n        nodes {\n          id\n          title\n          handle\n          priceRange { minVariantPrice { amount } }\n          images(first: 1) { nodes { url } }\n        }\n      }\n    }\n  }\n': {
     return: DestacadosCestaQuery;

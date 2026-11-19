@@ -112,6 +112,7 @@ export function Layout({children}) {
     pathname === '/' ||
     pathname === '/carrito' ||
     pathname === '/combo-gorras' ||
+    pathname === '/black-friday' ||
     pathname.startsWith('/collections/') ||
     pathname.startsWith('/products/') ||
     pathname.startsWith('/nuevo') ||
