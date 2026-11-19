@@ -148,7 +148,14 @@ function armar(productos) {
   conDescuento.sort((a, b) => b.pct - a.pct);
 
   // cuatro gorras para el abanico del pack: las mismas que van en la sección
-  const packFotos = ['gorra-camuflada-heritage', 'gorra-bull', 'gorra-desert', 'gorra-redwood']
+  // cinco gorras: el pack vende cinco, el abanico muestra cinco
+  const packFotos = [
+    'gorra-camuflada-heritage',
+    'gorra-bull',
+    'gorra-desert',
+    'gorra-redwood',
+    'gorra-territory',
+  ]
     .map((h) => porHandle.get(h))
     .filter(Boolean)
     .map((o) => o.foto);
@@ -356,8 +363,8 @@ export default function BlackFriday() {
                 src={`${f}${f.includes('?') ? '&' : '?'}width=220`}
                 alt=""
                 loading="lazy"
-                width="110"
-                height="110"
+                width="88"
+                height="88"
                 style={{'--i': i}}
               />
             ))}
