@@ -6729,6 +6729,71 @@
   .bf-cierre { padding: 64px 48px 72px; }
 }
 
+/* --- banner black friday en el home (se suma, no reemplaza) --- */
+.hn-bf { padding: 0 16px; margin-bottom: 10px; }
+.hn-bf-in {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  padding: 26px 22px 24px;
+  border-radius: 14px;
+  background: #171310;
+  color: #f5f0e6;
+  text-decoration: none;
+}
+.hn-bf-strip {
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 5px;
+  background: var(--tierra);
+}
+.hn-bf-kicker {
+  display: block;
+  margin-bottom: 12px;
+  font-size: 9.5px;
+  font-weight: 800;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #d98a6a;
+}
+.hn-bf-title {
+  display: block;
+  font-size: 30px;
+  line-height: 0.98;
+  letter-spacing: -0.045em;
+  font-weight: 800;
+}
+.hn-bf-title em { font-style: normal; color: #e2703f; }
+.hn-bf-txt {
+  display: block;
+  margin-top: 10px;
+  max-width: 32ch;
+  font-size: 13px;
+  line-height: 1.45;
+  color: rgba(245, 240, 230, 0.78);
+}
+.hn-bf-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 18px;
+  min-height: 44px;
+  padding: 0 18px;
+  border-radius: 8px;
+  background: #f5f0e6;
+  color: #171310;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+@media (min-width: 1000px) {
+  .hn-bf { padding: 0 48px; margin-bottom: 22px; }
+  .hn-bf-in { padding: 38px 40px; }
+  .hn-bf-title { font-size: 44px; }
+  .hn-bf-txt { font-size: 14px; }
+}
+
 /* ============================================================
    COLECCIÓN EDITORIAL · chaquetas de hombre
    Una prenda por pantalla, sin tarjetas ni sellos. Solo .ed

@@ -94,8 +94,8 @@ const SECCIONES = [
   },
   {
     titulo: 'Gorras',
-    nota: 'Las que menos salen, con descuento.',
-    handles: ['gorra-camuflada-heritage', 'gorra-bull', 'gorra-desert', 'gorra-redwood'],
+    nota: 'Las dos que menos salen, con descuento.',
+    handles: ['gorra-camuflada-heritage', 'gorra-bull'],
   },
 ];
 

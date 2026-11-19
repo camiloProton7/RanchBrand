@@ -663,6 +663,29 @@ export default function HomeNuevo() {
       </div>
 
       <section className="hn-cats" id="colecciones">
+        {/* campaña: no reemplaza nada del home, se suma entre el hero y las colecciones */}
+        <section className="hn-bf" aria-label="Black Friday">
+          <Link to="/black-friday" prefetch="intent" className="hn-bf-in">
+            <span className="hn-bf-strip" aria-hidden="true" />
+            <span className="hn-bf-kicker">Black Friday · 27 al 30 de noviembre</span>
+            <span className="hn-bf-title">
+              Hasta <em>53%</em>
+              <br />
+              en la selección.
+            </span>
+            <span className="hn-bf-txt">
+              Botas de niño y de mujer, chaquetas, camisas y el pack de cinco gorras.
+            </span>
+            <span className="hn-bf-cta">
+              Ver las ofertas
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M5 12h14M13 6l6 6-6 6" />
+              </svg>
+            </span>
+          </Link>
+        </section>
+
+
         <div className="hn-cats-head">
           <p className="hn-cats-eyebrow">Explora</p>
           <h2 className="hn-cats-title">Colecciones</h2>
