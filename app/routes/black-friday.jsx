@@ -212,7 +212,9 @@ export async function loader({context}) {
 const dinero = (n) => '$ ' + Math.round(n).toLocaleString('es-CO');
 
 function Cuenta({cierre}) {
-  const [falta, setFalta] = useState(() => new Date(cierre).getTime() - Date.now());
+  // Arranca en null: el reloj se pinta después de montar. Si se calcula en el
+  // servidor, el primer render del cliente no coincide y React tira error 425.
+  const [falta, setFalta] = useState(null);
 
   useEffect(() => {
     const tic = () => setFalta(new Date(cierre).getTime() - Date.now());
@@ -221,23 +223,23 @@ function Cuenta({cierre}) {
     return () => clearInterval(id);
   }, [cierre]);
 
-  if (falta <= 0) {
+  if (falta !== null && falta <= 0) {
     return <p className="bf-fin">La campaña se cerró. Gracias a los que alcanzaron.</p>;
   }
 
-  const s = Math.floor(falta / 1000);
+  const s = falta === null ? null : Math.floor(falta / 1000);
   const cajas = [
-    ['días', Math.floor(s / 86400)],
-    ['horas', Math.floor((s % 86400) / 3600)],
-    ['min', Math.floor((s % 3600) / 60)],
-    ['seg', s % 60],
+    ['días', s === null ? null : Math.floor(s / 86400)],
+    ['horas', s === null ? null : Math.floor((s % 86400) / 3600)],
+    ['min', s === null ? null : Math.floor((s % 3600) / 60)],
+    ['seg', s === null ? null : s % 60],
   ];
 
   return (
     <div className="bf-reloj" aria-label="Cuenta regresiva del Black Friday">
       {cajas.map(([rot, n]) => (
         <span className="bf-reloj-caja" key={rot}>
-          <b>{String(n).padStart(2, '0')}</b>
+          <b>{n === null ? '--' : String(n).padStart(2, '0')}</b>
           <i>{rot}</i>
         </span>
       ))}
