@@ -6249,6 +6249,8 @@
   --crema: #f5f0e6;
   --tinta: #14100c;
   --tierra: #b34a2a;
+  --bf-rojo: #7a1a12;
+  --bf-oro: #f0c04a;
   --papel: #fbf8f1;
   background: var(--crema);
   color: var(--tinta);
@@ -6283,7 +6285,7 @@
   text-transform: uppercase;
   color: rgba(245, 240, 230, 0.7);
 }
-.bf-sello span { width: 18px; height: 2px; background: var(--tierra); }
+.bf-sello span { width: 18px; height: 2px; background: var(--bf-oro); }
 .bf-titulo {
   margin: 0 0 14px;
   font-size: clamp(50px, 15.5vw, 74px);
@@ -6292,7 +6294,7 @@
   font-weight: 800;
   color: var(--crema);
 }
-.bf-titulo em { font-style: normal; color: #e2664a; }
+.bf-titulo em { font-style: normal; color: var(--bf-oro); }
 .bf-titulo small {
   display: block;
   margin-top: 6px;
@@ -6343,14 +6345,16 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  gap: 10px;
+  margin-top: 22px;
   min-height: 52px;
   padding: 0 26px;
   border-radius: 10px;
-  background: var(--tierra);
-  color: #fff;
-  font-size: 12px;
+  background: var(--bf-oro);
+  color: #14100c;
+  font-size: 11.5px;
   font-weight: 800;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   text-decoration: none;
 }
@@ -6554,7 +6558,7 @@
 
 .bf-pack {
   position: relative;
-  background: var(--tierra);
+  background: var(--bf-rojo);
   color: #fff;
   padding: 34px 20px 30px;
   overflow: hidden;
@@ -6568,7 +6572,7 @@
   font-weight: 800;
   line-height: 1;
   letter-spacing: -0.06em;
-  color: rgba(255, 255, 255, 0.09);
+  color: rgba(240, 192, 74, 0.14);
   pointer-events: none;
 }
 .bf-pack-top {
@@ -6592,6 +6596,7 @@
   font-size: 22px;
   font-weight: 800;
   letter-spacing: -0.03em;
+  color: var(--bf-oro);
 }
 .bf-pack-fotos {
   position: relative;
@@ -6655,10 +6660,10 @@
   background: var(--tinta);
   color: var(--crema);
   padding: 40px 20px 26px;
-  border-top: 2px solid var(--tierra);
+  border-top: 2px solid var(--bf-oro);
   border-bottom: 1px solid rgba(245, 240, 230, 0.12);
 }
-.bf-cierre .bf-eyebrow { color: #e2664a; }
+.bf-cierre .bf-eyebrow { color: var(--bf-oro); }
 .bf-cierre .bf-h2 { color: var(--crema); font-size: 30px; }
 .bf-cierre-txt {
   margin: 12px 0 22px;
@@ -6728,7 +6733,13 @@
 }
 
 /* --- banner black friday en el home (se suma, no reemplaza) --- */
-.hn-bf { padding: 0 16px; margin-bottom: 10px; }
+/* --- banner black friday en el home (se suma, no reemplaza) --- */
+.hn-bf {
+  --bf-oro: #f0c04a;
+  --bf-rojo: #7a1a12;
+  padding: 0 16px;
+  margin-bottom: 10px;
+}
 .hn-bf-in {
   position: relative;
   display: block;
@@ -6743,7 +6754,7 @@
   position: absolute;
   inset: 0 0 auto 0;
   height: 5px;
-  background: var(--tierra);
+  background: var(--bf-oro);
 }
 .hn-bf-kicker {
   display: block;
@@ -6752,7 +6763,7 @@
   font-weight: 800;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: #d98a6a;
+  color: var(--bf-oro);
 }
 .hn-bf-title {
   display: block;
@@ -6761,7 +6772,7 @@
   letter-spacing: -0.045em;
   font-weight: 800;
 }
-.hn-bf-title em { font-style: normal; color: #e2703f; }
+.hn-bf-title em { font-style: normal; color: var(--bf-oro); }
 .hn-bf-txt {
   display: block;
   margin-top: 10px;
@@ -6778,13 +6789,14 @@
   min-height: 44px;
   padding: 0 18px;
   border-radius: 8px;
-  background: #f5f0e6;
+  background: var(--bf-oro);
   color: #171310;
   font-size: 11px;
   font-weight: 800;
   letter-spacing: 0.1em;
   text-transform: uppercase;
 }
+
 @media (min-width: 1000px) {
   .hn-bf { padding: 0 48px; margin-bottom: 22px; }
   .hn-bf-in { padding: 38px 40px; }
