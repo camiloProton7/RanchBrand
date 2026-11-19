@@ -82,7 +82,6 @@ const SECCIONES = [
     titulo: 'Camisas y polos',
     nota: 'Manga corta, polo y las outdoor.',
     handles: [
-      'camisa-outdoor-proteccion-solar-upf-50',
       'camisa-outdoor-the-ranch',
       'camisa-manga-corta',
       'camisa-tipo-polo',
@@ -95,8 +94,8 @@ const SECCIONES = [
   },
   {
     titulo: 'Gorras',
-    nota: 'Las dos que menos salen, con descuento.',
-    handles: ['gorra-camuflada-heritage', 'gorra-bull'],
+    nota: 'Las que menos salen, con descuento.',
+    handles: ['gorra-camuflada-heritage', 'gorra-bull', 'gorra-desert', 'gorra-redwood'],
   },
 ];
 
@@ -148,7 +147,13 @@ function armar(productos) {
   const conDescuento = [...porHandle.values()].filter((o) => o.pct > 0);
   conDescuento.sort((a, b) => b.pct - a.pct);
 
-  return {secciones, rebajadas: conDescuento};
+  // cuatro gorras para el abanico del pack: las mismas que van en la sección
+  const packFotos = ['gorra-camuflada-heritage', 'gorra-bull', 'gorra-desert', 'gorra-redwood']
+    .map((h) => porHandle.get(h))
+    .filter(Boolean)
+    .map((o) => o.foto);
+
+  return {secciones, rebajadas: conDescuento, packFotos};
 }
 
 export async function loader({context}) {
@@ -189,13 +194,19 @@ export async function loader({context}) {
     return {
       secciones: datos.secciones.map((s) => ({...s, piezas: sinUnidades(s.piezas)})),
       rebajadas: sinUnidades(datos.rebajadas),
+      packFotos: datos.packFotos,
     };
   };
 
   // en desarrollo sin caché: un cambio de precio o de stock se ve al recargar
   const datos = import.meta.env.DEV ? await producir() : await recordar('black-friday', 2, producir);
 
-  return {secciones: datos.secciones, rebajadas: datos.rebajadas, cierre: CIERRE};
+  return {
+    secciones: datos.secciones,
+    rebajadas: datos.rebajadas,
+    packFotos: datos.packFotos,
+    cierre: CIERRE,
+  };
 }
 
 const dinero = (n) => '$ ' + Math.round(n).toLocaleString('es-CO');
@@ -265,7 +276,7 @@ function Tarjeta({o}) {
 }
 
 export default function BlackFriday() {
-  const {secciones, rebajadas, cierre} = useLoaderData();
+  const {secciones, rebajadas, packFotos = [], cierre} = useLoaderData();
   const todas = secciones.flatMap((s) => s.piezas);
   const ultimas = todas.filter((o) => o.unidades !== null && o.unidades <= 5);
   const mejor = rebajadas[0]?.pct ?? 0;
@@ -335,6 +346,19 @@ export default function BlackFriday() {
               <b>5 gorras</b>
               <span>$ 500.000</span>
             </p>
+          </div>
+          <div className="bf-pack-fotos" aria-hidden="true">
+            {packFotos.map((f, i) => (
+              <img
+                key={f}
+                src={`${f}${f.includes('?') ? '&' : '?'}width=220`}
+                alt=""
+                loading="lazy"
+                width="110"
+                height="110"
+                style={{'--i': i}}
+              />
+            ))}
           </div>
           <h2 className="bf-pack-titulo">
             Cinco gorras,
