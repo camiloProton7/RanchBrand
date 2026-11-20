@@ -127,7 +127,7 @@ const COMBO = `#graphql
 
 const CHAQUETAS = `#graphql
   query Chaquetas {
-    collection(handle: "chaquetas") {
+    collection(handle: "chaquetas-mujer") {
       products(first: 8, sortKey: BEST_SELLING) {
         nodes {
           id title handle description availableForSale
@@ -754,13 +754,13 @@ export default function HomeNuevo() {
 
         <Lienzo />
 
-        <section className="hn-gorras" aria-label="Colección de chaquetas">
+        <section className="hn-gorras" aria-label="Colección de chaquetas de mujer">
           <header className="hn-gorras-head">
             <div>
               <p className="hn-gorras-eyebrow">Colección</p>
-              <h2 className="hn-gorras-title">Chaquetas</h2>
+              <h2 className="hn-gorras-title">Chaquetas de mujer</h2>
             </div>
-            <Link to="/collections/chaquetas" className="hn-gorras-link">
+            <Link to="/collections/chaquetas-mujer" className="hn-gorras-link">
               Ver todas
               <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <path d="M5 12h14M13 6l6 6-6 6" />
@@ -791,7 +791,7 @@ export default function HomeNuevo() {
 
           <div className="hn-rail hn-rail-chaquetas" id="rail-chaquetas">
             {chaquetas.map((p) => (
-              <Tarjeta key={p.id} p={p} badge="Chaquetas" ruta="/products/" />
+              <Tarjeta key={p.id} p={p} badge="Mujer" ruta="/products/" />
             ))}
           </div>
         </section>
