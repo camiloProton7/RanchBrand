@@ -2559,6 +2559,8 @@
   z-index: 80;
   display: grid;
   grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
+  height: 100dvh;
 }
 
 .hn-menu-velo {
@@ -2583,7 +2585,8 @@
   width: 88%;
   max-width: 348px;
   height: 100%;
-  max-height: 100dvh;
+  max-height: 100%;
+  min-height: 0;
   overflow-y: auto;
   overscroll-behavior: contain;
   -webkit-overflow-scrolling: touch;
