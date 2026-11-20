@@ -79,6 +79,7 @@ const SECCIONES = [
     handles: [
       'chaleco-bombacho',
       'chaqueta-hunter-impermeable-green',
+      'chaqueta-impermeable-yellowstone-dtf',
       'chaqueta-impermeable-mojave',
       'chaqueta-impermeable-sahara',
     ],
