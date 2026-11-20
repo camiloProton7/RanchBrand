@@ -35,7 +35,7 @@ function ancho(url, w) {
   }
 }
 
-/** srcset de 200 a 900: la tarjeta mide ~174 px a 390, así que 400 ya sobra. */
+/** srcset de 200 a 900: el navegador elige según la pantalla; un iPhone 3x pide 600. */
 function srcset(url) {
   const anchos = [200, 300, 400, 600, 900];
   const partes = anchos.map((w) => {
