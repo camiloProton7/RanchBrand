@@ -3,6 +3,7 @@ import styles from '~/styles/home-nuevo.css?url';
 import {recordar} from '~/lib/cache';
 import {useEffect, useMemo, useRef, useState} from 'react';
 import {Grid, Tarjeta} from '~/components/Tarjeta';
+import TarjetaPack from '~/components/TarjetaPack';
 import Sellos from '~/components/Sellos';
 import Pie from '~/components/Pie';
 import MenuLateral from '~/components/MenuLateral';
@@ -10,6 +11,16 @@ import Carroza from '~/components/Carroza';
 import Buscador from '~/components/Buscador';
 
 export const links = () => [{rel: 'stylesheet', href: styles}];
+
+const PACK = `#graphql
+  query PackGorras {
+    p1: product(handle: "gorra-camuflada-heritage") { images(first: 1) { nodes { url } } }
+    p2: product(handle: "gorra-bull") { images(first: 1) { nodes { url } } }
+    p3: product(handle: "gorra-desert") { images(first: 1) { nodes { url } } }
+    p4: product(handle: "gorra-redwood") { images(first: 1) { nodes { url } } }
+    p5: product(handle: "gorra-territory") { images(first: 1) { nodes { url } } }
+  }
+`;
 
 const COLECCION = `#graphql
   query Coleccion($handle: String!, $orden: ProductCollectionSortKeys!, $alreves: Boolean!) {
@@ -147,6 +158,16 @@ async function cargarColeccion({params, context, genero = ''}) {
     const v = url.includes('?v=') ? '?' + url.split('?')[1].split('&')[0] : '';
     return `${base}${v}${v ? '&' : '?'}width=${ancho}`;
   };
+
+  // La colección de gorras lleva arriba la tarjeta del pack de cinco.
+  let packFotos = [];
+  if (handle === 'gorras') {
+    const pk = await context.storefront.query(PACK, fresco);
+    packFotos = ['p1', 'p2', 'p3', 'p4', 'p5']
+      .map((k) => pk?.[k]?.images?.nodes?.[0]?.url)
+      .filter(Boolean)
+      .map((u) => optimizar(u, 300));
+  }
 
   const estrellas = (nodos) => {
     const lista = (nodos || []).filter(Boolean);
@@ -296,6 +317,7 @@ async function cargarColeccion({params, context, genero = ''}) {
       (c.image ? optimizar(c.image.url, 1200) : productos[0]?.grande ?? null),
     desde: desde ? fmt.format(desde) : null,
     productos: lista,
+    packFotos,
   };
 }
 
@@ -344,7 +366,7 @@ export const meta = ({data}) => {
 };
 
 export default function ColeccionNueva() {
-  const {titulo, descripcion, foto, productos, handle, desde, otras, genero, sugeridos, sugeridosTitulo, sugeridosHandle} =
+  const {titulo, descripcion, foto, productos, handle, desde, otras, genero, sugeridos, sugeridosTitulo, sugeridosHandle, packFotos = []} =
     useLoaderData();
   const [orden, setOrden] = useState('destacados');
   const heroRef = useRef(null);
@@ -458,6 +480,7 @@ export default function ColeccionNueva() {
       </section>
 
       <Grid className="hc-grid">
+        {packFotos.length > 0 && <TarjetaPack fotos={packFotos} />}
         {lista.map((p, i) => (
           <Tarjeta
             key={p.id}

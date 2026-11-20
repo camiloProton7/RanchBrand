@@ -12,7 +12,8 @@ export default function FranjaBF() {
   const oculta =
     pathname === '/black-friday' ||
     pathname.startsWith('/black-friday/') ||
-    pathname.startsWith('/nuevo');
+    pathname.startsWith('/nuevo') ||
+    pathname.startsWith('/prueba');
 
   useEffect(() => {
     const raiz = document.documentElement;

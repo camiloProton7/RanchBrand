@@ -7551,3 +7551,84 @@ html.con-franja .hc-volver { margin-top: 6px; }
 .hn-par .hn-card-foot {
   padding: 7px 12px 13px;
 }
+
+/* ---------- tarjeta del pack de cinco gorras dentro de la colección ---------- */
+.pk {
+  grid-column: 1 / -1;
+  position: relative;
+  display: block;
+  overflow: hidden;
+  border-radius: 18px;
+  background: #7a1a12;
+  color: #fffdf8;
+  text-decoration: none;
+  box-shadow: 0 1px 2px rgba(43,31,20,.10), 0 16px 34px -22px rgba(122,26,18,.75);
+}
+.pk:active { transform: scale(.995); }
+
+.pk-fotos {
+  display: flex;
+  gap: 5px;
+  padding: 11px 11px 0;
+}
+.pk-fotos img {
+  flex: 1 1 0;
+  min-width: 0;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: 10px;
+  background: #f6f3ec;
+}
+
+.pk-cuerpo {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  padding: 11px 14px 14px;
+}
+.pk-rotulo {
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: #f0c04a;
+}
+.pk-titulo {
+  font-size: 18px;
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -.02em;
+}
+.pk-precios {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin-top: 3px;
+}
+.pk-precios b { font-size: 16px; font-weight: 800; color: #f0c04a; letter-spacing: -.01em; }
+.pk-precios em { font-style: normal; font-size: 11.5px; font-weight: 600; color: rgba(255,255,255,.52); }
+
+.pk-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: 10px;
+  padding: 9px 15px;
+  border-radius: 999px;
+  background: #f0c04a;
+  color: #1c1712;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.pk-sello {
+  padding: 3px 7px;
+  border-radius: 5px;
+  background: #f0c04a;
+  color: #7a1a12;
+  font-size: 10.5px;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -.01em;
+}

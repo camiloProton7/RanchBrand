@@ -478,6 +478,28 @@ export type DestacadosCestaQuery = {
   }>;
 };
 
+export type PackGorrasQueryVariables = StorefrontAPI.Exact<{
+  [key: string]: never;
+}>;
+
+export type PackGorrasQuery = {
+  p1?: StorefrontAPI.Maybe<{
+    images: {nodes: Array<Pick<StorefrontAPI.Image, 'url'>>};
+  }>;
+  p2?: StorefrontAPI.Maybe<{
+    images: {nodes: Array<Pick<StorefrontAPI.Image, 'url'>>};
+  }>;
+  p3?: StorefrontAPI.Maybe<{
+    images: {nodes: Array<Pick<StorefrontAPI.Image, 'url'>>};
+  }>;
+  p4?: StorefrontAPI.Maybe<{
+    images: {nodes: Array<Pick<StorefrontAPI.Image, 'url'>>};
+  }>;
+  p5?: StorefrontAPI.Maybe<{
+    images: {nodes: Array<Pick<StorefrontAPI.Image, 'url'>>};
+  }>;
+};
+
 export type ColeccionQueryVariables = StorefrontAPI.Exact<{
   handle: StorefrontAPI.Scalars['String']['input'];
   orden: StorefrontAPI.ProductCollectionSortKeys;
@@ -882,6 +904,43 @@ export type PruebaTarjetasQuery = {
   }>;
 };
 
+export type PruebaUpsellQueryVariables = StorefrontAPI.Exact<{
+  [key: string]: never;
+}>;
+
+export type PruebaUpsellQuery = {
+  principal?: StorefrontAPI.Maybe<
+    Pick<StorefrontAPI.Product, 'title' | 'handle'> & {
+      priceRange: {minVariantPrice: Pick<StorefrontAPI.MoneyV2, 'amount'>};
+      images: {nodes: Array<Pick<StorefrontAPI.Image, 'url'>>};
+    }
+  >;
+  c1?: StorefrontAPI.Maybe<
+    Pick<StorefrontAPI.Product, 'title' | 'handle'> & {
+      priceRange: {minVariantPrice: Pick<StorefrontAPI.MoneyV2, 'amount'>};
+      images: {nodes: Array<Pick<StorefrontAPI.Image, 'url'>>};
+    }
+  >;
+  c2?: StorefrontAPI.Maybe<
+    Pick<StorefrontAPI.Product, 'title' | 'handle'> & {
+      priceRange: {minVariantPrice: Pick<StorefrontAPI.MoneyV2, 'amount'>};
+      images: {nodes: Array<Pick<StorefrontAPI.Image, 'url'>>};
+    }
+  >;
+  c3?: StorefrontAPI.Maybe<
+    Pick<StorefrontAPI.Product, 'title' | 'handle'> & {
+      priceRange: {minVariantPrice: Pick<StorefrontAPI.MoneyV2, 'amount'>};
+      images: {nodes: Array<Pick<StorefrontAPI.Image, 'url'>>};
+    }
+  >;
+  c4?: StorefrontAPI.Maybe<
+    Pick<StorefrontAPI.Product, 'title' | 'handle'> & {
+      priceRange: {minVariantPrice: Pick<StorefrontAPI.MoneyV2, 'amount'>};
+      images: {nodes: Array<Pick<StorefrontAPI.Image, 'url'>>};
+    }
+  >;
+};
+
 export type SearchProductsQueryVariables = StorefrontAPI.Exact<{
   query: StorefrontAPI.Scalars['String']['input'];
   first: StorefrontAPI.Scalars['Int']['input'];
@@ -963,6 +1022,10 @@ interface GeneratedQueryTypes {
     return: DestacadosCestaQuery;
     variables: DestacadosCestaQueryVariables;
   };
+  '#graphql\n  query PackGorras {\n    p1: product(handle: "gorra-camuflada-heritage") { images(first: 1) { nodes { url } } }\n    p2: product(handle: "gorra-bull") { images(first: 1) { nodes { url } } }\n    p3: product(handle: "gorra-desert") { images(first: 1) { nodes { url } } }\n    p4: product(handle: "gorra-redwood") { images(first: 1) { nodes { url } } }\n    p5: product(handle: "gorra-territory") { images(first: 1) { nodes { url } } }\n  }\n': {
+    return: PackGorrasQuery;
+    variables: PackGorrasQueryVariables;
+  };
   '#graphql\n  query Coleccion($handle: String!, $orden: ProductCollectionSortKeys!, $alreves: Boolean!) {\n    collection(handle: $handle) {\n      title\n      handle\n      description\n      image { url altText }\n      products(first: 60, sortKey: $orden, reverse: $alreves) {\n        nodes {\n          id\n          title\n          handle\n          availableForSale\n          productType\n          priceRange { minVariantPrice { amount currencyCode } }\n      compareAtPriceRange { minVariantPrice { amount } }\n          images(first: 4) { nodes { url altText } }\n          metafields(identifiers: [\n            {namespace: "reviews", key: "rating"},\n            {namespace: "reviews", key: "rating_count"}\n          ]) { key value }\n        }\n      }\n    }\n  }\n': {
     return: ColeccionQuery;
     variables: ColeccionQueryVariables;
@@ -1010,6 +1073,10 @@ interface GeneratedQueryTypes {
   '#graphql\n  query PruebaTarjetas {\n    collection(handle: "chaquetas") {\n      products(first: 4, sortKey: BEST_SELLING) {\n        nodes {\n          title\n          handle\n          availableForSale\n          priceRange { minVariantPrice { amount } }\n          compareAtPriceRange { minVariantPrice { amount } }\n          images(first: 1) { nodes { url altText } }\n        }\n      }\n    }\n  }\n': {
     return: PruebaTarjetasQuery;
     variables: PruebaTarjetasQueryVariables;
+  };
+  '#graphql\n  query PruebaUpsell {\n    principal: product(handle: "chaqueta-impermeable-mojave") {\n      title handle\n      priceRange { minVariantPrice { amount } }\n      images(first: 1) { nodes { url } }\n    }\n    c1: product(handle: "gorra-camuflada-heritage") { title handle priceRange { minVariantPrice { amount } } images(first: 1) { nodes { url } } }\n    c2: product(handle: "billetera-anti-clonacion-copia") { title handle priceRange { minVariantPrice { amount } } images(first: 1) { nodes { url } } }\n    c3: product(handle: "camisa-outdoor-the-ranch") { title handle priceRange { minVariantPrice { amount } } images(first: 1) { nodes { url } } }\n    c4: product(handle: "licorera-metalica") { title handle priceRange { minVariantPrice { amount } } images(first: 1) { nodes { url } } }\n  }\n': {
+    return: PruebaUpsellQuery;
+    variables: PruebaUpsellQueryVariables;
   };
   '#graphql\n  query SearchProducts($query: String!, $first: Int!) {\n    search(\n      first: $first\n      query: $query\n      types: PRODUCT\n      sortKey: RELEVANCE\n      unavailableProducts: LAST\n    ) {\n      totalCount\n      nodes {\n        ... on Product {\n          id\n          title\n          handle\n          availableForSale\n          tags\n          productType\n          featuredImage { url }\n          priceRange { minVariantPrice { amount currencyCode } }\n          compareAtPriceRange { minVariantPrice { amount } }\n        }\n      }\n    }\n  }\n': {
     return: SearchProductsQuery;
