@@ -75,7 +75,7 @@ const SECCIONES = [
   },
   {
     titulo: 'Chaquetas y chalecos',
-    nota: 'La Mojave para el agua y el viento, y el bombacho para la sabana fría.',
+    nota: 'Del bombacho al nylon: cinco capas para la lluvia y el frío.',
     handles: [
       'chaleco-bombacho',
       'chaqueta-hunter-impermeable-green',
