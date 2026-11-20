@@ -2583,6 +2583,10 @@
   width: 88%;
   max-width: 348px;
   height: 100%;
+  max-height: 100dvh;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
   display: flex;
   flex-direction: column;
   background: #f7f2e8;
