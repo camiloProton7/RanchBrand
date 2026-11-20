@@ -123,6 +123,22 @@ export default function MenuLateral({tono = 'crema'}) {
               </a>
             </nav>
 
+            <Link
+              to="/black-friday"
+              className="hn-bf-franja"
+              onClick={() => setAbierto(false)}
+            >
+              <span className="hn-bf-franja-txt">
+                <b>Black Friday</b>
+                <small>Hasta 53% en la selección</small>
+              </span>
+              <span className="hn-bf-franja-flecha" aria-hidden="true">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M5 12h13M12 5l7 7-7 7" />
+                </svg>
+              </span>
+            </Link>
+
             <p className="hn-panel-lema">No nacimos para que fuera fácil.</p>
 
             <div className="hn-panel-pie">
