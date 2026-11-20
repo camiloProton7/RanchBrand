@@ -75,12 +75,13 @@ const SECCIONES = [
   },
   {
     titulo: 'Chaquetas y chalecos',
-    nota: 'Del bombacho al nylon: cinco capas para la lluvia y el frío.',
+    nota: 'Seis cortavientos para la lluvia y el frío.',
     handles: [
       'chaleco-bombacho',
       'chaqueta-hunter-impermeable-green',
       'chaqueta-impermeable-yellowstone-dtf',
       'chaqueta-impermeable-camuflada',
+      'chaqueta-nautica',
       'chaqueta-impermeable-mojave',
       'chaqueta-impermeable-sahara',
     ],
