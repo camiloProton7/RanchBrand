@@ -7493,3 +7493,6 @@ html.con-franja .hn-bar,
 html.con-franja .hc-bar,
 html.con-franja .ex-bar,
 html.con-franja .hp-bar { top: var(--bf-franja-alto); }
+
+/* respiro del botón volver cuando está la franja */
+html.con-franja .hc-volver { margin-top: 6px; }
