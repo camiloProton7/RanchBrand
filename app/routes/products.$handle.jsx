@@ -16,6 +16,51 @@ import Pie from '~/components/Pie';
 
 export const links = () => [{rel: 'stylesheet', href: styles}];
 
+const CODIGO_POR_HANDLE = {
+  "botas-gamuza-lariat": "UP15-LARIAT",
+  "billetera-anti-clonacion-copia": "UP15-BILLETERA",
+  "gorra-goat": "UP15-GOAT",
+  "gorra-territory-1": "UP15-TERRITORY",
+  "licorera-metalica": "UP15-LICORERA",
+  "gorra-andina": "UP15-ANDINA",
+  "chaqueta-laredo-impermeable": "UP15-LAREDO",
+  "chaqueta-impermeable-armor": "UP15-ARMOR",
+  "chaqueta-impermeable-yellowstone": "UP15-YELLOWSTONE",
+};
+
+const UPSELL_POOL = [
+  "botas-gamuza-lariat",
+  "billetera-anti-clonacion-copia",
+  "gorra-goat",
+  "gorra-territory-1",
+  "licorera-metalica",
+  "gorra-andina",
+  "chaqueta-laredo-impermeable",
+  "chaqueta-impermeable-armor",
+  "chaqueta-impermeable-yellowstone",
+];
+
+const UPSELL = `#graphql
+  query UpsellPool {
+    u1: product(handle: "botas-gamuza-lariat") { ...U }
+    u2: product(handle: "billetera-anti-clonacion-copia") { ...U }
+    u3: product(handle: "gorra-goat") { ...U }
+    u4: product(handle: "gorra-territory-1") { ...U }
+    u5: product(handle: "licorera-metalica") { ...U }
+    u6: product(handle: "gorra-andina") { ...U }
+    u7: product(handle: "chaqueta-laredo-impermeable") { ...U }
+    u8: product(handle: "chaqueta-impermeable-armor") { ...U }
+    u9: product(handle: "chaqueta-impermeable-yellowstone") { ...U }
+  }
+  fragment U on Product {
+    handle
+    title
+    priceRange { minVariantPrice { amount } }
+    images(first: 1) { nodes { url } }
+    variants(first: 1) { nodes { id availableForSale } }
+  }
+`;
+
 const PRODUCTO = `#graphql
   query Producto($handle: String!) {
     product(handle: $handle) {
@@ -202,6 +247,26 @@ async function cargarProducto({params, context}) {
   }
 
 
+  // Los nueve productos que se ofrecen como complemento después de comprar.
+  let upsell = [];
+  try {
+    const up = await context.storefront.query(UPSELL, fresco);
+    upsell = ["u1","u2","u3","u4","u5","u6","u7","u8","u9"]
+      .map((k) => up?.[k])
+      .filter((u) => u && u.handle !== handle && u.variants?.nodes?.[0]?.availableForSale)
+      .map((u) => ({
+        handle: u.handle,
+        titulo: u.title,
+        variantId: u.variants.nodes[0].id,
+        precioNum: Number(u.priceRange.minVariantPrice.amount),
+        precio: fmt.format(Number(u.priceRange.minVariantPrice.amount)),
+        img: optimizar(u.images?.nodes?.[0]?.url, 400),
+        codigo: CODIGO_POR_HANDLE[u.handle] || null,
+      }));
+  } catch {
+    upsell = [];
+  }
+
   return {
     recos,
     id: p.id,
@@ -230,6 +295,7 @@ async function cargarProducto({params, context}) {
     })),
     descripcion: texto,
     parrafos: texto.split('\n').map((t) => t.trim()).filter((t) => t.length > 2),
+    upsell,
   };
 }
 
@@ -269,8 +335,11 @@ export const meta = ({data}) => {
 };
 
 export default function ProductoNuevo() {
-  const {titulo, tipo, precio, precioNum, valor, cuenta, fotos, opciones, variantes, handle, parrafos, recos} =
+  const {titulo, tipo, precio, precioNum, valor, cuenta, fotos, opciones, variantes, handle, parrafos, recos, upsell = []} =
     useLoaderData();
+  const [hojaUp, setHojaUp] = useState(false);
+  const [elegidosUp, setElegidosUp] = useState([]);
+  const [tresUp, setTresUp] = useState([]);
 
   const [foto, setFoto] = useState(0);
   const pista = useRef(null);
@@ -398,13 +467,40 @@ export default function ProductoNuevo() {
   /**
    * "Comprar ahora" va derecho a la pasarela: sin hoja intermedia.
    */
+  const aId = (gid) => gid.replace(/\D/g, '');
+
+  /** Elige tres complementos al azar, sin repetir el producto que se está viendo. */
+  function abrirUpsell() {
+    const baraja = [...upsell].sort(() => Math.random() - 0.5);
+    setTresUp(baraja.slice(0, 3));
+    setElegidosUp([]);
+    setHojaUp(true);
+  }
+
+  /** Permalink al checkout con el producto y los complementos elegidos. */
+  function pagarConUpsell() {
+    const ids = [variante.id, ...elegidosUp].map(aId);
+    // el 15 % va con código por producto: solo rebaja el complemento elegido
+    const primero = upsell.find((u) => u.variantId === elegidosUp[0]);
+    const code = primero?.codigo ? `?discount=${encodeURIComponent(primero.codigo)}` : '';
+    trackCompra(variante.precioNum);
+    window.location.href = `https://1caf84-4.myshopify.com/cart/${ids
+      .map((id) => `${id}:1`)
+      .join(',')}${code}`;
+  }
+
+  /**
+   * "Comprar ahora" pasa primero por la hoja de complementos. Si no hay
+   * complementos cargados, va derecho a la pasarela como antes.
+   */
   function comprarAhora() {
     if (!variante?.disponible) return;
+    if (upsell.length) {
+      abrirUpsell();
+      return;
+    }
     trackCompra(variante.precioNum);
-    window.location.href = `https://1caf84-4.myshopify.com/cart/${variante.id.replace(
-      /\D/g,
-      '',
-    )}:1`;
+    window.location.href = `https://1caf84-4.myshopify.com/cart/${aId(variante.id)}:1`;
   }
 
   // Meta: el producto visto, para remarketing y catalogo.
@@ -683,6 +779,55 @@ export default function ProductoNuevo() {
           hormaProducto={elegidas[opcionHorma?.name] || ''}
           onElegir={(v) => setElegidas((e) => ({...e, [opcionTalla.name]: v}))}
         />
+      )}
+
+      {hojaUp && (
+        <div className="up-velo" onClick={() => setHojaUp(false)}>
+          <div className="up-hoja" onClick={(e) => e.stopPropagation()}>
+            <span className="up-tirador" />
+            <p className="up-rotulo">Antes de pagar</p>
+            <h3 className="up-titulo">Completa el equipo</h3>
+            <p className="up-sub">
+              Llévate un complemento con 15 % menos. El descuento se aplica al pagar.
+            </p>
+
+            <div className="up-lista">
+              {tresUp.map((u) => {
+                const on = elegidosUp.includes(u.variantId);
+                return (
+                  <button
+                    key={u.handle}
+                    type="button"
+                    className={'up-item' + (on ? ' is-on' : '')}
+                    onClick={() =>
+                      setElegidosUp((e) =>
+                        e.includes(u.variantId)
+                          ? e.filter((x) => x !== u.variantId)
+                          : [...e, u.variantId],
+                      )
+                    }
+                  >
+                    <img src={u.img} alt={u.titulo} loading="lazy" />
+                    <span className="up-item-txt">
+                      <span className="up-item-nombre">{u.titulo}</span>
+                      <span className="up-item-precio">{u.precio}</span>
+                    </span>
+                    <span className="up-check" aria-hidden="true">
+                      {on ? '✓' : '+'}
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+
+            <button type="button" className="up-cta" onClick={pagarConUpsell}>
+              {elegidosUp.length ? 'Agregar y pagar' : 'Ir a pagar'}
+            </button>
+            <button type="button" className="up-no" onClick={() => setHojaUp(false)}>
+              No, gracias · seguir solo con mi pedido
+            </button>
+          </div>
+        </div>
       )}
 
     </main>

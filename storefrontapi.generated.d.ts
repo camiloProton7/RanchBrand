@@ -780,6 +780,120 @@ export type ShopPoliciesQuery = {
   };
 };
 
+export type UpsellPoolQueryVariables = StorefrontAPI.Exact<{
+  [key: string]: never;
+}>;
+
+export type UpsellPoolQuery = {
+  u1?: StorefrontAPI.Maybe<
+    Pick<StorefrontAPI.Product, 'handle' | 'title'> & {
+      priceRange: {minVariantPrice: Pick<StorefrontAPI.MoneyV2, 'amount'>};
+      images: {nodes: Array<Pick<StorefrontAPI.Image, 'url'>>};
+      variants: {
+        nodes: Array<
+          Pick<StorefrontAPI.ProductVariant, 'id' | 'availableForSale'>
+        >;
+      };
+    }
+  >;
+  u2?: StorefrontAPI.Maybe<
+    Pick<StorefrontAPI.Product, 'handle' | 'title'> & {
+      priceRange: {minVariantPrice: Pick<StorefrontAPI.MoneyV2, 'amount'>};
+      images: {nodes: Array<Pick<StorefrontAPI.Image, 'url'>>};
+      variants: {
+        nodes: Array<
+          Pick<StorefrontAPI.ProductVariant, 'id' | 'availableForSale'>
+        >;
+      };
+    }
+  >;
+  u3?: StorefrontAPI.Maybe<
+    Pick<StorefrontAPI.Product, 'handle' | 'title'> & {
+      priceRange: {minVariantPrice: Pick<StorefrontAPI.MoneyV2, 'amount'>};
+      images: {nodes: Array<Pick<StorefrontAPI.Image, 'url'>>};
+      variants: {
+        nodes: Array<
+          Pick<StorefrontAPI.ProductVariant, 'id' | 'availableForSale'>
+        >;
+      };
+    }
+  >;
+  u4?: StorefrontAPI.Maybe<
+    Pick<StorefrontAPI.Product, 'handle' | 'title'> & {
+      priceRange: {minVariantPrice: Pick<StorefrontAPI.MoneyV2, 'amount'>};
+      images: {nodes: Array<Pick<StorefrontAPI.Image, 'url'>>};
+      variants: {
+        nodes: Array<
+          Pick<StorefrontAPI.ProductVariant, 'id' | 'availableForSale'>
+        >;
+      };
+    }
+  >;
+  u5?: StorefrontAPI.Maybe<
+    Pick<StorefrontAPI.Product, 'handle' | 'title'> & {
+      priceRange: {minVariantPrice: Pick<StorefrontAPI.MoneyV2, 'amount'>};
+      images: {nodes: Array<Pick<StorefrontAPI.Image, 'url'>>};
+      variants: {
+        nodes: Array<
+          Pick<StorefrontAPI.ProductVariant, 'id' | 'availableForSale'>
+        >;
+      };
+    }
+  >;
+  u6?: StorefrontAPI.Maybe<
+    Pick<StorefrontAPI.Product, 'handle' | 'title'> & {
+      priceRange: {minVariantPrice: Pick<StorefrontAPI.MoneyV2, 'amount'>};
+      images: {nodes: Array<Pick<StorefrontAPI.Image, 'url'>>};
+      variants: {
+        nodes: Array<
+          Pick<StorefrontAPI.ProductVariant, 'id' | 'availableForSale'>
+        >;
+      };
+    }
+  >;
+  u7?: StorefrontAPI.Maybe<
+    Pick<StorefrontAPI.Product, 'handle' | 'title'> & {
+      priceRange: {minVariantPrice: Pick<StorefrontAPI.MoneyV2, 'amount'>};
+      images: {nodes: Array<Pick<StorefrontAPI.Image, 'url'>>};
+      variants: {
+        nodes: Array<
+          Pick<StorefrontAPI.ProductVariant, 'id' | 'availableForSale'>
+        >;
+      };
+    }
+  >;
+  u8?: StorefrontAPI.Maybe<
+    Pick<StorefrontAPI.Product, 'handle' | 'title'> & {
+      priceRange: {minVariantPrice: Pick<StorefrontAPI.MoneyV2, 'amount'>};
+      images: {nodes: Array<Pick<StorefrontAPI.Image, 'url'>>};
+      variants: {
+        nodes: Array<
+          Pick<StorefrontAPI.ProductVariant, 'id' | 'availableForSale'>
+        >;
+      };
+    }
+  >;
+  u9?: StorefrontAPI.Maybe<
+    Pick<StorefrontAPI.Product, 'handle' | 'title'> & {
+      priceRange: {minVariantPrice: Pick<StorefrontAPI.MoneyV2, 'amount'>};
+      images: {nodes: Array<Pick<StorefrontAPI.Image, 'url'>>};
+      variants: {
+        nodes: Array<
+          Pick<StorefrontAPI.ProductVariant, 'id' | 'availableForSale'>
+        >;
+      };
+    }
+  >;
+};
+
+export type UFragment = Pick<StorefrontAPI.Product, 'handle' | 'title'> & {
+  priceRange: {minVariantPrice: Pick<StorefrontAPI.MoneyV2, 'amount'>};
+  images: {nodes: Array<Pick<StorefrontAPI.Image, 'url'>>};
+  variants: {
+    nodes: Array<Pick<StorefrontAPI.ProductVariant, 'id' | 'availableForSale'>>;
+  };
+};
+
 export type ProductoQueryVariables = StorefrontAPI.Exact<{
   handle: StorefrontAPI.Scalars['String']['input'];
 }>;
@@ -1057,6 +1171,10 @@ interface GeneratedQueryTypes {
   '#graphql\n  query ShopPolicies {\n    shop {\n      name\n      privacyPolicy {\n        title\n        body\n      }\n      refundPolicy {\n        title\n        body\n      }\n      shippingPolicy {\n        title\n        body\n      }\n      termsOfService {\n        title\n        body\n      }\n    }\n  }\n': {
     return: ShopPoliciesQuery;
     variables: ShopPoliciesQueryVariables;
+  };
+  '#graphql\n  query UpsellPool {\n    u1: product(handle: "botas-gamuza-lariat") { ...U }\n    u2: product(handle: "billetera-anti-clonacion-copia") { ...U }\n    u3: product(handle: "gorra-goat") { ...U }\n    u4: product(handle: "gorra-territory-1") { ...U }\n    u5: product(handle: "licorera-metalica") { ...U }\n    u6: product(handle: "gorra-andina") { ...U }\n    u7: product(handle: "chaqueta-laredo-impermeable") { ...U }\n    u8: product(handle: "chaqueta-impermeable-armor") { ...U }\n    u9: product(handle: "chaqueta-impermeable-yellowstone") { ...U }\n  }\n  fragment U on Product {\n    handle\n    title\n    priceRange { minVariantPrice { amount } }\n    images(first: 1) { nodes { url } }\n    variants(first: 1) { nodes { id availableForSale } }\n  }\n': {
+    return: UpsellPoolQuery;
+    variables: UpsellPoolQueryVariables;
   };
   '#graphql\n  query Producto($handle: String!) {\n    product(handle: $handle) {\n      id\n      title\n      handle\n      description\n      descriptionHtml\n      productType\n      vendor\n      tags\n      collections(first: 2) { nodes { handle title } }\n      priceRange { minVariantPrice { amount currencyCode } }\n      images(first: 12) { nodes { url altText } }\n      options { name values }\n      variants(first: 250) {\n        nodes {\n          id\n          title\n          availableForSale\n          quantityAvailable\n          selectedOptions { name value }\n          price { amount currencyCode }\n          compareAtPrice { amount currencyCode }\n        }\n      }\n      metafields(identifiers: [\n        {namespace: "reviews", key: "rating"},\n        {namespace: "reviews", key: "rating_count"}\n      ]) { key value }\n    }\n  }\n': {
     return: ProductoQuery;
