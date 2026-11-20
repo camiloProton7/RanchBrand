@@ -128,7 +128,7 @@ const COMBO = `#graphql
 const CHAQUETAS = `#graphql
   query Chaquetas {
     collection(handle: "chaquetas-mujer") {
-      products(first: 8, sortKey: BEST_SELLING) {
+      products(first: 12) {
         nodes {
           id title handle description availableForSale
           priceRange { minVariantPrice { amount currencyCode } }
