@@ -22,6 +22,29 @@ export function Grid({children, className = ''}) {
  * de puntero a propósito: cambiar el DOM entre `touchstart` y `touchend` hacía
  * que Safari se comiera el clic y hubiera que tocar varias veces para abrir.
  */
+
+/** URL del CDN con el ancho pedido. Shopify respeta &width= en la URL. */
+function ancho(url, w) {
+  try {
+    const u = new URL(url);
+    if (!u.hostname.includes('cdn.shopify.com')) return null;
+    u.searchParams.set('width', String(w));
+    return u.toString();
+  } catch {
+    return null;
+  }
+}
+
+/** srcset de 200 a 900: la tarjeta mide ~174 px a 390, así que 400 ya sobra. */
+function srcset(url) {
+  const anchos = [200, 300, 400, 600, 900];
+  const partes = anchos.map((w) => {
+    const v = ancho(url, w);
+    return v ? `${v} ${w}w` : null;
+  });
+  return partes.filter(Boolean).join(', ');
+}
+
 export function Tarjeta({p, prioridad = false, badge, ancha = false, ruta = '/products/'}) {
   // una sola foto: la tarjeta abre al primer toque, sin vista previa
   const foto = p.imgs?.[0] || p.img1;
@@ -36,6 +59,8 @@ export function Tarjeta({p, prioridad = false, badge, ancha = false, ruta = '/pr
         {foto ? (
           <img
             src={foto}
+            srcSet={srcset(foto) || undefined}
+            sizes="(max-width: 480px) 46vw, (max-width: 900px) 31vw, 320px"
             alt={p.titulo}
             className="base"
             loading={prioridad ? 'eager' : 'lazy'}
