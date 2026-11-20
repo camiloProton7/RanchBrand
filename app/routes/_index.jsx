@@ -768,11 +768,32 @@ export default function HomeNuevo() {
             </Link>
           </header>
 
-          <Rail className="hn-rail-chaquetas">
+          <div className="hn-rail-flechas">
+            <button
+              type="button"
+              aria-label="Chaquetas anteriores"
+              onClick={() => moverRail('rail-chaquetas', -1)}
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
+                <path d="M19 12H5M12 19l-7-7 7-7" />
+              </svg>
+            </button>
+            <button
+              type="button"
+              aria-label="Más chaquetas"
+              onClick={() => moverRail('rail-chaquetas', 1)}
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
+                <path d="M5 12h14M12 5l7 7-7 7" />
+              </svg>
+            </button>
+          </div>
+
+          <div className="hn-rail hn-rail-chaquetas" id="rail-chaquetas">
             {chaquetas.map((p) => (
               <Tarjeta key={p.id} p={p} badge="Chaquetas" ruta="/products/" />
             ))}
-          </Rail>
+          </div>
         </section>
 
         <Combo combo={combo} />

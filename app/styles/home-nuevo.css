@@ -7810,3 +7810,45 @@ html.con-franja .hc-volver { margin-top: 6px; }
 .up-op.is-on { background: #4c5730; border-color: #4c5730; color: #f7f3e6; }
 .up-op.is-off { opacity: 0.3; }
 .up-cta:disabled { background: rgba(28, 23, 18, 0.22); color: #fffdf8; }
+
+/* ---------- carrusel de chaquetas del home ---------- */
+.hn-rail-chaquetas {
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+}
+.hn-rail-chaquetas .hn-card { scroll-snap-align: start; }
+
+/* tarjetas del carrusel con la foto a sangre (diseño aprobado) */
+.hn-rail-chaquetas .hn-card-media { aspect-ratio: 4 / 5; }
+.hn-rail-chaquetas .hn-card-media img { padding: 0; object-fit: cover; }
+.hn-rail-chaquetas .hn-card-desc { display: none; }
+.hn-rail-chaquetas .hn-card-btn { display: none; }
+.hn-rail-chaquetas .hn-card-name {
+  font-size: 13.5px;
+  font-weight: 800;
+  line-height: 1.18;
+  -webkit-line-clamp: 2;
+}
+.hn-rail-chaquetas .hn-card-price { font-size: 14px; font-weight: 800; }
+
+.hn-rail-flechas {
+  display: none;
+  justify-content: flex-end;
+  gap: 7px;
+  padding: 0 18px 10px;
+}
+.hn-rail-flechas button {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border: 1px solid rgba(28, 23, 18, 0.16);
+  border-radius: 50%;
+  background: #fffdf8;
+  color: #1c1712;
+}
+.hn-rail-flechas button:active { background: #f0ece1; }
+
+@media (min-width: 900px) {
+  .hn-rail-flechas { display: flex; }
+}
