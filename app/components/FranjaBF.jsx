@@ -2,18 +2,15 @@ import {useEffect} from 'react';
 import {Link, useLocation} from 'react-router';
 
 /**
- * Franja fija de Black Friday, arriba de todo y debajo del header de cada página.
- * Se oculta en la propia landing de Black Friday, que ya trae su hero.
+ * Franja fija de Black Friday, solo en el home, arriba de todo y debajo del header.
+ * Fuera del home no aparece: en la landing sobra (ya trae su hero) y en el resto
+ * del sitio estorba la lectura.
  * Mientras está visible marca <html class="con-franja"> para que el header y el
  * contenido se corran esos píxeles y nada quede tapado.
  */
 export default function FranjaBF() {
   const {pathname} = useLocation();
-  const oculta =
-    pathname === '/black-friday' ||
-    pathname.startsWith('/black-friday/') ||
-    pathname.startsWith('/nuevo') ||
-    pathname.startsWith('/prueba');
+  const oculta = pathname !== '/';
 
   useEffect(() => {
     const raiz = document.documentElement;
