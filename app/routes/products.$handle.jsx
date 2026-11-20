@@ -16,59 +16,6 @@ import Pie from '~/components/Pie';
 
 export const links = () => [{rel: 'stylesheet', href: styles}];
 
-const CODIGO_POR_HANDLE = {
-  "botas-gamuza-lariat": "UP15-LARIAT",
-  "billetera-anti-clonacion-copia": "UP15-BILLETERA",
-  "gorra-goat": "UP15-GOAT",
-  "gorra-territory-1": "UP15-TERRITORY",
-  "licorera-metalica": "UP15-LICORERA",
-  "gorra-andina": "UP15-ANDINA",
-  "chaqueta-laredo-impermeable": "UP15-LAREDO",
-  "chaqueta-impermeable-armor": "UP15-ARMOR",
-  "chaqueta-impermeable-yellowstone": "UP15-YELLOWSTONE",
-};
-
-const UPSELL_POOL = [
-  "botas-gamuza-lariat",
-  "billetera-anti-clonacion-copia",
-  "gorra-goat",
-  "gorra-territory-1",
-  "licorera-metalica",
-  "gorra-andina",
-  "chaqueta-laredo-impermeable",
-  "chaqueta-impermeable-armor",
-  "chaqueta-impermeable-yellowstone",
-];
-
-const UPSELL = `#graphql
-  query UpsellPool {
-    u1: product(handle: "botas-gamuza-lariat") { ...U }
-    u2: product(handle: "billetera-anti-clonacion-copia") { ...U }
-    u3: product(handle: "gorra-goat") { ...U }
-    u4: product(handle: "gorra-territory-1") { ...U }
-    u5: product(handle: "licorera-metalica") { ...U }
-    u6: product(handle: "gorra-andina") { ...U }
-    u7: product(handle: "chaqueta-laredo-impermeable") { ...U }
-    u8: product(handle: "chaqueta-impermeable-armor") { ...U }
-    u9: product(handle: "chaqueta-impermeable-yellowstone") { ...U }
-  }
-  fragment U on Product {
-    handle
-    title
-    priceRange { minVariantPrice { amount } }
-    images(first: 1) { nodes { url } }
-    options { name values }
-    variants(first: 60) {
-      nodes {
-        id
-        availableForSale
-        price { amount }
-        selectedOptions { name value }
-      }
-    }
-  }
-`;
-
 const PRODUCTO = `#graphql
   query Producto($handle: String!) {
     product(handle: $handle) {
@@ -255,44 +202,6 @@ async function cargarProducto({params, context}) {
   }
 
 
-  // Los nueve productos que se ofrecen como complemento después de comprar.
-  let upsell = [];
-  try {
-    const up = await context.storefront.query(UPSELL, fresco);
-    upsell = ["u1","u2","u3","u4","u5","u6","u7","u8","u9"]
-      .map((k) => up?.[k])
-      .filter((u) => u && u.handle !== handle && u.variants?.nodes?.[0]?.availableForSale)
-      .map((u) => {
-        const vars = (u.variants?.nodes || []).map((v) => ({
-          id: v.id,
-          disp: v.availableForSale,
-          precioNum: Number(v.price.amount),
-          opts: Object.fromEntries(
-            (v.selectedOptions || []).map((o) => [o.name, o.value]),
-          ),
-        }));
-        const disp = vars.filter((v) => v.disp);
-        const precioNum = Math.min(...(disp.length ? disp : vars).map((v) => v.precioNum));
-        return {
-          handle: u.handle,
-          titulo: u.title,
-          precioNum,
-          precio: fmt.format(precioNum),
-          ahorro: fmt.format(Math.round(precioNum * 0.15)),
-          img: optimizar(u.images?.nodes?.[0]?.url, 400),
-          codigo: CODIGO_POR_HANDLE[u.handle] || null,
-          opciones: (u.options || [])
-            .filter((o) => o.name !== 'Title')
-            .map((o) => ({name: o.name, values: o.values})),
-          variantes: disp,
-          simple: disp.length === 1 && (u.options || []).every((o) => o.name === 'Title'),
-        };
-      })
-      .filter((u) => u.variantes.length > 0);
-  } catch {
-    upsell = [];
-  }
-
   return {
     recos,
     id: p.id,
@@ -321,7 +230,6 @@ async function cargarProducto({params, context}) {
     })),
     descripcion: texto,
     parrafos: texto.split('\n').map((t) => t.trim()).filter((t) => t.length > 2),
-    upsell,
   };
 }
 
@@ -361,11 +269,8 @@ export const meta = ({data}) => {
 };
 
 export default function ProductoNuevo() {
-  const {titulo, tipo, precio, precioNum, valor, cuenta, fotos, opciones, variantes, handle, parrafos, recos, upsell = []} =
+  const {titulo, tipo, precio, precioNum, valor, cuenta, fotos, opciones, variantes, handle, parrafos, recos} =
     useLoaderData();
-  const [hojaUp, setHojaUp] = useState(false);
-  const [elegidos, setElegidos] = useState({});
-  const [tresUp, setTresUp] = useState([]);
 
   const [foto, setFoto] = useState(0);
   const pista = useRef(null);
@@ -493,89 +398,13 @@ export default function ProductoNuevo() {
   /**
    * "Comprar ahora" va derecho a la pasarela: sin hoja intermedia.
    */
-  const aId = (gid) => gid.replace(/\D/g, '');
-
-  /** Elige tres complementos al azar, sin repetir el producto que se está viendo. */
-  function abrirUpsell() {
-    const baraja = [...upsell].sort(() => Math.random() - 0.5);
-    setTresUp(baraja.slice(0, 3));
-    setElegidos({});
-    setHojaUp(true);
-  }
-
-  /** Variante que corresponde a las opciones ya marcadas. */
-  function varianteDe(u, opts) {
-    if (u.simple) return u.variantes[0];
-    return (
-      u.variantes.find((v) => u.opciones.every((o) => opts[o.name] === v.opts[o.name])) || null
-    );
-  }
-
-  /** Marca o desmarca un complemento: al marcarlo se piden talla y color. */
-  function alternar(u) {
-    setElegidos((e) => {
-      const copia = {...e};
-      if (copia[u.handle]) {
-        delete copia[u.handle];
-      } else {
-        const v = u.simple ? u.variantes[0] : null;
-        copia[u.handle] = {opts: {}, vid: v?.id || null, precioNum: v?.precioNum || u.precioNum};
-      }
-      return copia;
-    });
-  }
-
-  function elegirOpcion(u, nombre, valor) {
-    setElegidos((e) => {
-      const actual = e[u.handle];
-      if (!actual) return e;
-      const opts = {...actual.opts};
-      if (opts[nombre] === valor) delete opts[nombre];
-      else opts[nombre] = valor;
-      const v = varianteDe(u, opts);
-      return {
-        ...e,
-        [u.handle]: {opts, vid: v ? v.id : null, precioNum: v ? v.precioNum : u.precioNum},
-      };
-    });
-  }
-
-  /** ¿La combinación de opciones existe? Si no, la talla o el color se apaga. */
-  function existe(u, opts, nombre, valor) {
-    const prueba = {...opts, [nombre]: valor};
-    return u.variantes.some((v) =>
-      u.opciones.every((o) => !prueba[o.name] || prueba[o.name] === v.opts[o.name]),
-    );
-  }
-
-  const marcados = Object.entries(elegidos);
-  const faltanDatos = marcados.some(([, x]) => !x.vid);
-  const conComplementos = marcados.length > 0 && !faltanDatos;
-
-  /** Permalink al checkout: producto + complementos, con el 15 % del primero. */
-  function pagarConUpsell() {
-    const ids = [aId(variante.id)];
-    if (conComplementos) marcados.forEach(([, x]) => ids.push(aId(x.vid)));
-    const primero = marcados.map(([h]) => upsell.find((u) => u.handle === h)).find((u) => u?.codigo);
-    const code = conComplementos && primero ? `?discount=${encodeURIComponent(primero.codigo)}` : '';
-    trackCompra(variante.precioNum);
-    window.location.href = `https://1caf84-4.myshopify.com/cart/${ids
-      .map((id) => `${id}:1`)
-      .join(',')}${code}`;
-  }
-
-  /**
-   * "Comprar ahora" pasa primero por la hoja de complementos. Si no hay
-   * complementos cargados, va derecho a la pasarela como antes.
-   */
   function comprarAhora() {
     if (!variante?.disponible) return;
-    if (upsell.length) {
-      abrirUpsell();
-      return;
-    }
     trackCompra(variante.precioNum);
-    window.location.href = `https://1caf84-4.myshopify.com/cart/${aId(variante.id)}:1`;
+    window.location.href = `https://1caf84-4.myshopify.com/cart/${variante.id.replace(
+      /\D/g,
+      '',
+    )}:1`;
   }
 
   // Meta: el producto visto, para remarketing y catalogo.
@@ -854,85 +683,6 @@ export default function ProductoNuevo() {
           hormaProducto={elegidas[opcionHorma?.name] || ''}
           onElegir={(v) => setElegidas((e) => ({...e, [opcionTalla.name]: v}))}
         />
-      )}
-
-      {hojaUp && (
-        <div className="up-velo" onClick={() => setHojaUp(false)}>
-          <div className="up-hoja" onClick={(e) => e.stopPropagation()}>
-            <span className="up-tirador" />
-            <p className="up-rotulo">Antes de pagar</p>
-            <h3 className="up-titulo">Completa el equipo</h3>
-            <p className="up-sub">
-              Un complemento con 15 % menos. Elige talla y color donde aplique.
-            </p>
-
-            <div className="up-lista">
-              {tresUp.map((u) => {
-                const sel = elegidos[u.handle];
-                return (
-                  <div key={u.handle} className={'up-item' + (sel ? ' is-on' : '')}>
-                    <button type="button" className="up-fila" onClick={() => alternar(u)}>
-                      <img src={u.img} alt={u.titulo} loading="lazy" />
-                      <span className="up-item-txt">
-                        <span className="up-item-nombre">{u.titulo}</span>
-                        <span className="up-item-precio">
-                          {u.precio}
-                          <em className="up-ahorro">−15 % · ahorras {u.ahorro}</em>
-                        </span>
-                      </span>
-                      <span className="up-check" aria-hidden="true">
-                        {sel ? '✓' : '+'}
-                      </span>
-                    </button>
-
-                    {sel && u.opciones.length > 0 && (
-                      <div className="up-opts">
-                        {u.opciones.map((o) => (
-                          <div key={o.name} className="up-opt-grupo">
-                            <p className="up-opt-nombre">{o.name}</p>
-                            <div className="up-op-chips">
-                              {o.values.map((valor) => {
-                                const on = sel.opts[o.name] === valor;
-                                const off = !existe(u, sel.opts, o.name, valor);
-                                return (
-                                  <button
-                                    key={valor}
-                                    type="button"
-                                    disabled={off}
-                                    className={'up-op' + (on ? ' is-on' : '') + (off ? ' is-off' : '')}
-                                    onClick={() => elegirOpcion(u, o.name, valor)}
-                                  >
-                                    {valor}
-                                  </button>
-                                );
-                              })}
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                );
-              })}
-            </div>
-
-            <button
-              type="button"
-              className="up-cta"
-              disabled={faltanDatos}
-              onClick={pagarConUpsell}
-            >
-              {faltanDatos
-                ? 'Elige talla y color'
-                : conComplementos
-                  ? 'Agregar y pagar'
-                  : 'Ir a pagar'}
-            </button>
-            <button type="button" className="up-no" onClick={() => setHojaUp(false)}>
-              No, gracias · seguir solo con mi pedido
-            </button>
-          </div>
-        </div>
       )}
 
     </main>
