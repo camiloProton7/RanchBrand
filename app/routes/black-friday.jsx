@@ -76,7 +76,12 @@ const SECCIONES = [
   {
     titulo: 'Chaquetas y chalecos',
     nota: 'La Mojave para el agua y el viento, y el bombacho para la sabana fría.',
-    handles: ['chaleco-bombacho', 'chaqueta-impermeable-mojave', 'chaqueta-impermeable-sahara'],
+    handles: [
+      'chaleco-bombacho',
+      'chaqueta-hunter-impermeable-green',
+      'chaqueta-impermeable-mojave',
+      'chaqueta-impermeable-sahara',
+    ],
   },
   {
     titulo: 'Camisas y polos',
