@@ -57,7 +57,15 @@ const UPSELL = `#graphql
     title
     priceRange { minVariantPrice { amount } }
     images(first: 1) { nodes { url } }
-    variants(first: 1) { nodes { id availableForSale } }
+    options { name values }
+    variants(first: 60) {
+      nodes {
+        id
+        availableForSale
+        price { amount }
+        selectedOptions { name value }
+      }
+    }
   }
 `;
 
@@ -254,15 +262,33 @@ async function cargarProducto({params, context}) {
     upsell = ["u1","u2","u3","u4","u5","u6","u7","u8","u9"]
       .map((k) => up?.[k])
       .filter((u) => u && u.handle !== handle && u.variants?.nodes?.[0]?.availableForSale)
-      .map((u) => ({
-        handle: u.handle,
-        titulo: u.title,
-        variantId: u.variants.nodes[0].id,
-        precioNum: Number(u.priceRange.minVariantPrice.amount),
-        precio: fmt.format(Number(u.priceRange.minVariantPrice.amount)),
-        img: optimizar(u.images?.nodes?.[0]?.url, 400),
-        codigo: CODIGO_POR_HANDLE[u.handle] || null,
-      }));
+      .map((u) => {
+        const vars = (u.variants?.nodes || []).map((v) => ({
+          id: v.id,
+          disp: v.availableForSale,
+          precioNum: Number(v.price.amount),
+          opts: Object.fromEntries(
+            (v.selectedOptions || []).map((o) => [o.name, o.value]),
+          ),
+        }));
+        const disp = vars.filter((v) => v.disp);
+        const precioNum = Math.min(...(disp.length ? disp : vars).map((v) => v.precioNum));
+        return {
+          handle: u.handle,
+          titulo: u.title,
+          precioNum,
+          precio: fmt.format(precioNum),
+          ahorro: fmt.format(Math.round(precioNum * 0.15)),
+          img: optimizar(u.images?.nodes?.[0]?.url, 400),
+          codigo: CODIGO_POR_HANDLE[u.handle] || null,
+          opciones: (u.options || [])
+            .filter((o) => o.name !== 'Title')
+            .map((o) => ({name: o.name, values: o.values})),
+          variantes: disp,
+          simple: disp.length === 1 && (u.options || []).every((o) => o.name === 'Title'),
+        };
+      })
+      .filter((u) => u.variantes.length > 0);
   } catch {
     upsell = [];
   }
@@ -338,7 +364,7 @@ export default function ProductoNuevo() {
   const {titulo, tipo, precio, precioNum, valor, cuenta, fotos, opciones, variantes, handle, parrafos, recos, upsell = []} =
     useLoaderData();
   const [hojaUp, setHojaUp] = useState(false);
-  const [elegidosUp, setElegidosUp] = useState([]);
+  const [elegidos, setElegidos] = useState({});
   const [tresUp, setTresUp] = useState([]);
 
   const [foto, setFoto] = useState(0);
@@ -473,16 +499,65 @@ export default function ProductoNuevo() {
   function abrirUpsell() {
     const baraja = [...upsell].sort(() => Math.random() - 0.5);
     setTresUp(baraja.slice(0, 3));
-    setElegidosUp([]);
+    setElegidos({});
     setHojaUp(true);
   }
 
-  /** Permalink al checkout con el producto y los complementos elegidos. */
+  /** Variante que corresponde a las opciones ya marcadas. */
+  function varianteDe(u, opts) {
+    if (u.simple) return u.variantes[0];
+    return (
+      u.variantes.find((v) => u.opciones.every((o) => opts[o.name] === v.opts[o.name])) || null
+    );
+  }
+
+  /** Marca o desmarca un complemento: al marcarlo se piden talla y color. */
+  function alternar(u) {
+    setElegidos((e) => {
+      const copia = {...e};
+      if (copia[u.handle]) {
+        delete copia[u.handle];
+      } else {
+        const v = u.simple ? u.variantes[0] : null;
+        copia[u.handle] = {opts: {}, vid: v?.id || null, precioNum: v?.precioNum || u.precioNum};
+      }
+      return copia;
+    });
+  }
+
+  function elegirOpcion(u, nombre, valor) {
+    setElegidos((e) => {
+      const actual = e[u.handle];
+      if (!actual) return e;
+      const opts = {...actual.opts};
+      if (opts[nombre] === valor) delete opts[nombre];
+      else opts[nombre] = valor;
+      const v = varianteDe(u, opts);
+      return {
+        ...e,
+        [u.handle]: {opts, vid: v ? v.id : null, precioNum: v ? v.precioNum : u.precioNum},
+      };
+    });
+  }
+
+  /** ¿La combinación de opciones existe? Si no, la talla o el color se apaga. */
+  function existe(u, opts, nombre, valor) {
+    const prueba = {...opts, [nombre]: valor};
+    return u.variantes.some((v) =>
+      u.opciones.every((o) => !prueba[o.name] || prueba[o.name] === v.opts[o.name]),
+    );
+  }
+
+  const marcados = Object.entries(elegidos);
+  const faltanDatos = marcados.some(([, x]) => !x.vid);
+  const conComplementos = marcados.length > 0 && !faltanDatos;
+
+  /** Permalink al checkout: producto + complementos, con el 15 % del primero. */
   function pagarConUpsell() {
-    const ids = [variante.id, ...elegidosUp].map(aId);
-    // el 15 % va con código por producto: solo rebaja el complemento elegido
-    const primero = upsell.find((u) => u.variantId === elegidosUp[0]);
-    const code = primero?.codigo ? `?discount=${encodeURIComponent(primero.codigo)}` : '';
+    const ids = [aId(variante.id)];
+    if (conComplementos) marcados.forEach(([, x]) => ids.push(aId(x.vid)));
+    const primero = marcados.map(([h]) => upsell.find((u) => u.handle === h)).find((u) => u?.codigo);
+    const code = conComplementos && primero ? `?discount=${encodeURIComponent(primero.codigo)}` : '';
     trackCompra(variante.precioNum);
     window.location.href = `https://1caf84-4.myshopify.com/cart/${ids
       .map((id) => `${id}:1`)
@@ -788,40 +863,70 @@ export default function ProductoNuevo() {
             <p className="up-rotulo">Antes de pagar</p>
             <h3 className="up-titulo">Completa el equipo</h3>
             <p className="up-sub">
-              Llévate un complemento con 15 % menos. El descuento se aplica al pagar.
+              Un complemento con 15 % menos. Elige talla y color donde aplique.
             </p>
 
             <div className="up-lista">
               {tresUp.map((u) => {
-                const on = elegidosUp.includes(u.variantId);
+                const sel = elegidos[u.handle];
                 return (
-                  <button
-                    key={u.handle}
-                    type="button"
-                    className={'up-item' + (on ? ' is-on' : '')}
-                    onClick={() =>
-                      setElegidosUp((e) =>
-                        e.includes(u.variantId)
-                          ? e.filter((x) => x !== u.variantId)
-                          : [...e, u.variantId],
-                      )
-                    }
-                  >
-                    <img src={u.img} alt={u.titulo} loading="lazy" />
-                    <span className="up-item-txt">
-                      <span className="up-item-nombre">{u.titulo}</span>
-                      <span className="up-item-precio">{u.precio}</span>
-                    </span>
-                    <span className="up-check" aria-hidden="true">
-                      {on ? '✓' : '+'}
-                    </span>
-                  </button>
+                  <div key={u.handle} className={'up-item' + (sel ? ' is-on' : '')}>
+                    <button type="button" className="up-fila" onClick={() => alternar(u)}>
+                      <img src={u.img} alt={u.titulo} loading="lazy" />
+                      <span className="up-item-txt">
+                        <span className="up-item-nombre">{u.titulo}</span>
+                        <span className="up-item-precio">
+                          {u.precio}
+                          <em className="up-ahorro">−15 % · ahorras {u.ahorro}</em>
+                        </span>
+                      </span>
+                      <span className="up-check" aria-hidden="true">
+                        {sel ? '✓' : '+'}
+                      </span>
+                    </button>
+
+                    {sel && u.opciones.length > 0 && (
+                      <div className="up-opts">
+                        {u.opciones.map((o) => (
+                          <div key={o.name} className="up-opt-grupo">
+                            <p className="up-opt-nombre">{o.name}</p>
+                            <div className="up-op-chips">
+                              {o.values.map((valor) => {
+                                const on = sel.opts[o.name] === valor;
+                                const off = !existe(u, sel.opts, o.name, valor);
+                                return (
+                                  <button
+                                    key={valor}
+                                    type="button"
+                                    disabled={off}
+                                    className={'up-op' + (on ? ' is-on' : '') + (off ? ' is-off' : '')}
+                                    onClick={() => elegirOpcion(u, o.name, valor)}
+                                  >
+                                    {valor}
+                                  </button>
+                                );
+                              })}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
                 );
               })}
             </div>
 
-            <button type="button" className="up-cta" onClick={pagarConUpsell}>
-              {elegidosUp.length ? 'Agregar y pagar' : 'Ir a pagar'}
+            <button
+              type="button"
+              className="up-cta"
+              disabled={faltanDatos}
+              onClick={pagarConUpsell}
+            >
+              {faltanDatos
+                ? 'Elige talla y color'
+                : conComplementos
+                  ? 'Agregar y pagar'
+                  : 'Ir a pagar'}
             </button>
             <button type="button" className="up-no" onClick={() => setHojaUp(false)}>
               No, gracias · seguir solo con mi pedido

@@ -789,9 +789,15 @@ export type UpsellPoolQuery = {
     Pick<StorefrontAPI.Product, 'handle' | 'title'> & {
       priceRange: {minVariantPrice: Pick<StorefrontAPI.MoneyV2, 'amount'>};
       images: {nodes: Array<Pick<StorefrontAPI.Image, 'url'>>};
+      options: Array<Pick<StorefrontAPI.ProductOption, 'name' | 'values'>>;
       variants: {
         nodes: Array<
-          Pick<StorefrontAPI.ProductVariant, 'id' | 'availableForSale'>
+          Pick<StorefrontAPI.ProductVariant, 'id' | 'availableForSale'> & {
+            price: Pick<StorefrontAPI.MoneyV2, 'amount'>;
+            selectedOptions: Array<
+              Pick<StorefrontAPI.SelectedOption, 'name' | 'value'>
+            >;
+          }
         >;
       };
     }
@@ -800,9 +806,15 @@ export type UpsellPoolQuery = {
     Pick<StorefrontAPI.Product, 'handle' | 'title'> & {
       priceRange: {minVariantPrice: Pick<StorefrontAPI.MoneyV2, 'amount'>};
       images: {nodes: Array<Pick<StorefrontAPI.Image, 'url'>>};
+      options: Array<Pick<StorefrontAPI.ProductOption, 'name' | 'values'>>;
       variants: {
         nodes: Array<
-          Pick<StorefrontAPI.ProductVariant, 'id' | 'availableForSale'>
+          Pick<StorefrontAPI.ProductVariant, 'id' | 'availableForSale'> & {
+            price: Pick<StorefrontAPI.MoneyV2, 'amount'>;
+            selectedOptions: Array<
+              Pick<StorefrontAPI.SelectedOption, 'name' | 'value'>
+            >;
+          }
         >;
       };
     }
@@ -811,9 +823,15 @@ export type UpsellPoolQuery = {
     Pick<StorefrontAPI.Product, 'handle' | 'title'> & {
       priceRange: {minVariantPrice: Pick<StorefrontAPI.MoneyV2, 'amount'>};
       images: {nodes: Array<Pick<StorefrontAPI.Image, 'url'>>};
+      options: Array<Pick<StorefrontAPI.ProductOption, 'name' | 'values'>>;
       variants: {
         nodes: Array<
-          Pick<StorefrontAPI.ProductVariant, 'id' | 'availableForSale'>
+          Pick<StorefrontAPI.ProductVariant, 'id' | 'availableForSale'> & {
+            price: Pick<StorefrontAPI.MoneyV2, 'amount'>;
+            selectedOptions: Array<
+              Pick<StorefrontAPI.SelectedOption, 'name' | 'value'>
+            >;
+          }
         >;
       };
     }
@@ -822,9 +840,15 @@ export type UpsellPoolQuery = {
     Pick<StorefrontAPI.Product, 'handle' | 'title'> & {
       priceRange: {minVariantPrice: Pick<StorefrontAPI.MoneyV2, 'amount'>};
       images: {nodes: Array<Pick<StorefrontAPI.Image, 'url'>>};
+      options: Array<Pick<StorefrontAPI.ProductOption, 'name' | 'values'>>;
       variants: {
         nodes: Array<
-          Pick<StorefrontAPI.ProductVariant, 'id' | 'availableForSale'>
+          Pick<StorefrontAPI.ProductVariant, 'id' | 'availableForSale'> & {
+            price: Pick<StorefrontAPI.MoneyV2, 'amount'>;
+            selectedOptions: Array<
+              Pick<StorefrontAPI.SelectedOption, 'name' | 'value'>
+            >;
+          }
         >;
       };
     }
@@ -833,9 +857,15 @@ export type UpsellPoolQuery = {
     Pick<StorefrontAPI.Product, 'handle' | 'title'> & {
       priceRange: {minVariantPrice: Pick<StorefrontAPI.MoneyV2, 'amount'>};
       images: {nodes: Array<Pick<StorefrontAPI.Image, 'url'>>};
+      options: Array<Pick<StorefrontAPI.ProductOption, 'name' | 'values'>>;
       variants: {
         nodes: Array<
-          Pick<StorefrontAPI.ProductVariant, 'id' | 'availableForSale'>
+          Pick<StorefrontAPI.ProductVariant, 'id' | 'availableForSale'> & {
+            price: Pick<StorefrontAPI.MoneyV2, 'amount'>;
+            selectedOptions: Array<
+              Pick<StorefrontAPI.SelectedOption, 'name' | 'value'>
+            >;
+          }
         >;
       };
     }
@@ -844,9 +874,15 @@ export type UpsellPoolQuery = {
     Pick<StorefrontAPI.Product, 'handle' | 'title'> & {
       priceRange: {minVariantPrice: Pick<StorefrontAPI.MoneyV2, 'amount'>};
       images: {nodes: Array<Pick<StorefrontAPI.Image, 'url'>>};
+      options: Array<Pick<StorefrontAPI.ProductOption, 'name' | 'values'>>;
       variants: {
         nodes: Array<
-          Pick<StorefrontAPI.ProductVariant, 'id' | 'availableForSale'>
+          Pick<StorefrontAPI.ProductVariant, 'id' | 'availableForSale'> & {
+            price: Pick<StorefrontAPI.MoneyV2, 'amount'>;
+            selectedOptions: Array<
+              Pick<StorefrontAPI.SelectedOption, 'name' | 'value'>
+            >;
+          }
         >;
       };
     }
@@ -855,9 +891,15 @@ export type UpsellPoolQuery = {
     Pick<StorefrontAPI.Product, 'handle' | 'title'> & {
       priceRange: {minVariantPrice: Pick<StorefrontAPI.MoneyV2, 'amount'>};
       images: {nodes: Array<Pick<StorefrontAPI.Image, 'url'>>};
+      options: Array<Pick<StorefrontAPI.ProductOption, 'name' | 'values'>>;
       variants: {
         nodes: Array<
-          Pick<StorefrontAPI.ProductVariant, 'id' | 'availableForSale'>
+          Pick<StorefrontAPI.ProductVariant, 'id' | 'availableForSale'> & {
+            price: Pick<StorefrontAPI.MoneyV2, 'amount'>;
+            selectedOptions: Array<
+              Pick<StorefrontAPI.SelectedOption, 'name' | 'value'>
+            >;
+          }
         >;
       };
     }
@@ -866,9 +908,15 @@ export type UpsellPoolQuery = {
     Pick<StorefrontAPI.Product, 'handle' | 'title'> & {
       priceRange: {minVariantPrice: Pick<StorefrontAPI.MoneyV2, 'amount'>};
       images: {nodes: Array<Pick<StorefrontAPI.Image, 'url'>>};
+      options: Array<Pick<StorefrontAPI.ProductOption, 'name' | 'values'>>;
       variants: {
         nodes: Array<
-          Pick<StorefrontAPI.ProductVariant, 'id' | 'availableForSale'>
+          Pick<StorefrontAPI.ProductVariant, 'id' | 'availableForSale'> & {
+            price: Pick<StorefrontAPI.MoneyV2, 'amount'>;
+            selectedOptions: Array<
+              Pick<StorefrontAPI.SelectedOption, 'name' | 'value'>
+            >;
+          }
         >;
       };
     }
@@ -877,9 +925,15 @@ export type UpsellPoolQuery = {
     Pick<StorefrontAPI.Product, 'handle' | 'title'> & {
       priceRange: {minVariantPrice: Pick<StorefrontAPI.MoneyV2, 'amount'>};
       images: {nodes: Array<Pick<StorefrontAPI.Image, 'url'>>};
+      options: Array<Pick<StorefrontAPI.ProductOption, 'name' | 'values'>>;
       variants: {
         nodes: Array<
-          Pick<StorefrontAPI.ProductVariant, 'id' | 'availableForSale'>
+          Pick<StorefrontAPI.ProductVariant, 'id' | 'availableForSale'> & {
+            price: Pick<StorefrontAPI.MoneyV2, 'amount'>;
+            selectedOptions: Array<
+              Pick<StorefrontAPI.SelectedOption, 'name' | 'value'>
+            >;
+          }
         >;
       };
     }
@@ -889,8 +943,16 @@ export type UpsellPoolQuery = {
 export type UFragment = Pick<StorefrontAPI.Product, 'handle' | 'title'> & {
   priceRange: {minVariantPrice: Pick<StorefrontAPI.MoneyV2, 'amount'>};
   images: {nodes: Array<Pick<StorefrontAPI.Image, 'url'>>};
+  options: Array<Pick<StorefrontAPI.ProductOption, 'name' | 'values'>>;
   variants: {
-    nodes: Array<Pick<StorefrontAPI.ProductVariant, 'id' | 'availableForSale'>>;
+    nodes: Array<
+      Pick<StorefrontAPI.ProductVariant, 'id' | 'availableForSale'> & {
+        price: Pick<StorefrontAPI.MoneyV2, 'amount'>;
+        selectedOptions: Array<
+          Pick<StorefrontAPI.SelectedOption, 'name' | 'value'>
+        >;
+      }
+    >;
   };
 };
 
@@ -1172,7 +1234,7 @@ interface GeneratedQueryTypes {
     return: ShopPoliciesQuery;
     variables: ShopPoliciesQueryVariables;
   };
-  '#graphql\n  query UpsellPool {\n    u1: product(handle: "botas-gamuza-lariat") { ...U }\n    u2: product(handle: "billetera-anti-clonacion-copia") { ...U }\n    u3: product(handle: "gorra-goat") { ...U }\n    u4: product(handle: "gorra-territory-1") { ...U }\n    u5: product(handle: "licorera-metalica") { ...U }\n    u6: product(handle: "gorra-andina") { ...U }\n    u7: product(handle: "chaqueta-laredo-impermeable") { ...U }\n    u8: product(handle: "chaqueta-impermeable-armor") { ...U }\n    u9: product(handle: "chaqueta-impermeable-yellowstone") { ...U }\n  }\n  fragment U on Product {\n    handle\n    title\n    priceRange { minVariantPrice { amount } }\n    images(first: 1) { nodes { url } }\n    variants(first: 1) { nodes { id availableForSale } }\n  }\n': {
+  '#graphql\n  query UpsellPool {\n    u1: product(handle: "botas-gamuza-lariat") { ...U }\n    u2: product(handle: "billetera-anti-clonacion-copia") { ...U }\n    u3: product(handle: "gorra-goat") { ...U }\n    u4: product(handle: "gorra-territory-1") { ...U }\n    u5: product(handle: "licorera-metalica") { ...U }\n    u6: product(handle: "gorra-andina") { ...U }\n    u7: product(handle: "chaqueta-laredo-impermeable") { ...U }\n    u8: product(handle: "chaqueta-impermeable-armor") { ...U }\n    u9: product(handle: "chaqueta-impermeable-yellowstone") { ...U }\n  }\n  fragment U on Product {\n    handle\n    title\n    priceRange { minVariantPrice { amount } }\n    images(first: 1) { nodes { url } }\n    options { name values }\n    variants(first: 60) {\n      nodes {\n        id\n        availableForSale\n        price { amount }\n        selectedOptions { name value }\n      }\n    }\n  }\n': {
     return: UpsellPoolQuery;
     variables: UpsellPoolQueryVariables;
   };

@@ -7758,3 +7758,51 @@ html.con-franja .hc-volver { margin-top: 6px; }
   text-decoration: underline;
   text-underline-offset: 3px;
 }
+
+/* hoja de upsell: renglón, ahorro y selectores de talla y color */
+.up-item { display: block; padding: 0; overflow: hidden; }
+.up-fila {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  width: 100%;
+  padding: 9px;
+  border: 0;
+  background: transparent;
+  text-align: left;
+}
+.up-item-precio { display: flex; align-items: baseline; gap: 7px; flex-wrap: wrap; }
+.up-ahorro {
+  font-style: normal;
+  font-size: 11px;
+  font-weight: 800;
+  color: #4c5730;
+}
+.up-opts {
+  display: grid;
+  gap: 9px;
+  margin: 0 9px;
+  padding: 10px 0 11px;
+  border-top: 1px solid rgba(28, 23, 18, 0.08);
+}
+.up-opt-nombre {
+  margin: 0 0 6px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(28, 23, 18, 0.5);
+}
+.up-op-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.up-op {
+  padding: 8px 11px;
+  border: 1px solid rgba(28, 23, 18, 0.14);
+  border-radius: 9px;
+  background: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  color: #1c1712;
+}
+.up-op.is-on { background: #4c5730; border-color: #4c5730; color: #f7f3e6; }
+.up-op.is-off { opacity: 0.3; }
+.up-cta:disabled { background: rgba(28, 23, 18, 0.22); color: #fffdf8; }
