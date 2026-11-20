@@ -862,6 +862,26 @@ export type DeColeccionQuery = {
   }>;
 };
 
+export type PruebaTarjetasQueryVariables = StorefrontAPI.Exact<{
+  [key: string]: never;
+}>;
+
+export type PruebaTarjetasQuery = {
+  collection?: StorefrontAPI.Maybe<{
+    products: {
+      nodes: Array<
+        Pick<StorefrontAPI.Product, 'title' | 'handle' | 'availableForSale'> & {
+          priceRange: {minVariantPrice: Pick<StorefrontAPI.MoneyV2, 'amount'>};
+          compareAtPriceRange: {
+            minVariantPrice: Pick<StorefrontAPI.MoneyV2, 'amount'>;
+          };
+          images: {nodes: Array<Pick<StorefrontAPI.Image, 'url' | 'altText'>>};
+        }
+      >;
+    };
+  }>;
+};
+
 export type SearchProductsQueryVariables = StorefrontAPI.Exact<{
   query: StorefrontAPI.Scalars['String']['input'];
   first: StorefrontAPI.Scalars['Int']['input'];
@@ -986,6 +1006,10 @@ interface GeneratedQueryTypes {
   '#graphql\n  query DeColeccion($handle: String!) {\n    collection(handle: $handle) {\n      products(first: 10, sortKey: BEST_SELLING) {\n        nodes {\n          id title handle\n          priceRange { minVariantPrice { amount currencyCode } }\n          variants(first: 1) { nodes { id availableForSale } }\n          images(first: 2) { nodes { url altText } }\n          metafields(identifiers: [\n            {namespace: "reviews", key: "rating"},\n            {namespace: "reviews", key: "rating_count"}\n          ]) { key value }\n        }\n      }\n    }\n  }\n': {
     return: DeColeccionQuery;
     variables: DeColeccionQueryVariables;
+  };
+  '#graphql\n  query PruebaTarjetas {\n    collection(handle: "chaquetas") {\n      products(first: 4, sortKey: BEST_SELLING) {\n        nodes {\n          title\n          handle\n          availableForSale\n          priceRange { minVariantPrice { amount } }\n          compareAtPriceRange { minVariantPrice { amount } }\n          images(first: 1) { nodes { url altText } }\n        }\n      }\n    }\n  }\n': {
+    return: PruebaTarjetasQuery;
+    variables: PruebaTarjetasQueryVariables;
   };
   '#graphql\n  query SearchProducts($query: String!, $first: Int!) {\n    search(\n      first: $first\n      query: $query\n      types: PRODUCT\n      sortKey: RELEVANCE\n      unavailableProducts: LAST\n    ) {\n      totalCount\n      nodes {\n        ... on Product {\n          id\n          title\n          handle\n          availableForSale\n          tags\n          productType\n          featuredImage { url }\n          priceRange { minVariantPrice { amount currencyCode } }\n          compareAtPriceRange { minVariantPrice { amount } }\n        }\n      }\n    }\n  }\n': {
     return: SearchProductsQuery;

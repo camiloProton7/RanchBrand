@@ -7496,3 +7496,58 @@ html.con-franja .hp-bar { top: var(--bf-franja-alto); }
 
 /* respiro del botón volver cuando está la franja */
 html.con-franja .hc-volver { margin-top: 6px; }
+
+/* ---------- tarjeta de producto: foto a sangre (diseño aprobado) ----------
+   La foto ocupa toda la tarjeta, sin marco blanco ni padding interno, y el
+   texto va en una franja abajo. Es el diseño A probado en /prueba-tarjetas:
+   la prenda se ve ~14 px más ancha por lado y la tarjeta deja de parecer
+   una caja de marketplace. */
+.hn-card,
+.hn-par .hn-card {
+  padding: 0;
+  border-radius: 18px;
+  overflow: hidden;
+  background: #fffdf8;
+}
+
+.hn-card-media,
+.hn-par .hn-card-media {
+  border-radius: 0;
+  aspect-ratio: 1 / 1;
+}
+
+.hn-card-media img,
+.hn-par .hn-card-media img {
+  padding: 0;
+  object-fit: cover;
+}
+
+.hn-card-badge,
+.hn-par .hn-card-badge {
+  top: 10px;
+  left: 10px;
+}
+
+.hn-card-rating {
+  top: 10px;
+  right: 10px;
+}
+
+.hn-card-body,
+.hn-par .hn-card-body {
+  padding: 10px 12px 0;
+}
+
+/* dos líneas fijas de nombre: así las tarjetas de una misma fila quedan parejas */
+.hn-card-name,
+.hn-par .hn-card-name {
+  font-size: 12.5px;
+  line-height: 1.22;
+  -webkit-line-clamp: 2;
+  min-height: 2.44em;
+}
+
+.hn-card-foot,
+.hn-par .hn-card-foot {
+  padding: 7px 12px 13px;
+}
