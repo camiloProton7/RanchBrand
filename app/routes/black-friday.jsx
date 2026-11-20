@@ -74,9 +74,9 @@ const SECCIONES = [
     handles: ['botas-chelsea', 'botas-chelsea-cobreblack', 'botas-urbanas'],
   },
   {
-    titulo: 'Chaquetas',
-    nota: 'La Mojave para el agua y el viento.',
-    handles: ['chaqueta-impermeable-mojave', 'chaqueta-impermeable-sahara'],
+    titulo: 'Chaquetas y chalecos',
+    nota: 'La Mojave para el agua y el viento, y el bombacho para la sabana fría.',
+    handles: ['chaleco-bombacho', 'chaqueta-impermeable-mojave', 'chaqueta-impermeable-sahara'],
   },
   {
     titulo: 'Camisas y polos',
