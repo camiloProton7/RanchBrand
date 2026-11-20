@@ -7450,3 +7450,46 @@
   flex: 0 0 auto;
 }
 .hn-bf-franja:active { transform: scale(0.99); }
+
+/* --- franja fija de black friday, arriba de todo --- */
+:root { --bf-franja-alto: 34px; }
+
+.bf-franja-global {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--bf-franja-alto);
+  z-index: 90;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  padding: 0 14px;
+  background: #7a1a12;
+  color: #f0c04a;
+  text-decoration: none;
+  font-size: 11.5px;
+  font-weight: 700;
+  line-height: 1;
+  white-space: nowrap;
+}
+.bf-franja-global b {
+  font-weight: 800;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+.bf-franja-global span {
+  color: #fff;
+  opacity: 0.7;
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.bf-franja-global svg { flex: 0 0 auto; }
+
+html.con-franja body { padding-top: var(--bf-franja-alto); }
+html.con-franja .hn-bar,
+html.con-franja .hc-bar,
+html.con-franja .ex-bar,
+html.con-franja .hp-bar { top: var(--bf-franja-alto); }

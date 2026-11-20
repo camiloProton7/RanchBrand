@@ -5,6 +5,7 @@ import GoogleAnalytics from './components/GoogleAnalytics';
 import SiteHeader from './components/SiteHeader';
 import Footer from './components/Footer';
 import Progreso from '~/components/Progreso';
+import FranjaBF from '~/components/FranjaBF';
 import {Analytics, getShopAnalytics, useNonce} from '@shopify/hydrogen';
 import {
   Outlet,
@@ -179,6 +180,7 @@ export default function App() {
         consent={data?.consent}
         cookieDomain="ranch.com.co"
       >
+        <FranjaBF />
         <Progreso />
         <Outlet />
       </Analytics.Provider>
@@ -190,6 +192,7 @@ export default function App() {
       consent={data?.consent}
       cookieDomain="ranch.com.co"
     >
+      <FranjaBF />
       <SiteHeader logoSrc={logoSrc} />
       <Outlet />
       <Footer logoSrc={logoSrc} />
