@@ -3660,27 +3660,32 @@
 .hp-comprar {
   width: 100%;
   margin-top: 14px;
-  padding: 16px;
-  border: 0;
+  padding: 15px;
+  border: 1.5px solid rgba(20, 17, 15, 0.3);
   border-radius: 999px;
-  background: var(--tinta);
-  color: var(--crema);
+  background: transparent;
+  color: var(--tinta);
   font-family: inherit;
-  font-size: 11.5px;
+  font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  transition: background 0.2s ease, transform 0.15s ease;
+  transition: background 0.2s ease, border-color 0.2s ease, transform 0.15s ease;
 }
 
 .hp-comprar:active { transform: scale(0.985); }
 
 .hp-comprar:disabled {
-  background: rgba(20, 17, 15, 0.22);
-  color: rgba(251, 248, 241, 0.8);
+  border-color: rgba(20, 17, 15, 0.14);
+  color: rgba(20, 17, 15, 0.34);
+  background: transparent;
 }
 
-.hp-comprar.is-ok { background: #b34a2a; }
+.hp-comprar.is-ok {
+  border-color: #b34a2a;
+  color: #b34a2a;
+  background: transparent;
+}
 
 .hp-nota {
   margin: 10px 0 0;
@@ -4332,30 +4337,40 @@
 
 .hp-ahora {
   width: 100%;
-  height: 46px;
-  margin-top: 8px;
+  height: 54px;
+  margin-top: 10px;
   border-radius: 999px;
-  border: 1px solid rgba(20, 17, 15, 0.28);
-  background: transparent;
-  color: #14110f;
-  font-size: 10.5px;
-  font-weight: 650;
-  letter-spacing: 0.12em;
+  border: 0;
+  background: #e8590c;
+  color: #fff;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
+  box-shadow: 0 8px 18px rgba(232, 89, 12, 0.26);
   cursor: pointer;
+  transition: background 0.2s ease, box-shadow 0.2s ease, transform 0.12s ease;
+}
+
+.hp-ahora:active:not(:disabled) {
+  transform: scale(0.985);
+  box-shadow: 0 4px 10px rgba(232, 89, 12, 0.22);
 }
 
 .hp-ahora:disabled {
-  opacity: 0.4;
+  background: rgba(232, 89, 12, 0.32);
+  box-shadow: none;
+  opacity: 1;
   cursor: not-allowed;
 }
 
 .hp-ahora-nota {
-  margin: 8px 0 0;
+  margin: 9px 0 0;
   text-align: center;
-  font-size: 9px;
+  font-size: 9.5px;
   letter-spacing: 0.04em;
-  color: rgba(20, 17, 15, 0.38);
+  color: rgba(20, 17, 15, 0.45);
 }
 
 /* --- respuesta inmediata al toque --- */
@@ -4979,11 +4994,11 @@
   padding: 15px 18px;
   border: 0;
   border-radius: 999px;
-  background: var(--tinta);
-  color: var(--crema);
+  background: #e8590c;
+  color: #fff;
   font-family: inherit;
   font-size: 11px;
-  font-weight: 700;
+  font-weight: 800;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   -webkit-tap-highlight-color: transparent;
