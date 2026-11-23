@@ -2,6 +2,7 @@ import {useEffect, useRef, useState} from 'react';
 import {Link, useLoaderData} from 'react-router';
 import styles from '~/styles/home-nuevo.css?url';
 import {getCartCount} from '~/lib/cart';
+import {IS_US} from '~/lib/market';
 import {recordar} from '~/lib/cache';
 import HeroBurn from '~/components/HeroBurn';
 import Carroza from '~/components/Carroza';
@@ -604,6 +605,8 @@ function Estrellas({valor, cuenta}) {
   );
 }
 
+const EN = IS_US;
+
 export default function HomeNuevo() {
   const wrap = useRef(null);
   const hero = useRef(null);
@@ -644,15 +647,15 @@ export default function HomeNuevo() {
 
           <div className="hn-bottom">
             <h1 className="hn-title">
-              <span className="hn-line hn-thin">No nacimos</span>
-              <span className="hn-line hn-bold">para que fuera fácil.</span>
-              <span className="hn-line hn-thin">Nacimos para</span>
-              <span className="hn-line hn-bold">hacerlo bien.</span>
+              <span className="hn-line hn-thin">{EN ? 'We did not build' : 'No nacimos'}</span>
+              <span className="hn-line hn-bold">{EN ? 'this to be easy.' : 'para que fuera fácil.'}</span>
+              <span className="hn-line hn-thin">{EN ? 'We built it' : 'Nacimos para'}</span>
+              <span className="hn-line hn-bold">{EN ? 'to be right.' : 'hacerlo bien.'}</span>
             </h1>
 
 
             <a href="#colecciones" className="hn-cta">
-              Explorar colecciones
+              {EN ? 'Explore collections' : 'Explorar colecciones'}
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <path d="M5 12h14M13 6l6 6-6 6" />
               </svg>
@@ -667,7 +670,7 @@ export default function HomeNuevo() {
         <section className="hn-bf" aria-label="Black Friday">
           <Link to="/black-friday" prefetch="intent" className="hn-bf-in">
             <span className="hn-bf-strip" aria-hidden="true" />
-            <span className="hn-bf-kicker">Black Friday · 27 al 30 de noviembre</span>
+            <span className="hn-bf-kicker">{EN ? 'Black Friday · Nov 27–30' : 'Black Friday · 27 al 30 de noviembre'}</span>
             <span className="hn-bf-title">
               Hasta <em>53%</em>
               <br />
@@ -687,8 +690,8 @@ export default function HomeNuevo() {
 
 
         <div className="hn-cats-head">
-          <p className="hn-cats-eyebrow">Explora</p>
-          <h2 className="hn-cats-title">Colecciones</h2>
+          <p className="hn-cats-eyebrow">{EN ? 'Explore' : 'Explora'}</p>
+          <h2 className="hn-cats-title">{EN ? 'Collections' : 'Colecciones'}</h2>
         </div>
 
         <nav className="hn-cats-row" aria-label="Colecciones">
@@ -705,10 +708,10 @@ export default function HomeNuevo() {
           ))}
         </nav>
 
-        <section className="hn-top" aria-label="Lo más vendido del mes">
+        <section className="hn-top" aria-label={EN ? 'Best sellers this month' : 'Lo más vendido del mes'}>
           <header className="hn-top-head">
-            <p className="hn-top-eyebrow">Lo más vendido</p>
-            <h2 className="hn-top-title">Este mes</h2>
+            <p className="hn-top-eyebrow">{EN ? 'Best sellers' : 'Lo más vendido'}</p>
+            <h2 className="hn-top-title">{EN ? 'This month' : 'Este mes'}</h2>
           </header>
 
           <Rail>
@@ -718,10 +721,10 @@ export default function HomeNuevo() {
           </Rail>
 
           <Link to="/combo-gorras" className="hn-promo">
-            <img src="/promo-gorras.webp" alt="Cinco gorras The Ranch" loading="lazy" decoding="async" />
+            <img src="/promo-gorras.webp" alt={EN ? 'Five The Ranch hats' : 'Cinco gorras The Ranch'} loading="lazy" decoding="async" />
             <span className="hn-promo-copy">
-              <span className="hn-promo-eyebrow">El combo</span>
-              <span className="hn-promo-title">Cinco gorras.<br />Quinientos mil.</span>
+              <span className="hn-promo-eyebrow">{EN ? 'The bundle' : 'El combo'}</span>
+              <span className="hn-promo-title">{EN ? 'Five hats.' : 'Cinco gorras.'}<br />{EN ? 'One price.' : 'Quinientos mil.'}</span>
               <span className="hn-promo-cta">
                 Ver el combo
                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -734,8 +737,8 @@ export default function HomeNuevo() {
         <section className="hn-gorras" aria-label="Colección de gorras">
           <header className="hn-gorras-head">
             <div>
-              <p className="hn-gorras-eyebrow">Colección</p>
-              <h2 className="hn-gorras-title">Gorras</h2>
+              <p className="hn-gorras-eyebrow">{EN ? 'Collection' : 'Colección'}</p>
+              <h2 className="hn-gorras-title">{EN ? 'Hats' : 'Gorras'}</h2>
             </div>
             <Link to="/collections/gorras" className="hn-gorras-link">
               Ver todas
@@ -757,8 +760,8 @@ export default function HomeNuevo() {
         <section className="hn-gorras" aria-label="Colección de chaquetas de mujer">
           <header className="hn-gorras-head">
             <div>
-              <p className="hn-gorras-eyebrow">Colección</p>
-              <h2 className="hn-gorras-title">Chaquetas de mujer</h2>
+              <p className="hn-gorras-eyebrow">{EN ? 'Collection' : 'Colección'}</p>
+              <h2 className="hn-gorras-title">{EN ? "Women's jackets" : 'Chaquetas de mujer'}</h2>
             </div>
             <Link to="/collections/chaquetas-mujer" className="hn-gorras-link">
               Ver todas
@@ -803,8 +806,8 @@ export default function HomeNuevo() {
         <section className="hn-gorras hn-camisas" aria-label="Camisas y camisetas">
           <header className="hn-gorras-head">
             <div>
-              <p className="hn-gorras-eyebrow">Colección</p>
-              <h2 className="hn-gorras-title">Camisas</h2>
+              <p className="hn-gorras-eyebrow">{EN ? 'Collection' : 'Colección'}</p>
+              <h2 className="hn-gorras-title">{EN ? 'Shirts' : 'Camisas'}</h2>
             </div>
             <Link to="/collections/camisetas" className="hn-gorras-link">
               Ver todas

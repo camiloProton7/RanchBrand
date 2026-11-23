@@ -13,6 +13,9 @@ export default defineConfig({
     reactRouter(),
     tsconfigPaths(),
   ],
+  // PUBLIC_* son variables de despliegue (mercado, dominio de checkout) y deben llegar
+  // al navegador igual que al servidor: sin esto Vite solo expone las VITE_*.
+  envPrefix: ['PUBLIC_', 'VITE_'],
   build: {
     // Allow a strict Content-Security-Policy
     // withtout inlining assets as base64:

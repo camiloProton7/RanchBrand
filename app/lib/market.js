@@ -49,3 +49,14 @@ export function getMarket(env) {
 export function esUS(env) {
   return getMarket(env).code === 'US';
 }
+
+/**
+ * Mercado resuelto en tiempo de compilación.
+ *
+ * Cada despliegue se compila con su propia variable PUBLIC_MARKET, así el valor
+ * viaja igual al servidor y al navegador (sin depender de leerla en runtime,
+ * que en el cliente no existe).
+ */
+const _crudo = (import.meta.env.PUBLIC_MARKET || 'CO').toUpperCase().trim();
+export const MARKET = MERCADOS[_crudo] ?? MERCADOS.CO;
+export const IS_US = MARKET.code === 'US';

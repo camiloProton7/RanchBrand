@@ -19,6 +19,7 @@ import {
   useLocation,
 } from 'react-router';
 import {HEADER_QUERY} from '~/lib/fragments';
+import {MARKET} from '~/lib/market';
 import resetStyles from '~/styles/reset.css?url';
 import baseStyles from '~/styles/base.css?url';
 import appStyles from '~/styles/app.css?url';
@@ -120,7 +121,7 @@ export function Layout({children}) {
     pathname.startsWith('/explorar');
 
   return (
-    <html lang="es-CO">
+    <html lang={MARKET.language === 'EN' ? 'en-US' : 'es-CO'}>
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width,initial-scale=1" />
