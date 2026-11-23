@@ -41,3 +41,36 @@ export const NAV_ITEMS = [
   },
   {label: 'Accesorios', href: '/collections/accesorios'},
 ];
+
+/**
+ * Navegación en inglés para el mercado de EE. UU.
+ * Mismos href: es la misma tienda y las mismas colecciones. Solo cambia la etiqueta.
+ */
+export const NAV_ITEMS_EN = [
+  {label: 'Hats', href: '/collections/gorras'},
+  {label: 'Shirts', href: '/collections/camisetas'},
+  {
+    label: 'Jackets',
+    href: '/collections/chaquetas',
+    children: [
+      {label: 'Jackets and vests', href: '/collections/chaquetas'},
+      {label: 'Embroidered sweaters', href: '/collections/bordados'},
+      {label: 'Knitwear', href: '/collections/sueteres-halfzip'},
+    ],
+  },
+  {label: 'Boots', href: '/collections/botas-1'},
+  {
+    label: 'Women',
+    href: '/collections/chaquetas-mujer',
+    children: [
+      {label: 'Women jackets', href: '/collections/chaquetas-mujer'},
+      {label: 'Women boots', href: '/collections/botas-mujer'},
+    ],
+  },
+  {label: 'Accessories', href: '/collections/accesorios'},
+];
+
+/** Devuelve la navegación del idioma activo. */
+export function getNav(language) {
+  return language === 'EN' ? NAV_ITEMS_EN : NAV_ITEMS;
+}
