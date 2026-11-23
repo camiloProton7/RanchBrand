@@ -1,5 +1,6 @@
 import {useEffect, useRef, useState} from 'react';
 import {RESENAS} from '~/data/resenas';
+import {EN} from '~/lib/lang';
 
 const PAUSA = 5200;
 
@@ -73,8 +74,8 @@ export default function Resenas() {
   return (
     <section className="hn-res" aria-label="Reseñas de clientes">
       <header className="hn-res-head">
-        <p className="hn-res-kicker">Reseñas</p>
-        <h2 className="hn-res-titulo">Lo que dicen en el campo</h2>
+        <p className="hn-res-kicker">{EN ? "Reviews" : "Reseñas"}</p>
+        <h2 className="hn-res-titulo">{EN ? "What the field says" : "Lo que dicen en el campo"}</h2>
         <p className="hn-res-media">
           <span className="hn-res-media-num">5,0</span>
           <span className="hn-res-media-est">★★★★★</span>

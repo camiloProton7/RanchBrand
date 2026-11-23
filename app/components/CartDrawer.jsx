@@ -2,6 +2,7 @@ import {useEffect, useState} from 'react';
 import {Link} from 'react-router';
 import {getCart, getCartUrl, formatPrice, addToCart, removeFromCart} from '~/lib/cart';
 import {optimizeImage} from '~/lib/image';
+import {EN} from '~/lib/lang';
 
 export default function CartDrawer({open, onClose}) {
   const [items, setItems] = useState([]);
@@ -86,7 +87,7 @@ export default function CartDrawer({open, onClose}) {
 
         <div className="tr-cart-items">
           {items.length === 0 ? (
-            <p className="tr-cart-empty">Tu bolsa está vacía.</p>
+            <p className="tr-cart-empty">{EN ? "Your bag is empty." : "Tu bolsa está vacía."}</p>
           ) : (
             items.map((item) => {
               const hasDiscount =
@@ -128,7 +129,7 @@ export default function CartDrawer({open, onClose}) {
 
         {recommended.length > 0 ? (
           <div className="tr-cart-reco">
-            <h3 className="tr-cart-reco-title">Completa tu look</h3>
+            <h3 className="tr-cart-reco-title">{EN ? "Complete the look" : "Completa tu look"}</h3>
             <div className="tr-cart-reco-list">
               {recommended.map((product) => (
                 <div key={product.variantId} className="tr-cart-reco-item">
@@ -167,13 +168,13 @@ export default function CartDrawer({open, onClose}) {
             </div>
             {discount > 0 ? (
               <div className="tr-cart-row tr-cart-discount">
-                <span>Descuento</span>
+                <span>{EN ? "Discount" : "Descuento"}</span>
                 <span>−{formatPrice(discount)}</span>
               </div>
             ) : null}
             <div className="tr-cart-row">
-              <span>Envío</span>
-              <span className="tr-cart-ship">En el pago</span>
+              <span>{EN ? "Shipping" : "Envío"}</span>
+              <span className="tr-cart-ship">{EN ? "At checkout" : "En el pago"}</span>
             </div>
             <div className="tr-cart-total">
               <span>Total</span>

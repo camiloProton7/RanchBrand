@@ -1,4 +1,5 @@
 import {Link} from 'react-router';
+import {EN} from '~/lib/lang';
 
 export default function Footer({logoSrc}) {
   const year = new Date().getFullYear();
@@ -11,12 +12,12 @@ export default function Footer({logoSrc}) {
           ) : (
             <h2 className="tr-footer-megatitle">THE RANCH</h2>
           )}
-          <p className="tr-footer-tagline">No seguimos modas, las marcamos.</p>
+          <p className="tr-footer-tagline">{EN ? "We don't follow trends. We set them." : "No seguimos modas, las marcamos."}</p>
         </div>
 
         <div className="tr-footer-grid">
           <div className="tr-footer-newsletter">
-            <h4 className="tr-footer-title">Únete al ranch</h4>
+            <h4 className="tr-footer-title">{EN ? "Join the ranch" : "Únete al ranch"}</h4>
             <p className="tr-footer-newsletter-desc">
               Novedades, drops y ofertas exclusivas.
             </p>
@@ -41,23 +42,23 @@ export default function Footer({logoSrc}) {
           </div>
 
           <div className="tr-footer-col">
-            <h4 className="tr-footer-title">Tienda</h4>
-            <Link to="/collections/gorras-truckers">Gorras</Link>
-            <Link to="/collections/chaquetas">Chaquetas</Link>
-            <Link to="/blog">Blog</Link>
+            <h4 className="tr-footer-title">{EN ? "Shop" : "Tienda"}</h4>
+            <Link to="/collections/gorras-truckers">{EN ? "Hats" : "Gorras"}</Link>
+            <Link to="/collections/chaquetas">{EN ? "Jackets" : "Chaquetas"}</Link>
+            <Link to="/blog">{EN ? "Journal" : "Blog"}</Link>
           </div>
 
           <div className="tr-footer-col">
-            <h4 className="tr-footer-title">Ayuda</h4>
-            <a href="https://ranch.com.co/policies/shipping-policy">Envíos</a>
-            <a href="https://ranch.com.co/policies/refund-policy">Devoluciones</a>
-            <a href="https://wa.me/573209157343">Contacto</a>
+            <h4 className="tr-footer-title">{EN ? "Help" : "Ayuda"}</h4>
+            <a href="https://ranch.com.co/policies/shipping-policy">{EN ? "Shipping" : "Envíos"}</a>
+            <a href="https://ranch.com.co/policies/refund-policy">{EN ? "Returns" : "Devoluciones"}</a>
+            <a href="https://wa.me/573209157343">{EN ? "Contact" : "Contacto"}</a>
           </div>
 
           <div className="tr-footer-col">
-            <h4 className="tr-footer-title">Legal</h4>
-            <a href="https://ranch.com.co/policies/privacy-policy">Privacidad</a>
-            <a href="https://ranch.com.co/policies/terms-of-service">Términos</a>
+            <h4 className="tr-footer-title">{EN ? "Legal" : "Legal"}</h4>
+            <a href="https://ranch.com.co/policies/privacy-policy">{EN ? "Privacy" : "Privacidad"}</a>
+            <a href="https://ranch.com.co/policies/terms-of-service">{EN ? "Terms" : "Términos"}</a>
           </div>
         </div>
 

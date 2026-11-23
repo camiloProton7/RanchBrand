@@ -20,6 +20,7 @@ import {
 } from 'react-router';
 import {HEADER_QUERY} from '~/lib/fragments';
 import {MARKET} from '~/lib/market';
+import {EN} from '~/lib/lang';
 import resetStyles from '~/styles/reset.css?url';
 import baseStyles from '~/styles/base.css?url';
 import appStyles from '~/styles/app.css?url';
@@ -181,7 +182,7 @@ export default function App() {
         consent={data?.consent}
         cookieDomain="ranch.com.co"
       >
-        <FranjaBF />
+        {!EN && <FranjaBF />}
         <Progreso />
         <Outlet />
       </Analytics.Provider>
@@ -193,7 +194,7 @@ export default function App() {
       consent={data?.consent}
       cookieDomain="ranch.com.co"
     >
-      <FranjaBF />
+      {!EN && <FranjaBF />}
       <SiteHeader logoSrc={logoSrc} />
       <Outlet />
       <Footer logoSrc={logoSrc} />

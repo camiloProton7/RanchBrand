@@ -1,6 +1,7 @@
 import {useEffect, useRef, useState} from 'react';
 
 import {NAV_ITEMS} from '~/lib/nav';
+import {EN} from '~/lib/lang';
 
 // Menú editorial de la portada: sale de la fuente única de navegación (app/lib/nav.js).
 // Se queda con las cuatro categorías cabecera para no alterar esta sección: los retardos
@@ -184,7 +185,7 @@ export function ScrollVideoHero({
           </a>
 
           <div className="tr-menu-bottom">
-            <p>No seguimos modas. Seguimos principios.</p>
+            <p>{EN ? "We don't follow trends. We follow principles." : "No seguimos modas. Seguimos principios."}</p>
             <ol className="tr-menu-list">
               {MENU_ITEMS.map((item) => (
                 <li key={item.label}>

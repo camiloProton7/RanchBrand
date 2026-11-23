@@ -1,4 +1,5 @@
 /**
+import {EN} from '~/lib/lang';
  * Ficha infográfica de la Camisa Outdoor UPF 50+ (verde oliva / beige).
  * Solo se monta para ese handle: el resto de las fichas sigue igual.
  * Todo el copy sale de los atributos reales del producto; nada inventado.
@@ -62,7 +63,7 @@ export default function ProductStory() {
   return (
     <section className="trp-story" aria-label="Por qué esta camisa">
       <p className="trp-story-kicker">The Ranch · Outdoor</p>
-      <h2 className="trp-story-title">Hecha para el sol y el agua</h2>
+      <h2 className="trp-story-title">{EN ? "Made for sun and water" : "Hecha para el sol y el agua"}</h2>
       <p className="trp-story-lead">
         Liviana y fresca para los días largos afuera. Seca rápido, ventila por la espalda y lleva el equipo encima.
       </p>
@@ -98,25 +99,25 @@ export default function ProductStory() {
         ))}
       </ul>
 
-      <p className="trp-story-edicion">Edición limitada</p>
+      <p className="trp-story-edicion">{EN ? "Limited edition" : "Edición limitada"}</p>
 
       <div className="trp-story-cuidado">
         <div>
-          <h3>Materiales</h3>
+          <h3>{EN ? "Materials" : "Materiales"}</h3>
           <ul>
             <li>100% poliéster de alta calidad.</li>
-            <li>Tejido transpirable de secado rápido.</li>
-            <li>Malla de ventilación en la espalda.</li>
-            <li>Bolsillos de carga y bolsillo con cremallera.</li>
+            <li>{EN ? "Breathable quick-dry fabric." : "Tejido transpirable de secado rápido."}</li>
+            <li>{EN ? "Mesh back for airflow." : "Malla de ventilación en la espalda."}</li>
+            <li>{EN ? "Cargo pockets and a zip pocket." : "Bolsillos de carga y bolsillo con cremallera."}</li>
           </ul>
         </div>
         <div>
-          <h3>Cuidados</h3>
+          <h3>{EN ? "Care" : "Cuidados"}</h3>
           <ul>
-            <li>Lavar a máquina con agua fría, ciclo suave.</li>
-            <li>No usar blanqueador.</li>
-            <li>Secar a la sombra.</li>
-            <li>Planchar a baja temperatura si es necesario.</li>
+            <li>{EN ? "Machine wash cold, gentle cycle." : "Lavar a máquina con agua fría, ciclo suave."}</li>
+            <li>{EN ? "Do not bleach." : "No usar blanqueador."}</li>
+            <li>{EN ? "Dry in the shade." : "Secar a la sombra."}</li>
+            <li>{EN ? "Iron low if needed." : "Planchar a baja temperatura si es necesario."}</li>
           </ul>
         </div>
       </div>

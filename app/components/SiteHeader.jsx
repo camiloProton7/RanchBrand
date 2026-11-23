@@ -2,7 +2,10 @@ import {useEffect, useRef, useState} from 'react';
 import {Link, Form, useLocation} from 'react-router';
 import {getCartCount} from '~/lib/cart';
 import CartDrawer from '~/components/CartDrawer';
-import {NAV_ITEMS as MENU_ITEMS} from '~/lib/nav';
+import {NAV_ITEMS, NAV_ITEMS_EN} from '~/lib/nav';
+import {EN} from '~/lib/lang';
+
+const MENU_ITEMS = EN ? NAV_ITEMS_EN : NAV_ITEMS;
 
 // Los items de documento suelto (el perchero de camisetas) se enlazan con
 // <a rel="external"> para forzar carga completa: si el item (o un hijo del desplegable)
@@ -193,7 +196,7 @@ export default function SiteHeader({logoSrc}) {
               placeholder="Buscar gorras, botas, camisetas…"
               aria-label="Buscar productos"
             />
-            <button type="submit">Buscar</button>
+            <button type="submit">{EN ? "Search" : "Buscar"}</button>
           </Form>
 
           <nav className="tr-site-menu-nav">

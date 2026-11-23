@@ -1,5 +1,6 @@
 import {useEffect, useRef, useState} from 'react';
 import {optimizeImage} from '~/lib/image';
+import {EN} from '~/lib/lang';
 
 const FONTS = [
   {id: 'rye', label: 'Western', family: '"Rye", serif'},
@@ -190,9 +191,9 @@ export default function Personalizador({product, onChange}) {
             >
               {text.trim() ? <span className="perso-text">{text}</span> : null}
               {logo ? <img className="perso-logo" src={logo} alt="logo" draggable={false} /> : null}
-              {!text.trim() && !logo ? <span className="perso-text">Tu texto</span> : null}
+              {!text.trim() && !logo ? <span className="perso-text">{EN ? "Your text" : "Tu texto"}</span> : null}
             </div>
-            <div className="perso-hint">Arrastra para mover · pellizca para escalar</div>
+            <div className="perso-hint">{EN ? "Drag to move · pinch to zoom" : "Arrastra para mover · pellizca para escalar"}</div>
           </div>
 
           <input
@@ -230,10 +231,10 @@ export default function Personalizador({product, onChange}) {
           />
 
           <label className="perso-file">
-            <span>Subir tu logo (opcional)</span>
+            <span>{EN ? "Upload your logo (optional)" : "Subir tu logo (opcional)"}</span>
             <input type="file" accept="image/*" onChange={onLogo} />
           </label>
-          <p className="perso-file-hint">PNG con fondo transparente recomendado</p>
+          <p className="perso-file-hint">{EN ? "PNG with transparent background preferred" : "PNG con fondo transparente recomendado"}</p>
         </div>
       ) : null}
     </div>

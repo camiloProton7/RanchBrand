@@ -1,4 +1,5 @@
 import {useEffect, useMemo, useState} from 'react';
+import {EN} from '~/lib/lang';
 
 /**
  * Guía de tallas.
@@ -207,7 +208,7 @@ export default function GuiaTallas({
         </button>
 
         <p className="gt-rotulo">{esCalzado ? 'Calzado' : 'Prendas'}</p>
-        <h2 className="gt-titulo">Encuentra tu talla</h2>
+        <h2 className="gt-titulo">{EN ? "Find your size" : "Encuentra tu talla"}</h2>
         <p className="gt-intro">
           {esCalzado
             ? 'Mide tu pie desde el talón hasta la punta del dedo más largo.'
@@ -218,7 +219,7 @@ export default function GuiaTallas({
           <div className="gt-campo">
             <PieMedido cm={pie} />
             <div className="gt-campo-head">
-              <span>Largo del pie</span>
+              <span>{EN ? "Foot length" : "Largo del pie"}</span>
               <strong>{pie.toFixed(1).replace('.', ',')} cm</strong>
             </div>
             <input
@@ -255,7 +256,7 @@ export default function GuiaTallas({
 
             <div className="gt-campo">
               <div className="gt-campo-head">
-                <span>Estatura</span>
+                <span>{EN ? "Height" : "Estatura"}</span>
                 <strong>{alto} cm</strong>
               </div>
               <input
@@ -276,7 +277,7 @@ export default function GuiaTallas({
 
             <div className="gt-campo">
               <div className="gt-campo-head">
-                <span>Peso</span>
+                <span>{EN ? "Weight" : "Peso"}</span>
                 <strong>{peso} kg</strong>
               </div>
               <input
@@ -299,7 +300,7 @@ export default function GuiaTallas({
 
         <div className="gt-resultado">
           <div>
-            <p className="gt-resultado-rotulo">Tu talla</p>
+            <p className="gt-resultado-rotulo">{EN ? "Your size" : "Tu talla"}</p>
             <p className="gt-resultado-talla">{sugerida}</p>
           </div>
           {onElegir && existe && (
@@ -315,7 +316,7 @@ export default function GuiaTallas({
             </button>
           )}
           {onElegir && !existe && (
-            <p className="gt-sin">No disponible en este producto</p>
+            <p className="gt-sin">{EN ? "Not available for this product" : "No disponible en este producto"}</p>
           )}
         </div>
 

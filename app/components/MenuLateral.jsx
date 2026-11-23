@@ -1,5 +1,6 @@
 import {useState} from 'react';
 import {Link} from 'react-router';
+import {EN} from '~/lib/lang';
 
 const ENTRADAS = [
   ['Inicio', '/'],
@@ -94,11 +95,11 @@ export default function MenuLateral({tono = 'crema'}) {
                 </div>
               ))}
 
-              <p className="hn-panel-rotulo">Ayuda</p>
+              <p className="hn-panel-rotulo">{EN ? "Help" : "Ayuda"}</p>
 
               <Link to="/policies/refund-policy" onClick={() => setAbierto(false)} style={{'--n': 7}}>
                 <span className="hn-panel-num">08</span>
-                <span className="hn-panel-txt">Garantía</span>
+                <span className="hn-panel-txt">{EN ? "Warranty" : "Garantía"}</span>
                 <span className="hn-panel-flecha" aria-hidden="true">
                   <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
                     <path d="M5 12h13M12 5l7 7-7 7" />
@@ -114,7 +115,7 @@ export default function MenuLateral({tono = 'crema'}) {
                 style={{'--n': 8}}
               >
                 <span className="hn-panel-num">09</span>
-                <span className="hn-panel-txt">Seguimiento de casos</span>
+                <span className="hn-panel-txt">{EN ? "Case tracking" : "Seguimiento de casos"}</span>
                 <span className="hn-panel-flecha" aria-hidden="true">
                   <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
                     <path d="M5 12h13M12 5l7 7-7 7" />
@@ -130,7 +131,7 @@ export default function MenuLateral({tono = 'crema'}) {
             >
               <span className="hn-bf-franja-txt">
                 <b>Black Friday</b>
-                <small>Hasta 53% en la selección</small>
+                <small>{EN ? "Up to 53% off selected styles" : "Hasta 53% en la selección"}</small>
               </span>
               <span className="hn-bf-franja-flecha" aria-hidden="true">
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -139,7 +140,7 @@ export default function MenuLateral({tono = 'crema'}) {
               </span>
             </Link>
 
-            <p className="hn-panel-lema">No nacimos para que fuera fácil.</p>
+            <p className="hn-panel-lema">{EN ? "We did not build this to be easy." : "No nacimos para que fuera fácil."}</p>
 
             <div className="hn-panel-pie">
               <a href="https://wa.me/573209157343" target="_blank" rel="noopener noreferrer">

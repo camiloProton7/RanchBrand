@@ -1,5 +1,6 @@
 import {Link} from 'react-router';
 import {optimizeImage} from '~/lib/image';
+import {EN} from '~/lib/lang';
 
 /** Datos de respaldo.
  *
@@ -48,7 +49,7 @@ export default function CamisaFeature({product}) {
             <p className="tr-camisa-feature-price">
               {enPreventa ? <s>{money(compare)}</s> : null}
               <strong>{money(price)}</strong>
-              {enPreventa ? <em>Preventa · entrega del 10 al 15 de noviembre</em> : null}
+              {enPreventa ? <em>{EN ? "Pre-order · ships Nov 10–15" : "Preventa · entrega del 10 al 15 de noviembre"}</em> : null}
             </p>
           ) : null}
           <Link className="tr-camisa-feature-cta" to={`/products/${handle}`}>

@@ -1,4 +1,5 @@
 import {RESENAS} from '~/data/resenas';
+import {EN} from '~/lib/lang';
 
 /**
  * Reseñas dentro de la ficha de producto.
@@ -19,7 +20,7 @@ export default function ResenasProducto({handle, titulo}) {
   return (
     <section className="hp-res" aria-label="Reseñas de clientes">
       <header className="hp-res-cabeza">
-        <p className="hp-res-kicker">Reseñas</p>
+        <p className="hp-res-kicker">{EN ? "Reviews" : "Reseñas"}</p>
         <h2 className="hp-res-titulo">
           {hayPropias ? 'Lo que dicen de esta pieza' : 'Lo que dicen en el campo'}
         </h2>

@@ -1,4 +1,5 @@
 import {Link} from 'react-router';
+import {EN} from '~/lib/lang';
 
 const TIENDA = [
   {t: 'Gorras', to: '/collections/gorras'},
@@ -23,11 +24,11 @@ export default function Pie() {
     <footer className="hn-pie">
       <div className="hn-pie-in">
         <p className="hn-pie-marca">The Ranch</p>
-        <p className="hn-pie-lema">No nacimos para que fuera fácil.</p>
+        <p className="hn-pie-lema">{EN ? "We did not build this to be easy." : "No nacimos para que fuera fácil."}</p>
 
         <div className="hn-pie-cols">
           <div className="hn-pie-col">
-            <p className="hn-pie-titulo">Tienda</p>
+            <p className="hn-pie-titulo">{EN ? "Shop" : "Tienda"}</p>
             {TIENDA.map((l) => (
               <Link key={l.t} to={l.to} className="hn-pie-link">
                 {l.t}
@@ -36,7 +37,7 @@ export default function Pie() {
           </div>
 
           <div className="hn-pie-col">
-            <p className="hn-pie-titulo">Ayuda</p>
+            <p className="hn-pie-titulo">{EN ? "Help" : "Ayuda"}</p>
             {AYUDA.map((l) =>
               l.href ? (
                 <a key={l.t} href={l.href} className="hn-pie-link" target="_blank" rel="noopener noreferrer">
@@ -51,7 +52,7 @@ export default function Pie() {
           </div>
 
           <div className="hn-pie-col">
-            <p className="hn-pie-titulo">Legal</p>
+            <p className="hn-pie-titulo">{EN ? "Legal" : "Legal"}</p>
             {LEGAL.map((l) => (
               <Link key={l.t} to={l.to} className="hn-pie-link">
                 {l.t}
@@ -71,7 +72,7 @@ export default function Pie() {
 
         <div className="hn-pie-base">
           <span>© {new Date().getFullYear()} The Ranch</span>
-          <span className="hn-pie-pais">Industria colombiana</span>
+          <span className="hn-pie-pais">{EN ? "Colombian craft" : "Industria colombiana"}</span>
         </div>
 
         <a

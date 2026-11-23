@@ -1,6 +1,7 @@
 import {useState} from 'react';
 import {Link} from 'react-router';
 import {optimizeImage} from '~/lib/image';
+import {EN} from '~/lib/lang';
 
 /**
  * Extras de conversión para la PDP: sellos de confianza, ayuda de tallas,
@@ -130,7 +131,7 @@ export function SizeGuide() {
           📏
         </span>
         <div>
-          <h4 className="trp-size-title">¿Cuál es tu talla?</h4>
+          <h4 className="trp-size-title">{EN ? "What's your size?" : "¿Cuál es tu talla?"}</h4>
           <p className="trp-size-subtitle">
             Calcúlala con tu peso y estatura (talla colombiana).
           </p>
@@ -139,7 +140,7 @@ export function SizeGuide() {
 
       <div className="trp-size-fields">
         <label className="trp-size-field">
-          <span>Peso (kg)</span>
+          <span>{EN ? "Weight (lb)" : "Peso (kg)"}</span>
           <input
             type="number"
             inputMode="decimal"
@@ -151,7 +152,7 @@ export function SizeGuide() {
           />
         </label>
         <label className="trp-size-field">
-          <span>Estatura (cm)</span>
+          <span>{EN ? "Height (in)" : "Estatura (cm)"}</span>
           <input
             type="number"
             inputMode="numeric"
@@ -173,25 +174,25 @@ export function SizeGuide() {
       {result ? (
         <div className="trp-size-result">
           <div className="trp-size-main">
-            <span className="trp-size-label">Tu talla recomendada</span>
+            <span className="trp-size-label">{EN ? "Your recommended size" : "Tu talla recomendada"}</span>
             <span className="trp-size-value">{result.normal}</span>
           </div>
 
           <div className="trp-size-fit">
             <div className="trp-size-fit-item">
-              <span className="trp-size-fit-name">Estrecha</span>
+              <span className="trp-size-fit-name">{EN ? "Narrow" : "Estrecha"}</span>
               <span className="trp-size-fit-size">{result.slim}</span>
-              <span className="trp-size-fit-desc">Más ceñida</span>
+              <span className="trp-size-fit-desc">{EN ? "Snugger" : "Más ceñida"}</span>
             </div>
             <div className="trp-size-fit-item is-active">
-              <span className="trp-size-fit-name">Normal</span>
+              <span className="trp-size-fit-name">{EN ? "Regular" : "Normal"}</span>
               <span className="trp-size-fit-size">{result.normal}</span>
-              <span className="trp-size-fit-desc">Ajuste estándar</span>
+              <span className="trp-size-fit-desc">{EN ? "Standard fit" : "Ajuste estándar"}</span>
             </div>
             <div className="trp-size-fit-item">
               <span className="trp-size-fit-name">Oversize</span>
               <span className="trp-size-fit-size">{result.oversize}</span>
-              <span className="trp-size-fit-desc">Más holgada</span>
+              <span className="trp-size-fit-desc">{EN ? "Looser" : "Más holgada"}</span>
             </div>
           </div>
 
@@ -469,7 +470,7 @@ export function SizeTable({datos}) {
         <table className="trp-medidas-table">
           <thead>
             <tr>
-              <th scope="col">Talla</th>
+              <th scope="col">{EN ? "Size" : "Talla"}</th>
               {columnas.map((c) => (
                 <th key={c} scope="col">{c}</th>
               ))}
@@ -491,7 +492,7 @@ export function SizeTable({datos}) {
 
       {Array.isArray(datos.detalles) && datos.detalles.length ? (
         <div className="trp-medidas-seccion">
-          <h5>Detalles</h5>
+          <h5>{EN ? "Details" : "Detalles"}</h5>
           <ul>
             {datos.detalles.map((c) => (
               <li key={c}>{c}</li>
@@ -502,14 +503,14 @@ export function SizeTable({datos}) {
 
       {datos.materiales ? (
         <div className="trp-medidas-seccion">
-          <h5>Materiales</h5>
+          <h5>{EN ? "Materials" : "Materiales"}</h5>
           <p>{datos.materiales}</p>
         </div>
       ) : null}
 
       {Array.isArray(datos.cuidados) && datos.cuidados.length ? (
         <div className="trp-medidas-seccion">
-          <h5>Cuidados</h5>
+          <h5>{EN ? "Care" : "Cuidados"}</h5>
           <ul>
             {datos.cuidados.map((c) => (
               <li key={c}>{c}</li>

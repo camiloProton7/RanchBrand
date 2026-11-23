@@ -1,4 +1,5 @@
 import {Link} from 'react-router';
+import {EN} from '~/lib/lang';
 
 /**
  * Banda de introducción del pack de cinco gorras.
@@ -8,7 +9,7 @@ export default function PackIntro({imagen}) {
   return (
     <section className="pi-band" aria-label="Pack de cinco gorras">
       <div className="pi-text">
-        <span className="pi-eyebrow">El pack del rancho</span>
+        <span className="pi-eyebrow">{EN ? "The ranch pack" : "El pack del rancho"}</span>
         <h2 className="pi-title">
           Cinco gorras.<br />
           Quinientos mil.

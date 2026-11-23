@@ -1,4 +1,5 @@
 import {useState} from 'react';
+import {EN} from '~/lib/lang';
 
 const CASE_TYPES = [
   'Asistencia',
@@ -32,7 +33,7 @@ export default function UtilityLinks() {
     <>
       <section className="tr-utility" aria-label="Servicios y ayuda">
         <div className="tr-utility-inner">
-          <h2 className="tr-utility-title">¿Cómo podemos ayudarte?</h2>
+          <h2 className="tr-utility-title">{EN ? "How can we help?" : "¿Cómo podemos ayudarte?"}</h2>
           <div className="tr-utility-grid">
             {LINKS.map((link) => (
               <a
@@ -61,7 +62,7 @@ export default function UtilityLinks() {
               <span className="tr-utility-icon" aria-hidden="true">
                 🤝
               </span>
-              <span className="tr-utility-card-title">Conviértete en proveedor</span>
+              <span className="tr-utility-card-title">{EN ? "Become a supplier" : "Conviértete en proveedor"}</span>
               <span className="tr-utility-card-desc">
                 Únete a nuestra red de proveedores de The Ranch.
               </span>
@@ -78,7 +79,7 @@ export default function UtilityLinks() {
               <span className="tr-utility-icon" aria-hidden="true">
                 💬
               </span>
-              <span className="tr-utility-card-title">Comunícate con nosotros</span>
+              <span className="tr-utility-card-title">{EN ? "Get in touch" : "Comunícate con nosotros"}</span>
               <span className="tr-utility-card-desc">
                 Escríbenos y te respondemos lo antes posible.
               </span>
@@ -175,7 +176,7 @@ function ProviderModal({onClose}) {
             <span className="tr-modal-success-icon" aria-hidden="true">
               ✓
             </span>
-            <h3 className="tr-modal-success-title">¡Solicitud recibida!</h3>
+            <h3 className="tr-modal-success-title">{EN ? "Request received!" : "¡Solicitud recibida!"}</h3>
             <p className="tr-modal-success-text">
               Tu número de solicitud es{' '}
               <strong className="tr-modal-ticket">{ticketNumber}</strong>.
@@ -187,13 +188,13 @@ function ProviderModal({onClose}) {
           </div>
         ) : (
           <form className="tr-modal-form" onSubmit={handleSubmit}>
-            <h3 className="tr-modal-title">Conviértete en proveedor</h3>
+            <h3 className="tr-modal-title">{EN ? "Become a supplier" : "Conviértete en proveedor"}</h3>
             <p className="tr-modal-subtitle">
               Cuéntanos qué ofreces y te contactamos para aliarnos.
             </p>
 
             <label className="tr-modal-field">
-              <span className="tr-modal-label">Nombre *</span>
+              <span className="tr-modal-label">{EN ? "Name *" : "Nombre *"}</span>
               <input
                 type="text"
                 value={form.name}
@@ -205,7 +206,7 @@ function ProviderModal({onClose}) {
             </label>
 
             <label className="tr-modal-field">
-              <span className="tr-modal-label">Empresa *</span>
+              <span className="tr-modal-label">{EN ? "Company *" : "Empresa *"}</span>
               <input
                 type="text"
                 value={form.company}
@@ -216,7 +217,7 @@ function ProviderModal({onClose}) {
             </label>
 
             <label className="tr-modal-field">
-              <span className="tr-modal-label">Correo</span>
+              <span className="tr-modal-label">{EN ? "Email" : "Correo"}</span>
               <input
                 type="email"
                 value={form.email}
@@ -227,7 +228,7 @@ function ProviderModal({onClose}) {
             </label>
 
             <label className="tr-modal-field">
-              <span className="tr-modal-label">Teléfono / WhatsApp</span>
+              <span className="tr-modal-label">{EN ? "Phone / WhatsApp" : "Teléfono / WhatsApp"}</span>
               <input
                 type="tel"
                 value={form.phone}
@@ -238,7 +239,7 @@ function ProviderModal({onClose}) {
             </label>
 
             <label className="tr-modal-field">
-              <span className="tr-modal-label">¿Qué ofreces? *</span>
+              <span className="tr-modal-label">{EN ? "What do you offer? *" : "¿Qué ofreces? *"}</span>
               <input
                 type="text"
                 value={form.productType}
@@ -249,7 +250,7 @@ function ProviderModal({onClose}) {
             </label>
 
             <label className="tr-modal-field">
-              <span className="tr-modal-label">Mensaje *</span>
+              <span className="tr-modal-label">{EN ? "Message *" : "Mensaje *"}</span>
               <textarea
                 value={form.message}
                 onChange={update('message')}
@@ -353,7 +354,7 @@ function ContactModal({onClose}) {
             <span className="tr-modal-success-icon" aria-hidden="true">
               ✓
             </span>
-            <h3 className="tr-modal-success-title">¡Recibimos tu mensaje!</h3>
+            <h3 className="tr-modal-success-title">{EN ? "Message received!" : "¡Recibimos tu mensaje!"}</h3>
             <p className="tr-modal-success-text">
               Tu número de caso es{' '}
               <strong className="tr-modal-ticket">{ticketNumber}</strong>. Te
@@ -365,13 +366,13 @@ function ContactModal({onClose}) {
           </div>
         ) : (
           <form className="tr-modal-form" onSubmit={handleSubmit}>
-            <h3 className="tr-modal-title">Comunícate con nosotros</h3>
+            <h3 className="tr-modal-title">{EN ? "Get in touch" : "Comunícate con nosotros"}</h3>
             <p className="tr-modal-subtitle">
               Déjanos tus datos y te ayudamos con lo que necesites.
             </p>
 
             <label className="tr-modal-field">
-              <span className="tr-modal-label">Nombre *</span>
+              <span className="tr-modal-label">{EN ? "Name *" : "Nombre *"}</span>
               <input
                 type="text"
                 name="name"
@@ -384,7 +385,7 @@ function ContactModal({onClose}) {
             </label>
 
             <label className="tr-modal-field">
-              <span className="tr-modal-label">Correo</span>
+              <span className="tr-modal-label">{EN ? "Email" : "Correo"}</span>
               <input
                 type="email"
                 name="email"
@@ -396,7 +397,7 @@ function ContactModal({onClose}) {
             </label>
 
             <label className="tr-modal-field">
-              <span className="tr-modal-label">Teléfono</span>
+              <span className="tr-modal-label">{EN ? "Phone" : "Teléfono"}</span>
               <input
                 type="tel"
                 name="phone"
@@ -408,7 +409,7 @@ function ContactModal({onClose}) {
             </label>
 
             <label className="tr-modal-field">
-              <span className="tr-modal-label">Tipo de caso *</span>
+              <span className="tr-modal-label">{EN ? "Case type *" : "Tipo de caso *"}</span>
               <select
                 name="caseType"
                 value={form.caseType}
@@ -424,7 +425,7 @@ function ContactModal({onClose}) {
             </label>
 
             <label className="tr-modal-field">
-              <span className="tr-modal-label">Mensaje *</span>
+              <span className="tr-modal-label">{EN ? "Message *" : "Mensaje *"}</span>
               <textarea
                 name="message"
                 value={form.message}

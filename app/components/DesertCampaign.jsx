@@ -1,4 +1,5 @@
 import {useEffect, useRef} from 'react';
+import {EN} from '~/lib/lang';
 
 const clamp = (v, min = 0, max = 1) => Math.min(max, Math.max(min, v));
 
@@ -104,12 +105,12 @@ export default function DesertCampaign({
         </span>
 
         <div ref={infoRef} className="tr-desert-info">
-          <span className="tr-desert-eyebrow">The Ranch — Edición Desert</span>
+          <span className="tr-desert-eyebrow">{EN ? "The Ranch — Desert Edition" : "The Ranch — Edición Desert"}</span>
           <p className="tr-desert-tagline">
             Hecha para el calor. Hecha para el desierto.
           </p>
           <a className="tr-desert-cta" href={productUrl}>
-            <span>Descubre la Gorra Desert</span>
+            <span>{EN ? "Meet the Desert Hat" : "Descubre la Gorra Desert"}</span>
             <span className="tr-desert-cta-arrow">→</span>
           </a>
         </div>

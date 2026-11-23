@@ -1,6 +1,7 @@
 import {useEffect, useRef, useState} from 'react';
 import {optimizeImage} from '~/lib/image';
 import {ratingFor} from '~/lib/rating';
+import {EN} from '~/lib/lang';
 
 /**
  * ChaquetaHero — hero premium de chaquetas.
@@ -281,7 +282,7 @@ export default function ChaquetaHero({products}) {
           className="tr-chaqueta-hero-cta"
           href={`/products/${active.handle}`}
         >
-          <span>Comprar ahora</span>
+          <span>{EN ? "Buy now" : "Comprar ahora"}</span>
           <span className="tr-chaqueta-hero-cta-arrow" aria-hidden="true">
             →
           </span>

@@ -1,6 +1,7 @@
 import {useEffect, useRef, useState} from 'react';
 import {createPortal} from 'react-dom';
 import {Link} from 'react-router';
+import {EN} from '~/lib/lang';
 
 const CATEGORIAS = [
   {titulo: 'Gorras', handle: 'gorras'},
@@ -130,7 +131,7 @@ export default function Buscador({tono = 'claro'}) {
                 <>
                   {recientes.length > 0 && (
                     <div className="bs-bloque">
-                      <p className="bs-rotulo">Recientes</p>
+                      <p className="bs-rotulo">{EN ? "Recent" : "Recientes"}</p>
                       <div className="bs-chips">
                         {recientes.map((r) => (
                           <button key={r} type="button" className="bs-chip" onClick={() => setTexto(r)}>
@@ -142,7 +143,7 @@ export default function Buscador({tono = 'claro'}) {
                   )}
 
                   <div className="bs-bloque">
-                    <p className="bs-rotulo">Explorar</p>
+                    <p className="bs-rotulo">{EN ? "Explore" : "Explorar"}</p>
                     <div className="bs-cats">
                       {CATEGORIAS.map((c) => (
                         <Link
@@ -163,13 +164,13 @@ export default function Buscador({tono = 'claro'}) {
               )}
 
               {hayTexto && cargando && (
-                <p className="bs-estado">Buscando…</p>
+                <p className="bs-estado">{EN ? "Searching…" : "Buscando…"}</p>
               )}
 
               {vacio && (
                 <div className="bs-vacio">
                   <p>No encontramos nada con «{texto.trim()}».</p>
-                  <span>Prueba con otra palabra o entra a una colección.</span>
+                  <span>{EN ? "Try another word or open a collection." : "Prueba con otra palabra o entra a una colección."}</span>
                 </div>
               )}
 

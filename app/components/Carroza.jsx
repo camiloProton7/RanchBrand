@@ -1,6 +1,7 @@
 import {useEffect, useRef, useState} from 'react';
 import {Link} from 'react-router';
 import {getCartCount} from '~/lib/cart';
+import {EN} from '~/lib/lang';
 
 /**
  * Carrito de compras: asa, cesta y dos ruedas, dibujado a trazo para que
@@ -69,7 +70,7 @@ export default function Carroza({className = ''}) {
         <span className="carroza-aviso">
           {ultimo.image && <img src={ultimo.image} alt="" />}
           <span>
-            <b>En el carrito</b>
+            <b>{EN ? "In the cart" : "En el carrito"}</b>
             <em>{ultimo.title}</em>
           </span>
         </span>

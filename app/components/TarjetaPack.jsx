@@ -1,4 +1,5 @@
 import {Link} from 'react-router';
+import {EN} from '~/lib/lang';
 
 /**
  * Tarjeta del pack de cinco gorras dentro de la colección.
@@ -16,7 +17,7 @@ export default function TarjetaPack({fotos = []}) {
       </span>
 
       <span className="pk-cuerpo">
-        <span className="pk-rotulo">Pack de cinco</span>
+        <span className="pk-rotulo">{EN ? "Five-pack" : "Pack de cinco"}</span>
         <span className="pk-titulo">5 Gorras por $500.000</span>
         <span className="pk-precios">
           <b>$ 500.000</b>

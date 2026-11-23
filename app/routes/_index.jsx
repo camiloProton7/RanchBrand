@@ -25,13 +25,13 @@ export const links = () => [{rel: 'stylesheet', href: styles}];
 // hombre, Campo Over Size para mujer, Outdoor UPF 50 para camisas, Tacoma
 // para botas.
 const CATS = [
-  {nombre: 'Chaquetas Hombre', handle: 'chaquetas-hombre', img: '/cats/chaquetas-hombre.webp'},
-  {nombre: 'Chaquetas Mujer', handle: 'chaquetas-mujer', img: '/cats/chaquetas-mujer.webp'},
-  {nombre: 'Camisas', handle: 'camisetas', img: '/cats/camisas-upf.webp'},
-  {nombre: 'Botas', handle: 'botas-1', img: '/cats/botas-tacoma.webp'},
-  {nombre: 'Gorras', handle: 'gorras', img: '/cats/gorras-1x1.webp'},
-  {nombre: 'Sacos bordados', handle: 'bordados', img: '/cats/sacos.webp'},
-  {nombre: 'Accesorios', handle: 'accesorios', img: '/cats/accesorios.webp'},
+  {nombre: 'Chaquetas Hombre', nombreEN: 'Men\'s jackets', handle: 'chaquetas-hombre', img: '/cats/chaquetas-hombre.webp'},
+  {nombre: 'Chaquetas Mujer', nombreEN: 'Women\'s jackets', handle: 'chaquetas-mujer', img: '/cats/chaquetas-mujer.webp'},
+  {nombre: 'Camisas', nombreEN: 'Shirts', handle: 'camisetas', img: '/cats/camisas-upf.webp'},
+  {nombre: 'Botas', nombreEN: 'Boots', handle: 'botas-1', img: '/cats/botas-tacoma.webp'},
+  {nombre: 'Gorras', nombreEN: 'Hats', handle: 'gorras', img: '/cats/gorras-1x1.webp'},
+  {nombre: 'Sacos bordados', nombreEN: 'Embroidered sweaters', handle: 'bordados', img: '/cats/sacos.webp'},
+  {nombre: 'Accesorios', nombreEN: 'Accessories', handle: 'accesorios', img: '/cats/accesorios.webp'},
 ];
 
 
@@ -575,13 +575,13 @@ const DESCRIPCION_HOME =
   'Chaquetas enceradas, botas de cuero y gorras de faena. Prendas para el frío, el barro y el camino, con envío a toda Colombia.';
 
 export const meta = () => [
-  {title: 'The Ranch — Chaquetas, botas y gorras para durar'},
+  {title: EN ? 'The Ranch — Jackets, boots and hats built to last' : 'The Ranch — Chaquetas, botas y gorras para durar'},
   {name: 'description', content: DESCRIPCION_HOME},
   {tagName: 'link', rel: 'canonical', href: 'https://ranch.com.co/'},
   {property: 'og:type', content: 'website'},
   {property: 'og:site_name', content: 'The Ranch'},
   {property: 'og:locale', content: 'es_CO'},
-  {property: 'og:title', content: 'The Ranch — Chaquetas, botas y gorras para durar'},
+  {property: 'og:title', content: EN ? 'The Ranch — Jackets, boots and hats built to last' : 'The Ranch — Chaquetas, botas y gorras para durar'},
   {property: 'og:description', content: DESCRIPCION_HOME},
   {property: 'og:url', content: 'https://ranch.com.co/'},
   {property: 'og:image', content: 'https://ranch.com.co/col/chaquetas-portada.webp'},
@@ -667,6 +667,7 @@ export default function HomeNuevo() {
 
       <section className="hn-cats" id="colecciones">
         {/* campaña: no reemplaza nada del home, se suma entre el hero y las colecciones */}
+        {!EN && (
         <section className="hn-bf" aria-label="Black Friday">
           <Link to="/black-friday" prefetch="intent" className="hn-bf-in">
             <span className="hn-bf-strip" aria-hidden="true" />
@@ -687,6 +688,7 @@ export default function HomeNuevo() {
             </span>
           </Link>
         </section>
+        )}
 
 
         <div className="hn-cats-head">
@@ -701,9 +703,9 @@ export default function HomeNuevo() {
                 className="hn-cat-thumb"
                 style={c.img ? {backgroundImage: `url(${c.img})`} : undefined}
               >
-                {!c.img && <span className="hn-cat-ph">{c.nombre.slice(0, 3)}</span>}
+                {!c.img && <span className="hn-cat-ph">{(EN ? c.nombreEN : c.nombre).slice(0, 3)}</span>}
               </span>
-              <span className="hn-cat-name">{c.nombre}</span>
+              <span className="hn-cat-name">{EN ? c.nombreEN : c.nombre}</span>
             </Link>
           ))}
         </nav>

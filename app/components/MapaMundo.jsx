@@ -1,5 +1,6 @@
 import {useEffect, useRef, useState} from 'react';
 import {Link} from 'react-router';
+import {EN} from '~/lib/lang';
 
 const PUNTOS = [
   {id: 'gorras', nombre: 'Gorras', x: 18.1, y: 17.0, to: '/collections/gorras'},
@@ -81,7 +82,7 @@ function Joystick({mandoRef}) {
       aria-valuenow={0}
     >
       <span className="hn-joy-knob" ref={knob} />
-      <span className="hn-joy-hint" aria-hidden="true">Arrastra</span>
+      <span className="hn-joy-hint" aria-hidden="true">{EN ? "Drag" : "Arrastra"}</span>
     </div>
   );
 }
@@ -334,14 +335,14 @@ export default function MapaMundo({completo = false}) {
       <div className="hn-world-stage" ref={stage} />
 
       <header className="hn-world-head">
-        <p className="hn-world-eyebrow">El pueblo</p>
-        <h2 className="hn-world-title">Recórrelo a caballo</h2>
-        <p className="hn-world-sub">Mueve el joystick para cabalgar. Cuando llegues, entra.</p>
+        <p className="hn-world-eyebrow">{EN ? "The town" : "El pueblo"}</p>
+        <h2 className="hn-world-title">{EN ? "Ride it on horseback" : "Recórrelo a caballo"}</h2>
+        <p className="hn-world-sub">{EN ? "Move the joystick to ride. When you get there, step in." : "Mueve el joystick para cabalgar. Cuando llegues, entra."}</p>
       </header>
 
       <Joystick mandoRef={mandoRef} />
 
-      {!listo && <p className="hn-world-cargando">Ensillando…</p>}
+      {!listo && <p className="hn-world-cargando">{EN ? "Saddling up…" : "Ensillando…"}</p>}
 
       {cerca && cerca.to && (
         <Link className="hn-world-cta" to={cerca.to}>

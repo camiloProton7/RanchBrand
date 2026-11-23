@@ -1,5 +1,6 @@
 import {useState} from 'react';
 import {Grid, Tarjeta} from '~/components/Tarjeta';
+import {EN} from '~/lib/lang';
 
 const DOMINIO = '1caf84-4.myshopify.com';
 
@@ -38,12 +39,12 @@ export default function Combo({combo}) {
       <header className="hn-combo-head">
         <div className="hn-combo-top">
           <div>
-            <p className="hn-gorras-eyebrow">El conjunto</p>
-            <h2 className="hn-combo-title">Combina tu próximo recorrido</h2>
+            <p className="hn-gorras-eyebrow">{EN ? "The set" : "El conjunto"}</p>
+            <h2 className="hn-combo-title">{EN ? "Match your next ride" : "Combina tu próximo recorrido"}</h2>
           </div>
-          <span className="hn-combo-badge">Ahorra 15%</span>
+          <span className="hn-combo-badge">{EN ? "Save 15%" : "Ahorra 15%"}</span>
         </div>
-        <p className="hn-combo-sub">Arma el conjunto perfecto y ahorra.</p>
+        <p className="hn-combo-sub">{EN ? "Build the perfect set and save." : "Arma el conjunto perfecto y ahorra."}</p>
       </header>
 
       <Grid className="hn-par-combo">
@@ -53,7 +54,7 @@ export default function Combo({combo}) {
 
       <div className="hn-combo-pie">
         <div className="hn-combo-total">
-          <span className="hn-combo-total-label">Precio conjunto</span>
+          <span className="hn-combo-total-label">{EN ? "Set price" : "Precio conjunto"}</span>
           <span className="hn-combo-total-nums">
             <span className="hn-combo-tachado">antes {pesos(suma)}</span>
             <strong className="hn-combo-final">{pesos(final)}</strong>
@@ -72,7 +73,7 @@ export default function Combo({combo}) {
         <div className="hn-sheet-fondo" role="dialog" aria-modal="true" aria-label="Elige talla y gorra">
           <div className="hn-sheet">
             <header className="hn-sheet-cabeza">
-              <h3>Arma tu conjunto</h3>
+              <h3>{EN ? "Build your set" : "Arma tu conjunto"}</h3>
               <button
                 type="button"
                 className="hn-sheet-cerrar"
@@ -113,7 +114,7 @@ export default function Combo({combo}) {
               </div>
 
               <div className="hn-sheet-bloque">
-                <p className="hn-sheet-prenda">Elige tu gorra</p>
+                <p className="hn-sheet-prenda">{EN ? "Pick your hat" : "Elige tu gorra"}</p>
                 <div className="hn-sheet-gorras">
                   {gorras.map((g) => {
                     const activa = g.handle === gorraElegida?.handle;

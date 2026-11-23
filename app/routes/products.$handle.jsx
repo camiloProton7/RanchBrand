@@ -13,6 +13,7 @@ import MenuLateral from '~/components/MenuLateral';
 import {useHeaderScroll} from '~/lib/useHeaderScroll';
 import {Rail, Tarjeta} from '~/components/Tarjeta';
 import Pie from '~/components/Pie';
+import {EN} from '~/lib/lang';
 
 export const links = () => [{rel: 'stylesheet', href: styles}];
 
@@ -509,7 +510,7 @@ export default function ProductoNuevo() {
         {variante?.stock > 0 && variante.stock <= 5 && (
           <span className="hp-sello-stock">Últimas {variante.stock} unidades</span>
         )}
-        {variante?.stock === 0 && <span className="hp-sello-stock is-agotado">Agotada</span>}
+        {variante?.stock === 0 && <span className="hp-sello-stock is-agotado">{EN ? "Sold out" : "Agotada"}</span>}
 
         <span className="hp-contador">
           {String(foto + 1).padStart(2, '0')} / {String(fotos.length).padStart(2, '0')}
@@ -636,8 +637,8 @@ export default function ProductoNuevo() {
       {recos.length > 1 && (
         <section className="hp-recos">
           <div className="hp-recos-head">
-            <h2>Los clientes también eligieron</h2>
-            <span>Desliza →</span>
+            <h2>{EN ? "Customers also chose" : "Los clientes también eligieron"}</h2>
+            <span>{EN ? "Swipe →" : "Desliza →"}</span>
           </div>
           <Rail className="hp-recos-rail">
             {recos.map((p) => (

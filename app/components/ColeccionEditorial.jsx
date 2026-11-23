@@ -4,6 +4,7 @@ import MenuLateral from '~/components/MenuLateral';
 import Carroza from '~/components/Carroza';
 import Buscador from '~/components/Buscador';
 import Pie from '~/components/Pie';
+import {EN} from '~/lib/lang';
 
 /**
  * Colección de chaquetas de hombre con tratamiento editorial: la prenda ocupa
@@ -103,7 +104,7 @@ export default function ColeccionEditorial({productos = [], titulo = '', desde =
       {productos.slice(0, 7).map(panel)}
 
       <section className="ed-interludio">
-        <p>No nacimos para que fuera fácil.</p>
+        <p>{EN ? "We did not build this to be easy." : "No nacimos para que fuera fácil."}</p>
       </section>
 
       {productos.slice(7).map((p, i) => panel(p, i + 7))}
@@ -129,7 +130,7 @@ export default function ColeccionEditorial({productos = [], titulo = '', desde =
         <Link to="/collections/chaquetas" prefetch="intent">
           Ver todas las chaquetas <span aria-hidden="true">→</span>
         </Link>
-        <small>The Ranch · Hecho para durar, no para pasar.</small>
+        <small>{EN ? "The Ranch · Built to last." : "The Ranch · Hecho para durar, no para pasar."}</small>
       </div>
 
       <Pie />
