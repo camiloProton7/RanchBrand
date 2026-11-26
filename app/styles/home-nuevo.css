@@ -7899,6 +7899,8 @@ html.con-franja .hc-volver { margin-top: 6px; }
   .hn-cat { flex: 0 0 132px; }
 
   .hn-combo-title { font-size: 30px; max-width: 20ch; }
+  .hn-pieza-foto { max-width: 560px; margin: 0 auto; }
+  .hn-pieza-foto img { aspect-ratio: 4 / 5; object-fit: cover; height: auto; }
   .hn-pieza-txt { padding: 0 32px; }
   .hn-pieza-nombre { font-size: 34px; max-width: 18ch; }
   .hn-pieza-desc { font-size: 14px; max-width: 38ch; }
@@ -7958,6 +7960,7 @@ html.con-franja .hc-volver { margin-top: 6px; }
   }
   .hn-pieza-top { grid-area: top; margin-bottom: 24px; }
   .hn-pieza-foto { grid-area: foto; margin: 0; }
+  .hn-pieza-foto img { aspect-ratio: 4 / 5; object-fit: cover; height: auto; }
   .hn-pieza-txt { grid-area: txt; align-self: center; margin-top: 0; padding: 0; }
   .hn-pieza-precio { font-size: 22px; }
   .hn-pieza-btn { max-width: 340px; }
