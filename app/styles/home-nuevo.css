@@ -7867,3 +7867,60 @@ html.con-franja .hc-volver { margin-top: 6px; }
 @media (min-width: 900px) {
   .hn-rail-flechas { display: flex; }
 }
+
+/* ============================================================
+   CAPA DESKTOP / TABLET — el home estaba clavado en medidas de
+   móvil: título del hero a 27px, banner 249px de ancho, padding
+   lateral de 16px y tarjetas de 290px en una pantalla de 1280.
+   Aquí se escala la misma composición, no se rediseña.
+   Va al final del archivo a propósito: `.hn-bottom .hn-title`
+   (0,2,0) le gana a `.hn-title` (0,1,0) dentro del media query
+   de la línea 353, y por eso el hero nunca crecía.
+   ============================================================ */
+
+@media (min-width: 600px) and (max-width: 899px) {
+  .hn-bottom { padding: 0 32px; gap: 24px; }
+  .hn-bottom .hn-title {
+    font-size: clamp(34px, 5.2vw, 44px);
+    max-width: 22ch;
+    line-height: 1.08;
+  }
+  .hn-bottom .hn-cta { min-height: 50px; padding: 0 26px; font-size: 13.5px; }
+
+  .hn-cats { padding: 52px 32px 0; }
+  .hn-rail { padding: 2px 32px 8px; margin: 0 -32px; scroll-padding-inline: 32px; gap: 15px; }
+  .hn-card { flex-basis: 44%; max-width: 320px; }
+
+  .hn-bf { padding: 0 32px; }
+  .hn-bf-txt { max-width: 46ch; font-size: 14px; }
+
+  .hn-combo-title { font-size: 30px; max-width: 20ch; }
+  .hn-pieza-txt { padding: 0 32px; }
+  .hn-pieza-nombre { font-size: 34px; max-width: 18ch; }
+  .hn-pieza-desc { font-size: 14px; max-width: 38ch; }
+  .hn-pie-lema { font-size: 12.5px; max-width: 32ch; }
+}
+
+@media (min-width: 900px) {
+  .hn-bottom { padding: 0 56px; gap: 26px; }
+  .hn-bottom .hn-title {
+    font-size: clamp(42px, 4.1vw, 60px);
+    max-width: 25ch;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+  }
+  .hn-bottom .hn-cta { min-height: 54px; padding: 0 30px; font-size: 14px; }
+
+  .hn-cats { padding: 64px 56px 0; }
+  .hn-rail { padding: 2px 56px 10px; margin: 0 -56px; scroll-padding-inline: 56px; gap: 18px; }
+  .hn-card { flex-basis: 340px; max-width: 340px; }
+
+  .hn-bf { padding: 0 56px; }
+  .hn-bf-txt { max-width: 54ch; font-size: 15px; line-height: 1.5; }
+
+  .hn-combo-title { font-size: clamp(30px, 2.4vw, 38px); max-width: 20ch; }
+  .hn-pieza-txt { padding: 0 56px; }
+  .hn-pieza-nombre { font-size: clamp(34px, 2.8vw, 46px); max-width: 20ch; }
+  .hn-pieza-desc { font-size: 15px; max-width: 40ch; }
+  .hn-pie-lema { font-size: 13px; max-width: 36ch; }
+}
