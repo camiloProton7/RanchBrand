@@ -7892,7 +7892,11 @@ html.con-franja .hc-volver { margin-top: 6px; }
   .hn-card { flex-basis: 44%; max-width: 320px; }
 
   .hn-bf { padding: 0 32px; }
+  .hn-bf-in { padding: 34px 32px; }
+  .hn-bf-title { font-size: 38px; }
   .hn-bf-txt { max-width: 46ch; font-size: 14px; }
+  .hn-cats-row { gap: 14px; }
+  .hn-cat { flex: 0 0 132px; }
 
   .hn-combo-title { font-size: 30px; max-width: 20ch; }
   .hn-pieza-txt { padding: 0 32px; }
@@ -7916,7 +7920,24 @@ html.con-franja .hc-volver { margin-top: 6px; }
   .hn-card { flex-basis: 340px; max-width: 340px; }
 
   .hn-bf { padding: 0 56px; }
-  .hn-bf-txt { max-width: 54ch; font-size: 15px; line-height: 1.5; }
+  .hn-bf-in { padding: 42px 48px; min-height: 260px; }
+  .hn-bf-kicker { font-size: 11px; }
+  .hn-bf-title { font-size: 46px; }
+  .hn-bf-txt { max-width: 46ch; font-size: 15px; line-height: 1.5; }
+  .hn-bf-cta {
+    position: absolute;
+    right: 48px;
+    bottom: 42px;
+    margin-top: 0;
+    min-height: 50px;
+    padding: 0 26px;
+    font-size: 12px;
+  }
+
+  /* categorías: 7 miniaturas de 104 px dejaban media pantalla vacía */
+  .hn-cats-row { padding: 0 56px 6px; margin: 0 -56px; gap: 18px; }
+  .hn-cat { flex: 1 1 0; min-width: 0; max-width: 190px; gap: 9px; }
+  .hn-cat-thumb { border-radius: 16px; }
 
   .hn-combo-title { font-size: clamp(30px, 2.4vw, 38px); max-width: 20ch; }
   .hn-pieza-txt { padding: 0 56px; }
